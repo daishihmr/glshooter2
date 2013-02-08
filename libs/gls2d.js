@@ -51,9 +51,12 @@ glslib.Scene.prototype._draw = function() {
     var children = this.children;
     var ctx = this.ctx;
     var program = this.program;
-    this.clear();
 
-    ctx.globalCompositeOperation = "lighter";
+    this.ctx.globalCompositeOperation = "copy";
+    this.ctx.fillStyle = "rgba(0,0,0,0)";
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.ctx.globalCompositeOperation = "source-over";
     for (var i = 0, len = children.length; i < len; i++) {
         children[i]._draw(this.canvas, ctx);
     }
@@ -62,10 +65,8 @@ glslib.Scene.prototype._draw = function() {
 /**
  * 
  */
-glslib.Scene.prototype.clear = function() {
-    this.ctx.globalCompositeOperation = "source-over";
-    this.ctx.fillStyle = "black";
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+glslib.Scene.prototype.hide = function() {
+    this.canvas.style.display = "none";
 };
 
 /**
@@ -156,7 +157,7 @@ glslib.fitWindow = function(domElement) {
         domElement.width = window.innerWidth;
         domElement.height = window.innerWidth;
     }
-}
+};
 
 /**
  * @param {Image} image

@@ -8,6 +8,9 @@ var glslib = {};
  * @param {HTMLCanvasElement} canvas
  */
 glslib.Scene = function(canvas) {
+    /** @type {HTMLCanvasElement} canvas */
+    this.canvas = canvas;
+
     /** @type {WebGLRenderingContext} */
     this.gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
 
@@ -20,7 +23,7 @@ glslib.Scene = function(canvas) {
 
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
     var program = this.program = createProgram(
         gl,
@@ -114,9 +117,8 @@ glslib.Scene.prototype._draw = function() {
 /**
  * 
  */
-glslib.Scene.prototype.clear = function() {
-    var gl = this.gl;
-    gl.clear(gl.COLOR_BUFFER_BIT);
+glslib.Scene.prototype.hide = function() {
+    this.canvas.style.display = "none";
 };
 
 /**
@@ -250,7 +252,7 @@ glslib.fitWindow = function(domElement) {
         domElement.width = window.innerWidth;
         domElement.height = window.innerWidth;
     }
-}
+};
 
 /**
  * @param {WebGLRenderingContext} gl
