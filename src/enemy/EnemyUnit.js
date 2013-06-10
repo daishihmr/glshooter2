@@ -1,6 +1,6 @@
 /**
- * 編隊.
+ * 編隊
  */
-var EnemyUnit = function() {
-
-};
+var EnemyUnit = tm.createClass({
+    enemies: []
+});

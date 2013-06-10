@@ -1,6 +1,14 @@
 /**
- * 敵の行動パターン.
+ * 敵の行動パターン
  */
-var EnemySoft = function() {
+var EnemySoft = tm.createClass({
+    init: function() {
+    },
+    setup: function(enemy) {
+    },
+    update: function(enemy) {
+    }
+});
 
+COMMON_DATA.soft = {
 };
