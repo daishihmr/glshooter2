@@ -51,3 +51,12 @@ gls2.Player = tm.createClass({
 });
 
 gls2.Player.instance = null;
+
+gls2.Bullet = tm.createClass({
+    superClass: tm.app.Sprite,
+    init: function() {
+        this.superInit("tex0", 16, 16);
+    }
+});
+
+gls2.Bullet.pool = [];
