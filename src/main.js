@@ -1,41 +1,39 @@
+var gls2 = {};
+
 var DEBUG = true;
 var SC_W = 320;
-var SC_H = 640;
-var COMMON_DATA = {};
-
-var app;
+var SC_H = 480;
 
 tm.preload(function() {
-    app = tm.app.CanvasApp("#canvas2d");
-    app.resize(SC_W, SC_H); //.fitWindow();
-    app.background = "black";
-    app.fps = 60;
+    gls2.app = tm.app.CanvasApp("#canvas2d");
+    gls2.app.resize(SC_W, SC_H).fitWindow();
+    gls2.app.background = "black";
+    gls2.app.fps = 60;
 
-    app.replaceScene(tm.app.LoadingScene());
+    gls2.app.replaceScene(tm.app.LoadingScene());
 
-    if (DEBUG) {
-        tm.util.ScriptManager.loadStats();
-    }
+    if (DEBUG) tm.util.ScriptManager.loadStats();
 
-    tm.asset.AssetManager.load("bullets", "images/bullets.png");
+    tm.asset.AssetManager.load("tex0", "images/bullets.png");
+    tm.asset.AssetManager.load("tex1", "images/tex1.png");
 });
 
 tm.main(function() {
-    COMMON_DATA.bullets = tm.app.SpriteSheet({
-        image: "bullets",
-        frame: {
-            width: 32,
-            height: 32,
-            count: 10
-        }
-    });
+    if (DEBUG) gls2.app.enableStats();
 
-    if (DEBUG) {
-        app.enableStats();
-    }
+    gls2.EnemyHard.setup();
+    gls2.EnemySoft.setup();
 
-    var mainScene = GameScene();
-    app.replaceScene(mainScene);
+    var player = gls2.Player.instance = gls2.Player();
+    gls2.Player.instance.keyboard = gls2.app.keyboard;
 
-    app.run();
+    var mainScene = gls2.GameScene();
+    mainScene.addChild(player);
+
+    gls2.Enemy("heri1", "heri1").setPosition(100, 100).addChildTo(mainScene);
+    gls2.Enemy("heri2", "heri1").setPosition(200, 100).addChildTo(mainScene);
+
+    gls2.app.run();
+
+    gls2.app.replaceScene(mainScene);
 });
