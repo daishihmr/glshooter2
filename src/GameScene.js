@@ -1,5 +1,6 @@
-var GameScene = tm.createClass({
+gls2.GameScene = tm.createClass({
     superClass: tm.app.Scene,
+    player: null,
     ground: null,
     init: function() {
         this.superInit();
