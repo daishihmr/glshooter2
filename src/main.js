@@ -14,8 +14,8 @@ tm.preload(function() {
 
     if (DEBUG) tm.util.ScriptManager.loadStats();
 
-    tm.asset.AssetManager.load("tex0", "images/bullets.png");
-    tm.asset.AssetManager.load("tex1", "images/tex1.png");
+    tm.asset.AssetManager.load("tex0", "assets/bullets.png");
+    tm.asset.AssetManager.load("tex1", "assets/tex1.png");
 });
 
 tm.main(function() {
@@ -25,15 +25,14 @@ tm.main(function() {
     gls2.EnemySoft.setup();
 
     var player = gls2.Player.instance = gls2.Player();
-    gls2.Player.instance.keyboard = gls2.app.keyboard;
 
-    var mainScene = gls2.GameScene();
-    mainScene.addChild(player);
+    var gameScene = gls2.GameScene();
+    gameScene.addChild(player);
 
-    gls2.Enemy("heri1", "heri1").setPosition(100, 100).addChildTo(mainScene);
-    gls2.Enemy("heri2", "heri1").setPosition(200, 100).addChildTo(mainScene);
+    gls2.Enemy("heri1", "heri1").setPosition(100, 100).addChildTo(gameScene);
+    gls2.Enemy("heri2", "heri1").setPosition(200, 100).addChildTo(gameScene);
 
     gls2.app.run();
 
-    gls2.app.replaceScene(mainScene);
+    gls2.app.replaceScene(gameScene);
 });
