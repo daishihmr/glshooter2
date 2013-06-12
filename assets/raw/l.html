@@ -2,6 +2,12 @@
 <head>
 <script src="../../libs/tmlib.js"></script>
 <script>
+tm.preload(function() {
+    tm.asset.AssetManager.load("laser", "laser.png");
+    for (var i = 0; i < 3; i++) {
+        tm.asset.AssetManager.load("r" + i, "r" + i + ".png");
+    }
+});
 tm.main(function() {
     var canvas = tm.graphics.Canvas("#c");
     tm.dom.Element("#c").event.click(function() {
@@ -21,23 +27,65 @@ tm.main(function() {
         canvas.fillRect(0, i-40, 64, 40);
     }
 
-    var c2 = tm.graphics.Canvas("#c2");
-    c2.resize(64, 800);
+    var x = 160;
+    var y = 350;
 
-    var app = tm.app.CanvasApp();
+    var laser = Laser(tm.asset.AssetManager.get("laser"), 64, 480);
+    laser.x = x;
+    laser.y = y;
+
+    var c = tm.app.CircleShape(10, 10);
+    c.x = x;
+    c.y = y;
+
+    var app = tm.app.CanvasApp("#app");
+    app.resize(320, 480);
     app.update = function() {
-        c2.clear();
-        var y = (app.frame*30) % 240;
-        for (var i = 0; i < 6; i++) {
-            c2.drawBitmap(canvas.getBitmap(), 0, i*240-240-y);
+        if (this.keyboard.getKey("up")) {
+            laser.y -= 3;
+            c.y -= 3;
+        } else if (this.keyboard.getKey("down")) {
+            laser.y += 3;
+            c.y += 3;
         }
     };
+
+    app.currentScene.addChild(laser);
+    app.currentScene.addChild(c);
+
     app.run();
 });
+
+var Laser = tm.createClass({
+    superClass: tm.app.CanvasElement,
+    texture: null,
+    image: tm.graphics.Canvas().resize(64, 480),
+    width: 0,
+    height: 0,
+    age: 0,
+    hitY: 30,
+    init: function(tex, w, h) {
+        this.superInit();
+        this.width = w;
+        this.height = h;
+        this.texture = tex;
+        this.blendMode = "lighter";
+        this.image.globalCompositeOperation = "lighter";
+    },
+    update: function(app) {
+        this.age += 1;
+        this.image.clear();
+        this.image.drawTexture(this.texture, 0, 120);
+    },
+    draw: function(canvas) {
+        canvas.context.drawImage(this.image.element,
+            -this.width*this.origin.x, this.hitY - this.y, this.width, this.y - this.hitY);
+    }
+})
 </script>
 </head>
-<body style="background:black">
+<body>
 <canvas id="c"></canvas>
-<canvas id="c2"></canvas>
+<canvas id="app"></canvas>
 </body>
 </html>
