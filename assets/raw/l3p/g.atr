@@ -1,0 +1,9 @@
+atr noname
+{
+	col ( rgb ( 0.310 0.530 0.840 ) )
+	amb ( 0.330 )
+	dif ( 0.800 )
+	spc ( 0.050 0.100 0.000 )
+	colormap ( "L3\effect\horizon.png" 0.300 1.000 )
+	mapsize ( 0 0 1 1 )
+}

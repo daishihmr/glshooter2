@@ -1,0 +1,50 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	CP\CP05.suf
+	EG\EG13.suf
+	P1\P110.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000   0.000 )
+	DisplayScale: 0.250000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr "#01" { col ( 1.000 ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) tramap ( "L3\machine\rotor\rotor[1-3].png" 0.000 1.040 ) mapsize ( 0 0 1 1 ) }
+	1: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 )  -2 -70 -70 )
+	{	mov ( 1052.97 930.99 1161.43 ) eye deg( 45 ) }
+	{	mov ( 103.395 56.8827 98.8811 ) target }
+	{	mov ( 19.5 0 17.7 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.7 0.7 0.7 ) obj CP05 /* "CP\CP05.suf" atr "noname" */
+	}
+	{	mov ( 0 0 200 ) rotz ( 90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
+	}
+	{	mov ( 0 0 200 ) rotz ( 50 ) roty ( 0 ) rotx ( 0 )
+		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
+	}
+	{	mov ( 0 0 200 ) rotz ( 60 ) roty ( 0 ) rotx ( 0 )
+		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
+	}
+	{	mov ( -15.5 0 52.7 ) rotz ( -180 ) roty ( 90 ) rotx ( 0 )
+		scal ( 0.21 0.35 2.9 ) obj EG13 /* "EG\EG13.suf" atr "noname" */
+	}
+	{	mov ( 0 0 200 ) rotz ( 70 ) roty ( 0 ) rotx ( 0 )
+		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
+	}
+	{	mov ( 0 0 200 ) rotz ( 80 ) roty ( 0 ) rotx ( 0 )
+		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
+	}
+}

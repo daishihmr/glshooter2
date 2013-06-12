@@ -1,0 +1,65 @@
+<html>
+<head>
+<script src="image/tmlib.min.js"></script>
+<script>
+tm.preload(function() {
+    tm.asset.AssetManager.load("tex1", "image/tex1.png");
+});
+tm.main(function() {
+    var app = tm.app.CanvasApp("#c");
+    app.fps = 60;
+    app.resize(200, 200);
+
+    var tex1_64x64 = tm.app.SpriteSheet({
+        image: "tex1",
+        frame: {
+            width: 64,
+            height: 64
+        },
+        animations: {
+            "heri1": {
+                frames: [ 7, 7, 8, 8],
+                next: "heri1"
+            },
+            "heri2": {
+                frames: [ 9, 9, 10, 10],
+                next: "heri2"
+            }
+        }
+    });
+
+    var animations = tm.app.CanvasElement();
+    animations.visible = false;
+    animations.addChildTo(app.currentScene);
+
+    var heri1 = tm.app.AnimationSprite(64, 64, tex1_64x64).addChildTo(animations);
+    heri1.gotoAndPlay("heri1");
+
+    var s = tm.app.CanvasElement();
+    s.setPosition(100, 100);
+    s.draw = function(canvas) {
+        heri1.draw(canvas);
+    };
+    s.addChildTo(app.currentScene);
+
+    // tm.app.AnimationSprite(64, 64, tex1_64x64)
+    //     .setPosition(80, 50)
+    //     .addChildTo(app.currentScene)
+    //     .gotoAndPlay("heri2");
+
+    var ga = tm.app.Sprite("tex1", 256, 128)
+        .setPosition(100, 100)
+        .addChildTo(app.currentScene);
+    ga.srcRect.set(64, 128, 256, 128);
+
+    app.run();
+});
+
+var EnemyHard = tm.createClass({
+});
+</script>
+</head>
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
