@@ -8,6 +8,7 @@ tm.preload(function() {
     for (var i = 0; i < 3; i++) {
         tm.asset.AssetManager.load("r" + i, "r" + i + ".png");
     }
+    tm.asset.AssetManager.load("fighter", "image/fighter1.png");
 });
 tm.main(function() {
     // var canvas = tm.graphics.Canvas("#c");
@@ -33,9 +34,9 @@ tm.main(function() {
     laser.x = x;
     laser.y = y;
 
-    var c = tm.app.CircleShape(10, 10);
+    var c = tm.app.Sprite("fighter", 48, 48);
     c.x = x;
-    c.y = y;
+    c.y = y+32;
 
     var app = tm.app.CanvasApp("#app");
     app.resize(320, 480);
@@ -56,8 +57,8 @@ tm.main(function() {
         }
     };
 
-    app.currentScene.addChild(laser);
     app.currentScene.addChild(c);
+    app.currentScene.addChild(laser);
 
     app.run();
 });
