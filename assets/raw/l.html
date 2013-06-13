@@ -4,33 +4,32 @@
 <script>
 tm.preload(function() {
     tm.asset.AssetManager.load("laser", "laser.png");
+    // tm.asset.AssetManager.load("laser", "dummy.png");
     for (var i = 0; i < 3; i++) {
         tm.asset.AssetManager.load("r" + i, "r" + i + ".png");
     }
 });
 tm.main(function() {
-    var canvas = tm.graphics.Canvas("#c");
-    tm.dom.Element("#c").event.click(function() {
-        canvas.saveAsImage();
-    });
-
-    canvas.resize(64, 240); //.fitWindow();
-    canvas.globalCompositeOperation = "lighter";
-
-    for (var i = 0; i < 240+40; i++) {
-        var t = (Math.PI*2)/240 * i;
-        canvas.fillStyle = tm.graphics.RadialGradient(32, i-20, 0, 32, i-20, 20).addColorStopList([
-            { offset: 0.00, color: "rgba(150, 200, 255, 0.2)" },
-            { offset: 0.30+Math.sin(t)*0.1, color: "rgba(150, 200, 255, 0.1)" },
-            { offset: 1.00, color: "rgba(0, 0, 255, 0.0)" },
-        ]).toStyle();
-        canvas.fillRect(0, i-40, 64, 40);
-    }
+    // var canvas = tm.graphics.Canvas("#c");
+    // tm.dom.Element("#c").event.click(function() {
+    //     canvas.saveAsImage();
+    // });
+    // canvas.resize(64, 240); //.fitWindow();
+    // canvas.globalCompositeOperation = "lighter";
+    // for (var i = 0; i < 240+40; i++) {
+    //     var t = (Math.PI*2)/240 * i;
+    //     canvas.fillStyle = tm.graphics.RadialGradient(32, i-20, 0, 32, i-20, 20).addColorStopList([
+    //         { offset: 0.00, color: "rgba(150, 200, 255, 0.2)" },
+    //         { offset: 0.30+Math.sin(t)*0.1, color: "rgba(150, 200, 255, 0.1)" },
+    //         { offset: 1.00, color: "rgba(0, 0, 255, 0.0)" },
+    //     ]).toStyle();
+    //     canvas.fillRect(0, i-40, 64, 40);
+    // }
 
     var x = 160;
     var y = 350;
 
-    var laser = Laser(tm.asset.AssetManager.get("laser"), 64, 480);
+    var laser = Laser("laser", ["r0", "r1", "r2"]);
     laser.x = x;
     laser.y = y;
 
@@ -48,6 +47,13 @@ tm.main(function() {
             laser.y += 3;
             c.y += 3;
         }
+        if (this.keyboard.getKey("left")) {
+            laser.x -= 3;
+            c.x -= 3;
+        } else if (this.keyboard.getKey("right")) {
+            laser.x += 3;
+            c.x += 3;
+        }
     };
 
     app.currentScene.addChild(laser);
@@ -58,34 +64,49 @@ tm.main(function() {
 
 var Laser = tm.createClass({
     superClass: tm.app.CanvasElement,
-    texture: null,
-    image: tm.graphics.Canvas().resize(64, 480),
-    width: 0,
-    height: 0,
+    image: null,
+    c: null,
     age: 0,
     hitY: 30,
-    init: function(tex, w, h) {
+    rt: null,
+    init: function(texture, roots) {
+        var tex = tm.asset.AssetManager.get(texture);
+        this.rt = roots.map(function(name) {
+            return tm.asset.AssetManager.get(name);
+        });
+
         this.superInit();
-        this.width = w;
-        this.height = h;
-        this.texture = tex;
+        this.image = tex.element;
+        this.width = tex.width;
+        this.height = 480;
         this.blendMode = "lighter";
-        this.image.globalCompositeOperation = "lighter";
+        this.origin.y = 1;
+
+        this.c = tm.graphics.Canvas();
+        this.c.resize(this.width, this.height);
+        this.c.globalCompositeOperation = "lighter";
     },
     update: function(app) {
         this.age += 1;
-        this.image.clear();
-        this.image.drawTexture(this.texture, 0, 120);
     },
     draw: function(canvas) {
-        canvas.context.drawImage(this.image.element,
-            -this.width*this.origin.x, this.hitY - this.y, this.width, this.y - this.hitY);
+        var y = (this.age*20) % 240;
+        this.c.clear();
+        this.c.drawImage(this.image, 0, -y);
+        this.c.drawImage(this.image, 0, -y+240);
+        this.c.drawImage(this.image, 0, -y+480);
+
+        this.height = this.y - this.hitY;
+        canvas.context.drawImage(this.c.element,
+            0, this.c.height-this.height, this.c.width, this.height,
+            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
+        canvas.context.drawImage(this.rt.random().element, -40, -40);
     }
 })
 </script>
 </head>
 <body>
-<canvas id="c"></canvas>
+<!-- <canvas id="c"></canvas> -->
 <canvas id="app"></canvas>
 </body>
 </html>
