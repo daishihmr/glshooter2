@@ -24,8 +24,7 @@ tm.main(function() {
     gls2.EnemyHard.setup();
     gls2.EnemySoft.setup();
 
-    var player = gls2.Player.instance = gls2.Player();
-
+    var player = gls2.Player();
     var gameScene = gls2.GameScene();
     gameScene.addChild(player);
 
