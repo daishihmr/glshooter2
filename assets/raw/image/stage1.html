@@ -1,0 +1,77 @@
+﻿<html>
+<head>
+<script src="tmlib.min.js"></script>
+<script>
+tm.preload(function() {
+    tm.asset.AssetManager.load("tx0", "bata.png");
+    tm.asset.AssetManager.load("tx1", "fighter1.png");
+    tm.asset.AssetManager.load("tx2", "fighter2.png");
+    tm.asset.AssetManager.load("tx3", "fighter3.png");
+    tm.asset.AssetManager.load("tx4", "fighter4.png");
+    tm.asset.AssetManager.load("tx5", "fighter5.png");
+    tm.asset.AssetManager.load("tx6", "fighter6.png");
+    tm.asset.AssetManager.load("tx7", "fighter7.png");
+    tm.asset.AssetManager.load("tx8", "ga.png");
+    tm.asset.AssetManager.load("tx9", "heri1_1.png");
+    tm.asset.AssetManager.load("tx10", "heri1_2.png");
+    tm.asset.AssetManager.load("tx11", "heri2_1.png");
+    tm.asset.AssetManager.load("tx12", "heri2_2.png");
+    tm.asset.AssetManager.load("tx13", "pink.png");
+    tm.asset.AssetManager.load("tx14", "pink2.png");
+    tm.asset.AssetManager.load("tx15", "tank1.png");
+    tm.asset.AssetManager.load("tx16", "tank1_b1.png");
+    tm.asset.AssetManager.load("tx17", "tank1_b2.png");
+    tm.asset.AssetManager.load("tx18", "tank1_b3.png");
+    tm.asset.AssetManager.load("tx19", "tank1_t1.png");
+    tm.asset.AssetManager.load("tx20", "tank1_t2.png");
+    tm.asset.AssetManager.load("tx21", "tank1_t3.png");
+    tm.asset.AssetManager.load("tx22", "tank2.png");
+});
+
+tm.main(function() {
+    var c = tm.graphics.Canvas("#c");
+    tm.dom.Element("#c").event.click(function() {
+        c.saveAsImage();
+    });
+
+    c.resize(512, 512);
+    // c.strokeRect(0, 0, 512, 512);
+    var draw = function(name, x, y) {
+        c.drawTexture(tm.asset.AssetManager.get("tx" + name), x*64, y*64);
+    };
+    draw( 1, 0, 0);
+    draw( 2, 1, 0);
+    draw( 3, 2, 0);
+    draw( 4, 3, 0);
+    draw( 5, 4, 0);
+    draw( 6, 5, 0);
+    draw( 7, 6, 0);
+
+    draw( 9, 7, 0);
+    draw(10, 0, 1);
+
+    draw(11, 1, 1);
+    draw(12, 2, 1);
+
+    draw(16, 3, 1);
+    draw(17, 4, 1);
+    draw(18, 5, 1);
+
+    draw(19, 6, 1);
+    draw(20, 7, 1);
+    draw(21, 0, 2);
+
+    draw( 8, 1, 2);
+
+    draw( 0, 5, 2);
+
+    draw(13, 0, 4);
+
+    draw(14, 2, 4);
+});
+</script>
+</head>
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>

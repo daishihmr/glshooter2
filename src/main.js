@@ -36,3 +36,22 @@ tm.main(function() {
 
     gls2.app.replaceScene(gameScene);
 });
+
+gls2.Pool = tm.createClass({
+    _pool: [],
+    activeList: [],
+    init: function(factoryFunc, initialNum) {
+        for (var i = 0; i < initialNum; i++) {
+            this._pool.push(factoryFunc());
+        }
+    },
+    get: function() {
+        var obj = this._pool.shift(0);
+        this.activeList.push(obj);
+        return obj;
+    },
+    dispose: function(obj) {
+        this.activeList.erase(obj);
+        this._pool.push(obj);
+    }
+});
