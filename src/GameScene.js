@@ -8,6 +8,8 @@ gls2.GameScene = tm.createClass({
     ]).toStyle(),
     init: function() {
         this.superInit();
+        gls2.GameScene.instance = this;
+
         this._createGround();
     },
     _createGround: function() {
@@ -16,9 +18,13 @@ gls2.GameScene = tm.createClass({
         this.ground.direction = Math.PI * 0.5;
         this.ground.cellSize = 20;
         this.ground.speed = 1;
+        this.ground.dx = 0;
+        this.ground.dy = 0;
         this.ground.update = function() {
-            this.gx = (this.gx + Math.cos(this.direction) * this.speed) % this.cellSize;
-            this.gy = (this.gy + Math.sin(this.direction) * this.speed) % this.cellSize;
+            this.dx = Math.cos(this.direction) * this.speed;
+            this.dy = Math.sin(this.direction) * this.speed;
+            this.gx = this.gx + this.dx % this.cellSize;
+            this.gy = this.gy + this.dy % this.cellSize;
         };
         this.ground.blendMode = "lighter";
         this.ground.draw = function(canvas) {
@@ -42,3 +48,5 @@ gls2.GameScene = tm.createClass({
         canvas.fillRect(0, 0, canvas.width, canvas.height);
     }
 });
+
+gls2.GameScene.instance = null;
