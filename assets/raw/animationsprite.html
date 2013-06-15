@@ -1,0 +1,38 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.preload(function() {
+    tm.addLoadCheckList(tm.asset.AssetManager);
+
+    tm.asset.AssetManager.load("tex", "../tex1.png")
+});
+tm.main(function() {
+    var app = tm.app.CanvasApp("#c").resize(200, 200);
+    var scene = app.currentScene;
+
+    var s = tm.app.AnimationSprite(32, 32, tm.app.SpriteSheet({
+        image: "tex",
+        frame: {
+            width: 32,
+            height: 32
+        },
+        animations: {
+            "anim0": {
+                frames: Array.range(0, 64),
+                next: "anim0",
+                frequency: 5
+            }
+        }
+    }));
+    s.gotoAndPlay("anim0");
+
+    s.setPosition(100, 100).addChildTo(scene);
+    app.run();
+});
+</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+</body>
+</html>
