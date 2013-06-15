@@ -14,8 +14,8 @@ Parts:
 	W1\W107.suf
 Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
-	DisplayOffset: (   0.000   0.000  -6.000 )
-	DisplayScale: 0.125000000000
+	DisplayOffset: (   0.000   0.000  -3.000 )
+	DisplayScale: 0.062500000000
 	MeshFlag: 1
 	MeshSpacing: 200
 	ShowStatus: 1
@@ -35,9 +35,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -18 -68 -70 )
-	{	mov ( 2726.51 1821.2 2280.54 ) eye deg( 45 ) }
-	{	mov ( -327.235 58.1201 -225.375 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 )  50  49 -70 )
+	{	mov ( -214.027 -0.000931008 4678.05 ) eye deg( 45 ) }
+	{	mov ( -205.989 -0.000964668 50.7241 ) target }
 	{	mov ( -200 -100 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 0.7 1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "#06" */
 	}

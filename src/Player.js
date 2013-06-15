@@ -9,9 +9,16 @@ gls2.Player = tm.createClass({
         gls2.Player.instance = this;
 
         this.setPosition(SC_W * 0.5, SC_H + 32).setFrameIndex(3 + this.roll);
-        this.scaleX = this.scaleY = 0.75;
 
         this._createHitCircle();
+
+        gls2.Bit(true).setPosition(40, 20).addChildTo(this);
+        gls2.Bit(true).setPosition(80, 30).addChildTo(this);
+        // gls2.Bit(true).setPosition(80, 40).addChildTo(this);
+        gls2.Bit(false).setPosition(-40, 20).addChildTo(this);
+        gls2.Bit(false).setPosition(-80, 30).addChildTo(this);
+        // gls2.Bit(false).setPosition(-80, 40).addChildTo(this);
+
     },
     _createHitCircle: function() {
         this.hitCircle = tm.app.Sprite("tex0", 64, 64).addChildTo(this);
@@ -42,9 +49,14 @@ gls2.Player = tm.createClass({
 
         gls2.Particle(128, 0.15, 0.95).setPosition(this.x, this.y).addChildTo(this.parent);
         for (var i = 0; i < 5; i++) {
-            gls2.BackfireParticle().setPosition(this.x-5, this.y+14).addChildTo(this.parent);
-            gls2.BackfireParticle().setPosition(this.x+5, this.y+14).addChildTo(this.parent);
+            gls2.BackfireParticle().setPosition(this.x-5, this.y+20).addChildTo(this.parent);
+            gls2.BackfireParticle().setPosition(this.x+5, this.y+20).addChildTo(this.parent);
         }
+
+        gls2.Particle(64, 0.2, 0.95).setPosition(this.x+40, this.y+20).addChildTo(this.parent);
+        gls2.Particle(64, 0.2, 0.95).setPosition(this.x+80, this.y+30).addChildTo(this.parent);
+        gls2.Particle(64, 0.2, 0.95).setPosition(this.x-40, this.y+20).addChildTo(this.parent);
+        gls2.Particle(64, 0.2, 0.95).setPosition(this.x-80, this.y+30).addChildTo(this.parent);
     },
     _calcRoll: function(app) {
         var inputLeft = this.controllable && app.keyboard.getKey("left");
@@ -66,6 +78,28 @@ gls2.Player = tm.createClass({
 
 gls2.Player.instance = null;
 
+gls2.Bit = tm.createClass({
+    superClass: tm.app.Sprite,
+    leftRoll: true,
+    init: function(leftRoll) {
+        this.superInit("tex1", 32, 32);
+        this.leftRoll = !!leftRoll;
+        if (gls2.Bit.FRAMES === null) {
+            gls2.Bit.FRAMES = [136, 137, 138, 152, 153, 154];
+        }
+    },
+    update: function(app) {
+        var f;
+        if (this.leftRoll) {
+            f = ~~(app.frame/8) % 6;
+        } else {
+            f = ~~(-app.frame/8) % 6 + 5;
+        }
+        this.setFrameIndex(gls2.Bit.FRAMES[f]);
+    }
+});
+gls2.Bit.FRAMES = null;
+
 gls2.Bullet = tm.createClass({
     superClass: tm.app.Sprite,
     init: function() {
@@ -74,3 +108,4 @@ gls2.Bullet = tm.createClass({
 });
 
 gls2.Bullet.pool = [];
+

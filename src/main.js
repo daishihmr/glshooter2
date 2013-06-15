@@ -1,8 +1,8 @@
 var gls2 = {};
 
 var DEBUG = true;
-var SC_W = 320;
-var SC_H = 480;
+var SC_W = 480;
+var SC_H = 640;
 
 tm.preload(function() {
     gls2.app = tm.app.CanvasApp("#canvas2d");
@@ -30,6 +30,9 @@ tm.main(function() {
 
     gls2.Enemy("heri1", "heri1").setPosition(100, 100).addChildTo(gameScene);
     gls2.Enemy("heri2", "heri1").setPosition(200, 100).addChildTo(gameScene);
+
+    gameScene.ground.direction = Math.PI/2;
+    gameScene.ground.speed = 0.5;
 
     gls2.app.run();
 
