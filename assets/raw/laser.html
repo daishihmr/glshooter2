@@ -3,12 +3,14 @@
 <script src="../../libs/tmlib.js"></script>
 <script>
 tm.preload(function() {
+    tm.addLoadCheckList(tm.asset.AssetManager);
+
     tm.asset.AssetManager.load("laser", "laser.png");
     // tm.asset.AssetManager.load("laser", "dummy.png");
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 8; i++) {
         tm.asset.AssetManager.load("r" + i, "r" + i + ".png");
     }
-    tm.asset.AssetManager.load("fighter", "image/fighter1.png");
+    tm.asset.AssetManager.load("fighter", "image/fighter4.png");
 });
 tm.main(function() {
     var canvas = tm.graphics.Canvas("#c");
@@ -30,16 +32,17 @@ tm.main(function() {
     var x = 160;
     var y = 350;
 
-    var laser = Laser("laser", ["r0", "r1", "r2"]);
+    var laser = Laser("laser", Array.range(0, 8).map(function(v) { return "r" + v }));
     laser.x = x;
     laser.y = y;
 
-    var c = tm.app.Sprite("fighter", 48, 48);
+    var c = tm.app.Sprite("fighter", 64, 64);
     c.x = x;
-    c.y = y+32;
+    c.y = y + 48;
 
     var app = tm.app.CanvasApp("#app");
     app.resize(320, 480);
+    app.background = "rgba(0,0,50,1)";
     app.update = function() {
         if (this.keyboard.getKey("up")) {
             laser.y -= 3;
@@ -75,6 +78,11 @@ var Laser = tm.createClass({
         this.rt = roots.map(function(name) {
             return tm.asset.AssetManager.get(name);
         });
+        this.rt.index = 0;
+        this.rt.next = function() {
+            this.index = (this.index + 1) % this.length;
+            return this[this.index];
+        };
 
         this.superInit();
         this.image = tex.element;
@@ -91,17 +99,17 @@ var Laser = tm.createClass({
         this.age += 1;
     },
     draw: function(canvas) {
-        var y = (this.age*20) % 240;
+        var y = (this.age*30) % 240;
         this.c.clear();
-        this.c.drawImage(this.image, 0, -y);
-        this.c.drawImage(this.image, 0, -y+240);
-        this.c.drawImage(this.image, 0, -y+480);
+        for (var i = 0; i < 3; i++) {
+            this.c.drawImage(this.image, 0, -y + 240*i);
+        }
 
         this.height = this.y - this.hitY;
         canvas.context.drawImage(this.c.element,
             0, this.c.height-this.height, this.c.width, this.height,
             -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
-        canvas.context.drawImage(this.rt.random().element, -40, -40);
+        canvas.context.drawImage(this.rt.next().element, -64, -32);
     }
 })
 </script>

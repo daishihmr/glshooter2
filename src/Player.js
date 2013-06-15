@@ -1,10 +1,14 @@
 gls2.Player = tm.createClass({
     superClass: tm.app.Sprite,
     roll: 0,
-    speed: 3,
+    speed: 4,
     controllable: true,
     hitCircle: null,
     bits: [
+        { x: -80, y: 30, d: -30, turn: false, sprite: null },
+        { x: -40, y: 20, d: -15, turn: false, sprite: null },
+        { x:  40, y: 20, d:  15, turn: true, sprite: null },
+        { x:  80, y: 30, d:  30, turn: true, sprite: null }
     ],
     init: function() {
         this.superInit("tex1", 64, 64);
@@ -14,13 +18,11 @@ gls2.Player = tm.createClass({
 
         this._createHitCircle();
 
-        gls2.Bit(true).setPosition(40, 20).addChildTo(this);
-        gls2.Bit(true).setPosition(80, 30).addChildTo(this);
-        // gls2.Bit(true).setPosition(80, 40).addChildTo(this);
-        gls2.Bit(false).setPosition(-40, 20).addChildTo(this);
-        gls2.Bit(false).setPosition(-80, 30).addChildTo(this);
-        // gls2.Bit(false).setPosition(-80, 40).addChildTo(this);
-
+        for (var i = 0, end = this.bits.length; i < end; i++) {
+            var bit = this.bits[i];
+            bit.sprite = gls2.Bit(bit.turn).setPosition(bit.x, bit.y).addChildTo(this);
+            bit.sprite.rotation = bit.d;
+        }
     },
     _createHitCircle: function() {
         this.hitCircle = tm.app.Sprite("tex0", 64, 64).addChildTo(this);
@@ -34,31 +36,26 @@ gls2.Player = tm.createClass({
     },
     update: function(app) {
         if (this.controllable) {
-            var kb = app.keyboard;
-            if (kb.getKey("left")) {
-                this.x -= this.speed;
-            } else if (kb.getKey("right")) {
-                this.x += this.speed;
-            }
-            if (kb.getKey("up")) {
-                this.y -= this.speed;
-            } else if (kb.getKey("down")) {
-                this.y += this.speed;
+            var angle = app.keyboard.getKeyAngle();
+            if (angle !== null) {
+                var m = gls2.Player.KEYBOARD_MOVE[angle];
+                this.x += m.x * this.speed;
+                this.y += m.y * this.speed;
             }
         }
 
         this._calcRoll(app);
 
-        gls2.Particle(128, 0.15, 0.95).setPosition(this.x, this.y).addChildTo(this.parent);
+        gls2.Particle(128, 0.3, 0.9).setPosition(this.x, this.y).addChildTo(this.parent);
         for (var i = 0; i < 5; i++) {
             gls2.BackfireParticle().setPosition(this.x-5, this.y+20).addChildTo(this.parent);
             gls2.BackfireParticle().setPosition(this.x+5, this.y+20).addChildTo(this.parent);
         }
 
-        gls2.Particle(64, 0.2, 0.95).setPosition(this.x+40, this.y+20).addChildTo(this.parent);
-        gls2.Particle(64, 0.2, 0.95).setPosition(this.x+80, this.y+30).addChildTo(this.parent);
-        gls2.Particle(64, 0.2, 0.95).setPosition(this.x-40, this.y+20).addChildTo(this.parent);
-        gls2.Particle(64, 0.2, 0.95).setPosition(this.x-80, this.y+30).addChildTo(this.parent);
+        gls2.Particle(64, 0.3, 0.9).setPosition(this.x+40, this.y+20).addChildTo(this.parent);
+        gls2.Particle(64, 0.3, 0.9).setPosition(this.x+80, this.y+30).addChildTo(this.parent);
+        gls2.Particle(64, 0.3, 0.9).setPosition(this.x-40, this.y+20).addChildTo(this.parent);
+        gls2.Particle(64, 0.3, 0.9).setPosition(this.x-80, this.y+30).addChildTo(this.parent);
     },
     _calcRoll: function(app) {
         var inputLeft = this.controllable && app.keyboard.getKey("left");
@@ -79,6 +76,16 @@ gls2.Player = tm.createClass({
 });
 
 gls2.Player.instance = null;
+gls2.Player.KEYBOARD_MOVE = {
+      0: { x: 1, y: 0 },
+     45: { x: 0.7, y: -0.7 },
+     90: { x: 0, y: -1 },
+    135: { x: -0.7, y: -0.7 },
+    180: { x: -1, y: 0 },
+    225: { x: -0.7, y: 0.7 },
+    270: { x: 0, y: 1 },
+    315: { x: 0.7, y: 0.7 },
+};
 
 gls2.Bit = tm.createClass({
     superClass: tm.app.AnimationSprite,

@@ -20,12 +20,16 @@ gls2.Particle = tm.createClass({
 
             gls2.Particle.IMAGE = c.element;
         }
+
+        this.ground = gls2.GameScene.instance.ground;
     },
     update: function(app) {
         this.alpha *= this.alphaDecayRate;
         if (this.alpha < 0.001) {
             this.remove();
         }
+        this.x += this.ground.dx;
+        this.y += this.ground.dy;
     },
     draw: function(canvas) {
         canvas.context.drawImage(gls2.Particle.IMAGE,
@@ -39,11 +43,9 @@ gls2.BackfireParticle = tm.createClass({
     ground: null,
     init: function() {
         this.superInit(Math.rand(14, 20));
-        this.ground = gls2.GameScene.instance.ground;
     },
     update: function(app) {
-        this.x += this.ground.dx;
-        this.y += this.ground.dy + 0.25;
         this.superClass.prototype.update.apply(this, app);
+        this.y +=  0.5;
     }
 });

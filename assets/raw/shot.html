@@ -1,6 +1,6 @@
 <html>
 <head>
-<script src="../libs/tmlib.js"></script>
+<script src="../../libs/tmlib.js"></script>
 <script>
 tm.main(function() {
     var canvas = tm.graphics.Canvas("#c");
@@ -12,23 +12,20 @@ tm.main(function() {
 
     canvas.globalCompositeOperation = "lighter";
     var alpha = 0.5;
-    var radius = 4.0;
-    for (var i = 4; i < 32-4; i+=0.5) {
+    var radius = 6.0;
+    for (var i = radius; i < 32-4; i+=0.5) {
         canvas.fillStyle = tm.graphics.RadialGradient(16, i, 0, 16, i, radius).addColorStopList([
             { offset: 0.00, color: "rgba(255, 255, 255, " + alpha + ")" },
             { offset: 1.00, color: "rgba(  0,   0, 255, 0.0)" },
         ]).toStyle();
         canvas.fillRect(0, 0, 32, 32);
 
-        alpha *= 0.945;
+        alpha *= 0.940;
         if (alpha < 0.0001) {
             break;
         }
 
         radius *= 0.995;
-        if (radius < 1) {
-            break;
-        }
     }
 });
 </script>

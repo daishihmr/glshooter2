@@ -5,6 +5,8 @@ var SC_W = 480;
 var SC_H = 640;
 
 tm.preload(function() {
+    tm.addLoadCheckList(tm.asset.AssetManager);
+
     gls2.app = tm.app.CanvasApp("#canvas2d");
     gls2.app.resize(SC_W, SC_H).fitWindow();
     gls2.app.background = "black";
@@ -25,14 +27,20 @@ tm.main(function() {
     gls2.EnemySoft.setup();
 
     var player = gls2.Player();
+    player.y = SC_H - 100;
     var gameScene = gls2.GameScene();
     gameScene.addChild(player);
 
     gls2.Enemy("heri1", "heri1").setPosition(100, 100).addChildTo(gameScene);
-    gls2.Enemy("heri2", "heri1").setPosition(200, 100).addChildTo(gameScene);
+    gls2.Enemy("heri2", "heri1").setPosition(450, 200).addChildTo(gameScene);
 
+    gameScene.addEventListener("enterframe", function() {
+        if (gls2.app.frame % 200 === 0) {
+            gameScene.ground.direction += Math.PI/4;
+        }
+    });
     gameScene.ground.direction = Math.PI/2;
-    gameScene.ground.speed = 0.5;
+    gameScene.ground.speed = 1;
 
     gls2.app.run();
 
