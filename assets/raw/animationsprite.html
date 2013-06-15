@@ -5,29 +5,53 @@
 tm.preload(function() {
     tm.addLoadCheckList(tm.asset.AssetManager);
 
-    tm.asset.AssetManager.load("tex", "../tex1.png")
+    tm.asset.AssetManager.load("tex1", "../tex1.png")
 });
 tm.main(function() {
-    var app = tm.app.CanvasApp("#c").resize(200, 200);
+    var app = tm.app.CanvasApp("#c").resize(400, 200);
     var scene = app.currentScene;
 
-    var s = tm.app.AnimationSprite(32, 32, tm.app.SpriteSheet({
-        image: "tex",
+    var ss = tm.app.SpriteSheet({
+        image: "tex1",
         frame: {
             width: 32,
             height: 32
         },
         animations: {
             "anim0": {
-                frames: Array.range(0, 64),
+                frames: [ 8+16*8, 9+16*8, 10+16*8, 8+16*9, 9+16*9, 10+16*9 ],
                 next: "anim0",
-                frequency: 5
-            }
+                frequency: 3
+            },
+            "anim1": {
+                frames: [ 8+16*8, 9+16*8, 10+16*8, 8+16*9, 9+16*9, 10+16*9 ].reverse(),
+                next: "anim1",
+                frequency: 3
+            },
         }
-    }));
-    s.gotoAndPlay("anim0");
+    });
 
-    s.setPosition(100, 100).addChildTo(scene);
+
+    var s0 = tm.app.AnimationSprite(32, 32, ss);
+    s0.gotoAndPlay("anim1");
+    s0.rotation = -20;
+    s0.setPosition(100, 120).addChildTo(scene);
+
+    var s1 = tm.app.AnimationSprite(32, 32, ss);
+    s1.gotoAndPlay("anim1");
+    s1.rotation = -10;
+    s1.setPosition(150, 100).addChildTo(scene);
+
+    var s2 = tm.app.AnimationSprite(32, 32, ss);
+    s2.gotoAndPlay("anim0");
+    s2.rotation = 10;
+    s2.setPosition(250, 100).addChildTo(scene);
+
+    var s3 = tm.app.AnimationSprite(32, 32, ss);
+    s3.gotoAndPlay("anim0");
+    s3.rotation = 20;
+    s3.setPosition(300, 120).addChildTo(scene);
+
     app.run();
 });
 </script>

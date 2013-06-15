@@ -4,6 +4,8 @@ gls2.Player = tm.createClass({
     speed: 3,
     controllable: true,
     hitCircle: null,
+    bits: [
+    ],
     init: function() {
         this.superInit("tex1", 64, 64);
         gls2.Player.instance = this;
@@ -79,26 +81,34 @@ gls2.Player = tm.createClass({
 gls2.Player.instance = null;
 
 gls2.Bit = tm.createClass({
-    superClass: tm.app.Sprite,
-    leftRoll: true,
+    superClass: tm.app.AnimationSprite,
     init: function(leftRoll) {
-        this.superInit("tex1", 32, 32);
-        this.leftRoll = !!leftRoll;
-        if (gls2.Bit.FRAMES === null) {
-            gls2.Bit.FRAMES = [136, 137, 138, 152, 153, 154];
+        if (gls2.Bit.SHEET === null) {
+            gls2.Bit.SHEET = tm.app.SpriteSheet({
+                image: "tex1",
+                frame: {
+                    width: 32,
+                    height: 32
+                },
+                animations: {
+                    "anim0": {
+                        frames: [ 8+16*8, 9+16*8, 10+16*8, 8+16*9, 9+16*9, 10+16*9 ],
+                        next: "anim0",
+                        frequency: 3
+                    },
+                    "anim1": {
+                        frames: [ 8+16*8, 9+16*8, 10+16*8, 8+16*9, 9+16*9, 10+16*9 ].reverse(),
+                        next: "anim1",
+                        frequency: 3
+                    },
+                }
+            });
         }
-    },
-    update: function(app) {
-        var f;
-        if (this.leftRoll) {
-            f = ~~(app.frame/8) % 6;
-        } else {
-            f = ~~(-app.frame/8) % 6 + 5;
-        }
-        this.setFrameIndex(gls2.Bit.FRAMES[f]);
+        this.superInit(32, 32, gls2.Bit.SHEET);
+        this.gotoAndPlay(leftRoll ? "anim0" : "anim1");
     }
 });
-gls2.Bit.FRAMES = null;
+gls2.Bit.SHEET = null;
 
 gls2.Bullet = tm.createClass({
     superClass: tm.app.Sprite,

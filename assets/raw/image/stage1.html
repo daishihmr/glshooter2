@@ -3,6 +3,8 @@
 <script src="tmlib.min.js"></script>
 <script>
 tm.preload(function() {
+    tm.addLoadCheckList(tm.asset.AssetManager);
+
     tm.asset.AssetManager.load("tx0", "bata.png");
     tm.asset.AssetManager.load("tx1", "fighter1.png");
     tm.asset.AssetManager.load("tx2", "fighter2.png");
