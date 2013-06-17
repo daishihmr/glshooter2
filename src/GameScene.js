@@ -3,14 +3,15 @@ gls2.GameScene = tm.createClass({
     player: null,
     ground: null,
     background: tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-        {offset:0, color:"#000088"},
-        {offset:1, color:"#000022"}
+        {offset:0, color:"#060"},
+        {offset:1, color:"#030"}
     ]).toStyle(),
+    shadowRenderer: null,
     init: function() {
         this.superInit();
         gls2.GameScene.instance = this;
-
         this._createGround();
+        this.gameStart();
     },
     _createGround: function() {
         this.ground = tm.app.CanvasElement().addChildTo(this);
@@ -29,7 +30,7 @@ gls2.GameScene = tm.createClass({
         this.ground.blendMode = "lighter";
         this.ground.draw = function(canvas) {
             canvas.lineWidth = 0.2;
-            canvas.strokeStyle = "#aaaaaa";
+            canvas.strokeStyle = "#999";
             canvas.beginPath();
             for (var x = this.gx; x < SC_W; x += this.cellSize) {
                 canvas.line(x, 0, x, SC_H);
@@ -40,6 +41,22 @@ gls2.GameScene = tm.createClass({
             canvas.closePath();
             canvas.stroke();
         };
+    },
+    gameStart: function() {
+        gls2.Enemy("heri1", "heri1").setPosition(100, 100).addChildTo(this);
+        gls2.Enemy("heri2", "heri1").setPosition(450, 200).addChildTo(this);
+
+        var player = gls2.Player();
+        player.y = SC_H - 100;
+        this.addChild(player);
+
+        this.addEventListener("enterframe", function() {
+            if (gls2.core.frame % 200 === 0) {
+                this.ground.direction += Math.PI/4;
+            }
+        });
+        this.ground.direction = Math.PI/2;
+        this.ground.speed = 1;
     },
     update: function() {
     },

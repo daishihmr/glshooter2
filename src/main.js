@@ -5,63 +5,21 @@ var SC_W = 480;
 var SC_H = 640;
 
 tm.preload(function() {
-    tm.addLoadCheckList(tm.asset.AssetManager);
-
-    gls2.app = tm.app.CanvasApp("#canvas2d");
-    gls2.app.resize(SC_W, SC_H).fitWindow();
-    gls2.app.background = "black";
-    gls2.app.fps = 60;
-
-    gls2.app.replaceScene(tm.app.LoadingScene());
+    gls2.core = gls2.GlShooter2("#canvas2d");
+    gls2.core.replaceScene(tm.app.LoadingScene());
 
     if (DEBUG) tm.util.ScriptManager.loadStats();
 
     tm.asset.AssetManager.load("tex0", "assets/bullets.png");
     tm.asset.AssetManager.load("tex1", "assets/tex1.png");
+
+    gls2.core.run();
 });
 
 tm.main(function() {
-    if (DEBUG) gls2.app.enableStats();
+    if (DEBUG) gls2.core.enableStats();
 
-    gls2.EnemyHard.setup();
-    gls2.EnemySoft.setup();
-
-    var player = gls2.Player();
-    player.y = SC_H - 100;
-    var gameScene = gls2.GameScene();
-    gameScene.addChild(player);
-
-    gls2.Enemy("heri1", "heri1").setPosition(100, 100).addChildTo(gameScene);
-    gls2.Enemy("heri2", "heri1").setPosition(450, 200).addChildTo(gameScene);
-
-    gameScene.addEventListener("enterframe", function() {
-        if (gls2.app.frame % 200 === 0) {
-            gameScene.ground.direction += Math.PI/4;
-        }
-    });
-    gameScene.ground.direction = Math.PI/2;
-    gameScene.ground.speed = 1;
-
-    gls2.app.run();
-
-    gls2.app.replaceScene(gameScene);
-});
-
-gls2.Pool = tm.createClass({
-    _pool: [],
-    activeList: [],
-    init: function(factoryFunc, initialNum) {
-        for (var i = 0; i < initialNum; i++) {
-            this._pool.push(factoryFunc());
-        }
-    },
-    get: function() {
-        var obj = this._pool.shift(0);
-        this.activeList.push(obj);
-        return obj;
-    },
-    dispose: function(obj) {
-        this.activeList.erase(obj);
-        this._pool.push(obj);
-    }
+    gls2.core.setupCommonData();
+    gls2.GameScene();
+    gls2.core.replaceScene(gls2.GameScene.instance);
 });

@@ -12,9 +12,11 @@ gls2.Player = tm.createClass({
     ],
     init: function() {
         this.superInit("tex1", 64, 64);
-        gls2.Player.instance = this;
+        var self = gls2.Player.instance = this;
 
         this.setPosition(SC_W * 0.5, SC_H + 32).setFrameIndex(3 + this.roll);
+
+        gls2.setShadow(this);
 
         this._createHitCircle();
 
@@ -46,16 +48,18 @@ gls2.Player = tm.createClass({
 
         this._calcRoll(app);
 
-        gls2.Particle(128, 0.3, 0.9).setPosition(this.x, this.y).addChildTo(this.parent);
         for (var i = 0; i < 5; i++) {
             gls2.BackfireParticle().setPosition(this.x-5, this.y+20).addChildTo(this.parent);
             gls2.BackfireParticle().setPosition(this.x+5, this.y+20).addChildTo(this.parent);
         }
 
-        gls2.Particle(64, 0.3, 0.9).setPosition(this.x+40, this.y+20).addChildTo(this.parent);
-        gls2.Particle(64, 0.3, 0.9).setPosition(this.x+80, this.y+30).addChildTo(this.parent);
-        gls2.Particle(64, 0.3, 0.9).setPosition(this.x-40, this.y+20).addChildTo(this.parent);
-        gls2.Particle(64, 0.3, 0.9).setPosition(this.x-80, this.y+30).addChildTo(this.parent);
+        if (app.frame % 2 === 0) {
+            gls2.Particle(128, 0.3, 0.9).setPosition(this.x, this.y).addChildTo(this.parent);
+            gls2.Particle(64, 0.3, 0.9).setPosition(this.x+40, this.y+20).addChildTo(this.parent);
+            gls2.Particle(64, 0.3, 0.9).setPosition(this.x+80, this.y+30).addChildTo(this.parent);
+            gls2.Particle(64, 0.3, 0.9).setPosition(this.x-40, this.y+20).addChildTo(this.parent);
+            gls2.Particle(64, 0.3, 0.9).setPosition(this.x-80, this.y+30).addChildTo(this.parent);
+        }
     },
     _calcRoll: function(app) {
         var inputLeft = this.controllable && app.keyboard.getKey("left");
@@ -112,6 +116,9 @@ gls2.Bit = tm.createClass({
             });
         }
         this.superInit(32, 32, gls2.Bit.SHEET);
+
+        gls2.setShadow(this);
+
         this.gotoAndPlay(leftRoll ? "anim0" : "anim1");
     }
 });

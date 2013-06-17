@@ -16,6 +16,10 @@ gls2.Enemy = tm.createClass({
         this.soft.setup(this);
         this.hard.setup(this);
         this.ground = gls2.GameScene.instance.ground;
+
+        if (!this.hard.isGround) {
+            gls2.setShadow(this);
+        }
     },
     update: function() {
         this.age++;
