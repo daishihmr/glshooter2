@@ -1,3 +1,5 @@
+(function() {
+
 gls2.Particle = tm.createClass({
     superClass: tm.app.CanvasElement,
     alpha: 1.0,
@@ -49,3 +51,5 @@ gls2.BackfireParticle = tm.createClass({
         this.y +=  0.5;
     }
 });
+
+})();
