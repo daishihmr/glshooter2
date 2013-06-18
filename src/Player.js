@@ -115,7 +115,7 @@ gls2.Bit = tm.createClass({
                 }
             });
         }
-        this.superInit(32, 32, gls2.Bit.SHEET);
+        this.superInit(gls2.Bit.SHEET, 32, 32);
 
         gls2.setShadow(this);
 
