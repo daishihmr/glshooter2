@@ -164,7 +164,7 @@ gls2.Bit = tm.createClass({
         var dir = this.bit.d * this.bit.dt;
         this.rotation = Math.radToDeg(dir);
 
-        if (this.player.controllable && app.frame % 2 === 0) {
+        if (this.player.controllable) {
             var g = this.parent.localToGlobal(this);
             gls2.ShotBullet(g.x, g.y, this.parent.rotation + this.rotation - 90).addChildTo(this.gameScene);
         }
@@ -178,7 +178,7 @@ gls2.ShotBullet = tm.createClass({
     init: function(x, y, dir) {
         var SZ = 24;
         this.superInit(SZ, SZ, {
-            fillStyle: tm.graphics.RadialGradient(SZ/2, SZ/2, 0, SZ/2, SZ/2, SZ/2).addColorStopList([
+            fillStyle: tm.graphics.RadialGradient(SZ*0.5, SZ*0.5, 0, SZ*0.5, SZ*0.5, SZ*0.5).addColorStopList([
                 { offset: 0, color: "rgba(255,255,255,1)" },
                 { offset: 1, color: "rgba(  0,255,100,0)" }
             ]).toStyle(),
@@ -187,6 +187,39 @@ gls2.ShotBullet = tm.createClass({
         this.blendMode = "lighter";
 
         this.scaleY = 0.4;
+        var rad = Math.degToRad(dir);
+        this.vx = Math.cos(rad) * this.speed;
+        this.vy = Math.sin(rad) * this.speed;
+
+        this.setPosition(x, y);
+        this.rotation = dir;
+    },
+    update: function() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < -60 || SC_W+60 < this.x || this.y < -60 || SC_H+60 < this.y) {
+            this.remove();
+        }
+    }
+});
+
+gls2.HiperBullet = tm.createClass({
+    superClass: tm.app.CircleShape,
+    speed: 20,
+    init: function(x, y, dir) {
+        var SZ = 24;
+        this.superInit(SZ, SZ, {
+            fillStyle: tm.graphics.RadialGradient(SZ*0.5, SZ*0.5, 0, SZ*0.5, SZ*0.5, SZ*0.5).addColorStopList([
+                { offset: 0, color: "rgba(255,255,255,1)" },
+                { offset: 1, color: "rgba(255,255,  0,0)" }
+            ]).toStyle(),
+            strokeStyle: "rgba(0,0,0,0)"
+        });
+        this.blendMode = "lighter";
+
+        this.scaleX = 2;
+        this.scaleY = 1;
         var rad = Math.degToRad(dir);
         this.vx = Math.cos(rad) * this.speed;
         this.vy = Math.sin(rad) * this.speed;

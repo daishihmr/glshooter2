@@ -14,7 +14,7 @@ gls2.Particle = tm.createClass({
         if (gls2.Particle.IMAGE == null) {
             var c = tm.graphics.Canvas();
             c.resize(size, size);
-            c.fillStyle = tm.graphics.RadialGradient(size/2,size/2,0,size/2,size/2,size/2).addColorStopList([
+            c.fillStyle = tm.graphics.RadialGradient(size * 0.5, size * 0.5, 0,size * 0.5, size * 0.5, size * 0.5).addColorStopList([
                 {offset:0, color: "rgba(255,255,255,0.1)"},
                 {offset:1, color: "rgba(  0,  0,  0,0.0)"}
             ]).toStyle();

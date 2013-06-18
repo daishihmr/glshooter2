@@ -85,6 +85,15 @@ gls2.GameScene = tm.createClass({
         }
     },
 
+    update: function(app) {
+        // this.stage.update();
+    },
+
+    draw: function(canvas) {
+        canvas.fillStyle = this.background;
+        canvas.fillRect(0, 0, canvas.width, canvas.height);
+    },
+
     gameStart: function(playerType) {
         this.player = gls2.Player();
 
@@ -96,22 +105,14 @@ gls2.GameScene = tm.createClass({
                 this.ground.direction += Math.PI/4;
             }
         });
-        this.ground.direction = Math.PI/2;
+        this.ground.direction = Math.PI * 0.5;
         this.ground.speed = 1;
 
-        this.startStage();
+        this.startStage(0);
     },
 
-    update: function() {
-
-    },
-
-    draw: function(canvas) {
-        canvas.fillStyle = this.background;
-        canvas.fillRect(0, 0, canvas.width, canvas.height);
-    },
-
-    startStage: function(stage) {
+    startStage: function(stageNumber) {
+        this.stage = gls2.StageManager.create(stageNumber);
         this.launch();
     },
 

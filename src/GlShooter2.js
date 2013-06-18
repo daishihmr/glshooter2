@@ -1,3 +1,6 @@
+/** @namespace */
+var gls2 = {};
+
 gls2.GlShooter2 = tm.createClass({
     superClass: tm.app.CanvasApp,
     score: 0,

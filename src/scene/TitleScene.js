@@ -4,7 +4,7 @@ gls2.TitleScene = tm.createClass({
     init: function() {
         this.superInit();
 
-        tm.app.Label("press z key").setPosition(SC_W/2, SC_H/2).setAlign("center").addChildTo(this);
+        tm.app.Label("press z key").setPosition(SC_W * 0.5, SC_H * 0.5).setAlign("center").addChildTo(this);
     },
     update: function(app) {
         if (this.result === "start") {

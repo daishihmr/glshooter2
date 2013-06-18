@@ -1,6 +1,3 @@
-/** @namespace */
-var gls2 = {};
-
 var DEBUG = true;
 var SC_W = 480;
 var SC_H = 640;
