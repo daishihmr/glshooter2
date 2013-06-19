@@ -18,16 +18,14 @@ gls2.TitleScene = tm.createClass({
         tm.app.Label("HIGH SCORE: " + gls2.core.highScore).setPosition(SC_W * 0.5, SC_H * 0.85).addChildTo(this);
         tm.app.Label("press z key").setPosition(SC_W * 0.5, SC_H * 0.75).addChildTo(this);
 
-        var size = 80;
         this.particleImage = tm.graphics.Canvas()
-            .resize(size, size)
+            .resize(80, 80)
             .setFillStyle(
-                tm.graphics.RadialGradient(size * 0.5, size * 0.5, 0,size * 0.5, size * 0.5, size * 0.5)
-                    .addColorStopList([
-                        {offset:0, color: "rgba(255,255,255,0.1)"},
-                        {offset:1, color: "rgba(  0,155,  0,0.0)"}
-                    ]).toStyle()
-            ).fillRect(0, 0, size, size)
+                tm.graphics.RadialGradient(40,40,0,40,40,40).addColorStopList([
+                    {offset:0, color: "rgba(255,255,255,0.1)"},
+                    {offset:1, color: "rgba(  0,155,  0,0.0)"}
+                ]).toStyle()
+            ).fillRect(0, 0, 80, 80)
             .element;
     },
 
