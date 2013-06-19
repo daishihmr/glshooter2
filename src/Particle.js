@@ -4,7 +4,14 @@ gls2.Particle = tm.createClass({
     superClass: tm.app.CanvasElement,
     alpha: 1.0,
     alphaDecayRate: 0.85,
-    init: function(size, initialAlpha, alphaDecayRate) {
+    image: null,
+
+    /**
+     * @param {number} size サイズ
+     * @param {number} initialAlpha アルファ初期値
+     * @param {number} alphaDecayRate アルファ減衰率
+     */
+    init: function(size, initialAlpha, alphaDecayRate, image) {
         this.superInit();
         this.width = this.height = size;
         if (initialAlpha !== undefined) this.alpha = initialAlpha;
@@ -23,18 +30,18 @@ gls2.Particle = tm.createClass({
             gls2.Particle.IMAGE = c.element;
         }
 
-        this.ground = gls2.GameScene.instance.ground;
+        this.image = image || gls2.Particle.IMAGE;
     },
     update: function(app) {
         this.alpha *= this.alphaDecayRate;
         if (this.alpha < 0.001) {
             this.remove();
+        } else if (1.0 < this.alpha) {
+            this.alpha = 1.0;
         }
-        this.x += this.ground.dx;
-        this.y += this.ground.dy;
     },
     draw: function(canvas) {
-        canvas.context.drawImage(gls2.Particle.IMAGE,
+        canvas.context.drawImage(this.image,
             -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
     }
 });
@@ -45,10 +52,12 @@ gls2.BackfireParticle = tm.createClass({
     ground: null,
     init: function() {
         this.superInit(Math.rand(14, 20));
+        this.ground = gls2.GameScene.instance.ground;
     },
     update: function(app) {
         this.superClass.prototype.update.apply(this, app);
-        this.y +=  0.5;
+        this.x += this.ground.dx;
+        this.y += this.ground.dy + 0.5;
     }
 });
 

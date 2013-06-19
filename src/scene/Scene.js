@@ -42,7 +42,7 @@ gls2.DialogMenu = tm.createClass({
 
             this.selection = menu.map(function(m, i) {
                 var y = SC_H*0.5 - menu.length*25 + i*50 + 30;
-                var label = tm.app.Label(m).setPosition(SC_W*0.5, y).setAlign("center").setBaseline("middle");
+                var label = tm.app.Label(m).setPosition(SC_W*0.5, y);
                 return label;
             });
             this.selection.each(function(sel) {
@@ -62,7 +62,10 @@ gls2.DialogMenu = tm.createClass({
         var h = Math.max(menu.length*50, 50) + 40;
         this.box = tm.app.RectangleShape(SC_W * 0.8, h, {
             strokeStyle: "rgba(255,255,255,1)",
-            fillStyle: "rgba(0,0,50,0.8)"
+            fillStyle: tm.graphics.LinearGradient(0,0,0,h).addColorStopList([
+                { offset:0, color:"rgba(49,37,128,0.8)" },
+                { offset:1, color:"rgba(28,21,74,0.8)" },
+            ]).toStyle()
         }).setPosition(SC_W*0.5, SC_H*0.5);
         this.box.width = 1;
         this.box.height = 1;

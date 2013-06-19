@@ -34,3 +34,16 @@ gls2.setShadow = function(element) {
     element.shadowOffsetX = 20;
     element.shadowOffsetY = 40;
 };
+
+tm.app.Label = tm.createClass({
+    superClass: tm.app.Label,
+    init: function(text, size) {
+        this.superInit(text, size);
+        this.setAlign("center");
+        this.setBaseline("middle");
+        this.setFontFamily("Orbitron");
+    },
+    update: function(app) {
+        this.alpha = 0.8 + Math.sin(app.frame * 0.1) * 0.2;
+    }
+});
