@@ -1,5 +1,5 @@
 /*
- * tmlib.js v0.1.6
+ * tmlib.js v0.1.7
  * http://github.com/phi1618/tmlib.js
  * MIT licensed
  * 
@@ -14,6 +14,12 @@
  */
 var tm = tm || {};
 tm.global = window || global || this;
+
+// node.js
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = tm;
+}
+
 
 (function() {
 
@@ -2144,10 +2150,10 @@ tm.util = tm.util || {};
         version = version || "r11";
         var path = null;
         if (["r6", "r7", "r8", "r9", "10"].indexOf(version) != -1) {
-            path = "https://raw.github.com/mrdoob/stats.js/" + version + "/build/Stats.js";
+            path = "http://rawgithub.com/mrdoob/stats.js/" + version + "/build/Stats.js";
         }
         else {
-            path = "https://raw.github.com/mrdoob/stats.js/" + version + "/build/stats.min.js";
+            path = "http://rawgithub.com/mrdoob/stats.js/" + version + "/build/stats.min.js";
         }
         this.load(path);
     };
@@ -2175,7 +2181,7 @@ tm.util = tm.util || {};
      * Three.js を動的ロード
      */
     tm.util.ScriptManager.loadThree = function(version) {
-        var THREE_JS_URL = "https://raw.github.com/mrdoob/three.js/{version}/build/three.js";
+        var THREE_JS_URL = "http://rawgithub.com/mrdoob/three.js/{version}/build/three.js";
 //        var THREE_JS_URL = "https://raw.github.com/mrdoob/three.js/{version}/build/three.min.js";
         version = version || "r55";
 
@@ -2190,7 +2196,7 @@ tm.util = tm.util || {};
      * BulletML を動的ロード
      */
     tm.util.ScriptManager.loadBulletML = function(version) {
-        var BULLETML_FOR_TMLIB_JS_URL   = "https://raw.github.com/daishihmr/bulletml.js/{version}/target/bulletml.for.tmlib.js";
+        var BULLETML_FOR_TMLIB_JS_URL   = "http://rawgithub.com/daishihmr/bulletml.js/{version}/target/bulletml.for.tmlib.js";
         version = version || "v0.4.1";
         var path = BULLETML_FOR_TMLIB_JS_URL.format({version: version});        
         this.load(path);
@@ -6261,6 +6267,15 @@ tm.event = tm.event || {};
         init: function() {
             this._listeners = {};
         },
+
+        on: function(type, listener) {
+            if (this._listeners[type] === undefined) {
+                this._listeners[type] = [];
+            }
+            
+            this._listeners[type].push(listener);
+            return this;
+        },
         
         /**
          * イベントリスナー追加
@@ -6321,6 +6336,461 @@ tm.event = tm.event || {};
     
 })();
 
+/*
+ * texture.js
+ */
+
+(function() {
+    
+    /**
+     * @class tm.asset.Texture
+     * テクスチャクラス
+     */
+    tm.define("tm.asset.Texture", {
+        superClass: tm.event.EventDispatcher,
+        
+        element: null,
+        loaded: false,
+        
+        /**
+         * 初期化
+         */
+        init: function(src) {
+            this.superInit();
+            
+            this.element = new Image();
+            this.element.src = src;
+            
+            var self = this;
+            this.element.onload = function() {
+                self.loaded = true;
+                var e = tm.event.Event("load");
+                self.dispatchEvent( e );
+            };
+        },
+        
+        getElement: function() {
+            return this.element;
+        },
+    });
+    
+    /**
+     * @property    width
+     * 幅
+     */
+    tm.asset.Texture.prototype.getter("width", function() {
+        return this.element.width;
+    });
+    
+    /**
+     * @property    height
+     * 高さ
+     */
+    tm.asset.Texture.prototype.getter("height", function() {
+        return this.element.height;
+    });
+    
+})();
+
+(function(){
+
+    /*
+     * @static
+     * @method
+     * ### ref
+     * http://dummyimage.com/
+     */
+    /*
+    tm.graphics.TextureManager.loadDummy = function(key, param)
+    {
+        param = param || {};
+
+        var paths = ["http://dummyimage.com"];
+        paths.push(param.size || 256);
+        paths.push(param.bgColor || "aaa");
+        paths.push(param.color || "000");
+        paths.push(param.format || "png");
+
+        var src = paths.join('/');
+        if (param.text) {
+            src += '&text=' + param.text;
+        }
+
+        this.textures[key] = tm.graphics.Texture(src);
+        this.loaded = false;
+    };
+    */
+
+})();
+
+
+
+
+
+(function() {
+    
+    tm.define("tm.asset.SpriteSheet", {
+
+        superClass: "tm.event.EventDispatcher",
+
+        init: function(src) {
+            this.superInit();
+
+            if (typeof src == "string") {
+            	this.load(src);
+            }
+            else {
+	            this.parse(src);
+    			this.loaded = true;
+    			this.dispatchEvent(tm.event.Event("load"));
+            }
+
+        },
+
+        load: function(path) {
+        	tm.util.Ajax.load({
+        		url: path,
+        		dataType: "json",
+        		success: function(d) {
+        			this.parse(d);
+        			this.loaded = true;
+        			this.dispatchEvent(tm.event.Event("load"));
+        		}.bind(this),
+        	});
+        },
+
+        parse: function(param) {
+            this.frame = param.frame;
+
+            if (typeof param.image == "string") {
+                if (!tm.asset.AssetManager.contains(param.image)) {
+                    tm.asset.AssetManager.load(param.image);
+                }
+                this.image = tm.asset.AssetManager.get(param.image);
+            }
+            else {
+                this.image = param.image;
+            }
+
+            if (this.image.loaded === false) {
+                this.image.addEventListener("load", function() {
+                    this._calcFrames(param.frame);
+                    var e = tm.event.Event("load");
+                    this.dispatchEvent(e);
+                }.bind(this), false);
+            }
+            else {
+                this._calcFrames(param.frame);
+                var e = tm.event.Event("load");
+                this.dispatchEvent(e);
+            }
+
+            this._calcAnim(param.animations);
+        },
+
+        getFrame: function(index) {
+            return this.frames[index];
+        },
+        
+        getAnimation: function(name) {
+            return this.animations[name];
+        },
+        
+        _calcFrames: function(frame) {
+            var frames = this.frames = [];
+            
+            var w = frame.width;
+            var h = frame.height;
+            var row = ~~(this.image.width / w);
+            var col = ~~(this.image.height/ h);
+            
+            if (!frame.count) frame.count = row*col;
+
+            for (var i=0,len=frame.count; i<len; ++i) {
+                var x   = i%row;
+                var y   = (i/row)|0;
+                var rect = {
+                    x:x*w,
+                    y:y*h,
+                    width: w,
+                    height: h
+                };
+                frames.push(rect);
+            }
+        },
+
+        _calcAnim: function(animations) {
+            this.animations = {};
+            for (var key in animations) {
+                var anim = animations[key];
+
+                if (anim instanceof Array) {
+                    this.animations[key] = {
+                        frames: [].range(anim[0], anim[1]),
+                        next: anim[2],
+                        frequency: anim[3] || 1
+                    };
+                }
+                else if (typeof anim == "number") {
+                    this.animations[key] = {
+                        frames: [anim],
+                        next: null,
+                        frequency: 1
+                    };
+                }
+                else {
+                    this.animations[key] = {
+                        frames: anim.frames,
+                        next: anim.next,
+                        frequency: anim.frequency || 1
+                    };
+                }
+            }
+            
+            // デフォルトアニメーション
+            this.animations["default"] = {
+                frames: [].range(0, this.frame.count),
+                next: "default",
+                frequency: 1,
+            };
+        }
+
+    });
+
+})();
+
+/*
+ * mapsheet.js
+ */
+
+
+
+(function() {
+
+    /**
+     * @class tm.asset.MapSheet
+     * マップシート
+     */
+    tm.define("tm.asset.MapSheet", {
+        superClass: "tm.event.EventDispatcher",
+        
+        init: function(path) {
+            this.superInit();
+            
+            this.loaded = false;
+
+            if (typeof path == "string") {
+                tm.util.Ajax.load({
+                    url: path,
+                    success: function(e) {
+                        var d = this._parse(e);
+                        this.$extend(d);
+                        this._checkImage();
+                    }.bind(this),
+                });
+            }
+            else {
+                this.$extend(arguments[0]);
+                
+                this._checkImage();
+            }
+        },
+
+        _parse: function(str) {
+            var each = Array.prototype.forEach;
+            var data = {};
+            var parser = new DOMParser();
+            var xml = parser.parseFromString(str, 'text/xml');
+            var map = this._attrToJSON(xml.getElementsByTagName('map')[0]);
+
+            this.$extend(map);
+
+            // tilesets(image)
+            data.tilesets = this._parseTilesets(xml);
+
+            // layer
+            data.layers = this._parseLayers(xml);
+            
+            return data;
+        },
+        
+        _parseTilesets: function(xml) {
+            var each = Array.prototype.forEach;
+            var self = this;
+            var data = [];
+            var tilesets = xml.getElementsByTagName('tileset');
+            each.call(tilesets, function(tileset) {
+                var t = {};
+                var props = self._propertiesToJson(tileset);
+                
+                if (props.src) {
+                    t.image = props.src;
+                }
+                else {
+                    t.image = tileset.getElementsByTagName('image')[0].getAttribute('source');
+                }
+                data.push(t);
+            });
+            
+            return data;
+        },
+        
+        _parseLayers: function(xml) {
+            var each = Array.prototype.forEach;
+            var data = [];
+
+            var map = xml.getElementsByTagName("map")[0];
+            var layers = [];
+            each.call(map.childNodes, function(elm) {
+                if (elm.tagName == "layer" || elm.tagName == "objectgroup") {
+                    layers.push(elm);
+                }
+            });
+
+            layers.each(function(layer) {
+                if (layer.tagName == "layer") {
+                    var d = layer.getElementsByTagName('data')[0];
+                    var encoding = d.getAttribute("encoding");
+                    var l = {
+                        type: "layer",
+                        name: layer.getAttribute("name"),
+                    };
+
+                    if (encoding == "csv") {
+                        l.data = this._parseCSV(d.textContent);
+                    }
+                    else if (encoding == "base64") {
+                        l.data = this._parseBase64(d.textContent);
+                    }
+
+                    data.push(l);
+                }
+                else if (layer.tagName == "objectgroup") {
+                    var l = {
+                        type: "objectgroup",
+                        objects: [],
+                        name: layer.getAttribute("name"),
+                    };
+                    each.call(layer.childNodes, function(elm) {
+                        if (elm.nodeType == 3) return ;
+                        
+                        var d = this._attrToJSON(elm);
+                        d.properties = this._propertiesToJson(elm);
+                        
+                        l.objects.push(d);
+                    }.bind(this));
+                    
+                    data.push(l);
+                }
+            }.bind(this));
+
+            return data;
+        },
+
+        _parseCSV: function(data) {
+            var dataList = data.split(',');
+            var layer = [];
+
+            dataList.each(function(elm, i) {
+                var num = parseInt(elm, 10) - 1;
+                layer.push(num);
+            });
+
+            return layer;
+        },
+
+        /**
+         * http://thekannon-server.appspot.com/herpity-derpity.appspot.com/pastebin.com/75Kks0WH
+         */
+        _parseBase64: function(data) {
+            var dataList = atob(data.trim());
+            var rst = [];
+
+            dataList = dataList.split('').map(function(e) {
+                return e.charCodeAt(0);
+            });
+
+            for (var i=0,len=dataList.length/4; i<len; ++i) {
+                var n = dataList[i*4];
+                rst[i] = parseInt(n, 10) - 1;
+            }
+            
+            return rst;
+        },
+        
+        _propertiesToJson: function(elm) {
+            var obj = {};
+            var properties = elm.getElementsByTagName('property');
+            for (var k = 0;k < properties.length;k++) {
+                obj[properties[k].getAttribute('name')] = properties[k].getAttribute('value');
+            }
+            
+            return obj;
+        },
+        
+        _attrToJSON: function(source) {
+            var obj = {};
+            for (var i = 0; i < source.attributes.length; i++) {
+                var val = source.attributes[i].value;
+                val = isNaN(parseFloat(val))? val: parseFloat(val);
+                obj[source.attributes[i].name] = val;
+            }
+            
+            return obj;
+        },
+        
+        _checkImage: function() {
+            var self = this;
+            if (this.tilesets.length) {
+                var i = 0;
+                var len = this.tilesets.length;
+                
+                var _onloadimage = function() {
+                    i++;
+                    if (i==len) {
+                        this.loaded = true;
+                        var e = tm.event.Event("load");
+                        this.dispatchEvent(e);
+                    }
+                }.bind(this);
+                
+                this.tilesets.each(function(elm) {
+                    var image = tm.asset.AssetManager.get(elm.image)
+                    
+                    if (image) {
+                        if (image.loaded) {
+                            // ロード済み
+                            ++i;
+                            if (i==len) {
+                                this.loaded = true;
+                                var e = tm.event.Event("load");
+                                self.dispatchEvent(e);
+                            }
+                        }
+                        else {
+                            image.addEventListener("load", _onloadimage);
+                        }
+                    }
+                    else {
+                        tm.asset.AssetManager.load(elm.image);
+                        var texture = tm.asset.AssetManager.get(elm.image);
+                        texture.addEventListener("load", _onloadimage);
+                    }
+                });
+                
+            }
+            else {
+                this.loaded = true;
+                var e = tm.event.Event("load");
+                this.dispatchEvent(e);
+            }
+        },
+        
+    });
+
+
+
+})();
 /*
  * assetmanger.js
  */
@@ -6422,7 +6892,12 @@ tm.event = tm.event || {};
     };
     
     var _tmxFunc = function(path) {
-        var mapSheet = tm.app.MapSheet(path);
+        var mapSheet = tm.asset.MapSheet(path);
+        return mapSheet;
+    };
+    
+    var _tmssFunc = function(path) {
+        var mapSheet = tm.asset.SpriteSheet(path);
         return mapSheet;
     };
 
@@ -6437,104 +6912,17 @@ tm.event = tm.event || {};
     
     tm.asset.AssetManager.register("tmx", _tmxFunc);
     
-})();
-
-
-
-
-
-
-
-
-
-
-
-/*
- * texture.js
- */
-
-(function() {
-    
-    /**
-     * @class
-     * テクスチャクラス
-     */
-    tm.define("tm.asset.Texture", {
-        superClass: tm.event.EventDispatcher,
-        
-        element: null,
-        loaded: false,
-        
-        /**
-         * 初期化
-         */
-        init: function(src) {
-            this.superInit();
-            
-            this.element = new Image();
-            this.element.src = src;
-            
-            var self = this;
-            this.element.onload = function() {
-                self.loaded = true;
-                var e = tm.event.Event("load");
-                self.dispatchEvent( e );
-            };
-        },
-        
-        getElement: function() {
-            return this.element;
-        },
-    });
-    
-    /**
-     * @property    width
-     * 幅
-     */
-    tm.asset.Texture.prototype.getter("width", function() {
-        return this.element.width;
-    });
-    
-    /**
-     * @property    height
-     * 高さ
-     */
-    tm.asset.Texture.prototype.getter("height", function() {
-        return this.element.height;
-    });
+    tm.asset.AssetManager.register("tmss", _tmssFunc);
     
 })();
 
-(function(){
 
-    /**
-     * @static
-     * @method
-     * ### ref
-     * http://dummyimage.com/
-     */
-    /*
-    tm.graphics.TextureManager.loadDummy = function(key, param)
-    {
-        param = param || {};
 
-        var paths = ["http://dummyimage.com"];
-        paths.push(param.size || 256);
-        paths.push(param.bgColor || "aaa");
-        paths.push(param.color || "000");
-        paths.push(param.format || "png");
 
-        var src = paths.join('/');
-        if (param.text) {
-            src += '&text=' + param.text;
-        }
 
-        this.textures[key] = tm.graphics.Texture(src);
-        this.loaded = false;
-    };
-    */
 
-})();
+
+
 
 
 
@@ -7327,13 +7715,16 @@ tm.input = tm.input || {};
                 var acceleration = self.acceleration;
                 var gravity = self.gravity;
                 
-                acceleration.x = e.acceleration.x;
-                acceleration.y = e.acceleration.y;
-                acceleration.z = e.acceleration.z;
-                
-                gravity.x = e.accelerationIncludingGravity.x;
-                gravity.y = e.accelerationIncludingGravity.y;
-                gravity.z = e.accelerationIncludingGravity.z;
+                if (e.acceleration) {
+                    acceleration.x = e.acceleration.x;
+                    acceleration.y = e.acceleration.y;
+                    acceleration.z = e.acceleration.z;
+                }
+                if (e.accelerationIncludingGravity) {
+                    gravity.x = e.accelerationIncludingGravity.x;
+                    gravity.y = e.accelerationIncludingGravity.y;
+                    gravity.z = e.accelerationIncludingGravity.z;
+                }
             });
             
             window.addEventListener("deviceorientation", function(e) {
@@ -8699,6 +9090,21 @@ tm.graphics = tm.graphics || {};
     tm.graphics.Canvas.prototype.getter("centerY", function(){
         return this.canvas.height/2;
     });
+
+    /**
+     * @property    imageSmoothingEnabled
+     * 画像スムージング設定
+     */
+    tm.graphics.Canvas.prototype.accessor("imageSmoothingEnabled", {
+        "get": function() {
+            return this.context.imageSmoothingEnabled;
+        },
+        "set": function(v) {
+            this.context.imageSmoothingEnabled = v;
+            this.context.webkitImageSmoothingEnabled = v;
+            this.context.mozImageSmoothingEnabled = v;
+        }
+    });
     
 })();
 
@@ -10015,6 +10421,10 @@ tm.app = tm.app || {};
 
 (function() {
     
+    /**
+     * @class tm.app.Object2D
+     * Object2D
+     */
     tm.define("tm.app.Object2D", {
         superClass: "tm.app.Element",
         
@@ -10048,7 +10458,11 @@ tm.app = tm.app || {};
             this.origin   = tm.geom.Vector2(0.5, 0.5);
             this._matrix  = tm.geom.Matrix33();
             this._matrix.identity();
+            
             this.boundingType = "circle";
+            this.interactive = false;
+            this.hitFlags = [];
+            this.downFlags= [];
 
             this._worldMatrix = tm.geom.Matrix33();
             this._worldMatrix.identity();
@@ -10190,8 +10604,10 @@ tm.app = tm.app || {};
          * グローバル座標をローカル座標に変換
          */
         globalToLocal: function(p) {
-            var matrix = this.getFinalMatrix();
+            // var matrix = this.getFinalMatrix();
+            var matrix = this._worldMatrix.clone();
             matrix.invert();
+            matrix.transpose();
             
             return matrix.multiplyVector2(p);
         },
@@ -10227,6 +10643,105 @@ tm.app = tm.app || {};
             this.height = height;
             return this;
         },
+        
+        wakeUp: function() {
+            this.isUpdate = true;
+            return this;
+        },
+        
+        sleep: function() {
+            this.isUpdate = false;
+            return this;
+        },
+        
+        setInteractive: function(flag) {
+            this.interactive = flag;
+            return this;
+        },
+        
+        setBoundingType: function(type) {
+            this.boundingType = type;
+            return this;
+        },
+        
+        _update: function(app) {
+            // 更新有効チェック
+            if (this.isUpdate == false) return ;
+            
+            if (this.update) this.update(app);
+            
+            if (this.hasEventListener("enterframe")) {
+                var e = tm.event.Event("enterframe");
+                e.app = app;
+                this.dispatchEvent(e);
+            }
+            
+            if (this.interactive) {
+                this._checkPointing(app);
+            }
+            
+            // 子供達も実行
+            if (this.children.length > 0) {
+                var tempChildren = this.children.slice();
+                for (var i=0,len=tempChildren.length; i<len; ++i) {
+                    tempChildren[i]._update(app);
+                }
+            }
+        },
+        
+        _checkPointing: function(app) {
+            console.assert(false);
+        },
+        
+        _checkMouse: function(app) {
+            this.__checkPointing(app, app.pointing, 0);
+        },
+
+        _checkTouch: function(app) {
+            var self = this;
+            app.touches.each(function(touch, i) {
+                self.__checkPointing(app, touch, i);
+            });
+        },
+        
+        __checkPointing: function(app, p, index) {
+            var elm = this.element;
+            
+            var prevHitFlag = this.hitFlags[index];
+            
+            this.hitFlags[index]    = this.isHitPoint(p.x, p.y);
+            
+            if (!prevHitFlag && this.hitFlags[index]) {
+                this._dispatchPointingEvent("mouseover", "touchover", "pointingover", app, p);
+            }
+            
+            if (prevHitFlag && !this.hitFlags[index]) {
+                this._dispatchPointingEvent("mouseout", "touchout", "pointingout", app, p);
+            }
+            
+            if (this.hitFlags[index]) {
+                if (p.getPointingStart()) {
+                    this._dispatchPointingEvent("mousedown", "touchstart", "pointingstart", app, p);
+                    this.downFlags[index] = true;
+                }
+            }
+            
+            if (this.downFlags[index]) {
+                this._dispatchPointingEvent("mousemove", "touchmove", "pointingmove", app, p);
+            }
+            
+            if (this.downFlags[index]==true && p.getPointingEnd()) {
+                this._dispatchPointingEvent("mouseup", "touchend", "pointingend", app, p);
+                this.downFlags[index] = false;
+            }
+        },
+        
+        _dispatchPointingEvent: function(mouse, touch, pointing, app, p) {
+            this.dispatchEvent( tm.event.MouseEvent(mouse, app, p) );
+            this.dispatchEvent( tm.event.TouchEvent(touch, app, p) );
+            this.dispatchEvent( tm.event.PointingEvent(pointing, app, p) );
+        },
+        
         _dirtyCalc: function() {
             if (!this.parent) {
             	this._worldAlpha = this.alpha;
@@ -10273,8 +10788,6 @@ tm.app = tm.app || {};
             worldTransform[4] = b10 * a01 + b11 * a11;
             worldTransform[5] = b10 * a02 + b11 * a12 + b12;
         },
-        
-        
     });
  
     /**
@@ -10471,8 +10984,10 @@ tm.app = tm.app || {};
         this.isHitPoint   = (isHitFuncMap[boundingType]) ? (isHitFuncMap[boundingType]) : (isHitFuncMap["true"]);
         this.isHitElement = (_isHitElementMap[boundingType]) ? (_isHitElementMap[boundingType]) : (_isHitElementMap["true"]);
     };
- 
- 
+    
+    tm.app.Object2D.prototype._checkPointing = (tm.isMobile) ?
+        tm.app.Object2D.prototype._checkTouch : tm.app.Object2D.prototype._checkMouse;
+
     
 })();
 
@@ -10576,16 +11091,6 @@ tm.app = tm.app || {};
             return this;
         },
         
-        wakeUp: function() {
-            this.isUpdate = true;
-            return this;
-        },
-        
-        sleep: function() {
-            this.isUpdate = false;
-            return this;
-        },
-        
         show: function() {
             this.visible = true;
             return this;
@@ -10617,7 +11122,10 @@ tm.app = tm.app || {};
                 group.height = layer.height;
                 
                 layer.objects.forEach(function(obj) {
-                    var _class  = window[obj.type] || tm.app[obj.type];
+                    var _class = tm.using(obj.type);
+                    if (Object.keys(_class).length === 0) {
+                        _class=tm.app[obj.type];
+                    }
                     var initParam = null;
                     if (obj.properties.init) {
                         initParam = JSON.parse(obj.properties.init);
@@ -10647,7 +11155,10 @@ tm.app = tm.app || {};
                     for (var i=0,len=value.length; i<len; ++i) {
                         var data = value[i];
                         var init = data["init"] || [];
-                        var _class = window[data.type] || tm.app[data.type];
+                        var _class = tm.using(data.type);
+                        if (Object.keys(_class).length === 0) {
+                            _class=tm.app[data.type];
+                        }
                         var elm = _class.apply(null, init).addChildTo(this);
                         elm.fromJSON(data);
                         this[data.name] = elm;
@@ -10663,27 +11174,6 @@ tm.app = tm.app || {};
         
         toJSON: function() {
             // TODO:
-        },
-        
-        _update: function(app) {
-            // 更新有効チェック
-            if (this.isUpdate == false) return ;
-            
-            if (this.update) this.update(app);
-            
-            if (this.hasEventListener("enterframe")) {
-                var e = tm.event.Event("enterframe");
-                e.app = app;
-                this.dispatchEvent(e);
-            }
-            
-            // 子供達も実行
-            if (this.children.length > 0) {
-                var tempChildren = this.children.slice();
-                for (var i=0,len=tempChildren.length; i<len; ++i) {
-                    tempChildren[i]._update(app);
-                }
-            }
         },
         
         _refreshSize: function() {},
@@ -10823,14 +11313,22 @@ tm.app = tm.app || {};
         /**
          * 初期化
          */
-        init: function(width, height, ss)
+        init: function(ss, width, height)
         {
             this.superInit();
             
-            this.width  = width || 64;
-            this.height = height|| 64;
-            
+            if (typeof ss == "string") {
+                var ss = tm.asset.AssetManager.get(ss);
+                console.assert(ss, "not found " + ss);
+            }
+
+            console.assert(typeof ss == "object", "AnimationSprite の第一引数はスプライトシートもしくはスプライトシート名に変わりました");
+
             this.ss = ss;
+            
+            this.width  = width || ss.frame.width;
+            this.height = height|| ss.frame.height;
+
             this.currentFrame = 0;
             this.currentFrameIndex = 0;
             this.paused = true;
@@ -11388,6 +11886,9 @@ tm.app = tm.app || {};
 
 (function() {
     
+    var dummyCanvas  = null;
+    var dummyContext = null;
+    
     /**
      * @class
      * Label
@@ -11413,8 +11914,13 @@ tm.app = tm.app || {};
             this.superInit();
             
             this.text       = text || "";
-            this.fontSize   = size || 24;
-            this.fontFamily = "'Consolas', 'Monaco', 'ＭＳ ゴシック'";
+            
+            this._fontSize   = size || 24;
+            this._fontFamily = "'Consolas', 'Monaco', 'ＭＳ ゴシック'";
+            this._fontWeight = "";
+            this._lineHeight = 1.2;
+            this._updateFont();
+            
             this.align      = "start";
             this.baseline   = "alphabetic";
 
@@ -11441,10 +11947,42 @@ tm.app = tm.app || {};
             return this;
         },
         
+        setFontWeight: function(weight) {
+            this.fontWeight= weight;
+            return this;
+        },
+        
         _updateFont: function() {
-            this.fontStyle = "{fontSize}px {fontFamily}".format(this);
+            this.fontStyle = "{fontWeight} {fontSize}px {fontFamily}".format(this);
+            if (!dummyCanvas) {
+                dummyCanvas = document.createElement("canvas");
+                dummyContext = dummyCanvas.getContext('2d');
+            }
+            dummyContext.font = this.fontStyle;
+            this.textSize = dummyContext.measureText('あ').width * this.lineHeight;
+        },
+        
+        _updateLines: function() {
+            this._lines = (this._text+'').split('\n');
         }
         
+    });
+    
+    /**
+     * @property    text
+     * サイズ
+     */
+    tm.app.Label.prototype.accessor("text", {
+        "get": function() { return this._text; },
+        "set": function(v){
+            if (v == null || v == undefined) {
+                this._text = "";
+            }
+            else {
+                this._text = v;
+            }
+            this._updateLines();
+        }
     });
     
     /**
@@ -11457,13 +11995,36 @@ tm.app = tm.app || {};
     });
     
     /**
-     * @property    font
+     * @property    fontFamily
      * フォント
      */
     tm.app.Label.prototype.accessor("fontFamily", {
         "get": function() { return this._fontFamily; },
         "set": function(v){ this._fontFamily = v; this._updateFont(); }
     });
+    
+    /**
+     * @property fontWeight
+     * フォント
+     */
+    tm.app.Label.prototype.accessor("fontWeight", {
+        "get": function() { return this._fontWeight; },
+        "set": function(v) {
+            this._fontWeight = v; this._updateFont();
+        },
+    });
+    
+    /**
+     * @property lineHeight
+     * フォント
+     */
+    tm.app.Label.prototype.accessor("lineHeight", {
+        "get": function() { return this._lineHeight; },
+        "set": function(v) {
+            this._lineHeight = v; this._updateFont();
+        },
+    });
+
     
 })();
 
@@ -11493,8 +12054,8 @@ tm.app = tm.app || {};
             this.alpha = tm.app.LabelButton.DEFAULT_ALPHA;
             this.setAlign("center").setBaseline("middle");
             
-            this.interaction.enabled = true;
-            this.interaction.boundingType = "rect";
+            this.setInteractive(true);
+            this.boundingType = "rect";
             
             this.addEventListener("pointingover", function() {
                 this.tweener.clear();
@@ -11545,8 +12106,8 @@ tm.app = tm.app || {};
             
             this.alpha = tm.app.IconButton.DEFAULT_ALPHA;
             
-            this.interaction.enabled = true;
-            this.interaction.boundingType = "rect";
+            this.setInteractive(true);
+            this.boundingType = "rect";
             this.addEventListener("pointingover", function() {
                 this.tweener.clear();
                 this.tweener.fade(1, 250);
@@ -11579,8 +12140,8 @@ tm.app = tm.app || {};
             this.backgroundColor = backgroundColor || "black";
             this.alpha = tm.app.GlossyButton.DEFAULT_ALPHA;
             
-            this.interaction.enabled = true;
-            this.interaction.boundingType = "rect";
+            this.setInteractive(true);
+            this.boundingType = "rect";
             this.addEventListener("pointingover", function() {
                 this.tweener.clear();
                 this.tweener.fade(1.0, 250);
@@ -11643,6 +12204,36 @@ tm.app = tm.app || {};
 })();
 
 
+(function() {
+
+    tm.define("tm.app.FlatButton", {
+        superClass: tm.app.Shape,
+
+        init: function(param) {
+            param.$safe({
+                width: 300,
+                height: 100,
+                bgColor: "rgb(180, 180, 180)",
+                text: "ABC",
+                fontSize: 50,
+                fontFamily: "'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', 'Meiryo', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif",
+            });
+
+            this.superInit(param.width, param.height);
+
+            this.canvas.clearColor(param.bgColor);
+
+            this.setInteractive(true);
+            this.setBoundingType("rect");
+
+            this.label = tm.app.Label(param.text).addChildTo(this);
+            this.label.setFontSize(param.fontSize).setFontFamily(param.fontFamily).setAlign("center").setBaseline("middle");
+        },
+    });
+
+
+
+})();
 
 
 
@@ -11674,7 +12265,7 @@ tm.app = tm.app || {};
             this.boundingType = "none";
             
             // タッチに反応させる
-            this.interaction.enabled = true;
+            this.setInteractive(true);
         },
     });
     
@@ -11875,230 +12466,6 @@ tm.app = tm.app || {};
  * mapsprite.js
  */
 
-tm.app = tm.app || {};
-
-(function() {
-
-    tm.define("tm.app.MapSheet", {
-        superClass: "tm.event.EventDispatcher",
-        
-        init: function(path) {
-            this.superInit();
-            
-            this.loaded = false;
-
-            if (typeof path == "string") {
-                tm.util.Ajax.load({
-                    url: path,
-                    success: function(e) {
-                        var d = this._parse(e);
-                        this.$extend(d);
-                        this._checkImage();
-                    }.bind(this),
-                });
-            }
-            else {
-                this.$extend(arguments[0]);
-                
-                this._checkImage();
-            }
-        },
-
-        _parse: function(str) {
-            var each = Array.prototype.forEach;
-            var data = {};
-            var parser = new DOMParser();
-            var xml = parser.parseFromString(str, 'text/xml');
-            var map = this._attrToJSON(xml.getElementsByTagName('map')[0]);
-
-            this.$extend(map);
-
-            // tilesets(image)
-            data.tilesets = this._parseTilesets(xml);
-
-            // layer
-            data.layers = this._parseLayers(xml);
-            
-            return data;
-        },
-        
-        _parseTilesets: function(xml) {
-            var each = Array.prototype.forEach;
-            var self = this;
-            var data = [];
-            var tilesets = xml.getElementsByTagName('tileset');
-            each.call(tilesets, function(tileset) {
-                var t = {};
-                var props = self._propertiesToJson(tileset);
-                
-                if (props.src) {
-                    t.image = props.src;
-                }
-                else {
-                    t.image = tileset.getElementsByTagName('image')[0].getAttribute('source');
-                }
-                data.push(t);
-            });
-            
-            return data;
-        },
-        
-        _parseLayers: function(xml) {
-            var each = Array.prototype.forEach;
-            var data = [];
-
-            var map = xml.getElementsByTagName("map")[0];
-            var layers = [];
-            each.call(map.childNodes, function(elm) {
-                if (elm.tagName == "layer" || elm.tagName == "objectgroup") {
-                    layers.push(elm);
-                }
-            });
-
-            layers.each(function(layer) {
-                if (layer.tagName == "layer") {
-                    var d = layer.getElementsByTagName('data')[0];
-                    var encoding = d.getAttribute("encoding");
-                    var l = {
-                        type: "layer",
-                        name: layer.getAttribute("name"),
-                    };
-
-                    if (encoding == "csv") {
-                        l.data = this._parseCSV(d.textContent);
-                    }
-                    else if (encoding == "base64") {
-                        l.data = this._parseBase64(d.textContent);
-                    }
-
-                    data.push(l);
-                }
-                else if (layer.tagName == "objectgroup") {
-                    var l = {
-                        type: "objectgroup",
-                        objects: [],
-                        name: layer.getAttribute("name"),
-                    };
-                    each.call(layer.childNodes, function(elm) {
-                        if (elm.nodeType == 3) return ;
-                        
-                        var d = this._attrToJSON(elm);
-                        d.properties = this._propertiesToJson(elm);
-                        
-                        l.objects.push(d);
-                    }.bind(this));
-                    
-                    data.push(l);
-                }
-            }.bind(this));
-
-            return data;
-        },
-
-        _parseCSV: function(data) {
-            var dataList = data.split(',');
-            var layer = [];
-
-            dataList.each(function(elm, i) {
-                var num = parseInt(elm, 10) - 1;
-                layer.push(num);
-            });
-
-            return layer;
-        },
-
-        /**
-         * http://thekannon-server.appspot.com/herpity-derpity.appspot.com/pastebin.com/75Kks0WH
-         */
-        _parseBase64: function(data) {
-            var dataList = atob(data.trim());
-            var rst = [];
-
-            dataList = dataList.split('').map(function(e) {
-                return e.charCodeAt(0);
-            });
-
-            for (var i=0,len=dataList.length/4; i<len; ++i) {
-                var n = dataList[i*4];
-                rst[i] = parseInt(n, 10) - 1;
-            }
-            
-            return rst;
-        },
-        
-        _propertiesToJson: function(elm) {
-            var obj = {};
-            var properties = elm.getElementsByTagName('property');
-            for (var k = 0;k < properties.length;k++) {
-                obj[properties[k].getAttribute('name')] = properties[k].getAttribute('value');
-            }
-            
-            return obj;
-        },
-        
-        _attrToJSON: function(source) {
-            var obj = {};
-            for (var i = 0; i < source.attributes.length; i++) {
-                var val = source.attributes[i].value;
-                val = isNaN(parseFloat(val))? val: parseFloat(val);
-                obj[source.attributes[i].name] = val;
-            }
-            
-            return obj;
-        },
-        
-        _checkImage: function() {
-            var self = this;
-            if (this.tilesets.length) {
-                var i = 0;
-                var len = this.tilesets.length;
-                
-                var _onloadimage = function() {
-                    i++;
-                    if (i==len) {
-                        this.loaded = true;
-                        var e = tm.event.Event("load");
-                        this.dispatchEvent(e);
-                    }
-                }.bind(this);
-                
-                this.tilesets.each(function(elm) {
-                    var image = tm.asset.AssetManager.get(elm.image)
-                    
-                    if (image) {
-                        if (image.loaded) {
-                            // ロード済み
-                            ++i;
-                            if (i==len) {
-                                this.loaded = true;
-                                var e = tm.event.Event("load");
-                                self.dispatchEvent(e);
-                            }
-                        }
-                        else {
-                            image.addEventListener("load", _onloadimage);
-                        }
-                    }
-                    else {
-                        tm.asset.AssetManager.load(elm.image);
-                        var texture = tm.asset.AssetManager.get(elm.image);
-                        texture.addEventListener("load", _onloadimage);
-                    }
-                });
-                
-            }
-            else {
-                this.loaded = true;
-                var e = tm.event.Event("load");
-                this.dispatchEvent(e);
-            }
-        },
-        
-    });
-
-
-
-})();
 
 (function() {
 
@@ -12179,7 +12546,11 @@ tm.app = tm.app || {};
             group.height = layer.height;
             
             layer.objects.forEach(function(obj) {
-                var _class  = window[obj.type] || tm.app[obj.type];
+                var _class = tm.using(obj.type);
+                if (Object.keys(_class).length === 0) {
+                    _class=tm.app[obj.type];
+                }
+
                 var initParam = null;
                 if (obj.properties.init) {
                     initParam = JSON.parse(obj.properties.init);
@@ -12344,9 +12715,8 @@ tm.app = tm.app || {};
             e = tm.event.Event("enter");
             e.app = this;
             this.currentScene = scene;
-            this.currentScene.dispatchEvent(e);
-
             this.currentScene.app = this;
+            this.currentScene.dispatchEvent(e);
         },
         
         /**
@@ -12364,9 +12734,8 @@ tm.app = tm.app || {};
             
             e = tm.event.Event("enter");
             e.app = this;
-            scene.dispatchEvent(e);
-
             scene.app = this;
+            scene.dispatchEvent(e);
         },
         
         /**
@@ -12375,7 +12744,7 @@ tm.app = tm.app || {};
          */
         popScene: function()
         {
-            var scene = this._scenes.pop(scene);
+            var scene = this._scenes.pop();
             --this._sceneIndex;
             
             e = tm.event.Event("exit");
@@ -12712,18 +13081,26 @@ tm.app = tm.app || {};
             canvas.setText(this.fontStyle, this.align, this.baseline);
             if (this.fill) {
                 if (this.maxWidth) {
-                    canvas.fillText(this.text, 0, 0, this.maxWidth);
+                    this._lines.each(function(elm, i) {
+                        canvas.fillText(elm, 0, this.textSize*i, this.maxWidth);
+                    }.bind(this));
                 }
                 else {
-                    canvas.fillText(this.text, 0, 0);
+                    this._lines.each(function(elm, i) {
+                        canvas.fillText(elm, 0, this.textSize*i);
+                    }.bind(this));
                 }
             }
             if (this.stroke) {
                 if (this.maxWidth) {
-                    canvas.strokeText(this.text, 0, 0, this.maxWidth);
+                    this._lines.each(function(elm, i) {
+                        canvas.strokeText(elm, 0, this.textSize*i, this.maxWidth);
+                    }.bind(this));
                 }
                 else {
-                    canvas.strokeText(this.text, 0, 0);
+                    this._lines.each(function(elm, i) {
+                        canvas.strokeText(elm, 0, this.textSize*i);
+                    }.bind(this));
                 }
             }
             
@@ -12766,155 +13143,6 @@ tm.app = tm.app || {};
 
 
 
-
-
-
-
-
-
-
-/*
- * interactive.js
- */
-
-tm.app = tm.app || {};
-
-
-
-(function() {
-    
-    /**
-     * @class
-     * インタラクティブクラス
-     */
-    tm.app.Interaction = tm.createClass({
-        
-        hitFlag: false,
-        downFlag: false,
-        enabled: true,
-        hitTestFunc: null,
-        
-        _boundingType: "circle",
-        
-        init: function(element) {
-            this.element = element;
-
-            this.hitFlags = [];
-            this.downFlags= [];
-        },
-        
-        update: function(app) {
-            if (this.enabled === false) return ;
-
-            var elm = this.element;
-            var p   = app.pointing;
-            
-            var prevHitFlag = this.hitFlag;
-            
-            this.hitFlag    = elm.isHitPoint(p.x, p.y);
-            
-            if (!prevHitFlag && this.hitFlag) {
-                this._dispatchEvent("mouseover", "touchover", "pointingover");
-            }
-            
-            if (prevHitFlag && !this.hitFlag) {
-                this._dispatchEvent("mouseout", "touchout", "pointingout");
-            }
-            
-            if (this.hitFlag) {
-                if (p.getPointingStart()) {
-                    this._dispatchEvent("mousedown", "touchstart", "pointingstart");
-                    this.downFlag = true;
-                }
-            }
-            
-            if (this.downFlag) {
-                this._dispatchEvent("mousemove", "touchmove", "pointingmove");
-            }
-            
-            if (this.downFlag==true && p.getPointingEnd()) {
-                this._dispatchEvent("mouseup", "touchend", "pointingend");
-                this.downFlag = false;
-            }
-        },
-
-        _check: function(app, p, index) {
-            if (this.enabled === false) return ;
-
-            var elm = this.element;
-            
-            var prevHitFlag = this.hitFlags[index];
-            
-            this.hitFlags[index]    = elm.isHitPoint(p.x, p.y);
-            
-            if (!prevHitFlag && this.hitFlags[index]) {
-                this._dispatchEvent("mouseover", "touchover", "pointingover", app, p);
-            }
-            
-            if (prevHitFlag && !this.hitFlags[index]) {
-                this._dispatchEvent("mouseout", "touchout", "pointingout", app, p);
-            }
-            
-            if (this.hitFlags[index]) {
-                if (p.getPointingStart()) {
-                    this._dispatchEvent("mousedown", "touchstart", "pointingstart", app, p);
-                    this.downFlags[index] = true;
-                }
-            }
-            
-            if (this.downFlags[index]) {
-                this._dispatchEvent("mousemove", "touchmove", "pointingmove", app, p);
-            }
-            
-            if (this.downFlags[index]==true && p.getPointingEnd()) {
-                this._dispatchEvent("mouseup", "touchend", "pointingend", app, p);
-                this.downFlags[index] = false;
-            }
-        },
-
-        _updatePC: function(app) {
-            this._check(app, app.pointing, 0);
-        },
-
-        _updateMobile: function(app) {
-            var self = this;
-            app.touches.each(function(touch, i) {
-                self._check(app, touch, i);
-            });
-        },
-
-        _dispatchEvent: function(mouse, touch, pointing, app, p) {
-            var elm = this.element;
-
-            elm.dispatchEvent( tm.event.MouseEvent(mouse, app, p) );
-            elm.dispatchEvent( tm.event.TouchEvent(touch, app, p) );
-            elm.dispatchEvent( tm.event.PointingEvent(pointing, app, p) );
-        },
-        
-        setBoundingType: function(type) { this.boundingType = type; },
-    });
-    
-    tm.app.Interaction.prototype.update = (tm.isMobile) ?
-        tm.app.Interaction.prototype._updateMobile : tm.app.Interaction.prototype._updatePC;
-
-    
-    /**
-     * @member      tm.app.Element
-     * @property    interaction
-     * インタラクション
-     */
-    tm.app.Element.prototype.getter("interaction", function() {
-        if (!this._interaction) {
-            this._interaction = tm.app.Interaction(this);
-            this.addEventListener("enterframe", function(e){
-                this._interaction.update(e.app);
-            });
-        }
-        
-        return this._interaction;
-    });
-    
-})();
 
 
 
@@ -13753,7 +13981,7 @@ tm.app = tm.app || {};
             
             this._createCircle();
             
-            this.interaction;
+            this.setInteractive(true);
             
             this.alpha = 0.75;
         },
@@ -14988,18 +15216,15 @@ tm.google = tm.google || {};
 
 
 ;(function() {
-
-    tm.app.Interaction.prototype.setBoundingType = function(type) {
-        this.boundingType = type;
-    };
-
-    tm.app.Interaction.prototype.accessor("boundingType", {
-        "get": function()   {
-            return this.element.boundingType;
-        },
-        "set": function(v)  {
-            this.element.boundingType = v;
-        }
+    
+    /**
+     * @member      tm.app.Element
+     * @property    interaction
+     * インタラクション
+     */
+    tm.app.Element.prototype.getter("interaction", function() {
+        console.assert(false, "interaction は Object2d に統合されました. obj.setInteractive(true); とすればタッチ判定が有効になります.");
     });
+
 
 })();

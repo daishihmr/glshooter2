@@ -11,10 +11,27 @@ gls2.EnemySoft = tm.createClass({
 });
 
 gls2.EnemySoft.setup = function() {
-    gls2.EnemySoft.heri1 = tm.createClass({
+
+    this["heri1"] = tm.createClass({
         superClass: gls2.EnemySoft,
         init: function() {
             this.superInit();
+        },
+        update: function(enemy) {
+            enemy.y += 1;
         }
     })();
+
+    this["heri2"] = tm.createClass({
+        superClass: gls2.EnemySoft,
+        init: function() {
+            this.superInit();
+        },
+        update: function(enemy) {
+            enemy.x -= 0.2;
+            enemy.y += 0.2;
+        }
+    })();
+
 };
+

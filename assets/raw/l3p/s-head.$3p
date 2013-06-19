@@ -26,7 +26,7 @@ Info:
 	SelectedOnly: 0
 	DispRelative: 0
 Palette:
-	0: atr "#01" { col ( rgb ( 1.000 0.820 0.150 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) colormap ( "L3\effect\horizon.png" 0.500 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
+	0: atr "#01" { col ( rgb ( 0.450 0.640 0.920 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) colormap ( "L3\effect\horizon.png" 0.500 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
 	1: atr "#02" { col ( rgb ( 0.970 0.530 0.540 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.150 ) spc ( 0.900 1.500 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
 	2: atr "#03" { col ( 1.000 ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.400 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
 	3: atr "#04" { col ( 1.000 ) amb ( 1.000 ) dif ( 0.000 ) tra ( 1.000 ) spc ( 0.000 45.507 0.000 ) }
@@ -35,9 +35,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -70  -9 -70 )
-	{	mov ( 2852.13 -2359.7 2091.03 ) eye deg( 45 ) }
-	{	mov ( -307.12 64.4802 -198.807 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -18 -68 -70 )
+	{	mov ( 2726.51 1821.2 2280.54 ) eye deg( 45 ) }
+	{	mov ( -327.235 58.1201 -225.375 ) target }
 	{	mov ( -200 -100 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 0.7 1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "#06" */
 	}

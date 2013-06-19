@@ -31,7 +31,7 @@ gls2.EnemyHard.setup = function() {
         }
     });
 
-    gls2.EnemyHard.heri1 = tm.createClass({
+    this["heri1"] = tm.createClass({
         superClass: gls2.EnemyHard,
         init: function() {
             this.superInit();
@@ -54,11 +54,12 @@ gls2.EnemyHard.setup = function() {
         }
     })();
 
-    gls2.EnemyHard.heri2 = tm.createClass({
+    this["heri2"] = tm.createClass({
         superClass: gls2.EnemyHard,
         init: function() {
             this.superInit();
             this._sprite = _Sprite("tex1", 64, 64);
+            this.isGround = true;
         },
         update: function(enemy) {
             if (enemy.x < gls2.Player.instance.x) {
