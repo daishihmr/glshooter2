@@ -164,7 +164,7 @@ gls2.Bit = tm.createClass({
         var dir = this.bit.d * this.bit.dt;
         this.rotation = Math.radToDeg(dir);
 
-        if (this.player.controllable) {
+        if (this.player.controllable && !app.keyboard.getKey("c")) {
             var g = this.parent.localToGlobal(this);
             gls2.ShotBullet(g.x, g.y, this.parent.rotation + this.rotation - 90).addChildTo(this.gameScene);
         }

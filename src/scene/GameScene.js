@@ -1,8 +1,9 @@
 gls2.GameScene = tm.createClass({
-    superClass: tm.app.Scene,
+    superClass: gls2.Scene,
     player: null,
     stage: null,
     ground: null,
+    zanki: 3,
     groundLayer: tm.app.CanvasElement(),
     playerLayer: tm.app.CanvasElement(),
     enemyLayer: tm.app.CanvasElement(),
@@ -19,6 +20,11 @@ gls2.GameScene = tm.createClass({
     init: function(playerType) {
         this.superInit();
         gls2.GameScene.instance = this;
+        this.addEventListener("enter", function(e) {
+            if (e.app.result) {
+                this.onResult(e.app.result);
+            }
+        });
 
         this._setupCommonData();
         this._createGround();
@@ -86,7 +92,7 @@ gls2.GameScene = tm.createClass({
     },
 
     update: function(app) {
-        // this.stage.update();
+        this.stage.update(app.frame);
     },
 
     draw: function(canvas) {
@@ -96,18 +102,6 @@ gls2.GameScene = tm.createClass({
 
     gameStart: function(playerType) {
         this.player = gls2.Player();
-
-        // TODO あとで消す
-        gls2.Enemy("heri1", "heri1").setPosition(100, 100).addChildTo(this);
-        gls2.Enemy("heri2", "heri1").setPosition(450, 200).addChildTo(this);
-        this.addEventListener("enterframe", function() {
-            if (gls2.core.frame % 200 === 0) {
-                this.ground.direction += Math.PI/4;
-            }
-        });
-        this.ground.direction = Math.PI * 0.5;
-        this.ground.speed = 1;
-
         this.startStage(0);
     },
 
@@ -139,23 +133,29 @@ gls2.GameScene = tm.createClass({
     },
 
     miss: function() {
-
+        this.player.remove();
+        this.zanki -= 1;
+        if (this.zanki > 0) {
+            this.launch();
+        } else {
+            // TODO コンティニュー確認画面へ
+        }
     },
 
     gameContinue: function() {
-
+        this.launch();
     },
 
     clearStage: function() {
-
+        // TODO リザルト画面へ
     },
 
     gameOver: function() {
-
+        // TODO ゲームオーバー画面へ
     },
 
     gameClear: function() {
-
+        // TODO エンディング画面へ
     },
 
 });

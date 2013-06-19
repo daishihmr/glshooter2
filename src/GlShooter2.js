@@ -1,12 +1,16 @@
 /** @namespace */
-var gls2 = {};
+var gls2 = {
+    core: null,
+};
 
 gls2.GlShooter2 = tm.createClass({
     superClass: tm.app.CanvasApp,
     score: 0,
     highScore: 0,
+    result: null,
     init: function(id) {
         this.superInit(id);
+        gls2.core = this;
         this.resize(SC_W, SC_H).fitWindow();
         this.fps = 60;
         this.background = "rgba(0,0,0,1)";
@@ -17,6 +21,10 @@ gls2.GlShooter2 = tm.createClass({
             },
             nextScene: gls2.TitleScene
         }));
+    },
+    exitApp: function() {
+        this.stop();
+        tm.social.Nineleap.postRanking(this.highScore, "");
     }
 });
 
