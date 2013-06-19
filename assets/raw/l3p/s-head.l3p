@@ -2,6 +2,7 @@
                                   Version 2.04.080709(:
 Parts: 
 	CP\CP09.suf
+	EG\EG03.suf
 	EG\EG06.suf
 	EG\EG13.suf
 	OT\OT09.suf
@@ -9,11 +10,12 @@ Parts:
 	S1\S109.suf
 	SD\SD01.suf
 	SL\SL14.suf
+	W1\W102.suf
 	W1\W107.suf
 Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
-	DisplayOffset: (   0.000   6.000  -6.000 )
-	DisplayScale: 0.125000000000
+	DisplayOffset: (   0.000   0.000  -3.000 )
+	DisplayScale: 0.062500000000
 	MeshFlag: 1
 	MeshSpacing: 200
 	ShowStatus: 1
@@ -24,54 +26,73 @@ Info:
 	SelectedOnly: 0
 	DispRelative: 0
 Palette:
-	0: atr "#01" { col ( rgb ( 0.420 0.420 0.580 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) colormap ( "L3\effect\horizon.png" 0.500 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
-	1: atr "#02" { col ( 1.000 ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) opt ( castshadow receiveshadow ) }
-	2: atr "#03" { col ( rgb ( 0.840 0.830 1.000 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.400 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
+	0: atr "#01" { col ( rgb ( 0.450 0.640 0.920 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) colormap ( "L3\effect\horizon.png" 0.500 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
+	1: atr "#02" { col ( rgb ( 0.970 0.530 0.540 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.150 ) spc ( 0.900 1.500 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
+	2: atr "#03" { col ( 1.000 ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.400 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
 	3: atr "#04" { col ( 1.000 ) amb ( 1.000 ) dif ( 0.000 ) tra ( 1.000 ) spc ( 0.000 45.507 0.000 ) }
-	4: atr noname { col ( rgb ( 0.300 0.450 0.950 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.150 ) spc ( 0.900 1.500 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
+	4: atr "#05" { col ( rgb ( 0.480 0.480 0.520 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) }
+	5: atr "#06" { col ( rgb ( 0.970 0.530 0.540 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.150 ) spc ( 0.900 1.500 0.000 ) colormap ( "L3\effect\horizon.png" 1.000 0.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -3.00 -2.00 -4.00 )
-	{	mov ( -687.236 0 4546.94 ) eye deg( 45 ) }
-	{	mov ( -125.421 0 27.4552 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 )  50  49 -70 )
+	{	mov ( -214.027 -0.000931008 4678.05 ) eye deg( 45 ) }
+	{	mov ( -205.989 -0.000964668 50.7241 ) target }
 	{	mov ( -200 -100 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 0.7 1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "noname" */
+		scal ( 0.7 1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "#06" */
 	}
 	{	mov ( -1000 -400 71 ) rotz ( 180 ) roty ( 0 ) rotx ( 0.727644 )
-		scal ( 1.5 -1.5918 5.1 ) obj W107 /* "W1\W107.suf" atr "noname" */
+		scal ( 1.5 -1.5918 5.1 ) obj W107 /* "W1\W107.suf" atr "#02" */
 	}
-	{	mov ( 200 0 -167 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 1.3 0.7 2 ) obj S109 /* "S1\S109.suf" atr "#03" */
+	{	mov ( 200 0 -183 ) rotz ( 0 ) roty ( -1.18456 ) rotx ( 0 )
+		scal ( 1.22589 0.7 2 ) obj S109 /* "S1\S109.suf" atr "#03" */
 	}
-	{	mov ( 350 0 137 ) rotz ( 0 ) roty ( 10 ) rotx ( 0 )
+	{	mov ( 350 0 137 ) rotz ( 0 ) roty ( 15.5514 ) rotx ( 0 )
 		scal ( 2.19383 2.06828 2.12941 ) obj CP09 /* "CP\CP09.suf" atr "#03" */
 	}
 	{	mov ( -200 100 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 0.7 -1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "noname" */
+		scal ( 0.7 -1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "#06" */
 	}
-	{	mov ( -864 -248 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+	{	mov ( -864 -248 235 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 0.662989 1.62064 1.62064 ) obj EG06 /* "EG\EG06.suf" atr "#01" */
 	}
-	{	mov ( -864 248 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 0.662989 -1.62064 1.62064 ) obj EG06 /* "EG\EG06.suf" atr "#01" */
-	}
 	{	mov ( -300 0 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 1.4 0.9 2.3 ) obj SL14 /* "SL\SL14.suf" atr "#03" */
-	}
-	{	mov ( -600 400 71 ) rotz ( -5.67149 ) roty ( 19.9475 ) rotx ( -178.521 )
-		scal ( 1.9 0.9 1.4 ) obj OT09 /* "OT\OT09.suf" atr "#01" */
+		scal ( 1.4 0.9 2.6 ) obj SL14 /* "SL\SL14.suf" atr "#03" */
 	}
 	{	mov ( 250 0 71 ) rotz ( 0 ) roty ( 0 ) rotx ( -180 )
-		scal ( 1 1 1.8 ) obj EG13 /* "EG\EG13.suf" atr "noname" */
-	}
-	{	mov ( -1000 400 71 ) rotz ( -180 ) roty ( 0 ) rotx ( -0.727644 )
-		scal ( 1.5 1.5918 5.1 ) obj W107 /* "W1\W107.suf" atr "noname" */
+		scal ( 1 1 1.8 ) obj EG13 /* "EG\EG13.suf" atr "#02" */
 	}
 	{	mov ( 0 0 -900 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 1 1 1 ) obj P101 /* "P1\P101.suf" atr "#04" */
 	}
-	{	mov ( -600 -400 71 ) rotz ( 5.67149 ) roty ( 19.9475 ) rotx ( 178.521 )
-		scal ( 1.9 -0.9 1.4 ) obj OT09 /* "OT\OT09.suf" atr "#01" */
+	{	mov ( 99.275 -252.922 -267.882 ) rotz ( -174.433 ) roty ( 16.308 ) rotx ( 0 )
+		scal ( 1.2 -0.715385 0.8 ) obj OT09 /* "OT\OT09.suf" atr "#05" */
+	}
+	{	mov ( 99.275 252.922 -267.882 ) rotz ( 174.433 ) roty ( 16.308 ) rotx ( 0 )
+		scal ( 1.2 0.715385 0.8 ) obj OT09 /* "OT\OT09.suf" atr "#05" */
+	}
+	{	mov ( -1098.4 -493.603 -274.766 ) rotz ( 0 ) roty ( 0 ) rotx ( 38.0861 )
+		scal ( 1.32 0.806298 0.649516 ) obj EG03 /* "EG\EG03.suf" atr "#05" */
+	}
+	{	mov ( -822.4 -235.831 -60.7419 ) rotz ( 0 ) roty ( 0 ) rotx ( 128.086 )
+		scal ( 1.2 1.2 6.24 ) obj EG13 /* "EG\EG13.suf" atr "#01" */
+	}
+	{	mov ( -1000 400 71 ) rotz ( -180 ) roty ( 0 ) rotx ( -0.727644 )
+		scal ( 1.5 1.5918 5.1 ) obj W107 /* "W1\W107.suf" atr "#02" */
+	}
+	{	mov ( -864 248 235 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.662989 -1.62064 1.62064 ) obj EG06 /* "EG\EG06.suf" atr "#01" */
+	}
+	{	mov ( -822.4 235.831 -60.7419 ) rotz ( 0 ) roty ( 0 ) rotx ( -128.086 )
+		scal ( 1.2 -1.2 6.24 ) obj EG13 /* "EG\EG13.suf" atr "#01" */
+	}
+	{	mov ( -1134 -292 400 ) rotz ( 0 ) roty ( 0 ) rotx ( -70.0367 )
+		scal ( 1 0.70906 1 ) obj W102 /* "W1\W102.suf" atr "#02" */
+	}
+	{	mov ( -1134 292 400 ) rotz ( 0 ) roty ( 0 ) rotx ( 70.0367 )
+		scal ( 1 -0.70906 1 ) obj W102 /* "W1\W102.suf" atr "#02" */
+	}
+	{	mov ( -1098.4 493.603 -274.766 ) rotz ( 0 ) roty ( 0 ) rotx ( -38.0861 )
+		scal ( 1.32 -0.806298 0.649516 ) obj EG03 /* "EG\EG03.suf" atr "#05" */
 	}
 }
