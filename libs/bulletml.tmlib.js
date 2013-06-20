@@ -1,16 +1,13 @@
 /**
- * plugin namespace object
- *
- * @type {Object}
+ * @namespace
  */
 tm.bulletml = tm.bulletml || {};
 
 (function() {
 
-    /**
-     * @scope enchant.bulletml.AttackPattern.prototype
-     */
-    tm.bulletml.AttackPattern = tm.createClass({
+    tm.bulletml.AttackPattern = tm.createClass(
+    /** @lends tm.bulletml.AttackPattern.prototype */
+    {
         /**
          * 攻撃パターン.
          *
@@ -27,11 +24,10 @@ tm.bulletml = tm.bulletml || {};
         /**
          * enterframeイベントのリスナを作成する.<br>
          * <br>
-         * 第1引数configで各種設定を行う. <br>
+         * 第1引数configで各種設定を行う.<br>
          *
-         *
-         * @param {Object|enchant.Node}
-         *            [config] 発射される弾に関する設定.<br>
+         * @param {Object=} config
+         *            発射される弾に関する設定.<br>
          *            <table border=1>
          *            <tr>
          *            <th>プロパティ名</th>
@@ -90,10 +86,8 @@ tm.bulletml = tm.bulletml || {};
          *            <td></td>
          *            </tr>
          *            </table>
-         *            設定する項目がtargetのみの場合、標的オブジェクトを直接引数として渡すことが可能.
-         * @param {string}
-         *            [action] 最初に読み込むactionのラベル.<br>
-         *            省略可.
+         * @param {string=} action
+         *            最初に読み込むactionのラベル.省略可.
          */
         createTicker: function(config, action) {
             var topLabels = this._bulletml.getTopActionLabels();
@@ -131,6 +125,9 @@ tm.bulletml = tm.bulletml || {};
                 return this._createTicker(config, action);
             }
         },
+        /**
+         * @private
+         */
         _createTicker: function(config, action) {
             config = (function(base) {
                 var result = {};
@@ -196,6 +193,7 @@ tm.bulletml = tm.bulletml || {};
                 // test out of world
                 if (!conf.isInsideOfWorld(this)) {
                     this.remove();
+                    this.dispatchEvent(tm.event.Event("removed"));
                     ticker.completed = true;
                     if (ticker.parentTicker) {
                         ticker.parentTicker.completeChild();
@@ -243,6 +241,9 @@ tm.bulletml = tm.bulletml || {};
                     case "vanish":
                         this.remove();
                         this.dispatchEvent(tm.event.Event("removed"));
+                        break;
+                    case "notify":
+                        ptn._notify.call(this, cmd);
                         break;
                     }
                 }
@@ -294,6 +295,7 @@ tm.bulletml = tm.bulletml || {};
         },
         /**
          * action要素を持たないbullet(等速直進弾)のためのtickerを作る.
+         * @private
          */
         _createSimpleTicker: function(config) {
             config = (function(base) {
@@ -325,6 +327,7 @@ tm.bulletml = tm.bulletml || {};
                 // test out of world
                 if (!ticker.config.isInsideOfWorld(this)) {
                     this.remove();
+                    this.dispatchEvent(tm.event.Event("removed"));
                     return;
                 }
             };
@@ -338,6 +341,9 @@ tm.bulletml = tm.bulletml || {};
             ticker.isDanmaku = true;
             return ticker;
         },
+        /**
+         * @private
+         */
         _fire: function(cmd, config, ticker, pattern) {
             var spec = { label: cmd.bullet.label };
             for (var key in cmd.bullet.option) {
@@ -350,7 +356,7 @@ tm.bulletml = tm.bulletml || {};
             }
 
             // 等速直進弾?
-            var uniformLinearBullet = cmd.bullet.actions.length;
+            var uniformLinearBullet = !!cmd.bullet.actions.length;
 
             var bt = uniformLinearBullet ? (
                 pattern._createSimpleTicker(config)
@@ -414,10 +420,10 @@ tm.bulletml = tm.bulletml || {};
             }
 
             // set direction, speed to bullet
-            this.updateProperties = !!this.updateProperties;
-            if (config.updateProperties || this.updateProperties) {
-                b.rotation = (ticker.direction + Math.PI * 0.5) * Math.RAD_TO_DEG;
-                b.speed = ticker.speed;
+            b.updateProperties = !!b.updateProperties;
+            if (config.updateProperties || b.updateProperties) {
+                b.rotation = (bt.direction + Math.PI * 0.5) * Math.RAD_TO_DEG;
+                b.speed = bt.speed;
             }
 
             b.addEventListener("enterframe", bt);
@@ -430,7 +436,12 @@ tm.bulletml = tm.bulletml || {};
             } else if (this.parent) {
                 this.parent.addChild(b);
             }
+
+            config.onFire(b);
         },
+        /**
+         * @private
+         */
         _changeDirection: function(cmd, config, ticker) {
             var d = eval(cmd.direction.value) * Math.DEG_TO_RAD;
             var t = eval(cmd.term);
@@ -458,6 +469,9 @@ tm.bulletml = tm.bulletml || {};
             }
             ticker.chDirEnd = ticker.age + t;
         },
+        /**
+         * @private
+         */
         _changeSpeed: function(cmd, ticker) {
             // console.log("changeSpeed")
             var s = eval(cmd.speed.value);
@@ -478,6 +492,9 @@ tm.bulletml = tm.bulletml || {};
             }
             ticker.chSpdEnd = ticker.age + t;
         },
+        /**
+         * @private
+         */
         _accel: function(cmd, ticker) {
             var t = eval(cmd.term);
             ticker.aclEnd = ticker.age + t;
@@ -517,6 +534,18 @@ tm.bulletml = tm.bulletml || {};
                 ticker.aclIncrV = 0;
                 ticker.aclFinV = ticker.speedV;
             }
+        },
+        /**
+         * @private
+         */
+        _notify: function(cmd) {
+            var e = tm.event.Event(cmd.eventName);
+            if (cmd.params) {
+                for (var key in cmd.params) {
+                    e[key] = cmd.params[key];
+                }
+            }
+            this.dispatchEvent(e);
         }
     });
 
@@ -537,9 +566,8 @@ tm.bulletml = tm.bulletml || {};
     /**
      * bulletFactory未指定時に使用される弾スプライトの生成関数.
      *
-     * @returns {tm.app.CanvasElement} 8px x 8px の大きさのスプライト
-     * @type function
-     * @memberOf enchant.bulletml
+     * @param {Object} spec
+     * @return {tm.app.Element} 8px x 8px の大きさのスプライト
      */
     tm.bulletml.defaultBulletFactory = function(spec) {
         var bullet = tm.app.Sprite(8, 8, DEFAULT_BULLET_IMAGE);
@@ -549,22 +577,40 @@ tm.bulletml = tm.bulletml || {};
 
     /**
      * isInsideOfWorld未指定時に使用される関数.
+     *
+     * @return {boolean}
      */
+    var ROOT = null;
     tm.bulletml.defaultIsInsideOfWorld = function(bullet) {
-        return true;
+        if (ROOT === null) {
+            ROOT = bullet.getRoot();
+        }
+        return 0 <= bullet.x && bullet.x < APP.width && 0 <= bullet.y && bullet.y < APP.height;
+    };
+
+    /**
+     * onFire未指定時に使用される関数.
+     */
+    tm.bulletml.defaultOnFire = function(bullet) {
     };
 
     /**
      * configのデフォルト値.
-     *
-     * @scope enchant.bulletml.AttackPattern
      */
     tm.bulletml.AttackPattern.defaultConfig = {
+        /** @type {function(Object): tm.app.Element} */
         bulletFactory: tm.bulletml.defaultBulletFactory,
+        /** @type {function(tm.app.Element): boolean} */
         isInsideOfWorld: tm.bulletml.defaultIsInsideOfWorld,
+        /** @type {function(tm.app.Element)} */
+        onFire: tm.bulletml.defaultOnFire,
+        /** @type {number} */
         rank: 0,
+        /** @type {boolean} */
         updateProperties: false,
+        /** @type {number} */
         speedRate: 2,
+        /** @type {tm.app.Element} */
         target: null
     };
 
@@ -584,12 +630,17 @@ tm.bulletml = tm.bulletml || {};
     /**
      * スプライトAから見たスプライトBの方向をラジアンで返す.
      *
-     * @param {enchant.Node}
+     * @param {tm.app.CanvasElement}
      *            a スプライトA
-     * @param {enchant.Node}
+     * @param {tm.app.CanvasElement}
      *            b スプライトB
      */
     function angleAtoB(a, b) {
         return Math.atan2(b.y-a.y, b.x-a.x);
     }
+
+    bulletml.Root.prototype.createTicker = function(config) {
+        return tm.bulletml.AttackPattern(this).createTicker(config);
+    };
+
 })();

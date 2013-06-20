@@ -1,52 +1,44 @@
-gls2.Scene = tm.createClass({
-    superClass: tm.app.Scene,
-    init: function() {
-        this.superInit();
-        this.addEventListener("enter", function(e) {
-            this.onResult(gls2.Scene.requestCode, gls2.Scene.result);
-        });
-    },
-    finish: function(result) {
-        gls2.Scene.result = result;
-        gls2.core.popScene();
-    },
-    startScene: function(requestCode, sceneClass) {
-        gls2.Scene.result = null;
-        gls2.Scene.requestCode = requestCode;
-        gls2.core.pushScene(sceneClass());
-    },
-    openDialogMenu: function(requestCode, menu) {
-        gls2.Scene.result = null;
-        gls2.Scene.requestCode = requestCode;
-        gls2.core.pushScene(gls2.DialogMenu(menu));
-    },
-    onResult: function(requestCode, result) {
-    }
-});
-gls2.Scene.result = null;
-
 gls2.DialogMenu = tm.createClass({
     superClass: gls2.Scene,
+    title: null,
     selection: [],
     selected: 0,
     box: null,
     finished: false,
     cursor: null,
-    init: function(menu) {
+
+    /**
+     * @param {string} title
+     * @param {Array.<string>} menu
+     */
+    init: function(title, menu) {
         this.superInit();
-        var show = function() {
+
+        var showLabels = function() {
+            var y = SC_H*0.5 - menu.length*25;
+            this.title = tm.app.Label(title, 30).setPosition(SC_W*0.5, y).addChildTo(this);
             this.selection = menu.map(function(m, i) {
-                var y = SC_H*0.5 - menu.length*25 + i*50 + 30;
-                return tm.app.Label(m).setPosition(SC_W*0.5, y).addChildTo(this);
+                var self = this;
+                y += 50;
+                var sel = tm.app.Label(m).setPosition(SC_W*0.5, y).addChildTo(this);
+                sel.interactive = true;
+                sel.addEventListener("touchend", function() {
+                    if (self.selected === i) {
+                        self.closeDialog(self.selected);
+                    } else {
+                        self.selected = i;
+                    }
+                });
+                return sel;
             }.bind(this));
 
             this._createCursor();
         }.bind(this);
 
-        var h = Math.max(menu.length*50, 50) + 40;
-        this.box = tm.app.RectangleShape(SC_W * 0.8, h, {
+        var height = Math.max((1+menu.length)*50, 50) + 40;
+        this.box = tm.app.RectangleShape(SC_W * 0.8, height, {
             strokeStyle: "rgba(255,255,255,1)",
-            fillStyle: tm.graphics.LinearGradient(0,0,0,h).addColorStopList([
+            fillStyle: tm.graphics.LinearGradient(0,0,0,height).addColorStopList([
                 { offset:0, color:"rgba(49,37,128,0.8)" },
                 { offset:1, color:"rgba(28,21,74,0.8)" },
             ]).toStyle(),
@@ -54,10 +46,11 @@ gls2.DialogMenu = tm.createClass({
         this.box.width = 1;
         this.box.height = 1;
         this.box.tweener
-            .to({ width: SC_W * 0.8, height: h }, 200, "easeOutExpo")
-            .call(show);
+            .to({ width: SC_W*0.8, height: height }, 200, "easeOutExpo")
+            .call(showLabels);
         this.box.addChildTo(this);
     },
+
     _createCursor: function() {
         this.cursor = tm.app.RectangleShape(SC_W*0.7, 35, {
             strokeStyle: "rgba(0,0,0,0)",
@@ -81,8 +74,13 @@ gls2.DialogMenu = tm.createClass({
             }
         };
     },
+
     update: function(app) {
-        if (this.finished) return;
+        this.superClass.prototype.update.apply(this, arguments);
+        if (this.finished) {
+            this.cursor.visible = app.frame % 2 === 0;
+            return;
+        }
 
         if (app.keyboard.getKeyDown("x")) {
             this.closeDialog(-1);
@@ -97,17 +95,25 @@ gls2.DialogMenu = tm.createClass({
         }
         this.selected = Math.clamp(this.selected, 0, this.selection.length-1);
     },
+
     closeDialog: function(result) {
         this.finished = true;
-        this.cursor.remove();
-        this.selection.each(function(sel) {
-            sel.remove();
-        });
-        this.box.tweener.clear();
-        this.box.tweener
-            .to({ width: 1, height: 1 }, 200, "easeInExpo")
+        this.tweener
+            .clear()
+            .wait(200)
             .call(function() {
-                this.finish(result);
+                this.cursor.remove();
+                this.title.remove();
+                this.selection.each(function(sel) {
+                    sel.remove();
+                });
+                this.box.tweener.clear();
+                this.box.tweener
+                    .to({ width: 1, height: 1 }, 200, "easeInExpo")
+                    .call(function() {
+                        this.finish(result);
+                    }.bind(this));
             }.bind(this));
-    }
+    },
+
 });

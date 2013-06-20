@@ -16,6 +16,7 @@ gls2.Player = tm.createClass({
     init: function() {
         this.superInit("tex1", 64, 64);
         gls2.Player.instance = this;
+        tm.bulletml.AttackPattern.defaultConfig.target = this;
 
         gls2.setShadow(this);
         this._createHitCircle();

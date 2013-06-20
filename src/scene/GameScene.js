@@ -1,6 +1,7 @@
 gls2.GameScene = tm.createClass({
     superClass: gls2.Scene,
     player: null,
+    score: 0,
     stage: null,
     ground: null,
     zanki: 3,
@@ -108,7 +109,7 @@ gls2.GameScene = tm.createClass({
     },
 
     startStage: function(stageNumber) {
-        this.stage = gls2.StageManager.create(stageNumber);
+        this.stage = gls2.Stage.create(stageNumber);
         this.launch();
     },
 

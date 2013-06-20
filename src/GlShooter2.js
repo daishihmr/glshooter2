@@ -5,9 +5,10 @@ var gls2 = {
 
 gls2.GlShooter2 = tm.createClass({
     superClass: tm.app.CanvasApp,
-    score: 0,
+    /** アプリ実行中のハイスコア */
     highScore: 0,
-    result: null,
+    /** ハイスコア取得時の最終到達ステージ */
+    highStage: 0,
     init: function(id) {
         this.superInit(id);
         gls2.core = this;

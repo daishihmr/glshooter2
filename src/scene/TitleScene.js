@@ -2,7 +2,8 @@
 
 var MAIN_MENU = 0;
 var OPTION_MENU = 1;
-var GAME = 2;
+var BGM_MENU = 2;
+var GAME = 3;
 
 gls2.TitleScene = tm.createClass({
     superClass: gls2.Scene,
@@ -35,8 +36,8 @@ gls2.TitleScene = tm.createClass({
             this._generateParticle(Math.cos(this.age*0.02+Math.PI) * 50 + SC_W*0.5, Math.sin(this.age*0.02+Math.PI) * 50 + SC_H*0.5);
         }
 
-        if (app.keyboard.getKeyDown("z")) {
-            this.openDialogMenu(MAIN_MENU, [ "START", "OPTION", "EXIT" ]);
+        if (app.keyboard.getKeyDown("z") || app.pointing.getPointingEnd()) {
+            this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "START", "OPTION", "EXIT" ]);
         }
 
         this.age += 1;
@@ -80,14 +81,14 @@ gls2.TitleScene = tm.createClass({
                     }.bind(this));
                 break;
             case 1: // option
-                this.openDialogMenu(OPTION_MENU, [ "BGM", "SE", "EXIT" ]);
+                this.openDialogMenu(OPTION_MENU, "OPTION", [ "BGM", "SE" ]);
                 break;
             case 2: // exit
                 gls2.core.exitApp();
                 break;
             }
         } else if (requestCode === OPTION_MENU) { // option menu
-            console.log(result)
+            this.openDialogMenu(BGM_MENU, "BGM", [ "0", "1", "2", "3", "4", "5", "6", "7" ]);
         }
     },
 });

@@ -9,34 +9,39 @@ gls2.Stage = tm.createClass({
     player: null,
     gameScene: null,
 
+    frame: 0,
+
+    lastLaunchedEnemy: null,
+
     init: function() {
         this.player = gls2.Player.instance;
-        this.gameScene = gls2.GameScene.instance;
+        var scene = this.gameScene = gls2.GameScene.instance;
+        scene.ground.direction = Math.PI * 0.5;
+        scene.ground.speed = 1;
     },
 
-    update: function(frame) {
+    update: function() {
         var scene = this.gameScene;
 
         // 敵を出現させる
-        if (frame % 60 === 0) {
-            gls2.Enemy("heri1", "heri1").setPosition(100, -50).addChildTo(scene);
-            gls2.Enemy("heri2", "heri2").setPosition(450, -50).addChildTo(scene);
+        if (this.frame % 180 === 0) {
+            var unit = gls2.EnemyUnit["heri1-left"];
+            for (var i = 0, end = unit.length; i < end; i++) {
+                this.lastLaunchedEnemy = this.launchEnemy(unit[i]);
+            }
         }
 
-        // スクロール方向を変更する
-        if (frame % 200 === 0) {
-            scene.ground.direction += Math.PI/4;
-        }
-        scene.ground.direction = Math.PI * 0.5;
-        scene.ground.speed = 1;
-    }
-});
-
-gls2.StageManager = tm.createClass({
-    init: function() {
+        this.frame += 1;
     },
-    create: function(stageNumber) {
-        return gls2.Stage();
-    }
+
+    launchEnemy: function(data) {
+        return gls2.Enemy(data.hard, data.soft)
+            .setPosition(data.x, data.y)
+            .addChildTo(this.gameScene)
+            .onLaunch();
+    },
 });
-gls2.StageManager = gls2.StageManager();
+
+gls2.Stage.create = function(stageNumber) {
+    return gls2.Stage();
+};
