@@ -31,8 +31,8 @@ gls2.TitleScene = tm.createClass({
 
     update: function(app) {
         if (this.age % 2 === 0) {
-            this._generateParticle(Math.cos(this.age*0.01)         * 50 + SC_W*0.5, Math.sin(this.age*0.01)         * 50 + SC_H*0.5);
-            this._generateParticle(Math.cos(this.age*0.01+Math.PI) * 50 + SC_W*0.5, Math.sin(this.age*0.01+Math.PI) * 50 + SC_H*0.5);
+            this._generateParticle(Math.cos(this.age*0.02)         * 50 + SC_W*0.5, Math.sin(this.age*0.02)         * 50 + SC_H*0.5);
+            this._generateParticle(Math.cos(this.age*0.02+Math.PI) * 50 + SC_W*0.5, Math.sin(this.age*0.02+Math.PI) * 50 + SC_H*0.5);
         }
 
         if (app.keyboard.getKeyDown("z")) {
@@ -44,7 +44,7 @@ gls2.TitleScene = tm.createClass({
 
     _generateParticle: function(cx, cy) {
         var p = gls2.Particle(80, 1.0, 0.8, this.particleImage).addChildTo(this);
-        p.speed = 0.3;
+        p.speed = 0.6;
         var a = Math.randf(0, Math.PI*2);
         var r = Math.rand(0, 20);
         p.setPosition(Math.cos(a) * r + cx, Math.sin(a) * r + cy);

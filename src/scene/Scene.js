@@ -31,32 +31,16 @@ gls2.DialogMenu = tm.createClass({
     selected: 0,
     box: null,
     finished: false,
-    cursor: tm.app.RectangleShape(SC_W*0.7, 35, {
-        strokeStyle: "rgba(0,0,0,0)",
-        fillStyle: "rgba(0, 255, 100, 0.5)",
-    }),
+    cursor: null,
     init: function(menu) {
         this.superInit();
         var show = function() {
-            this.cursor.addChildTo(this);
-
             this.selection = menu.map(function(m, i) {
                 var y = SC_H*0.5 - menu.length*25 + i*50 + 30;
-                var label = tm.app.Label(m).setPosition(SC_W*0.5, y);
-                return label;
-            });
-            this.selection.each(function(sel) {
-                sel.addChildTo(this);
+                return tm.app.Label(m).setPosition(SC_W*0.5, y).addChildTo(this);
             }.bind(this));
 
-            this.cursor.x = SC_W*0.5;
-            this.cursor.y = this.selection[this.selected].y-4;
-            this.cursor.update = function() {
-                this.tweener.clear();
-                this.tweener.to({
-                    y: this.parent.selection[this.parent.selected].y-4
-                }, 30);
-            };
+            this._createCursor();
         }.bind(this);
 
         var h = Math.max(menu.length*50, 50) + 40;
@@ -65,14 +49,37 @@ gls2.DialogMenu = tm.createClass({
             fillStyle: tm.graphics.LinearGradient(0,0,0,h).addColorStopList([
                 { offset:0, color:"rgba(49,37,128,0.8)" },
                 { offset:1, color:"rgba(28,21,74,0.8)" },
-            ]).toStyle()
+            ]).toStyle(),
         }).setPosition(SC_W*0.5, SC_H*0.5);
         this.box.width = 1;
         this.box.height = 1;
         this.box.tweener
-            .to({ width: SC_W * 0.8, height: h }, 200)
+            .to({ width: SC_W * 0.8, height: h }, 200, "easeOutExpo")
             .call(show);
         this.box.addChildTo(this);
+    },
+    _createCursor: function() {
+        this.cursor = tm.app.RectangleShape(SC_W*0.7, 35, {
+            strokeStyle: "rgba(0,0,0,0)",
+            fillStyle: tm.graphics.LinearGradient(0,0,SC_W*0.7,0)
+                .addColorStopList([
+                    { offset:0.0, color:"rgba(0,128,50,0.5)" },
+                    { offset:0.5, color:"rgba(0,255,100,0.5)" },
+                    { offset:1.0, color:"rgba(0,128,50,0.5)" },
+                ]).toStyle(),
+        }).addChildTo(this);
+        this.cursor.x = SC_W*0.5;
+        this.cursor.s = 0;
+        this.cursor.y = this.selection[0].y;
+        this.cursor.update = function() {
+            if (this.s !== this.parent.selected) {
+                this.s = this.parent.selected;
+                this.tweener.clear();
+                this.tweener.to({
+                    y: this.parent.selection[this.parent.selected].y
+                }, 200, "easeOutExpo");
+            }
+        };
     },
     update: function(app) {
         if (this.finished) return;
@@ -98,7 +105,7 @@ gls2.DialogMenu = tm.createClass({
         });
         this.box.tweener.clear();
         this.box.tweener
-            .to({ width: 1, height: 1 }, 200)
+            .to({ width: 1, height: 1 }, 200, "easeInExpo")
             .call(function() {
                 this.finish(result);
             }.bind(this));
