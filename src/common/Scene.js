@@ -15,17 +15,17 @@ gls2.Scene = tm.createClass({
         gls2.Scene.requestCode = requestCode;
         gls2.core.pushScene(sceneClass());
     },
-    openDialogMenu: function(requestCode, title, menu) {
+    openDialogMenu: function(requestCode, title, menu, defaultValue) {
         gls2.Scene.result = null;
         gls2.Scene.requestCode = requestCode;
-        gls2.core.pushScene(gls2.DialogMenu(title, menu));
+        gls2.core.pushScene(gls2.DialogMenu(title, menu, defaultValue));
     },
     onResult: function(requestCode, result) {
     },
     update: function(app) {
         if (app.pointing.getPointingEnd()) {
             gls2.PointerEffect(app.pointing).addChildTo(this);
-        }        
+        }
     },
 });
 gls2.Scene.result = null;

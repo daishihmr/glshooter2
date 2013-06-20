@@ -2,8 +2,10 @@
 
 var MAIN_MENU = 0;
 var OPTION_MENU = 1;
-var BGM_MENU = 2;
-var GAME = 3;
+var BGM_SETTING = 2;
+var SE_SETTING = 3;
+var DIFFICULTY_SETTING = 4;
+var GAME = 5;
 
 gls2.TitleScene = tm.createClass({
     superClass: gls2.Scene,
@@ -15,7 +17,7 @@ gls2.TitleScene = tm.createClass({
     init: function() {
         this.superInit();
         tm.app.Label("GL-Shooter 2", 50).setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
-        tm.app.Label("version 1.0 beta", 22).setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
+        tm.app.Label("version 1.0-beta", 22).setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
         tm.app.Label("HIGH SCORE: " + gls2.core.highScore).setPosition(SC_W * 0.5, SC_H * 0.85).addChildTo(this);
         tm.app.Label("press z key").setPosition(SC_W * 0.5, SC_H * 0.75).addChildTo(this);
 
@@ -32,12 +34,12 @@ gls2.TitleScene = tm.createClass({
 
     update: function(app) {
         if (this.age % 2 === 0) {
-            this._generateParticle(Math.cos(this.age*0.02)         * 50 + SC_W*0.5, Math.sin(this.age*0.02)         * 50 + SC_H*0.5);
-            this._generateParticle(Math.cos(this.age*0.02+Math.PI) * 50 + SC_W*0.5, Math.sin(this.age*0.02+Math.PI) * 50 + SC_H*0.5);
+            this._generateParticle(Math.cos(this.age*0.02)        *50+SC_W*0.5, Math.sin(this.age*0.02)        *50+SC_H*0.5);
+            this._generateParticle(Math.cos(this.age*0.02+Math.PI)*50+SC_W*0.5, Math.sin(this.age*0.02+Math.PI)*50+SC_H*0.5);
         }
 
         if (app.keyboard.getKeyDown("z") || app.pointing.getPointingEnd()) {
-            this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "START", "OPTION", "EXIT" ]);
+            this.openMainMenu()
         }
 
         this.age += 1;
@@ -64,9 +66,25 @@ gls2.TitleScene = tm.createClass({
         this.particles.push(p);
     },
 
+    openMainMenu: function() {
+        this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "start", "setting", "exit" ]);
+    },
+    openSetting: function() {
+        this.openDialogMenu(OPTION_MENU, "SETTING", [ "bgm volume", "sound volume", "difficulty", "exit" ]);
+    },
+    openBgmSetting: function() {
+        this.openDialogMenu(BGM_SETTING, "BGM VOLUME", [ "0", "1", "2", "3", "4", "5", "exit" ], gls2.core.bgmVolume);
+    },
+    openSeSetting: function() {
+        this.openDialogMenu(SE_SETTING, "SE VOLUME", [ "0", "1", "2", "3", "4", "5", "exit" ], gls2.core.seVolume);
+    },
+    openDifficultySetting: function() {
+        this.openDialogMenu(DIFFICULTY_SETTING, "DIFFICULTY", [ "easy", "normal", "hard", "very hard", "hell", "exit" ], gls2.core.difficulty);
+    },
+
     onResult: function(requestCode, result) {
         if (requestCode === MAIN_MENU) { // main menu
-            switch(result) {
+            switch (result) {
             case 0: // start
                 this.tweener
                     .call(function() {
@@ -81,16 +99,39 @@ gls2.TitleScene = tm.createClass({
                     }.bind(this));
                 break;
             case 1: // option
-                this.openDialogMenu(OPTION_MENU, "OPTION", [ "BGM", "SE" ]);
+                this.openSetting();
                 break;
-            case 2: // exit
+            default: // exit
                 gls2.core.exitApp();
                 break;
             }
         } else if (requestCode === OPTION_MENU) { // option menu
-            this.openDialogMenu(BGM_MENU, "BGM", [ "0", "1", "2", "3", "4", "5", "6", "7" ]);
+            switch (result) {
+            case 0:
+                this.openBgmSetting();
+                break;
+            case 1:
+                this.openSeSetting();
+                break;
+            case 2:
+                this.openDifficultySetting();
+                break;
+            default:
+                this.openMainMenu();
+                break;
+            }
+        } else if (requestCode === BGM_SETTING) {
+            if (result !== 6) gls2.core.bgmVolume = result;
+            this.openSetting();
+        } else if (requestCode === SE_SETTING) {
+            if (result !== 6) gls2.core.seVolume = result;
+            this.openSetting();
+        } else if (requestCode === DIFFICULTY_SETTING) {
+            if (result !== 5) gls2.core.difficulty = result;
+            this.openSetting();
         }
     },
+
 });
 
 })();

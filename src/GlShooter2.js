@@ -9,6 +9,12 @@ gls2.GlShooter2 = tm.createClass({
     highScore: 0,
     /** ハイスコア取得時の最終到達ステージ */
     highStage: 0,
+    /** BGM音量(0～5) */
+    bgmVolume: 4,
+    /** SE音量(0～5) */
+    seVolume: 4,
+    /** 難易度(0～4) */
+    difficulty: 1,
     init: function(id) {
         this.superInit(id);
         gls2.core = this;
@@ -43,6 +49,8 @@ tm.app.Label = tm.createClass({
         this.setAlign("center");
         this.setBaseline("middle");
         this.setFontFamily("Orbitron");
+
+        this.isHitPoint = this.isHitPointRect;
     },
     update: function(app) {
         this.alpha = 0.8 + Math.sin(app.frame * 0.1) * 0.2;

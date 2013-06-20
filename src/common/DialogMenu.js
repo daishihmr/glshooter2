@@ -11,8 +11,9 @@ gls2.DialogMenu = tm.createClass({
      * @param {string} title
      * @param {Array.<string>} menu
      */
-    init: function(title, menu) {
+    init: function(title, menu, defaultSelected) {
         this.superInit();
+        if (defaultSelected !== undefined) this.selected = defaultSelected;
 
         var showLabels = function() {
             var y = SC_H*0.5 - menu.length*25;
@@ -29,6 +30,7 @@ gls2.DialogMenu = tm.createClass({
                         self.selected = i;
                     }
                 });
+                sel.width = SC_W * 0.7;
                 return sel;
             }.bind(this));
 
@@ -62,8 +64,8 @@ gls2.DialogMenu = tm.createClass({
                 ]).toStyle(),
         }).addChildTo(this);
         this.cursor.x = SC_W*0.5;
-        this.cursor.s = 0;
-        this.cursor.y = this.selection[0].y;
+        this.cursor.s = this.selected;
+        this.cursor.y = this.selection[this.selected].y;
         this.cursor.update = function() {
             if (this.s !== this.parent.selected) {
                 this.s = this.parent.selected;
@@ -90,10 +92,11 @@ gls2.DialogMenu = tm.createClass({
             return;
         } else if (app.keyboard.getKeyDown("down")) {
             this.selected += 1;
+            this.selected = Math.clamp(this.selected, 0, this.selection.length-1);
         } else if (app.keyboard.getKeyDown("up")) {
             this.selected -= 1;
+            this.selected = Math.clamp(this.selected, 0, this.selection.length-1);
         }
-        this.selected = Math.clamp(this.selected, 0, this.selection.length-1);
     },
 
     closeDialog: function(result) {
