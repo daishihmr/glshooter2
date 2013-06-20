@@ -53,10 +53,10 @@ gls2.Player = tm.createClass({
             // ショット
             if (!kb.getKey("c") && app.frame % 2 === 0) {
                 var s = Math.sin(app.frame * 0.1);
-                gls2.ShotBullet(this.x - s*14, this.y - 10, -90).addChildTo(this.gameScene);
-                gls2.ShotBullet(this.x - s* 7, this.y - 10, -90).addChildTo(this.gameScene);
-                gls2.ShotBullet(this.x + s* 7, this.y - 10, -90).addChildTo(this.gameScene);
-                gls2.ShotBullet(this.x + s*14, this.y - 10, -90).addChildTo(this.gameScene);
+                gls2.ShotBullet(this.x-7 - s*4, this.y-5, -90).addChildTo(this.gameScene);
+                gls2.ShotBullet(this.x-7 + s*4, this.y-5, -90).addChildTo(this.gameScene);
+                gls2.ShotBullet(this.x+7 - s*4, this.y-5, -90).addChildTo(this.gameScene);
+                gls2.ShotBullet(this.x+7 + s*4, this.y-5, -90).addChildTo(this.gameScene);
             }
         }
 
@@ -70,13 +70,6 @@ gls2.Player = tm.createClass({
         for (var i = 0; i < 5; i++) {
             gls2.BackfireParticle().setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
             gls2.BackfireParticle().setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
-        }
-
-        // 残像
-        gls2.Particle(128, 0.3, 0.9).setPosition(this.x, this.y).addChildTo(this.gameScene);
-        for (var i = 0, end = this.bits.length; i < end; i++) {
-            var bit = this.bits[i];
-            gls2.Particle(64, 0.3, 0.9).setPosition(this.x + bit.x, this.y + bit.y).addChildTo(this.gameScene);
         }
     },
     controlBit: function(kb) {

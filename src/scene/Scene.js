@@ -50,11 +50,11 @@ gls2.DialogMenu = tm.createClass({
             }.bind(this));
 
             this.cursor.x = SC_W*0.5;
-            this.cursor.y = this.selection[this.selected].y;
+            this.cursor.y = this.selection[this.selected].y-4;
             this.cursor.update = function() {
                 this.tweener.clear();
                 this.tweener.to({
-                    y: this.parent.selection[this.parent.selected].y
+                    y: this.parent.selection[this.parent.selected].y-4
                 }, 30);
             };
         }.bind(this);

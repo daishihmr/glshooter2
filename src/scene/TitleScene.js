@@ -44,7 +44,7 @@ gls2.TitleScene = tm.createClass({
 
     _generateParticle: function(cx, cy) {
         var p = gls2.Particle(80, 1.0, 0.8, this.particleImage).addChildTo(this);
-        p.speed = 0.5;
+        p.speed = 0.3;
         var a = Math.randf(0, Math.PI*2);
         var r = Math.rand(0, 20);
         p.setPosition(Math.cos(a) * r + cx, Math.sin(a) * r + cy);
