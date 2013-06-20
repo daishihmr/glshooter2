@@ -42,7 +42,7 @@ gls2.EnemySoft.setup = function() {
                 .wait(Math.rand(10, 500))
                 .move(this.enemy.x, y, y*5, "easeOutQuad")
                 .call(function() {
-                    attack(this.enemy, "basic0");
+                    attack(this.enemy, "basic0-4");
                 }.bind(this));
         },
         onCompleteAttack: function() {

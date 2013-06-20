@@ -21,8 +21,8 @@ gls2.TitleScene = tm.createClass({
         this.superInit();
         tm.app.Label("GL-Shooter 2", 50).setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
         tm.app.Label("version 1.0-beta", 22).setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
-        tm.app.Label("HIGH SCORE: " + gls2.core.highScore).setPosition(SC_W * 0.5, SC_H * 0.85).addChildTo(this);
-        tm.app.Label("press z key").setPosition(SC_W * 0.5, SC_H * 0.75).addChildTo(this);
+        tm.app.Label("HIGH SCORE: " + gls2.core.highScore).setPosition(SC_W * 0.5, SC_H * 0.40).addChildTo(this);
+        tm.app.Label("press [Z] key").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.particleImage = tm.graphics.Canvas()
             .resize(80, 80)

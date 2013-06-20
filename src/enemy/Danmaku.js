@@ -19,9 +19,22 @@ var $ = bulletml.dsl;
 /** 自機狙い弾 */
 var fire0 = $.fire($.direction(0), $.bullet());
 
-Danmaku.basic0 = new bulletml.Root({
+Danmaku["basic0-0"] = new bulletml.Root({
     top: $.action([
         fire0,
+    ]),
+});
+
+Danmaku["basic0-4"] = new bulletml.Root({
+    top: $.action([
+        $.repeat(3, [
+            $.repeat(10, [
+                $.fire($.direction(-20), $.speed("$loop.count*0.02+1.15"), $.bullet()),
+                $.fire($.direction(  0), $.speed("$loop.count*0.02+1.15"), $.bullet()),
+                $.fire($.direction(+20), $.speed("$loop.count*0.02+1.15"), $.bullet()),
+            ]),
+            $.wait(40),
+        ]),
     ]),
 });
 

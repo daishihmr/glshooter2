@@ -1,7 +1,7 @@
 gls2.Player = tm.createClass({
     superClass: tm.app.Sprite,
     roll: 0,
-    speed: 5,
+    speed: 4,
     controllable: true,
     muteki: false,
     hitCircle: null,
