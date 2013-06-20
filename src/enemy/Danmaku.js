@@ -12,7 +12,7 @@ config.bulletFactory = function(spec) {
         fillStyle: "white",
     });
 };
-config.speedRate = 3;
+config.speedRate = 4;
 
 var $ = bulletml.dsl;
 

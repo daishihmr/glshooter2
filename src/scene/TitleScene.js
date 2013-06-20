@@ -14,6 +14,9 @@ gls2.TitleScene = tm.createClass({
     age: 0,
     particles: [],
 
+    lastMainMenu: 0,
+    lastSetting: 0,
+
     init: function() {
         this.superInit();
         tm.app.Label("GL-Shooter 2", 50).setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
@@ -67,23 +70,38 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "start", "setting", "exit" ]);
+        this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "start", "setting", "save score" ], this.lastMainMenu, [
+            "プレイを開始します",
+            "設定を変更します",
+            "ゲームを終了し9leapにスコアを登録します",
+        ]);
     },
     openSetting: function() {
-        this.openDialogMenu(OPTION_MENU, "SETTING", [ "bgm volume", "sound volume", "difficulty", "exit" ]);
+        this.openDialogMenu(OPTION_MENU, "SETTING", [ "bgm volume", "sound volume", "difficulty" ], this.lastSetting, [
+            "BGMボリュームを設定します",
+            "効果音ボリュームを設定します",
+            "難易度を設定します",
+        ]);
     },
     openBgmSetting: function() {
-        this.openDialogMenu(BGM_SETTING, "BGM VOLUME", [ "0", "1", "2", "3", "4", "5", "exit" ], gls2.core.bgmVolume);
+        this.openDialogMenu(BGM_SETTING, "BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.bgmVolume);
     },
     openSeSetting: function() {
-        this.openDialogMenu(SE_SETTING, "SE VOLUME", [ "0", "1", "2", "3", "4", "5", "exit" ], gls2.core.seVolume);
+        this.openDialogMenu(SE_SETTING, "SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.seVolume);
     },
     openDifficultySetting: function() {
-        this.openDialogMenu(DIFFICULTY_SETTING, "DIFFICULTY", [ "easy", "normal", "hard", "very hard", "hell", "exit" ], gls2.core.difficulty);
+        this.openDialogMenu(DIFFICULTY_SETTING, "DIFFICULTY", [ "easy", "normal", "hard", "very hard", "hell" ], gls2.core.difficulty, [
+            "初心者でも安心して挑戦可能な入門コース",
+            "普通の難易度。easyでは物足りない人へ",
+            "一般的な弾幕STGのレベル",
+            "hardはヌルすぎるという人向け",
+            "死ぬがよい",
+        ]);
     },
 
     onResult: function(requestCode, result) {
         if (requestCode === MAIN_MENU) { // main menu
+            if (result !== 3) this.lastMainMenu = result;
             switch (result) {
             case 0: // start
                 this.tweener
@@ -101,11 +119,13 @@ gls2.TitleScene = tm.createClass({
             case 1: // option
                 this.openSetting();
                 break;
-            default: // exit
+            case 2: // to 9leap
                 gls2.core.exitApp();
                 break;
             }
         } else if (requestCode === OPTION_MENU) { // option menu
+            if ((result !== 3) ) this.lastSetting = result;
+
             switch (result) {
             case 0:
                 this.openBgmSetting();

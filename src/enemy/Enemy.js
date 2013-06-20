@@ -1,3 +1,5 @@
+(function() {
+
 /**
  * 敵
  */
@@ -9,6 +11,7 @@ gls2.Enemy = tm.createClass({
     hard: null,
     soft: null,
     ground: null,
+    hp: 0,
     init: function(hardName, softName) {
         this.superInit();
         this.addEventListener("added", function() {
@@ -28,6 +31,13 @@ gls2.Enemy = tm.createClass({
         this.addEventListener("completeattack", function() {
             this.onCompleteAttack();
         });
+        this.addEventListener("added", function() {
+            activeList.push(this);
+        });
+        this.addEventListener("removed", function() {
+            var idx = activeList.indexOf(this);
+            if (idx !== -1) activeList.splice(idx, 1);
+        });
     },
     onLaunch: function() {
         this.soft.onLaunch();
@@ -44,9 +54,19 @@ gls2.Enemy = tm.createClass({
         if (this.hard.isGround) {
             this.x += this.ground.dx;
             this.y += this.ground.dy;
-        }    
+        }
+    },
+    damage: function(damagePoint) {
+        this.hp -= damagePoint;
+        if (this.hp <= 0) {
+            this.remove();
+        }
     },
     draw: function(canvas) {
         this.hard.draw(canvas);
     }
 });
+
+var activeList = gls2.Enemy.activeList = [];
+
+})();

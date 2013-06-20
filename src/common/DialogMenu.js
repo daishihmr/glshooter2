@@ -3,7 +3,10 @@ gls2.DialogMenu = tm.createClass({
     title: null,
     selection: [],
     selected: 0,
+    descriptions: null,
+    description: null,
     box: null,
+    opened: false,
     finished: false,
     cursor: null,
 
@@ -11,8 +14,17 @@ gls2.DialogMenu = tm.createClass({
      * @param {string} title
      * @param {Array.<string>} menu
      */
-    init: function(title, menu, defaultSelected) {
+    init: function(title, menu, defaultSelected, menuDesctiptions) {
         this.superInit();
+
+        menu.push("exit");
+        if (menuDesctiptions) {
+            this.descriptions = menuDesctiptions;
+        } else {
+            this.descriptions = [].concat(menu);
+        }
+        this.descriptions.push("前の画面へ戻ります");
+
         if (defaultSelected !== undefined) this.selected = defaultSelected;
 
         var showLabels = function() {
@@ -35,6 +47,8 @@ gls2.DialogMenu = tm.createClass({
             }.bind(this));
 
             this._createCursor();
+
+            this.opened = true;
         }.bind(this);
 
         var height = Math.max((1+menu.length)*50, 50) + 40;
@@ -51,6 +65,8 @@ gls2.DialogMenu = tm.createClass({
             .to({ width: SC_W*0.8, height: height }, 200, "easeOutExpo")
             .call(showLabels);
         this.box.addChildTo(this);
+
+        this.description = tm.app.Label("", 14).setPosition(SC_W*0.5, SC_H-10).addChildTo(this);
     },
 
     _createCursor: function() {
@@ -79,13 +95,21 @@ gls2.DialogMenu = tm.createClass({
 
     update: function(app) {
         this.superClass.prototype.update.apply(this, arguments);
+
+        if (this.descriptions !== null) this.description.text = this.descriptions[this.selected];
+
+
+        if (!this.opened) {
+            return;
+        }
         if (this.finished) {
             this.cursor.visible = app.frame % 2 === 0;
             return;
         }
 
         if (app.keyboard.getKeyDown("x")) {
-            this.closeDialog(-1);
+            this.selected = this.selection.length-1;
+            this.closeDialog(this.selected);
             return;
         } else if (app.keyboard.getKeyDown("z")) {
             this.closeDialog(this.selected);
@@ -118,5 +142,10 @@ gls2.DialogMenu = tm.createClass({
                     }.bind(this));
             }.bind(this));
     },
+
+    draw: function(canvas) {
+        canvas.fillStyle = "rgba(0,0,0,0.5)";
+        canvas.fillRect(0,0,SC_W,SC_H);
+    }
 
 });

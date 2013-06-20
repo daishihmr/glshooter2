@@ -36,9 +36,11 @@ gls2.EnemySoft.setup = function() {
             this.superInit(enemy);
         },
         onLaunch: function() {
+            var y = Math.randf(SC_H*0.1, SC_H*0.3);
             this.enemy.tweener
                 .clear()
-                .move(this.enemy.x, Math.rand(SC_H*0.1, SC_H*0.4), 800, "easeOutQuad")
+                .wait(Math.rand(10, 500))
+                .move(this.enemy.x, y, y*5, "easeOutQuad")
                 .call(function() {
                     attack(this.enemy, "basic0");
                 }.bind(this));
@@ -47,7 +49,7 @@ gls2.EnemySoft.setup = function() {
             this.enemy.tweener
                 .clear()
                 .wait(1000)
-                .moveBy(0, -SC_H, 1600, "easeOutQuad")
+                .moveBy(0, -SC_H, 2400, "easeOutQuad")
                 .call(function() {
                     this.enemy.remove();
                 }.bind(this));

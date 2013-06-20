@@ -6,10 +6,12 @@ gls2.EnemyHard = tm.createClass({
     /** 地上物判定 */
     isGround: false,
     _sprite: null,
+    hp: 0,
     init: function(enemy) {
         this.enemy = enemy;
     },
     setup: function() {
+        this.enemy.hp = this.hp;
     },
     onLaunch: function() {
     },
@@ -30,7 +32,7 @@ gls2.EnemyHard.setup = function() {
         draw: function(canvas) {
             var srcRect = this.srcRect;
             var element = this._image.element;
-            
+
             canvas.context.drawImage(element,
                 srcRect.x, srcRect.y, srcRect.width, srcRect.height,
                 -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
@@ -39,6 +41,7 @@ gls2.EnemyHard.setup = function() {
 
     this["heri1"] = tm.createClass({
         superClass: gls2.EnemyHard,
+        hp: 10,
         init: function(enemy) {
             this.superInit(enemy);
             this._sprite = _Sprite("tex1", 64, 64);

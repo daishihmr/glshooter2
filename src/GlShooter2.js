@@ -1,3 +1,6 @@
+var SC_W = 480;
+var SC_H = 520;
+
 /** @namespace */
 var gls2 = {
     core: null,
