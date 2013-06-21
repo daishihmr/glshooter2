@@ -54,6 +54,13 @@ gls2.ShotBullet = tm.createClass({
     }
 });
 
+gls2.ShotBullet.clearAll = function() {
+    var copied = [].concat(activeList);
+    for (var i = 0, end = copied.length; i < end; i++) {
+        copied[i].remove();
+    }
+};
+
 var activeList = gls2.ShotBullet.activeList = [];
 
 })();

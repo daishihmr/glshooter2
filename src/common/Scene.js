@@ -10,10 +10,17 @@ gls2.Scene = tm.createClass({
         gls2.Scene.result = result;
         gls2.core.popScene();
     },
-    openDialogMenu: function(requestCode, title, menu, defaultValue, menuDescriptions) {
+    startScene: function(requestCode, scene) {
         gls2.Scene.result = null;
         gls2.Scene.requestCode = requestCode;
-        gls2.core.pushScene(gls2.DialogMenu(title, menu, defaultValue, menuDescriptions));
+        if (typeof(scene) === "function") {
+            gls2.core.pushScene(scene());
+        } else if (scene instanceof gls2.Scene) {
+            gls2.core.pushScene(scene);
+        }
+    },
+    openDialogMenu: function(requestCode, title, menu, defaultValue, menuDescriptions) {
+        this.startScene(requestCode, gls2.DialogMenu(title, menu, defaultValue, menuDescriptions));
     },
     onResult: function(requestCode, result) {
     },

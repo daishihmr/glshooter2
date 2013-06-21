@@ -1,9 +1,11 @@
 (function() {
 
+var bulletPool = [];
+var activeList = [];
+
 gls2.Danmaku = {};
 
 gls2.Danmaku.setup = function() {
-    var bulletPool = [];
     for (var i = 0; i < 250; i++) {
         var b = tm.app.Sprite("tex0", 20, 20);
         // b.update = function() {
@@ -11,6 +13,8 @@ gls2.Danmaku.setup = function() {
         // };
         b.addEventListener("removed", function() {
             bulletPool.push(this);
+            var idx = activeList.indexOf(this);
+            if (idx !== -1) activeList.splice(idx, 1);
         });
 
         bulletPool.push(b);
@@ -23,6 +27,8 @@ gls2.Danmaku.setup = function() {
     config.bulletFactory = function(spec) {
         var b = bulletPool.shift(0);
         if (b) {
+            activeList.push(b);
+
             b.setFrameIndex(1);
             return b;
         } else {
@@ -55,5 +61,12 @@ gls2.Danmaku["basic0-4"] = new bulletml.Root({
         ]),
     ]),
 });
+
+gls2.Danmaku.clearAll = function() {
+    var copied = [].concat(activeList);
+    for (var i = 0, end = copied.length; i < end; i++) {
+        copied[i].remove();
+    }
+};
 
 })();

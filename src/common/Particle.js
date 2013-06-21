@@ -50,11 +50,9 @@ gls2.Particle.IMAGE = null;
 gls2.BackfireParticle = tm.createClass({
     superClass: gls2.Particle,
     ground: null,
-    init: function() {
-        this.superInit(Math.rand(10, 22));
-        this.addEventListener("added", function() {
-            this.ground = gls2.GameScene.instance.ground;
-        });
+    init: function(ground) {
+        this.superInit(20, 1.0, 0.9);
+        this.ground = ground;
     },
     update: function(app) {
         this.superClass.prototype.update.apply(this, app);

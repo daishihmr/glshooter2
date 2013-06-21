@@ -13,8 +13,11 @@ gls2.Player = tm.createClass({
         { x:  60, y: 30, d: 0.1, turn:  true, dt:  1.0 },
     ],
     bitPivot: tm.app.CanvasElement(),
-    init: function() {
+    init: function(gameScene) {
         this.superInit("tex1", 64, 64);
+
+        this.gameScene = gameScene;
+
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
         gls2.setShadow(this);
@@ -25,10 +28,6 @@ gls2.Player = tm.createClass({
             gls2.Bit(this, bit).setPosition(bit.x, bit.y).addChildTo(this.bitPivot);
         }
         this.bitPivot.addChildTo(this);
-
-        this.addEventListener("added", function() {
-            this.gameScene = gls2.GameScene.instance;
-        });
     },
     _createHitCircle: function() {
         this.hitCircle = tm.app.Sprite("tex0", 20, 20).addChildTo(this);
@@ -68,16 +67,14 @@ gls2.Player = tm.createClass({
         this._calcRoll(kb);
 
         // バックファイア
-        for (var i = 0; i < 5; i++) {
-            gls2.BackfireParticle().setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
-            gls2.BackfireParticle().setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
-        }
+        gls2.BackfireParticle(this.gameScene.ground).setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
+        gls2.BackfireParticle(this.gameScene.ground).setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
     },
     controlBit: function(kb) {
         var p = this.bitPivot;
-        if (kb.getKey("left")) {
+        if (this.controllable && kb.getKey("left")) {
             p.rotation = Math.max(p.rotation - 2, -30);
-        } else if (kb.getKey("right")) {
+        } else if (this.controllable && kb.getKey("right")) {
             p.rotation = Math.min(p.rotation + 2,  30);
         } else {
             if (2 < p.rotation) {
@@ -121,7 +118,6 @@ gls2.Bit = tm.createClass({
     superClass: tm.app.AnimationSprite,
     bit: null,
     player: null,
-    gameScene: null,
     init: function(player, bit) {
         this.superInit(tm.app.SpriteSheet({
             image: "tex1",
@@ -149,20 +145,23 @@ gls2.Bit = tm.createClass({
         gls2.setShadow(this);
 
         this.gotoAndPlay(bit.turn ? "anim0" : "anim1");
-
-        this.addEventListener("added", function() {
-            this.gameScene = gls2.GameScene.instance;
-        });
     },
-    update: function(app) {
+    update: function(core) {
         this.x = this.bit.x;
         this.y = this.bit.y;
 
-        if (!this.player.controllable || app.frame % 2 !== 0 || app.keyboard.getKey("c")) return;
-
         var dir = this.bit.d * this.bit.dt;
         this.rotation = Math.radToDeg(dir);
+
+        // グローバル座標
         var g = this.parent.localToGlobal(this);
-        gls2.ShotBullet(g.x, g.y, this.parent.rotation + this.rotation - 90).addChildTo(this.gameScene);
+
+        // バックファイア
+        gls2.BackfireParticle(core.gameScene.ground).setPosition(g.x, g.y).addChildTo(core.gameScene);
+
+        // ショット
+        if (this.player.controllable && !core.keyboard.getKey("c") && core.frame % 2 !== 0) {
+            gls2.ShotBullet(g.x, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
+        }
     }
 });

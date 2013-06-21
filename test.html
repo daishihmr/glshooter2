@@ -1,0 +1,63 @@
+<html>
+<head>
+<script src="libs/tmlib.js"></script>
+<script>
+var W = 500;
+var H = 500;
+var app;
+
+tm.main(function() {
+
+    app = tm.app.CanvasApp("#app");
+    app.resize(W, H);
+    app.run();
+
+    app.replaceScene(SceneA());
+
+    console.log(typeof SceneA);
+    console.log(typeof SceneA());
+
+});
+
+var SceneA = tm.createClass({
+    superClass: tm.app.Scene,
+    s: null,
+    init: function() {
+        this.superInit();
+        tm.app.Label("This is SceneA").setAlign("center").setBaseline("middle").setPosition(W/2, H/2).addChildTo(this);
+    },
+    update: function(app) {
+        if (app.keyboard.getKeyDown("space")) {
+            console.log("SceneA#touch")
+            this.tweener
+                .clear()
+                .wait(500)
+                .call(function() {
+                    app.replaceScene(SceneB());
+                });
+        }
+    },
+});
+
+
+var SceneB = tm.createClass({
+    superClass: tm.app.Scene,
+    init: function() {
+        this.superInit();
+        tm.app.Label("This is SceneB").setAlign("center").setBaseline("middle").setPosition(W/2, H/2).addChildTo(this);
+    },
+    update: function(app) {
+        if (app.keyboard.getKeyDown("space")) {
+            console.log("SceneB#touch")
+            app.replaceScene(SceneA());
+        }
+    },
+});
+
+
+</script>
+</head>
+<body>
+<canvas id="app"></canvas>
+</body>
+</html>

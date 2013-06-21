@@ -1,3 +1,7 @@
+(function() {
+
+var SINGLETON = null;
+
 gls2.GameScene = tm.createClass({
     superClass: gls2.Scene,
     player: null,
@@ -16,20 +20,12 @@ gls2.GameScene = tm.createClass({
         { offset:1, color:"#010" }
     ]).toStyle(),
 
-    /**
-     * @param {number} playerType 自機タイプ
-     */
-    init: function(playerType) {
-        console.log("GameScene#init")
-        this.superInit();
-        gls2.GameScene.instance = this;
-        this.addEventListener("enter", function(e) {
-            if (e.app.result) {
-                this.onResult(e.app.result);
-            }
-        });
+    init: function() {
+        if (SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
 
-        this._setupCommonData();
+        this.superInit();
+        SINGLETON = this;
+
         this._createGround();
 
         this.groundLayer.addChildTo(this);
@@ -37,14 +33,6 @@ gls2.GameScene = tm.createClass({
         this.enemyLayer.addChildTo(this);
         this.effectLayer.addChildTo(this);
         this.bulletLayer.addChildTo(this);
-
-        this.gameStart(playerType);
-    },
-
-    _setupCommonData: function() {
-        gls2.EnemyHard.setup();
-        gls2.EnemySoft.setup();
-        gls2.Danmaku.setup();
     },
 
     _createGround: function() {
@@ -100,8 +88,8 @@ gls2.GameScene = tm.createClass({
     update: function(app) {
         this.stage.update(app.frame);
 
-        if (app.keyboard.getKey("space")) {
-            gls2.core.replaceScene(gls2.TitleScene());
+        if (app.keyboard.getKeyDown("space")) {
+            this.finish(0);
         }
     },
 
@@ -110,7 +98,12 @@ gls2.GameScene = tm.createClass({
     },
 
     gameStart: function(playerType) {
-        this.player = gls2.Player();
+        if (this.player !== null) this.player.remove();
+        gls2.Enemy.clearAll();
+        gls2.ShotBullet.clearAll();
+        gls2.Danmaku.clearAll();
+
+        this.player = gls2.Player(this);
         this.startStage(0);
     },
 
@@ -120,25 +113,24 @@ gls2.GameScene = tm.createClass({
     },
 
     launch: function() {
-        this.player.setFrameIndex(3 + this.roll);
-        this.player.addChildTo(this);
+        this.player
+            .setPosition(SC_W*0.5, SC_H+32)
+            .setFrameIndex(3 + this.roll)
+            .addChildTo(this);
         this.player.controllable = false;
         this.player.muteki = true;
-        this.player.tweener.clear();
-        this.player.tweener.set({
-            x: SC_W * 0.5,
-            y: SC_H + 32
-        })
-        .wait(30)
-        .moveBy(0, -120)
-        .wait(120)
-        .call(function() {
-            this.controllable = true;
-        }.bind(this.player))
-        .wait(120)
-        .call(function() {
-            this.muteki = false;
-        }.bind(this.player));
+        this.player.tweener
+            .clear()
+            .wait(30)
+            .moveBy(0, -120)
+            .wait(120)
+            .call(function() {
+                this.controllable = true;
+            }.bind(this.player))
+            .wait(120)
+            .call(function() {
+                this.muteki = false;
+            }.bind(this.player));
     },
 
     miss: function() {
@@ -169,4 +161,4 @@ gls2.GameScene = tm.createClass({
 
 });
 
-gls2.GameScene.instance = null;
+})();

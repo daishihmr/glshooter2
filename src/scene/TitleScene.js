@@ -5,6 +5,7 @@ var OPTION_MENU = 1;
 var BGM_SETTING = 2;
 var SE_SETTING = 3;
 var DIFFICULTY_SETTING = 4;
+var GAME_SCENE = 5;
 
 gls2.TitleScene = tm.createClass({
     superClass: gls2.Scene,
@@ -13,14 +14,18 @@ gls2.TitleScene = tm.createClass({
     age: 0,
     particles: [],
 
+    gameStarted: false,
+    highScoreLabel: null,
+
     lastMainMenu: 0,
     lastSetting: 0,
 
     init: function() {
         this.superInit();
+
         tm.app.Label("GL-Shooter 2", 50).setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
         tm.app.Label("version 1.0-beta", 22).setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
-        tm.app.Label("HIGH SCORE: " + gls2.core.highScore).setPosition(SC_W * 0.5, SC_H * 0.40).addChildTo(this);
+        this.highScoreLabel = tm.app.Label().setPosition(SC_W * 0.5, SC_H * 0.40).addChildTo(this);
         tm.app.Label("press space key").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.particleImage = tm.graphics.Canvas()
@@ -32,6 +37,11 @@ gls2.TitleScene = tm.createClass({
                 ]).toStyle()
             ).fillRect(0, 0, 80, 80)
             .element;
+
+        this.addEventListener("enter", function() {
+            this.gameStarted = false;
+            this.highScoreLabel.text = "HIGH SCORE: " + gls2.core.highScore;
+        });
     },
 
     draw: function(canvas) {
@@ -53,6 +63,8 @@ gls2.TitleScene = tm.createClass({
     },
 
     _generateParticle: function(cx, cy) {
+        if (this.gameStarted) return;
+
         var p = gls2.Particle(80, 1.0, 0.8, this.particleImage).addChildTo(this);
         p.speed = 0.6;
         var a = Math.randf(0, Math.PI*2);
@@ -113,13 +125,13 @@ gls2.TitleScene = tm.createClass({
                     .call(function() {
                         for (var i = 0, end = this.particles.length; i < end; i++) {
                             this.particles[i].speed = 6;
-                            this._generateParticle = function() {};
+                            this.gameStarted = true;
                         }
                     }.bind(this))
-                    .wait(2000)
+                    .wait(1000)
                     .call(function() {
-                        console.log("start?")
-                        gls2.core.replaceScene(gls2.GameScene());
+                        gls2.core.gameScene.gameStart();
+                        this.startScene(GAME_SCENE, gls2.core.gameScene);
                     }.bind(this));
                 break;
             case 1: // option

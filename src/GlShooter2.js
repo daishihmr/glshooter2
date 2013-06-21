@@ -19,6 +19,8 @@ gls2.GlShooter2 = tm.createClass({
     /** 難易度(0～4) */
     difficulty: 1,
 
+    gameScene: null,
+
     init: function(id) {
         this.superInit(id);
         gls2.core = this;
@@ -31,8 +33,19 @@ gls2.GlShooter2 = tm.createClass({
                 "tex0": "assets/tex0.png",
                 "tex1": "assets/tex1.png",
             },
-            nextScene: gls2.TitleScene
+            nextScene: function() {
+                this.loaded();
+                return gls2.TitleScene();
+            }.bind(this),
         }));
+    },
+
+    loaded: function() {
+        gls2.EnemyHard.setup();
+        gls2.EnemySoft.setup();
+        gls2.Danmaku.setup();
+
+        this.gameScene = gls2.GameScene();
     },
 
     exitApp: function() {
