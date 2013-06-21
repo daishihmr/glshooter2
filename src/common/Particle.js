@@ -4,21 +4,25 @@ gls2.Particle = tm.createClass({
     superClass: tm.app.CanvasElement,
     alpha: 1.0,
     alphaDecayRate: 0.85,
+    size: 0,
     image: null,
 
     /**
      * @param {number} size サイズ
-     * @param {number} initialAlpha アルファ初期値
-     * @param {number} alphaDecayRate アルファ減衰率
+     * @param {number=} initialAlpha アルファ初期値
+     * @param {number=} alphaDecayRate アルファ減衰率
+     * @param {Image=} image 画像
      */
     init: function(size, initialAlpha, alphaDecayRate, image) {
         this.superInit();
-        this.width = this.height = size;
+        this.width = this.height = this.size = size;
         if (initialAlpha !== undefined) this.alpha = initialAlpha;
         if (alphaDecayRate !== undefined) this.alphaDecayRate = alphaDecayRate;
         this.blendMode = "lighter";
 
-        if (gls2.Particle.IMAGE == null) {
+        if (image) {
+            this.image = image
+        } else {
             var c = tm.graphics.Canvas();
             c.resize(size, size);
             c.fillStyle = tm.graphics.RadialGradient(size * 0.5, size * 0.5, 0,size * 0.5, size * 0.5, size * 0.5).addColorStopList([
@@ -27,10 +31,8 @@ gls2.Particle = tm.createClass({
             ]).toStyle();
             c.fillRect(0, 0, size, size);
 
-            gls2.Particle.IMAGE = c.element;
+            this.image = c.element;
         }
-
-        this.image = image || gls2.Particle.IMAGE;
     },
     update: function(app) {
         this.alpha *= this.alphaDecayRate;
@@ -43,9 +45,11 @@ gls2.Particle = tm.createClass({
     draw: function(canvas) {
         canvas.context.drawImage(this.image,
             -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
-    }
+    },
+    clone: function() {
+        return gls2.Particle(this.size, this.initialAlpha, this.alphaDecayRate, this.image);
+    },
 });
-gls2.Particle.IMAGE = null;
 
 gls2.BackfireParticle = tm.createClass({
     superClass: gls2.Particle,
@@ -58,7 +62,10 @@ gls2.BackfireParticle = tm.createClass({
         this.superClass.prototype.update.apply(this, app);
         this.x += this.ground.dx;
         this.y += this.ground.dy + 0.5;
-    }
+    },
+    clone: function() {
+        return gls2.BackfireParticle(this.ground);
+    },
 });
 
 })();

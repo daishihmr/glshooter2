@@ -4,7 +4,6 @@ gls2.Player = tm.createClass({
     speed: 4,
     controllable: true,
     muteki: false,
-    hitCircle: null,
     gameScene : null,
     bits: [
         { x: -60, y: 30, d: 0.1, turn: false, dt: -1.0 },
@@ -12,7 +11,12 @@ gls2.Player = tm.createClass({
         { x:  30, y: 20, d: 0.1, turn:  true, dt:  0.5 },
         { x:  60, y: 30, d: 0.1, turn:  true, dt:  1.0 },
     ],
-    bitPivot: tm.app.CanvasElement(),
+
+    hitCircle: null,
+    bitPivot: null,
+    circle0: null,
+    circle1: null,
+
     init: function(gameScene) {
         this.superInit("tex1", 64, 64);
 
@@ -21,13 +25,45 @@ gls2.Player = tm.createClass({
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
         gls2.setShadow(this);
-        this._createHitCircle();
 
+        this._createHitCircle();
+        this.bitPivot = tm.app.CanvasElement().addChildTo(this);
         for (var i = 0, end = this.bits.length; i < end; i++) {
             var bit = this.bits[i];
             gls2.Bit(this, bit).setPosition(bit.x, bit.y).addChildTo(this.bitPivot);
         }
-        this.bitPivot.addChildTo(this);
+
+        this.circle0 = tm.app.CircleShape(80, 80, {
+            fillStyle: "rgba(0,0,0,0)",
+            strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
+                { offset:0.0, color:"rgba(100,255,100,0.1)" },
+                { offset:0.4, color:"rgba(100,255,100,0.1)" },
+                { offset:0.5, color:"rgba(255,255,255,1.0)" },
+                { offset:0.6, color:"rgba(100,255,100,0.1)" },
+                { offset:1.0, color:"rgba(100,255,100,0.1)" },
+            ]).toStyle(),
+            lineWidth: 3.0,
+        }).addChildTo(this);
+        this.circle0.blendMode = "lighter";
+        this.circle0.update = function() {
+            this.rotation += 3;
+        };
+
+        this.circle1 = tm.app.CircleShape(80, 80, {
+            fillStyle: "rgba(0,0,0,0)",
+            strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
+                { offset:0.0, color:"rgba(100,255,100,0.1)" },
+                { offset:0.4, color:"rgba(100,255,100,0.1)" },
+                { offset:0.5, color:"rgba(255,255,255,1.0)" },
+                { offset:0.6, color:"rgba(100,255,100,0.1)" },
+                { offset:1.0, color:"rgba(100,255,100,0.1)" },
+            ]).toStyle(),
+            lineWidth: 3.0,
+        }).addChildTo(this);
+        this.circle1.blendMode = "lighter";
+        this.circle1.update = function() {
+            this.rotation -= 3;
+        };
     },
     _createHitCircle: function() {
         this.hitCircle = tm.app.Sprite("tex0", 20, 20).addChildTo(this);
