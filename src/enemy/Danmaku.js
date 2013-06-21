@@ -3,14 +3,17 @@
 var bulletPool = [];
 var activeList = [];
 
-gls2.Danmaku = {};
+gls2.Bullet = tm.createClass({
+    superClass: tm.app.Sprite,
+    init: function() {
+        this.superInit("tex0", 20, 20);
+    },
+});
 
+gls2.Danmaku = {};
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 250; i++) {
         var b = gls2.Bullet();
-        // b.update = function() {
-        //     this.rotation += 10;
-        // };
         b.addEventListener("removed", function() {
             bulletPool.push(this);
             var idx = activeList.indexOf(this);
@@ -37,6 +40,12 @@ gls2.Danmaku.setup = function() {
     };
     config.speedRate = 4;
 };
+gls2.Danmaku.clearAll = function() {
+    var copied = [].concat(activeList);
+    for (var i = 0, end = copied.length; i < end; i++) {
+        copied[i].remove();
+    }
+};
 
 var $ = bulletml.dsl;
 
@@ -60,20 +69,6 @@ gls2.Danmaku["basic0-4"] = new bulletml.Root({
             $.wait(40),
         ]),
     ]),
-});
-
-gls2.Danmaku.clearAll = function() {
-    var copied = [].concat(activeList);
-    for (var i = 0, end = copied.length; i < end; i++) {
-        copied[i].remove();
-    }
-};
-
-gls2.Bullet = tm.createClass({
-    superClass: tm.app.Sprite,
-    init: function() {
-        this.superInit("tex0", 20, 20);
-    },
 });
 
 })();
