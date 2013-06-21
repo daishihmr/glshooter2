@@ -1,40 +1,40 @@
+(function() {
+
+var SINGLETON = null;
+
 gls2.GameScene = tm.createClass({
-    superClass: tm.app.Scene,
+    superClass: gls2.Scene,
     player: null,
+    score: 0,
     stage: null,
     ground: null,
-    groundLayer: tm.app.CanvasElement(),
-    playerLayer: tm.app.CanvasElement(),
-    enemyLayer: tm.app.CanvasElement(),
-    effectLayer: tm.app.CanvasElement(),
-    bulletLayer: tm.app.CanvasElement(),
-    background: tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-        { offset:0, color:"#060" },
-        { offset:1, color:"#030" }
+    zanki: 3,
+    groundLayer: tm.app.Object2D(),
+    playerLayer: tm.app.Object2D(),
+    enemyLayer: tm.app.Object2D(),
+    effectLayer0: tm.app.Object2D(),
+    effectLayer1: tm.app.Object2D(),
+    bulletLayer: tm.app.Object2D(),
+
+    background: this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
+        { offset:0, color:"#030" },
+        { offset:1, color:"#010" }
     ]).toStyle(),
 
-    /**
-     * @param {number} playerType 自機タイプ
-     */
-    init: function(playerType) {
-        this.superInit();
-        gls2.GameScene.instance = this;
+    init: function() {
+        if (SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
 
-        this._setupCommonData();
+        this.superInit();
+        SINGLETON = this;
+
         this._createGround();
 
         this.groundLayer.addChildTo(this);
+        this.effectLayer0.addChildTo(this);
         this.playerLayer.addChildTo(this);
         this.enemyLayer.addChildTo(this);
-        this.effectLayer.addChildTo(this);
+        this.effectLayer1.addChildTo(this);
         this.bulletLayer.addChildTo(this);
-
-        this.gameStart(playerType);
-    },
-
-    _setupCommonData: function() {
-        gls2.EnemyHard.setup();
-        gls2.EnemySoft.setup();
     },
 
     _createGround: function() {
@@ -76,87 +76,91 @@ gls2.GameScene = tm.createClass({
             } else {
                 this.enemyLayer.addChild(child);
             }
-        } else if (child instanceof gls2.Particle || child instanceof gls2.ShotBullet) {
-            this.effectLayer.addChild(child);
-        // } else if (child instanceof gls2.Bullet) {
-        //     this.bulletLayer.addChild(child);
+        } else if (child instanceof gls2.BackfireParticle || child instanceof gls2.ShotBullet) {
+            this.effectLayer0.addChild(child);
+        } else if (child instanceof gls2.Particle) {
+            this.effectLayer1.addChild(child);
+        } else if (child instanceof gls2.Bullet) {
+            this.bulletLayer.addChild(child);
         } else {
             this.superClass.prototype.addChild.apply(this, arguments);
         }
     },
 
-    gameStart: function(playerType) {
-        this.player = gls2.Player();
+    update: function(app) {
+        this.stage.update(app.frame);
 
-        // TODO あとで消す
-        gls2.Enemy("heri1", "heri1").setPosition(100, 100).addChildTo(this);
-        gls2.Enemy("heri2", "heri1").setPosition(450, 200).addChildTo(this);
-        this.addEventListener("enterframe", function() {
-            if (gls2.core.frame % 200 === 0) {
-                this.ground.direction += Math.PI/4;
-            }
-        });
-        this.ground.direction = Math.PI/2;
-        this.ground.speed = 1;
-
-        this.startStage();
-    },
-
-    update: function() {
-
+        if (app.keyboard.getKeyDown("escape")) {
+            this.finish(0);
+        }
     },
 
     draw: function(canvas) {
-        canvas.fillStyle = this.background;
-        canvas.fillRect(0, 0, canvas.width, canvas.height);
+        canvas.clearColor(this.background, 0, 0);
     },
 
-    startStage: function(stage) {
+    gameStart: function(playerType) {
+        if (this.player !== null) this.player.remove();
+        gls2.Enemy.clearAll();
+        gls2.ShotBullet.clearAll();
+        gls2.Danmaku.clearAll();
+
+        this.player = gls2.Player(this);
+        this.startStage(0);
+    },
+
+    startStage: function(stageNumber) {
+        this.stage = gls2.Stage.create(this, stageNumber);
         this.launch();
     },
 
     launch: function() {
-        this.player.setFrameIndex(3 + this.roll);
-        this.player.addChildTo(this);
+        this.player
+            .setPosition(SC_W*0.5, SC_H+32)
+            .setFrameIndex(3 + this.roll)
+            .addChildTo(this);
         this.player.controllable = false;
         this.player.muteki = true;
-        this.player.tweener.clear();
-        this.player.tweener.set({
-            x: SC_W * 0.5,
-            y: SC_H + 32
-        })
-        .wait(30)
-        .moveBy(0, -120)
-        .wait(120)
-        .call(function() {
-            this.controllable = true;
-        }.bind(this.player))
-        .wait(120)
-        .call(function() {
-            this.muteki = false;
-        }.bind(this.player));
+        this.player.tweener
+            .clear()
+            .wait(30)
+            .moveBy(0, -120)
+            .wait(120)
+            .call(function() {
+                this.controllable = true;
+            }.bind(this.player))
+            .wait(120)
+            .call(function() {
+                this.muteki = false;
+            }.bind(this.player));
     },
 
     miss: function() {
-
+        this.player.remove();
+        this.zanki -= 1;
+        if (this.zanki > 0) {
+            this.launch();
+        } else {
+            // TODO コンティニュー確認画面へ
+        }
     },
 
     gameContinue: function() {
-
+        this.launch();
     },
 
     clearStage: function() {
-
+        // TODO リザルト画面へ
     },
 
     gameOver: function() {
-
+        // TODO ゲームオーバー画面へ
     },
 
     gameClear: function() {
-
+        // TODO エンディング画面へ
     },
 
 });
 
-gls2.GameScene.instance = null;
+})();
