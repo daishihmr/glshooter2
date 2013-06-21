@@ -7,7 +7,7 @@ gls2.Danmaku = {};
 
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 250; i++) {
-        var b = tm.app.Sprite("tex0", 20, 20);
+        var b = gls2.Bullet();
         // b.update = function() {
         //     this.rotation += 10;
         // };
@@ -68,5 +68,12 @@ gls2.Danmaku.clearAll = function() {
         copied[i].remove();
     }
 };
+
+gls2.Bullet = tm.createClass({
+    superClass: tm.app.Sprite,
+    init: function() {
+        this.superInit("tex0", 20, 20);
+    },
+});
 
 })();

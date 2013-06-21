@@ -9,12 +9,12 @@ gls2.GameScene = tm.createClass({
     stage: null,
     ground: null,
     zanki: 3,
-    groundLayer: tm.app.CanvasElement(),
-    playerLayer: tm.app.CanvasElement(),
-    enemyLayer: tm.app.CanvasElement(),
-    effectLayer0: tm.app.CanvasElement(),
-    effectLayer1: tm.app.CanvasElement(),
-    bulletLayer: tm.app.CanvasElement(),
+    groundLayer: tm.app.Object2D(),
+    playerLayer: tm.app.Object2D(),
+    enemyLayer: tm.app.Object2D(),
+    effectLayer0: tm.app.Object2D(),
+    effectLayer1: tm.app.Object2D(),
+    bulletLayer: tm.app.Object2D(),
 
     background: this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
         { offset:0, color:"#030" },
@@ -80,8 +80,8 @@ gls2.GameScene = tm.createClass({
             this.effectLayer0.addChild(child);
         } else if (child instanceof gls2.Particle) {
             this.effectLayer1.addChild(child);
-        // } else if (child instanceof gls2.Bullet) {
-        //     this.bulletLayer.addChild(child);
+        } else if (child instanceof gls2.Bullet) {
+            this.bulletLayer.addChild(child);
         } else {
             this.superClass.prototype.addChild.apply(this, arguments);
         }
@@ -90,7 +90,7 @@ gls2.GameScene = tm.createClass({
     update: function(app) {
         this.stage.update(app.frame);
 
-        if (app.keyboard.getKeyDown("space")) {
+        if (app.keyboard.getKeyDown("escape")) {
             this.finish(0);
         }
     },

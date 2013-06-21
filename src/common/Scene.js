@@ -3,7 +3,9 @@ gls2.Scene = tm.createClass({
     init: function() {
         this.superInit();
         this.addEventListener("enter", function(e) {
-            this.onResult(gls2.Scene.requestCode, gls2.Scene.result);
+            if (gls2.Scene.requestCode !== null) {
+                this.onResult(gls2.Scene.requestCode, gls2.Scene.result);
+            }
         });
     },
     finish: function(result) {
@@ -30,6 +32,7 @@ gls2.Scene = tm.createClass({
         }
     },
 });
+gls2.Scene.requestCode = null;
 gls2.Scene.result = null;
 
 gls2.PointerEffect = tm.createClass({
@@ -52,7 +55,7 @@ gls2.PointerEffect = tm.createClass({
                 width: 150,
                 height: 150,
                 alpha: 0
-            }, 300)
+            }, 300, "easeOutQuad")
             .call(function() {
                 this.remove();
             }.bind(this));

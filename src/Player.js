@@ -1,5 +1,7 @@
 (function() {
 
+var backfireParticle = null;
+
 var KEYBOARD_MOVE = {
       0: { x:  1.0, y:  0.0 },
      45: { x:  0.7, y: -0.7 },
@@ -118,8 +120,9 @@ gls2.Player = tm.createClass({
         this._calcRoll(kb);
 
         // バックファイア
-        gls2.BackfireParticle(this.gameScene.ground).setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
-        gls2.BackfireParticle(this.gameScene.ground).setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
+        if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
+        backfireParticle.clone().setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
+        backfireParticle.clone().setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
     },
 
     controlBit: function(kb) {
@@ -203,7 +206,7 @@ gls2.Bit = tm.createClass({
         var g = this.parent.localToGlobal(this);
 
         // バックファイア
-        gls2.BackfireParticle(core.gameScene.ground).setPosition(g.x, g.y).addChildTo(core.gameScene);
+        backfireParticle.clone().setPosition(g.x, g.y).addChildTo(core.gameScene);
 
         // ショット
         if (this.player.controllable && !core.keyboard.getKey("c") && core.frame % 2 !== 0) {
