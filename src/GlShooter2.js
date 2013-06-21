@@ -18,24 +18,28 @@ gls2.GlShooter2 = tm.createClass({
     seVolume: 4,
     /** 難易度(0～4) */
     difficulty: 1,
+
     init: function(id) {
         this.superInit(id);
         gls2.core = this;
         this.resize(SC_W, SC_H).fitWindow();
         this.fps = 60;
-        this.background = "rgba(0,0,0,1)";
+        this.background = "black";
+
         this.replaceScene(tm.app.LoadingScene({
             assets: {
-                "tex0": "assets/bullets.png",
+                "tex0": "assets/tex0.png",
                 "tex1": "assets/tex1.png",
             },
             nextScene: gls2.TitleScene
         }));
     },
+
     exitApp: function() {
         this.stop();
         tm.social.Nineleap.postRanking(this.highScore, "");
     }
+
 });
 
 gls2.setShadow = function(element) {

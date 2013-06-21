@@ -15,7 +15,6 @@ gls2.Player = tm.createClass({
     bitPivot: tm.app.CanvasElement(),
     init: function() {
         this.superInit("tex1", 64, 64);
-        gls2.Player.instance = this;
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
         gls2.setShadow(this);
@@ -23,19 +22,20 @@ gls2.Player = tm.createClass({
 
         for (var i = 0, end = this.bits.length; i < end; i++) {
             var bit = this.bits[i];
-            gls2.Bit(bit).setPosition(bit.x, bit.y).addChildTo(this.bitPivot);
+            gls2.Bit(this, bit).setPosition(bit.x, bit.y).addChildTo(this.bitPivot);
         }
         this.bitPivot.addChildTo(this);
 
-        this.gameScene = gls2.GameScene.instance;
+        this.addEventListener("added", function() {
+            this.gameScene = gls2.GameScene.instance;
+        });
     },
     _createHitCircle: function() {
-        this.hitCircle = tm.app.Sprite("tex0", 64, 64).addChildTo(this);
-        this.hitCircle.setFrameIndex(7);
-        this.hitCircle.scale.set(0.2, 0.2);
+        this.hitCircle = tm.app.Sprite("tex0", 20, 20).addChildTo(this);
+        this.hitCircle.setFrameIndex(5);
         this.hitCircle.blendMode = "lighter";
         this.hitCircle.update = function(app) {
-            var s = 0.15 + Math.sin(app.frame * 0.2) * 0.05;
+            var s = 0.75 + Math.sin(app.frame * 0.2) * 0.15;
             this.scale.set(s, s);
         };
     },
@@ -106,7 +106,6 @@ gls2.Player = tm.createClass({
         return frame;
     }
 });
-gls2.Player.instance = null;
 gls2.Player.KEYBOARD_MOVE = {
       0: { x:  1.0, y:  0.0 },
      45: { x:  0.7, y: -0.7 },
@@ -123,7 +122,7 @@ gls2.Bit = tm.createClass({
     bit: null,
     player: null,
     gameScene: null,
-    init: function(bit) {
+    init: function(player, bit) {
         this.superInit(tm.app.SpriteSheet({
             image: "tex1",
             frame: {
@@ -145,21 +144,24 @@ gls2.Bit = tm.createClass({
         }), 32, 32);
         this.bit = bit;
 
-        this.player = gls2.Player.instance;
-        this.gameScene = gls2.GameScene.instance;
+        this.player = player;
 
         gls2.setShadow(this);
 
         this.gotoAndPlay(bit.turn ? "anim0" : "anim1");
+
+        this.addEventListener("added", function() {
+            this.gameScene = gls2.GameScene.instance;
+        });
     },
     update: function(app) {
         this.x = this.bit.x;
         this.y = this.bit.y;
-        var dir = this.bit.d * this.bit.dt;
-        this.rotation = Math.radToDeg(dir);
 
         if (!this.player.controllable || app.frame % 2 !== 0 || app.keyboard.getKey("c")) return;
 
+        var dir = this.bit.d * this.bit.dt;
+        this.rotation = Math.radToDeg(dir);
         var g = this.parent.localToGlobal(this);
         gls2.ShotBullet(g.x, g.y, this.parent.rotation + this.rotation - 90).addChildTo(this.gameScene);
     }

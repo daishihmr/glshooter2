@@ -17,13 +17,13 @@ gls2.DialogMenu = tm.createClass({
     init: function(title, menu, defaultSelected, menuDesctiptions) {
         this.superInit();
 
-        menu.push("exit");
         if (menuDesctiptions) {
             this.descriptions = menuDesctiptions;
         } else {
             this.descriptions = [].concat(menu);
         }
         this.descriptions.push("前の画面へ戻ります");
+        menu.push("exit");
 
         if (defaultSelected !== undefined) this.selected = defaultSelected;
 
@@ -70,7 +70,7 @@ gls2.DialogMenu = tm.createClass({
     },
 
     _createCursor: function() {
-        this.cursor = tm.app.RectangleShape(SC_W*0.7, 35, {
+        this.cursor = tm.app.RectangleShape(SC_W*0.7, 10, {
             strokeStyle: "rgba(0,0,0,0)",
             fillStyle: tm.graphics.LinearGradient(0,0,SC_W*0.7,0)
                 .addColorStopList([

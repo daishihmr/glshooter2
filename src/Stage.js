@@ -13,9 +13,9 @@ gls2.Stage = tm.createClass({
 
     lastLaunchedEnemy: null,
 
-    init: function() {
-        this.player = gls2.Player.instance;
-        var scene = this.gameScene = gls2.GameScene.instance;
+    init: function(gameScene, player) {
+        var scene = this.gameScene = gameScene;
+        this.player = gameScene.player;
         scene.ground.direction = Math.PI * 0.5;
         scene.ground.speed = 1;
     },
@@ -38,10 +38,11 @@ gls2.Stage = tm.createClass({
         return gls2.Enemy(data.hard, data.soft)
             .setPosition(data.x, data.y)
             .addChildTo(this.gameScene)
+            .setPlayer(this.player)
             .onLaunch();
     },
 });
 
-gls2.Stage.create = function(stageNumber) {
-    return gls2.Stage();
+gls2.Stage.create = function(gameScene, stageNumber) {
+    return gls2.Stage(gameScene);
 };

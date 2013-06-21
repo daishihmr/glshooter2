@@ -5,7 +5,6 @@ var OPTION_MENU = 1;
 var BGM_SETTING = 2;
 var SE_SETTING = 3;
 var DIFFICULTY_SETTING = 4;
-var GAME = 5;
 
 gls2.TitleScene = tm.createClass({
     superClass: gls2.Scene,
@@ -22,7 +21,7 @@ gls2.TitleScene = tm.createClass({
         tm.app.Label("GL-Shooter 2", 50).setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
         tm.app.Label("version 1.0-beta", 22).setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
         tm.app.Label("HIGH SCORE: " + gls2.core.highScore).setPosition(SC_W * 0.5, SC_H * 0.40).addChildTo(this);
-        tm.app.Label("press [Z] key").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
+        tm.app.Label("press space key").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.particleImage = tm.graphics.Canvas()
             .resize(80, 80)
@@ -35,13 +34,18 @@ gls2.TitleScene = tm.createClass({
             .element;
     },
 
+    draw: function(canvas) {
+        canvas.fillStyle = "black";
+        canvas.fillRect(0,0,SC_W,SC_H);
+    },
+
     update: function(app) {
         if (this.age % 2 === 0) {
             this._generateParticle(Math.cos(this.age*0.02)        *50+SC_W*0.5, Math.sin(this.age*0.02)        *50+SC_H*0.5);
             this._generateParticle(Math.cos(this.age*0.02+Math.PI)*50+SC_W*0.5, Math.sin(this.age*0.02+Math.PI)*50+SC_H*0.5);
         }
 
-        if (app.keyboard.getKeyDown("z") || app.pointing.getPointingEnd()) {
+        if (app.keyboard.getKeyDown("space") || app.pointing.getPointingEnd()) {
             this.openMainMenu()
         }
 
@@ -105,6 +109,7 @@ gls2.TitleScene = tm.createClass({
             switch (result) {
             case 0: // start
                 this.tweener
+                    .clear()
                     .call(function() {
                         for (var i = 0, end = this.particles.length; i < end; i++) {
                             this.particles[i].speed = 6;
@@ -113,7 +118,8 @@ gls2.TitleScene = tm.createClass({
                     }.bind(this))
                     .wait(2000)
                     .call(function() {
-                        this.startScene(GAME, gls2.GameScene);
+                        console.log("start?")
+                        gls2.core.replaceScene(gls2.GameScene());
                     }.bind(this));
                 break;
             case 1: // option

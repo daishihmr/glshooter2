@@ -10,15 +10,17 @@ gls2.GameScene = tm.createClass({
     enemyLayer: tm.app.CanvasElement(),
     effectLayer: tm.app.CanvasElement(),
     bulletLayer: tm.app.CanvasElement(),
-    background: tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-        { offset:0, color:"#060" },
-        { offset:1, color:"#030" }
+
+    background: this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
+        { offset:0, color:"#030" },
+        { offset:1, color:"#010" }
     ]).toStyle(),
 
     /**
      * @param {number} playerType 自機タイプ
      */
     init: function(playerType) {
+        console.log("GameScene#init")
         this.superInit();
         gls2.GameScene.instance = this;
         this.addEventListener("enter", function(e) {
@@ -42,6 +44,7 @@ gls2.GameScene = tm.createClass({
     _setupCommonData: function() {
         gls2.EnemyHard.setup();
         gls2.EnemySoft.setup();
+        gls2.Danmaku.setup();
     },
 
     _createGround: function() {
@@ -96,11 +99,14 @@ gls2.GameScene = tm.createClass({
 
     update: function(app) {
         this.stage.update(app.frame);
+
+        if (app.keyboard.getKey("space")) {
+            gls2.core.replaceScene(gls2.TitleScene());
+        }
     },
 
     draw: function(canvas) {
-        canvas.fillStyle = this.background;
-        canvas.fillRect(0, 0, canvas.width, canvas.height);
+        canvas.clearColor(this.background, 0, 0);
     },
 
     gameStart: function(playerType) {
@@ -109,7 +115,7 @@ gls2.GameScene = tm.createClass({
     },
 
     startStage: function(stageNumber) {
-        this.stage = gls2.Stage.create(stageNumber);
+        this.stage = gls2.Stage.create(this, stageNumber);
         this.launch();
     },
 

@@ -11,6 +11,7 @@ gls2.Enemy = tm.createClass({
     hard: null,
     soft: null,
     ground: null,
+    player: null,
     hp: 0,
     init: function(hardName, softName) {
         this.superInit();
@@ -22,7 +23,6 @@ gls2.Enemy = tm.createClass({
         this.soft = gls2.EnemySoft[softName](this);
         this.soft.setup(this);
         this.hard.setup(this);
-        this.ground = gls2.GameScene.instance.ground;
 
         if (!this.hard.isGround) {
             gls2.setShadow(this);
@@ -32,6 +32,7 @@ gls2.Enemy = tm.createClass({
             this.onCompleteAttack();
         });
         this.addEventListener("added", function() {
+            this.ground = gls2.GameScene.instance.ground;
             activeList.push(this);
         });
         this.addEventListener("removed", function() {
@@ -64,7 +65,11 @@ gls2.Enemy = tm.createClass({
     },
     draw: function(canvas) {
         this.hard.draw(canvas);
-    }
+    },
+    setPlayer: function(player) {
+        this.player = player;
+        return this;
+    },
 });
 
 var activeList = gls2.Enemy.activeList = [];

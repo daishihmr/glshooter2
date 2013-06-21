@@ -47,7 +47,7 @@ gls2.EnemyHard.setup = function() {
             this._sprite = _Sprite("tex1", 64, 64);
         },
         update: function() {
-            if (this.enemy.x < gls2.Player.instance.x) {
+            if (this.enemy.x < this.enemy.player.x) {
                 this.enemy.scaleX = -1;
             } else {
                 this.enemy.scaleX = 1;
@@ -71,7 +71,7 @@ gls2.EnemyHard.setup = function() {
             this.isGround = true;
         },
         update: function() {
-            if (this.enemy.x < gls2.Player.instance.x) {
+            if (this.enemy.x < this.enemy.player.x) {
                 this.enemy.scaleX = -1;
             } else {
                 this.enemy.scaleX = 1;

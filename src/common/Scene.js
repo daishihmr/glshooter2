@@ -10,11 +10,6 @@ gls2.Scene = tm.createClass({
         gls2.Scene.result = result;
         gls2.core.popScene();
     },
-    startScene: function(requestCode, sceneClass) {
-        gls2.Scene.result = null;
-        gls2.Scene.requestCode = requestCode;
-        gls2.core.pushScene(sceneClass());
-    },
     openDialogMenu: function(requestCode, title, menu, defaultValue, menuDescriptions) {
         gls2.Scene.result = null;
         gls2.Scene.requestCode = requestCode;
