@@ -41,7 +41,7 @@ gls2.EnemyHard.setup = function() {
 
     this["heri1"] = tm.createClass({
         superClass: gls2.EnemyHard,
-        hp: 10,
+        hp: 120,
         init: function(enemy) {
             this.superInit(enemy);
             this._sprite = _Sprite("tex1", 64, 64);
@@ -58,30 +58,6 @@ gls2.EnemyHard.setup = function() {
                 this._sprite.srcRect.set(448, 0, 64, 64);
             } else {
                 this._sprite.srcRect.set(0, 64, 64, 64);
-            }
-            this._sprite.draw(canvas);
-        }
-    });
-
-    this["heri2"] = tm.createClass({
-        superClass: gls2.EnemyHard,
-        init: function(enemy) {
-            this.superInit(enemy);
-            this._sprite = _Sprite("tex1", 64, 64);
-            this.isGround = true;
-        },
-        update: function() {
-            if (this.enemy.x < this.enemy.player.x) {
-                this.enemy.scaleX = -1;
-            } else {
-                this.enemy.scaleX = 1;
-            }
-        },
-        draw: function(canvas) {
-            if (this.enemy.age % 4 < 2) {
-                this._sprite.srcRect.set(64, 64, 64, 64);
-            } else {
-                this._sprite.srcRect.set(128, 64, 64, 64);
             }
             this._sprite.draw(canvas);
         }
