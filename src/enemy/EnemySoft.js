@@ -27,8 +27,8 @@ gls2.EnemySoft.setup = function() {
 
     /**
      * heri1.
-     * まっすぐ降りてきて停止後、弾を撃って上へ離脱
-     * 出現位置はy=-50
+     * まっすぐ降りてきて上方で停止後、弾を撃って上へ離脱
+     * 出現位置はy=-100
      */
     this["heri1"] = tm.createClass({
         superClass: gls2.EnemySoft,
@@ -40,16 +40,47 @@ gls2.EnemySoft.setup = function() {
             this.enemy.tweener
                 .clear()
                 .wait(Math.rand(10, 500))
-                .move(this.enemy.x, y, y*5, "easeOutQuad")
+                .move(this.enemy.x, y, y*7, "easeOutQuad")
                 .call(function() {
-                    attack(this.enemy, "basic0-4");
+                    attack(this.enemy, "basic0-0");
                 }.bind(this));
         },
         onCompleteAttack: function() {
             this.enemy.tweener
                 .clear()
                 .wait(1000)
-                .moveBy(0, -SC_H, 2400, "easeOutQuad")
+                .moveBy(0, -SC_H, 2000, "easeInQuad")
+                .call(function() {
+                    this.enemy.remove();
+                }.bind(this));
+        },
+    });
+
+    /**
+     * heri1.
+     * まっすぐ降りてきて中程で停止後、弾を撃って上へ離脱
+     * 出現位置はy=-100
+     */
+    this["heri1b"] = tm.createClass({
+        superClass: gls2.EnemySoft,
+        init: function(enemy) {
+            this.superInit(enemy);
+        },
+        onLaunch: function() {
+            var y = Math.randf(SC_H*0.3, SC_H*0.5);
+            this.enemy.tweener
+                .clear()
+                .wait(Math.rand(10, 500))
+                .move(this.enemy.x, y, y*7, "easeOutQuad")
+                .call(function() {
+                    attack(this.enemy, "basic0-0");
+                }.bind(this));
+        },
+        onCompleteAttack: function() {
+            this.enemy.tweener
+                .clear()
+                .wait(1000)
+                .moveBy(0, -SC_H, 2000, "easeInQuad")
                 .call(function() {
                     this.enemy.remove();
                 }.bind(this));

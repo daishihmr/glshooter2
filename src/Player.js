@@ -247,7 +247,7 @@ gls2.Bit = tm.createClass({
 
         if (!this.bit.v) {
             this.x = 0;
-            this.y = -40;
+            this.y = -30;
             this.currentFrameIndex = 3;
         } else {
             this.x = this.bit.x;
@@ -264,7 +264,8 @@ gls2.Bit = tm.createClass({
 
             // ショット
             if (this.player.fireShot) {
-                gls2.ShotBullet(g.x, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
+                gls2.ShotBullet(g.x - 3, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
+                gls2.ShotBullet(g.x + 3, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
             }
         }
     },

@@ -59,6 +59,9 @@ gls2.Enemy = tm.createClass({
         this.hp -= damagePoint;
         if (this.hp <= 0) {
             this.remove();
+            return true;
+        } else {
+            return false;
         }
     },
     draw: function(canvas) {

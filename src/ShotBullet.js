@@ -6,6 +6,7 @@ gls2.ShotBullet = tm.createClass({
     superClass: tm.app.CircleShape,
     speed: 20,
     attackPower: 1,
+
     init: function(x, y, dir) {
         var SZ = 24;
         this.superInit(SZ, SZ, {
@@ -34,12 +35,14 @@ gls2.ShotBullet = tm.createClass({
             if (idx !== -1) activeList.splice(idx, 1);
         });
     },
+
     update: function() {
         this.x += this.vx;
         this.y += this.vy;
 
-        for (var i = 0, len = gls2.Enemy.activeList.length; i < len; i++) {
-            var e = gls2.Enemy.activeList[i];
+        var copied = [].concat(gls2.Enemy.activeList);
+        for (var i = 0, len = copied.length; i < len; i++) {
+            var e = copied[i];
             if (e.x < e.radius || SC_W-e.radius < e.x || e.y < e.radius || SC_H-e.radius < e.y) continue;
             if ((this.x-e.x)*(this.x-e.x) + (this.y-e.y)*(this.y-e.y) < (this.radius+e.radius)*this.radius+e.radius) {
                 this.remove();
@@ -52,7 +55,8 @@ gls2.ShotBullet = tm.createClass({
         if (this.x < -60 || SC_W+60 < this.x || this.y < -60 || SC_H+60 < this.y) {
             this.remove();
         }
-    }
+    },
+
 });
 
 gls2.ShotBullet.clearAll = function() {

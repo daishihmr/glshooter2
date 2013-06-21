@@ -1,0 +1,34 @@
+<html>
+<head>
+<script src="../../libs/tmlib.min.js"></script>
+<script>
+tm.preload(function() {
+    tm.addLoadCheckList(tm.asset.AssetManager);
+
+    tm.asset.AssetManager.load("tx0", "h0.png");
+    tm.asset.AssetManager.load("tx1", "h1.png");
+    tm.asset.AssetManager.load("tx2", "h2.png");
+    tm.asset.AssetManager.load("tx3", "h3.png");
+});
+
+tm.main(function() {
+    var c = tm.graphics.Canvas("#c");
+    tm.dom.Element("#c").event.click(function() {
+        c.saveAsImage();
+    });
+
+    c.resize(80*4, 80);
+    var draw = function(name, x, y) {
+        c.drawTexture(tm.asset.AssetManager.get("tx" + name), x*80, y*80);
+    };
+    draw( 0, 0, 0);
+    draw( 1, 1, 0);
+    draw( 2, 2, 0);
+    draw( 3, 3, 0);
+});
+</script>
+</head>
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>

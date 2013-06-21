@@ -26,15 +26,18 @@ gls2.GlShooter2 = tm.createClass({
     init: function(id) {
         this.superInit(id);
         gls2.core = this;
-        this.resize(SC_W, SC_H).fitWindow();
+        this.resize(SC_W, SC_H) //.fitWindow();
         this.fps = 60;
         this.background = "black";
+
+        this.keyboard = tm.input.Keyboard(window);
 
         this.replaceScene(tm.app.LoadingScene({
             assets: {
                 "tex0": "assets/tex0.png",
                 "tex1": "assets/tex1.png",
                 "laser": "assets/laser.png",
+                "laserHead": "assets/laser_head.png",
                 "r0": "assets/r0.png",
                 "r1": "assets/r1.png",
                 "r2": "assets/r2.png",
@@ -80,6 +83,8 @@ tm.app.Label = tm.createClass({
         this.setAlign("center");
         this.setBaseline("middle");
         this.setFontFamily("Orbitron");
+
+        this.fillStyle = "white";
 
         this.isHitPoint = this.isHitPointRect;
     },
