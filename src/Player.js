@@ -13,17 +13,22 @@ var KEYBOARD_MOVE = {
     315: { x:  0.7, y:  0.7 },
 };
 
+/** 自機 */
 gls2.Player = tm.createClass({
     superClass: tm.app.Sprite,
     roll: 0,
-    speed: 4,
     controllable: true,
     muteki: false,
     gameScene : null,
+
+    /** ハイパーゲージ(0～100) */
+    hyperGauge: 0,
+
+    /** @protected */
+    speed: 4,
+    /** @protected */
     bits: [
         { x: -50, y: 30, d: 0.1, turn: false, dt: -0.5 },
-        // { x: -30, y: 20, d: 0.1, turn: false, dt: -0.5 },
-        // { x:  30, y: 20, d: 0.1, turn:  true, dt:  0.5 },
         { x:  50, y: 30, d: 0.1, turn:  true, dt:  0.5 },
     ],
 
@@ -52,32 +57,32 @@ gls2.Player = tm.createClass({
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,70).addColorStopList([
                 { offset:0.0, color:"rgba(100,255,100,0.1)" },
-                { offset:0.4, color:"rgba(100,255,100,0.1)" },
+                { offset:0.3, color:"rgba(100,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
-                { offset:0.6, color:"rgba(100,255,100,0.1)" },
+                { offset:0.7, color:"rgba(100,255,100,0.1)" },
                 { offset:1.0, color:"rgba(100,255,100,0.1)" },
             ]).toStyle(),
-            lineWidth: 3.0,
+            lineWidth: 2.0,
         }).addChildTo(this);
         this.circle0.blendMode = "lighter";
         this.circle0.update = function() {
-            this.rotation += 3;
+            this.rotation += 2;
         };
 
         this.circle1 = tm.app.CircleShape(70, 70, {
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,70).addColorStopList([
                 { offset:0.0, color:"rgba(100,255,100,0.1)" },
-                { offset:0.4, color:"rgba(100,255,100,0.1)" },
+                { offset:0.3, color:"rgba(100,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
-                { offset:0.6, color:"rgba(100,255,100,0.1)" },
+                { offset:0.7, color:"rgba(100,255,100,0.1)" },
                 { offset:1.0, color:"rgba(100,255,100,0.1)" },
             ]).toStyle(),
-            lineWidth: 3.0,
+            lineWidth: 2.0,
         }).addChildTo(this);
         this.circle1.blendMode = "lighter";
         this.circle1.update = function() {
-            this.rotation -= 3;
+            this.rotation -= 2;
         };
     },
 
@@ -113,6 +118,8 @@ gls2.Player = tm.createClass({
             }
         }
 
+        this.circle0.visible = this.circle1.visible = this.hyperGauge === 100;
+
         // ビット
         this.controlBit(kb);
 
@@ -125,6 +132,7 @@ gls2.Player = tm.createClass({
         backfireParticle.clone().setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
     },
 
+    /** @protected */
     controlBit: function(kb) {
         var p = this.bitPivot;
         if (this.controllable && kb.getKey("left")) {

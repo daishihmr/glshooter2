@@ -117,7 +117,7 @@ gls2.GameScene = tm.createClass({
     launch: function() {
         this.player
             .setPosition(SC_W*0.5, SC_H+32)
-            .setFrameIndex(3 + this.roll)
+            .setFrameIndex(3)
             .addChildTo(this);
         this.player.controllable = false;
         this.player.muteki = true;

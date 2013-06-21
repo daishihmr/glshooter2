@@ -3,9 +3,11 @@ var SC_H = 520;
 
 /** @namespace */
 var gls2 = {
+    /** @type {gls2.Glshooter2} */
     core: null,
 };
 
+/** GL-Shooter2アプリケーション */
 gls2.GlShooter2 = tm.createClass({
     superClass: tm.app.CanvasApp,
     /** アプリ実行中のハイスコア */
@@ -34,13 +36,13 @@ gls2.GlShooter2 = tm.createClass({
                 "tex1": "assets/tex1.png",
             },
             nextScene: function() {
-                this.loaded();
+                this._onLoadAssets();
                 return gls2.TitleScene();
             }.bind(this),
         }));
     },
 
-    loaded: function() {
+    _onLoadAssets: function() {
         gls2.EnemyHard.setup();
         gls2.EnemySoft.setup();
         gls2.Danmaku.setup();
@@ -74,5 +76,5 @@ tm.app.Label = tm.createClass({
     },
     update: function(app) {
         this.alpha = 0.8 + Math.sin(app.frame * 0.1) * 0.2;
-    }
+    },
 });
