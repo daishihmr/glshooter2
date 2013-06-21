@@ -98,8 +98,9 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "start", "setting", "save score" ], this.lastMainMenu, [
-            "プレイを開始します",
+        this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "start", "tutorial", "setting", "save score" ], this.lastMainMenu, [
+            "ゲームを開始します",
+            "チュートリアルを開始します",
             "設定を変更します",
             "ゲームを終了し9leapにスコアを登録します",
         ]);
@@ -122,10 +123,12 @@ gls2.TitleScene = tm.createClass({
                     this.startScene(GAME_SCENE, gls2.core.gameScene);
                 }.bind(this));
             break;
-        case 1: // option
+        case 1: // tutorial
+            break;
+        case 2: // option
             this.openSetting();
             break;
-        case 2: // to 9leap
+        case 3: // to 9leap
             gls2.core.exitApp();
             break;
         }

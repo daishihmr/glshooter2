@@ -17,7 +17,7 @@ gls2.Stage = tm.createClass({
         var scene = this.gameScene = gameScene;
         this.player = gameScene.player;
         scene.ground.direction = Math.PI * 0.5;
-        scene.ground.speed = 1;
+        scene.ground.speed = 2;
     },
 
     update: function() {

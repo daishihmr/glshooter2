@@ -70,7 +70,7 @@ gls2.setShadow = function(element) {
     element.shadowColor = "rgba(0,0,0,0.5)";
     element.shadowBlur = 30;
     element.shadowOffsetX = 20;
-    element.shadowOffsetY = 40;
+    element.shadowOffsetY = 70;
 };
 
 tm.app.Label = tm.createClass({
