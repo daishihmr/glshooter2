@@ -146,7 +146,7 @@ gls2.DialogMenu = tm.createClass({
     },
 
     draw: function(canvas) {
-        canvas.fillStyle = "rgba(0,0,0,0.5)";
+        canvas.fillStyle = "rgba(0,0,0,0.8)";
         canvas.fillRect(0,0,SC_W,SC_H);
     }
 

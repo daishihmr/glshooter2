@@ -10,14 +10,15 @@ gls2.ShotBullet = tm.createClass({
         var SZ = 24;
         this.superInit(SZ, SZ, {
             fillStyle: tm.graphics.RadialGradient(SZ*0.5, SZ*0.5, 0, SZ*0.5, SZ*0.5, SZ*0.5).addColorStopList([
-                { offset: 0, color: "rgba(255,255,255,1)" },
-                { offset: 1, color: "rgba(  0,255,100,0)" }
+                { offset: 0.0, color: "rgba(255,255,255,1)" },
+                { offset: 0.5, color: "rgba(255,255,255,1)" },
+                { offset: 1.0, color: "rgba(  0,100,255,0)" }
             ]).toStyle(),
             strokeStyle: "rgba(0,0,0,0)"
         });
         this.blendMode = "lighter";
 
-        this.scaleY = 0.4;
+        this.scaleY = 0.5;
         var rad = Math.degToRad(dir);
         this.vx = Math.cos(rad) * this.speed;
         this.vy = Math.sin(rad) * this.speed;
