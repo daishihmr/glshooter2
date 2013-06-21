@@ -12,7 +12,8 @@ gls2.GameScene = tm.createClass({
     groundLayer: tm.app.CanvasElement(),
     playerLayer: tm.app.CanvasElement(),
     enemyLayer: tm.app.CanvasElement(),
-    effectLayer: tm.app.CanvasElement(),
+    effectLayer0: tm.app.CanvasElement(),
+    effectLayer1: tm.app.CanvasElement(),
     bulletLayer: tm.app.CanvasElement(),
 
     background: this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
@@ -29,9 +30,10 @@ gls2.GameScene = tm.createClass({
         this._createGround();
 
         this.groundLayer.addChildTo(this);
+        this.effectLayer0.addChildTo(this);
         this.playerLayer.addChildTo(this);
         this.enemyLayer.addChildTo(this);
-        this.effectLayer.addChildTo(this);
+        this.effectLayer1.addChildTo(this);
         this.bulletLayer.addChildTo(this);
     },
 
@@ -74,10 +76,10 @@ gls2.GameScene = tm.createClass({
             } else {
                 this.enemyLayer.addChild(child);
             }
-        } else if (child instanceof gls2.BackfireParticle) {
-            this.groundLayer.addChild(child);
-        } else if (child instanceof gls2.Particle || child instanceof gls2.ShotBullet) {
-            this.effectLayer.addChild(child);
+        } else if (child instanceof gls2.BackfireParticle || child instanceof gls2.ShotBullet) {
+            this.effectLayer0.addChild(child);
+        } else if (child instanceof gls2.Particle) {
+            this.effectLayer1.addChild(child);
         // } else if (child instanceof gls2.Bullet) {
         //     this.bulletLayer.addChild(child);
         } else {

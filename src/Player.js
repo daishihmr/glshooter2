@@ -1,3 +1,16 @@
+(function() {
+
+var KEYBOARD_MOVE = {
+      0: { x:  1.0, y:  0.0 },
+     45: { x:  0.7, y: -0.7 },
+     90: { x:  0.0, y: -1.0 },
+    135: { x: -0.7, y: -0.7 },
+    180: { x: -1.0, y:  0.0 },
+    225: { x: -0.7, y:  0.7 },
+    270: { x:  0.0, y:  1.0 },
+    315: { x:  0.7, y:  0.7 },
+};
+
 gls2.Player = tm.createClass({
     superClass: tm.app.Sprite,
     roll: 0,
@@ -6,10 +19,10 @@ gls2.Player = tm.createClass({
     muteki: false,
     gameScene : null,
     bits: [
-        { x: -60, y: 30, d: 0.1, turn: false, dt: -1.0 },
-        { x: -30, y: 20, d: 0.1, turn: false, dt: -0.5 },
-        { x:  30, y: 20, d: 0.1, turn:  true, dt:  0.5 },
-        { x:  60, y: 30, d: 0.1, turn:  true, dt:  1.0 },
+        { x: -50, y: 30, d: 0.1, turn: false, dt: -0.5 },
+        // { x: -30, y: 20, d: 0.1, turn: false, dt: -0.5 },
+        // { x:  30, y: 20, d: 0.1, turn:  true, dt:  0.5 },
+        { x:  50, y: 30, d: 0.1, turn:  true, dt:  0.5 },
     ],
 
     hitCircle: null,
@@ -33,9 +46,9 @@ gls2.Player = tm.createClass({
             gls2.Bit(this, bit).setPosition(bit.x, bit.y).addChildTo(this.bitPivot);
         }
 
-        this.circle0 = tm.app.CircleShape(80, 80, {
+        this.circle0 = tm.app.CircleShape(70, 70, {
             fillStyle: "rgba(0,0,0,0)",
-            strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
+            strokeStyle: tm.graphics.LinearGradient(0,0,0,70).addColorStopList([
                 { offset:0.0, color:"rgba(100,255,100,0.1)" },
                 { offset:0.4, color:"rgba(100,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
@@ -49,9 +62,9 @@ gls2.Player = tm.createClass({
             this.rotation += 3;
         };
 
-        this.circle1 = tm.app.CircleShape(80, 80, {
+        this.circle1 = tm.app.CircleShape(70, 70, {
             fillStyle: "rgba(0,0,0,0)",
-            strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
+            strokeStyle: tm.graphics.LinearGradient(0,0,0,70).addColorStopList([
                 { offset:0.0, color:"rgba(100,255,100,0.1)" },
                 { offset:0.4, color:"rgba(100,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
@@ -65,6 +78,7 @@ gls2.Player = tm.createClass({
             this.rotation -= 3;
         };
     },
+
     _createHitCircle: function() {
         this.hitCircle = tm.app.Sprite("tex0", 20, 20).addChildTo(this);
         this.hitCircle.setFrameIndex(5);
@@ -74,12 +88,13 @@ gls2.Player = tm.createClass({
             this.scale.set(s, s);
         };
     },
+
     update: function(app) {
         var kb = app.keyboard;
         if (this.controllable) {
             var angle = kb.getKeyAngle();
             if (angle !== null) {
-                var m = gls2.Player.KEYBOARD_MOVE[angle];
+                var m = KEYBOARD_MOVE[angle];
                 this.x += m.x * this.speed;
                 this.y += m.y * this.speed;
             }
@@ -106,6 +121,7 @@ gls2.Player = tm.createClass({
         gls2.BackfireParticle(this.gameScene.ground).setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
         gls2.BackfireParticle(this.gameScene.ground).setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
     },
+
     controlBit: function(kb) {
         var p = this.bitPivot;
         if (this.controllable && kb.getKey("left")) {
@@ -122,6 +138,7 @@ gls2.Player = tm.createClass({
             }
         }
     },
+
     _calcRoll: function(kb) {
         if (this.controllable && kb.getKey("left")) {
             this.roll = Math.clamp(this.roll - 0.2, -3, 3);
@@ -137,23 +154,15 @@ gls2.Player = tm.createClass({
         var frame = 3 + ~~this.roll
         this.setFrameIndex(frame);
         return frame;
-    }
+    },
+
 });
-gls2.Player.KEYBOARD_MOVE = {
-      0: { x:  1.0, y:  0.0 },
-     45: { x:  0.7, y: -0.7 },
-     90: { x:  0.0, y: -1.0 },
-    135: { x: -0.7, y: -0.7 },
-    180: { x: -1.0, y:  0.0 },
-    225: { x: -0.7, y:  0.7 },
-    270: { x:  0.0, y:  1.0 },
-    315: { x:  0.7, y:  0.7 },
-};
 
 gls2.Bit = tm.createClass({
     superClass: tm.app.AnimationSprite,
     bit: null,
     player: null,
+
     init: function(player, bit) {
         this.superInit(tm.app.SpriteSheet({
             image: "tex1",
@@ -182,6 +191,7 @@ gls2.Bit = tm.createClass({
 
         this.gotoAndPlay(bit.turn ? "anim0" : "anim1");
     },
+
     update: function(core) {
         this.x = this.bit.x;
         this.y = this.bit.y;
@@ -199,5 +209,8 @@ gls2.Bit = tm.createClass({
         if (this.player.controllable && !core.keyboard.getKey("c") && core.frame % 2 !== 0) {
             gls2.ShotBullet(g.x, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
         }
-    }
+    },
+
 });
+
+})();
