@@ -1,3 +1,7 @@
+(function() {
+
+var origParticle = null;
+
 gls2.Laser = tm.createClass({
     superClass: tm.app.CanvasElement,
     player: null,
@@ -6,7 +10,7 @@ gls2.Laser = tm.createClass({
     age: 0,
     hitY: 0,
     rootTexture: null,
-    attackPower: 10,
+    attackPower: 5,
 
     head: null,
 
@@ -48,6 +52,23 @@ gls2.Laser = tm.createClass({
         }), 80, 80);
         this.head.gotoAndPlay();
         this.head.blendMode = "lighter";
+
+        if (origParticle === null) {
+            var size = 16;
+            origParticle = gls2.Particle(size, 1.0, 0.8, tm.graphics.Canvas()
+                .resize(size, size)
+                .setFillStyle(
+                    tm.graphics.RadialGradient(size*0.5, size*0.5, 0, size*0.5, size*0.5, size*0.5)
+                        .addColorStopList([
+                            {offset:0.0, color: "rgba(255,255,255,1.0)"},
+                            {offset:0.6, color: "rgba(255,255,255,1.0)"},
+                            {offset:1.0, color: "rgba(  0,  0,  0,0.0)"},
+                        ]).toStyle()
+                )
+                .fillRect(0, 0, size, size)
+                .element
+            );
+        }
     },
 
     update: function(app) {
@@ -62,13 +83,27 @@ gls2.Laser = tm.createClass({
         }
 
         var copied = [].concat(gls2.Enemy.activeList);
+        copied.sort(function(l, r) {
+            return r.y - l.y;
+        });
         for (var i = 0, len = copied.length; i < len; i++) {
             var e = copied[i];
             if (e.x < e.radius || SC_W-e.radius < e.x || e.y < e.radius || SC_H-e.radius < e.y) continue;
-            if (this.hitY-30 < e.y && e.y < this.y && this.x-32 < e.x && e.x < this.x+32) {
+            if (this.hitY-30 < e.y && e.y < this.y && this.x-40 < e.x && e.x < this.x+40) {
                 if (!e.damage(this.attackPower)) {
                     this.hitY = e.y;
                 }
+
+                var p = origParticle.clone().setPosition(this.x, this.hitY).addChildTo(this.parent);
+                var speed = Math.randf(5, 10);
+                var dir = Math.random() * Math.PI * 2;
+                p.dx = Math.cos(dir) * speed;
+                p.dy = Math.sin(dir) * speed;
+                p.initialAlpha = Math.randf(0.5, 1.0);
+                p.addEventListener("enterframe", function() {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                });
             }
         }
 
@@ -95,3 +130,5 @@ gls2.Laser = tm.createClass({
             -this.width*this.origin.x-43, -this.height*this.origin.y-75, 150, 150);
     },
 });
+
+})();

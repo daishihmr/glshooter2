@@ -41,7 +41,7 @@ gls2.EnemyHard.setup = function() {
 
     this["heri1"] = tm.createClass({
         superClass: gls2.EnemyHard,
-        hp: 120,
+        hp: 12000,
         init: function(enemy) {
             this.superInit(enemy);
             this._sprite = _Sprite("tex1", 64, 64);

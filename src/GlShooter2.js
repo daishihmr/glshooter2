@@ -30,6 +30,8 @@ gls2.GlShooter2 = tm.createClass({
         this.fps = 60;
         this.background = "black";
 
+        this.keyboard = tm.input.Keyboard(window);
+
         this.replaceScene(tm.app.LoadingScene({
             assets: {
                 "tex0": "assets/tex0.png",
