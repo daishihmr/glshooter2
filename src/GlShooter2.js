@@ -38,14 +38,7 @@ gls2.GlShooter2 = tm.createClass({
                 "tex1": "assets/tex1.png",
                 "laser": "assets/laser.png",
                 "laserHead": "assets/laser_head.png",
-                "r0": "assets/r0.png",
-                "r1": "assets/r1.png",
-                "r2": "assets/r2.png",
-                "r3": "assets/r3.png",
-                "r4": "assets/r4.png",
-                "r5": "assets/r5.png",
-                "r6": "assets/r6.png",
-                "r7": "assets/r7.png",
+                "laserFoot": "assets/laser_foot.png",
             },
             nextScene: function() {
                 this._onLoadAssets();

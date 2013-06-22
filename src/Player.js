@@ -50,7 +50,7 @@ gls2.Player = tm.createClass({
 
         gls2.setShadow(this);
 
-        this.laser = gls2.Laser(this, "laser", Array.range(0, 8).map(function(v) { return "r" + v }));
+        this.laser = gls2.Laser(this, "laser", "laserHead", "laserFoot");
         this.laser.visible = false;
         this.laser.addChildTo(gameScene);
 
