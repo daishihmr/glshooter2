@@ -45,7 +45,7 @@ gls2.TitleScene = tm.createClass({
         this._generateParticle(Math.cos(this.age*0.01)        *80+SC_W*0.5, Math.sin(this.age*0.01)        *80+SC_H*0.5, 0);
         this._generateParticle(Math.cos(this.age*0.01+Math.PI)*80+SC_W*0.5, Math.sin(this.age*0.01+Math.PI)*80+SC_H*0.5, 1);
 
-        if (app.keyboard.getKeyDown("space") || app.pointing.getPointingEnd()) {
+        if ((app.keyboard.getKeyDown("space") || app.pointing.getPointingEnd()) && !this.gameStarted) {
             this.openMainMenu()
         }
 
@@ -104,6 +104,7 @@ gls2.TitleScene = tm.createClass({
         callbacks[BGM_SETTING] = this.onResultBgmSetting;
         callbacks[SE_SETTING] = this.onResultSeSetting;
         callbacks[DIFFICULTY_SETTING] = this.onResultDifficultySetting;
+        callbacks[GAME_SCENE] = function() {};
 
         var callback = callbacks[requestCode];
         if (callback) callback.call(this, result);
@@ -124,9 +125,9 @@ gls2.TitleScene = tm.createClass({
             this.tweener
                 .clear()
                 .call(function() {
+                    this.gameStarted = true;
                     for (var i = 0, end = this.particles.length; i < end; i++) {
                         this.particles[i].speed = 6;
-                        this.gameStarted = true;
                     }
                 }.bind(this))
                 .wait(1000)
@@ -201,6 +202,7 @@ gls2.TitleScene = tm.createClass({
         this.openSetting();
     },
 
+    toString: function() { return "gls2.TitleScene" },
 });
 
 })();

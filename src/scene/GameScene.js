@@ -94,6 +94,39 @@ gls2.GameScene = tm.createClass({
 
         if (app.keyboard.getKeyDown("escape")) {
             this.finish(0);
+        } else if (app.keyboard.getKeyDown("space")) {
+            this.openPauseMenu(0);
+        }
+    },
+
+    openPauseMenu: function(defaultValue) {
+        this.openDialogMenu(0, "PAUSE", [ "resume", "exit game" ], defaultValue, [
+            "ゲームを再開します",
+            "ゲームを中断し、タイトル画面に戻ります",
+        ], false);
+    },
+    openConfirmExitGame: function() {
+        this.openDialogMenu(1, "REARY?", [ "yes", "no" ], 1, [
+            "ゲームを中断し、タイトル画面に戻ります",
+            "前の画面へ戻ります",
+        ], false);
+    },
+    onResult: function(requestCode, result) {
+        switch(requestCode) {
+        case 0: // pause
+            switch (result) {
+            case 1: // back to title
+                this.openConfirmExitGame();
+                break;
+            }
+            break;
+        case 1: // confirm exit game
+            if (result === 0) {
+                this.finish(0);
+            } else {
+                this.openPauseMenu(1);
+            }
+            break;
         }
     },
 
