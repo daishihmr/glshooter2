@@ -64,6 +64,15 @@ gls2.Enemy = tm.createClass({
         this.hp -= damagePoint;
         if (this.hp <= 0) {
             this.hard.destroy();
+
+            var r = Math.random();
+            if (r < 0.3) {
+                this.gameScene.println("enemy destroy.");
+            } else if (r < 0.6) {
+                this.gameScene.println(this.hard.name + " destroy.");
+            } else {
+                this.gameScene.println("ETR reaction gone.")
+            }
             this.remove();
             return true;
         } else {

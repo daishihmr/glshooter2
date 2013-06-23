@@ -9,12 +9,15 @@ gls2.GameScene = tm.createClass({
     stage: null,
     ground: null,
     zanki: 3,
-    groundLayer: tm.app.Object2D(),
-    playerLayer: tm.app.Object2D(),
-    enemyLayer: tm.app.Object2D(),
-    effectLayer0: tm.app.Object2D(),
-    effectLayer1: tm.app.Object2D(),
-    bulletLayer: tm.app.Object2D(),
+    groundLayer: null,
+    playerLayer: null,
+    enemyLayer: null,
+    effectLayer0: null,
+    effectLayer1: null,
+    bulletLayer: null,
+    labelLayer: null,
+
+    consoleWindow: null,
 
     background: this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
         { offset:0, color:"#030" },
@@ -29,14 +32,23 @@ gls2.GameScene = tm.createClass({
 
         this._createGround();
 
-        this.groundLayer.addChildTo(this);
-        this.enemyLayer.addChildTo(this);
-        this.effectLayer0.addChildTo(this);
-        this.playerLayer.addChildTo(this);
-        this.effectLayer1.addChildTo(this);
-        this.bulletLayer.addChildTo(this);
+        this.groundLayer = tm.app.Object2D().addChildTo(this);
+        this.enemyLayer = tm.app.Object2D().addChildTo(this);
+        this.effectLayer0 = tm.app.Object2D().addChildTo(this);
+        this.playerLayer = tm.app.Object2D().addChildTo(this);
+        this.effectLayer1 = tm.app.Object2D().addChildTo(this);
+        this.bulletLayer = tm.app.Object2D().addChildTo(this);
+        this.labelLayer = tm.app.Object2D().addChildTo(this);
+
+        this.consoleWindow = gls2.ConsoleWindow(200)
+            .setPosition(SC_W - 100 - 5, 32 + 5)
+            .addChildTo(this.labelLayer);
 
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
+    },
+
+    println: function(string) {
+        this.consoleWindow.buf.push(string);
     },
 
     _createGround: function() {
@@ -95,6 +107,9 @@ gls2.GameScene = tm.createClass({
         if (app.keyboard.getKeyDown("escape")) {
             this.finish(0);
         } else if (app.keyboard.getKeyDown("space")) {
+            this.openPauseMenu(0);
+        } else if (app.keyboard.getKeyDown("p")) {
+            app.canvas.saveAsImage();
             this.openPauseMenu(0);
         }
     },

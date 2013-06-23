@@ -251,7 +251,7 @@ gls2.Bit = tm.createClass({
 
         if (!this.bit.v) {
             this.x = 0;
-            this.y = -30;
+            this.y = -40;
             this.currentFrameIndex = 3;
         } else {
             this.x = this.bit.x;

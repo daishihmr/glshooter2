@@ -83,7 +83,7 @@ gls2.Laser = tm.createClass({
 
     update: function(app) {
         this.x = this.player.x;
-        this.y = this.player.y - 30;
+        this.y = this.player.y - 40;
 
         if (!this.visible) {
             if (this.beforeFrameVisible) {

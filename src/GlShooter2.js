@@ -95,6 +95,46 @@ tm.app.Label = tm.createClass({
     },
 });
 
+gls2.ConsoleWindow = tm.createClass({
+    superClass: tm.app.RectangleShape,
+    label: null,
+    buf: null,
+    init: function(w) {
+        this.superInit(w, 64, {
+            fillStyle: "rgba(1,2,48,0.5)",
+            strokeStyle: "rgba(0,0,0,0)",
+        });
+        this.label = tm.app.Label("_", 10)
+            // .setFontFamily("'Consolas', 'Monaco', 'ＭＳ ゴシック'")
+            .setAlign("left")
+            .setBaseline("top")
+            .setPosition(-this.width/2+4, -this.height/2+4)
+            .setFillStyle("rgba(255,255,255,0.5)")
+            .addChildTo(this);
+        this.buf = [];
+    },
+    update: function(app) {
+        var text = this.label.text;
+        text = text.substring(0, text.length - 1);
+        if (app.frame % 2 === 0 && this.buf.length !== 0) {
+            if (this.buf[0] !== "") {
+                var c = this.buf[0][0];
+                this.buf[0] = this.buf[0].substring(1);
+                text += c;
+            } else {
+                this.buf.shift();
+                var lines = text.split("\n");
+                if (lines.length > 3) {
+                    lines.shift();
+                    text = lines.join("\n");
+                }
+                text += "\n";
+            }
+        }
+        this.label.text = text + ((~~(app.frame/6) % 2) ? "_" : " ");
+    },
+});
+
 tm.app.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);
 };
