@@ -24,12 +24,12 @@ gls2.Laser = tm.createClass({
         this.superInit();
         this.image = tex.element;
         this.width = tex.width;
-        this.height = 480;
+        this.height = SC_H;
         this.blendMode = "lighter";
         this.origin.y = 1;
 
         this.c = tm.graphics.Canvas();
-        this.c.resize(this.width, this.height+100);
+        this.c.resize(this.width, SC_H + 100);
         this.c.globalCompositeOperation = "lighter";
 
         this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
@@ -147,7 +147,7 @@ gls2.Laser = tm.createClass({
 
     draw: function(canvas) {
         this.c.clear();
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < 6; i++) {
             this.c.drawImage(this.image, 0, -((this.age*15)%240) + 240*i);
         }
 

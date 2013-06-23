@@ -2,6 +2,9 @@
 
 var backfireParticle = null;
 
+/** ショットボタンを何フレーム押し続けるとレーザーになるか */
+var LASER_FRAME = 10;
+
 var KEYBOARD_MOVE = {
       0: { x:  1.0, y:  0.0 },
      45: { x:  0.7, y: -0.7 },
@@ -128,14 +131,13 @@ gls2.Player = tm.createClass({
             } else {
                 this.pressTimeC -= 1;
             }
-            this.pressTimeC = Math.clamp(this.pressTimeC, -1, 15);
+            this.pressTimeC = Math.clamp(this.pressTimeC, -1, LASER_FRAME);
 
             // ショット
-            this.fireLaser = (pressZ && pressC) || this.pressTimeC === 15;
+            this.fireLaser = (pressZ && pressC) || this.pressTimeC === LASER_FRAME;
             this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % 3 === 0;
-            if (!pressZ && !pressC) {
-                this.fireLaser = false;
-                this.fireShot = false;
+            if (pressZ) {
+                this.pressTimeC = 0;
             }
 
             if (this.fireLaser) {

@@ -32,6 +32,7 @@ gls2.Effect.setup = function() {
 };
 
 gls2.Effect.explode = function(x, y, scene) {
+    tm.asset.AssetManager.get("soundExplode").clone().play();
     var e = this["explosion"][Math.rand(0, 3)]
         .clone()
         .addEventListener("animationend", function() {

@@ -1,5 +1,5 @@
 var SC_W = 480;
-var SC_H = 520;
+var SC_H = 640;
 
 /** @namespace */
 var gls2 = {
@@ -34,6 +34,7 @@ gls2.GlShooter2 = tm.createClass({
 
         this.replaceScene(tm.app.LoadingScene({
             assets: {
+                // image
                 "tex0": "assets/tex0.png",
                 "tex1": "assets/tex1.png",
                 "laser": "assets/laser.png",
@@ -43,6 +44,9 @@ gls2.GlShooter2 = tm.createClass({
                 "explode1": "assets/explode1.png",
                 "explode2": "assets/explode2.png",
                 "explode3": "assets/explode3.png",
+
+                // sound
+                "soundExplode": "assets/sen_ge_taihou03.mp3",
             },
             nextScene: function() {
                 this._onLoadAssets();

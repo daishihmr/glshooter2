@@ -118,7 +118,7 @@ gls2.TitleScene = tm.createClass({
         ]);
     },
     onResultMainMenu: function(result) {
-        if (result !== 3) this.lastMainMenu = result;
+        if (result !== 4) this.lastMainMenu = result;
         switch (result) {
         case 0: // start
             this.tweener
