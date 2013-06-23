@@ -54,9 +54,12 @@ gls2.DialogMenu = tm.createClass({
         var height = Math.max((1+menu.length)*50, 50) + 40;
         this.box = tm.app.RectangleShape(SC_W * 0.8, height, {
             strokeStyle: "rgba(255,255,255,1)",
-            fillStyle: tm.graphics.LinearGradient(0,0,0,height).addColorStopList([
-                { offset:0, color:"rgba(49,37,128,0.8)" },
-                { offset:1, color:"rgba(28,21,74,0.8)" },
+            fillStyle: tm.graphics.LinearGradient(
+                    0, 0,
+                    0, height
+                ).addColorStopList([
+                { offset:0, color:"rgba(3,5,105,0.8)" },
+                { offset:1, color:"rgba(1,2, 48,0.8)" },
             ]).toStyle(),
         }).setPosition(SC_W*0.5, SC_H*0.5);
         this.box.width = 1;

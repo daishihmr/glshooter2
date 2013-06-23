@@ -120,7 +120,10 @@ gls2.Player = tm.createClass({
             this.x = Math.clamp(this.x, 5, SC_W-5);
             this.y = Math.clamp(this.y, 5, SC_H-5);
 
-            if (kb.getKey("c")) {
+            var pressC = kb.getKey("c");
+            var pressZ = kb.getKey("z");
+
+            if (pressC) {
                 this.pressTimeC += 1;
             } else {
                 this.pressTimeC -= 1;
@@ -128,9 +131,12 @@ gls2.Player = tm.createClass({
             this.pressTimeC = Math.clamp(this.pressTimeC, -1, 15);
 
             // ショット
-            var beforeLaser = this.fireLaser;
-            this.fireLaser = (kb.getKey("z") && kb.getKey("c")) || this.pressTimeC === 15;
-            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || kb.getKey("z")) && app.frame % 3 === 0;
+            this.fireLaser = (pressZ && pressC) || this.pressTimeC === 15;
+            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % 3 === 0;
+            if (!pressZ && !pressC) {
+                this.fireLaser = false;
+                this.fireShot = false;
+            }
 
             if (this.fireLaser) {
                 this.laser.visible = true;
@@ -138,12 +144,8 @@ gls2.Player = tm.createClass({
                     this.bits[i].v = false;
                 }
                 this.bitPivot.rotation = 0;
-                if (!beforeLaser) {
-                    this.laser.hitY = this.y;
-                }
             } else {
                 this.laser.visible = false;
-                this.laser.hitY = 0;
                 for (var i = 0, len = this.bits.length; i < len; i++) {
                     this.bits[i].v = true;
                 }

@@ -12,6 +12,8 @@ gls2.Laser = tm.createClass({
     rootTexture: null,
     attackPower: 5,
 
+    beforeFrameVisible: false,
+
     head: null,
     foot: null,
 
@@ -82,40 +84,53 @@ gls2.Laser = tm.createClass({
     update: function(app) {
         this.x = this.player.x;
         this.y = this.player.y - 30;
-        this.age += 1;
-        this.hitY -= 50;
-        if (this.hitY < -80) this.hitY = -80;
 
         if (!this.visible) {
-            return;
-        }
-
-        var copied = [].concat(gls2.Enemy.activeList);
-        copied.sort(function(l, r) {
-            return r.y - l.y;
-        });
-        for (var i = 0, len = copied.length; i < len; i++) {
-            var e = copied[i];
-            if (this.hitY-30 < e.y && e.y < this.y && this.x-40 < e.x && e.x < this.x+40) {
-                if (!e.damage(this.attackPower)) {
-                    this.hitY = e.y;
-                } else {
-                    this.genParticle(3);
-                }
-
-                if (app.frame % 2 === 0) {
-                    this.genParticle(2);
+            if (this.beforeFrameVisible) {
+                for (var y = this.y; y > this.hitY; y -= 30) {
+                    this.genParticle(1, y);
                 }
             }
+            this.hitY = this.y;
+        } else {
+            if (!this.beforeFrameVisible) {
+                this.hitY = this.y;
+            } else {
+                this.hitY -= 50;
+            }
+
+            var copied = [].concat(gls2.Enemy.activeList);
+            copied.sort(function(l, r) {
+                return r.y - l.y;
+            });
+            for (var i = 0, len = copied.length; i < len; i++) {
+                var e = copied[i];
+                if (this.hitY-30 < e.y && e.y < this.y && this.x-40 < e.x && e.x < this.x+40) {
+                    if (!e.damage(this.attackPower)) {
+                        this.hitY = e.y;
+                    } else {
+                        this.genParticle(3);
+                    }
+
+                    if (app.frame % 2 === 0) {
+                        this.genParticle(2);
+                    }
+                }
+            }
+
+            this.head._updateFrame();
+            this.foot._updateFrame();
         }
 
-        this.head._updateFrame();
-        this.foot._updateFrame();
+        if (this.hitY < -80) this.hitY = -80;
+        this.beforeFrameVisible = this.visible;
+        this.age += 1;
     },
 
-    genParticle: function(count) {
+    genParticle: function(count, y) {
+        var y = y || this.hitY;
         for (var i = 0; i < count; i++) {
-            var p = origParticle.clone().setPosition(this.x, this.hitY).addChildTo(this.parent);
+            var p = origParticle.clone().setPosition(this.x, y).addChildTo(this.parent);
             var speed = Math.randf(8, 14);
             var dir = Math.randf(0, Math.PI);
             p.dx = Math.cos(dir) * speed;
@@ -131,10 +146,9 @@ gls2.Laser = tm.createClass({
     },
 
     draw: function(canvas) {
-        var y = (this.age*15) % 240;
         this.c.clear();
         for (var i = 0; i < 4; i++) {
-            this.c.drawImage(this.image, 0, -y + 240*i);
+            this.c.drawImage(this.image, 0, -((this.age*15)%240) + 240*i);
         }
 
         this.height = Math.max(this.y - this.hitY, 1);
