@@ -9,12 +9,13 @@ gls2.DialogMenu = tm.createClass({
     opened: false,
     finished: false,
     cursor: null,
+    showExit: false,
 
     /**
      * @param {string} title
      * @param {Array.<string>} menu
      */
-    init: function(title, menu, defaultSelected, menuDesctiptions) {
+    init: function(title, menu, defaultSelected, menuDesctiptions, showExit) {
         this.superInit();
 
         if (menuDesctiptions) {
@@ -22,8 +23,12 @@ gls2.DialogMenu = tm.createClass({
         } else {
             this.descriptions = [].concat(menu);
         }
-        this.descriptions.push("前の画面へ戻ります");
-        menu.push("exit");
+        if (showExit) {
+            menu.push("exit");
+            this.descriptions.push("前の画面へ戻ります");
+        }
+
+        this.showExit = !!showExit;
 
         if (defaultSelected !== undefined) this.selected = defaultSelected;
 
@@ -53,11 +58,8 @@ gls2.DialogMenu = tm.createClass({
 
         var height = Math.max((1+menu.length)*50, 50) + 40;
         this.box = tm.app.RectangleShape(SC_W * 0.8, height, {
-            strokeStyle: "rgba(255,255,255,1)",
-            fillStyle: tm.graphics.LinearGradient(0,0,0,height).addColorStopList([
-                { offset:0, color:"rgba(49,37,128,0.8)" },
-                { offset:1, color:"rgba(28,21,74,0.8)" },
-            ]).toStyle(),
+            strokeStyle: "rgba(0,0,0,0)",
+            fillStyle: "rgba(1,2,48,0.8)",
         }).setPosition(SC_W*0.5, SC_H*0.5);
         this.box.width = 1;
         this.box.height = 1;
@@ -101,20 +103,19 @@ gls2.DialogMenu = tm.createClass({
 
         if (this.descriptions !== null) this.description.text = this.descriptions[this.selected];
 
-
         if (!this.opened) {
             return;
         }
         if (this.finished) {
-            this.cursor.visible = app.frame % 2 === 0;
+            this.cursor.visible = ~~(app.frame/2) % 2 === 0;
             return;
         }
 
-        if (app.keyboard.getKeyDown("x")) {
+        if (this.showExit && app.keyboard.getKeyDown("x")) {
             this.selected = this.selection.length-1;
             this.closeDialog(this.selected);
             return;
-        } else if (app.keyboard.getKeyDown("z")) {
+        } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
             this.closeDialog(this.selected);
             return;
         } else if (app.keyboard.getKeyDown("down")) {
@@ -149,6 +150,7 @@ gls2.DialogMenu = tm.createClass({
     draw: function(canvas) {
         canvas.fillStyle = "rgba(0,0,0,0.8)";
         canvas.fillRect(0,0,SC_W,SC_H);
-    }
+    },
 
+    toString: function() { return "gls2.DialogMenu" },
 });

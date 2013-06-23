@@ -6,7 +6,8 @@ gls2.EnemyHard = tm.createClass({
     /** 地上物判定 */
     isGround: false,
     _sprite: null,
-    hp: 0,
+    hp: 10,
+    name: "enemy",
     init: function(enemy) {
         this.enemy = enemy;
     },
@@ -20,7 +21,10 @@ gls2.EnemyHard = tm.createClass({
     update: function() {
     },
     draw: function(canvas) {
-    }
+    },
+    destroy: function() {
+        gls2.Effect.explode(this.enemy.x, this.enemy.y, this.enemy.gameScene);
+    },
 });
 
 gls2.EnemyHard.setup = function() {
@@ -39,9 +43,13 @@ gls2.EnemyHard.setup = function() {
         }
     });
 
+    /**
+     * 小型ヘリ「クジョウ」
+     */
     this["heri1"] = tm.createClass({
         superClass: gls2.EnemyHard,
-        hp: 12000,
+        name: "kujo",
+        hp: 3,
         init: function(enemy) {
             this.superInit(enemy);
             this._sprite = _Sprite("tex1", 64, 64);
@@ -54,13 +62,108 @@ gls2.EnemyHard.setup = function() {
             }
         },
         draw: function(canvas) {
-            if (this.enemy.age % 4 < 2) {
-                this._sprite.srcRect.set(448, 0, 64, 64);
+            if (this.enemy.frame % 4 < 2) {
+                this._sprite.srcRect.set(7 * 64, 0 * 64, 64, 64);
             } else {
-                this._sprite.srcRect.set(0, 64, 64, 64);
+                this._sprite.srcRect.set(0 * 64, 1 * 64, 64, 64);
             }
             this._sprite.draw(canvas);
         }
     });
 
+    /**
+     * 中型ヘリ「キリュウ」
+     */
+    this["heri2"] = tm.createClass({
+        superClass: gls2.EnemyHard,
+        name: "kiryu",
+        hp: 10,
+        init: function(enemy) {
+            this.superInit(enemy);
+            this._sprite = _Sprite("tex1", 64, 64);
+        },
+        update: function() {
+            if (this.enemy.x < this.enemy.player.x) {
+                this.enemy.scaleX = -1;
+            } else {
+                this.enemy.scaleX = 1;
+            }
+        },
+        draw: function(canvas) {
+            if (this.enemy.frame % 4 < 2) {
+                this._sprite.srcRect.set(1 * 64,  1 * 64, 64, 64);
+            } else {
+                this._sprite.srcRect.set(2 * 64,  1 * 64, 64, 64);
+            }
+            this._sprite.draw(canvas);
+        }
+    });
+
+    /**
+     * 小型戦車「ナツキ」
+     */
+
+    /**
+     * 大型戦車「ヤマブキ」
+     */
+
+    /**
+     * 小型戦闘機「ツキカゲ」
+     */
+
+    /**
+     * 中型戦闘機「クロカワ」
+     */
+
+    /**
+     * 固定砲台「キセ」
+     */
+
+    /**
+     * 大型固定砲台「ケンザキ」
+     */
+
+    /**
+     * ボムキャリアー「クルミ」
+     */
+
+    /**
+     * ステージ１中ボス「ユキシロ」
+     */
+    /**
+     * ステージ２中ボス「ミショウ」
+     */
+    /**
+     * ステージ３中ボス「ヒガシ」
+     */
+    /**
+     * ステージ４中ボス「ミナミノ」
+     */
+    /**
+     * ステージ５中ボス「ヒシカワ」
+     */
+
+    /**
+     * ステージ１ボス「ミスミ」
+     */
+
+    /**
+     * ステージ２ボス「ヒュウガ」
+     */
+
+    /**
+     * ステージ３ボス「モモゾノ」
+     */
+
+    /**
+     * ステージ４ボス「ホウジョウ」
+     */
+
+    /**
+     * ステージ５ボス「アイダ」
+     */
+
+    /**
+     * エクストラボス「ユメハラ」
+     */
 };

@@ -3,15 +3,19 @@
 var bulletPool = [];
 var activeList = [];
 
-gls2.Danmaku = {};
+gls2.Bullet = tm.createClass({
+    superClass: tm.app.Sprite,
+    init: function() {
+        this.superInit("tex0", 20, 20);
+    },
+});
 
+gls2.Danmaku = {};
 gls2.Danmaku.setup = function() {
-    for (var i = 0; i < 250; i++) {
+    for (var i = 0; i < 255; i++) {
         var b = gls2.Bullet();
-        // b.update = function() {
-        //     this.rotation += 10;
-        // };
         b.addEventListener("removed", function() {
+            this.clearEventListener("enterframe");
             bulletPool.push(this);
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);
@@ -28,14 +32,26 @@ gls2.Danmaku.setup = function() {
         var b = bulletPool.shift(0);
         if (b) {
             activeList.push(b);
-
             b.setFrameIndex(1);
+            b.scaleX = 1.2;
+            b.scaleY = 1.5;
+
+            b.addEventListener("enterframe", function() {
+                this.rotation += 15;
+            });
+
             return b;
         } else {
             console.warn("弾が足りない！");
         }
     };
     config.speedRate = 4;
+};
+gls2.Danmaku.clearAll = function() {
+    var copied = [].concat(activeList);
+    for (var i = 0, end = copied.length; i < end; i++) {
+        copied[i].remove();
+    }
 };
 
 var $ = bulletml.dsl;
@@ -62,18 +78,16 @@ gls2.Danmaku["basic0-4"] = new bulletml.Root({
     ]),
 });
 
-gls2.Danmaku.clearAll = function() {
-    var copied = [].concat(activeList);
-    for (var i = 0, end = copied.length; i < end; i++) {
-        copied[i].remove();
-    }
-};
-
-gls2.Bullet = tm.createClass({
-    superClass: tm.app.Sprite,
-    init: function() {
-        this.superInit("tex0", 20, 20);
-    },
+/**
+ * 自機狙い弾を20フレーム間隔で連射.
+ */
+gls2.Danmaku["basic1-0"] = new bulletml.Root({
+    top: $.action([
+        $.repeat(999, [
+            fire0,
+            $.wait(20),
+        ]),
+    ]),
 });
 
 })();

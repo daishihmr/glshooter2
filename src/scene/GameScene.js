@@ -9,12 +9,15 @@ gls2.GameScene = tm.createClass({
     stage: null,
     ground: null,
     zanki: 3,
-    groundLayer: tm.app.Object2D(),
-    playerLayer: tm.app.Object2D(),
-    enemyLayer: tm.app.Object2D(),
-    effectLayer0: tm.app.Object2D(),
-    effectLayer1: tm.app.Object2D(),
-    bulletLayer: tm.app.Object2D(),
+    groundLayer: null,
+    playerLayer: null,
+    enemyLayer: null,
+    effectLayer0: null,
+    effectLayer1: null,
+    bulletLayer: null,
+    labelLayer: null,
+
+    consoleWindow: null,
 
     background: this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
         { offset:0, color:"#030" },
@@ -29,14 +32,23 @@ gls2.GameScene = tm.createClass({
 
         this._createGround();
 
-        this.groundLayer.addChildTo(this);
-        this.enemyLayer.addChildTo(this);
-        this.effectLayer0.addChildTo(this);
-        this.playerLayer.addChildTo(this);
-        this.effectLayer1.addChildTo(this);
-        this.bulletLayer.addChildTo(this);
+        this.groundLayer = tm.app.Object2D().addChildTo(this);
+        this.enemyLayer = tm.app.Object2D().addChildTo(this);
+        this.effectLayer0 = tm.app.Object2D().addChildTo(this);
+        this.playerLayer = tm.app.Object2D().addChildTo(this);
+        this.effectLayer1 = tm.app.Object2D().addChildTo(this);
+        this.bulletLayer = tm.app.Object2D().addChildTo(this);
+        this.labelLayer = tm.app.Object2D().addChildTo(this);
+
+        this.consoleWindow = gls2.ConsoleWindow(200)
+            .setPosition(SC_W - 100 - 5, 32 + 5)
+            .addChildTo(this.labelLayer);
 
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
+    },
+
+    println: function(string) {
+        this.consoleWindow.addLine(string);
     },
 
     _createGround: function() {
@@ -80,7 +92,7 @@ gls2.GameScene = tm.createClass({
             }
         } else if (child instanceof gls2.BackfireParticle || child instanceof gls2.ShotBullet || child instanceof gls2.Laser) {
             this.effectLayer0.addChild(child);
-        } else if (child instanceof gls2.Particle) {
+        } else if (child instanceof gls2.Particle || child.isEffect) {
             this.effectLayer1.addChild(child);
         } else if (child instanceof gls2.Bullet) {
             this.bulletLayer.addChild(child);
@@ -94,7 +106,105 @@ gls2.GameScene = tm.createClass({
 
         if (app.keyboard.getKeyDown("escape")) {
             this.finish(0);
+        } else if (app.keyboard.getKeyDown("space")) {
+            this.openPauseMenu(0);
+        } else if (app.keyboard.getKeyDown("p")) {
+            app.canvas.saveAsImage();
+            this.openPauseMenu(0);
         }
+    },
+
+    onResult: function(requestCode, result) {
+        switch(requestCode) {
+        case 0: // pause
+            this.onResultPause(result);
+            break;
+        case 1: // setting
+            this.onResultSetting(result);
+            break;
+        case 2: // confirm exit game
+            this.onResultConfirmExitGame(result);
+            break;
+        case 3: // bgm setting
+            this.onResultBgmSetting(result);
+            break;
+        case 4: // se setting
+            this.onResultSeSetting(result);
+            break;
+        }
+    },
+
+    openPauseMenu: function(defaultValue) {
+        this.openDialogMenu(0, "PAUSE", [ "resume", "setting", "exit game" ], defaultValue, [
+            "ゲームを再開します",
+            "設定を変更します",
+            "ゲームを中断し、タイトル画面に戻ります",
+        ], false);
+    },
+    onResultPause: function(result) {
+        switch (result) {
+        case 0: // resume
+            break;
+        case 1: // setting
+            this.openSetting();
+            break;
+        case 2: // exit title
+            this.openConfirmExitGame();
+            break;
+        }
+    },
+
+    openSetting: function() {
+        this.openDialogMenu(1, "SETTING", [ "bgm volume", "sound volume" ], this.lastSetting, [
+            "BGMボリュームを設定します",
+            "効果音ボリュームを設定します",
+        ]);
+    },
+    onResultSetting: function(result) {
+        if (result !== 3) this.lastSetting = result;
+        switch (result) {
+        case 0:
+            this.openBgmSetting();
+            break;
+        case 1:
+            this.openSeSetting();
+            break;
+        default:
+            this.openPauseMenu();
+            break;
+        }
+    },
+
+    openConfirmExitGame: function() {
+        this.openDialogMenu(2, "REARY?", [ "yes", "no" ], 1, [
+            "ゲームを中断し、タイトル画面に戻ります",
+            "前の画面へ戻ります",
+        ], false);
+    },
+    onResultConfirmExitGame: function(result) {
+        if (result === 0) {
+            this.finish(0);
+        } else {
+            this.openPauseMenu(1);
+        }
+    },
+
+    openBgmSetting: function() {
+        this.openDialogMenu(3, "BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.bgmVolume);
+    },
+    onResultBgmSetting: function(result) {
+        if (result !== 6) gls2.core.bgmVolume = result;
+        this.openSetting(1);
+    },
+
+    openSeSetting: function() {
+        this.openDialogMenu(4, "SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.seVolume);
+    },
+    onResultSeSetting: function(result) {
+        if (result !== 6) {
+            gls2.core.seVolume = result;
+        }
+        this.openSetting(1);
     },
 
     draw: function(canvas) {
@@ -102,6 +212,8 @@ gls2.GameScene = tm.createClass({
     },
 
     gameStart: function(playerType) {
+        this.consoleWindow.clearBuf().clear();
+
         if (this.player !== null) this.player.remove();
         gls2.Enemy.clearAll();
         gls2.ShotBullet.clearAll();
