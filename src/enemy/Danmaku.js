@@ -12,9 +12,10 @@ gls2.Bullet = tm.createClass({
 
 gls2.Danmaku = {};
 gls2.Danmaku.setup = function() {
-    for (var i = 0; i < 250; i++) {
+    for (var i = 0; i < 255; i++) {
         var b = gls2.Bullet();
         b.addEventListener("removed", function() {
+            this.clearEventListener("enterframe");
             bulletPool.push(this);
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);
@@ -31,8 +32,14 @@ gls2.Danmaku.setup = function() {
         var b = bulletPool.shift(0);
         if (b) {
             activeList.push(b);
-
             b.setFrameIndex(1);
+            b.scaleX = 1.2;
+            b.scaleY = 1.5;
+
+            b.addEventListener("enterframe", function() {
+                this.rotation += 15;
+            });
+
             return b;
         } else {
             console.warn("弾が足りない！");
