@@ -78,4 +78,16 @@ gls2.Danmaku["basic0-4"] = new bulletml.Root({
     ]),
 });
 
+/**
+ * 自機狙い弾を20フレーム間隔で連射.
+ */
+gls2.Danmaku["basic1-0"] = new bulletml.Root({
+    top: $.action([
+        $.repeat(999, [
+            fire0,
+            $.wait(20),
+        ]),
+    ]),
+});
+
 })();

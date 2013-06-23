@@ -48,7 +48,7 @@ gls2.GameScene = tm.createClass({
     },
 
     println: function(string) {
-        this.consoleWindow.buf.push(string);
+        this.consoleWindow.addLine(string);
     },
 
     _createGround: function() {
@@ -114,35 +114,97 @@ gls2.GameScene = tm.createClass({
         }
     },
 
+    onResult: function(requestCode, result) {
+        switch(requestCode) {
+        case 0: // pause
+            this.onResultPause(result);
+            break;
+        case 1: // setting
+            this.onResultSetting(result);
+            break;
+        case 2: // confirm exit game
+            this.onResultConfirmExitGame(result);
+            break;
+        case 3: // bgm setting
+            this.onResultBgmSetting(result);
+            break;
+        case 4: // se setting
+            this.onResultSeSetting(result);
+            break;
+        }
+    },
+
     openPauseMenu: function(defaultValue) {
-        this.openDialogMenu(0, "PAUSE", [ "resume", "exit game" ], defaultValue, [
+        this.openDialogMenu(0, "PAUSE", [ "resume", "setting", "exit game" ], defaultValue, [
             "ゲームを再開します",
+            "設定を変更します",
             "ゲームを中断し、タイトル画面に戻ります",
         ], false);
     },
+    onResultPause: function(result) {
+        switch (result) {
+        case 0: // resume
+            break;
+        case 1: // setting
+            this.openSetting();
+            break;
+        case 2: // exit title
+            this.openConfirmExitGame();
+            break;
+        }
+    },
+
+    openSetting: function() {
+        this.openDialogMenu(1, "SETTING", [ "bgm volume", "sound volume" ], this.lastSetting, [
+            "BGMボリュームを設定します",
+            "効果音ボリュームを設定します",
+        ]);
+    },
+    onResultSetting: function(result) {
+        if (result !== 3) this.lastSetting = result;
+        switch (result) {
+        case 0:
+            this.openBgmSetting();
+            break;
+        case 1:
+            this.openSeSetting();
+            break;
+        default:
+            this.openPauseMenu();
+            break;
+        }
+    },
+
     openConfirmExitGame: function() {
-        this.openDialogMenu(1, "REARY?", [ "yes", "no" ], 1, [
+        this.openDialogMenu(2, "REARY?", [ "yes", "no" ], 1, [
             "ゲームを中断し、タイトル画面に戻ります",
             "前の画面へ戻ります",
         ], false);
     },
-    onResult: function(requestCode, result) {
-        switch(requestCode) {
-        case 0: // pause
-            switch (result) {
-            case 1: // back to title
-                this.openConfirmExitGame();
-                break;
-            }
-            break;
-        case 1: // confirm exit game
-            if (result === 0) {
-                this.finish(0);
-            } else {
-                this.openPauseMenu(1);
-            }
-            break;
+    onResultConfirmExitGame: function(result) {
+        if (result === 0) {
+            this.finish(0);
+        } else {
+            this.openPauseMenu(1);
         }
+    },
+
+    openBgmSetting: function() {
+        this.openDialogMenu(3, "BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.bgmVolume);
+    },
+    onResultBgmSetting: function(result) {
+        if (result !== 6) gls2.core.bgmVolume = result;
+        this.openSetting(1);
+    },
+
+    openSeSetting: function() {
+        this.openDialogMenu(4, "SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.seVolume);
+    },
+    onResultSeSetting: function(result) {
+        if (result !== 6) {
+            gls2.core.seVolume = result;
+        }
+        this.openSetting(1);
     },
 
     draw: function(canvas) {
@@ -150,6 +212,8 @@ gls2.GameScene = tm.createClass({
     },
 
     gameStart: function(playerType) {
+        this.consoleWindow.clearBuf().clear();
+
         if (this.player !== null) this.player.remove();
         gls2.Enemy.clearAll();
         gls2.ShotBullet.clearAll();

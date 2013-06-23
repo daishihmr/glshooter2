@@ -113,6 +113,21 @@ gls2.ConsoleWindow = tm.createClass({
             .addChildTo(this);
         this.buf = [];
     },
+    addLine: function(string) {
+        if (this.buf.length > 5) {
+            this.buf.splice(1, this.buf.length - 4);
+        }
+        this.buf.push(string);
+        return this;
+    },
+    clearBuf: function() {
+        this.buf.clear();
+        return this;
+    },
+    clear: function() {
+        this.label.text = "_";
+        return this;
+    },
     update: function(app) {
         var text = this.label.text;
         text = text.substring(0, text.length - 1);
@@ -134,6 +149,16 @@ gls2.ConsoleWindow = tm.createClass({
         this.label.text = text + ((~~(app.frame/6) % 2) ? "_" : " ");
     },
 });
+
+gls2.playSound = function(soundName) {
+    if (gls2.core.seVolume === 0) return;
+
+    var sound = tm.asset.AssetManager.get(soundName);
+    sound.volume = gls2.core.seVolume * 0.1;
+    if (sound) {
+        sound = sound.clone().play();
+    }
+};
 
 tm.app.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);

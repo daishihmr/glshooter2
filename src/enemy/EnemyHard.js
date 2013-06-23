@@ -49,7 +49,7 @@ gls2.EnemyHard.setup = function() {
     this["heri1"] = tm.createClass({
         superClass: gls2.EnemyHard,
         name: "kujo",
-        hp: 10,
+        hp: 3,
         init: function(enemy) {
             this.superInit(enemy);
             this._sprite = _Sprite("tex1", 64, 64);
@@ -62,7 +62,7 @@ gls2.EnemyHard.setup = function() {
             }
         },
         draw: function(canvas) {
-            if (this.enemy.age % 4 < 2) {
+            if (this.enemy.frame % 4 < 2) {
                 this._sprite.srcRect.set(7 * 64, 0 * 64, 64, 64);
             } else {
                 this._sprite.srcRect.set(0 * 64, 1 * 64, 64, 64);
@@ -90,7 +90,7 @@ gls2.EnemyHard.setup = function() {
             }
         },
         draw: function(canvas) {
-            if (this.enemy.age % 4 < 2) {
+            if (this.enemy.frame % 4 < 2) {
                 this._sprite.srcRect.set(1 * 64,  1 * 64, 64, 64);
             } else {
                 this._sprite.srcRect.set(2 * 64,  1 * 64, 64, 64);

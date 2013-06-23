@@ -248,7 +248,6 @@ gls2.Bit = tm.createClass({
     },
 
     update: function(core) {
-
         if (!this.bit.v) {
             this.x = 0;
             this.y = -40;

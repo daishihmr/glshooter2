@@ -184,7 +184,9 @@ gls2.TitleScene = tm.createClass({
         this.openDialogMenu(SE_SETTING, "SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.seVolume);
     },
     onResultSeSetting: function(result) {
-        if (result !== 6) gls2.core.seVolume = result;
+        if (result !== 6) {
+            gls2.core.seVolume = result;
+        }
         this.openSetting();
     },
 
