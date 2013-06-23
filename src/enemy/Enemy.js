@@ -8,16 +8,18 @@ gls2.Enemy = tm.createClass({
     age: 0,
     direction: 0,
     speed: 0,
+    gameScene: null,
     hard: null,
     soft: null,
     player: null,
     hp: 0,
-    init: function(hardName, softName) {
+    init: function(gameScene, hardName, softName) {
         this.superInit();
         this.addEventListener("added", function() {
             this.age = 0;
         });
 
+        this.gameScene = gameScene;
         this.hard = gls2.EnemyHard[hardName](this);
         this.soft = gls2.EnemySoft[softName](this);
         this.soft.setup(this);
@@ -56,8 +58,12 @@ gls2.Enemy = tm.createClass({
         }
     },
     damage: function(damagePoint) {
+        if (this.x < this.radius || SC_W-this.radius < this.x || this.y < this.radius || SC_H-this.radius < this.y)
+            return false;
+
         this.hp -= damagePoint;
         if (this.hp <= 0) {
+            this.hard.destroy();
             this.remove();
             return true;
         } else {

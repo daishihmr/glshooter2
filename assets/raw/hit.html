@@ -1,0 +1,31 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var canvas = tm.graphics.Canvas("#c");
+    tm.dom.Element("#c").event.click(function() {
+        canvas.saveAsImage();
+    });
+
+    canvas.resize(30, 30); //.fitWindow();
+    canvas.globalCompositeOperation = "lighter";
+
+    for (var i = 0; i < 40; i++) {
+        var cx = (Math.rand((30/2)-3, (30/2)+3) + Math.rand((30/2)-3, (30/2)+3)) / 2;
+        var cy = (Math.rand((30/2)-3, (30/2)+3) + Math.rand((30/2)-3, (30/2)+3)) / 2;
+        var rd = Math.rand(15, 15);
+        canvas.fillStyle = tm.graphics.RadialGradient(cx, cy, 0, cx, cy, rd*0.8).addColorStopList([
+            { offset: 0.00, color: "rgba(150, 200, 255, 0.1)" },
+            { offset: 0.20, color: "rgba(150, 200, 255, 0.1)" },
+            { offset: 1.00, color: "rgba(  0,   0, 255, 0.0)" },
+        ]).toStyle();
+        canvas.fillStar(cx, cy, rd, 13, 0.2);
+    }
+});
+</script>
+</head>
+<body style="background:black">
+<canvas id="c"></canvas>
+</body>
+</html>

@@ -80,7 +80,7 @@ gls2.GameScene = tm.createClass({
             }
         } else if (child instanceof gls2.BackfireParticle || child instanceof gls2.ShotBullet || child instanceof gls2.Laser) {
             this.effectLayer0.addChild(child);
-        } else if (child instanceof gls2.Particle) {
+        } else if (child instanceof gls2.Particle || child.isEffect) {
             this.effectLayer1.addChild(child);
         } else if (child instanceof gls2.Bullet) {
             this.bulletLayer.addChild(child);

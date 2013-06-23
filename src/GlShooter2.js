@@ -39,6 +39,10 @@ gls2.GlShooter2 = tm.createClass({
                 "laser": "assets/laser.png",
                 "laserHead": "assets/laser_head.png",
                 "laserFoot": "assets/laser_foot.png",
+                "explode0": "assets/explode0.png",
+                "explode1": "assets/explode1.png",
+                "explode2": "assets/explode2.png",
+                "explode3": "assets/explode3.png",
             },
             nextScene: function() {
                 this._onLoadAssets();
@@ -51,6 +55,7 @@ gls2.GlShooter2 = tm.createClass({
         gls2.EnemyHard.setup();
         gls2.EnemySoft.setup();
         gls2.Danmaku.setup();
+        gls2.Effect.setup();
 
         this.gameScene = gls2.GameScene();
     },
@@ -85,3 +90,7 @@ tm.app.Label = tm.createClass({
         this.alpha = 0.8 + Math.sin(app.frame * 0.1) * 0.2;
     },
 });
+
+tm.app.AnimationSprite.prototype.clone = function() {
+    return tm.app.AnimationSprite(this.ss, this.width, this.height);
+};

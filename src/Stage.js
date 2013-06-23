@@ -35,7 +35,7 @@ gls2.Stage = tm.createClass({
     },
 
     launchEnemy: function(data) {
-        return gls2.Enemy(data.hard, data.soft)
+        return gls2.Enemy(this.gameScene, data.hard, data.soft)
             .setPosition(data.x, data.y)
             .addChildTo(this.gameScene)
             .setPlayer(this.player)

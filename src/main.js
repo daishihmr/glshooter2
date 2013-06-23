@@ -1,4 +1,4 @@
-var STATS = false;
+var STATS = true;
 
 tm.preload(function() {
     if (STATS) tm.util.ScriptManager.loadStats();

@@ -1,0 +1,236 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.graphics.Color = tm.createClass({
+    superClass: tm.graphics.Color,
+    init: function(r,g,b,a) {
+        this.superInit(r,g,b,a);
+    },
+    toStyleAsRGBA: function() {
+        return "rgba({r},{g},{b},{a})".format({
+            r: ~~this.r,
+            g: ~~this.g,
+            b: ~~this.b,
+            a: this.a,
+        });
+    },
+});
+
+var FRAME_LENGTH = 50;
+var CELL_SIZE = 100;
+var CELL_LENGTH = 5;
+var SKIP = 2;
+tm.main(function() {
+
+    var canvas = tm.graphics.Canvas("#c");
+    canvas.resize(CELL_SIZE, CELL_SIZE);
+
+    var out = tm.graphics.Canvas("#out");
+    tm.dom.Element("#out").event.click(function() {
+        out.saveAsImage();
+    });
+    out.resize(CELL_SIZE * CELL_LENGTH, CELL_SIZE * CELL_LENGTH);
+
+    var particles = [];
+    var gen = function(count) {
+        for (var i = 0; i < count; i++) {
+            var angle = Math.random() * Math.PI * 2;
+            var p = Particle(
+                Math.cos(angle) * 1,
+                Math.sin(angle) * 1,
+                2,
+                255,
+                255,
+                128,
+                0.1,
+                255,
+                128,
+                0,
+                0.0
+            );
+
+            var dist = Math.randf(10, 34);
+            p.addTween({
+                x: Math.cos(angle) * dist,
+                y: Math.sin(angle) * dist,
+            }, 20);
+
+            p.addTween({
+                radius: 15,
+            }, 10, "easeOutQuad");
+
+            p.addTween({
+                b0: 0,
+            }, 20, "easeInQuad");
+
+            p.addTween({
+                g0: 0,
+            }, 20, "easeInExpo");
+
+            p.addTween({
+                g1: 0,
+            }, 20, "easeInExpo");
+
+            p.addTween({
+                a0: 0,
+            }, 30, "easeInExpo");
+
+            particles.push(p);
+        }
+    };
+
+    gen(20);
+    var genCount = 50;
+
+    var index = 0;
+
+    var shockWave = ShockWave(100, 2, 0.1);
+    shockWave.tweens.add(shockWave, {
+        radius: 45,
+    }, 20, "easeInOutQuart");
+    shockWave.tweens.add(shockWave, {
+        alpha: 0.0,
+    }, 40);
+
+    var app = tm.app.CanvasApp("#c");
+    app.update = function() {
+        canvas.clear();
+        particles.each(function(p) {
+            p.update();
+            p.draw(canvas);
+        });
+
+        if (1 < genCount) {
+            gen(genCount);
+            genCount *= 0.8;
+        }
+
+        // shockWave.update();
+        // shockWave.draw(canvas);
+
+        if (this.frame % SKIP === 0) {
+            out.drawImage(canvas.element, (index % CELL_LENGTH) * CELL_SIZE, ~~(index / CELL_LENGTH) * CELL_SIZE);
+           index++;
+        }
+    };
+    app.run();
+
+});
+
+var Tweens = tm.createClass({
+    tweens: null,
+    init: function() {
+        this.tweens = [];
+    },
+    update: function() {
+        this.tweens.each(function(t) {
+            t._setTime(t.time + 1);
+            t.update();
+        });
+    },
+    push: function(tween) {
+        this.tweens.push(tween);
+    },
+    add: function(target, finalProps, duration, easeFunc) {
+        this.tweens.push(tm.anim.Tween(target, finalProps, duration, easeFunc));
+    },
+});
+
+var Particle = tm.createClass({
+    tweens: null,
+    init: function(x, y, radius, r0, g0, b0, a0, r1, g1, b1, a1) {
+        this.tweens = Tweens();
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.r0 = r0;
+        this.g0 = g0;
+        this.b0 = b0;
+        this.a0 = a0;
+        this.r1 = r1;
+        this.g1 = g1;
+        this.b1 = b1;
+        this.a1 = a1;
+    },
+
+    addTween: function(finalProps, duration, easeFunc) {
+        this.tweens.add(this, finalProps, duration, easeFunc);
+    },
+
+    update: function() {
+        this.tweens.update();
+    },
+
+    draw: function(canvas) {
+        canvas.globalCompositeOperation = "lighter";
+        var cx = canvas.width/2;
+        var cy = canvas.height/2;
+        var color0 = tm.graphics.Color(this.r0, this.g0, this.b0, this.a0);
+        var color1 = tm.graphics.Color(this.r1, this.g1, this.b1, this.a1);
+        canvas
+            .setStrokeStyle("rgba(0,0,0,0)")
+            .setFillStyle(
+                tm.graphics.RadialGradient(
+                    this.x+cx, this.y+cy, 0,
+                    this.x+cx, this.y+cy, this.radius
+                )
+                .addColorStopList([
+                    { offset: 0.0, color: color0.toStyleAsRGBA() },
+                    { offset: 1.0, color: color1.toStyleAsRGBA() },
+                ]).toStyle()
+            )
+            .fillRect(this.x+cx-this.radius, this.y+cy-this.radius, this.radius*2, this.radius*2);
+    },
+});
+
+var ShockWave = tm.createClass({
+    init: function(num, radius, initialAlpha) {
+        this.radius = radius;
+        this.angles = Array.range(0, num).map(function(v) {
+            return Math.random() * Math.PI * 2;
+        });
+        this.ps = this.angles.map(function() {
+            return Math.randf(2, 18);
+        });
+        this.rs = this.angles.map(function() {
+            return Math.randf(0.70, 0.95);
+        });
+        this.alpha = initialAlpha;
+        this.tweens = Tweens();
+    },
+    update: function() {
+        this.tweens.update();
+    },
+    draw: function(canvas) {
+        canvas.globalCompositeOperation = "lighter";
+        var cx = canvas.width/2;
+        var cy = canvas.height/2;
+        this.angles.each(function(a, i) {
+            var r = this.radius * this.rs[i];
+            var alpha = this.alpha;
+            if (alpha < 0.001) alpha = 0;
+            canvas
+                .setStrokeStyle("rgba(0,0,0,0)")
+                .setFillStyle(
+                    tm.graphics.RadialGradient(
+                        Math.cos(a)*r+cx, Math.sin(a)*r+cy, 0,
+                        Math.cos(a)*r+cx, Math.sin(a)*r+cy, this.ps[i]
+                    )
+                    .addColorStopList([
+                        { offset: 0.0, color: "rgba(255,255,255," + alpha + ")" },
+                        { offset: 1.0, color: "rgba(255,64,0,0.0)" },
+                    ]).toStyle()
+                )
+                .fillRect(0, 0, canvas.width, canvas.height);
+        }.bind(this));
+    },
+});
+
+</script>
+</head>
+<body style="background:black /* url(background.png) repeat */">
+<canvas id="c" style="border:1px solid white"></canvas>
+<canvas id="out"></canvas>
+</body>
+</html>

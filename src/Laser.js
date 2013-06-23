@@ -96,31 +96,38 @@ gls2.Laser = tm.createClass({
         });
         for (var i = 0, len = copied.length; i < len; i++) {
             var e = copied[i];
-            if (e.x < e.radius || SC_W-e.radius < e.x || e.y < e.radius || SC_H-e.radius < e.y) continue;
             if (this.hitY-30 < e.y && e.y < this.y && this.x-40 < e.x && e.x < this.x+40) {
                 if (!e.damage(this.attackPower)) {
                     this.hitY = e.y;
+                } else {
+                    this.genParticle(3);
                 }
 
                 if (app.frame % 2 === 0) {
-                    var p = origParticle.clone().setPosition(this.x, this.hitY).addChildTo(this.parent);
-                    var speed = Math.randf(8, 14);
-                    var dir = Math.random() * Math.PI * 2;
-                    p.dx = Math.cos(dir) * speed;
-                    p.dy = Math.sin(dir) * speed;
-                    p.scaleX = p.scaleY = Math.randf(0.5, 1.0);
-                    p.addEventListener("enterframe", function() {
-                        this.x += this.dx;
-                        this.y += this.dy;
-                        this.dx *= 0.9;
-                        this.dy *= 0.9;
-                    });
+                    this.genParticle(2);
                 }
             }
         }
 
         this.head._updateFrame();
         this.foot._updateFrame();
+    },
+
+    genParticle: function(count) {
+        for (var i = 0; i < count; i++) {
+            var p = origParticle.clone().setPosition(this.x, this.hitY).addChildTo(this.parent);
+            var speed = Math.randf(8, 14);
+            var dir = Math.randf(0, Math.PI);
+            p.dx = Math.cos(dir) * speed;
+            p.dy = Math.sin(dir) * speed;
+            p.scaleX = p.scaleY = (Math.randf(0.5, 1.5) + Math.randf(0.5, 1.5)) / 2;
+            p.addEventListener("enterframe", function() {
+                this.x += this.dx;
+                this.y += this.dy;
+                this.dx *= 0.9;
+                this.dy *= 0.9;
+            });
+        }
     },
 
     draw: function(canvas) {

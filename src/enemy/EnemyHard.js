@@ -6,7 +6,7 @@ gls2.EnemyHard = tm.createClass({
     /** 地上物判定 */
     isGround: false,
     _sprite: null,
-    hp: 0,
+    hp: 10,
     init: function(enemy) {
         this.enemy = enemy;
     },
@@ -20,7 +20,10 @@ gls2.EnemyHard = tm.createClass({
     update: function() {
     },
     draw: function(canvas) {
-    }
+    },
+    destroy: function() {
+        gls2.Effect.explode(this.enemy.x, this.enemy.y, this.enemy.gameScene);
+    },
 });
 
 gls2.EnemyHard.setup = function() {
@@ -41,7 +44,7 @@ gls2.EnemyHard.setup = function() {
 
     this["heri1"] = tm.createClass({
         superClass: gls2.EnemyHard,
-        hp: 12000,
+        hp: 10,
         init: function(enemy) {
             this.superInit(enemy);
             this._sprite = _Sprite("tex1", 64, 64);
