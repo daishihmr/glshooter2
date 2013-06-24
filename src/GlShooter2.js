@@ -33,7 +33,7 @@ gls2.GlShooter2 = tm.createClass(
     init: function(id) {
         this.superInit(id);
         gls2.core = this;
-        this.resize(SC_W, SC_H).fitWindow();
+        this.resize(SC_W, SC_H);
         this.fps = 60;
         this.background = "black";
 
