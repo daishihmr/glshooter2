@@ -1,30 +1,37 @@
-gls2.Scene = tm.createClass({
+/**
+ * @class
+ * @extends {tm.app.Scene}
+ */
+gls2.Scene = tm.createClass(
+/** @lends {gls2.Scene.prototype} */
+{
     superClass: tm.app.Scene,
+    _requestCode: -1,
     init: function() {
         this.superInit();
-        this.addEventListener("enter", function(e) {
-            if (gls2.Scene.requestCode !== null) {
-                this.onResult(gls2.Scene.requestCode, gls2.Scene.result);
-            }
-        });
     },
     finish: function(result) {
-        gls2.Scene.result = result;
-        gls2.core.popScene();
-    },
-    startScene: function(requestCode, scene) {
-        gls2.Scene.result = null;
-        gls2.Scene.requestCode = requestCode;
-        if (typeof(scene) === "function") {
-            gls2.core.pushScene(scene());
-        } else if (scene instanceof gls2.Scene) {
-            gls2.core.pushScene(scene);
+        var app = this.app;
+        app.popScene();
+        var scene = app.currentScene;
+        if (scene && scene._requestCode !== -1) {
+            scene.onResult(scene._requestCode, result);
         }
     },
-    openDialogMenu: function(requestCode, title, menu, defaultValue, menuDescriptions) {
-        this.startScene(requestCode, gls2.DialogMenu(title, menu, defaultValue, menuDescriptions));
+    startScene: function(requestCode, scene) {
+        this._requestCode = requestCode;
+        if (typeof(scene) === "function") {
+            this.app.pushScene(scene());
+        } else if (scene instanceof tm.app.Scene) {
+            this.app.pushScene(scene);
+        }
+    },
+    openDialogMenu: function(requestCode, title, menu, defaultValue, menuDescriptions, showExit) {
+        if (showExit === undefined) showExit = true;
+        this.startScene(requestCode, gls2.DialogMenu(title, menu, defaultValue, menuDescriptions, showExit));
     },
     onResult: function(requestCode, result) {
+        // for override
     },
     update: function(app) {
         if (app.pointing.getPointingEnd()) {
@@ -32,10 +39,14 @@ gls2.Scene = tm.createClass({
         }
     },
 });
-gls2.Scene.requestCode = null;
-gls2.Scene.result = null;
 
-gls2.PointerEffect = tm.createClass({
+/**
+ * @class
+ * @extends {tm.app.CircleShape}
+ */
+gls2.PointerEffect = tm.createClass(
+/** @lends {gls2.PointerEffect.prototype} */
+{
     superClass: tm.app.CircleShape,
     init: function(pointing) {
         this.superInit(150, 150, {

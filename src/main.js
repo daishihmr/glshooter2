@@ -1,10 +1,18 @@
-var DEBUG = true;
+/**
+ * @preserve gls2.js v1.0-beta
+ *
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
+/** @const */
+var STATS = true;
 
 tm.preload(function() {
-    if (DEBUG) tm.util.ScriptManager.loadStats();
+    if (STATS) tm.util.ScriptManager.loadStats();
 });
 tm.main(function() {
     var app = gls2.GlShooter2("#canvas2d");
-    if (DEBUG) app.enableStats();
+    if (STATS) app.enableStats();
     app.run();
 });

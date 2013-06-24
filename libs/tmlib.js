@@ -7863,7 +7863,11 @@ tm.graphics = tm.graphics || {};
          * CSS 用 RGB文字列に変換
          */
         toStyleAsRGB: function() {
-            return "rgb({r},{g},{b})".format(this);
+            return "rgb({r},{g},{b})".format({
+                r: ~~this.r,
+                g: ~~this.g,
+                b: ~~this.b
+            });
         },
         
         
@@ -7871,14 +7875,24 @@ tm.graphics = tm.graphics || {};
          * CSS 用 RGBA文字列に変換
          */
         toStyleAsRGBA: function() {
-            return "rgba({r},{g},{b},{a})".format(this);
+            return "rgba({r},{g},{b},{a})".format({
+                r: ~~this.r,
+                g: ~~this.g,
+                b: ~~this.b,
+                a: this.a
+            });
         },
 
         /**
          * CSS 用 RGBA 文字列に変換
          */
         toStyle: function() {
-            return "rgba({r},{g},{b},{a})".format(this);
+            return "rgba({r},{g},{b},{a})".format({
+                r: ~~this.r,
+                g: ~~this.g,
+                b: ~~this.b,
+                a: this.a
+            });
         },
         
     });
@@ -10612,11 +10626,17 @@ tm.app = tm.app || {};
             return matrix.multiplyVector2(p);
         },
         
+        /**
+         * X 座標値をセット
+         */
         setX: function(x) {
             this.position.x = x;
             return this;
         },
         
+        /**
+         * Y 座標値をセット
+         */
         setY: function(y) {
             this.position.y = y;
             return this;
@@ -10627,38 +10647,74 @@ tm.app = tm.app || {};
             this.position.y = y;
             return this;
         },
+
+        setRotation: function(rotation) {
+            this.rotation = rotation;
+            return this;
+        },
+
+        setScale: function(x, y) {
+            this.scale.x = x;
+            if (arguments.length <= 1) {
+                this.scale.y = x;
+            } else {
+                this.scale.y = y;
+            }
+            return this;
+        },
         
+        /**
+         * 幅をセット
+         */
         setWidth: function(width) {
             this.width = width;
             return this;
         },
         
+        /**
+         * 高さをセット
+         */
         setHeight: function(height) {
             this.height = height;
             return this;
         },
         
+        /**
+         * サイズ(幅, 高さ)をセット
+         */
         setSize: function(width, height) {
             this.width  = width;
             this.height = height;
             return this;
         },
         
+        /**
+         * 起動
+         */
         wakeUp: function() {
             this.isUpdate = true;
             return this;
         },
         
+        /**
+         * 停止
+         */
         sleep: function() {
             this.isUpdate = false;
             return this;
         },
         
+        /**
+         * タッチ判定の有効/無効をセット
+         */
         setInteractive: function(flag) {
             this.interactive = flag;
             return this;
         },
         
+        /**
+         * バウンディングタイプをセット("circle" or "rect")
+         */
         setBoundingType: function(type) {
             this.boundingType = type;
             return this;
@@ -10992,52 +11048,52 @@ tm.app = tm.app || {};
 })();
 
 /*
- * 
+ *
  */
- 
+
 tm.app = tm.app || {};
 
- 
+
 (function() {
-    
+
     /**
      * @class
      * キャンバスエレメント
      */
     tm.app.CanvasElement = tm.createClass({
-        
+
         superClass: tm.app.Object2D,
-        
+
         /**
          * 更新フラグ
          */
         isUpdate: true,
-        
+
         /**
          * 表示フラグ
          */
         visible: true,
-        
+
         /**
          * fillStyle
          */
         fillStyle: "white",
-        
+
         /**
          * strokeStyle
          */
         strokeStyle: "white",
-        
+
         /**
          * アルファ
          */
         alpha: 1.0,
-        
+
         /**
          * ブレンドモード
          */
         blendMode: "source-over",
-        
+
         /**
          * シャドウカラー
          */
@@ -11045,28 +11101,28 @@ tm.app = tm.app || {};
         shadowOffsetX: 0,
         shadowOffsetY: 0,
         shadowBlur: 0,
-        
+
         /**
          * ゲーム用エレメントクラス
          */
         init: function() {
             this.superInit();
         },
-        
+
         drawBoundingCircle: function(canvas) {
             canvas.save();
             canvas.lineWidth = 2;
             canvas.strokeCircle(0, 0, this.radius);
             canvas.restore();
         },
-        
+
         drawBoundingRect: function(canvas) {
             canvas.save();
             canvas.lineWidth = 2;
             canvas.strokeRect(-this.width*this.originX, -this.height*this.originY, this.width, this.height);
             canvas.restore();
         },
-        
+
         drawFillRect: function(ctx) {
             ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
             return this;
@@ -11075,7 +11131,7 @@ tm.app = tm.app || {};
             ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
             return this;
         },
-        
+
         drawFillArc: function(ctx) {
             ctx.beginPath();
             ctx.arc(0, 0, this.radius, 0, Math.PI*2, false);
@@ -11090,37 +11146,42 @@ tm.app = tm.app || {};
             ctx.closePath();
             return this;
         },
-        
+
         show: function() {
             this.visible = true;
             return this;
         },
-        
+
         hide: function() {
             this.visible = false;
             return this;
         },
-        
+
         setFillStyle: function(style) {
             this.fillStyle = style;
             return this;
         },
-        
+
         setStrokeStyle: function(style) {
             this.strokeStyle = style;
             return this;
         },
-        
+
+        setBlendMode: function(blendMode) {
+            this.blendMode = blendMode;
+            return this;
+        },
+
         load: function(data) {
             var self = this;
-            
+
             data.layers.forEach(function(layer) {
                 if (layer.type != "objectgroup") return ;
-                
+
                 var group = tm.app.CanvasElement().addChildTo(self);
                 group.width = layer.width;
                 group.height = layer.height;
-                
+
                 layer.objects.forEach(function(obj) {
                     var _class = tm.using(obj.type);
                     if (Object.keys(_class).length === 0) {
@@ -11137,17 +11198,17 @@ tm.app = tm.app || {};
                         var value = props[key];
                         element[key] = value;
                     }
-                    
+
                     element.x = obj.x;
                     element.y = obj.y;
                     element.width = obj.width;
                     element.height = obj.height;
                 });
-                
+
                 self[layer.name] = group;
             });
         },
-        
+
         fromJSON: function(data) {
             for (var key in data) {
                 var value = data[key];
@@ -11168,15 +11229,15 @@ tm.app = tm.app || {};
                     this[key] = value;
                 }
             }
-            
+
             return this;
         },
-        
+
         toJSON: function() {
             // TODO:
         },
-        
-        
+
+
         _calcAlpha: function() {
             if (!this.parent) {
                 this._worldAlpha = this.alpha;
@@ -11187,17 +11248,17 @@ tm.app = tm.app || {};
                 this._worldAlpha = this.parent._worldAlpha * this.alpha;
             }
         },
-        
+
         _dirtyCalc: function() {
             this._calcAlpha();
             this._calcWorldMatrix();
         },
-        
+
     });
-    
+
 
 })();
- 
+
 
 
 
@@ -11318,7 +11379,7 @@ tm.app = tm.app || {};
 
 
 (function() {
-    
+
     /**
      * @class
      * AnimationSprite
@@ -11333,7 +11394,7 @@ tm.app = tm.app || {};
         init: function(ss, width, height)
         {
             this.superInit();
-            
+
             if (typeof ss == "string") {
                 var ss = tm.asset.AssetManager.get(ss);
                 console.assert(ss, "not found " + ss);
@@ -11342,7 +11403,7 @@ tm.app = tm.app || {};
             console.assert(typeof ss == "object", "AnimationSprite の第一引数はスプライトシートもしくはスプライトシート名に変わりました");
 
             this.ss = ss;
-            
+
             this.width  = width || ss.frame.width;
             this.height = height|| ss.frame.height;
 
@@ -11373,22 +11434,26 @@ tm.app = tm.app || {};
 
         gotoAndPlay: function(name) {
             name = name || "default";
-            
+
             this.paused = false;
             this.currentAnimation = this.ss.animations[name];
             this.currentFrame = 0;
             this.currentFrameIndex = 0;
             this._normalizeFrame();
+
+            return this;
         },
 
         gotoAndStop: function(name) {
             name = name || "default";
-            
+
             this.paused = true;
             this.currentAnimation = this.ss.animations[name];
             this.currentFrame = 0;
             this.currentFrameIndex = 0;
             this._normalizeFrame();
+
+            return this;
         },
 
         _updateFrame: function() {
@@ -11424,7 +11489,7 @@ tm.app = tm.app || {};
 
 
 (function() {
-    
+
     tm.app.SpriteSheet = tm.createClass({
         superClass: tm.event.EventDispatcher,
 
@@ -11461,19 +11526,19 @@ tm.app = tm.app || {};
         getFrame: function(index) {
             return this.frames[index];
         },
-        
+
         getAnimation: function(name) {
             return this.animations[name];
         },
-        
+
         _calcFrames: function(frame) {
             var frames = this.frames = [];
-            
+
             var w = frame.width;
             var h = frame.height;
             var row = ~~(this.image.width / w);
             var col = ~~(this.image.height/ h);
-            
+
             if (!frame.count) frame.count = row*col;
 
             for (var i=0,len=frame.count; i<len; ++i) {
@@ -11509,7 +11574,7 @@ tm.app = tm.app || {};
                     };
                 }
             }
-            
+
             // デフォルトアニメーション
             this.animations["default"] = {
                 frames: [].range(0, this.frame.count),
@@ -11646,6 +11711,8 @@ tm.app = tm.app || {};
             c.fillStyle = param.fillStyle;
             c.strokeStyle = param.strokeStyle;
             c.lineWidth = param.lineWidth;
+            c.textAlign = "center";
+            c.textBaseline = "middle";
             
             // 描画
             var lw          = Number(c.lineWidth);
@@ -11673,6 +11740,27 @@ tm.app = tm.app || {};
             // 描画
             c.fillHeart(this.width/2, this.height/2, this.radius, param.angle);
             c.strokeHeart(this.width/2, this.height/2, this.radius-Number(c.lineWidth)/2, param.angle);
+            
+            c.restore();
+        },
+
+        renderText: function(param) {
+            var c = this.canvas;
+            param = {}.$extend(tm.app.Shape.DEFAULT_SHAPE_PARAM_TEXT, param);
+
+            c.save();
+            
+            // パラメータセット
+            c.fillStyle     = param.fillStyle;
+            c.strokeStyle   = param.strokeStyle;
+            c.lineWidth     = param.lineWidth;
+            c.font          = param.font;
+            c.textAlign     = param.textAlign;
+            c.textBaseline  = param.textBaseline;
+
+            // 描画
+            c.strokeText(param.text, this.width/2, this.height/2);
+            c.fillText(param.text, this.width/2, this.height/2);
             
             c.restore();
         },
@@ -11722,6 +11810,16 @@ tm.app = tm.app || {};
         lineWidth: "2",
         
         angle: 45,
+    };
+
+    tm.app.Shape.DEFAULT_SHAPE_PARAM_TEXT = {
+        text: "hello, world",
+        fillStyle: "pink",
+        strokeStyle: "white",
+        lineWidth: "1",
+        textAlign: "center",
+        textBaseline: "middle",
+        font: "24px 'Consolas', 'Monaco', 'ＭＳ ゴシック'",
     };
     
 })();
@@ -11872,6 +11970,31 @@ tm.app = tm.app || {};
             this.renderHeart(param);
         },
         
+    });
+    
+})();
+
+
+
+
+(function() {
+    
+    /**
+     * @class
+     * HeartShape
+     */
+    tm.define("tm.app.TextShape", {
+
+        superClass: "tm.app.Shape",
+        
+        /**
+         * 初期化
+         */
+        init: function(width, height, param) {
+            this.superInit(width, height);
+            // 描画
+            this.renderText(param);
+        },
     });
     
 })();

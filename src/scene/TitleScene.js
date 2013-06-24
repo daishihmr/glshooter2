@@ -1,6 +1,7 @@
 (function() {
 
-var origParticle = null;
+var origParticle0 = null;
+var origParticle1 = null;
 
 var MAIN_MENU = 0;
 var SETTING_MENU = 1;
@@ -41,33 +42,42 @@ gls2.TitleScene = tm.createClass({
     },
 
     update: function(app) {
-        if (this.age % 2 === 0) {
-            this._generateParticle(Math.cos(this.age*0.02)        *50+SC_W*0.5, Math.sin(this.age*0.02)        *50+SC_H*0.5);
-            this._generateParticle(Math.cos(this.age*0.02+Math.PI)*50+SC_W*0.5, Math.sin(this.age*0.02+Math.PI)*50+SC_H*0.5);
-        }
+        this._generateParticle(Math.cos(this.age*0.01)        *80+SC_W*0.5, Math.sin(this.age*0.01)        *80+SC_H*0.5, 0);
+        this._generateParticle(Math.cos(this.age*0.01+Math.PI)*80+SC_W*0.5, Math.sin(this.age*0.01+Math.PI)*80+SC_H*0.5, 1);
 
-        if (app.keyboard.getKeyDown("space") || app.pointing.getPointingEnd()) {
+        if ((app.keyboard.getKeyDown("space") || app.pointing.getPointingEnd()) && !this.gameStarted) {
             this.openMainMenu()
         }
 
         this.age += 1;
     },
 
-    _generateParticle: function(cx, cy) {
+    _generateParticle: function(cx, cy, col) {
         if (this.gameStarted) return;
 
-        if (origParticle === null) origParticle = gls2.Particle(80, 1.0, 0.8, tm.graphics.Canvas()
+        if (origParticle0 === null) origParticle0 = gls2.Particle(80, 1.0, 0.8, tm.graphics.Canvas()
             .resize(80, 80)
             .setFillStyle(
                 tm.graphics.RadialGradient(40,40,0,40,40,40).addColorStopList([
                     {offset:0, color: "rgba(255,255,255,0.1)"},
-                    {offset:1, color: "rgba(  0,155,  0,0.0)"},
+                    {offset:1, color: "rgba(155,  0,  0,0.0)"},
+                ]).toStyle()
+            ).fillRect(0, 0, 80, 80)
+            .element
+        );
+        if (origParticle1 === null) origParticle1 = gls2.Particle(80, 1.0, 0.8, tm.graphics.Canvas()
+            .resize(80, 80)
+            .setFillStyle(
+                tm.graphics.RadialGradient(40,40,0,40,40,40).addColorStopList([
+                    {offset:0, color: "rgba(255,255,255,0.1)"},
+                    {offset:1, color: "rgba(  0,  0,155,0.0)"},
                 ]).toStyle()
             ).fillRect(0, 0, 80, 80)
             .element
         );
 
-        var p = origParticle.clone().addChildTo(this);
+        var p = (col === 0) ? origParticle0.clone().addChildTo(this) : origParticle1.clone().addChildTo(this);
+
         p.speed = 0.6;
         var a = Math.randf(0, Math.PI*2);
         var r = Math.rand(0, 20);
@@ -94,28 +104,30 @@ gls2.TitleScene = tm.createClass({
         callbacks[BGM_SETTING] = this.onResultBgmSetting;
         callbacks[SE_SETTING] = this.onResultSeSetting;
         callbacks[DIFFICULTY_SETTING] = this.onResultDifficultySetting;
+        callbacks[GAME_SCENE] = function() {};
 
         var callback = callbacks[requestCode];
         if (callback) callback.call(this, result);
     },
 
     openMainMenu: function() {
-        this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "start", "setting", "save score" ], this.lastMainMenu, [
-            "プレイを開始します",
+        this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "start", "tutorial", "setting", "save score" ], this.lastMainMenu, [
+            "ゲームを開始します",
+            "チュートリアルを開始します",
             "設定を変更します",
             "ゲームを終了し9leapにスコアを登録します",
         ]);
     },
     onResultMainMenu: function(result) {
-        if (result !== 3) this.lastMainMenu = result;
+        if (result !== 4) this.lastMainMenu = result;
         switch (result) {
         case 0: // start
             this.tweener
                 .clear()
                 .call(function() {
+                    this.gameStarted = true;
                     for (var i = 0, end = this.particles.length; i < end; i++) {
                         this.particles[i].speed = 6;
-                        this.gameStarted = true;
                     }
                 }.bind(this))
                 .wait(1000)
@@ -124,10 +136,12 @@ gls2.TitleScene = tm.createClass({
                     this.startScene(GAME_SCENE, gls2.core.gameScene);
                 }.bind(this));
             break;
-        case 1: // option
+        case 1: // tutorial
+            break;
+        case 2: // option
             this.openSetting();
             break;
-        case 2: // to 9leap
+        case 3: // to 9leap
             gls2.core.exitApp();
             break;
         }
@@ -170,7 +184,9 @@ gls2.TitleScene = tm.createClass({
         this.openDialogMenu(SE_SETTING, "SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.seVolume);
     },
     onResultSeSetting: function(result) {
-        if (result !== 6) gls2.core.seVolume = result;
+        if (result !== 6) {
+            gls2.core.seVolume = result;
+        }
         this.openSetting();
     },
 
@@ -188,6 +204,7 @@ gls2.TitleScene = tm.createClass({
         this.openSetting();
     },
 
+    toString: function() { return "gls2.TitleScene" },
 });
 
 })();

@@ -2,24 +2,32 @@
 
 /**
  * 敵
+ * @class
  */
-gls2.Enemy = tm.createClass({
+gls2.Enemy = tm.createClass(
+/** @lends {gls2.Enemy} */
+{
     superClass: tm.app.CanvasElement,
-    age: 0,
+    frame: 0,
     direction: 0,
     speed: 0,
+    player: null,
+    gameScene: null,
     hard: null,
     soft: null,
-    player: null,
     hp: 0,
-    init: function(hardName, softName) {
-        this.superInit();
-        this.addEventListener("added", function() {
-            this.age = 0;
-        });
 
-        this.hard = gls2.EnemyHard[hardName](this);
-        this.soft = gls2.EnemySoft[softName](this);
+    /**
+     * @constructs
+     */
+    init: function(gameScene, hardClass, softClass) {
+        this.superInit();
+        this.frame = 0;
+
+        this.gameScene = gameScene;
+        this.player = this.gameScene.player;
+        this.hard = hardClass(this);
+        this.soft = softClass(this);
         this.soft.setup(this);
         this.hard.setup(this);
 
@@ -47,26 +55,38 @@ gls2.Enemy = tm.createClass({
         this.hard.onCompleteAttack();
     },
     update: function(core) {
-        this.age++;
         this.soft.update();
         this.hard.update();
         if (this.hard.isGround) {
             this.x += core.gameScene.ground.dx;
             this.y += core.gameScene.ground.dy;
         }
+        this.frame += 1;
     },
     damage: function(damagePoint) {
+        if (this.x < this.radius || SC_W-this.radius < this.x || this.y < this.radius || SC_H-this.radius < this.y)
+            return false;
+
         this.hp -= damagePoint;
         if (this.hp <= 0) {
+            this.hard.destroy();
+
+            var r = Math.rand(0, 2);
+            if (r === 0) {
+                this.gameScene.println("enemy destroy.");
+            } else if (r === 1) {
+                this.gameScene.println(this.hard.name + " destroy.");
+            } else if (r === 2) {
+                this.gameScene.println("ETR reaction gone.")
+            }
             this.remove();
+            return true;
+        } else {
+            return false;
         }
     },
     draw: function(canvas) {
         this.hard.draw(canvas);
-    },
-    setPlayer: function(player) {
-        this.player = player;
-        return this;
     },
 });
 gls2.Enemy.clearAll = function() {
