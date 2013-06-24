@@ -1,3 +1,10 @@
+/**
+ * @preserve gls2.js v1.0-beta
+ *
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 var STATS = true;
 
 tm.preload(function() {
