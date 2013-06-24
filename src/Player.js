@@ -2,9 +2,13 @@
 
 var backfireParticle = null;
 
-/** ショットボタンを何フレーム押し続けるとレーザーになるか */
+/** 
+ * ショットボタンを何フレーム押し続けるとレーザーになるか 
+ * @const
+ */
 var LASER_FRAME = 10;
 
+/** @const */
 var KEYBOARD_MOVE = {
       0: { x:  1.0, y:  0.0 },
      45: { x:  0.7, y: -0.7 },
@@ -16,8 +20,14 @@ var KEYBOARD_MOVE = {
     315: { x:  0.7, y:  0.7 },
 };
 
-/** 自機 */
-gls2.Player = tm.createClass({
+/**
+ * 自機
+ * @class
+ * @extends {tm.app.Sprite}
+ */
+gls2.Player = tm.createClass(
+/** @lends {gls2.Player.prototype} */
+{
     superClass: tm.app.Sprite,
     roll: 0,
     controllable: true,
@@ -44,6 +54,7 @@ gls2.Player = tm.createClass({
     hyperCircle0: null,
     hyperCircle1: null,
 
+    /** @constructs */
     init: function(gameScene) {
         this.superInit("tex1", 64, 64);
 
@@ -213,11 +224,20 @@ gls2.Player = tm.createClass({
 
 });
 
-gls2.Bit = tm.createClass({
+/**
+ * @class
+ * @extends {tm.app.AnimationSprite}
+ */
+gls2.Bit = tm.createClass(
+/** @lends {gls2.Bit.prototype} */
+{
     superClass: tm.app.AnimationSprite,
     bit: null,
     player: null,
 
+    /**
+     * @constructs
+     */
     init: function(player, bit) {
         this.superInit(tm.app.SpriteSheet({
             image: "tex1",

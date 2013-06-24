@@ -1,4 +1,9 @@
-gls2.Stage = tm.createClass({
+/**
+ * @class
+ */
+gls2.Stage = tm.createClass(
+/** @lends {gls2.Stage.prototype} */
+{
     /** ステージ中の星アイテムゲット数 */
     starItem: 0,
     /** 撃墜数 */
@@ -15,7 +20,7 @@ gls2.Stage = tm.createClass({
         var scene = this.gameScene = gameScene;
         this.player = gameScene.player;
         scene.ground.direction = Math.PI * 0.5;
-        scene.ground.speed = 2;
+        scene.ground.speed = 0.5;
     },
 
     update: function() {
@@ -24,13 +29,11 @@ gls2.Stage = tm.createClass({
         // 敵を出現させる
         if (this.frame > 200 && this.frame%30 === 0) {
             var unit;
-            var r = Math.rand(0, 5);
-            if (r === 0) unit = gls2.EnemyUnit["heri2-left"];
-            else if (r === 1) unit = gls2.EnemyUnit["heri2-center"];
-            else if (r === 2) unit = gls2.EnemyUnit["heri2-right"];
-            else if (r === 3) unit = gls2.EnemyUnit["heri1-left"];
-            else if (r === 4) unit = gls2.EnemyUnit["heri1-center"];
-            else if (r === 5) unit = gls2.EnemyUnit["heri1-right"];
+            var unitNames = [];
+            for (var n in gls2.EnemyUnit) if (gls2.EnemyUnit.hasOwnProperty(n)) {
+                unitNames.push(n);
+            }
+            unit = gls2.EnemyUnit[unitNames.random()];
             for (var i = 0, end = unit.length; i < end; i++) {
                 this.launchEnemy(unit[i]);
             }

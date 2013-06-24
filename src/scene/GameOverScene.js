@@ -1,5 +1,13 @@
-gls2.GameOverScene = tm.createClass({
+/**
+ * @class
+ */
+gls2.GameOverScene = tm.createClass(
+/** @lends {gls2.GameOverScene.prototype} */
+{
     superClass: gls2.Scene,
+    /**
+     * @constructs
+     */
     init: function() {
         this.superInit();
     },

@@ -33,7 +33,7 @@ gls2.Effect.setup = function() {
 
 gls2.Effect.explode = function(x, y, scene) {
     gls2.playSound("soundExplode");
-    var e = this["explosion"][Math.rand(0, 3)]
+    var e = gls2.Effect["explosion"][Math.rand(0, 3)]
         .clone()
         .addEventListener("animationend", function() {
             this.remove();

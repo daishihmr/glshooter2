@@ -1,4 +1,10 @@
-gls2.DialogMenu = tm.createClass({
+/**
+ * @class
+ * @extends {gls2.Scene}
+ */
+gls2.DialogMenu = tm.createClass(
+/** @lends {gls2.DialogMenu.prototype} */
+{
     superClass: gls2.Scene,
     title: null,
     selection: [],
@@ -12,8 +18,12 @@ gls2.DialogMenu = tm.createClass({
     showExit: false,
 
     /**
+     * @constructs
      * @param {string} title
      * @param {Array.<string>} menu
+     * @param {number} defaultSelected
+     * @param {Array.<string>} menuDesctiptions
+     * @param {boolean} showExit
      */
     init: function(title, menu, defaultSelected, menuDesctiptions, showExit) {
         this.superInit();
@@ -151,6 +161,4 @@ gls2.DialogMenu = tm.createClass({
         canvas.fillStyle = "rgba(0,0,0,0.8)";
         canvas.fillRect(0,0,SC_W,SC_H);
     },
-
-    toString: function() { return "gls2.DialogMenu" },
 });

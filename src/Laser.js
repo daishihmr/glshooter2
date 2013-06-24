@@ -99,6 +99,7 @@ gls2.Laser = tm.createClass({
                 this.hitY -= 50;
             }
 
+            // 当たり判定
             var copied = [].concat(gls2.Enemy.activeList);
             copied.sort(function(l, r) {
                 return r.y - l.y;
@@ -106,15 +107,9 @@ gls2.Laser = tm.createClass({
             for (var i = 0, len = copied.length; i < len; i++) {
                 var e = copied[i];
                 if (this.hitY-30 < e.y && e.y < this.y && this.x-40 < e.x && e.x < this.x+40) {
-                    if (!e.damage(this.attackPower)) {
-                        this.hitY = e.y;
-                    } else {
-                        this.genParticle(3);
-                    }
-
-                    if (app.frame % 2 === 0) {
-                        this.genParticle(2);
-                    }
+                    this.hitY = e.y;
+                    e.damage(this.attackPower);
+                    this.genParticle(1);
                 }
             }
 

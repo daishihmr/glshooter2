@@ -2,8 +2,11 @@
 
 /**
  * 敵
+ * @class
  */
-gls2.Enemy = tm.createClass({
+gls2.Enemy = tm.createClass(
+/** @lends {gls2.Enemy} */
+{
     superClass: tm.app.CanvasElement,
     frame: 0,
     direction: 0,
@@ -13,14 +16,18 @@ gls2.Enemy = tm.createClass({
     hard: null,
     soft: null,
     hp: 0,
-    init: function(gameScene, hardName, softName) {
+
+    /**
+     * @constructs
+     */
+    init: function(gameScene, hardClass, softClass) {
         this.superInit();
         this.frame = 0;
 
         this.gameScene = gameScene;
         this.player = this.gameScene.player;
-        this.hard = gls2.EnemyHard[hardName](this);
-        this.soft = gls2.EnemySoft[softName](this);
+        this.hard = hardClass(this);
+        this.soft = softClass(this);
         this.soft.setup(this);
         this.hard.setup(this);
 
@@ -64,12 +71,12 @@ gls2.Enemy = tm.createClass({
         if (this.hp <= 0) {
             this.hard.destroy();
 
-            var r = Math.random();
-            if (r < 0.3) {
+            var r = Math.rand(0, 2);
+            if (r === 0) {
                 this.gameScene.println("enemy destroy.");
-            } else if (r < 0.6) {
+            } else if (r === 1) {
                 this.gameScene.println(this.hard.name + " destroy.");
-            } else {
+            } else if (r === 2) {
                 this.gameScene.println("ETR reaction gone.")
             }
             this.remove();

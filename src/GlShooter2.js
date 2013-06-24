@@ -1,4 +1,6 @@
+/** @const */
 var SC_W = 480;
+/** @const */
 var SC_H = 640;
 
 /** @namespace */
@@ -7,8 +9,13 @@ var gls2 = {
     core: null,
 };
 
-/** GL-Shooter2アプリケーション */
-gls2.GlShooter2 = tm.createClass({
+/**
+　* GL-Shooter2アプリケーション
+ * @class
+ */
+gls2.GlShooter2 = tm.createClass(
+/** @lends {gls2.GlShooter2.prototype} */
+{
     superClass: tm.app.CanvasApp,
     /** アプリ実行中のハイスコア */
     highScore: 0,
@@ -56,8 +63,6 @@ gls2.GlShooter2 = tm.createClass({
     },
 
     _onLoadAssets: function() {
-        gls2.EnemyHard.setup();
-        gls2.EnemySoft.setup();
         gls2.Danmaku.setup();
         gls2.Effect.setup();
 
@@ -78,7 +83,10 @@ gls2.setShadow = function(element) {
     element.shadowOffsetY = 70;
 };
 
-tm.app.Label = tm.createClass({
+/** @class */
+tm.app.Label = tm.createClass(
+/** @lends {tm.app.Label.prototype} */
+{
     superClass: tm.app.Label,
     init: function(text, size) {
         this.superInit(text, size);
@@ -95,7 +103,10 @@ tm.app.Label = tm.createClass({
     },
 });
 
-gls2.ConsoleWindow = tm.createClass({
+/** @class */
+gls2.ConsoleWindow = tm.createClass(
+/** @lends {gls2.ConsoleWindow.prototype} */
+{
     superClass: tm.app.RectangleShape,
     label: null,
     buf: null,

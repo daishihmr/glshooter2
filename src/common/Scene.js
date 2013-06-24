@@ -1,4 +1,10 @@
-gls2.Scene = tm.createClass({
+/**
+ * @class
+ * @extends {tm.app.Scene}
+ */
+gls2.Scene = tm.createClass(
+/** @lends {gls2.Scene.prototype} */
+{
     superClass: tm.app.Scene,
     _requestCode: -1,
     init: function() {
@@ -34,7 +40,13 @@ gls2.Scene = tm.createClass({
     },
 });
 
-gls2.PointerEffect = tm.createClass({
+/**
+ * @class
+ * @extends {tm.app.CircleShape}
+ */
+gls2.PointerEffect = tm.createClass(
+/** @lends {gls2.PointerEffect.prototype} */
+{
     superClass: tm.app.CircleShape,
     init: function(pointing) {
         this.superInit(150, 150, {

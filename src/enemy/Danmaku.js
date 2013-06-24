@@ -26,7 +26,7 @@ gls2.Danmaku.setup = function() {
 
     var config = tm.bulletml.AttackPattern.defaultConfig;
     config.isInsideOfWorld = function(b) {
-        return !(b.x < -50 || SC_W+50 < b.x || b.y < -50 || SC_H+50 < b.y);
+        return !(b instanceof gls2.Bullet) || !(b.x < -50 || SC_W+50 < b.x || b.y < -50 || SC_H+50 < b.y);
     };
     config.bulletFactory = function(spec) {
         var b = bulletPool.shift(0);
@@ -86,6 +86,20 @@ gls2.Danmaku["basic1-0"] = new bulletml.Root({
         $.repeat(999, [
             fire0,
             $.wait(20),
+        ]),
+    ]),
+});
+
+
+/**
+ * 自機狙い弾をランダム間隔で連射.
+ */
+gls2.Danmaku["basic2-0"] = new bulletml.Root({
+    top: $.action([
+        $.wait("120"),
+        $.repeat(999, [
+            $.wait("50*$rand*5"),
+            fire0,
         ]),
     ]),
 });
