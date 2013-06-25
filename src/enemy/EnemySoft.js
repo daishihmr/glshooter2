@@ -7,7 +7,9 @@
 gls2.EnemySoft = tm.createClass(
 /** @lends {gls2.EnemySoft.prototype} */
 {
+    /** @type {gls2.Enemy} */
     enemy: null,
+    /** @type {gls2.Player} */
     player: null,
     entered: false,
     /**
@@ -75,10 +77,10 @@ gls2.EnemySoft.Heri1a = tm.createClass(
         this.superInit(enemy);
     },
     onLaunch: function() {
-        var y = Math.randf(SC_H*0.1, SC_H*0.3);
+        var y = gls2.math.randf(SC_H*0.1, SC_H*0.3);
         this.enemy.tweener
             .clear()
-            .wait(Math.rand(10, 500))
+            .wait(gls2.math.rand(10, 500))
             .move(this.enemy.x, y, y*7, "easeOutQuad")
             .call(function() {
                 attack(this.enemy, "basic0-0");
@@ -114,10 +116,10 @@ gls2.EnemySoft.Heri1b = tm.createClass(
         this.superInit(enemy);
     },
     onLaunch: function() {
-        var y = Math.randf(SC_H*0.3, SC_H*0.5);
+        var y = gls2.math.randf(SC_H*0.3, SC_H*0.5);
         this.enemy.tweener
             .clear()
-            .wait(Math.rand(10, 500))
+            .wait(gls2.math.rand(10, 500))
             .move(this.enemy.x, y, y*7, "easeOutQuad")
             .call(function() {
                 attack(this.enemy, "basic0-0");
@@ -152,7 +154,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     init: function(enemy) {
         this.superInit(enemy);
         this.angle = Math.PI * 0.5;
-        this.startFrame = Math.rand(0, 60);
+        this.startFrame = gls2.math.rand(0, 60);
         this.speed = 0;
     },
     update: function() {
@@ -166,7 +168,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         } else if (this.startFrame < frame && this.enemy.y < this.player.y) {
             var a = Math.atan2(this.player.y-this.enemy.y, this.player.x-this.enemy.x);
             this.angle += (a < this.angle) ? -0.02 : 0.02;
-            this.angle = Math.clamp(this.angle, 0.5, Math.PI-0.5);
+            this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI-0.5);
         }
 
         this.enemy.x += Math.cos(this.angle) * this.speed;
@@ -177,7 +179,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
             this.enemy.remove();
         }
 
-        if (this.player.y < this.enemy.y || this.enemy.position.distanceSquared(this.player.position) < 300*300) {
+        if (gls2.distanceSq(this.enemy, this.player) < 300*300) {
             stopAttack(this.enemy);
         }
     },

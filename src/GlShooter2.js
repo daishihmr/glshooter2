@@ -174,3 +174,11 @@ gls2.playSound = function(soundName) {
 tm.app.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);
 };
+
+/** 
+ * @param {tm.app.Object2D} a
+ * @param {tm.app.Object2D} b
+ */
+gls2.distanceSq = function(a, b) {
+    return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
+};

@@ -46,7 +46,11 @@ gls2.Danmaku.setup = function() {
         }
     };
     config.speedRate = 4;
+    config.onFire = function(bullet) {
+        return true;
+    };
 };
+
 gls2.Danmaku.clearAll = function() {
     var copied = [].concat(activeList);
     for (var i = 0, end = copied.length; i < end; i++) {

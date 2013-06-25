@@ -21,7 +21,7 @@ gls2.ShotBullet = tm.createClass({
         this.blendMode = "lighter";
 
         this.scaleY = 0.5;
-        var rad = Math.degToRad(dir);
+        var rad = gls2.math.degToRad(dir);
         this.vx = Math.cos(rad) * this.speed;
         this.vy = Math.sin(rad) * this.speed;
 
@@ -76,11 +76,11 @@ gls2.ShotBullet = tm.createClass({
 
     genParticle: function() {
         var p = origParticle.clone().setPosition(this.x, this.y).addChildTo(this.parent);
-        var speed = Math.randf(2, 8);
+        var speed = gls2.math.randf(2, 8);
         var dir = Math.random() * Math.PI * 2;
         p.dx = Math.cos(dir) * speed;
         p.dy = Math.sin(dir) * speed;
-        p.scaleX = p.scaleY = (Math.randf(0.1, 0.5) + Math.randf(0.1, 0.5)) / 2;
+        p.scaleX = p.scaleY = (gls2.math.randf(0.1, 0.5) + gls2.math.randf(0.1, 0.5)) / 2;
         p.addEventListener("enterframe", function() {
             this.x += this.dx;
             this.y += this.dy;

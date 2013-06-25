@@ -205,15 +205,9 @@
             };
         }
         // console.log(scope);
-        var vars = [];
-        var args = [];
-        for (var name in scope) if (scope.hasOwnProperty(name)) {
-            vars.push(name);
-            args.push(scope[name]);
-        }
-        var f = new Function(vars, "return " + exp);
+        var f = new Function("return " + exp.split("$").join("this.$"));
         // console.log(f);
-        var result = f.apply(null, args);
+        var result = f.apply(scope);
         // console.log(result);
         return result;
     };

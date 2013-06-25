@@ -71,7 +71,7 @@ gls2.Enemy = tm.createClass(
         if (this.hp <= 0) {
             this.hard.destroy();
 
-            var r = Math.rand(0, 2);
+            var r = gls2.math.rand(0, 2);
             if (r === 0) {
                 this.gameScene.println("enemy destroy.");
             } else if (r === 1) {

@@ -1,4 +1,5 @@
-@echo off
+erase build\gls2.js
+
 java -jar tools/compiler.jar ^
 --externs libs/tmlib.js ^
 --js libs/bulletml.js ^
@@ -28,8 +29,8 @@ java -jar tools/compiler.jar ^
 --js src/enemy/EnemySoft.js ^
 --js src/enemy/EnemyUnit.js ^
 --js src/enemy/Danmaku.js ^
+--js libs/math.js ^
 --compilation_level ADVANCED_OPTIMIZATIONS ^
 --language_in ECMASCRIPT5 ^
---js_output_file build/gls2.js ^
---manage_closure_dependencies
+--js_output_file build/gls2.js
 rem --formatting PRETTY_PRINT

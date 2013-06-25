@@ -126,11 +126,11 @@ gls2.Laser = tm.createClass({
         var y = y || this.hitY;
         for (var i = 0; i < count; i++) {
             var p = origParticle.clone().setPosition(this.x, y).addChildTo(this.parent);
-            var speed = Math.randf(8, 14);
-            var dir = Math.randf(0, Math.PI);
+            var speed = gls2.math.randf(8, 14);
+            var dir = gls2.math.randf(0, Math.PI);
             p.dx = Math.cos(dir) * speed;
             p.dy = Math.sin(dir) * speed;
-            p.scaleX = p.scaleY = (Math.randf(0.5, 1.5) + Math.randf(0.5, 1.5)) / 2;
+            p.scaleX = p.scaleY = (gls2.math.randf(0.5, 1.5) + gls2.math.randf(0.5, 1.5)) / 2;
             p.addEventListener("enterframe", function() {
                 this.x += this.dx;
                 this.y += this.dy;

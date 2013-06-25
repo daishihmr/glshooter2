@@ -130,10 +130,10 @@ gls2.DialogMenu = tm.createClass(
             return;
         } else if (app.keyboard.getKeyDown("down")) {
             this.selected += 1;
-            this.selected = Math.clamp(this.selected, 0, this.selection.length-1);
+            this.selected = gls2.math.clamp(this.selected, 0, this.selection.length-1);
         } else if (app.keyboard.getKeyDown("up")) {
             this.selected -= 1;
-            this.selected = Math.clamp(this.selected, 0, this.selection.length-1);
+            this.selected = gls2.math.clamp(this.selected, 0, this.selection.length-1);
         }
     },
 
