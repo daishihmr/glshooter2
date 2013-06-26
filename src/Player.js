@@ -39,13 +39,7 @@ gls2.Player = tm.createClass(
 
     /** @protected */
     speed: 4.5,
-    /** @protected */
-    bits: [
-        { x: -70, y: 20, d: 0.1, turn: false, dt: -0.7, v: true },
-        { x: -40, y: 40, d: 0.1, turn: false, dt: -0.5, v: true },
-        { x:  40, y: 40, d: 0.1, turn:  true, dt:  0.5, v: true },
-        { x:  70, y: 20, d: 0.1, turn:  true, dt:  0.7, v: true },
-    ],
+    bits: null,
 
     laser: null,
 
@@ -69,6 +63,9 @@ gls2.Player = tm.createClass(
         this.laser.addChildTo(gameScene);
 
         this._createHitCircle();
+
+        this.bits = this._createBits();
+
         this.bitPivot = tm.app.CanvasElement().addChildTo(this);
         for (var i = 0, end = this.bits.length; i < end; i++) {
             var bit = this.bits[i];
@@ -106,6 +103,16 @@ gls2.Player = tm.createClass(
         this.hyperCircle1.update = function() {
             this.rotation -= 2;
         };
+    },
+
+    /** @protected */
+    _createBits: function() {
+        return [
+            { x: -70, y: 20, d: 0.1, turn: false, dt: -0.7, v: true },
+            { x: -40, y: 40, d: 0.1, turn: false, dt: -0.5, v: true },
+            { x:  40, y: 40, d: 0.1, turn:  true, dt:  0.5, v: true },
+            { x:  70, y: 20, d: 0.1, turn:  true, dt:  0.7, v: true },
+        ];
     },
 
     _createHitCircle: function() {
