@@ -23,7 +23,7 @@ gls2.Scene = tm.createClass(
         app.popScene();
         var scene = app.currentScene;
         if (scene && scene._sceneResultCallback) {
-            scene._sceneResultCallback.call(scene, result);
+            scene._sceneResultCallback.bind(scene)(result);
         }
     },
     update: function(app) {

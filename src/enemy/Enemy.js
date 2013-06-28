@@ -48,6 +48,8 @@ gls2.Enemy = tm.createClass(
 
             this.tweener.clear();
 
+            this.scaleX = this.scaleY = 1;
+
             enemyPool.push(this);
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);

@@ -102,7 +102,7 @@ gls2.GameScene = tm.createClass({
         this.stage.update(app.frame);
 
         if (app.keyboard.getKeyDown("escape")) {
-            this.finish(0);
+            this.app.popScene();
         } else if (app.keyboard.getKeyDown("space")) {
             this.openPauseMenu(0);
         } else if (app.keyboard.getKeyDown("p")) {
@@ -160,7 +160,7 @@ gls2.GameScene = tm.createClass({
     },
     onResultConfirmExitGame: function(result) {
         if (result === 0) {
-            this.finish(0);
+            this.app.popScene();
         } else {
             this.openPauseMenu(1);
         }

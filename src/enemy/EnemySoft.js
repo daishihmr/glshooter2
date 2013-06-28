@@ -171,7 +171,7 @@ gls2.EnemySoft.TankR = tm.createClass(
     },
     setup: function() {
         attack(this, "basic2-0");
-        this.direction = 0;
+        this.dir = 0;
     },
     update: function() {
         this.x += 1;
@@ -198,7 +198,7 @@ gls2.EnemySoft.TankRD = tm.createClass(
     },
     setup: function() {
         attack(this, "basic2-0");
-        this.direction = 1;
+        this.dir = 1;
     },
     update: function() {
         this.x += 0.7;
@@ -226,7 +226,7 @@ gls2.EnemySoft.TankD = tm.createClass(
     },
     setup: function() {
         attack(this, "basic2-0");
-        this.direction = 2;
+        this.dir = 2;
     },
     update: function() {
         this.y += 1;
@@ -253,7 +253,7 @@ gls2.EnemySoft.TankLD = tm.createClass(
     },
     setup: function() {
         attack(this, "basic2-0");
-        this.direction = 3;
+        this.dir = 3;
     },
     update: function() {
         this.x -= 0.7;
@@ -281,7 +281,7 @@ gls2.EnemySoft.TankL = tm.createClass(
     },
     setup: function() {
         attack(this, "basic2-0");
-        this.direction = 4;
+        this.dir = 4;
     },
     update: function() {
         this.x -= 1;

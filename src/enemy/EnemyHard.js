@@ -36,7 +36,7 @@ gls2.EnemyHard = tm.createClass(
     draw: function(canvas) {
     },
     destroy: function() {
-        gls2.Effect.explode(this.x, this.y, this.gameScene);
+        gls2.Effect.explodeS(this.x, this.y, this.gameScene);
     },
 });
 
@@ -128,7 +128,7 @@ gls2.EnemyHard.Tank1 = tm.createClass({
         this.radius = 24;
     },
     update: function() {
-        switch (this.direction) {
+        switch (this.dir) {
         case 0:
             this._sprite.setFrameIndex(16, 64, 64);
             break;

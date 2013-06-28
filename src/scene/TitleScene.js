@@ -107,7 +107,7 @@ gls2.TitleScene = tm.createClass({
                 .call(function() {
                     this.gameStarted = true;
                     for (var i = 0, end = this.particles.length; i < end; i++) {
-                        this.particles[i].speed = 6;
+                        this.particles[i].speed = 8;
                     }
                 }.bind(this))
                 .wait(1000)

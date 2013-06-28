@@ -42,7 +42,7 @@ gls2.Stage = tm.createClass(
             for (var n in gls2.EnemyUnit) if (gls2.EnemyUnit.hasOwnProperty(n)) {
                 unitNames.push(n);
             }
-            unit = gls2.EnemyUnit["heri2-left"];
+            unit = gls2.EnemyUnit[["tank-left", "heri1-left"].random()];
             for (var i = 0, end = unit.length; i < end; i++) {
                 this.launchEnemy(unit[i]);
             }
