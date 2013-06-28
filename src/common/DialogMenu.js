@@ -21,26 +21,24 @@ gls2.DialogMenu = tm.createClass(
      * @constructs
      * @param {string} title
      * @param {Array.<string>} menu
-     * @param {number} defaultSelected
+     * @param {number=} defaultSelected
      * @param {Array.<string>} menuDesctiptions
-     * @param {boolean} showExit
+     * @param {boolean=} showExit
      */
     init: function(title, menu, defaultSelected, menuDesctiptions, showExit) {
         this.superInit();
 
+        this.selected = ~~defaultSelected;
+        this.showExit = !!showExit;
         if (menuDesctiptions) {
             this.descriptions = menuDesctiptions;
         } else {
             this.descriptions = [].concat(menu);
         }
-        if (showExit) {
+        if (this.showExit) {
             menu.push("exit");
             this.descriptions.push("前の画面へ戻ります");
         }
-
-        this.showExit = !!showExit;
-
-        if (defaultSelected !== undefined) this.selected = defaultSelected;
 
         var showLabels = function() {
             var y = SC_H*0.5 - menu.length*25;
@@ -162,3 +160,16 @@ gls2.DialogMenu = tm.createClass(
         canvas.fillRect(0,0,SC_W,SC_H);
     },
 });
+
+/**
+ * @param {string} title
+ * @param {Array.<string>} menu
+ * @param {function(number)} callback
+ * @param {number=} defaultValue
+ * @param {Array.<string>=} menuDescriptions
+ * @param {boolean=} showExit
+ */
+gls2.Scene.prototype.openDialogMenu = function(title, menu, callback, defaultValue, menuDescriptions, showExit) {
+    if (showExit === undefined) showExit = true;
+    this.startSceneForResult(gls2.DialogMenu(title, menu, defaultValue, menuDescriptions, showExit), callback);
+};

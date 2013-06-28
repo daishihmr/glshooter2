@@ -19,10 +19,8 @@ gls2.GameScene = tm.createClass({
 
     consoleWindow: null,
 
-    background: this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-        { offset:0, color:"#030" },
-        { offset:1, color:"#010" }
-    ]).toStyle(),
+    /** ランク(0.0～1.0) */
+    rank: 0,
 
     init: function() {
         if (SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
@@ -68,7 +66,7 @@ gls2.GameScene = tm.createClass({
         g.blendMode = "lighter";
         g.draw = function(canvas) {
             canvas.lineWidth = 0.2;
-            canvas.strokeStyle = "#999";
+            canvas.strokeStyle = "#rgba(255,255,255,0.5)";
             canvas.beginPath();
             for (var x = this.gx; x < SC_W; x += this.cellSize) {
                 canvas.line(x, 0, x, SC_H);
@@ -76,7 +74,6 @@ gls2.GameScene = tm.createClass({
             for (var y = this.gy; y < SC_H; y += this.cellSize) {
                 canvas.line(0, y, SC_W, y);
             }
-            canvas.closePath();
             canvas.stroke();
         };
     },
@@ -114,28 +111,8 @@ gls2.GameScene = tm.createClass({
         }
     },
 
-    onResult: function(requestCode, result) {
-        switch(requestCode) {
-        case 0: // pause
-            this.onResultPause(result);
-            break;
-        case 1: // setting
-            this.onResultSetting(result);
-            break;
-        case 2: // confirm exit game
-            this.onResultConfirmExitGame(result);
-            break;
-        case 3: // bgm setting
-            this.onResultBgmSetting(result);
-            break;
-        case 4: // se setting
-            this.onResultSeSetting(result);
-            break;
-        }
-    },
-
     openPauseMenu: function(defaultValue) {
-        this.openDialogMenu(0, "PAUSE", [ "resume", "setting", "exit game" ], defaultValue, [
+        this.openDialogMenu("PAUSE", [ "resume", "setting", "exit game" ], this.onResultPause, defaultValue, [
             "ゲームを再開します",
             "設定を変更します",
             "ゲームを中断し、タイトル画面に戻ります",
@@ -155,7 +132,7 @@ gls2.GameScene = tm.createClass({
     },
 
     openSetting: function() {
-        this.openDialogMenu(1, "SETTING", [ "bgm volume", "sound volume" ], this.lastSetting, [
+        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume" ], this.onResultSetting, this.lastSetting, [
             "BGMボリュームを設定します",
             "効果音ボリュームを設定します",
         ]);
@@ -176,7 +153,7 @@ gls2.GameScene = tm.createClass({
     },
 
     openConfirmExitGame: function() {
-        this.openDialogMenu(2, "REARY?", [ "yes", "no" ], 1, [
+        this.openDialogMenu("REARY?", [ "yes", "no" ], this.onResultConfirmExitGame, 1, [
             "ゲームを中断し、タイトル画面に戻ります",
             "前の画面へ戻ります",
         ], false);
@@ -190,7 +167,7 @@ gls2.GameScene = tm.createClass({
     },
 
     openBgmSetting: function() {
-        this.openDialogMenu(3, "BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.bgmVolume);
+        this.openDialogMenu("BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultBgmSetting, gls2.core.bgmVolume);
     },
     onResultBgmSetting: function(result) {
         if (result !== 6) gls2.core.bgmVolume = result;
@@ -198,7 +175,7 @@ gls2.GameScene = tm.createClass({
     },
 
     openSeSetting: function() {
-        this.openDialogMenu(4, "SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.seVolume);
+        this.openDialogMenu("SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultSeSetting, gls2.core.seVolume);
     },
     onResultSeSetting: function(result) {
         if (result !== 6) {
@@ -208,7 +185,8 @@ gls2.GameScene = tm.createClass({
     },
 
     draw: function(canvas) {
-        canvas.clearColor(this.background, 0, 0);
+        if (this.stage === null) return;
+        canvas.clearColor(this.stage.background, 0, 0);
     },
 
     gameStart: function(playerType) {
@@ -250,6 +228,7 @@ gls2.GameScene = tm.createClass({
     },
 
     miss: function() {
+        // TODO ミスエフェクト
         this.player.remove();
         this.zanki -= 1;
         if (this.zanki > 0) {
@@ -273,6 +252,23 @@ gls2.GameScene = tm.createClass({
 
     gameClear: function() {
         // TODO エンディング画面へ
+    },
+
+    addScore: function(score) {
+        var before = score;
+        this.score += score;
+        for (var i = 0; i < gls2.core.extendScore.length; i++) {
+            var es = gls2.core.extendScore[i];
+            if (before < es && es <= this.score) {
+                this.extendZanki();
+            }
+        }
+        gls2.core.highScore = Math.max(gls2.core.highScore, this.score);
+    },
+
+    extendZanki: function() {
+        // TODO エクステンドエフェクト
+        this.zanki += 1;
     },
 
 });

@@ -17,6 +17,7 @@ java -jar tools/compiler.jar ^
 --js src/common/Scene.js ^
 --js src/common/DialogMenu.js ^
 --js src/common/Particle.js ^
+--js src/common/ConsoleWindow.js ^
 --js src/scene/TitleScene.js ^
 --js src/scene/ShipSelectScene.js ^
 --js src/scene/GameScene.js ^

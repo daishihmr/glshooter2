@@ -16,11 +16,20 @@ gls2.Stage = tm.createClass(
 
     frame: 0,
 
+    background: null,
+
     init: function(gameScene, player) {
         var scene = this.gameScene = gameScene;
         this.player = gameScene.player;
         scene.ground.direction = Math.PI * 0.5;
         scene.ground.speed = 0.5;
+
+        this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
+            { offset:0, color:"#030" },
+            { offset:1, color:"#010" }
+        ]).toStyle();
+
+        this.frame = 0;
     },
 
     update: function() {
@@ -33,7 +42,7 @@ gls2.Stage = tm.createClass(
             for (var n in gls2.EnemyUnit) if (gls2.EnemyUnit.hasOwnProperty(n)) {
                 unitNames.push(n);
             }
-            unit = gls2.EnemyUnit[unitNames.random()];
+            unit = gls2.EnemyUnit["heri2-left"];
             for (var i = 0, end = unit.length; i < end; i++) {
                 this.launchEnemy(unit[i]);
             }
@@ -43,11 +52,23 @@ gls2.Stage = tm.createClass(
     },
 
     launchEnemy: function(data) {
-        return gls2.Enemy(this.gameScene, data.hard, data.soft)
-            .setPosition(data.x, data.y)
-            .addChildTo(this.gameScene)
-            .onLaunch();
+        var enemy = gls2.Enemy.pool.shift();
+        if (enemy) {
+            this.enemyCount += 1;
+            enemy
+                .setup(this.gameScene, this, data.soft, data.hard)
+                .setPosition(data.x, data.y)
+                .addChildTo(this.gameScene)
+                .onLaunch();
+        } else {
+            console.warn("敵が足りない！");
+        }
     },
+
+    onDestroyEnemy: function(enemy) {
+        this.killCount += 1;
+    },
+
 });
 
 gls2.Stage.create = function(gameScene, stageNumber) {

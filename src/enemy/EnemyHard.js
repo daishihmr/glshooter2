@@ -1,4 +1,20 @@
+// すべてsingletonかつimmutableに実装する
 (function() {
+
+var _Sprite = tm.createClass({
+    superClass: tm.app.Sprite,
+    init: function(tex, w, h) {
+        this.superInit(tex, w, h);
+    },
+    draw: function(canvas) {
+        var srcRect = this.srcRect;
+        var element = this._image.element;
+        
+        canvas.context.drawImage(element,
+            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
+            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
+    },
+});
 
 /**
  * 敵の見た目や性能
@@ -7,17 +23,9 @@
 gls2.EnemyHard = tm.createClass(
 /** @lends */
 {
-    enemy: null,
-    /** 地上物判定 */
-    isGround: false,
-    _sprite: null,
-    hp: 10,
-    name: "enemy",
-    init: function(enemy) {
-        this.enemy = enemy;
-    },
     setup: function() {
-        this.enemy.hp = this.hp;
+        this.name = "abstract enemy";
+        this.hp = 9999;
     },
     onLaunch: function() {
     },
@@ -28,7 +36,7 @@ gls2.EnemyHard = tm.createClass(
     draw: function(canvas) {
     },
     destroy: function() {
-        gls2.Effect.explode(this.enemy.x, this.enemy.y, this.enemy.gameScene);
+        gls2.Effect.explode(this.x, this.y, this.gameScene);
     },
 });
 
@@ -41,21 +49,24 @@ gls2.EnemyHard.Heri1 = tm.createClass(
 /** @lends */
 {
     superClass: gls2.EnemyHard,
-    name: "kujo",
-    hp: 3,
-    init: function(enemy) {
-        this.superInit(enemy);
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.name = "kujo";
+        this.hp = 3;
+        this.isGround = false;
         this._sprite = _Sprite("tex1", 64, 64);
     },
     update: function() {
-        if (this.enemy.x < this.enemy.player.x) {
-            this.enemy.scaleX = -1;
+        if (this.x < this.player.x) {
+            this.scaleX = -1;
         } else {
-            this.enemy.scaleX = 1;
+            this.scaleX = 1;
         }
     },
     draw: function(canvas) {
-        if (this.enemy.frame % 4 < 2) {
+        if (this.age % 4 < 2) {
             this._sprite.setFrameIndex(7);
         } else {
             this._sprite.setFrameIndex(8);
@@ -63,6 +74,7 @@ gls2.EnemyHard.Heri1 = tm.createClass(
         this._sprite.draw(canvas);
     }
 });
+gls2.EnemyHard.Heri1 = gls2.EnemyHard.Heri1();
 
 /**
  * 中型ヘリ「キリュウ」
@@ -73,21 +85,24 @@ gls2.EnemyHard.Heri2 = tm.createClass(
 /** @lends */
 {
     superClass: gls2.EnemyHard,
-    name: "kiryu",
-    hp: 10,
-    init: function(enemy) {
-        this.superInit(enemy);
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.name = "kiryu";
+        this.hp = 10;
+        this.isGround = false;
         this._sprite = _Sprite("tex1", 64, 64);
     },
     update: function() {
-        if (this.enemy.x < this.enemy.player.x) {
-            this.enemy.scaleX = -1;
+        if (this.x < this.player.x) {
+            this.scaleX = -1;
         } else {
-            this.enemy.scaleX = 1;
+            this.scaleX = 1;
         }
     },
     draw: function(canvas) {
-        if (this.enemy.frame % 4 < 2) {
+        if (this.age % 4 < 2) {
             this._sprite.setFrameIndex(9);
         } else {
             this._sprite.setFrameIndex(10);
@@ -95,22 +110,25 @@ gls2.EnemyHard.Heri2 = tm.createClass(
         this._sprite.draw(canvas);
     }
 });
+gls2.EnemyHard.Heri2 = gls2.EnemyHard.Heri2();
 
 /**
  * 小型戦車「ナツキ」
  */
 gls2.EnemyHard.Tank1 = tm.createClass({
     superClass: gls2.EnemyHard,
-    name: "natsuki",
-    hp: 5,
-    init: function(enemy) {
-        this.superInit(enemy);
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.name = "natsuki";
+        this.hp = 5;
         this.isGround = true;
         this._sprite = _Sprite("tex1", 48, 48);
-        this.enemy.radius = 24;
+        this.radius = 24;
     },
     update: function() {
-        switch (this.enemy.direction) {
+        switch (this.direction) {
         case 0:
             this._sprite.setFrameIndex(16, 64, 64);
             break;
@@ -141,6 +159,7 @@ gls2.EnemyHard.Tank1 = tm.createClass({
         this._sprite.draw(canvas);
     },
 });
+gls2.EnemyHard.Tank1 = gls2.EnemyHard.Tank1();
 
 /**
  * 大型戦車「ヤマブキ」
@@ -205,20 +224,5 @@ gls2.EnemyHard.Tank1 = tm.createClass({
 /**
  * エクストラボス「ユメハラ」
  */
-
-var _Sprite = tm.createClass({
-    superClass: tm.app.Sprite,
-    init: function(tex, w, h) {
-        this.superInit(tex, w, h);
-    },
-    draw: function(canvas) {
-        var srcRect = this.srcRect;
-        var element = this._image.element;
-        
-        canvas.context.drawImage(element,
-            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
-            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
-    },
-});
 
 })();

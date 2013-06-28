@@ -8,86 +8,129 @@ gls2.Enemy = tm.createClass(
 /** @lends {gls2.Enemy} */
 {
     superClass: tm.app.CanvasElement,
-    frame: 0,
+    age: 0,
     direction: 0,
     speed: 0,
     player: null,
     gameScene: null,
+    stage: null,
     hard: null,
     soft: null,
     hp: 0,
+    enableFire: true,
+
+    /** 出現してから一度でも可視範囲に入ったか */
+    entered: false,
 
     /**
      * @constructs
      */
-    init: function(gameScene, hardClass, softClass) {
+    init: function() {
         this.superInit();
-        this.frame = 0;
-
-        this.gameScene = gameScene;
-        this.player = this.gameScene.player;
-        this.hard = hardClass(this);
-        this.soft = softClass(this);
-        this.soft.setup(this);
-        this.hard.setup(this);
-
-        if (!this.hard.isGround) {
-            gls2.setShadow(this);
-        }
-
         this.addEventListener("completeattack", function() {
             this.onCompleteAttack();
         });
         this.addEventListener("added", function() {
+            this.age = 0;
+            this.entered = false;
+            this.enableFire = true;
             activeList.push(this);
         });
         this.addEventListener("removed", function() {
+            var listeners = [].concat(this._listeners["enterframe"]);
+            if (listeners) {
+                for (var i = 0, len = listeners.length; i < len; i++) {
+                    if (listeners[i] && listeners[i].isDanmaku) {
+                        this.removeEventListener("enterframe", listeners[i]);
+                    }
+                }
+            }
+
+            this.tweener.clear();
+
+            enemyPool.push(this);
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);
         });
     },
+    setup: function(gameScene, stage, software, hardware) {
+        this.gameScene = gameScene;
+        this.player = gameScene.player;
+        this.stage = stage;
+        this.soft = software;
+        this.hard = hardware;
+
+        this.soft.setup.apply(this);
+        this.hard.setup.apply(this);
+
+        if (this.isGround) {
+            gls2.removeShadow(this);
+        } else {
+            gls2.setShadow(this);
+        }
+
+        return this;
+    },
     onLaunch: function() {
-        this.soft.onLaunch();
-        this.hard.onLaunch();
+        this.soft.onLaunch.apply(this);
+        this.hard.onLaunch.apply(this);
     },
     onCompleteAttack: function() {
-        this.soft.onCompleteAttack();
-        this.hard.onCompleteAttack();
+        this.soft.onCompleteAttack.apply(this);
+        this.hard.onCompleteAttack.apply(this);
     },
-    update: function(core) {
-        this.soft.update();
-        this.hard.update();
-        if (this.hard.isGround) {
-            this.x += core.gameScene.ground.dx;
-            this.y += core.gameScene.ground.dy;
+    update: function() {
+        if (this.isInScreen()) {
+            this.entered = true;
         }
-        this.frame += 1;
+
+        this.soft.update.apply(this);
+        this.hard.update.apply(this);
+        if (this.isGround) {
+            this.x += this.gameScene.ground.dx;
+            this.y += this.gameScene.ground.dy;
+        }
+        this.age += 1;
     },
     damage: function(damagePoint) {
-        if (this.x < this.radius || SC_W-this.radius < this.x || this.y < this.radius || SC_H-this.radius < this.y)
-            return false;
+        // 可視範囲に入ったことのない敵はダメージを受けない
+        if (!this.entered) return false;
 
         this.hp -= damagePoint;
         if (this.hp <= 0) {
-            this.hard.destroy();
+            this.hard.destroy.apply(this);
 
             var r = gls2.math.rand(0, 2);
             if (r === 0) {
                 this.gameScene.println("enemy destroy.");
             } else if (r === 1) {
-                this.gameScene.println(this.hard.name + " destroy.");
+                this.gameScene.println(this.name + " destroy.");
             } else if (r === 2) {
                 this.gameScene.println("ETR reaction gone.")
             }
             this.remove();
+
+            this.stage.onDestroyEnemy(this);
+
             return true;
         } else {
             return false;
         }
     },
+
     draw: function(canvas) {
-        this.hard.draw(canvas);
+        this.hard.draw.call(this, canvas);
     },
+
+    isInScreen: function() {
+        var rad = this.radius;
+        return -rad <= this.x && this.x < SC_W+rad && -rad <= this.y && this.y < SC_H+rad;
+    },
+
+    onfire: function() {
+        return this.enableFire;
+    },
+
 });
 gls2.Enemy.clearAll = function() {
     var copied = [].concat(activeList);
@@ -97,5 +140,9 @@ gls2.Enemy.clearAll = function() {
 };
 
 var activeList = gls2.Enemy.activeList = [];
+var enemyPool = gls2.Enemy.pool = [];
+for (var i = 0; i < 256; i++) {
+    enemyPool.push(gls2.Enemy());
+}
 
 })();
