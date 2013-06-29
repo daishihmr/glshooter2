@@ -43,23 +43,6 @@ gls2.Effect.setup = function() {
             ]).toStyle())
         .fillCircle(50, 50, 50);
 
-    gls2.Effect["shockwaveImage2"] = tm.graphics.Canvas()
-        .resize(100, 100)
-        .setStrokeStyle("rgba(0,0,0,0)");
-    gls2.Effect["shockwaveImage2"].globalCompositeOperation = "lighter";
-    for (var i = 0; i < 20; i++) {
-        var a = Math.random() * Math.PI * 2;
-        var d = gls2.math.randf(45, 50);
-        var r = gls2.math.randf(5, 20);
-        gls2.Effect["shockwaveImage2"]
-            .setFillStyle(tm.graphics.RadialGradient(Math.cos(a)*d+50, Math.sin(a)*d+50, 0, Math.cos(a)*d+50, Math.sin(a)*d+50, r)
-                .addColorStopList([
-                    { offset: 0.00, color: "rgba(255,255,255,1)" },
-                    { offset: 1.00, color: "rgba(255,255,255,0)" },
-                ]).toStyle())
-            .fillCircle(Math.cos(a)*d+50, Math.sin(a)*d+50, r);
-    }
-
     /** @const */
     var size = 16;
     gls2.Effect["particle16"] = gls2.Particle(size, 1.0, 0.9, tm.graphics.Canvas()
@@ -114,26 +97,6 @@ gls2.Effect.genShockwave = function(x, y, scene) {
         });
 };
 
-gls2.Effect.genShockwave2 = function(x, y, scene) {
-    var scale = 0.1;
-    var sw = tm.app.Sprite()
-        .setPosition(x, y)
-        .setScale(scale)
-        .setBlendMode("lighter")
-        .addChildTo(scene);
-    sw.image = gls2.Effect["shockwaveImage2"];
-    sw.tweener
-        .clear()
-        .to({
-            scaleX: 1.4,
-            scaleY: 1.4,
-            alpha: 0.0
-        }, 800, "easeOutQuad")
-        .call(function() {
-            sw.remove();
-        });
-};
-
 gls2.Effect.explodeS = function(x, y, scene) {
     gls2.playSound("soundExplode");
     var e = gls2.Effect["explosion"].random()
@@ -149,7 +112,7 @@ gls2.Effect.explodeS = function(x, y, scene) {
     e.isEffect = true;
     e.addChildTo(scene);
 
-    gls2.Effect.genShockwave2(x,y,scene);
+    gls2.Effect.genShockwave(x,y,scene);
 };
 
 gls2.Effect.explodeM = function(x, y, scene) {

@@ -6,7 +6,7 @@
  */
 
 /**
- * @define {boolean}
+ * @const
  */
 var STATS = false;
 
