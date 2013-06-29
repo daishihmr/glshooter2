@@ -8,7 +8,7 @@ var CELL_SIZE = 100;
 /** フレーム数(= NUM_OF_CELL_SQRTxNUM_OF_CELL_SQRT) */
 var NUM_OF_CELL_SQRT = 8;
 /** 何フレームごとに記録するか */
-var SKIP_FRAME = 2;
+var SKIP_FRAME = 1;
 
 /**
  * パーティクル生成パラメータ.
@@ -128,26 +128,34 @@ tm.main(function() {
     canvas.resize(CELL_SIZE, CELL_SIZE);
 
     var out = tm.graphics.Canvas();
-    tm.dom.Element("#out").event.click(function() {
-        out.saveAsImage();
-    });
     out.resize(CELL_SIZE * NUM_OF_CELL_SQRT, CELL_SIZE * NUM_OF_CELL_SQRT);
     var outIndex = 0;
 
     var particles = [];
+    var generators = [];
 
-    var fireGen = ParticleGenerator(fireParticle);
-    var smokeGen = ParticleGenerator(smokeParticle);
+    generators.push(ParticleGenerator(fireParticle));
+    generators.push(ParticleGenerator(smokeParticle));
+
+    tm.dom.Element("#restart").event.click(function() {
+        canvas.clear();
+        generators.each(function(gen) {
+            gen.reset();
+        });
+        particles = [];
+    });
+    tm.dom.Element("#output").event.click(function() {
+        out.saveAsImage();
+    });
 
     var app = tm.app.CanvasApp("#c");
     app.background = "rgba(0,0,0,0)";
     app.update = function() {
         canvas.clear();
 
-        var fire = fireGen.generate();
-        var smoke = smokeGen.generate();
-
-        particles = smoke.concat(fire).concat(particles);
+        generators.each(function(gen) {
+            particles = gen.generate().concat(particles);
+        });
 
         particles.each(function(p) {
             p.update();
@@ -162,7 +170,6 @@ tm.main(function() {
         }
     };
     app.run();
-
 });
 
 var Tweens = tm.createClass({
@@ -240,8 +247,6 @@ var ParticleGenerator = tm.createClass({
     frame: 0,
     init: function(params) {
         this.params = params;
-        this.genCount = params.generate.initial;
-        this.frame = 0;
         if (!this.params.start || this.params.start === -1) {
             this.params.start = 0;
         }
@@ -251,6 +256,11 @@ var ParticleGenerator = tm.createClass({
         if (!this.params.generate.rate) {
             this.params.generate.rate = 1;
         }
+        this.reset();
+    },
+    reset: function() {
+        this.genCount = this.params.generate.initial;
+        this.frame = 0;
     },
     generate: function() {
         var array = [];
@@ -413,9 +423,158 @@ var ParticleGenerator = tm.createClass({
 </script>
 </head>
 <body>
-<canvas id="c" style="background:url(background.png) repeat;border:1px solid white"></canvas>
-<button id="out">画像を出力！</button>
-<textarea id="p1"></textarea>
-<textarea id="p2"></textarea>
+<div>
+    <canvas id="c" style="background:url(background.png) repeat;border:1px solid white"></canvas>
+</div>
+<div>
+    <button id="restart">restart</button>
+    <button id="output">output</button>
+</div>
+<div>
+<table border="1">
+    <tr>
+        <th>ブレンドモード</th>
+        <td>
+            <select>
+                <option>source-over</option>
+                <option>lighter</option>
+                <option>source-atop</option>
+                <option>source-in</option>
+                <option>source-out</option>
+                <option>destination-atop</option>
+                <option>destination-in</option>
+                <option>destination-out</option>
+                <option>destination-over</option>
+                <option>copy</option>
+                <option>xor</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>生成開始フレーム</th>
+        <td><input type="text" /></td>
+    </tr>
+    <tr>
+        <th>生成終了フレーム</th>
+        <td><input type="text" /></td>
+    </tr>
+    <tr>
+        <th>フレーム毎の生成個数</th>
+        <td>
+            初期値：<br>
+            <input type="text" /><br>
+            減衰率：<br>
+            <input type="text" /><br>
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <th>initial</th>
+        <th>final</th>
+        <th>duration</th>
+        <th>easeFunc</th>
+    </tr>
+    <tr>
+        <th>位置</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>半径</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>中心色(R)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>中心色(G)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>中心色(B)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>中心色(A)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>外縁色(R)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>外縁色(G)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>外縁色(B)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>外縁色(A)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+</table>
+</div>
 </body>
 </html>

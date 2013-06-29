@@ -6,32 +6,25 @@ gls2.Scene = tm.createClass(
 /** @lends {gls2.Scene.prototype} */
 {
     superClass: tm.app.Scene,
-    _requestCode: -1,
+    _sceneResultCallback: null,
     init: function() {
         this.superInit();
     },
-    finish: function(result) {
-        var app = this.app;
-        app.popScene();
-        var scene = app.currentScene;
-        if (scene && scene._requestCode !== -1) {
-            scene.onResult(scene._requestCode, result);
-        }
-    },
-    startScene: function(requestCode, scene) {
-        this._requestCode = requestCode;
+    startSceneForResult: function(scene, callback) {
         if (typeof(scene) === "function") {
             this.app.pushScene(scene());
         } else if (scene instanceof tm.app.Scene) {
             this.app.pushScene(scene);
         }
+        this._sceneResultCallback = callback;
     },
-    openDialogMenu: function(requestCode, title, menu, defaultValue, menuDescriptions, showExit) {
-        if (showExit === undefined) showExit = true;
-        this.startScene(requestCode, gls2.DialogMenu(title, menu, defaultValue, menuDescriptions, showExit));
-    },
-    onResult: function(requestCode, result) {
-        // for override
+    finish: function(result) {
+        var app = this.app;
+        app.popScene();
+        var scene = app.currentScene;
+        if (scene && scene._sceneResultCallback) {
+            scene._sceneResultCallback.bind(scene)(result);
+        }
     },
     update: function(app) {
         if (app.pointing.getPointingEnd()) {

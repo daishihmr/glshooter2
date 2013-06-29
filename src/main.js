@@ -5,8 +5,10 @@
  * http://daishihmr.mit-license.org/
  */
 
-/** @const */
-var STATS = true;
+/**
+ * @define {boolean}
+ */
+var STATS = false;
 
 tm.preload(function() {
     if (STATS) tm.util.ScriptManager.loadStats();

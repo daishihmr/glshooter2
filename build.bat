@@ -17,6 +17,7 @@ java -jar tools/compiler.jar ^
 --js src/common/Scene.js ^
 --js src/common/DialogMenu.js ^
 --js src/common/Particle.js ^
+--js src/common/ConsoleWindow.js ^
 --js src/scene/TitleScene.js ^
 --js src/scene/ShipSelectScene.js ^
 --js src/scene/GameScene.js ^
@@ -32,5 +33,6 @@ java -jar tools/compiler.jar ^
 --js libs/math.js ^
 --compilation_level ADVANCED_OPTIMIZATIONS ^
 --language_in ECMASCRIPT5 ^
---js_output_file build/gls2.js
+--js_output_file build/gls2.js ^
+--define="STATS=false"
 rem --formatting PRETTY_PRINT
