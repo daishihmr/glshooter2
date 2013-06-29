@@ -45,8 +45,8 @@ gls2.Effect.setup = function() {
 
     gls2.Effect["shockwaveImage2"] = tm.graphics.Canvas()
         .resize(100, 100)
-        .setBlendMode("lighter")
         .setStrokeStyle("rgba(0,0,0,0)");
+    gls2.Effect["shockwaveImage2"].globalCompositeOperation = "lighter";
     for (var i = 0; i < 20; i++) {
         var a = Math.random() * Math.PI * 2;
         var d = gls2.math.randf(45, 50);
