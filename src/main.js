@@ -5,7 +5,9 @@
  * http://daishihmr.mit-license.org/
  */
 
-/** @const */
+/**
+ * @define {boolean}
+ */
 var STATS = true;
 
 tm.preload(function() {
