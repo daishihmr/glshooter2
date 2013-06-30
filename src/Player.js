@@ -2,8 +2,8 @@
 
 var backfireParticle = null;
 
-/** 
- * ショットボタンを何フレーム押し続けるとレーザーになるか 
+/**
+ * ショットボタンを何フレーム押し続けるとレーザーになるか
  * @const
  */
 var LASER_FRAME = 10;
@@ -294,8 +294,8 @@ gls2.Bit = tm.createClass(
 
             // ショット
             if (this.player.fireShot) {
-                gls2.ShotBullet(g.x - 3, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
-                gls2.ShotBullet(g.x + 3, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
+                gls2.ShotBullet(g.x-4, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
+                gls2.ShotBullet(g.x+4, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
             }
         }
     },

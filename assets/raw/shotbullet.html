@@ -36,6 +36,15 @@ tm.main(function() {
             ]).toStyle())
             .fillRect(x-rad,y-rad,rad*2,rad*2);
     };
+    var dh = function(x, y, rad) {
+        if (rad <= 0) return;
+        canvas
+            .setFillStyle(tm.graphics.RadialGradient(x,y,0,x,y,rad*2).addColorStopList([
+                {offset:0,color:"rgba(255,255,100,0.1)"},
+                {offset:1,color:"rgba(255,255,  0,0.2)"},
+            ]).toStyle())
+            .fillRect(x-rad,y-rad,rad*2,rad*2);
+    };
 
     var d2 = function(dr, sr, rr, df) {
         var x = S*0.5;
@@ -51,7 +60,7 @@ tm.main(function() {
         }
     };
 
-    var out = tm.graphics.Canvas("#c").resize(S*3, S);
+    var out = tm.graphics.Canvas("#c").resize(S*4, S);
 
     canvas.clear();
     d2(    0, 1.7, 20, dr);
@@ -82,6 +91,22 @@ tm.main(function() {
     d2(-0.18, 1.4, 32, db);
     d2( 0.18, 1.4, 32, db);
     out.drawImage(canvas.element, S*2, 0);
+
+    canvas.clear();
+    d2(    0, 2.0, 26, dh);
+    d2(-0.08, 1.7, 32, dh);
+    d2( 0.08, 1.7, 32, dh);
+    d2(-0.12, 1.2, 32, dh);
+    d2( 0.12, 1.2, 32, dh);
+    d2(-0.18, 1.6, 32, dh);
+    d2( 0.18, 1.6, 32, dh);
+    d2(-0.30, 1.2, 32, dh);
+    d2( 0.30, 1.2, 32, dh);
+    d2(-0.42, 1.2, 32, dh);
+    d2( 0.42, 1.2, 32, dh);
+    d2(-0.54, 1.4, 32, dh);
+    d2( 0.54, 1.4, 32, dh);
+    out.drawImage(canvas.element, S*3, 0);
 
     tm.dom.Element("#c").event.click(function() {
         out.saveAsImage();
