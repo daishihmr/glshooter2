@@ -9,7 +9,7 @@ var _Sprite = tm.createClass({
     draw: function(canvas) {
         var srcRect = this.srcRect;
         var element = this._image.element;
-        
+
         canvas.context.drawImage(element,
             srcRect.x, srcRect.y, srcRect.width, srcRect.height,
             -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
@@ -55,7 +55,6 @@ gls2.EnemyHard.Heri1 = tm.createClass(
     setup: function() {
         this.name = "kujo";
         this.hp = 3;
-        this.isGround = false;
         this._sprite = _Sprite("tex1", 64, 64);
     },
     update: function() {
@@ -91,7 +90,6 @@ gls2.EnemyHard.Heri2 = tm.createClass(
     setup: function() {
         this.name = "kiryu";
         this.hp = 10;
-        this.isGround = false;
         this._sprite = _Sprite("tex1", 64, 64);
     },
     update: function() {

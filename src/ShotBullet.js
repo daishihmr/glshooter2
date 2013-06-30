@@ -2,31 +2,22 @@
 
 var origParticle = null;
 
-// TODO Spriteにする
 gls2.ShotBullet = tm.createClass({
-    superClass: tm.app.CircleShape,
+    superClass: tm.app.Sprite,
     speed: 20,
     attackPower: 1,
 
     init: function(x, y, dir) {
-        var SZ = 24;
-        this.superInit(SZ, SZ, {
-            fillStyle: tm.graphics.RadialGradient(SZ*0.5, SZ*0.5, 0, SZ*0.5, SZ*0.5, SZ*0.5).addColorStopList([
-                { offset: 0.0, color: "rgba(255,255,255,1)" },
-                { offset: 0.5, color: "rgba(255,255,255,1)" },
-                { offset: 1.0, color: "rgba(  0,100,255,0)" }
-            ]).toStyle(),
-            strokeStyle: "rgba(0,0,0,0)"
-        });
+        var SZ = 64;
+        this.superInit("shotbullet", SZ, SZ);
         this.blendMode = "lighter";
 
-        this.scaleY = 0.5;
         var rad = gls2.math.degToRad(dir);
         this.vx = Math.cos(rad) * this.speed;
         this.vy = Math.sin(rad) * this.speed;
 
         this.setPosition(x, y);
-        this.rotation = dir;
+        this.rotation = dir+90;
 
         this.addEventListener("added", function() {
             activeList.push(this);
@@ -51,6 +42,9 @@ gls2.ShotBullet = tm.createClass({
                 .element
             );
         }
+
+        // TODO 自機タイプの寄って色を変える
+        this.setFrameIndex(2, 64, 64);
     },
 
     update: function() {

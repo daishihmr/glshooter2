@@ -18,6 +18,7 @@ gls2.Enemy = tm.createClass(
     soft: null,
     hp: 0,
     enableFire: true,
+    isGround: false,
 
     /** 出現してから一度でも可視範囲に入ったか */
     entered: false,
@@ -49,6 +50,7 @@ gls2.Enemy = tm.createClass(
             this.tweener.clear();
 
             this.scaleX = this.scaleY = 1;
+            this.isGround = false;
 
             enemyPool.push(this);
             var idx = activeList.indexOf(this);

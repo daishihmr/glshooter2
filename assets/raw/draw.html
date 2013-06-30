@@ -1,0 +1,95 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+
+    var S = 64;
+    var canvas = tm.graphics.Canvas().resize(S, S);
+    canvas.globalCompositeOperation = "lighter";
+    canvas.setStrokeStyle("rgba(0,0,0,0)");
+
+    var dr = function(x, y, rad) {
+        if (rad <= 0) return;
+        canvas
+            .setFillStyle(tm.graphics.RadialGradient(x,y,0,x,y,rad).addColorStopList([
+                {offset:0,color:"rgba(255,255,255,0.6)"},
+                {offset:1,color:"rgba(255,  0,  0,0.0)"},
+            ]).toStyle())
+            .fillRect(x-rad,y-rad,rad*2,rad*2);
+    };
+    var dg = function(x, y, rad) {
+        if (rad <= 0) return;
+        canvas
+            .setFillStyle(tm.graphics.RadialGradient(x,y,0,x,y,rad).addColorStopList([
+                {offset:0,color:"rgba(255,255,255,0.6)"},
+                {offset:1,color:"rgba(  0,255,  0,0.0)"},
+            ]).toStyle())
+            .fillRect(x-rad,y-rad,rad*2,rad*2);
+    };
+    var db = function(x, y, rad) {
+        if (rad <= 0) return;
+        canvas
+            .setFillStyle(tm.graphics.RadialGradient(x,y,0,x,y,rad).addColorStopList([
+                {offset:0,color:"rgba(255,255,255,0.6)"},
+                {offset:1,color:"rgba(  0,  0,255,0.0)"},
+            ]).toStyle())
+            .fillRect(x-rad,y-rad,rad*2,rad*2);
+    };
+
+    var d2 = function(dr, sr, rr, df) {
+        var x = S*0.5;
+        var y = S*0.1;
+        var dir = Math.PI/2+dr;
+        var r = 0;
+        for (var i = 0; i < S; i++) {
+            df(x, y, r);
+            x += Math.cos(dir) * sr;
+            y += Math.sin(dir) * sr;
+            var j = i / S;
+            r = Math.sin(Math.PI*2 * j)*S/rr;
+        }
+    };
+
+    var out = tm.graphics.Canvas("#c").resize(S*3, S);
+
+    canvas.clear();
+    d2(    0, 1.7, 20, dr);
+    d2(-0.06, 1.6, 32, dr);
+    d2( 0.06, 1.6, 32, dr);
+    d2(-0.12, 1.5, 32, dr);
+    d2( 0.12, 1.5, 32, dr);
+    d2(-0.18, 1.4, 32, dr);
+    d2( 0.18, 1.4, 32, dr);
+    out.drawImage(canvas.element, S*0, 0);
+
+    canvas.clear();
+    d2(    0, 1.7, 20, dg);
+    d2(-0.06, 1.6, 32, dg);
+    d2( 0.06, 1.6, 32, dg);
+    d2(-0.12, 1.5, 32, dg);
+    d2( 0.12, 1.5, 32, dg);
+    d2(-0.18, 1.4, 32, dg);
+    d2( 0.18, 1.4, 32, dg);
+    out.drawImage(canvas.element, S*1, 0);
+
+    canvas.clear();
+    d2(    0, 1.7, 20, db);
+    d2(-0.06, 1.6, 32, db);
+    d2( 0.06, 1.6, 32, db);
+    d2(-0.12, 1.5, 32, db);
+    d2( 0.12, 1.5, 32, db);
+    d2(-0.18, 1.4, 32, db);
+    d2( 0.18, 1.4, 32, db);
+    out.drawImage(canvas.element, S*2, 0);
+
+    tm.dom.Element("#c").event.click(function() {
+        out.saveAsImage();
+    });
+});
+</script>
+</head>
+<body style="background:black">
+<canvas id="c"></canvas>
+</body>
+</html>

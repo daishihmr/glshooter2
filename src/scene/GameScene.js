@@ -82,9 +82,11 @@ gls2.GameScene = tm.createClass({
         if (child instanceof gls2.Player) {
             this.playerLayer.addChild(child);
         } else if (child instanceof gls2.Enemy) {
-            if (child.hard.isGround) {
+            if (child.isGround) {
+                console.log("ge")
                 this.groundLayer.addChild(child);
             } else {
+                console.log("ae")
                 this.enemyLayer.addChild(child);
             }
         } else if (child instanceof gls2.BackfireParticle || child instanceof gls2.ShotBullet || child instanceof gls2.Laser) {

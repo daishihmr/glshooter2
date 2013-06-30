@@ -58,6 +58,7 @@ gls2.GlShooter2 = tm.createClass(
                 "explode1": "assets/explode1.png",
                 "explode2": "assets/explode2.png",
                 "explode3": "assets/explode3.png",
+                "shotbullet": "assets/shotbullet.png",
 
                 // sound
                 "soundExplode": "assets/sen_ge_taihou03.mp3",
@@ -128,7 +129,7 @@ tm.app.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);
 };
 
-/** 
+/**
  * @param {tm.app.Object2D} a
  * @param {tm.app.Object2D} b
  */

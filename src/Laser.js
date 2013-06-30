@@ -110,6 +110,7 @@ gls2.Laser = tm.createClass({
                     this.hitY = e.y;
                     e.damage(this.attackPower);
                     this.genParticle(1);
+                    break;
                 }
             }
 
