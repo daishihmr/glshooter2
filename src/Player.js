@@ -2,8 +2,8 @@
 
 var backfireParticle = null;
 
-/** 
- * ショットボタンを何フレーム押し続けるとレーザーになるか 
+/**
+ * ショットボタンを何フレーム押し続けるとレーザーになるか
  * @const
  */
 var LASER_FRAME = 10;
@@ -39,13 +39,7 @@ gls2.Player = tm.createClass(
 
     /** @protected */
     speed: 4.5,
-    /** @protected */
-    bits: [
-        { x: -70, y: 20, d: 0.1, turn: false, dt: -0.7, v: true },
-        { x: -40, y: 40, d: 0.1, turn: false, dt: -0.5, v: true },
-        { x:  40, y: 40, d: 0.1, turn:  true, dt:  0.5, v: true },
-        { x:  70, y: 20, d: 0.1, turn:  true, dt:  0.7, v: true },
-    ],
+    bits: null,
 
     laser: null,
 
@@ -69,6 +63,9 @@ gls2.Player = tm.createClass(
         this.laser.addChildTo(gameScene);
 
         this._createHitCircle();
+
+        this.bits = this._createBits();
+
         this.bitPivot = tm.app.CanvasElement().addChildTo(this);
         for (var i = 0, end = this.bits.length; i < end; i++) {
             var bit = this.bits[i];
@@ -108,6 +105,16 @@ gls2.Player = tm.createClass(
         };
     },
 
+    /** @protected */
+    _createBits: function() {
+        return [
+            { x: -70, y: 20, d: 0.1, turn: false, dt: -0.7, v: true },
+            { x: -40, y: 40, d: 0.1, turn: false, dt: -0.5, v: true },
+            { x:  40, y: 40, d: 0.1, turn:  true, dt:  0.5, v: true },
+            { x:  70, y: 20, d: 0.1, turn:  true, dt:  0.7, v: true },
+        ];
+    },
+
     _createHitCircle: function() {
         this.hitCircle = tm.app.Sprite("tex0", 20, 20).addChildTo(this);
         this.hitCircle.setFrameIndex(5);
@@ -131,8 +138,8 @@ gls2.Player = tm.createClass(
                 this.x += m.x * this.speed * (this.fireLaser ? 0.75 : 1);
                 this.y += m.y * this.speed * (this.fireLaser ? 0.75 : 1);
             }
-            this.x = Math.clamp(this.x, 5, SC_W-5);
-            this.y = Math.clamp(this.y, 5, SC_H-5);
+            this.x = gls2.math.clamp(this.x, 5, SC_W-5);
+            this.y = gls2.math.clamp(this.y, 5, SC_H-5);
 
             var pressC = kb.getKey("c");
             var pressZ = kb.getKey("z");
@@ -142,7 +149,7 @@ gls2.Player = tm.createClass(
             } else {
                 this.pressTimeC -= 1;
             }
-            this.pressTimeC = Math.clamp(this.pressTimeC, -1, LASER_FRAME);
+            this.pressTimeC = gls2.math.clamp(this.pressTimeC, -1, LASER_FRAME);
 
             // ショット
             this.fireLaser = (pressZ && pressC) || this.pressTimeC === LASER_FRAME;
@@ -207,14 +214,14 @@ gls2.Player = tm.createClass(
 
     _calcRoll: function(kb) {
         if (this.controllable && kb.getKey("left")) {
-            this.roll = Math.clamp(this.roll - 0.2, -3, 3);
+            this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3);
         } else if (this.controllable && kb.getKey("right")) {
-            this.roll = Math.clamp(this.roll + 0.2, -3, 3);
+            this.roll = gls2.math.clamp(this.roll + 0.2, -3, 3);
         } else {
             if (this.roll < 0) {
-                this.roll = Math.clamp(this.roll + 0.2, -3, 3);
+                this.roll = gls2.math.clamp(this.roll + 0.2, -3, 3);
             } else if (0 < this.roll){
-                this.roll = Math.clamp(this.roll - 0.2, -3, 3);
+                this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3);
             }
         }
         var frame = 3 + ~~this.roll
@@ -287,8 +294,8 @@ gls2.Bit = tm.createClass(
 
             // ショット
             if (this.player.fireShot) {
-                gls2.ShotBullet(g.x - 3, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
-                gls2.ShotBullet(g.x + 3, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
+                gls2.ShotBullet(g.x-4, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
+                gls2.ShotBullet(g.x+4, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
             }
         }
     },

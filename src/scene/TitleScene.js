@@ -3,13 +3,6 @@
 var origParticle0 = null;
 var origParticle1 = null;
 
-var MAIN_MENU = 0;
-var SETTING_MENU = 1;
-var BGM_SETTING = 2;
-var SE_SETTING = 3;
-var DIFFICULTY_SETTING = 4;
-var GAME_SCENE = 5;
-
 gls2.TitleScene = tm.createClass({
     superClass: gls2.Scene,
     result: null,
@@ -79,8 +72,8 @@ gls2.TitleScene = tm.createClass({
         var p = (col === 0) ? origParticle0.clone().addChildTo(this) : origParticle1.clone().addChildTo(this);
 
         p.speed = 0.6;
-        var a = Math.randf(0, Math.PI*2);
-        var r = Math.rand(0, 20);
+        var a = gls2.math.randf(0, Math.PI*2);
+        var r = gls2.math.rand(0, 20);
         p.setPosition(Math.cos(a) * r + cx, Math.sin(a) * r + cy);
         var self = this;
         p.update = function() {
@@ -97,21 +90,8 @@ gls2.TitleScene = tm.createClass({
         this.particles.push(p);
     },
 
-    onResult: function(requestCode, result) {
-        var callbacks = {};
-        callbacks[MAIN_MENU] = this.onResultMainMenu;
-        callbacks[SETTING_MENU] = this.onResultSetting;
-        callbacks[BGM_SETTING] = this.onResultBgmSetting;
-        callbacks[SE_SETTING] = this.onResultSeSetting;
-        callbacks[DIFFICULTY_SETTING] = this.onResultDifficultySetting;
-        callbacks[GAME_SCENE] = function() {};
-
-        var callback = callbacks[requestCode];
-        if (callback) callback.call(this, result);
-    },
-
     openMainMenu: function() {
-        this.openDialogMenu(MAIN_MENU, "MAIN MENU", [ "start", "tutorial", "setting", "save score" ], this.lastMainMenu, [
+        this.openDialogMenu("MAIN MENU", [ "start", "tutorial", "setting", "save score" ], this.onResultMainMenu, this.lastMainMenu, [
             "ゲームを開始します",
             "チュートリアルを開始します",
             "設定を変更します",
@@ -127,13 +107,13 @@ gls2.TitleScene = tm.createClass({
                 .call(function() {
                     this.gameStarted = true;
                     for (var i = 0, end = this.particles.length; i < end; i++) {
-                        this.particles[i].speed = 6;
+                        this.particles[i].speed = 8;
                     }
                 }.bind(this))
                 .wait(1000)
                 .call(function() {
                     gls2.core.gameScene.gameStart(1); // TODO 自機タイプを渡す
-                    this.startScene(GAME_SCENE, gls2.core.gameScene);
+                    gls2.core.pushScene(gls2.core.gameScene);
                 }.bind(this));
             break;
         case 1: // tutorial
@@ -148,7 +128,7 @@ gls2.TitleScene = tm.createClass({
     },
 
     openSetting: function() {
-        this.openDialogMenu(SETTING_MENU, "SETTING", [ "bgm volume", "sound volume", "difficulty" ], this.lastSetting, [
+        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume", "difficulty" ], this.onResultSetting, this.lastSetting, [
             "BGMボリュームを設定します",
             "効果音ボリュームを設定します",
             "難易度を設定します",
@@ -173,7 +153,7 @@ gls2.TitleScene = tm.createClass({
     },
 
     openBgmSetting: function() {
-        this.openDialogMenu(BGM_SETTING, "BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.bgmVolume);
+        this.openDialogMenu("BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultBgmSetting, gls2.core.bgmVolume);
     },
     onResultBgmSetting: function(result) {
         if (result !== 6) gls2.core.bgmVolume = result;
@@ -181,7 +161,7 @@ gls2.TitleScene = tm.createClass({
     },
 
     openSeSetting: function() {
-        this.openDialogMenu(SE_SETTING, "SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], gls2.core.seVolume);
+        this.openDialogMenu("SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultSeSetting, gls2.core.seVolume);
     },
     onResultSeSetting: function(result) {
         if (result !== 6) {
@@ -191,7 +171,7 @@ gls2.TitleScene = tm.createClass({
     },
 
     openDifficultySetting: function() {
-        this.openDialogMenu(DIFFICULTY_SETTING, "DIFFICULTY", [ "easy", "normal", "hard", "very hard", "hell" ], gls2.core.difficulty, [
+        this.openDialogMenu("DIFFICULTY", [ "easy", "normal", "hard", "very hard", "hell" ], this.onResultDifficultySetting, gls2.core.difficulty, [
             "初心者でも安心して挑戦可能な入門コース",
             "普通の難易度。easyでは物足りない人へ",
             "一般的な弾幕STGの難易度",

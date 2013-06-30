@@ -7,21 +7,20 @@ gls2.Bullet = tm.createClass({
     superClass: tm.app.Sprite,
     init: function() {
         this.superInit("tex0", 20, 20);
+        this.addEventListener("removed", function() {
+            bulletPool.push(this);
+            var idx = activeList.indexOf(this);
+            if (idx !== -1) activeList.splice(idx, 1);
+
+            this.clearEventListener("enterframe");
+        });
     },
 });
 
 gls2.Danmaku = {};
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 255; i++) {
-        var b = gls2.Bullet();
-        b.addEventListener("removed", function() {
-            this.clearEventListener("enterframe");
-            bulletPool.push(this);
-            var idx = activeList.indexOf(this);
-            if (idx !== -1) activeList.splice(idx, 1);
-        });
-
-        bulletPool.push(b);
+        bulletPool.push(gls2.Bullet());
     }
 
     var config = tm.bulletml.AttackPattern.defaultConfig;
@@ -47,6 +46,7 @@ gls2.Danmaku.setup = function() {
     };
     config.speedRate = 4;
 };
+
 gls2.Danmaku.clearAll = function() {
     var copied = [].concat(activeList);
     for (var i = 0, end = copied.length; i < end; i++) {
