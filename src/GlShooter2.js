@@ -5,7 +5,7 @@ var SC_H = 640;
 
 /** @namespace */
 var gls2 = {
-    /** @type {gls2.Glshooter2} */
+    /** @type {gls2.GlShooter2} */
     core: null,
 };
 
@@ -28,12 +28,19 @@ gls2.GlShooter2 = tm.createClass(
     /** 難易度(0～4) */
     difficulty: 1,
 
+    /** エクステンドスコア */
+    extendScore: [
+         1000000000,
+        10000000000,
+    ],
+
     gameScene: null,
 
     init: function(id) {
+        if (gls2.core !== null) throw new Error("class 'gls2.GlShooter2' is singleton!!");
         this.superInit(id);
         gls2.core = this;
-        this.resize(SC_W, SC_H);
+        this.resize(SC_W, SC_H).fitWindow();
         this.fps = 60;
         this.background = "black";
 
@@ -51,6 +58,7 @@ gls2.GlShooter2 = tm.createClass(
                 "explode1": "assets/explode1.png",
                 "explode2": "assets/explode2.png",
                 "explode3": "assets/explode3.png",
+                "shotbullet": "assets/shotbullet.png",
 
                 // sound
                 "soundExplode": "assets/sen_ge_taihou03.mp3",
@@ -83,6 +91,10 @@ gls2.setShadow = function(element) {
     element.shadowOffsetY = 70;
 };
 
+gls2.removeShadow = function(element) {
+    element.shadowBlur = 0;
+};
+
 /** @class */
 tm.app.Label = tm.createClass(
 /** @lends {tm.app.Label.prototype} */
@@ -103,64 +115,6 @@ tm.app.Label = tm.createClass(
     },
 });
 
-/** @class */
-gls2.ConsoleWindow = tm.createClass(
-/** @lends {gls2.ConsoleWindow.prototype} */
-{
-    superClass: tm.app.RectangleShape,
-    label: null,
-    buf: null,
-    init: function(w) {
-        this.superInit(w, 64, {
-            fillStyle: "rgba(1,2,48,0.5)",
-            strokeStyle: "rgba(0,0,0,0)",
-        });
-        this.label = tm.app.Label("_", 10)
-            // .setFontFamily("'Consolas', 'Monaco', 'ＭＳ ゴシック'")
-            .setAlign("left")
-            .setBaseline("top")
-            .setPosition(-this.width/2+4, -this.height/2+4)
-            .setFillStyle("rgba(255,255,255,0.5)")
-            .addChildTo(this);
-        this.buf = [];
-    },
-    addLine: function(string) {
-        if (this.buf.length > 5) {
-            this.buf.splice(1, this.buf.length - 4);
-        }
-        this.buf.push(string);
-        return this;
-    },
-    clearBuf: function() {
-        this.buf.clear();
-        return this;
-    },
-    clear: function() {
-        this.label.text = "_";
-        return this;
-    },
-    update: function(app) {
-        var text = this.label.text;
-        text = text.substring(0, text.length - 1);
-        if (app.frame % 2 === 0 && this.buf.length !== 0) {
-            if (this.buf[0] !== "") {
-                var c = this.buf[0][0];
-                this.buf[0] = this.buf[0].substring(1);
-                text += c;
-            } else {
-                this.buf.shift();
-                var lines = text.split("\n");
-                if (lines.length > 3) {
-                    lines.shift();
-                    text = lines.join("\n");
-                }
-                text += "\n";
-            }
-        }
-        this.label.text = text + ((~~(app.frame/6) % 2) ? "_" : " ");
-    },
-});
-
 gls2.playSound = function(soundName) {
     if (gls2.core.seVolume === 0) return;
 
@@ -173,4 +127,12 @@ gls2.playSound = function(soundName) {
 
 tm.app.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);
+};
+
+/**
+ * @param {tm.app.Object2D} a
+ * @param {tm.app.Object2D} b
+ */
+gls2.distanceSq = function(a, b) {
+    return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
 };
