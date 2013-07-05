@@ -99,7 +99,7 @@ gls2.Laser = tm.createClass({
                 this.hitY -= 50;
             }
 
-            // 当たり判定
+            // レーザー部分の当たり判定
             var copied = [].concat(gls2.Enemy.activeList);
             copied.sort(function(l, r) {
                 return r.y - l.y;
@@ -111,6 +111,16 @@ gls2.Laser = tm.createClass({
                     e.damage(this.attackPower);
                     this.genParticle(1);
                     break;
+                }
+            }
+
+            // オーラ部分の当たり判定
+            copied = [].concat(gls2.Enemy.activeList);
+            for (var i = 0, len = copied.length; i < len; i++) {
+                var e = copied[i];
+                if (gls2.distanceSq(e, this.player) < 60*60) {
+                    e.damage(this.attackPower);
+                    this.genParticle(3, e.y);
                 }
             }
 

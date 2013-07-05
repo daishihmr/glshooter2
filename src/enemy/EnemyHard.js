@@ -156,6 +156,9 @@ gls2.EnemyHard.Tank1 = tm.createClass({
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
+    destroy: function() {
+        gls2.Effect.explodeGS(this.x, this.y, this.gameScene);
+    },
 });
 gls2.EnemyHard.Tank1 = gls2.EnemyHard.Tank1();
 

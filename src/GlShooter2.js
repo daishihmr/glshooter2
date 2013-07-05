@@ -22,9 +22,9 @@ gls2.GlShooter2 = tm.createClass(
     /** ハイスコア取得時の最終到達ステージ */
     highStage: 0,
     /** BGM音量(0～5) */
-    bgmVolume: 4,
+    bgmVolume: 1,
     /** SE音量(0～5) */
-    seVolume: 4,
+    seVolume: 1,
     /** 難易度(0～4) */
     difficulty: 1,
 

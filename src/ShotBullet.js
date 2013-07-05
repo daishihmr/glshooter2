@@ -55,7 +55,7 @@ gls2.ShotBullet = tm.createClass({
         for (var i = 0, len = copied.length; i < len; i++) {
             var e = copied[i];
             if ((this.x-e.x)*(this.x-e.x) + (this.y-e.y)*(this.y-e.y) < (this.radius+e.radius)*this.radius+e.radius) {
-                this.genParticle();
+                this.genParticle(1);
                 e.damage(this.attackPower);
                 this.remove();
                 break;
@@ -68,19 +68,21 @@ gls2.ShotBullet = tm.createClass({
         }
     },
 
-    genParticle: function() {
-        var p = origParticle.clone().setPosition(this.x, this.y).addChildTo(this.parent);
-        var speed = gls2.math.randf(2, 8);
-        var dir = Math.random() * Math.PI * 2;
-        p.dx = Math.cos(dir) * speed;
-        p.dy = Math.sin(dir) * speed;
-        p.scaleX = p.scaleY = (gls2.math.randf(0.1, 0.5) + gls2.math.randf(0.1, 0.5)) / 2;
-        p.addEventListener("enterframe", function() {
-            this.x += this.dx;
-            this.y += this.dy;
-            this.dx *= 0.9;
-            this.dy *= 0.9;
-        });
+    genParticle: function(n) {
+        for (var i = 0; i < n; i++) {
+            var p = origParticle.clone().setPosition(this.x, this.y).addChildTo(this.parent);
+            var speed = gls2.math.randf(2, 8);
+            var dir = Math.random() * Math.PI * 2;
+            p.dx = Math.cos(dir) * speed;
+            p.dy = Math.sin(dir) * speed;
+            p.scaleX = p.scaleY = (gls2.math.randf(0.1, 0.5) + gls2.math.randf(0.1, 0.5)) / 2;
+            p.addEventListener("enterframe", function() {
+                this.x += this.dx;
+                this.y += this.dy;
+                this.dx *= 0.9;
+                this.dy *= 0.9;
+            });
+        }
     },
 
 });
