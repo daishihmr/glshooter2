@@ -122,12 +122,26 @@ gls2.Effect.explodeGS = function(x, y, scene) {
             this.remove();
         })
         .addEventListener("enterframe", function() {
+            this.y -= 0.8;
+        })
+        .setScale(0.5)
+        .setPosition(x, y)
+        .setRotation(Math.random() * 360)
+        .gotoAndPlay();
+    e.isEffect = true;
+    e.addChildTo(scene);
+
+    e = gls2.Effect["explosion"].random()
+        .clone()
+        .addEventListener("animationend", function() {
+            this.remove();
+        })
+        .addEventListener("enterframe", function() {
             this.rotation += 2;
             this.y -= 0.5;
         })
-        .setBlendMode("lighter")
         .setScale(0.5)
-        .setPosition(x+8, y)
+        .setPosition(x+12, y)
         .setRotation(Math.random() * 360)
         .gotoAndPlay();
     e.isEffect = true;
@@ -142,9 +156,8 @@ gls2.Effect.explodeGS = function(x, y, scene) {
             this.rotation -= 2;
             this.y -= 0.5;
         })
-        .setBlendMode("lighter")
         .setScale(0.5)
-        .setPosition(x-8, y)
+        .setPosition(x-12, y)
         .setRotation(Math.random() * 360)
         .gotoAndPlay();
     e.isEffect = true;
