@@ -16,10 +16,11 @@ gls2.Laser = tm.createClass({
 
     head: null,
     foot: null,
+    aura: null,
 
-    init: function(player, texture, texHead, texFoot) {
+    init: function(player, type) {
         this.player = player;
-        var tex = tm.asset.AssetManager.get(texture);
+        var tex = tm.asset.AssetManager.get("laser" + "RGBH"[type]);
 
         this.superInit();
         this.image = tex.element;
@@ -33,7 +34,7 @@ gls2.Laser = tm.createClass({
         this.c.globalCompositeOperation = "lighter";
 
         this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: texHead,
+            image: "laser" + "RGBH"[type] + "Head",
             frame: {
                 width: 80,
                 height: 80,
@@ -46,10 +47,9 @@ gls2.Laser = tm.createClass({
             },
         }), 80, 80);
         this.head.gotoAndPlay();
-        this.head.blendMode = "lighter";
 
         this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: texFoot,
+            image: "laser" + "RGBH"[type] + "Foot",
             frame: {
                 width: 128,
                 height: 64,
@@ -62,7 +62,21 @@ gls2.Laser = tm.createClass({
             },
         }), 128, 64);
         this.foot.gotoAndPlay();
-        this.foot.blendMode = "lighter";
+
+        this.aura = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: "aura",
+            frame: {
+                width: 100,
+                height: 100,
+            },
+            animations: {
+                "animation": {
+                    frames: [ 0, 4, 8, 12 ].map(function(v) { return type+v }),
+                    next: "animation"
+                },
+            }
+        }), 100, 100);
+        this.aura.gotoAndPlay("animation");
 
         if (origParticle === null) {
             var size = 16;
@@ -126,6 +140,7 @@ gls2.Laser = tm.createClass({
 
             this.head._updateFrame();
             this.foot._updateFrame();
+            this.aura._updateFrame();
         }
 
         if (this.hitY < -80) this.hitY = -80;
@@ -167,6 +182,12 @@ gls2.Laser = tm.createClass({
         canvas.drawImage(element,
             srcRect.x, srcRect.y, srcRect.width, srcRect.height,
             -this.width*this.origin.x-43, -this.height*this.origin.y-75, 150, 150);
+
+        srcRect = this.aura.ss.getFrame(this.aura.currentFrame);
+        element = this.aura.ss.image.element;
+        canvas.drawImage(element,
+            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
+            -this.width*this.origin.x-18, -this.height*this.origin.y+this.height-10, 100, 150);
 
         srcRect = this.foot.ss.getFrame(this.foot.currentFrame);
         element = this.foot.ss.image.element;

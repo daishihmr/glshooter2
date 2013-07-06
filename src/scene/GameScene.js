@@ -83,10 +83,8 @@ gls2.GameScene = tm.createClass({
             this.playerLayer.addChild(child);
         } else if (child instanceof gls2.Enemy) {
             if (child.isGround) {
-                console.log("ge")
                 this.groundLayer.addChild(child);
             } else {
-                console.log("ae")
                 this.enemyLayer.addChild(child);
             }
         } else if (child instanceof gls2.BackfireParticle || child instanceof gls2.ShotBullet || child instanceof gls2.Laser || child.isEffect) {
@@ -199,7 +197,7 @@ gls2.GameScene = tm.createClass({
         gls2.ShotBullet.clearAll();
         gls2.Danmaku.clearAll();
 
-        this.player = gls2.Player(this);
+        this.player = gls2.Player(this, playerType);
         this.startStage(0);
     },
 

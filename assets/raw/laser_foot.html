@@ -17,9 +17,9 @@ tm.main(function() {
             var cy = Math.rand(32-4, 32+4);
             var rd = Math.rand(24, 38);
             canvas.fillStyle = tm.graphics.RadialGradient(cx, cy, 0, cx, cy, rd*0.8).addColorStopList([
-                { offset: 0.00, color: "rgba(150, 200, 255, 0.2)" },
-                { offset: 0.20, color: "rgba(150, 200, 255, 0.1)" },
-                { offset: 1.00, color: "rgba(  0,   0, 255, 0.0)" },
+                { offset: 0.00, color: "rgba(180, 100, 50, 0.2)" },
+                { offset: 0.20, color: "rgba(180, 100, 50, 0.1)" },
+                { offset: 1.00, color: "rgba(255, 250,  0, 0.0)" },
             ]).toStyle();
             canvas.fillStar(cx, cy, rd, 8, 0.2);
         }
@@ -28,9 +28,9 @@ tm.main(function() {
             var cy = Math.rand(32-4, 32+4);
             var rd = Math.rand(24, 38);
             canvas.fillStyle = tm.graphics.RadialGradient(cx, cy, 0, cx, cy, rd*0.8).addColorStopList([
-                { offset: 0.00, color: "rgba(150, 200, 255, 0.2)" },
-                { offset: 0.20, color: "rgba(150, 200, 255, 0.1)" },
-                { offset: 1.00, color: "rgba(  0,   0, 255, 0.0)" },
+                { offset: 0.00, color: "rgba(180, 100, 50, 0.2)" },
+                { offset: 0.20, color: "rgba(180, 100, 50, 0.1)" },
+                { offset: 1.00, color: "rgba(255, 250,  0, 0.0)" },
             ]).toStyle();
             canvas.fillStar(cx, cy, rd, 8, 0.2, Math.rand(0, 360));
         }

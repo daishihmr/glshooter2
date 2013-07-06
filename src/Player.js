@@ -29,6 +29,8 @@ gls2.Player = tm.createClass(
 /** @lends {gls2.Player.prototype} */
 {
     superClass: tm.app.Sprite,
+
+    type: 0,
     roll: 0,
     controllable: true,
     muteki: false,
@@ -49,16 +51,17 @@ gls2.Player = tm.createClass(
     hyperCircle1: null,
 
     /** @constructs */
-    init: function(gameScene) {
+    init: function(gameScene, type) {
         this.superInit("tex1", 64, 64);
 
+        this.type = type;
         this.gameScene = gameScene;
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
         gls2.setShadow(this);
 
-        this.laser = gls2.Laser(this, "laser", "laserHead", "laserFoot");
+        this.laser = gls2.Laser(this, this.type); // TODO 機体タイプによる
         this.laser.visible = false;
         this.laser.addChildTo(gameScene);
 
