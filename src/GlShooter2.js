@@ -69,6 +69,7 @@ gls2.GlShooter2 = tm.createClass(
                 "explode2": "assets/explode2.png",
                 "explode3": "assets/explode3.png",
                 "shotbullet": "assets/shotbullet.png",
+                "bomb": "assets/bomb.png",
 
                 // sound
                 "soundExplode": "assets/sen_ge_taihou03.mp3",

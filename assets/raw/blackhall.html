@@ -1,0 +1,87 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var C = 140;
+    var R = 100;
+
+    var canvas = tm.graphics.Canvas("#canvas");
+    canvas.resize(C*2, C*2);
+    canvas.globalCompositeOperation = "lighter";
+
+    var draw = function() {
+        canvas.setFillStyle(
+            tm.graphics.RadialGradient(C, C, 0, C, C, R*Math.randf(0.8, 1.0))
+                .addColorStopList([
+                    { offset: 0.00, color: "rgba(0, 0, 0, 0.5)" },
+                    { offset: 0.60, color: "rgba(0, 0, 255, 0.5)" },
+                    { offset: 0.80, color: "rgba(255, 255, 255, 1)" },
+                    { offset: 1.00, color: "rgba(0, 0, 255, 0)" },
+                ])
+                .toStyle()
+        );
+        canvas.fillRect(C-R, C-R, R*2, R*2);
+
+        for (var i = 0; i < 80; i++) {
+            var a = Math.randf(0, Math.PI * 2);
+            var d = Math.randf(0, 10);
+            var cx = Math.cos(a) * d + C;
+            var cy = Math.sin(a) * d + C;
+            var r = Math.randf(30, 80);
+            canvas.setFillStyle(
+                tm.graphics.RadialGradient(cx, cy, 0, cx, cy, r)
+                    .addColorStopList([
+                        { offset: 0.00, color: "rgba(255, 255, 255, 0.1)" },
+                        { offset: 1.00, color: "rgba(  0,   0, 255, 0)" },
+                    ])
+                    .toStyle()
+            );
+            canvas.fillStar(cx, cy, r, 16, 0.1, Math.randf(0, 10));
+        }
+
+        for (var i = 0; i < 20; i++) {
+            var a = Math.randf(0, Math.PI * 2);
+            var len = Math.rand(80, 130);
+            var x = C;
+            var y = C;
+            var w = Math.rand(4, 12);
+
+            for (var j = 0; j < len; j++) {
+                canvas.setFillStyle(
+                    tm.graphics.RadialGradient(x, y, 0, x, y, w)
+                        .addColorStopList([
+                            { offset: 0.00, color: "rgba(255, 255, 255, 0.1)" },
+                            { offset: 1.00, color: "rgba(  0,   0, 255, 0.0)" },
+                        ])
+                        .toStyle()
+                );
+                canvas.fillRect(x-w, y-w, w*2, w*2);
+
+                x += Math.cos(a);
+                y += Math.sin(a);
+
+                if (Math.random() < 0.08) {
+                    a += Math.randf(-0.8, 0.8);
+                    w = Math.rand(4, 12) * (len-j)/len;
+                }
+            }
+        }
+    };
+
+    var FS = 8
+    var out = tm.graphics.Canvas();
+    out.resize(canvas.width * FS, canvas.height);
+    for (var i = 0; i < FS; i++) {
+        canvas.clear();
+        draw();
+        out.drawImage(canvas.element, i*canvas.width, 0);
+    }
+    out.saveAsImage();
+});
+</script>
+</head>
+<body style="background:#000">
+    <canvas id="canvas"></canvas>
+</body>
+</html>
