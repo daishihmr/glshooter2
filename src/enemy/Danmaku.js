@@ -44,7 +44,7 @@ gls2.Danmaku.setup = function() {
             console.warn("弾が足りない！");
         }
     };
-    config.speedRate = 4;
+    config.speedRate = 3;
 };
 
 gls2.Danmaku.clearAll = function() {
