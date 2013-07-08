@@ -12,7 +12,7 @@ tm.main(function() {
 
     var draw = function() {
         canvas.setFillStyle(
-            tm.graphics.RadialGradient(C, C, 0, C, C, R*Math.randf(0.8, 1.0))
+            tm.graphics.RadialGradient(C, C, 0, C, C, R)
                 .addColorStopList([
                     { offset: 0.00, color: "rgba(0, 0, 0, 0.5)" },
                     { offset: 0.60, color: "rgba(0, 0, 255, 0.5)" },
@@ -42,7 +42,7 @@ tm.main(function() {
 
         for (var i = 0; i < 20; i++) {
             var a = Math.randf(0, Math.PI * 2);
-            var len = Math.rand(80, 130);
+            var len = Math.rand(80, 150);
             var x = C;
             var y = C;
             var w = Math.rand(4, 12);

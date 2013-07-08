@@ -9,6 +9,9 @@ gls2.GameScene = tm.createClass({
     stage: null,
     ground: null,
     zanki: 3,
+    bomb: 0,
+    bombMax: 3,
+    isBombActive: false,
     groundLayer: null,
     playerLayer: null,
     enemyLayer: null,
@@ -99,6 +102,12 @@ gls2.GameScene = tm.createClass({
     },
 
     update: function(app) {
+        if (this.isBombActive) {
+            // TODO すべての敵にダメージ
+            // TODO すべての弾を消す
+            // TODO 自機を無敵に
+        }
+
         this.stage.update(app.frame);
 
         if (app.keyboard.getKeyDown("escape")) {
@@ -225,6 +234,7 @@ gls2.GameScene = tm.createClass({
             .call(function() {
                 this.muteki = false;
             }.bind(this.player));
+        this.bomb = this.bombMax;
     },
 
     miss: function() {

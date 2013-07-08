@@ -181,6 +181,14 @@ gls2.Player = tm.createClass(
                 gls2.ShotBullet(this.x+7 - s*6, this.y-5, -90).addChildTo(this.gameScene);
                 gls2.ShotBullet(this.x+7 + s*6, this.y-5, -90).addChildTo(this.gameScene);
             }
+
+            if (kb.getKeyDown("x")) {
+                if (false) {
+                    // TODO ハイパー
+                } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
+                    gls2.Bomb(this, this.gameScene).setPosition(this.x, Math.max(this.y - SC_H*0.5, SC_H*0.3));
+                }
+            }
         }
 
         this.hyperCircle0.visible = this.hyperCircle1.visible = this.hyperGauge === 100;

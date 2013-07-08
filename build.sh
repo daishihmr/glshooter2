@@ -11,6 +11,7 @@ java -jar tools/compiler.jar \
 --js src/Player.js \
 --js src/ShotBullet.js \
 --js src/Laser.js \
+--js src/src/Bomb.js \
 --js src/Stage.js \
 --js src/StageData.js \
 --js src/Effect.js \
