@@ -1,4 +1,4 @@
-erase build\gls2.js
+erase target\gls2.js
 
 java -jar tools/compiler.jar ^
 --externs libs/tmlib.js ^
@@ -33,6 +33,6 @@ java -jar tools/compiler.jar ^
 --js libs/math.js ^
 --compilation_level ADVANCED_OPTIMIZATIONS ^
 --language_in ECMASCRIPT5 ^
---js_output_file build/gls2.js ^
---define="STATS=false"
-rem --formatting PRETTY_PRINT
+--js_output_file target/gls2.js ^
+--define="STATS=false" ^
+--formatting PRETTY_PRINT
