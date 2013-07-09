@@ -1,6 +1,8 @@
 gls2.Bomb = tm.createClass({
     superClass: tm.app.Object2D,
+
     gameScene: null,
+
     init: function(player, gameScene) {
         this.superInit();
 
@@ -25,10 +27,10 @@ gls2.Bomb = tm.createClass({
         }).setScale(0.1, 0.1).addChildTo(this);
         this.shockwave.tweener.clear()
             .to({
-                scaleX: 3,
-                scaleY: 3,
+                scaleX: 5,
+                scaleY: 5,
                 alpha: 0,
-            }, 400, "easeOutQuad")
+            }, 4000, "easeOutQuad")
             .call(function() {
                 this.remove();
             }.bind(this.shockwave));
@@ -78,6 +80,7 @@ gls2.Bomb = tm.createClass({
         this.b = 8;
         this.age = 0;
     },
+
     update: function(app) {
         for (var i = 0; i < this.b; i++) {
             var t = this.a + i * Math.PI*2 / this.b;
@@ -86,16 +89,19 @@ gls2.Bomb = tm.createClass({
                 .addChildTo(this.parent);
         }
         this.a += 0.04;
-        this.r = Math.sin(this.age * 0.02) * 250;
+        var theta = this.age * 0.02;
+        this.r = Math.sin(theta) * 250;
 
-        if (Math.PI * 2 < this.age * 0.02) {
+        if (Math.PI * 2 < theta) {
             this.player.muteki = false;
             this.gameScene.isBombActive = false;
             this.remove();
-        } else if (Math.PI < this.age * 0.02) {
+        } else if (Math.PI < theta) {
             this.b = 15;
+            this.age += 2;
+        } else {
+            this.age += 1;
         }
+    },
 
-        this.age += 1;
-    }
 });
