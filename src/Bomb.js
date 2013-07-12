@@ -79,11 +79,12 @@ gls2.Bomb = tm.createClass({
         this.r = 0;
         this.b = 8;
         this.age = 0;
+        this.rd = 1;
     },
 
     update: function(app) {
         for (var i = 0; i < this.b; i++) {
-            var t = this.a + i * Math.PI*2 / this.b;
+            var t = (this.a * this.rd) + i * Math.PI*2 / this.b;
             this.origParticle.clone()
                 .setPosition(Math.cos(t)*this.r + this.x, Math.sin(t)*this.r + this.y)
                 .addChildTo(this.parent);
@@ -97,10 +98,13 @@ gls2.Bomb = tm.createClass({
             this.gameScene.isBombActive = false;
             this.remove();
         } else if (Math.PI < theta) {
-            this.b = 15;
-            this.age += 2;
+            this.b = 16;
+            this.age += 3.6;
+            this.rd = -1;
         } else {
-            this.age += 1;
+            this.b = 8;
+            this.age += 1.8;
+            this.rd = 1;
         }
     },
 
