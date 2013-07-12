@@ -104,7 +104,13 @@ gls2.GameScene = tm.createClass({
     update: function(app) {
         if (this.isBombActive) {
             // TODO すべての敵にダメージ
+            
             // TODO すべての弾を消す
+            var bullets = [].concat(gls2.Bullet.activeList);
+            for (var i = 0, len = bullets.length; i < len; i++) {
+                bullets[i].destroy();
+            }
+
             // TODO 自機を無敵に
         }
 

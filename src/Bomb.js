@@ -30,7 +30,7 @@ gls2.Bomb = tm.createClass({
                 scaleX: 5,
                 scaleY: 5,
                 alpha: 0,
-            }, 4000, "easeOutQuad")
+            }, 500, "easeOutQuad")
             .call(function() {
                 this.remove();
             }.bind(this.shockwave));
