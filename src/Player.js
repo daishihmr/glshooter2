@@ -209,14 +209,14 @@ gls2.Player = tm.createClass(
     controlBit: function(kb) {
         var p = this.bitPivot;
         if (this.controllable && kb.getKey("left")) {
-            p.rotation = Math.max(p.rotation - 2, -30);
+            p.rotation = Math.max(p.rotation - 3, -40);
         } else if (this.controllable && kb.getKey("right")) {
-            p.rotation = Math.min(p.rotation + 2,  30);
+            p.rotation = Math.min(p.rotation + 3,  40);
         } else {
-            if (2 < p.rotation) {
-                p.rotation -= 2;
-            } else if (p.rotation < -2) {
-                p.rotation += 2;
+            if (3 < p.rotation) {
+                p.rotation -= 3;
+            } else if (p.rotation < -3) {
+                p.rotation += 3;
             } else {
                 p.rotation = 0;
             }

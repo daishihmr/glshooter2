@@ -1,3 +1,5 @@
+(function() {
+
 gls2.Bomb = tm.createClass({
     superClass: tm.app.Object2D,
 
@@ -11,8 +13,6 @@ gls2.Bomb = tm.createClass({
 
         this.gameScene = gameScene;
         this.gameScene.bomb -= 1;
-        this.gameScene.isBombActive = true;
-        this.addChildTo(this.gameScene);
 
         this.shockwave = tm.app.CircleShape(300, 300, {
             strokeStyle: "rgba(0,0,0,0)",
@@ -80,9 +80,22 @@ gls2.Bomb = tm.createClass({
         this.b = 8;
         this.age = 0;
         this.rd = 1;
+
+        this.addEventListener("added", function() {
+            activeList.push(this);
+        });
+        this.addEventListener("removed", function() {
+            var idx = activeList.indexOf(this);
+            if (idx !== -1) activeList.splice(idx, 1);
+        });
+
+        this.addChildTo(this.gameScene);
     },
 
     update: function(app) {
+        // すべての弾を消す
+        gls2.Danmaku.erase();
+
         for (var i = 0; i < this.b; i++) {
             var t = (this.a * this.rd) + i * Math.PI*2 / this.b;
             this.origParticle.clone()
@@ -95,7 +108,6 @@ gls2.Bomb = tm.createClass({
 
         if (Math.PI * 2 < theta) {
             this.player.muteki = false;
-            this.gameScene.isBombActive = false;
             this.remove();
         } else if (Math.PI < theta) {
             this.b = 16;
@@ -109,3 +121,8 @@ gls2.Bomb = tm.createClass({
     },
 
 });
+
+gls2.Bomb.attackPower = 1;
+var activeList = gls2.Bomb.activeList = [];
+
+})();
