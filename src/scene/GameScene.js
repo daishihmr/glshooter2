@@ -108,15 +108,16 @@ gls2.GameScene = tm.createClass({
         // ショットvs敵
         enemies = [].concat(gls2.Enemy.activeList);
         var shots = [].concat(gls2.ShotBullet.activeList);
-        for (var i = 0, ilen = enemies.length; i < ilen; i++) {
-            for (var j = 0, jlen = shots.length; j < jlen; j++) {
+        for (var j = 0, jlen = shots.length; j < jlen; j++) {
+            for (var i = 0, ilen = enemies.length; i < ilen; i++) {
                 var e = enemies[i];
                 var s = shots[j];
                 if (e.isHitWithShot(s)) {
-                    s.genParticle(1);
-                    e.damage(s.attackPower);
                     s.remove();
-                    break;
+                    s.genParticle(1);
+                    if (e.damage(s.attackPower)) {
+                        break;
+                    }
                 }
             }
         }
@@ -131,18 +132,22 @@ gls2.GameScene = tm.createClass({
             });
             for (var i = 0, len = enemies.length; i < len; i++) {
                 var e = enemies[i];
-                if (laser.hitY-30 < e.y && e.y < laser.y && laser.x-40 < e.x && e.x < laser.x+40) {
-                    laser.hitY = e.y;
+                if (e.isHitWithLaser(laser)) {
                     e.damage(laser.attackPower);
                     laser.genParticle(2);
                     break;
                 }
             }
             // オーラ部分の当たり判定
+            var aura = {
+                x: this.player.x,
+                y: this.player.y,
+                radius: 60,
+            };
             enemies = [].concat(gls2.Enemy.activeList);
             for (var i = 0, len = enemies.length; i < len; i++) {
                 var e = enemies[i];
-                if (gls2.distanceSq(e, this.player) < 60*60) {
+                if (e.isHitWithShot(aura)) {
                     e.damage(laser.attackPower);
                     laser.genAuraParticle(2, e.y);
                 }

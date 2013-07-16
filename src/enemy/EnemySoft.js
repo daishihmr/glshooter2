@@ -292,4 +292,25 @@ gls2.EnemySoft.TankL = tm.createClass(
 });
 gls2.EnemySoft.TankL = gls2.EnemySoft.TankL();
 
+/**
+ * 中型戦闘機
+ */
+gls2.EnemySoft.MiddleFighter = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.tweener
+            .clear()
+            .moveBy(0, SC_H*0.5, 800, "easeOutQuad");
+    },
+    update: function() {
+
+    },
+})
+gls2.EnemySoft.MiddleFighter = gls2.EnemySoft.MiddleFighter();
+
 })();
+

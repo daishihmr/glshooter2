@@ -10,7 +10,7 @@ gls2.Laser = tm.createClass({
     age: 0,
     hitY: 0,
     rootTexture: null,
-    attackPower: 5,
+    attackPower: 10,
 
     beforeFrameVisible: false,
 
@@ -110,7 +110,7 @@ gls2.Laser = tm.createClass({
             if (!this.beforeFrameVisible) {
                 this.hitY = this.y;
             } else {
-                this.hitY -= 50;
+                this.hitY -= 40;
             }
 
             this.head._updateFrame();

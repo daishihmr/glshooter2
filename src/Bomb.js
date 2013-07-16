@@ -122,7 +122,7 @@ gls2.Bomb = tm.createClass({
 
 });
 
-gls2.Bomb.attackPower = 1;
+gls2.Bomb.attackPower = 2;
 var activeList = gls2.Bomb.activeList = [];
 
 })();

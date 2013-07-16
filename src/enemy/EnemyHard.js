@@ -1,21 +1,6 @@
 // すべてsingletonかつimmutableに実装する
 (function() {
 
-var _Sprite = tm.createClass({
-    superClass: tm.app.Sprite,
-    init: function(tex, w, h) {
-        this.superInit(tex, w, h);
-    },
-    draw: function(canvas) {
-        var srcRect = this.srcRect;
-        var element = this._image.element;
-
-        canvas.context.drawImage(element,
-            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
-            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
-    },
-});
-
 /**
  * 敵の見た目や性能
  * @class
@@ -42,7 +27,9 @@ gls2.EnemyHard = tm.createClass(
         return (shotBullet.x-this.x)*(shotBullet.x-this.x)+(shotBullet.y-this.y)*(shotBullet.y-this.y) < (shotBullet.radius+this.radius)*shotBullet.radius+this.radius;
     },
     isHitWithLaser: function(laser) {
-        return false;
+        var result = laser.hitY < this.y+this.radius && this.y-this.radius < laser.y && laser.x-40 < this.x+this.radius && this.x-this.radius < laser.x+40;
+        if (result) laser.hitY = this.y + this.radius;
+        return result;
     },
 });
 
@@ -179,6 +166,41 @@ gls2.EnemyHard.Tank1 = gls2.EnemyHard.Tank1();
 /**
  * 中型戦闘機「クロカワ」
  */
+gls2.EnemyHard.FighterM = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.EnemyHard,
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.name = "kurokawa";
+        this.hp = 200;
+        this._sprite = _Sprite("tex1", 256, 128);
+        this._sprite.srcRect.x = 64;
+        this._sprite.srcRect.y = 128;
+        this._sprite.srcRect.width = 256;
+        this._sprite.srcRect.height = 128;
+        this.bw = 60;
+        this.bh = 20;
+    },
+    update: function() {
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    isHitWithShot: function(s) {
+        return this.x - this.bw - s.radius < s.x && s.x < this.x + this.bw + s.radius
+            && this.y - this.bh - s.radius < s.y && s.y < this.y + this.bh + s.radius;
+    },
+    isHitWithLaser: function(laser) {
+        var result = laser.hitY < this.y+this.bh && this.y-this.bh < laser.y
+                && laser.x-40 < this.x+this.bw && this.x-this.bw < laser.x+40;
+        if (result) laser.hitY = this.y + this.bh*2;
+        return result;
+    },
+});
+gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();
 
 /**
  * 固定砲台「キセ」
@@ -231,5 +253,20 @@ gls2.EnemyHard.Tank1 = gls2.EnemyHard.Tank1();
 /**
  * エクストラボス「ユメハラ」
  */
+
+var _Sprite = tm.createClass({
+    superClass: tm.app.Sprite,
+    init: function(tex, w, h) {
+        this.superInit(tex, w, h);
+    },
+    draw: function(canvas) {
+        var srcRect = this.srcRect;
+        var element = this._image.element;
+
+        canvas.context.drawImage(element,
+            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
+            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
+    },
+});
 
 })();
