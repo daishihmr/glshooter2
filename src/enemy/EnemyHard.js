@@ -38,6 +38,12 @@ gls2.EnemyHard = tm.createClass(
     destroy: function() {
         gls2.Effect.explodeS(this.x, this.y, this.gameScene);
     },
+    isHitWithShot: function(shotBullet) {
+        return (shotBullet.x-this.x)*(shotBullet.x-this.x)+(shotBullet.y-this.y)*(shotBullet.y-this.y) < (shotBullet.radius+this.radius)*shotBullet.radius+this.radius;
+    },
+    isHitWithLaser: function(laser) {
+        return false;
+    },
 });
 
 /**

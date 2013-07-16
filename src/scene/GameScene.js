@@ -11,7 +11,6 @@ gls2.GameScene = tm.createClass({
     zanki: 3,
     bomb: 0,
     bombMax: 3,
-    isBombActive: false,
     groundLayer: null,
     playerLayer: null,
     enemyLayer: null,
@@ -102,19 +101,70 @@ gls2.GameScene = tm.createClass({
     },
 
     update: function(app) {
-        if (this.isBombActive) {
-            // TODO すべての敵にダメージ
-            
-            // TODO すべての弾を消す
-            var bullets = [].concat(gls2.Bullet.activeList);
-            for (var i = 0, len = bullets.length; i < len; i++) {
-                bullets[i].destroy();
-            }
+        this.stage.update(app.frame);
 
-            // TODO 自機を無敵に
+        var enemies;
+
+        // ショットvs敵
+        enemies = [].concat(gls2.Enemy.activeList);
+        var shots = [].concat(gls2.ShotBullet.activeList);
+        for (var i = 0, ilen = enemies.length; i < ilen; i++) {
+            for (var j = 0, jlen = shots.length; j < jlen; j++) {
+                var e = enemies[i];
+                var s = shots[j];
+                if (e.isHitWithShot(s)) {
+                    s.genParticle(1);
+                    e.damage(s.attackPower);
+                    s.remove();
+                    break;
+                }
+            }
         }
 
-        this.stage.update(app.frame);
+        // レーザーvs敵
+        var laser = this.player.laser;
+        if (this.player.laser.visible) {
+            // レーザー部分の当たり判定
+            enemies = [].concat(gls2.Enemy.activeList);
+            enemies.sort(function(l, r) {
+                return r.y - l.y;
+            });
+            for (var i = 0, len = enemies.length; i < len; i++) {
+                var e = enemies[i];
+                if (laser.hitY-30 < e.y && e.y < laser.y && laser.x-40 < e.x && e.x < laser.x+40) {
+                    laser.hitY = e.y;
+                    e.damage(laser.attackPower);
+                    laser.genParticle(2);
+                    break;
+                }
+            }
+            // オーラ部分の当たり判定
+            enemies = [].concat(gls2.Enemy.activeList);
+            for (var i = 0, len = enemies.length; i < len; i++) {
+                var e = enemies[i];
+                if (gls2.distanceSq(e, this.player) < 60*60) {
+                    e.damage(laser.attackPower);
+                    laser.genAuraParticle(2, e.y);
+                }
+            }
+        }
+
+        // ボムvs敵
+        if (gls2.Bomb.activeList.length > 0) {
+            var enemies = [].concat(gls2.Enemy.activeList);
+            for (var i = 0, ilen = enemies.length; i < ilen; i++) {
+                var e = enemies[i];
+                if (e.isInScreen()) {
+                    e.damage(gls2.Bomb.attackPower);
+                }
+            }
+        }
+
+        // TODO? ショットvs敵弾
+
+        // TODO 敵弾vs自機
+
+        // TODO 敵vs自機
 
         if (app.keyboard.getKeyDown("escape")) {
             this.app.popScene();

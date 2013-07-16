@@ -128,11 +128,18 @@ gls2.Enemy = tm.createClass(
 
     isInScreen: function() {
         var rad = this.radius;
-        return -rad <= this.x && this.x < SC_W+rad && -rad <= this.y && this.y < SC_H+rad;
+        return rad <= this.x && this.x < SC_W-rad && rad <= this.y && this.y < SC_H-rad;
     },
 
     onfire: function() {
         return this.enableFire;
+    },
+
+    isHitWithShot: function(shotBullet) {
+        return this.hard.isHitWithShot.call(this, shotBullet);
+    },
+    isHitWithLaser: function(laser) {
+        return this.hard.isHitWithLaser.call(this, laser);
     },
 
 });

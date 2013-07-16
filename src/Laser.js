@@ -113,31 +113,6 @@ gls2.Laser = tm.createClass({
                 this.hitY -= 50;
             }
 
-            // レーザー部分の当たり判定
-            var copied = [].concat(gls2.Enemy.activeList);
-            copied.sort(function(l, r) {
-                return r.y - l.y;
-            });
-            for (var i = 0, len = copied.length; i < len; i++) {
-                var e = copied[i];
-                if (this.hitY-30 < e.y && e.y < this.y && this.x-40 < e.x && e.x < this.x+40) {
-                    this.hitY = e.y;
-                    e.damage(this.attackPower);
-                    this.genParticle(1);
-                    break;
-                }
-            }
-
-            // オーラ部分の当たり判定
-            copied = [].concat(gls2.Enemy.activeList);
-            for (var i = 0, len = copied.length; i < len; i++) {
-                var e = copied[i];
-                if (gls2.distanceSq(e, this.player) < 60*60) {
-                    e.damage(this.attackPower);
-                    this.genParticle(3, e.y);
-                }
-            }
-
             this.head._updateFrame();
             this.foot._updateFrame();
             this.aura._updateFrame();
@@ -160,12 +135,29 @@ gls2.Laser = tm.createClass({
             p.addEventListener("enterframe", function() {
                 this.x += this.dx;
                 this.y += this.dy;
-                this.dx *= 0.9;
-                this.dy *= 0.9;
+                this.dx *= 0.95;
+                this.dy *= 0.95;
             });
         }
     },
 
+    genAuraParticle: function(count, y) {
+        var y = y || this.hitY;
+        for (var i = 0; i < count; i++) {
+            var p = origParticle.clone().setPosition(this.x, y).addChildTo(this.parent);
+            var speed = gls2.math.randf(12, 20);
+            var dir = gls2.math.randf(0, Math.PI);
+            p.dx = Math.cos(dir) * speed;
+            p.dy = Math.sin(dir) * speed;
+            p.scaleX = p.scaleY = (gls2.math.randf(1.0, 3.0) + gls2.math.randf(1.0, 3.0)) / 2;
+            p.addEventListener("enterframe", function() {
+                this.x += this.dx;
+                this.y += this.dy;
+                this.dx *= 0.95;
+                this.dy *= 0.95;
+            });
+        }
+    },
     draw: function(canvas) {
         this.c.clear();
         for (var i = 0; i < 6; i++) {

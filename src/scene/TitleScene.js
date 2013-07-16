@@ -38,7 +38,7 @@ gls2.TitleScene = tm.createClass({
         this._generateParticle(Math.cos(this.age*0.01)        *80+SC_W*0.5, Math.sin(this.age*0.01)        *80+SC_H*0.5, 0);
         this._generateParticle(Math.cos(this.age*0.01+Math.PI)*80+SC_W*0.5, Math.sin(this.age*0.01+Math.PI)*80+SC_H*0.5, 1);
 
-        if ((app.keyboard.getKeyDown("space") || app.pointing.getPointingEnd()) && !this.gameStarted) {
+        if ((app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space") || app.pointing.getPointingEnd()) && !this.gameStarted) {
             this.openMainMenu()
         }
 

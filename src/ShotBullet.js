@@ -51,18 +51,6 @@ gls2.ShotBullet = tm.createClass({
         this.x += this.vx;
         this.y += this.vy;
 
-        var copied = [].concat(gls2.Enemy.activeList);
-        for (var i = 0, len = copied.length; i < len; i++) {
-            var e = copied[i];
-            if ((this.x-e.x)*(this.x-e.x) + (this.y-e.y)*(this.y-e.y) < (this.radius+e.radius)*this.radius+e.radius) {
-                this.genParticle(1);
-                e.damage(this.attackPower);
-                this.remove();
-                break;
-            }
-        }
-
-
         if (this.x < -60 || SC_W+60 < this.x || this.y < -60 || SC_H+60 < this.y) {
             this.remove();
         }

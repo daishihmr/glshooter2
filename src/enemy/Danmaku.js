@@ -13,6 +13,7 @@ gls2.Bullet = tm.createClass({
         });
     },
     destroy: function() {
+        // TODO 弾消しエフェクト
         tm.app.CircleShape(20*2, 20*2, {
             strokeStyle: "rgba(0,0,0,0)",
             fillStyle: tm.graphics.RadialGradient(20,20,0,20,20,20)
@@ -40,6 +41,12 @@ gls2.Bullet = tm.createClass({
 });
 
 gls2.Danmaku = {};
+gls2.Danmaku.erase = function() {
+    var bullets = [].concat(activeList);
+    for (var i = 0, len = bullets.length; i < len; i++) {
+        bullets[i].destroy();
+    }
+};
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 255; i++) {
         bulletPool.push(gls2.Bullet());
