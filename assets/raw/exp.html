@@ -25,9 +25,9 @@ var fireParticle = {
     /** 生成個数 */
     generate: {
         /** 初期生成個数 */
-        initial: 70,
+        initial: 90,
         /** 減衰率 */
-        rate: 0.9,
+        rate: 0.8,
     },
     /** パーティクル初期値 */
     initial: {
@@ -36,16 +36,16 @@ var fireParticle = {
         /** 半径 */
         radius: 2,
         /** 中心色 */
-        colorCenter:  { r: 255, g: 255, b: 200, a: 0.1 },
+        colorCenter:  { r: 255, g: 255, b: 255, a: 0.1 },
         /** 外縁色 */
-        colorOuterEdge: { r: 255, g: 128, b:   0, a: 0.0 },
+        colorOuterEdge: { r: 255, g: 255, b: 255, a: 0.0 },
     },
     /** 変化 */
     transition: {
         /** 位置(中心からの距離) */
         position: {
             /** 最終値 */
-            finalValue: [2, 40], // 値に配列を指定した場合はv[0]～v[1]間のランダムな値
+            finalValue: [4, 45], // 値に配列を指定した場合はv[0]～v[1]間のランダムな値
             /** フレーム数 */
             duration: 10,
             /** イージング関数 */
@@ -59,15 +59,15 @@ var fireParticle = {
         },
         /** 中心色 */
         colorCenter: {
-            g: {
+            r: {
                 finalValue: 0,
-                duration: 20,
+                duration: 10,
                 easeFunc: "easeInExpo",
             },
-            b: {
+            g: {
                 finalValue: 0,
-                duration: 20,
-                easeFunc: "easeInQuad",
+                duration: 10,
+                easeFunc: "easeInExpo",
             },
             a: {
                 finalValue: 0,
@@ -77,6 +77,11 @@ var fireParticle = {
         },
         /** 外縁色 */
         colorOuterEdge: {
+            r: {
+                finalValue: 0,
+                duration: 20,
+                easeFunc: "easeInExpo",
+            },
             g: {
                 finalValue: 0,
                 duration: 20,
@@ -98,7 +103,7 @@ var smokeParticle = {
         initial: 35,
     },
     initial: {
-        position: [ 3, 25 ],
+        position: [ 10, 25 ],
         radius: 5,
         colorCenter:  { r: 0, g: 0, b: 0, a: 0.05 },
         colorOuterEdge: { r: 0, g: 0, b: 0, a: 0.00 },
