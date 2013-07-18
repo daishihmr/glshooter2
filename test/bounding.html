@@ -4,22 +4,9 @@
 <script src="../libs/tmlib.js"></script>
 <script>
 tm.main(function() {
-    var app = tm.app.CanvasApp("#app").resize(300, 300);
+    var app = tm.app.CanvasApp("#app").resize(300, 640);
     app.fps = 60;
     var scene = app.currentScene;
-
-    var fighter = tm.app.TriangleShape(20, 20).setPosition(150, 280).addChildTo(scene);
-    fighter.update = function(app) {
-        var kb = app.keyboard;
-        if (kb.getKey("left")) this.x -= 5;
-        else if (kb.getKey("right")) this.x += 5;
-        if (kb.getKey("up")) this.y -= 5;
-        else if (kb.getKey("down")) this.y += 5;
-
-        if (kb.getKeyDown("space") && !shot.active) {
-            shot.setPosition(this.x, this.y).addChildTo(this.parent);
-        }
-    }
 
     var shot = tm.app.CircleShape(10, 10, {
         strokeStyle: "transparent",
@@ -49,49 +36,97 @@ tm.main(function() {
         return tm.geom.Rect(this.x - 25, this.y - 25, 50, 50);
     };
     enemy.update = function(app) {
-        if (this.isHitElement(p)) {
+        if (this.isHitElement(laser)) {
             this.alpha = app.frame % 2 ? 0.5: 0.2;
-            p.hitY = this.y + 25 - 1;
+            laser.hitY = this.y + 25 - 1;
         } else {
-            p.hitY = -50;
+            laser.hitY = 0;
             this.alpha = 1;
         }
     }
 
-    var texture = tm.asset.Texture("../assets/laser_b.png");
-    var ht = tm.asset.Texture("../assets/laser_b_head.png");
-    var ft = tm.asset.Texture("../assets/laser_b_foot.png");
+    var bt = tm.asset.Texture("../assets/laser_h.png");
+    var ht = tm.asset.Texture("../assets/laser_h_head.png");
+    var ft = tm.asset.Texture("../assets/laser_h_foot.png");
     var at = tm.asset.Texture("../assets/aura.png");
 
-    var p = Laser(texture, ht, ft, at, 40)
+    var laser = gls2.Laser(bt, ht, ft, at, 40)
         .setPosition(200, 150)
         .addChildTo(scene);
-    p.onenterframe = function(app) {
-        this.setPosition(fighter.x, fighter.y);
+    laser.onenterframe = function(app) {
+        this.setPosition(fighter.x, fighter.y-20);
     }
-    p.hitY = -50;
+    laser.hitY = 0;
+
+    var fighter = tm.app.TriangleShape(20, 20).setPosition(150, 280).addChildTo(scene);
+    fighter.update = function(app) {
+        var kb = app.keyboard;
+        if (kb.getKey("left")) this.x -= 5;
+        else if (kb.getKey("right")) this.x += 5;
+        if (kb.getKey("up")) this.y -= 5;
+        else if (kb.getKey("down")) this.y += 5;
+
+        if (kb.getKeyDown("space") && !shot.active) {
+            shot.setPosition(this.x, this.y).addChildTo(this.parent);
+        }
+    }
 
     app.run();
 });
 
-var Laser = tm.createClass({
+var gls2 = {};
+gls2.Laser = tm.createClass({
     superClass: tm.app.Sprite,
 
     hitY: 0,
     frame: 0,
 
-    init: function(texture, headTexture, footTexture, auraTexture, width) {
-        this.superInit(texture, width, 100);
+    init: function(bodyTexture, headTexture, footTexture, auraTexture, width) {
+        this.superInit(bodyTexture, width, 100);
 
         this.boundingType = "rect";
 
         this.scrollOffset = 0;
         this.origin.y = 1.0;
-        // this.blendMode = "lighter";
 
         this.srcRect.x = 0;
         this.srcRect.y = 0;
-        this.srcRect.width = texture.width / 16;
+        this.srcRect.width = bodyTexture.width / 16;
+
+        var a = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: auraTexture,
+            frame: {
+                width: 100,
+                height: 100
+            },
+            animations: {
+                "anim": {
+                    frames: [3, 7, 11, 15],
+                    next: "anim",
+                    frequency: 2,
+                }
+            }
+        }), 80, 80);
+        a.y = 30;
+        a.gotoAndPlay("anim");
+        a.addChildTo(this);
+
+        var f = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: footTexture,
+            frame: {
+                width: 128,
+                height: 64
+            },
+            animations: {
+                "anim": {
+                    frames: [0, 1, 2, 3],
+                    next: "anim",
+                    frequency: 2,
+                }
+            }
+        }), 96, 48);
+        f.gotoAndPlay("anim");
+        f.addChildTo(this);
 
         var h = tm.app.AnimationSprite(tm.app.SpriteSheet({
             image: headTexture,
@@ -112,54 +147,24 @@ var Laser = tm.createClass({
         var self = this;
         h.update = function() {
             this.y = self.hitY - self.y;
+            this.visible = self.hitY !== 0;
         };
+
+        // this.blendMode = "lighter";
+        // a.blendMode = "lighter";
+        // f.blendMode = "lighter";
         // h.blendMode = "lighter";
 
-        var f = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: footTexture,
-            frame: {
-                width: 128,
-                height: 64
-            },
-            animations: {
-                "anim": {
-                    frames: [0, 1, 2, 3],
-                    next: "anim",
-                    frequency: 2,
-                }
-            }
-        }), 96, 48);
-        f.gotoAndPlay("anim");
-        f.blendMode = "lighter";
-        f.addChildTo(this);
+    },
 
-        var a = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: auraTexture,
-            frame: {
-                width: 100,
-                height: 100
-            },
-            animations: {
-                "anim": {
-                    frames: [2, 6, 10, 14],
-                    next: "anim",
-                    frequency: 2,
-                }
-            }
-        }), 80, 80);
-        a.y = 30;
-        a.gotoAndPlay("anim");
-        a.blendMode = "lighter";
-        a.addChildTo(this);
+    getBoundingRect: function() {
+        this.height = this.position.y - this.hitY;
+        return tm.geom.Rect(this.x - this.width/2, this.y - this.height, this.width, this.height);
     },
 
     update: function(app) {
         this.height = this.position.y - this.hitY;
         if (app.frame % 3 === 0) this.frame = (this.frame + 1) % 16;
-    },
-
-    getBoundingRect: function() {
-        return tm.geom.Rect(this.x - this.width/2, this.y - this.height, this.width, this.height);
     },
 
     draw: function(canvas) {
