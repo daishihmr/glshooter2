@@ -55,26 +55,43 @@ gls2.GameScene = tm.createClass({
         var g = this.ground = tm.app.CanvasElement().addChildTo(this);
         g.gx = g.gy = 0;
         g.direction = Math.PI * 0.5;
-        g.cellSize = 20;
         g.speed = 1;
         g.dx = 0;
         g.dy = 0;
+
+        var c = 8 * 2;
+        var l = 8*Math.sqrt(3);
+
         g.update = function() {
             this.dx = Math.cos(this.direction) * this.speed;
             this.dy = Math.sin(this.direction) * this.speed;
-            this.gx = (this.gx + this.dx) % this.cellSize;
-            this.gy = (this.gy + this.dy) % this.cellSize;
+
+            this.gx += this.dx;
+            while (c*3 < this.gx) this.gx -= c*3;
+            while (this.gx < -c*3) this.gx += c*3;
+
+            this.gy += this.dy;
+            while (l*2 < this.gy) this.gy -= l*2;
+            while (this.gy < -l*2) this.gy += l*2;
         };
         g.blendMode = "lighter";
         g.draw = function(canvas) {
             canvas.lineWidth = 0.2;
-            canvas.strokeStyle = "#rgba(255,255,255,0.5)";
+            canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba(255,255,255,0.5)" },
+                    { offset: 1.0, color: "rgba(255,255,255,0.1)" },
+                ])
+                .toStyle();
             canvas.beginPath();
-            for (var x = this.gx; x < SC_W; x += this.cellSize) {
-                canvas.line(x, 0, x, SC_H);
-            }
-            for (var y = this.gy; y < SC_H; y += this.cellSize) {
-                canvas.line(0, y, SC_W, y);
+            var yy = 0;
+            for (var x = this.gx-c*3; x < SC_W+c*3; x += c*1.5) {
+                yy = (yy === 0) ? l : 0;
+                for (var y = this.gy-l*2 + yy; y < SC_H+l*2; y += l*2) {
+                    canvas.line(x, y, x + c, y);
+                    canvas.line(x, y, x - c/2, y + l);
+                    canvas.line(x, y, x - c/2, y - l);
+                }
             }
             canvas.stroke();
         };

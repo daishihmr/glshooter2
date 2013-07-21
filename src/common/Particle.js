@@ -58,7 +58,7 @@ gls2.BackfireParticle = tm.createClass({
     ground: null,
     init: function(ground) {
         var size = 20;
-        this.superInit(size, 1.0, 0.8, tm.graphics.Canvas()
+        this.superInit(size, 1.0, 0.82, tm.graphics.Canvas()
             .resize(size, size)
             .setFillStyle(
                 tm.graphics.RadialGradient(size*0.5, size*0.5, 0, size*0.5, size*0.5, size*0.5)

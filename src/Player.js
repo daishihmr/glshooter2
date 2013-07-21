@@ -133,6 +133,8 @@ gls2.Player = tm.createClass(
     fireLaser: false,
 
     update: function(app) {
+        if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
+
         var kb = app.keyboard;
         if (this.controllable) {
             var angle = kb.getKeyAngle();
@@ -200,9 +202,10 @@ gls2.Player = tm.createClass(
         this._calcRoll(kb);
 
         // バックファイア
-        if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
-        backfireParticle.clone().setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
-        backfireParticle.clone().setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
+        if (app.frame % 2 === 0) {
+            backfireParticle.clone().setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
+            backfireParticle.clone().setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
+        }
     },
 
     /** @protected */
@@ -301,7 +304,7 @@ gls2.Bit = tm.createClass(
             var g = this.parent.localToGlobal(this);
 
             // バックファイア
-            if (this.bit.v) backfireParticle.clone().setPosition(g.x, g.y).addChildTo(core.gameScene);
+            if (this.bit.v && core.frame%2 === 0) backfireParticle.clone().setPosition(g.x, g.y).addChildTo(core.gameScene);
 
             // ショット
             if (this.player.fireShot) {
