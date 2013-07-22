@@ -66,8 +66,6 @@ gls2.GlShooter2 = tm.createClass(
                 "aura": "assets/aura.png",
                 "explode0": "assets/explode0.png",
                 "explode1": "assets/explode1.png",
-                "explode2": "assets/explode2.png",
-                "explode3": "assets/explode3.png",
                 "shotbullet": "assets/shotbullet.png",
                 "bomb": "assets/bomb.png",
 

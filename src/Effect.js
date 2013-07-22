@@ -2,7 +2,7 @@
 
 gls2.Effect = {};
 gls2.Effect.setup = function() {
-    gls2.Effect["explosion"] = Array.range(0, 4).map(function(i) {
+    gls2.Effect["explosion"] = Array.range(0, 2).map(function(i) {
         var exp = tm.app.AnimationSprite(tm.app.SpriteSheet({
             image: "explode" + i,
             frame: {
