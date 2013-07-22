@@ -35,14 +35,15 @@ tm.main(function() {
     var draw = function(frame) {
         canvas.globalCompositeOperation = "lighter";
         for (var y = canvas.height; y >= 0; y--) {
-            canvas.p(25, y, 25, col0, col2);
+            canvas.p(25, y, 20, col0, col2);
         }
+        // canvas.globalCompositeOperation = "source-over";
         for (var c = 0; c < noise.length; c++) {
-            var a = noise[c]*20 + frame/frameSize*Math.PI*2;
+            var a = (c/noise.length + frame/frameSize) * Math.PI*2;
             for (var y = canvas.height; y >= 0; y--) {
-                var alpha = (1 + Math.cos(a)) * 0.015;
+                var alpha = (1 + Math.cos(a)) * 0.1 * noise[c];
                 if (alpha > 0.0001)
-                    canvas.p(Math.sin(a)*8 + 25, y, 10, col1.concat([alpha]), col2);
+                    canvas.p(Math.sin(a)*12 + 25, y, 8, col1.concat([alpha]), col2);
                 a -= 0.008;
             }
         }
@@ -80,7 +81,7 @@ var createPNoise = function(dataSize) {
         return a*(1-f) + b*f;
     };
     var createLayer = function(interval) {
-        if (interval < 1) { 
+        if (interval < 1) {
             return null;
         }
 
