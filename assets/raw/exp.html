@@ -21,13 +21,13 @@ var fireParticle = {
     /** 生成開始フレーム */
     start: 0,
     /** 生成終了フレーム */
-    end: 15,
+    end: 30,
     /** 生成個数 */
     generate: {
         /** 初期生成個数 */
         initial: 90,
         /** 減衰率 */
-        rate: 0.8,
+        rate: 0.9,
     },
     /** パーティクル初期値 */
     initial: {
@@ -36,9 +36,9 @@ var fireParticle = {
         /** 半径 */
         radius: 2,
         /** 中心色 */
-        colorCenter:  { r: 255, g: 255, b: 255, a: 0.1 },
+        colorCenter:  { r: 220, g: 220, b: 255, a: 0.1 },
         /** 外縁色 */
-        colorOuterEdge: { r: 255, g: 255, b: 255, a: 0.0 },
+        colorOuterEdge: { r: 220, g: 220, b: 255, a: 0.0 },
     },
     /** 変化 */
     transition: {
@@ -61,12 +61,17 @@ var fireParticle = {
         colorCenter: {
             r: {
                 finalValue: 0,
-                duration: 10,
+                duration: 30,
                 easeFunc: "easeInExpo",
             },
             g: {
                 finalValue: 0,
-                duration: 10,
+                duration: 30,
+                easeFunc: "easeInExpo",
+            },
+            b: {
+                finalValue: 0,
+                duration: 40,
                 easeFunc: "easeInExpo",
             },
             a: {
@@ -87,6 +92,11 @@ var fireParticle = {
                 duration: 20,
                 easeFunc: "easeInExpo",
             },
+            b: {
+                finalValue: 0,
+                duration: 30,
+                easeFunc: "easeInExpo",
+            },
         },
     },
 };
@@ -97,20 +107,20 @@ var fireParticle = {
  * 煙用.
  */
 var smokeParticle = {
-    start: 18,
+    start: 8,
     end: 30,
     generate: {
-        initial: 35,
+        initial: 20,
     },
     initial: {
-        position: [ 10, 25 ],
+        position: [ 2, 25 ],
         radius: 5,
         colorCenter:  { r: 0, g: 0, b: 0, a: 0.05 },
         colorOuterEdge: { r: 0, g: 0, b: 0, a: 0.00 },
     },
     transition: {
         position: {
-            finalValue: [ 5, 40 ],
+            finalValue: [ 10, 40 ],
             duration: 10,
         },
         radius: {

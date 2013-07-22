@@ -2,7 +2,7 @@
 
 gls2.Effect = {};
 gls2.Effect.setup = function() {
-    gls2.Effect["explosion"] = Array.range(0, 4).map(function(i) {
+    gls2.Effect["explosion"] = Array.range(0, 2).map(function(i) {
         var exp = tm.app.AnimationSprite(tm.app.SpriteSheet({
             image: "explode" + i,
             frame: {
@@ -164,19 +164,23 @@ gls2.Effect.explodeGS = function(x, y, scene) {
     e.addChildTo(scene);
 };
 
+var noise = gls2.Noise.generate(256);
+
 gls2.Effect.explodeM = function(x, y, scene) {
     gls2.playSound("soundExplode");
-    var e = gls2.Effect["explosion"].random()
-        .clone()
-        .addEventListener("animationend", function() {
-            this.remove();
-        })
-        .setPosition(x, y)
-        .setRotation(Math.random() * 360)
-        // .setBlendMode("lighter")
-        .gotoAndPlay();
-    e.isEffect = true;
-    e.addChildTo(scene);
+    for (var i = 0, end = gls2.math.rand(5, 10); i < end; i++) {
+        var e = gls2.Effect["explosion"].random()
+            .clone()
+            .addEventListener("animationend", function() {
+                this.remove();
+            })
+            .setPosition(x, y)
+            .setRotation(Math.random() * 360)
+            .gotoAndPlay();
+        e.isEffect = true;
+        // e.tweener.moveBy()
+        e.addChildTo(scene);
+    }
     for (var i = 0; i < 10; i++) {
         gls2.Effect.genParticle(x, y, scene);
     }
