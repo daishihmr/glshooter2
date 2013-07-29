@@ -54,7 +54,7 @@ tm.main(function() {
         for (var i = 0; i < S; i++) {
             df(x, y, r);
             x += Math.cos(dir) * sr;
-            y += Math.sin(dir) * sr;
+            y += Math.sin(dir) * sr + 0.3;
             var j = i / S;
             r = Math.sin(Math.PI*2 * j)*S/rr;
         }
@@ -66,32 +66,32 @@ tm.main(function() {
         canvas.clear();
         d2(    0, 1.2, 16, dr);
         for (var i = 0.12; i < 1; i+=0.12) {
-            d2(-i, 1.2*Math.randf(0.7,1.2), 16, dr);
-            d2( i, 1.2*Math.randf(0.7,1.2), 16, dr);
+            d2(-i, 1.2*Math.randf(0.7,1.1), 16, dr);
+            d2( i, 1.2*Math.randf(0.7,1.1), 16, dr);
         }
         out.drawImage(canvas.element, S*0, S*row);
 
         canvas.clear();
         d2(    0, 1.2, 16, dg);
         for (var i = 0.12; i < 1; i+=0.12) {
-            d2(-i, 1.2*Math.randf(0.7,1.2), 16, dg);
-            d2( i, 1.2*Math.randf(0.7,1.2), 16, dg);
+            d2(-i, 1.2*Math.randf(0.7,1.1), 16, dg);
+            d2( i, 1.2*Math.randf(0.7,1.1), 16, dg);
         }
         out.drawImage(canvas.element, S*1, S*row);
 
         canvas.clear();
         d2(    0, 1.2, 16, db);
         for (var i = 0.12; i < 1; i+=0.12) {
-            d2(-i, 1.2*Math.randf(0.7,1.2), 16, db);
-            d2( i, 1.2*Math.randf(0.7,1.2), 16, db);
+            d2(-i, 1.2*Math.randf(0.7,1.1), 16, db);
+            d2( i, 1.2*Math.randf(0.7,1.1), 16, db);
         }
         out.drawImage(canvas.element, S*2, S*row);
 
         canvas.clear();
         d2(    0, 1.2, 16, dh);
         for (var i = 0.12; i < 1; i+=0.12) {
-            d2(-i, 1.2*Math.randf(0.7,1.2), 16, dh);
-            d2( i, 1.2*Math.randf(0.7,1.2), 16, dh);
+            d2(-i, 1.2*Math.randf(0.7,1.1), 16, dh);
+            d2( i, 1.2*Math.randf(0.7,1.1), 16, dh);
         }
         out.drawImage(canvas.element, S*3, S*row);
     }

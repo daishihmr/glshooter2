@@ -2,6 +2,9 @@
 
 gls2.Effect = {};
 gls2.Effect.setup = function() {
+
+    noise = gls2.Noise.generate(256);
+
     gls2.Effect["explosion"] = Array.range(0, 2).map(function(i) {
         var exp = tm.app.AnimationSprite(tm.app.SpriteSheet({
             image: "explode" + i,
@@ -164,7 +167,7 @@ gls2.Effect.explodeGS = function(x, y, scene) {
     e.addChildTo(scene);
 };
 
-var noise = gls2.Noise.generate(256);
+var noise;
 
 gls2.Effect.explodeM = function(x, y, scene) {
     gls2.playSound("soundExplode");
