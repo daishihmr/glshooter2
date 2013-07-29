@@ -18,6 +18,7 @@ tm.main(function() {
             tm.graphics.RadialGradient(x, y, 0, x, y, rad)
                 .addColorStopList([
                     { offset: 0.0, color: "rgba("+~~col0[0]+","+~~col0[1]+","+~~col0[2]+","+col0[3]+")" },
+                    { offset: 0.8, color: "rgba("+~~col1[0]+","+~~col1[1]+","+~~col1[2]+","+col1[3]+")" },
                     { offset: 1.0, color: "rgba("+~~col1[0]+","+~~col1[1]+","+~~col1[2]+","+col1[3]+")" },
                 ])
                 .toStyle()
@@ -25,26 +26,35 @@ tm.main(function() {
         this.fillRect(x - rad, y - rad, rad*2, rad*2);
     };
 
-    var col0 = [200,200,200,0.03];
+    // var col0 = [255,255,255,0.05];
+    // var col1 = [255,255,255];
+    // var col2 = [255,0,0,0.0];
+
+    // var col0 = [255,255,255,0.05];
+    // var col1 = [255,255,255];
+    // var col2 = [0,255,0,0.0];
+
+    var col0 = [255,255,255,0.05];
     var col1 = [255,255,255];
     var col2 = [0,0,255,0.0];
-    // var col0 = [127,127,75,0.05];
-    // var col1 = [255,255,150];
-    // var col2 = [255,150,0,0.0];
+
+    // var col0 = [255,180,100,0.08];
+    // var col1 = [255,180,100];
+    // var col2 = [255,180,0,0];
 
     var draw = function(frame) {
         canvas.globalCompositeOperation = "lighter";
         for (var y = canvas.height; y >= 0; y--) {
-            canvas.p(25, y, 20, col0, col2);
+            canvas.p(25, y, 23, col0, col2);
         }
         // canvas.globalCompositeOperation = "source-over";
         for (var c = 0; c < noise.length; c++) {
             var a = (c/noise.length + frame/frameSize) * Math.PI*2;
             for (var y = canvas.height; y >= 0; y--) {
-                var alpha = (1 + Math.cos(a)) * 0.1 * noise[c];
+                var alpha = (1 + Math.cos(a)) * 0.06 * noise[c];
                 if (alpha > 0.0001)
                     canvas.p(Math.sin(a)*12 + 25, y, 8, col1.concat([alpha]), col2);
-                a -= 0.008;
+                a -= 0.004;
             }
         }
     };

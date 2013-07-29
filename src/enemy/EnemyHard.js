@@ -27,7 +27,7 @@ gls2.EnemyHard = tm.createClass(
         return (shotBullet.x-this.x)*(shotBullet.x-this.x)+(shotBullet.y-this.y)*(shotBullet.y-this.y) < (shotBullet.radius+this.radius)*shotBullet.radius+this.radius;
     },
     isHitWithLaser: function(laser) {
-        var result = laser.hitY < this.y+this.radius && this.y-this.radius < laser.y && laser.x-40 < this.x+this.radius && this.x-this.radius < laser.x+40;
+        var result = laser.isHitElement(this);
         if (result) laser.hitY = this.y + this.radius;
         return result;
     },
@@ -175,7 +175,7 @@ gls2.EnemyHard.FighterM = tm.createClass(
     },
     setup: function() {
         this.name = "kurokawa";
-        this.hp = 200;
+        this.hp = 2000;
         this._sprite = _Sprite("tex1", 256, 128);
         this._sprite.srcRect.x = 64;
         this._sprite.srcRect.y = 128;
@@ -192,12 +192,6 @@ gls2.EnemyHard.FighterM = tm.createClass(
     isHitWithShot: function(s) {
         return this.x - this.bw - s.radius < s.x && s.x < this.x + this.bw + s.radius
             && this.y - this.bh - s.radius < s.y && s.y < this.y + this.bh + s.radius;
-    },
-    isHitWithLaser: function(laser) {
-        var result = laser.hitY < this.y+this.bh && this.y-this.bh < laser.y
-                && laser.x-40 < this.x+this.bw && this.x-this.bw < laser.x+40;
-        if (result) laser.hitY = this.y + this.bh*2;
-        return result;
     },
 });
 gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();

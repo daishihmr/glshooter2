@@ -19,6 +19,8 @@ gls2.GameScene = tm.createClass({
     bulletLayer: null,
     labelLayer: null,
 
+    lastElement: null,
+
     consoleWindow: null,
 
     /** ランク(0.0～1.0) */
@@ -45,6 +47,11 @@ gls2.GameScene = tm.createClass({
             .addChildTo(this.labelLayer);
 
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
+
+        this.lastElement = tm.app.Object2D().addChildTo(this);
+        this.lastElement.update = function(app) {
+            this.onexitframe(app);
+        }.bind(this);
     },
 
     println: function(string) {
@@ -106,7 +113,10 @@ gls2.GameScene = tm.createClass({
             } else {
                 this.enemyLayer.addChild(child);
             }
-        } else if (child instanceof gls2.BackfireParticle || child instanceof gls2.ShotBullet || child instanceof gls2.Laser || child.isEffect) {
+        } else if (child instanceof gls2.BackfireParticle
+            || child instanceof gls2.ShotBullet
+            || child instanceof gls2.Laser
+            || child.isEffect) {
             this.effectLayer0.addChild(child);
         } else if (child instanceof gls2.Particle) {
             this.effectLayer1.addChild(child);
@@ -120,6 +130,17 @@ gls2.GameScene = tm.createClass({
     update: function(app) {
         this.stage.update(app.frame);
 
+        if (app.keyboard.getKeyDown("escape")) {
+            this.app.popScene();
+        } else if (app.keyboard.getKeyDown("space")) {
+            this.openPauseMenu(0);
+        } else if (app.keyboard.getKeyDown("p")) {
+            app.canvas.saveAsImage();
+            this.openPauseMenu(0);
+        }
+    },
+
+    onexitframe: function(app) {
         var enemies;
 
         // ショットvs敵
@@ -166,7 +187,7 @@ gls2.GameScene = tm.createClass({
                 var e = enemies[i];
                 if (e.isHitWithShot(aura)) {
                     e.damage(laser.attackPower);
-                    laser.genAuraParticle(2, e.y);
+                    laser.genAuraParticle(2, (aura.x + e.x) * 0.5, (aura.y + e.y) * 0.5);
                 }
             }
         }
@@ -187,15 +208,6 @@ gls2.GameScene = tm.createClass({
         // TODO 敵弾vs自機
 
         // TODO 敵vs自機
-
-        if (app.keyboard.getKeyDown("escape")) {
-            this.app.popScene();
-        } else if (app.keyboard.getKeyDown("space")) {
-            this.openPauseMenu(0);
-        } else if (app.keyboard.getKeyDown("p")) {
-            app.canvas.saveAsImage();
-            this.openPauseMenu(0);
-        }
     },
 
     openPauseMenu: function(defaultValue) {

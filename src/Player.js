@@ -61,7 +61,15 @@ gls2.Player = tm.createClass(
 
         gls2.setShadow(this);
 
-        this.laser = gls2.Laser(this, this.type); // TODO 機体タイプによる
+        this.laser = gls2.Laser(this, {
+            redBody: "laserR",
+            greenBody: "laserG",
+            blueBody: "laserB",
+            hyperBody: "laserH",
+            head: "laserHead",
+            foot: "laserFoot",
+            aura: "aura",
+        }, 50);
         this.laser.visible = false;
         this.laser.addChildTo(gameScene);
 
@@ -163,8 +171,10 @@ gls2.Player = tm.createClass(
                 this.pressTimeC = 0;
             }
 
+            // レーザー
+            this.laser.x = this.x;
+            this.laser.y = this.y - 40;
             if (this.fireLaser) {
-                this.laser.visible = true;
                 for (var i = 0, len = this.bits.length; i < len; i++) {
                     this.bits[i].v = false;
                 }

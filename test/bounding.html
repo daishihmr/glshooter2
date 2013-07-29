@@ -69,6 +69,11 @@ tm.main(function() {
         if (kb.getKey("up")) this.y -= 5;
         else if (kb.getKey("down")) this.y += 5;
 
+        if (kb.getKey("r")) laser.setColor("red");
+        if (kb.getKey("g")) laser.setColor("green");
+        if (kb.getKey("b")) laser.setColor("blue");
+        if (kb.getKey("h")) laser.setColor("hyper");
+
         if (kb.getKeyDown("space") && !shot.active) {
             shot.setPosition(this.x, this.y).addChildTo(this.parent);
         }
@@ -84,21 +89,18 @@ gls2.Laser = tm.createClass({
     hitY: 0,
     frame: 0,
 
-    color: null,    
+    textures: null,
+    color: null,
 
     init: function(textures, width) {
-        this.color = "hyper",
+        this.textures = textures;
 
-        this.superInit(textures[this.color + "Body"], width, 100);
+        this.superInit(textures["red" + "Body"], width, 100);
 
         this.boundingType = "rect";
 
         this.scrollOffset = 0;
         this.origin.y = 1.0;
-
-        this.srcRect.x = 0;
-        this.srcRect.y = 0;
-        this.srcRect.width = textures[this.color + "Body"].width / 16;
 
         var a = this.aura = tm.app.AnimationSprite(tm.app.SpriteSheet({
             image: textures.aura,
@@ -130,7 +132,6 @@ gls2.Laser = tm.createClass({
             }
         }), 100, 100);
         a.y = 40;
-        a.gotoAndPlay(this.color);
         a.addChildTo(this);
 
         var f = this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
@@ -162,7 +163,6 @@ gls2.Laser = tm.createClass({
                 },
             }
         }), 120, 60);
-        f.gotoAndPlay(this.color);
         f.addChildTo(this);
 
         var h = this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
@@ -193,14 +193,13 @@ gls2.Laser = tm.createClass({
                     frequency: 2,
                 },
             }
-        }), 120, 120);
-        h.gotoAndPlay(this.color);
+        }), 100, 100);
         h.addChildTo(this);
         var self = this;
         h.update = function() {
             this.y = self.hitY - self.y;
-            if (self.y - 100 < this.y) {
-                this.y = self.y - 100;
+            if (-10 < this.y) {
+                this.y = -10;
             }
             this.visible = self.hitY !== 0;
         };
@@ -208,8 +207,24 @@ gls2.Laser = tm.createClass({
         this.blendMode = "lighter";
         a.blendMode = "lighter";
         f.blendMode = "lighter";
-        h.blendMode = "lighter";
+        // h.blendMode = "lighter";
 
+        this.setColor("red");
+    },
+
+    setColor: function(color) {
+        this.color = color;
+
+        this.image = this.textures[this.color + "Body"]
+        this.srcRect.x = 0;
+        this.srcRect.y = 0;
+        this.srcRect.width = this.textures[this.color + "Body"].width / 16;
+
+        this.aura.gotoAndPlay(this.color);
+        this.foot.gotoAndPlay(this.color);
+        this.head.gotoAndPlay(this.color);
+
+        return this;
     },
 
     getBoundingRect: function() {
