@@ -45,12 +45,15 @@ tm.main(function() {
         }
     }
 
-    var bt = tm.asset.Texture("../assets/laser_h.png");
-    var ht = tm.asset.Texture("../assets/laser_h_head.png");
-    var ft = tm.asset.Texture("../assets/laser_h_foot.png");
-    var at = tm.asset.Texture("../assets/aura.png");
-
-    var laser = gls2.Laser(bt, ht, ft, at, 40)
+    var laser = gls2.Laser({
+        redBody: tm.asset.Texture("../assets/laser_r.png"),
+        greenBody: tm.asset.Texture("../assets/laser_g.png"),
+        blueBody: tm.asset.Texture("../assets/laser_b.png"),
+        hyperBody: tm.asset.Texture("../assets/laser_h.png"),
+        head: tm.asset.Texture("../assets/laser_head.png"),
+        foot: tm.asset.Texture("../assets/laser_foot.png"),
+        aura: tm.asset.Texture("../assets/aura.png"),
+    }, 40)
         .setPosition(200, 150)
         .addChildTo(scene);
     laser.onenterframe = function(app) {
@@ -81,8 +84,12 @@ gls2.Laser = tm.createClass({
     hitY: 0,
     frame: 0,
 
-    init: function(bodyTexture, headTexture, footTexture, auraTexture, width) {
-        this.superInit(bodyTexture, width, 100);
+    color: null,    
+
+    init: function(textures, width) {
+        this.color = "hyper",
+
+        this.superInit(textures[this.color + "Body"], width, 100);
 
         this.boundingType = "rect";
 
@@ -91,69 +98,117 @@ gls2.Laser = tm.createClass({
 
         this.srcRect.x = 0;
         this.srcRect.y = 0;
-        this.srcRect.width = bodyTexture.width / 16;
+        this.srcRect.width = textures[this.color + "Body"].width / 16;
 
-        var a = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: auraTexture,
+        var a = this.aura = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: textures.aura,
             frame: {
                 width: 100,
                 height: 100
             },
             animations: {
-                "anim": {
-                    frames: [3, 7, 11, 15],
-                    next: "anim",
+                "red": {
+                    frames: [0, 1, 2, 3],
+                    next: "red",
                     frequency: 2,
-                }
+                },
+                "green": {
+                    frames: [4, 5, 6, 7],
+                    next: "green",
+                    frequency: 2,
+                },
+                "blue": {
+                    frames: [8, 9, 10, 11],
+                    next: "blue",
+                    frequency: 2,
+                },
+                "hyper": {
+                    frames: [12, 13, 14, 15],
+                    next: "hyper",
+                    frequency: 2,
+                },
             }
-        }), 80, 80);
-        a.y = 30;
-        a.gotoAndPlay("anim");
+        }), 100, 100);
+        a.y = 40;
+        a.gotoAndPlay(this.color);
         a.addChildTo(this);
 
-        var f = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: footTexture,
+        var f = this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: textures.foot,
             frame: {
-                width: 128,
-                height: 64
+                width: 120,
+                height: 80
             },
             animations: {
-                "anim": {
+                "red": {
                     frames: [0, 1, 2, 3],
-                    next: "anim",
+                    next: "red",
                     frequency: 2,
-                }
+                },
+                "green": {
+                    frames: [4, 5, 6, 7],
+                    next: "green",
+                    frequency: 2,
+                },
+                "blue": {
+                    frames: [8, 9, 10, 11],
+                    next: "blue",
+                    frequency: 2,
+                },
+                "hyper": {
+                    frames: [12, 13, 14, 15],
+                    next: "hyper",
+                    frequency: 2,
+                },
             }
-        }), 96, 48);
-        f.gotoAndPlay("anim");
+        }), 120, 60);
+        f.gotoAndPlay(this.color);
         f.addChildTo(this);
 
-        var h = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: headTexture,
+        var h = this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: textures.head,
             frame: {
                 width: 80,
                 height: 80
             },
             animations: {
-                "anim": {
+                "red": {
                     frames: [0, 1, 2, 3],
-                    next: "anim",
+                    next: "red",
                     frequency: 2,
-                }
+                },
+                "green": {
+                    frames: [4, 5, 6, 7],
+                    next: "green",
+                    frequency: 2,
+                },
+                "blue": {
+                    frames: [8, 9, 10, 11],
+                    next: "blue",
+                    frequency: 2,
+                },
+                "hyper": {
+                    frames: [12, 13, 14, 15],
+                    next: "hyper",
+                    frequency: 2,
+                },
             }
         }), 120, 120);
-        h.gotoAndPlay("anim");
+        h.gotoAndPlay(this.color);
         h.addChildTo(this);
         var self = this;
         h.update = function() {
             this.y = self.hitY - self.y;
+            if (self.y - 100 < this.y) {
+                this.y = self.y - 100;
+            }
             this.visible = self.hitY !== 0;
         };
 
-        // this.blendMode = "lighter";
-        // a.blendMode = "lighter";
-        // f.blendMode = "lighter";
-        // h.blendMode = "lighter";
+        this.blendMode = "lighter";
+        a.blendMode = "lighter";
+        f.blendMode = "lighter";
+        h.blendMode = "lighter";
 
     },
 

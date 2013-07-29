@@ -40,8 +40,8 @@ tm.main(function() {
         if (rad <= 0) return;
         canvas
             .setFillStyle(tm.graphics.RadialGradient(x,y,0,x,y,rad*2).addColorStopList([
-                {offset:0,color:"rgba(  0,  0,  0,0.1)"},
-                {offset:1,color:"rgba(255,255,  0,0.1)"},
+                {offset:0,color:"rgba(255, 200,  50, 0.1)"},
+                {offset:1,color:"rgba(255, 100,   0, 0.0)"},
             ]).toStyle())
             .fillRect(x-rad,y-rad,rad*2,rad*2);
     };
@@ -69,7 +69,7 @@ tm.main(function() {
             d2(-i, 1.2*Math.randf(0.7,1.2), 16, dr);
             d2( i, 1.2*Math.randf(0.7,1.2), 16, dr);
         }
-        out.drawImage(canvas.element, S*0, S*row);
+        out.drawImage(canvas.element, S*row, S*0);
 
         canvas.clear();
         d2(    0, 1.2, 16, dg);
@@ -77,7 +77,7 @@ tm.main(function() {
             d2(-i, 1.2*Math.randf(0.7,1.2), 16, dg);
             d2( i, 1.2*Math.randf(0.7,1.2), 16, dg);
         }
-        out.drawImage(canvas.element, S*1, S*row);
+        out.drawImage(canvas.element, S*row, S*1);
 
         canvas.clear();
         d2(    0, 1.2, 16, db);
@@ -85,7 +85,7 @@ tm.main(function() {
             d2(-i, 1.2*Math.randf(0.7,1.2), 16, db);
             d2( i, 1.2*Math.randf(0.7,1.2), 16, db);
         }
-        out.drawImage(canvas.element, S*2, S*row);
+        out.drawImage(canvas.element, S*row, S*2);
 
         canvas.clear();
         d2(    0, 1.2, 16, dh);
@@ -93,7 +93,7 @@ tm.main(function() {
             d2(-i, 1.2*Math.randf(0.7,1.2), 16, dh);
             d2( i, 1.2*Math.randf(0.7,1.2), 16, dh);
         }
-        out.drawImage(canvas.element, S*3, S*row);
+        out.drawImage(canvas.element, S*row, S*3);
     }
 
     tm.dom.Element("#c").event.click(function() {
