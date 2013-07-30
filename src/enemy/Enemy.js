@@ -20,6 +20,9 @@ gls2.Enemy = tm.createClass(
     enableFire: true,
     isGround: false,
 
+    boundingRectWidth: 0,
+    boundingRectHeight: 0,
+
     /** 出現してから一度でも可視範囲に入ったか */
     entered: false,
 
@@ -28,6 +31,9 @@ gls2.Enemy = tm.createClass(
      */
     init: function() {
         this.superInit();
+
+        this.boundingType = "rect";
+
         this.addEventListener("completeattack", function() {
             this.onCompleteAttack();
         });
@@ -56,6 +62,9 @@ gls2.Enemy = tm.createClass(
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);
         });
+    },
+    getBoundingRect: function() {
+        return tm.geom.Rect(this.x - this.boundingRectWidth*0.5, this.y - this.boundingRectHeight*0.5, this.boundingRectWidth, this.boundingRectHeight);
     },
     setup: function(gameScene, stage, software, hardware) {
         this.gameScene = gameScene;

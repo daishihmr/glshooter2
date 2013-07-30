@@ -177,17 +177,21 @@ gls2.GameScene = tm.createClass({
                 }
             }
             // オーラ部分の当たり判定
+            var auraRect = tm.geom.Rect(
+                this.player.x - 100*0.5, this.player.y - 150*0.5, 
+                100, 150
+            );
             var aura = {
-                x: this.player.x,
-                y: this.player.y,
-                radius: 60,
+                getBoundingRect: function() {
+                    return auraRect;
+                },
             };
             enemies = [].concat(gls2.Enemy.activeList);
             for (var i = 0, len = enemies.length; i < len; i++) {
                 var e = enemies[i];
                 if (e.isHitWithShot(aura)) {
                     e.damage(laser.attackPower);
-                    laser.genAuraParticle(2, (aura.x + e.x) * 0.5, (aura.y + e.y) * 0.5);
+                    laser.genAuraParticle(2, (this.player.x + e.x) * 0.5, (this.player.y + e.y) * 0.5);
                 }
             }
         }

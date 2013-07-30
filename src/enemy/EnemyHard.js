@@ -24,10 +24,10 @@ gls2.EnemyHard = tm.createClass(
         gls2.Effect.explodeS(this.x, this.y, this.gameScene);
     },
     isHitWithShot: function(shotBullet) {
-        return (shotBullet.x-this.x)*(shotBullet.x-this.x)+(shotBullet.y-this.y)*(shotBullet.y-this.y) < (shotBullet.radius+this.radius)*shotBullet.radius+this.radius;
+        return this.isHitElementRect(shotBullet);
     },
     isHitWithLaser: function(laser) {
-        var result = laser.isHitElement(this);
+        var result = laser.isHitElementRect(this);
         if (result) laser.hitY = this.y + this.radius;
         return result;
     },
@@ -181,17 +181,13 @@ gls2.EnemyHard.FighterM = tm.createClass(
         this._sprite.srcRect.y = 128;
         this._sprite.srcRect.width = 256;
         this._sprite.srcRect.height = 128;
-        this.bw = 60;
-        this.bh = 20;
+        this.boundingRectWidth = 200;
+        this.boundingRectHeight = 20;
     },
     update: function() {
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
-    },
-    isHitWithShot: function(s) {
-        return this.x - this.bw - s.radius < s.x && s.x < this.x + this.bw + s.radius
-            && this.y - this.bh - s.radius < s.y && s.y < this.y + this.bh + s.radius;
     },
 });
 gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();
