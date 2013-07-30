@@ -22,6 +22,8 @@ gls2.Laser = tm.createClass({
         this.player = player;
         var tex = tm.asset.AssetManager.get("laser" + "RGBH"[type]);
 
+        var self = this;
+
         this.superInit();
         this.image = tex.element;
         this.width = tex.width;
@@ -33,36 +35,6 @@ gls2.Laser = tm.createClass({
         this.c.resize(this.width, SC_H + 100);
         this.c.globalCompositeOperation = "lighter";
 
-        this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: "laser" + "RGBH"[type] + "Head",
-            frame: {
-                width: 80,
-                height: 80,
-            },
-            animations: {
-                "default": {
-                    frames: [ 0, 1, 2, 3 ],
-                    next: "default"
-                },
-            },
-        }), 80, 80);
-        this.head.gotoAndPlay();
-
-        this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: "laser" + "RGBH"[type] + "Foot",
-            frame: {
-                width: 128,
-                height: 64,
-            },
-            animations: {
-                "default": {
-                    frames: [ 0, 1, 2, 3 ],
-                    next: "default"
-                },
-            },
-        }), 128, 64);
-        this.foot.gotoAndPlay();
-
         this.aura = tm.app.AnimationSprite(tm.app.SpriteSheet({
             image: "aura",
             frame: {
@@ -72,11 +44,50 @@ gls2.Laser = tm.createClass({
             animations: {
                 "animation": {
                     frames: [ 0, 4, 8, 12 ].map(function(v) { return type+v }),
-                    next: "animation"
+                    next: "animation",
+                    frequency: 2,
                 },
             }
-        }), 100, 100);
+        }), 100, 100).setPosition(0, 50).setScale(1.2, 1.2);
+        this.aura.addChildTo(this);
         this.aura.gotoAndPlay("animation");
+
+        this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: "laser" + "RGBH"[type] + "Foot",
+            frame: {
+                width: 128,
+                height: 64,
+            },
+            animations: {
+                "animation": {
+                    frames: [ 0, 1, 2, 3 ],
+                    next: "animation",
+                    frequency: 2,
+                },
+            },
+        }), 128, 64).setScale(1.2, 1.2);
+        this.foot.addChildTo(this);
+        this.foot.gotoAndPlay("animation");
+
+        this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: "laser" + "RGBH"[type] + "Head",
+            frame: {
+                width: 80,
+                height: 80,
+            },
+            animations: {
+                "animation": {
+                    frames: [ 0, 1, 2, 3 ],
+                    next: "animation",
+                    frequency: 2,
+                },
+            },
+        }), 80, 80).setScale(1.5, 1.5);
+        this.head.update = function() {
+            this.y = self.hitY - self.y;
+        };
+        this.head.addChildTo(this);
+        this.head.gotoAndPlay("animation");
 
         if (origParticle === null) {
             var size = 16;
@@ -112,10 +123,6 @@ gls2.Laser = tm.createClass({
             } else {
                 this.hitY -= 40;
             }
-
-            this.head._updateFrame();
-            this.foot._updateFrame();
-            this.aura._updateFrame();
         }
 
         if (this.hitY < -80) this.hitY = -80;
@@ -159,34 +166,6 @@ gls2.Laser = tm.createClass({
         }
     },
     draw: function(canvas) {
-        this.c.clear();
-        for (var i = 0; i < 6; i++) {
-            this.c.drawImage(this.image, 0, -((this.age*15)%240) + 240*i);
-        }
-
-        this.height = Math.max(this.y - this.hitY, 1);
-        canvas.context.drawImage(this.c.element,
-            0, this.c.height-this.height, this.c.width, this.height,
-            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
-
-        var srcRect = this.head.ss.getFrame(this.head.currentFrame);
-        var element = this.head.ss.image.element;
-        canvas.drawImage(element,
-            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
-            -this.width*this.origin.x-43, -this.height*this.origin.y-75, 150, 150);
-
-        srcRect = this.aura.ss.getFrame(this.aura.currentFrame);
-        element = this.aura.ss.image.element;
-        canvas.drawImage(element,
-            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
-            -this.width*this.origin.x-18, -this.height*this.origin.y+this.height-10, 100, 150);
-
-        srcRect = this.foot.ss.getFrame(this.foot.currentFrame);
-        element = this.foot.ss.image.element;
-        canvas.drawImage(element,
-            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
-            -this.width*this.origin.x-43, -this.height*this.origin.y+this.height-37, 150, 74);
-
     },
 });
 
