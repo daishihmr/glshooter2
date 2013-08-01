@@ -59,7 +59,7 @@ gls2.Player = tm.createClass(
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
-        gls2.setShadow(this);
+        this.altitude = 10;
 
         this.laser = gls2.Laser(this, {
             redBody: "laserR",
@@ -293,7 +293,7 @@ gls2.Bit = tm.createClass(
 
         this.player = player;
 
-        gls2.setShadow(this);
+        this.altitude = 10;
 
         this.gotoAndPlay(bit.turn ? "anim0" : "anim1");
     },

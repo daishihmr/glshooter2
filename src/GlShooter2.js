@@ -87,16 +87,25 @@ gls2.GlShooter2 = tm.createClass(
 
 });
 
-gls2.setShadow = function(element) {
-    element.shadowColor = "rgba(0,0,0,0.5)";
-    element.shadowBlur = 30;
-    element.shadowOffsetX = 20;
-    element.shadowOffsetY = 70;
-};
-
-gls2.removeShadow = function(element) {
-    element.shadowBlur = 0;
-};
+/**
+ * 空中物の高度
+ */
+tm.app.CanvasElement.prototype.accessor("altitude", {
+    "get": function() {
+        return this._altitude;
+    },
+    "set": function(v) {
+        this._altitude = v;
+        if (this._altitude > 0) {
+            this.shadowColor = "rgba(0,0,0,0.8)";
+            this.shadowBlur = 30;
+            this.shadowOffsetX = 2 * this._altitude;
+            this.shadowOffsetY = 7 * this._altitude;
+        } else {
+            this.shadowBlur = 0;
+        }
+    },
+});
 
 /** @class */
 tm.app.Label = tm.createClass(

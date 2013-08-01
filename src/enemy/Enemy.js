@@ -77,9 +77,9 @@ gls2.Enemy = tm.createClass(
         this.hard.setup.apply(this);
 
         if (this.isGround) {
-            gls2.removeShadow(this);
+            this.altitude = 0;
         } else {
-            gls2.setShadow(this);
+            this.altitude = 10;
         }
 
         return this;
