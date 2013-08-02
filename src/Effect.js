@@ -100,21 +100,29 @@ gls2.Effect.genShockwave = function(x, y, scene) {
         });
 };
 
-gls2.Effect.explodeS = function(x, y, scene) {
+gls2.Effect.explodeS = function(x, y, scene, vector) {
     gls2.playSound("soundExplode");
     var e = gls2.Effect["explosion"].random()
         .clone()
         .addEventListener("animationend", function() {
             this.remove();
         })
-        .setScale(0.5)
+        .setScale(0.75)
         .setPosition(x, y)
         .setRotation(Math.random() * 360)
         .gotoAndPlay();
     e.isEffect = true;
+    if (vector !== undefined) {
+        var vx = vector.x;
+        var vy = vector.y;
+        e.addEventListener("enterframe", function() {
+            this.x += vx;
+            this.y += vy;
+            vx *= 0.99;
+            vy *= 0.99;
+        });
+    }
     e.addChildTo(scene);
-
-    gls2.Effect.genShockwave(x,y,scene);
 };
 
 gls2.Effect.explodeGS = function(x, y, scene) {
@@ -146,6 +154,7 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         .setScale(0.5)
         .setPosition(x+12, y)
         .setRotation(Math.random() * 360)
+        .setBlendMode("lighter")
         .gotoAndPlay();
     e.isEffect = true;
     e.addChildTo(scene);
@@ -162,6 +171,7 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         .setScale(0.5)
         .setPosition(x-12, y)
         .setRotation(Math.random() * 360)
+        .setBlendMode("lighter")
         .gotoAndPlay();
     e.isEffect = true;
     e.addChildTo(scene);

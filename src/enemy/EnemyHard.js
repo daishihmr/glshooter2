@@ -21,15 +21,7 @@ gls2.EnemyHard = tm.createClass(
     draw: function(canvas) {
     },
     destroy: function() {
-        gls2.Effect.explodeS(this.x, this.y, this.gameScene);
-    },
-    isHitWithShot: function(shotBullet) {
-        return this.isHitElementRect(shotBullet);
-    },
-    isHitWithLaser: function(laser) {
-        var result = laser.isHitElementRect(this);
-        if (result) laser.hitY = this.y + this.radius;
-        return result;
+        gls2.Effect.explodeS(this.x, this.y, this.gameScene, this.velocity);
     },
 });
 
@@ -49,6 +41,7 @@ gls2.EnemyHard.Heri1 = tm.createClass(
         this.name = "kujo";
         this.hp = 3;
         this._sprite = _Sprite("tex1", 64, 64);
+        this.boundingRadius = 24;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -84,6 +77,7 @@ gls2.EnemyHard.Heri2 = tm.createClass(
         this.name = "kiryu";
         this.hp = 10;
         this._sprite = _Sprite("tex1", 64, 64);
+        this.boundingRadius = 24;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -116,7 +110,7 @@ gls2.EnemyHard.Tank1 = tm.createClass({
         this.hp = 5;
         this.isGround = true;
         this._sprite = _Sprite("tex1", 48, 48);
-        this.radius = 24;
+        this.boundingRadius = 24;
     },
     update: function() {
         switch (this.dir) {
@@ -181,8 +175,8 @@ gls2.EnemyHard.FighterM = tm.createClass(
         this._sprite.srcRect.y = 128;
         this._sprite.srcRect.width = 256;
         this._sprite.srcRect.height = 128;
-        this.boundingRectWidth = 200;
-        this.boundingRectHeight = 20;
+        this.boundingWidth = 200;
+        this.boundingHeight = 20;
     },
     update: function() {
     },

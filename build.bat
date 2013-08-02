@@ -2,6 +2,7 @@ erase target\gls2.js
 
 java -jar tools/compiler.jar ^
 --externs libs/tmlib.js ^
+--externs src/extern/extern.js ^
 --js libs/bulletml.js ^
 --js libs/bulletml.walker.js ^
 --js libs/bulletml.dsl.js ^
@@ -15,10 +16,12 @@ java -jar tools/compiler.jar ^
 --js src/Stage.js ^
 --js src/StageData.js ^
 --js src/Effect.js ^
+--js src/common/Collision.js ^
 --js src/common/Scene.js ^
 --js src/common/DialogMenu.js ^
 --js src/common/Particle.js ^
 --js src/common/ConsoleWindow.js ^
+--js src/common/Noise.js ^
 --js src/scene/TitleScene.js ^
 --js src/scene/ShipSelectScene.js ^
 --js src/scene/GameScene.js ^
@@ -35,5 +38,4 @@ java -jar tools/compiler.jar ^
 --compilation_level ADVANCED_OPTIMIZATIONS ^
 --language_in ECMASCRIPT5 ^
 --js_output_file target/gls2.js ^
---define="STATS=false" ^
 --formatting PRETTY_PRINT

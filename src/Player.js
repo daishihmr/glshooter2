@@ -43,6 +43,7 @@ gls2.Player = tm.createClass(
     speed: 4.5,
     bits: null,
 
+    /** @type {gls2.Laser} */
     laser: null,
 
     hitCircle: null,
@@ -62,13 +63,13 @@ gls2.Player = tm.createClass(
         this.altitude = 10;
 
         this.laser = gls2.Laser(this, {
-            redBody: "laserR",
-            greenBody: "laserG",
-            blueBody: "laserB",
-            hyperBody: "laserH",
-            head: "laserHead",
-            foot: "laserFoot",
-            aura: "aura",
+            "redBody": "laserR",
+            "greenBody": "laserG",
+            "blueBody": "laserB",
+            "hyperBody": "laserH",
+            "head": "laserHead",
+            "foot": "laserFoot",
+            "aura": "aura",
         }, 50);
         this.laser.visible = false;
         this.laser.addChildTo(gameScene);
@@ -82,6 +83,16 @@ gls2.Player = tm.createClass(
             var bit = this.bits[i];
             gls2.Bit(this, bit).setPosition(bit.x, bit.y).addChildTo(this.bitPivot);
         }
+
+        this.light = tm.app.CircleShape(140, 140, {
+            strokeStyle: "rgba(0,0,0,0)",
+            fillStyle: tm.graphics.RadialGradient(70,70,0,70,70,70).addColorStopList([
+                { offset:0.0, color:"rgba(255,255,255,0.1)" },
+                { offset:0.5, color:"rgba(255,255,255,0.1)" },
+                { offset:1.0, color:"rgba(255,255,255,0.0)" },
+            ]).toStyle(),
+        }).addChildTo(this);
+        this.light.blendMode = "lighter";
 
         this.hyperCircle0 = tm.app.CircleShape(80, 80, {
             fillStyle: "rgba(0,0,0,0)",
@@ -213,8 +224,8 @@ gls2.Player = tm.createClass(
 
         // バックファイア
         if (app.frame % 2 === 0) {
-            backfireParticle.clone().setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
-            backfireParticle.clone().setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
+            backfireParticle.clone(20).setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
+            backfireParticle.clone(20).setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
         }
     },
 
@@ -314,7 +325,7 @@ gls2.Bit = tm.createClass(
             var g = this.parent.localToGlobal(this);
 
             // バックファイア
-            if (this.bit.v && core.frame%2 === 0) backfireParticle.clone().setPosition(g.x, g.y).addChildTo(core.gameScene);
+            if (this.bit.v && core.frame%2 === 0) backfireParticle.clone(40).setPosition(g.x, g.y).addChildTo(core.gameScene);
 
             // ショット
             if (this.player.fireShot) {

@@ -21,11 +21,11 @@ var fireParticle = {
     /** 生成開始フレーム */
     start: 0,
     /** 生成終了フレーム */
-    end: 30,
+    end: 20,
     /** 生成個数 */
     generate: {
         /** 初期生成個数 */
-        initial: 90,
+        initial: 50,
         /** 減衰率 */
         rate: 0.9,
     },
@@ -38,63 +38,62 @@ var fireParticle = {
         /** 中心色 */
         colorCenter:  { r: 220, g: 220, b: 255, a: 0.1 },
         /** 外縁色 */
-        colorOuterEdge: { r: 220, g: 220, b: 255, a: 0.0 },
+        colorOuterEdge: { r: 20, g: 20, b: 255, a: 0.0 },
     },
     /** 変化 */
     transition: {
         /** 位置(中心からの距離) */
         position: {
             /** 最終値 */
-            finalValue: [4, 45], // 値に配列を指定した場合はv[0]～v[1]間のランダムな値
+            finalValue: [10, 40], // 値に配列を指定した場合はv[0]～v[1]間のランダムな値
             /** フレーム数 */
-            duration: 10,
+            duration: 18,
             /** イージング関数 */
             easeFunc: "easeOutQuad",
         },
         /** 半径 */
         radius: {
-            finalValue: 13,
-            duration: 5,
+            finalValue: 15,
+            duration: 6,
             easeFunc: "easeOutQuad",
         },
         /** 中心色 */
         colorCenter: {
             r: {
                 finalValue: 0,
-                duration: 30,
+                duration: 20,
                 easeFunc: "easeInExpo",
             },
             g: {
                 finalValue: 0,
-                duration: 30,
+                duration: 20,
                 easeFunc: "easeInExpo",
             },
             b: {
                 finalValue: 0,
-                duration: 40,
+                duration: 30,
                 easeFunc: "easeInExpo",
             },
             a: {
                 finalValue: 0,
-                duration: 30,
-                easeFunc: "easeInExpo",
+                duration: 26,
             },
         },
         /** 外縁色 */
         colorOuterEdge: {
             r: {
                 finalValue: 0,
-                duration: 20,
+                duration: 40,
                 easeFunc: "easeInExpo",
             },
             g: {
                 finalValue: 0,
-                duration: 20,
+                duration: 40,
                 easeFunc: "easeInExpo",
             },
             b: {
                 finalValue: 0,
-                duration: 30,
+                duration: 40,
                 easeFunc: "easeInExpo",
             },
         },
@@ -108,9 +107,9 @@ var fireParticle = {
  */
 var smokeParticle = {
     start: 8,
-    end: 30,
+    end: 12,
     generate: {
-        initial: 20,
+        initial: 10,
     },
     initial: {
         position: [ 2, 25 ],
@@ -131,7 +130,7 @@ var smokeParticle = {
         colorCenter: {
             a: {
                 finalValue: 0,
-                duration: 30,
+                duration: 50,
                 easeFunc: "easeInExpo",
             },
         },

@@ -2,7 +2,12 @@
 
 var origParticle = null;
 
-gls2.Laser = tm.createClass({
+/**
+ * @class
+ */
+gls2.Laser = tm.createClass(
+/** @lends {gls2.Laser.prototype} */
+{
     superClass: tm.app.Sprite,
     player: null,
     gameScene: null,
@@ -28,15 +33,16 @@ gls2.Laser = tm.createClass({
 
         this.textures = textures;
 
-        this.superInit(textures.redBody, width, 100);
+        this.superInit(textures["redBody"], width, 100);
 
-        this.boundingType = "rect";
+        this.boundingWidth = width;
+        this.boundingHeightBottom = 1;
 
         this.scrollOffset = 0;
         this.origin.y = 1.0;
 
         var a = this.aura = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: textures.aura,
+            image: textures["aura"],
             frame: {
                 width: 100,
                 height: 100
@@ -68,7 +74,7 @@ gls2.Laser = tm.createClass({
         a.addChildTo(this);
 
         var f = this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: textures.foot,
+            image: textures["foot"],
             frame: {
                 width: 120,
                 height: 80
@@ -99,7 +105,7 @@ gls2.Laser = tm.createClass({
         f.addChildTo(this);
 
         var h = this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: textures.head,
+            image: textures["head"],
             frame: {
                 width: 80,
                 height: 80
@@ -174,11 +180,6 @@ gls2.Laser = tm.createClass({
         return this;
     },
 
-    getBoundingRect: function() {
-        this.height = this.position.y - this._hitY;
-        return tm.geom.Rect(this.x - this.width/2, this.y - this.height, this.width, this.height);
-    },
-
     genParticle: function(count, y) {
         var y = y || this._hitY;
         for (var i = 0; i < count; i++) {
@@ -228,6 +229,7 @@ gls2.Laser = tm.createClass({
         }
 
         this.beforeFrameVisible = this.visible;
+        // this.boundingHeightTop = this.y - this._hitY;
     },
 
     draw: function(canvas) {
@@ -241,14 +243,19 @@ gls2.Laser = tm.createClass({
             -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
     },
 
+    getHitY: function() {
+        return this._hitY;
+    },
+
+    setHitY: function(v) {
+        this._hitY = v;
+        this.head.update();
+    },
+
 });
 
-gls2.Laser.prototype.accessor("hitY", {
-    "get": function()   { return this._hitY; },
-    "set": function(hitY)  {
-        this._hitY = hitY;
-        this.head.update();
-    }
+gls2.Laser.prototype.getter("boundingHeightTop", function() {
+    return this.position.y - this._hitY;
 });
 
 })();

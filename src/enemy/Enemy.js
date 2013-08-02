@@ -5,7 +5,7 @@
  * @class
  */
 gls2.Enemy = tm.createClass(
-/** @lends {gls2.Enemy} */
+/** @lends {gls2.Enemy.prototype} */
 {
     superClass: tm.app.CanvasElement,
     age: 0,
@@ -20,19 +20,16 @@ gls2.Enemy = tm.createClass(
     enableFire: true,
     isGround: false,
 
-    boundingRectWidth: 0,
-    boundingRectHeight: 0,
-
     /** 出現してから一度でも可視範囲に入ったか */
     entered: false,
+
+    velocity: null,
 
     /**
      * @constructs
      */
     init: function() {
         this.superInit();
-
-        this.boundingType = "rect";
 
         this.addEventListener("completeattack", function() {
             this.onCompleteAttack();
@@ -63,9 +60,6 @@ gls2.Enemy = tm.createClass(
             if (idx !== -1) activeList.splice(idx, 1);
         });
     },
-    getBoundingRect: function() {
-        return tm.geom.Rect(this.x - this.boundingRectWidth*0.5, this.y - this.boundingRectHeight*0.5, this.boundingRectWidth, this.boundingRectHeight);
-    },
     setup: function(gameScene, stage, software, hardware) {
         this.gameScene = gameScene;
         this.player = gameScene.player;
@@ -77,10 +71,12 @@ gls2.Enemy = tm.createClass(
         this.hard.setup.apply(this);
 
         if (this.isGround) {
-            this.altitude = 0;
+            this.altitude = 1;
         } else {
             this.altitude = 10;
         }
+
+        this.velocity = {x:0, y:0};
 
         return this;
     },
@@ -97,6 +93,11 @@ gls2.Enemy = tm.createClass(
             this.entered = true;
         }
 
+        var before = {
+            x: this.x,
+            y: this.y,
+        };
+
         this.soft.update.apply(this);
         this.hard.update.apply(this);
         if (this.isGround) {
@@ -104,6 +105,9 @@ gls2.Enemy = tm.createClass(
             this.y += this.gameScene.ground.dy;
         }
         this.age += 1;
+
+        this.velocity.x = this.x - before.x;
+        this.velocity.y = this.y - before.y;
     },
     damage: function(damagePoint) {
         // 可視範囲に入ったことのない敵はダメージを受けない
@@ -136,19 +140,12 @@ gls2.Enemy = tm.createClass(
     },
 
     isInScreen: function() {
-        var rad = this.radius;
-        return rad <= this.x && this.x < SC_W-rad && rad <= this.y && this.y < SC_H-rad;
+        return 0 <= this.x-this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
+            && 0 <= this.y-this.boundingHeightTop && this.y + this.boundingHeightBottom < SC_H;
     },
 
     onfire: function() {
         return this.enableFire;
-    },
-
-    isHitWithShot: function(shotBullet) {
-        return this.hard.isHitWithShot.call(this, shotBullet);
-    },
-    isHitWithLaser: function(laser) {
-        return this.hard.isHitWithLaser.call(this, laser);
     },
 
 });

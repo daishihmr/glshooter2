@@ -87,26 +87,6 @@ gls2.GlShooter2 = tm.createClass(
 
 });
 
-/**
- * 空中物の高度
- */
-tm.app.CanvasElement.prototype.accessor("altitude", {
-    "get": function() {
-        return this._altitude;
-    },
-    "set": function(v) {
-        this._altitude = v;
-        if (this._altitude > 0) {
-            this.shadowColor = "rgba(0,0,0,0.8)";
-            this.shadowBlur = 30;
-            this.shadowOffsetX = 2 * this._altitude;
-            this.shadowOffsetY = 7 * this._altitude;
-        } else {
-            this.shadowBlur = 0;
-        }
-    },
-});
-
 /** @class */
 tm.app.Label = tm.createClass(
 /** @lends {tm.app.Label.prototype} */

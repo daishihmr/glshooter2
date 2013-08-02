@@ -22,11 +22,11 @@ gls2.Stage = tm.createClass(
         var scene = this.gameScene = gameScene;
         this.player = gameScene.player;
         scene.ground.direction = Math.PI*0.5;
-        scene.ground.speed = 3.2;
+        scene.ground.speed = 0.6;
 
         this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-            { offset:0, color:"#030" },
-            { offset:1, color:"#010" }
+            { offset:0, color:"#338" },
+            { offset:1, color:"#114" }
         ]).toStyle();
 
         this.frame = 0;
@@ -36,7 +36,11 @@ gls2.Stage = tm.createClass(
         var scene = this.gameScene;
 
         // 敵を出現させる
-        var unit = gls2.EnemyUnit["fighter-m"];
+        var keys = [];
+        for (var key in gls2.EnemyUnit) {
+            keys.push(key);
+        }
+        var unit = gls2.EnemyUnit[keys.random()];
         if (this.frame > 200 && this.frame%300 === 0) {
             for (var i = 0, end = unit.length; i < end; i++) {
                 this.launchEnemy(unit[i]);

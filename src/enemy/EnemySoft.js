@@ -143,7 +143,6 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         this.x += Math.cos(this.angle) * this.speed;
         this.y += Math.sin(this.angle) * this.speed;
 
-        var rad = this.radius;
         if (!this.isInScreen() && this.entered) {
             this.remove();
         }

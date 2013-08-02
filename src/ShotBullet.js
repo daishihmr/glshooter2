@@ -27,6 +27,8 @@ gls2.ShotBullet = tm.createClass({
             if (idx !== -1) activeList.splice(idx, 1);
         });
 
+        this.boundingRadius = 32;
+
         if (origParticle === null) {
             var size = 16;
             origParticle = gls2.Particle(size, 1.0, 0.9, tm.graphics.Canvas()

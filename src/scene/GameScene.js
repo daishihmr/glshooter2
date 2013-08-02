@@ -2,8 +2,15 @@
 
 var SINGLETON = null;
 
-gls2.GameScene = tm.createClass({
+/**
+ * @class
+ * @extends {gls2.Scene}
+ */
+gls2.GameScene = tm.createClass(
+/** @lends {gls2.GameScene.prototype} */
+{
     superClass: gls2.Scene,
+    /** @type {gls2.Player} */
     player: null,
     score: 0,
     stage: null,
@@ -86,8 +93,8 @@ gls2.GameScene = tm.createClass({
             canvas.lineWidth = 0.2;
             canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
                 .addColorStopList([
-                    { offset: 0.0, color: "rgba(255,255,255,0.5)" },
-                    { offset: 1.0, color: "rgba(255,255,255,0.1)" },
+                    { offset: 0.0, color: "rgba(255,255,255,1.0)" },
+                    { offset: 1.0, color: "rgba(255,255,255,0.5)" },
                 ])
                 .toStyle();
             canvas.beginPath();
@@ -149,11 +156,11 @@ gls2.GameScene = tm.createClass({
         for (var j = 0, jlen = shots.length; j < jlen; j++) {
             for (var i = 0, ilen = enemies.length; i < ilen; i++) {
                 var e = enemies[i];
-                var s = shots[j];
-                if (e.isHitWithShot(s)) {
-                    s.remove();
-                    s.genParticle(1);
-                    if (e.damage(s.attackPower)) {
+                var shot = shots[j];
+                if (gls2.Collision.isHit(e, shot)) {
+                    shot.remove();
+                    shot.genParticle(1);
+                    if (e.damage(shot.attackPower)) {
                         break;
                     }
                 }
@@ -170,26 +177,26 @@ gls2.GameScene = tm.createClass({
             });
             for (var i = 0, len = enemies.length; i < len; i++) {
                 var e = enemies[i];
-                if (e.isHitWithLaser(laser)) {
+                if (gls2.Collision.isHit(e, laser)) {
+                    laser.setHitY(e.y + e.boundingHeightBottom);
                     e.damage(laser.attackPower);
                     laser.genParticle(2);
                     break;
                 }
             }
             // オーラ部分の当たり判定
-            var auraRect = tm.geom.Rect(
-                this.player.x - 100*0.5, this.player.y - 150*0.5, 
-                100, 150
-            );
             var aura = {
-                getBoundingRect: function() {
-                    return auraRect;
-                },
+                x: this.player.x,
+                y: this.player.y,
+                boundingWidthLeft: 50,
+                boundingWidthRight: 50,
+                boundingHeightTop: 50,
+                boundingHeightBottom: 40,
             };
             enemies = [].concat(gls2.Enemy.activeList);
             for (var i = 0, len = enemies.length; i < len; i++) {
                 var e = enemies[i];
-                if (e.isHitWithShot(aura)) {
+                if (gls2.Collision.isHit(e, aura)) {
                     e.damage(laser.attackPower);
                     laser.genAuraParticle(2, (this.player.x + e.x) * 0.5, (this.player.y + e.y) * 0.5);
                 }
