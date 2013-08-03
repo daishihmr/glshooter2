@@ -43,7 +43,9 @@ gls2.ScoreLabel = tm.createClass({
         var text;
         this.setText("16px Orbitron", "left", "top");
         var score = (this.gameScene.score + "");
-        score.substring(score.indexOf("."), score.length);
+        if (score.indexOf(".") !== -1) {
+            score = score.substring(0, score.indexOf("."));
+        }
         score = score.padding(16, "0");
         text = "";
         for (var i = 0; i < score.length; i += 4) {

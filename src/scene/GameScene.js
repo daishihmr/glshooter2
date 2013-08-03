@@ -72,6 +72,10 @@ gls2.GameScene = tm.createClass(
         this.lastElement.update = function(app) {
             this.onexitframe(app);
         }.bind(this);
+
+        this.addEventListener("exit", function() {
+            this.scoreLabel.clear();
+        });
     },
 
     println: function(string) {
@@ -152,7 +156,7 @@ gls2.GameScene = tm.createClass(
 
         if (app.frame % 5 === 0) this.scoreLabel.update();
 
-        this.comboGauge -= 0.01;
+        this.comboGauge -= 0.02;
         if (this.comboGauge <= 0) {
             if (this.comboCount > 0) {
                 this.baseScore = this.baseScore * (this.comboCount-6)/this.comboCount;

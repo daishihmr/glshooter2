@@ -82,9 +82,11 @@ gls2.Bomb = tm.createClass({
         this.rd = 1;
 
         this.addEventListener("added", function() {
+            this.gameScene.isBombActive = true;
             activeList.push(this);
         });
         this.addEventListener("removed", function() {
+            this.gameScene.isBombActive = false;
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);
         });

@@ -2,6 +2,7 @@ rm -f target/gls2.js
 
 java -jar tools/compiler.jar \
 --externs libs/tmlib.js \
+--externs src/extern/extern.js \
 --js libs/bulletml.js \
 --js libs/bulletml.walker.js \
 --js libs/bulletml.dsl.js \
@@ -11,10 +12,11 @@ java -jar tools/compiler.jar \
 --js src/Player.js \
 --js src/ShotBullet.js \
 --js src/Laser.js \
---js src/src/Bomb.js \
+--js src/Bomb.js \
 --js src/Stage.js \
 --js src/StageData.js \
 --js src/Effect.js \
+--js src/ScoreLabel.js \
 --js src/common/Collision.js \
 --js src/common/Scene.js \
 --js src/common/DialogMenu.js \
@@ -36,5 +38,5 @@ java -jar tools/compiler.jar \
 --js libs/math.js \
 --compilation_level SIMPLE_OPTIMIZATIONS \
 --language_in ECMASCRIPT5 \
---define STATS=false \
---js_output_file target/gls2.js
+--js_output_file target/gls2.js \
+--formatting PRETTY_PRINT
