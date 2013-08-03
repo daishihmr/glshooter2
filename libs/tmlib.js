@@ -1,11 +1,10 @@
 /*
- * tmlib.js v0.1.7
+ * tmlib.js 0.1.8
  * http://github.com/phi1618/tmlib.js
- * MIT licensed
+ * MIT Licensed
  * 
  * Copyright (C) 2010 phi, http://tmlife.net
  */
-
 
 (function() { "use strict"; })();
 
@@ -26,7 +25,7 @@ if (typeof module !== 'undefined' && module.exports) {
     /**
      * バージョン
      */
-    tm.VERSION = "0.1.5";
+    tm.VERSION = "0.1.8";
 
     /**
      * tmlib.js のルートパス
@@ -1802,7 +1801,13 @@ tm.util = tm.util || {};
         },
         
         json: function(data) {
-            return JSON.parse(data);
+            try {
+                return JSON.parse(data);
+            }
+            catch(e) {
+                console.dir(e);
+                console.dir(data);
+            }
         },
         
         script: function(data) {
@@ -5113,6 +5118,14 @@ tm.dom = tm.dom || {};
             this.element.webkitRequestFullScreen();
         },
         
+        show: function() {
+            this.visible = true;
+        },
+        
+        hide: function() {
+            this.visible = false;
+        },
+        
         /**
          * 文字列化
          */
@@ -5767,6 +5780,18 @@ tm.dom = tm.dom || {};
 
 (function() {
     
+    var prefix = tm.VENDER_PREFIX;
+    
+    var ANIMATION                   = prefix + "Animation";
+    var ANIMATION_END               = prefix + "AnimationEnd";
+    var ANIMATION_PLAY_STATE        = prefix + "AnimationPlayState";
+    var ANIMATION_NAME              = prefix + "AnimationName";
+    var ANIMATION_DURATION          = prefix + "AnimationDuration";
+    var ANIMATION_TIMING_FUNCTION   = prefix + "AnimationTimingFunction";
+    var ANIMATION_DELAY             = prefix + "AnimationDelay";
+    var ANIMATION_DIRECTION         = prefix + "AnimationDirection";
+    var ANIMATION_ITERATION_COUNT   = prefix + "AnimationIterationCount";
+    
     /**
      * @class
      * アニメーションクラス
@@ -5781,7 +5806,7 @@ tm.dom = tm.dom || {};
             
             // アニメーションが終了したらステートを "paused" にする(何度も再生できるようにする為)
             var self = this;
-            this.element.addEventListener("webkitAnimationEnd", function() {
+            this.element.addEventListener(ANIMATION_END, function() {
                 self.stop();
             }, false);
         },
@@ -5791,7 +5816,7 @@ tm.dom = tm.dom || {};
          * アニメーション開始
          */
         start: function() {
-            this.element.style["webkitAnimationPlayState"] = "running";
+            this.element.style[ANIMATION_PLAY_STATE] = "running";
             return this;
         },
         
@@ -5799,7 +5824,7 @@ tm.dom = tm.dom || {};
          * アニメーション終了
          */
         stop: function() {
-            this.element.style["webkitAnimationPlayState"] = "paused";
+            this.element.style[ANIMATION_PLAY_STATE] = "paused";
             return this;
         },
         
@@ -5808,7 +5833,7 @@ tm.dom = tm.dom || {};
          */
         setProperty: function(prop) {
             if (typeof prop == "string") {
-                this.element.style["webkitAnimation"] = prop;
+                this.element.style[ANIMATION] = prop;
             }
             else {
                 for (var key in prop) {
@@ -5824,7 +5849,7 @@ tm.dom = tm.dom || {};
          * 名前をセット
          */
         setName: function(name) {
-            this.element.style["webkitAnimationName"] = name;
+            this.element.style[ANIMATION_NAME] = name;
             return this;
         },
         
@@ -5832,7 +5857,7 @@ tm.dom = tm.dom || {};
          * アニメーション時間の長さをセット
          */
         setDuration: function(s) {
-            this.element.style["webkitAnimationDuration"] = s;
+            this.element.style[ANIMATION_DURATION] = s;
             return this;
         },
         
@@ -5840,7 +5865,7 @@ tm.dom = tm.dom || {};
          * 補間関数をセット
          */
         setTimingFunction: function(func) {
-            this.element.style["webkitAnimationTimingFunction"] = func;
+            this.element.style[ANIMATION_TIMING_FUNCTION] = func;
             return this;
         },
         
@@ -5848,7 +5873,7 @@ tm.dom = tm.dom || {};
          * イテレータカウントをセット
          */
         setIterationCount: function(n) {
-            this.element.style["webkitAnimationIterationCount"] = n;
+            this.element.style[ANIMATION_ITERATION_COUNT] = n;
             return this;
         },
         
@@ -5856,7 +5881,7 @@ tm.dom = tm.dom || {};
          * アニメーション開始待ち時間をセット
          */
         setDelay: function(s) {
-            this.element.style["webkitAnimationDelay"] = s;
+            this.element.style[ANIMATION_DELAY] = s;
             return this;
         },
         
@@ -5865,7 +5890,7 @@ tm.dom = tm.dom || {};
          * "normal" or "alternate"
          */
         setDirection: function(t) {
-            this.element.style["webkitAnimationDirection"] = t;
+            this.element.style[ANIMATION_DURATION] = t;
             return this;
         },
     });
@@ -7000,7 +7025,8 @@ tm.input = tm.input || {};
             var self = this;
             fps = fps || 30;
             tm.setLoop(function(){
-                self.update();
+                self._update();
+                if (self.update) self.update();
             }, 1000/fps);
         },
         
@@ -7008,7 +7034,7 @@ tm.input = tm.input || {};
          * 情報更新処理
          * マイフレーム呼んで下さい.
          */
-        update: function() {
+        _update: function() {
             // TODO: 一括ビット演算で行うよう修正する
             for (var k in this.key) {
                 this.last[k]    = this.press[k];
@@ -12933,7 +12959,7 @@ tm.app = tm.app || {};
         {
             // デバイス系 Update
             this.mouse.update();
-            this.keyboard.update();
+            this.keyboard._update();
             this.touches.update();
             
             if (this.isPlaying) {

@@ -5,7 +5,7 @@
  * @class
  */
 gls2.Enemy = tm.createClass(
-/** @lends {gls2.Enemy} */
+/** @lends {gls2.Enemy.prototype} */
 {
     superClass: tm.app.CanvasElement,
     age: 0,
@@ -20,14 +20,19 @@ gls2.Enemy = tm.createClass(
     enableFire: true,
     isGround: false,
 
+    score: 0,
+
     /** 出現してから一度でも可視範囲に入ったか */
     entered: false,
+
+    velocity: null,
 
     /**
      * @constructs
      */
     init: function() {
         this.superInit();
+
         this.addEventListener("completeattack", function() {
             this.onCompleteAttack();
         });
@@ -64,14 +69,18 @@ gls2.Enemy = tm.createClass(
         this.soft = software;
         this.hard = hardware;
 
+        this.score = 100;
+
         this.soft.setup.apply(this);
         this.hard.setup.apply(this);
 
         if (this.isGround) {
-            gls2.removeShadow(this);
+            this.altitude = 1;
         } else {
-            gls2.setShadow(this);
+            this.altitude = 10;
         }
+
+        this.velocity = {x:0, y:0};
 
         return this;
     },
@@ -84,9 +93,15 @@ gls2.Enemy = tm.createClass(
         this.hard.onCompleteAttack.apply(this);
     },
     update: function() {
-        if (this.isInScreen()) {
+        if (0 <= this.x - this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
+            && 0 <= this.y - this.boundingHeightTop && this.y + this.boundingHeightBottom < SC_H) {
             this.entered = true;
         }
+
+        var before = {
+            x: this.x,
+            y: this.y,
+        };
 
         this.soft.update.apply(this);
         this.hard.update.apply(this);
@@ -95,6 +110,9 @@ gls2.Enemy = tm.createClass(
             this.y += this.gameScene.ground.dy;
         }
         this.age += 1;
+
+        this.velocity.x = this.x - before.x;
+        this.velocity.y = this.y - before.y;
     },
     damage: function(damagePoint) {
         // 可視範囲に入ったことのない敵はダメージを受けない
@@ -127,8 +145,8 @@ gls2.Enemy = tm.createClass(
     },
 
     isInScreen: function() {
-        var rad = this.radius;
-        return -rad <= this.x && this.x < SC_W+rad && -rad <= this.y && this.y < SC_H+rad;
+        return 0 <= this.x + this.width/2 && this.x - this.width/2 < SC_W
+            && 0 <= this.y + this.height/2 && this.y - this.height/2 < SC_H;
     },
 
     onfire: function() {

@@ -22,9 +22,9 @@ gls2.GlShooter2 = tm.createClass(
     /** ハイスコア取得時の最終到達ステージ */
     highStage: 0,
     /** BGM音量(0～5) */
-    bgmVolume: 4,
+    bgmVolume: 1,
     /** SE音量(0～5) */
-    seVolume: 4,
+    seVolume: 1,
     /** 難易度(0～4) */
     difficulty: 1,
 
@@ -51,14 +51,17 @@ gls2.GlShooter2 = tm.createClass(
                 // image
                 "tex0": "assets/tex0.png",
                 "tex1": "assets/tex1.png",
-                "laser": "assets/laser.png",
+                "laserR": "assets/laser_r.png",
+                "laserG": "assets/laser_g.png",
+                "laserB": "assets/laser_b.png",
+                "laserH": "assets/laser_h.png",
                 "laserHead": "assets/laser_head.png",
                 "laserFoot": "assets/laser_foot.png",
+                "aura": "assets/aura.png",
                 "explode0": "assets/explode0.png",
                 "explode1": "assets/explode1.png",
-                "explode2": "assets/explode2.png",
-                "explode3": "assets/explode3.png",
                 "shotbullet": "assets/shotbullet.png",
+                "bomb": "assets/bomb.png",
 
                 // sound
                 "soundExplode": "assets/sen_ge_taihou03.mp3",
@@ -73,6 +76,7 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.Danmaku.setup();
         gls2.Effect.setup();
+        gls2.ShotBullet.createPool(50);
 
         this.gameScene = gls2.GameScene();
     },
@@ -82,37 +86,6 @@ gls2.GlShooter2 = tm.createClass(
         tm.social.Nineleap.postRanking(this.highScore, "");
     }
 
-});
-
-gls2.setShadow = function(element) {
-    element.shadowColor = "rgba(0,0,0,0.5)";
-    element.shadowBlur = 30;
-    element.shadowOffsetX = 20;
-    element.shadowOffsetY = 70;
-};
-
-gls2.removeShadow = function(element) {
-    element.shadowBlur = 0;
-};
-
-/** @class */
-tm.app.Label = tm.createClass(
-/** @lends {tm.app.Label.prototype} */
-{
-    superClass: tm.app.Label,
-    init: function(text, size) {
-        this.superInit(text, size);
-        this.setAlign("center");
-        this.setBaseline("middle");
-        this.setFontFamily("Orbitron");
-
-        this.fillStyle = "white";
-
-        this.isHitPoint = this.isHitPointRect;
-    },
-    update: function(app) {
-        this.alpha = 0.8 + Math.sin(app.frame * 0.1) * 0.2;
-    },
 });
 
 gls2.playSound = function(soundName) {

@@ -1,21 +1,6 @@
 // すべてsingletonかつimmutableに実装する
 (function() {
 
-var _Sprite = tm.createClass({
-    superClass: tm.app.Sprite,
-    init: function(tex, w, h) {
-        this.superInit(tex, w, h);
-    },
-    draw: function(canvas) {
-        var srcRect = this.srcRect;
-        var element = this._image.element;
-
-        canvas.context.drawImage(element,
-            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
-            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
-    },
-});
-
 /**
  * 敵の見た目や性能
  * @class
@@ -36,7 +21,7 @@ gls2.EnemyHard = tm.createClass(
     draw: function(canvas) {
     },
     destroy: function() {
-        gls2.Effect.explodeS(this.x, this.y, this.gameScene);
+        gls2.Effect.explodeS(this.x, this.y, this.gameScene, this.velocity);
     },
 });
 
@@ -54,8 +39,9 @@ gls2.EnemyHard.Heri1 = tm.createClass(
     },
     setup: function() {
         this.name = "kujo";
-        this.hp = 3;
+        this.hp = 2;
         this._sprite = _Sprite("tex1", 64, 64);
+        this.boundingRadius = 24;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -89,8 +75,9 @@ gls2.EnemyHard.Heri2 = tm.createClass(
     },
     setup: function() {
         this.name = "kiryu";
-        this.hp = 10;
+        this.hp = 3;
         this._sprite = _Sprite("tex1", 64, 64);
+        this.boundingRadius = 24;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -123,7 +110,7 @@ gls2.EnemyHard.Tank1 = tm.createClass({
         this.hp = 5;
         this.isGround = true;
         this._sprite = _Sprite("tex1", 48, 48);
-        this.radius = 24;
+        this.boundingRadius = 24;
     },
     update: function() {
         switch (this.dir) {
@@ -156,6 +143,9 @@ gls2.EnemyHard.Tank1 = tm.createClass({
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
+    destroy: function() {
+        gls2.Effect.explodeGS(this.x, this.y, this.gameScene);
+    },
 });
 gls2.EnemyHard.Tank1 = gls2.EnemyHard.Tank1();
 
@@ -170,6 +160,31 @@ gls2.EnemyHard.Tank1 = gls2.EnemyHard.Tank1();
 /**
  * 中型戦闘機「クロカワ」
  */
+gls2.EnemyHard.FighterM = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.EnemyHard,
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.name = "kurokawa";
+        this.hp = 80;
+        this._sprite = _Sprite("tex1", 256, 128);
+        this._sprite.srcRect.x = 64;
+        this._sprite.srcRect.y = 128;
+        this._sprite.srcRect.width = 256;
+        this._sprite.srcRect.height = 128;
+        this.boundingWidth = 200;
+        this.boundingHeight = 20;
+    },
+    update: function() {
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+});
+gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();
 
 /**
  * 固定砲台「キセ」
@@ -222,5 +237,20 @@ gls2.EnemyHard.Tank1 = gls2.EnemyHard.Tank1();
 /**
  * エクストラボス「ユメハラ」
  */
+
+var _Sprite = tm.createClass({
+    superClass: tm.app.Sprite,
+    init: function(tex, w, h) {
+        this.superInit(tex, w, h);
+    },
+    draw: function(canvas) {
+        var srcRect = this.srcRect;
+        var element = this._image.element;
+
+        canvas.context.drawImage(element,
+            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
+            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
+    },
+});
 
 })();

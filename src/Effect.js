@@ -2,7 +2,10 @@
 
 gls2.Effect = {};
 gls2.Effect.setup = function() {
-    gls2.Effect["explosion"] = Array.range(0, 4).map(function(i) {
+
+    noise = gls2.Noise.generate(256);
+
+    gls2.Effect["explosion"] = Array.range(0, 2).map(function(i) {
         var exp = tm.app.AnimationSprite(tm.app.SpriteSheet({
             image: "explode" + i,
             frame: {
@@ -97,37 +100,108 @@ gls2.Effect.genShockwave = function(x, y, scene) {
         });
 };
 
-gls2.Effect.explodeS = function(x, y, scene) {
+gls2.Effect.explodeS = function(x, y, scene, vector) {
     gls2.playSound("soundExplode");
     var e = gls2.Effect["explosion"].random()
         .clone()
         .addEventListener("animationend", function() {
             this.remove();
+        })
+        .setScale(0.75)
+        .setPosition(x, y)
+        .setRotation(Math.random() * 360)
+        .gotoAndPlay();
+    e.isEffect = true;
+    if (vector !== undefined) {
+        var vx = vector.x;
+        var vy = vector.y;
+        e.addEventListener("enterframe", function() {
+            this.x += vx;
+            this.y += vy;
+            vx *= 0.99;
+            vy *= 0.99;
+        });
+    }
+    e.addChildTo(scene);
+};
+
+gls2.Effect.explodeGS = function(x, y, scene) {
+    gls2.playSound("soundExplode");
+    var e = gls2.Effect["explosion"].random()
+        .clone()
+        .addEventListener("animationend", function() {
+            this.remove();
+        })
+        .addEventListener("enterframe", function() {
+            this.y -= 1.4;
+            this.scaleX += 0.01;
+            this.scaleY += 0.01;
         })
         .setScale(0.5)
         .setPosition(x, y)
         .setRotation(Math.random() * 360)
-        // .setBlendMode("lighter")
         .gotoAndPlay();
     e.isEffect = true;
     e.addChildTo(scene);
 
-    gls2.Effect.genShockwave(x,y,scene);
-};
-
-gls2.Effect.explodeM = function(x, y, scene) {
-    gls2.playSound("soundExplode");
-    var e = gls2.Effect["explosion"].random()
+    e = gls2.Effect["explosion"].random()
         .clone()
         .addEventListener("animationend", function() {
             this.remove();
         })
-        .setPosition(x, y)
+        .addEventListener("enterframe", function() {
+            this.rotation += 2;
+            this.x += 0.7;
+            this.y -= 0.7;
+            this.scaleX += 0.01;
+            this.scaleY += 0.01;
+        })
+        .setScale(0.5)
+        .setPosition(x+12, y)
         .setRotation(Math.random() * 360)
-        // .setBlendMode("lighter")
+        .setBlendMode("lighter")
         .gotoAndPlay();
     e.isEffect = true;
     e.addChildTo(scene);
+
+    e = gls2.Effect["explosion"].random()
+        .clone()
+        .addEventListener("animationend", function() {
+            this.remove();
+        })
+        .addEventListener("enterframe", function() {
+            this.rotation -= 2;
+            this.x -= 0.7;
+            this.y -= 0.7;
+            this.scaleX += 0.01;
+            this.scaleY += 0.01;
+        })
+        .setScale(0.5)
+        .setPosition(x-12, y)
+        .setRotation(Math.random() * 360)
+        .setBlendMode("lighter")
+        .gotoAndPlay();
+    e.isEffect = true;
+    e.addChildTo(scene);
+};
+
+var noise;
+
+gls2.Effect.explodeM = function(x, y, scene) {
+    gls2.playSound("soundExplode");
+    for (var i = 0, end = gls2.math.rand(5, 10); i < end; i++) {
+        var e = gls2.Effect["explosion"].random()
+            .clone()
+            .addEventListener("animationend", function() {
+                this.remove();
+            })
+            .setPosition(x, y)
+            .setRotation(Math.random() * 360)
+            .gotoAndPlay();
+        e.isEffect = true;
+        // e.tweener.moveBy()
+        e.addChildTo(scene);
+    }
     for (var i = 0; i < 10; i++) {
         gls2.Effect.genParticle(x, y, scene);
     }

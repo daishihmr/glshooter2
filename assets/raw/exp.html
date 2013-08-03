@@ -21,11 +21,11 @@ var fireParticle = {
     /** 生成開始フレーム */
     start: 0,
     /** 生成終了フレーム */
-    end: 15,
+    end: 20,
     /** 生成個数 */
     generate: {
         /** 初期生成個数 */
-        initial: 70,
+        initial: 50,
         /** 減衰率 */
         rate: 0.9,
     },
@@ -36,29 +36,34 @@ var fireParticle = {
         /** 半径 */
         radius: 2,
         /** 中心色 */
-        colorCenter:  { r: 255, g: 255, b: 200, a: 0.1 },
+        colorCenter:  { r: 220, g: 220, b: 255, a: 0.1 },
         /** 外縁色 */
-        colorOuterEdge: { r: 255, g: 128, b:   0, a: 0.0 },
+        colorOuterEdge: { r: 20, g: 20, b: 255, a: 0.0 },
     },
     /** 変化 */
     transition: {
         /** 位置(中心からの距離) */
         position: {
             /** 最終値 */
-            finalValue: [2, 40], // 値に配列を指定した場合はv[0]～v[1]間のランダムな値
+            finalValue: [10, 40], // 値に配列を指定した場合はv[0]～v[1]間のランダムな値
             /** フレーム数 */
-            duration: 10,
+            duration: 18,
             /** イージング関数 */
             easeFunc: "easeOutQuad",
         },
         /** 半径 */
         radius: {
-            finalValue: 13,
-            duration: 5,
+            finalValue: 15,
+            duration: 6,
             easeFunc: "easeOutQuad",
         },
         /** 中心色 */
         colorCenter: {
+            r: {
+                finalValue: 0,
+                duration: 20,
+                easeFunc: "easeInExpo",
+            },
             g: {
                 finalValue: 0,
                 duration: 20,
@@ -66,20 +71,29 @@ var fireParticle = {
             },
             b: {
                 finalValue: 0,
-                duration: 20,
-                easeFunc: "easeInQuad",
+                duration: 30,
+                easeFunc: "easeInExpo",
             },
             a: {
                 finalValue: 0,
-                duration: 30,
-                easeFunc: "easeInExpo",
+                duration: 26,
             },
         },
         /** 外縁色 */
         colorOuterEdge: {
+            r: {
+                finalValue: 0,
+                duration: 40,
+                easeFunc: "easeInExpo",
+            },
             g: {
                 finalValue: 0,
-                duration: 20,
+                duration: 40,
+                easeFunc: "easeInExpo",
+            },
+            b: {
+                finalValue: 0,
+                duration: 40,
                 easeFunc: "easeInExpo",
             },
         },
@@ -92,20 +106,20 @@ var fireParticle = {
  * 煙用.
  */
 var smokeParticle = {
-    start: 18,
-    end: 30,
+    start: 8,
+    end: 12,
     generate: {
-        initial: 35,
+        initial: 10,
     },
     initial: {
-        position: [ 3, 25 ],
+        position: [ 2, 25 ],
         radius: 5,
         colorCenter:  { r: 0, g: 0, b: 0, a: 0.05 },
         colorOuterEdge: { r: 0, g: 0, b: 0, a: 0.00 },
     },
     transition: {
         position: {
-            finalValue: [ 5, 40 ],
+            finalValue: [ 10, 40 ],
             duration: 10,
         },
         radius: {
@@ -116,7 +130,7 @@ var smokeParticle = {
         colorCenter: {
             a: {
                 finalValue: 0,
-                duration: 30,
+                duration: 50,
                 easeFunc: "easeInExpo",
             },
         },
@@ -376,50 +390,6 @@ var ParticleGenerator = tm.createClass({
         return p;
     },
 });
-
-// var ShockWave = tm.createClass({
-//     init: function(num, radius, initialAlpha) {
-//         this.radius = radius;
-//         this.angles = Array.range(0, num).map(function(v) {
-//             return Math.random() * Math.PI * 2;
-//         });
-//         this.ps = this.angles.map(function() {
-//             return Math.randf(2, 18);
-//         });
-//         this.rs = this.angles.map(function() {
-//             return Math.randf(0.70, 0.95);
-//         });
-//         this.alpha = initialAlpha;
-//         this.tweens = Tweens();
-//     },
-//     update: function() {
-//         this.tweens.update();
-//     },
-//     draw: function(canvas) {
-//         canvas.globalCompositeOperation = "lighter";
-//         var cx = canvas.width/2;
-//         var cy = canvas.height/2;
-//         this.angles.each(function(a, i) {
-//             var r = this.radius * this.rs[i];
-//             var alpha = this.alpha;
-//             if (alpha < 0.001) alpha = 0;
-//             canvas
-//                 .setStrokeStyle("rgba(0,0,0,0)")
-//                 .setFillStyle(
-//                     tm.graphics.RadialGradient(
-//                         Math.cos(a)*r+cx, Math.sin(a)*r+cy, 0,
-//                         Math.cos(a)*r+cx, Math.sin(a)*r+cy, this.ps[i]
-//                     )
-//                     .addColorStopList([
-//                         { offset: 0.0, color: "rgba(255,255,255," + alpha + ")" },
-//                         { offset: 1.0, color: "rgba(255,64,0,0.0)" },
-//                     ]).toStyle()
-//                 )
-//                 .fillRect(0, 0, canvas.width, canvas.height);
-//         }.bind(this));
-//     },
-// });
-
 </script>
 </head>
 <body>
@@ -435,7 +405,7 @@ var ParticleGenerator = tm.createClass({
     <tr>
         <th>ブレンドモード</th>
         <td>
-            <select>
+            <select name="blendMode">
                 <option>source-over</option>
                 <option>lighter</option>
                 <option>source-atop</option>
@@ -452,19 +422,19 @@ var ParticleGenerator = tm.createClass({
     </tr>
     <tr>
         <th>生成開始フレーム</th>
-        <td><input type="text" /></td>
+        <td><input type="text" name="start" /></td>
     </tr>
     <tr>
         <th>生成終了フレーム</th>
-        <td><input type="text" /></td>
+        <td><input type="text" name="end" /></td>
     </tr>
     <tr>
         <th>フレーム毎の生成個数</th>
         <td>
             初期値：<br>
-            <input type="text" /><br>
+            <input type="text" name="generate-init" /><br>
             減衰率：<br>
-            <input type="text" /><br>
+            <input type="text" name="generate-rate" /><br>
         </td>
     </tr>
     <tr>
@@ -476,9 +446,9 @@ var ParticleGenerator = tm.createClass({
     </tr>
     <tr>
         <th>位置</th>
-        <td><input type="text" /></td>
-        <td><input type="text" /></td>
-        <td><input type="text" /></td>
+        <td><input type="text" name="position-initial" /></td>
+        <td><input type="text" name="position-final" /></td>
+        <td><input type="text" name="position-duration" /></td>
         <td>
             <select class="easeFuncSelect">
             </select>

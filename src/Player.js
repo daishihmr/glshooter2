@@ -29,6 +29,8 @@ gls2.Player = tm.createClass(
 /** @lends {gls2.Player.prototype} */
 {
     superClass: tm.app.Sprite,
+
+    type: 0,
     roll: 0,
     controllable: true,
     muteki: false,
@@ -41,6 +43,7 @@ gls2.Player = tm.createClass(
     speed: 4.5,
     bits: null,
 
+    /** @type {gls2.Laser} */
     laser: null,
 
     hitCircle: null,
@@ -49,16 +52,25 @@ gls2.Player = tm.createClass(
     hyperCircle1: null,
 
     /** @constructs */
-    init: function(gameScene) {
+    init: function(gameScene, type) {
         this.superInit("tex1", 64, 64);
 
+        this.type = type;
         this.gameScene = gameScene;
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
-        gls2.setShadow(this);
+        this.altitude = 10;
 
-        this.laser = gls2.Laser(this, "laser", "laserHead", "laserFoot");
+        this.laser = gls2.Laser(this, {
+            "redBody": "laserR",
+            "greenBody": "laserG",
+            "blueBody": "laserB",
+            "hyperBody": "laserH",
+            "head": "laserHead",
+            "foot": "laserFoot",
+            "aura": "aura",
+        }, 50);
         this.laser.visible = false;
         this.laser.addChildTo(gameScene);
 
@@ -71,6 +83,16 @@ gls2.Player = tm.createClass(
             var bit = this.bits[i];
             gls2.Bit(this, bit).setPosition(bit.x, bit.y).addChildTo(this.bitPivot);
         }
+
+        this.light = tm.app.CircleShape(140, 140, {
+            strokeStyle: "rgba(0,0,0,0)",
+            fillStyle: tm.graphics.RadialGradient(70,70,0,70,70,70).addColorStopList([
+                { offset:0.0, color:"rgba(255,255,255,0.1)" },
+                { offset:0.5, color:"rgba(255,255,255,0.1)" },
+                { offset:1.0, color:"rgba(255,255,255,0.0)" },
+            ]).toStyle(),
+        }).addChildTo(this);
+        this.light.blendMode = "lighter";
 
         this.hyperCircle0 = tm.app.CircleShape(80, 80, {
             fillStyle: "rgba(0,0,0,0)",
@@ -130,6 +152,8 @@ gls2.Player = tm.createClass(
     fireLaser: false,
 
     update: function(app) {
+        if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
+
         var kb = app.keyboard;
         if (this.controllable) {
             var angle = kb.getKeyAngle();
@@ -153,13 +177,15 @@ gls2.Player = tm.createClass(
 
             // ショット
             this.fireLaser = (pressZ && pressC) || this.pressTimeC === LASER_FRAME;
-            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % 3 === 0;
+            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % 5 === 0;
             if (pressZ) {
                 this.pressTimeC = 0;
             }
 
+            // レーザー
+            this.laser.x = this.x;
+            this.laser.y = this.y - 40;
             if (this.fireLaser) {
-                this.laser.visible = true;
                 for (var i = 0, len = this.bits.length; i < len; i++) {
                     this.bits[i].v = false;
                 }
@@ -173,10 +199,19 @@ gls2.Player = tm.createClass(
 
             if (this.fireShot) {
                 var s = Math.sin(app.frame * 0.2);
-                gls2.ShotBullet(this.x-7 - s*6, this.y-5, -90).addChildTo(this.gameScene);
-                gls2.ShotBullet(this.x-7 + s*6, this.y-5, -90).addChildTo(this.gameScene);
-                gls2.ShotBullet(this.x+7 - s*6, this.y-5, -90).addChildTo(this.gameScene);
-                gls2.ShotBullet(this.x+7 + s*6, this.y-5, -90).addChildTo(this.gameScene);
+                var sb;
+                sb = gls2.ShotBullet.fire(this.x-7 - s*6, this.y-5, -90);
+                if (sb !== null) sb.addChildTo(this.gameScene);
+                sb = gls2.ShotBullet.fire(this.x+7 + s*6, this.y-5, -90);
+                if (sb !== null) sb.addChildTo(this.gameScene);
+            }
+
+            if (kb.getKeyDown("x")) {
+                if (false) {
+                    // TODO ハイパー
+                } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
+                    gls2.Bomb(this, this.gameScene).setPosition(Math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3));
+                }
             }
         }
 
@@ -189,23 +224,24 @@ gls2.Player = tm.createClass(
         this._calcRoll(kb);
 
         // バックファイア
-        if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
-        backfireParticle.clone().setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
-        backfireParticle.clone().setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
+        if (app.frame % 2 === 0) {
+            backfireParticle.clone(20).setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
+            backfireParticle.clone(20).setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
+        }
     },
 
     /** @protected */
     controlBit: function(kb) {
         var p = this.bitPivot;
         if (this.controllable && kb.getKey("left")) {
-            p.rotation = Math.max(p.rotation - 2, -30);
+            p.rotation = Math.max(p.rotation - 3, -40);
         } else if (this.controllable && kb.getKey("right")) {
-            p.rotation = Math.min(p.rotation + 2,  30);
+            p.rotation = Math.min(p.rotation + 3,  40);
         } else {
-            if (2 < p.rotation) {
-                p.rotation -= 2;
-            } else if (p.rotation < -2) {
-                p.rotation += 2;
+            if (3 < p.rotation) {
+                p.rotation -= 3;
+            } else if (p.rotation < -3) {
+                p.rotation += 3;
             } else {
                 p.rotation = 0;
             }
@@ -269,7 +305,7 @@ gls2.Bit = tm.createClass(
 
         this.player = player;
 
-        gls2.setShadow(this);
+        this.altitude = 10;
 
         this.gotoAndPlay(bit.turn ? "anim0" : "anim1");
     },
@@ -290,12 +326,12 @@ gls2.Bit = tm.createClass(
             var g = this.parent.localToGlobal(this);
 
             // バックファイア
-            if (this.bit.v) backfireParticle.clone().setPosition(g.x, g.y).addChildTo(core.gameScene);
+            if (this.bit.v && core.frame%2 === 0) backfireParticle.clone(40).setPosition(g.x, g.y).addChildTo(core.gameScene);
 
             // ショット
             if (this.player.fireShot) {
-                gls2.ShotBullet(g.x-4, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
-                gls2.ShotBullet(g.x+4, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
+                var sb = gls2.ShotBullet.fire(g.x, g.y, this.parent.rotation + this.rotation - 90);
+                if (sb !== null) sb.addChildTo(core.gameScene);
             }
         }
     },

@@ -106,6 +106,10 @@ gls2.EnemyUnit = {
     { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.75, y:-64*5 },
 ],
 
+"fighter-m": [
+    { soft:$s.MiddleFighter, hard:$h.FighterM, x:SC_W*0.5, y:SC_H*-0.3 },
+],
+
 };
 
 })();

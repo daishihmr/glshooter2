@@ -2,13 +2,31 @@
 
 var SINGLETON = null;
 
-gls2.GameScene = tm.createClass({
+/**
+ * @class
+ * @extends {gls2.Scene}
+ */
+gls2.GameScene = tm.createClass(
+/** @lends {gls2.GameScene.prototype} */
+{
     superClass: gls2.Scene,
+    /** @type {gls2.Player} */
     player: null,
+
+    /** スコア */
     score: 0,
+    /** 素点 */
+    baseScore: 0,
+    /** コンボ数 */
+    comboCount: 0,
+    /** コンボゲージ */
+    comboGauge: 0,
+
     stage: null,
     ground: null,
     zanki: 3,
+    bomb: 0,
+    bombMax: 3,
     groundLayer: null,
     playerLayer: null,
     enemyLayer: null,
@@ -17,7 +35,11 @@ gls2.GameScene = tm.createClass({
     bulletLayer: null,
     labelLayer: null,
 
+    lastElement: null,
+
     consoleWindow: null,
+
+    scoreLabel: null,
 
     /** ランク(0.0～1.0) */
     rank: 0,
@@ -27,6 +49,8 @@ gls2.GameScene = tm.createClass({
 
         this.superInit();
         SINGLETON = this;
+
+        this.scoreLabel = gls2.ScoreLabel(this);
 
         this._createGround();
 
@@ -43,6 +67,15 @@ gls2.GameScene = tm.createClass({
             .addChildTo(this.labelLayer);
 
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
+
+        this.lastElement = tm.app.Object2D().addChildTo(this);
+        this.lastElement.update = function(app) {
+            this.onexitframe(app);
+        }.bind(this);
+
+        this.addEventListener("exit", function() {
+            this.scoreLabel.clear();
+        });
     },
 
     println: function(string) {
@@ -53,26 +86,43 @@ gls2.GameScene = tm.createClass({
         var g = this.ground = tm.app.CanvasElement().addChildTo(this);
         g.gx = g.gy = 0;
         g.direction = Math.PI * 0.5;
-        g.cellSize = 20;
         g.speed = 1;
         g.dx = 0;
         g.dy = 0;
+
+        var c = 8 * 2;
+        var l = 8*Math.sqrt(3);
+
         g.update = function() {
             this.dx = Math.cos(this.direction) * this.speed;
             this.dy = Math.sin(this.direction) * this.speed;
-            this.gx = (this.gx + this.dx) % this.cellSize;
-            this.gy = (this.gy + this.dy) % this.cellSize;
+
+            this.gx += this.dx;
+            while (c*3 < this.gx) this.gx -= c*3;
+            while (this.gx < -c*3) this.gx += c*3;
+
+            this.gy += this.dy;
+            while (l*2 < this.gy) this.gy -= l*2;
+            while (this.gy < -l*2) this.gy += l*2;
         };
         g.blendMode = "lighter";
         g.draw = function(canvas) {
             canvas.lineWidth = 0.2;
-            canvas.strokeStyle = "#rgba(255,255,255,0.5)";
+            canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba(255,255,255,1.0)" },
+                    { offset: 1.0, color: "rgba(255,255,255,0.5)" },
+                ])
+                .toStyle();
             canvas.beginPath();
-            for (var x = this.gx; x < SC_W; x += this.cellSize) {
-                canvas.line(x, 0, x, SC_H);
-            }
-            for (var y = this.gy; y < SC_H; y += this.cellSize) {
-                canvas.line(0, y, SC_W, y);
+            var yy = 0;
+            for (var x = this.gx-c*3; x < SC_W+c*3; x += c*1.5) {
+                yy = (yy === 0) ? l : 0;
+                for (var y = this.gy-l*2 + yy; y < SC_H+l*2; y += l*2) {
+                    canvas.line(x, y, x + c, y);
+                    canvas.line(x, y, x - c/2, y + l);
+                    canvas.line(x, y, x - c/2, y - l);
+                }
             }
             canvas.stroke();
         };
@@ -83,15 +133,16 @@ gls2.GameScene = tm.createClass({
             this.playerLayer.addChild(child);
         } else if (child instanceof gls2.Enemy) {
             if (child.isGround) {
-                console.log("ge")
                 this.groundLayer.addChild(child);
             } else {
-                console.log("ae")
                 this.enemyLayer.addChild(child);
             }
-        } else if (child instanceof gls2.BackfireParticle || child instanceof gls2.ShotBullet || child instanceof gls2.Laser) {
+        } else if (child instanceof gls2.BackfireParticle
+            || child instanceof gls2.ShotBullet
+            || child instanceof gls2.Laser
+            || child.isEffect) {
             this.effectLayer0.addChild(child);
-        } else if (child instanceof gls2.Particle || child.isEffect) {
+        } else if (child instanceof gls2.Particle) {
             this.effectLayer1.addChild(child);
         } else if (child instanceof gls2.Bullet) {
             this.bulletLayer.addChild(child);
@@ -103,6 +154,21 @@ gls2.GameScene = tm.createClass({
     update: function(app) {
         this.stage.update(app.frame);
 
+        if (app.frame % 5 === 0) this.scoreLabel.update();
+
+        this.comboGauge -= 0.02;
+        if (this.comboGauge <= 0) {
+            if (this.comboCount > 0) {
+                this.baseScore = this.baseScore * (this.comboCount-6)/this.comboCount;
+            }
+            this.comboCount -= 6;
+            if (this.comboCount < 0) {
+                this.baseScore = 0;
+                this.comboCount = 0;
+            }
+            this.comboGauge = 0;
+        }
+
         if (app.keyboard.getKeyDown("escape")) {
             this.app.popScene();
         } else if (app.keyboard.getKeyDown("space")) {
@@ -111,6 +177,102 @@ gls2.GameScene = tm.createClass({
             app.canvas.saveAsImage();
             this.openPauseMenu(0);
         }
+    },
+
+    onexitframe: function(app) {
+        var enemies;
+
+        // ショットvs敵
+        enemies = [].concat(gls2.Enemy.activeList);
+        var shots = [].concat(gls2.ShotBullet.activeList);
+        for (var j = 0, jlen = shots.length; j < jlen; j++) {
+            for (var i = 0, ilen = enemies.length; i < ilen; i++) {
+                var e = enemies[i];
+                var shot = shots[j];
+                if (gls2.Collision.isHit(e, shot)) {
+                    shot.remove();
+                    shot.genParticle(1);
+                    if (e.damage(shot.attackPower)) {
+                        this.comboCount += 1;
+                        this.comboGauge = 1;
+                        this.baseScore += e.score;
+                        this.addScore(this.baseScore);
+                        enemies.erase(e);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // レーザーvs敵
+        var laser = this.player.laser;
+        if (this.player.laser.visible) {
+            // レーザー部分の当たり判定
+            enemies = [].concat(gls2.Enemy.activeList);
+            enemies.sort(function(l, r) {
+                return r.y - l.y;
+            });
+            for (var i = 0, len = enemies.length; i < len; i++) {
+                var e = enemies[i];
+                if (gls2.Collision.isHit(e, laser)) {
+                    laser.setHitY(e.y + e.boundingHeightBottom);
+                    if (e.damage(laser.attackPower)) {
+                        this.comboCount += 1;
+                        this.comboGauge = 1;
+                        this.baseScore += e.score;
+                        this.addScore(this.baseScore);
+                    } else {
+                        this.comboGauge = Math.max(this.comboGauge, 0.1);
+                    }
+                    laser.genParticle(2);
+                    break;
+                }
+            }
+            // オーラ部分の当たり判定
+            var aura = {
+                x: this.player.x,
+                y: this.player.y,
+                boundingWidthLeft: 50,
+                boundingWidthRight: 50,
+                boundingHeightTop: 50,
+                boundingHeightBottom: 40,
+            };
+            enemies = [].concat(gls2.Enemy.activeList);
+            for (var i = 0, len = enemies.length; i < len; i++) {
+                var e = enemies[i];
+                if (gls2.Collision.isHit(e, aura)) {
+                    if(e.damage(laser.attackPower)) {
+                        this.comboCount += 1;
+                        this.comboGauge = 1;
+                        this.baseScore += e.score;
+                        this.addScore(this.baseScore);
+                    } else {
+                        this.comboCount += 0.1;
+                        this.comboGauge = Math.max(this.comboGauge, 0.1);
+                    }
+                    laser.genAuraParticle(2, (this.player.x + e.x) * 0.5, (this.player.y + e.y) * 0.5);
+                }
+            }
+        }
+
+        // ボムvs敵
+        if (gls2.Bomb.activeList.length > 0) {
+            var enemies = [].concat(gls2.Enemy.activeList);
+            for (var i = 0, ilen = enemies.length; i < ilen; i++) {
+                var e = enemies[i];
+                if (e.isInScreen()) {
+                    e.damage(gls2.Bomb.attackPower);
+                }
+            }
+            this.comboCount = 0;
+            this.comboGauge = 0;
+        }
+
+        // TODO? ショットvs敵弾
+
+        // TODO 敵弾vs自機
+
+        // TODO 敵vs自機
     },
 
     openPauseMenu: function(defaultValue) {
@@ -189,6 +351,15 @@ gls2.GameScene = tm.createClass({
     draw: function(canvas) {
         if (this.stage === null) return;
         canvas.clearColor(this.stage.background, 0, 0);
+        this.drawComboGauge(canvas);
+    },
+
+    drawComboGauge: function(canvas) {
+        if (this.comboGauge > 0) {
+            canvas.fillStyle = "rgba(255," + ~~(this.comboGauge * 255) + "," + ~~Math.min(255, this.comboGauge * 512) + ",0.5)";
+            var h = 500 * this.comboGauge;
+            canvas.fillRect(SC_W-15, SC_H-5 - h, 10, h);
+        }
     },
 
     gameStart: function(playerType) {
@@ -199,7 +370,7 @@ gls2.GameScene = tm.createClass({
         gls2.ShotBullet.clearAll();
         gls2.Danmaku.clearAll();
 
-        this.player = gls2.Player(this);
+        this.player = gls2.Player(this, playerType);
         this.startStage(0);
     },
 
@@ -227,6 +398,7 @@ gls2.GameScene = tm.createClass({
             .call(function() {
                 this.muteki = false;
             }.bind(this.player));
+        this.bomb = this.bombMax;
     },
 
     miss: function() {
@@ -257,7 +429,7 @@ gls2.GameScene = tm.createClass({
     },
 
     addScore: function(score) {
-        var before = score;
+        var before = this.score;
         this.score += score;
         for (var i = 0; i < gls2.core.extendScore.length; i++) {
             var es = gls2.core.extendScore[i];

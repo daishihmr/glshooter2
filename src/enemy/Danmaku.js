@@ -1,8 +1,5 @@
 (function() {
 
-var bulletPool = [];
-var activeList = [];
-
 gls2.Bullet = tm.createClass({
     superClass: tm.app.Sprite,
     init: function() {
@@ -15,9 +12,41 @@ gls2.Bullet = tm.createClass({
             this.clearEventListener("enterframe");
         });
     },
+    destroy: function() {
+        // TODO 弾消しエフェクト
+        tm.app.CircleShape(20*2, 20*2, {
+            strokeStyle: "rgba(0,0,0,0)",
+            fillStyle: tm.graphics.RadialGradient(20,20,0,20,20,20)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba(255,255,255,0.0)" },
+                    { offset: 0.5, color: "rgba(255,255,255,0.0)" },
+                    { offset: 1.0, color: "rgba(255,255,255,1.0)" },
+                ])
+                .toStyle()
+        })
+        .setBlendMode("lighter")
+        .setPosition(this.x, this.y)
+        .setScale(0.1, 0.1)
+        .addChildTo(this.parent)
+        .update = function() {
+            this.scaleX += 0.1;
+            this.scaleY += 0.1;
+            this.alpha *= 0.9;
+            if (this.alpha < 0.001) {
+                this.remove();
+            }
+        };
+        this.remove();
+    },
 });
 
 gls2.Danmaku = {};
+gls2.Danmaku.erase = function() {
+    var bullets = [].concat(activeList);
+    for (var i = 0, len = bullets.length; i < len; i++) {
+        bullets[i].destroy();
+    }
+};
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 255; i++) {
         bulletPool.push(gls2.Bullet());
@@ -103,5 +132,8 @@ gls2.Danmaku["basic2-0"] = new bulletml.Root({
         ]),
     ]),
 });
+
+var bulletPool = [];
+var activeList = gls2.Bullet.activeList = [];
 
 })();

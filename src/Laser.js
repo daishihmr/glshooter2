@@ -2,131 +2,188 @@
 
 var origParticle = null;
 
-gls2.Laser = tm.createClass({
-    superClass: tm.app.CanvasElement,
+/**
+ * @class
+ */
+gls2.Laser = tm.createClass(
+/** @lends {gls2.Laser.prototype} */
+{
+    superClass: tm.app.Sprite,
     player: null,
-    image: null,
-    c: null,
-    age: 0,
-    hitY: 0,
-    rootTexture: null,
-    attackPower: 5,
+    gameScene: null,
+    attackPower: 2,
+
+    _hitY: 0,
+    frame: 0,
+
+    textures: null,
+    color: null,
 
     beforeFrameVisible: false,
 
     head: null,
     foot: null,
+    aura: null,
 
-    init: function(player, texture, texHead, texFoot) {
+    init: function(player, textures, width) {
         this.player = player;
-        var tex = tm.asset.AssetManager.get(texture);
+        this.gameScene = player.gameScene;
 
-        this.superInit();
-        this.image = tex.element;
-        this.width = tex.width;
-        this.height = SC_H;
-        this.blendMode = "lighter";
-        this.origin.y = 1;
+        var self = this;
 
-        this.c = tm.graphics.Canvas();
-        this.c.resize(this.width, SC_H + 100);
-        this.c.globalCompositeOperation = "lighter";
+        this.textures = textures;
 
-        this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: texHead,
+        this.superInit(textures["redBody"], width, 100);
+
+        this.boundingWidth = width;
+        this.boundingHeightBottom = 1;
+
+        this.scrollOffset = 0;
+        this.origin.y = 1.0;
+
+        var a = this.aura = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: textures["aura"],
+            frame: {
+                width: 100,
+                height: 100
+            },
+            animations: {
+                "red": {
+                    frames: [0, 1, 2, 3],
+                    next: "red",
+                    frequency: 2,
+                },
+                "green": {
+                    frames: [4, 5, 6, 7],
+                    next: "green",
+                    frequency: 2,
+                },
+                "blue": {
+                    frames: [8, 9, 10, 11],
+                    next: "blue",
+                    frequency: 2,
+                },
+                "hyper": {
+                    frames: [12, 13, 14, 15],
+                    next: "hyper",
+                    frequency: 2,
+                },
+            }
+        }), 140, 140);
+        a.y = 60;
+        a.addChildTo(this);
+
+        var f = this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: textures["foot"],
+            frame: {
+                width: 120,
+                height: 80
+            },
+            animations: {
+                "red": {
+                    frames: [0, 1, 2, 3],
+                    next: "red",
+                    frequency: 2,
+                },
+                "green": {
+                    frames: [4, 5, 6, 7],
+                    next: "green",
+                    frequency: 2,
+                },
+                "blue": {
+                    frames: [8, 9, 10, 11],
+                    next: "blue",
+                    frequency: 2,
+                },
+                "hyper": {
+                    frames: [12, 13, 14, 15],
+                    next: "hyper",
+                    frequency: 2,
+                },
+            }
+        }), 140, 80);
+        f.addChildTo(this);
+
+        var h = this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
+            image: textures["head"],
             frame: {
                 width: 80,
-                height: 80,
+                height: 80
             },
             animations: {
-                "default": {
-                    frames: [ 0, 1, 2, 3 ],
-                    next: "default"
+                "red": {
+                    frames: [0, 1, 2, 3],
+                    next: "red",
+                    frequency: 2,
                 },
-            },
-        }), 80, 80);
-        this.head.gotoAndPlay();
-        this.head.blendMode = "lighter";
-
-        this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
-            image: texFoot,
-            frame: {
-                width: 128,
-                height: 64,
-            },
-            animations: {
-                "default": {
-                    frames: [ 0, 1, 2, 3 ],
-                    next: "default"
+                "green": {
+                    frames: [4, 5, 6, 7],
+                    next: "green",
+                    frequency: 2,
                 },
-            },
-        }), 128, 64);
-        this.foot.gotoAndPlay();
-        this.foot.blendMode = "lighter";
+                "blue": {
+                    frames: [8, 9, 10, 11],
+                    next: "blue",
+                    frequency: 2,
+                },
+                "hyper": {
+                    frames: [12, 13, 14, 15],
+                    next: "hyper",
+                    frequency: 2,
+                },
+            }
+        }), 130, 130);
+        h.addChildTo(this);
+        h.update = function() {
+            this.y = self._hitY - self.y;
+            if (-10 < this.y) {
+                this.y = -10;
+            }
+            this.visible = self._hitY > 0;
+        };
 
-        if (origParticle === null) {
-            var size = 16;
-            origParticle = gls2.Particle(size, 1.0, 0.9, tm.graphics.Canvas()
-                .resize(size, size)
-                .setFillStyle(
-                    tm.graphics.RadialGradient(size*0.5, size*0.5, 0, size*0.5, size*0.5, size*0.5)
-                        .addColorStopList([
-                            {offset:0.0, color: "rgba(255,255,255,1.0)"},
-                            {offset:1.0, color: "rgba(  0,  0,255,0.0)"},
-                        ]).toStyle()
-                )
-                .fillRect(0, 0, size, size)
-                .element
-            );
-        }
+        // this.blendMode = "lighter";
+        // a.blendMode = "lighter";
+        // f.blendMode = "lighter";
+        // h.blendMode = "lighter";
+
+        // TODO
+        this.setColor("blue");
     },
 
-    update: function(app) {
-        this.x = this.player.x;
-        this.y = this.player.y - 40;
+    setColor: function(color) {
+        this.color = color;
 
-        if (!this.visible) {
-            if (this.beforeFrameVisible) {
-                for (var y = this.y; y > this.hitY; y -= 30) {
-                    this.genParticle(1, y);
-                }
-            }
-            this.hitY = this.y;
-        } else {
-            if (!this.beforeFrameVisible) {
-                this.hitY = this.y;
-            } else {
-                this.hitY -= 50;
-            }
+        this.image = tm.asset.AssetManager.get(this.textures[this.color + "Body"]);
+        this.srcRect.x = 0;
+        this.srcRect.y = 0;
+        this.srcRect.width = this.image.width / 16;
 
-            // 当たり判定
-            var copied = [].concat(gls2.Enemy.activeList);
-            copied.sort(function(l, r) {
-                return r.y - l.y;
-            });
-            for (var i = 0, len = copied.length; i < len; i++) {
-                var e = copied[i];
-                if (this.hitY-30 < e.y && e.y < this.y && this.x-40 < e.x && e.x < this.x+40) {
-                    this.hitY = e.y;
-                    e.damage(this.attackPower);
-                    this.genParticle(1);
-                    break;
-                }
-            }
+        this.aura.gotoAndPlay(this.color);
+        this.foot.gotoAndPlay(this.color);
+        this.head.gotoAndPlay(this.color);
 
-            this.head._updateFrame();
-            this.foot._updateFrame();
-        }
+        var size = 16;
+        origParticle = gls2.Particle(size, 1.0, 0.9, tm.graphics.Canvas()
+            .resize(size, size)
+            .setFillStyle(
+                tm.graphics.RadialGradient(size*0.5, size*0.5, 0, size*0.5, size*0.5, size*0.5)
+                    .addColorStopList([
+                        {offset:0.0, color: "rgba(255,255,255,1.0)"},
+                        {offset:1.0, color: "rgba(  0,  0,255,0.0)"},
+                    ]).toStyle()
+            )
+            .fillRect(0, 0, size, size)
+            .element
+        );
 
-        if (this.hitY < -80) this.hitY = -80;
-        this.beforeFrameVisible = this.visible;
-        this.age += 1;
+        return this;
     },
 
     genParticle: function(count, y) {
-        var y = y || this.hitY;
+        var y = y || this._hitY;
         for (var i = 0; i < count; i++) {
-            var p = origParticle.clone().setPosition(this.x, y).addChildTo(this.parent);
+            var p = origParticle.clone().setPosition(this.x, y).addChildTo(this.gameScene);
             var speed = gls2.math.randf(8, 14);
             var dir = gls2.math.randf(0, Math.PI);
             p.dx = Math.cos(dir) * speed;
@@ -135,36 +192,70 @@ gls2.Laser = tm.createClass({
             p.addEventListener("enterframe", function() {
                 this.x += this.dx;
                 this.y += this.dy;
-                this.dx *= 0.9;
-                this.dy *= 0.9;
+                this.dx *= 0.95;
+                this.dy *= 0.95;
             });
         }
     },
 
-    draw: function(canvas) {
-        this.c.clear();
-        for (var i = 0; i < 6; i++) {
-            this.c.drawImage(this.image, 0, -((this.age*15)%240) + 240*i);
+    genAuraParticle: function(count, x, y) {
+        var x = x || this.x;
+        var y = y || this._hitY;
+        for (var i = 0; i < count; i++) {
+            var p = origParticle.clone().setPosition(x, y).addChildTo(this.gameScene);
+            var speed = gls2.math.randf(12, 20);
+            var dir = gls2.math.randf(0, Math.PI);
+            p.dx = Math.cos(dir) * speed;
+            p.dy = Math.sin(dir) * speed;
+            p.scaleX = p.scaleY = (gls2.math.randf(1.0, 3.0) + gls2.math.randf(1.0, 3.0)) / 2;
+            p.addEventListener("enterframe", function() {
+                this.x += this.dx;
+                this.y += this.dy;
+                this.dx *= 0.95;
+                this.dy *= 0.95;
+            });
+        }
+    },
+
+    update: function(app) {
+        this.visible = this.player.fireLaser;
+
+        if (this.visible) {
+            this._hitY = Math.max(0, this._hitY - 40);
+            this.height = this.y - this._hitY;
+            if (app.frame % 3 === 0) this.frame = (this.frame + 1) % 16;
+        } else {
+            this._hitY = this.y - 40;
         }
 
-        this.height = Math.max(this.y - this.hitY, 1);
-        canvas.context.drawImage(this.c.element,
-            0, this.c.height-this.height, this.c.width, this.height,
-            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
-
-        var srcRect = this.head.ss.getFrame(this.head.currentFrame);
-        var element = this.head.ss.image.element;
-        canvas.drawImage(element,
-            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
-            -this.width*this.origin.x-43, -this.height*this.origin.y-75, 150, 150);
-
-        srcRect = this.foot.ss.getFrame(this.foot.currentFrame);
-        element = this.foot.ss.image.element;
-        canvas.drawImage(element,
-            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
-            -this.width*this.origin.x-43, -this.height*this.origin.y+this.height-37, 150, 74);
-
+        this.beforeFrameVisible = this.visible;
+        // this.boundingHeightTop = this.y - this._hitY;
     },
+
+    draw: function(canvas) {
+        var srcRect = this.srcRect;
+        var element = this._image.element;
+
+        srcRect.x = srcRect.width * this.frame;
+
+        canvas.context.drawImage(element,
+            srcRect.x, srcRect.height - this.height, srcRect.width, this.height,
+            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
+    },
+
+    getHitY: function() {
+        return this._hitY;
+    },
+
+    setHitY: function(v) {
+        this._hitY = v;
+        this.head.update();
+    },
+
+});
+
+gls2.Laser.prototype.getter("boundingHeightTop", function() {
+    return this.position.y - this._hitY;
 });
 
 })();
