@@ -41,7 +41,7 @@ gls2.Stage = tm.createClass(
             keys.push(key);
         }
         var unit = gls2.EnemyUnit[keys.random()];
-        if (this.frame > 200 && this.frame%300 === 0) {
+        if (this.frame > 200 && this.frame%30 === 0) {
             for (var i = 0, end = unit.length; i < end; i++) {
                 this.launchEnemy(unit[i]);
             }

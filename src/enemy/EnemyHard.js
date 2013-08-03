@@ -39,7 +39,7 @@ gls2.EnemyHard.Heri1 = tm.createClass(
     },
     setup: function() {
         this.name = "kujo";
-        this.hp = 3;
+        this.hp = 2;
         this._sprite = _Sprite("tex1", 64, 64);
         this.boundingRadius = 24;
     },
@@ -75,7 +75,7 @@ gls2.EnemyHard.Heri2 = tm.createClass(
     },
     setup: function() {
         this.name = "kiryu";
-        this.hp = 10;
+        this.hp = 3;
         this._sprite = _Sprite("tex1", 64, 64);
         this.boundingRadius = 24;
     },
@@ -169,7 +169,7 @@ gls2.EnemyHard.FighterM = tm.createClass(
     },
     setup: function() {
         this.name = "kurokawa";
-        this.hp = 2000;
+        this.hp = 80;
         this._sprite = _Sprite("tex1", 256, 128);
         this._sprite.srcRect.x = 64;
         this._sprite.srcRect.y = 128;

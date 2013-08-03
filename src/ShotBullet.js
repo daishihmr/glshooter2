@@ -7,17 +7,11 @@ gls2.ShotBullet = tm.createClass({
     speed: 20,
     attackPower: 1,
 
-    init: function(x, y, dir) {
+    init: function() {
         var SZ = 64;
         this.superInit("shotbullet", SZ, SZ);
         this.blendMode = "lighter";
-
-        var rad = gls2.math.degToRad(dir);
-        this.vx = Math.cos(rad) * this.speed;
-        this.vy = Math.sin(rad) * this.speed;
-
-        this.setPosition(x, y);
-        this.rotation = dir+90;
+        this.setScale(1.5, 1.5);
 
         this.addEventListener("added", function() {
             activeList.push(this);
@@ -25,6 +19,7 @@ gls2.ShotBullet = tm.createClass({
         this.addEventListener("removed", function() {
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);
+            pool.push(this);
         });
 
         this.boundingRadius = 32;
@@ -84,6 +79,26 @@ gls2.ShotBullet.clearAll = function() {
     }
 };
 
+var pool = [];
 var activeList = gls2.ShotBullet.activeList = [];
+gls2.ShotBullet.createPool = function(count) {
+    for (var i = 0; i < count; i++) {
+        pool.push(gls2.ShotBullet());
+    }
+};
+gls2.ShotBullet.fire = function(x, y, dir) {
+    var shotBullet = pool.pop();
+    if (shotBullet === undefined) {
+        return null;
+    }
+    var rad = gls2.math.degToRad(dir);
+    shotBullet.vx = Math.cos(rad) * shotBullet.speed;
+    shotBullet.vy = Math.sin(rad) * shotBullet.speed;
+
+    shotBullet.setPosition(x, y);
+    shotBullet.rotation = dir+90;
+
+    return shotBullet;
+};
 
 })();

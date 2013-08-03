@@ -133,7 +133,9 @@ gls2.Effect.explodeGS = function(x, y, scene) {
             this.remove();
         })
         .addEventListener("enterframe", function() {
-            this.y -= 0.8;
+            this.y -= 1.4;
+            this.scaleX += 0.01;
+            this.scaleY += 0.01;
         })
         .setScale(0.5)
         .setPosition(x, y)
@@ -149,7 +151,10 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         })
         .addEventListener("enterframe", function() {
             this.rotation += 2;
-            this.y -= 0.5;
+            this.x += 0.7;
+            this.y -= 0.7;
+            this.scaleX += 0.01;
+            this.scaleY += 0.01;
         })
         .setScale(0.5)
         .setPosition(x+12, y)
@@ -166,7 +171,10 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         })
         .addEventListener("enterframe", function() {
             this.rotation -= 2;
-            this.y -= 0.5;
+            this.x -= 0.7;
+            this.y -= 0.7;
+            this.scaleX += 0.01;
+            this.scaleY += 0.01;
         })
         .setScale(0.5)
         .setPosition(x-12, y)

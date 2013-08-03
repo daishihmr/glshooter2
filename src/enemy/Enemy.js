@@ -20,6 +20,8 @@ gls2.Enemy = tm.createClass(
     enableFire: true,
     isGround: false,
 
+    score: 0,
+
     /** 出現してから一度でも可視範囲に入ったか */
     entered: false,
 
@@ -67,6 +69,8 @@ gls2.Enemy = tm.createClass(
         this.soft = software;
         this.hard = hardware;
 
+        this.score = 100;
+
         this.soft.setup.apply(this);
         this.hard.setup.apply(this);
 
@@ -89,7 +93,8 @@ gls2.Enemy = tm.createClass(
         this.hard.onCompleteAttack.apply(this);
     },
     update: function() {
-        if (this.isInScreen()) {
+        if (0 <= this.x - this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
+            && 0 <= this.y - this.boundingHeightTop && this.y + this.boundingHeightBottom < SC_H) {
             this.entered = true;
         }
 
@@ -140,8 +145,8 @@ gls2.Enemy = tm.createClass(
     },
 
     isInScreen: function() {
-        return 0 <= this.x-this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
-            && 0 <= this.y-this.boundingHeightTop && this.y + this.boundingHeightBottom < SC_H;
+        return 0 <= this.x + this.width/2 && this.x - this.width/2 < SC_W
+            && 0 <= this.y + this.height/2 && this.y - this.height/2 < SC_H;
     },
 
     onfire: function() {

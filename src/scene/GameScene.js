@@ -12,7 +12,16 @@ gls2.GameScene = tm.createClass(
     superClass: gls2.Scene,
     /** @type {gls2.Player} */
     player: null,
+
+    /** スコア */
     score: 0,
+    /** 素点 */
+    baseScore: 0,
+    /** コンボ数 */
+    comboCount: 0,
+    /** コンボゲージ */
+    comboGauge: 0,
+
     stage: null,
     ground: null,
     zanki: 3,
@@ -30,6 +39,8 @@ gls2.GameScene = tm.createClass(
 
     consoleWindow: null,
 
+    scoreLabel: null,
+
     /** ランク(0.0～1.0) */
     rank: 0,
 
@@ -38,6 +49,8 @@ gls2.GameScene = tm.createClass(
 
         this.superInit();
         SINGLETON = this;
+
+        this.scoreLabel = gls2.ScoreLabel(this);
 
         this._createGround();
 
@@ -137,6 +150,21 @@ gls2.GameScene = tm.createClass(
     update: function(app) {
         this.stage.update(app.frame);
 
+        if (app.frame % 5 === 0) this.scoreLabel.update();
+
+        this.comboGauge -= 0.01;
+        if (this.comboGauge <= 0) {
+            if (this.comboCount > 0) {
+                this.baseScore = this.baseScore * (this.comboCount-6)/this.comboCount;
+            }
+            this.comboCount -= 6;
+            if (this.comboCount < 0) {
+                this.baseScore = 0;
+                this.comboCount = 0;
+            }
+            this.comboGauge = 0;
+        }
+
         if (app.keyboard.getKeyDown("escape")) {
             this.app.popScene();
         } else if (app.keyboard.getKeyDown("space")) {
@@ -161,6 +189,11 @@ gls2.GameScene = tm.createClass(
                     shot.remove();
                     shot.genParticle(1);
                     if (e.damage(shot.attackPower)) {
+                        this.comboCount += 1;
+                        this.comboGauge = 1;
+                        this.baseScore += e.score;
+                        this.addScore(this.baseScore);
+                        enemies.erase(e);
                         break;
                     }
                 }
@@ -179,7 +212,14 @@ gls2.GameScene = tm.createClass(
                 var e = enemies[i];
                 if (gls2.Collision.isHit(e, laser)) {
                     laser.setHitY(e.y + e.boundingHeightBottom);
-                    e.damage(laser.attackPower);
+                    if (e.damage(laser.attackPower)) {
+                        this.comboCount += 1;
+                        this.comboGauge = 1;
+                        this.baseScore += e.score;
+                        this.addScore(this.baseScore);
+                    } else {
+                        this.comboGauge = Math.max(this.comboGauge, 0.1);
+                    }
                     laser.genParticle(2);
                     break;
                 }
@@ -197,7 +237,15 @@ gls2.GameScene = tm.createClass(
             for (var i = 0, len = enemies.length; i < len; i++) {
                 var e = enemies[i];
                 if (gls2.Collision.isHit(e, aura)) {
-                    e.damage(laser.attackPower);
+                    if(e.damage(laser.attackPower)) {
+                        this.comboCount += 1;
+                        this.comboGauge = 1;
+                        this.baseScore += e.score;
+                        this.addScore(this.baseScore);
+                    } else {
+                        this.comboCount += 0.1;
+                        this.comboGauge = Math.max(this.comboGauge, 0.1);
+                    }
                     laser.genAuraParticle(2, (this.player.x + e.x) * 0.5, (this.player.y + e.y) * 0.5);
                 }
             }
@@ -212,6 +260,8 @@ gls2.GameScene = tm.createClass(
                     e.damage(gls2.Bomb.attackPower);
                 }
             }
+            this.comboCount = 0;
+            this.comboGauge = 0;
         }
 
         // TODO? ショットvs敵弾
@@ -297,6 +347,15 @@ gls2.GameScene = tm.createClass(
     draw: function(canvas) {
         if (this.stage === null) return;
         canvas.clearColor(this.stage.background, 0, 0);
+        this.drawComboGauge(canvas);
+    },
+
+    drawComboGauge: function(canvas) {
+        if (this.comboGauge > 0) {
+            canvas.fillStyle = "rgba(255," + ~~(this.comboGauge * 255) + "," + ~~Math.min(255, this.comboGauge * 512) + ",0.5)";
+            var h = 500 * this.comboGauge;
+            canvas.fillRect(SC_W-15, SC_H-5 - h, 10, h);
+        }
     },
 
     gameStart: function(playerType) {
@@ -366,7 +425,7 @@ gls2.GameScene = tm.createClass(
     },
 
     addScore: function(score) {
-        var before = score;
+        var before = this.score;
         this.score += score;
         for (var i = 0; i < gls2.core.extendScore.length; i++) {
             var es = gls2.core.extendScore[i];

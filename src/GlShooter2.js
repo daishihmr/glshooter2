@@ -76,6 +76,7 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.Danmaku.setup();
         gls2.Effect.setup();
+        gls2.ShotBullet.createPool(50);
 
         this.gameScene = gls2.GameScene();
     },
@@ -85,26 +86,6 @@ gls2.GlShooter2 = tm.createClass(
         tm.social.Nineleap.postRanking(this.highScore, "");
     }
 
-});
-
-/** @class */
-tm.app.Label = tm.createClass(
-/** @lends {tm.app.Label.prototype} */
-{
-    superClass: tm.app.Label,
-    init: function(text, size) {
-        this.superInit(text, size);
-        this.setAlign("center");
-        this.setBaseline("middle");
-        this.setFontFamily("Orbitron");
-
-        this.fillStyle = "white";
-
-        this.isHitPoint = this.isHitPointRect;
-    },
-    update: function(app) {
-        this.alpha = 0.8 + Math.sin(app.frame * 0.1) * 0.2;
-    },
 });
 
 gls2.playSound = function(soundName) {

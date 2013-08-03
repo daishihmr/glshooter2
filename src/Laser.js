@@ -11,7 +11,7 @@ gls2.Laser = tm.createClass(
     superClass: tm.app.Sprite,
     player: null,
     gameScene: null,
-    attackPower: 10,
+    attackPower: 2,
 
     _hitY: 0,
     frame: 0,

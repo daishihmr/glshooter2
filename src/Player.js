@@ -177,7 +177,7 @@ gls2.Player = tm.createClass(
 
             // ショット
             this.fireLaser = (pressZ && pressC) || this.pressTimeC === LASER_FRAME;
-            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % 3 === 0;
+            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % 5 === 0;
             if (pressZ) {
                 this.pressTimeC = 0;
             }
@@ -199,10 +199,11 @@ gls2.Player = tm.createClass(
 
             if (this.fireShot) {
                 var s = Math.sin(app.frame * 0.2);
-                gls2.ShotBullet(this.x-7 - s*6, this.y-5, -90).addChildTo(this.gameScene);
-                gls2.ShotBullet(this.x-7 + s*6, this.y-5, -90).addChildTo(this.gameScene);
-                gls2.ShotBullet(this.x+7 - s*6, this.y-5, -90).addChildTo(this.gameScene);
-                gls2.ShotBullet(this.x+7 + s*6, this.y-5, -90).addChildTo(this.gameScene);
+                var sb;
+                sb = gls2.ShotBullet.fire(this.x-7 - s*6, this.y-5, -90);
+                if (sb !== null) sb.addChildTo(this.gameScene);
+                sb = gls2.ShotBullet.fire(this.x+7 + s*6, this.y-5, -90);
+                if (sb !== null) sb.addChildTo(this.gameScene);
             }
 
             if (kb.getKeyDown("x")) {
@@ -329,8 +330,8 @@ gls2.Bit = tm.createClass(
 
             // ショット
             if (this.player.fireShot) {
-                gls2.ShotBullet(g.x-4, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
-                gls2.ShotBullet(g.x+4, g.y, this.parent.rotation + this.rotation - 90).addChildTo(core.gameScene);
+                var sb = gls2.ShotBullet.fire(g.x, g.y, this.parent.rotation + this.rotation - 90);
+                if (sb !== null) sb.addChildTo(core.gameScene);
             }
         }
     },
