@@ -85,13 +85,16 @@ gls2.GameScene = tm.createClass(
     _createGround: function() {
         var g = this.ground = tm.app.CanvasElement().addChildTo(this);
         g.gx = g.gy = 0;
+        g.gx2 = g.gy2 = 0;
         g.direction = Math.PI * 0.5;
         g.speed = 1;
         g.dx = 0;
         g.dy = 0;
 
-        var c = 8 * 2;
-        var l = 8*Math.sqrt(3);
+        var c = 16 * 2;
+        var l = c/2*Math.sqrt(3);
+        var c2 = c*0.8;
+        var l2 = c2/2*Math.sqrt(3);
 
         g.update = function() {
             this.dx = Math.cos(this.direction) * this.speed;
@@ -104,6 +107,14 @@ gls2.GameScene = tm.createClass(
             this.gy += this.dy;
             while (l*2 < this.gy) this.gy -= l*2;
             while (this.gy < -l*2) this.gy += l*2;
+
+            this.gx2 += this.dx*0.8;
+            while (c2*3 < this.gx2) this.gx2 -= c2*3;
+            while (this.gx2 < -c2*3) this.gx2 += c2*3;
+
+            this.gy2 += this.dy*0.8;
+            while (l2*2 < this.gy2) this.gy2 -= l2*2;
+            while (this.gy2 < -l2*2) this.gy2 += l2*2;
         };
         g.blendMode = "lighter";
         g.draw = function(canvas) {
@@ -122,6 +133,24 @@ gls2.GameScene = tm.createClass(
                     canvas.line(x, y, x + c, y);
                     canvas.line(x, y, x - c/2, y + l);
                     canvas.line(x, y, x - c/2, y - l);
+                }
+            }
+            canvas.stroke();
+
+            canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba(128,128,128,1.0)" },
+                    { offset: 1.0, color: "rgba(128,128,128,0.5)" },
+                ])
+                .toStyle();
+            canvas.beginPath();
+            yy = 0;
+            for (var x = this.gx2-c2*3; x < SC_W+c2*3; x += c2*1.5) {
+                yy = (yy === 0) ? l2 : 0;
+                for (var y = this.gy2-l2*2 + yy; y < SC_H+l2*2; y += l2*2) {
+                    canvas.line(x, y, x + c2, y);
+                    canvas.line(x, y, x - c2/2, y + l2);
+                    canvas.line(x, y, x - c2/2, y - l2);
                 }
             }
             canvas.stroke();

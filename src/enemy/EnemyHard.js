@@ -42,6 +42,8 @@ gls2.EnemyHard.Heri1 = tm.createClass(
         this.hp = 2;
         this._sprite = _Sprite("tex1", 64, 64);
         this.boundingRadius = 24;
+
+        this.score = 100;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -78,6 +80,8 @@ gls2.EnemyHard.Heri2 = tm.createClass(
         this.hp = 3;
         this._sprite = _Sprite("tex1", 64, 64);
         this.boundingRadius = 24;
+
+        this.score = 300;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -111,6 +115,8 @@ gls2.EnemyHard.Tank1 = tm.createClass({
         this.isGround = true;
         this._sprite = _Sprite("tex1", 48, 48);
         this.boundingRadius = 24;
+
+        this.score = 300;
     },
     update: function() {
         switch (this.dir) {
@@ -177,6 +183,8 @@ gls2.EnemyHard.FighterM = tm.createClass(
         this._sprite.srcRect.height = 128;
         this.boundingWidth = 200;
         this.boundingHeight = 20;
+
+        this.score = 3000;
     },
     update: function() {
     },
