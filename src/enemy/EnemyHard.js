@@ -176,12 +176,12 @@ gls2.EnemyHard.FighterM = tm.createClass(
     setup: function() {
         this.name = "kurokawa";
         this.hp = 80;
-        this._sprite = _Sprite("tex1", 256, 128);
-        this._sprite.srcRect.x = 64;
-        this._sprite.srcRect.y = 128;
-        this._sprite.srcRect.width = 256;
-        this._sprite.srcRect.height = 128;
-        this.boundingWidth = 200;
+        this._sprite = _Sprite("tex1", 128, 128);
+        this._sprite.srcRect.x = 64*5;
+        this._sprite.srcRect.y = 64*2;
+        this._sprite.srcRect.width = 64*2;
+        this._sprite.srcRect.height = 64*2;
+        this.boundingWidth = 100;
         this.boundingHeight = 20;
 
         this.score = 3000;
