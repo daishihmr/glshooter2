@@ -8,6 +8,7 @@ http://daishihmr.github.io/glshooter2/ (Google Chrome専用)
 
  * tmlib.js + bulletml.jsのみで作る
  * 空中物・地上物の区別
+ * 早回し・遅回し
  * ショットとレーザーを撃ちわけ
  * ボム・オートボム・ハイパーシステム・大型機撃破時の弾消し
  * GPS(ゲットポイントシステム)
