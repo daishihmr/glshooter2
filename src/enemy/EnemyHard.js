@@ -119,7 +119,7 @@ gls2.EnemyHard.Tank1 = tm.createClass({
         this.score = 300;
     },
     update: function() {
-        switch (this.dir) {
+        switch (~~(this.dir/(Math.PI*0.25))) {
         case 0:
             this._sprite.setFrameIndex(16, 64, 64);
             break;
@@ -190,6 +190,9 @@ gls2.EnemyHard.FighterM = tm.createClass(
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
     },
 });
 gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();

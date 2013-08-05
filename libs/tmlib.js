@@ -10391,6 +10391,7 @@ tm.app = tm.app || {};
         {
             var index = this.children.indexOf(child);
             if (index != -1) {
+                this.children[index].parent = null;
                 this.children.splice(index, 1);
                 var e = tm.event.Event("removed");
                 child.dispatchEvent(e);

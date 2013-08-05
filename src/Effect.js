@@ -133,7 +133,6 @@ gls2.Effect.explodeGS = function(x, y, scene) {
             this.remove();
         })
         .addEventListener("enterframe", function() {
-            this.y -= 1.4;
             this.scaleX += 0.01;
             this.scaleY += 0.01;
         })
@@ -152,7 +151,7 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         .addEventListener("enterframe", function() {
             this.rotation += 2;
             this.x += 0.7;
-            this.y -= 0.7;
+            this.y -= 0.3;
             this.scaleX += 0.01;
             this.scaleY += 0.01;
         })
@@ -172,7 +171,7 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         .addEventListener("enterframe", function() {
             this.rotation -= 2;
             this.x -= 0.7;
-            this.y -= 0.7;
+            this.y -= 0.3;
             this.scaleX += 0.01;
             this.scaleY += 0.01;
         })
@@ -189,21 +188,25 @@ var noise;
 
 gls2.Effect.explodeM = function(x, y, scene) {
     gls2.playSound("soundExplode");
-    for (var i = 0, end = gls2.math.rand(5, 10); i < end; i++) {
+    for (var i = 0; i < 10; i++) {
         var e = gls2.Effect["explosion"].random()
             .clone()
             .addEventListener("animationend", function() {
                 this.remove();
             })
+            .addEventListener("enterframe", function() {
+                this.x += Math.cos(this.a) * 2;
+                this.y += Math.sin(this.a) * 2;
+                this.scaleX += 0.01;
+                this.scaleY += 0.01;
+            })
+            .setScale(0.7)
+            .setBlendMode(i%2===0?"lighter":"source-over")
             .setPosition(x, y)
-            .setRotation(Math.random() * 360)
             .gotoAndPlay();
+        e.a = Math.PI*2 * Math.random();
         e.isEffect = true;
-        // e.tweener.moveBy()
         e.addChildTo(scene);
-    }
-    for (var i = 0; i < 10; i++) {
-        gls2.Effect.genParticle(x, y, scene);
     }
 };
 

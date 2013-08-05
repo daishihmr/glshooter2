@@ -155,13 +155,11 @@ gls2.EnemySoft.Heri2 = tm.createClass(
 gls2.EnemySoft.Heri2 = gls2.EnemySoft.Heri2();
 
 /**
- * 右へ直進する戦車
- *
  * @class
  * @extends {gls2.EnemySoft}
  */
-gls2.EnemySoft.TankR = tm.createClass(
-/** @lends {gls2.EnemySoft.Tank1.prototype} */
+gls2.EnemySoft.Tank = tm.createClass(
+/** @lends {gls2.EnemySoft.Tank.prototype} */
 {
     superClass: gls2.EnemySoft,
     /** @constructs */
@@ -170,16 +168,17 @@ gls2.EnemySoft.TankR = tm.createClass(
     },
     setup: function() {
         attack(this, "basic2-0");
+        this.speed = 0.8;
         this.dir = 0;
     },
     update: function() {
-        this.x += 1;
+        this.x += Math.cos(this.dir) * this.speed;
+        this.y += Math.sin(this.dir) * this.speed;
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
     },
 });
-gls2.EnemySoft.TankR = gls2.EnemySoft.TankR();
 
 /**
  * 右下へ直進する戦車
@@ -188,7 +187,7 @@ gls2.EnemySoft.TankR = gls2.EnemySoft.TankR();
  * @extends {gls2.EnemySoft}
  */
 gls2.EnemySoft.TankRD = tm.createClass(
-/** @lends {gls2.EnemySoft.Tank1.prototype} */
+/** @lends {gls2.EnemySoft.TankRD.prototype} */
 {
     superClass: gls2.EnemySoft,
     /** @constructs */
@@ -197,11 +196,12 @@ gls2.EnemySoft.TankRD = tm.createClass(
     },
     setup: function() {
         attack(this, "basic2-0");
-        this.dir = 1;
+        this.speed = 0.7;
+        this.dir = Math.PI*0.25;
     },
     update: function() {
-        this.x += 0.7;
-        this.y += 0.7;
+        this.x += Math.cos(this.dir) * this.speed;
+        this.y += Math.sin(this.dir) * this.speed;
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
@@ -210,68 +210,13 @@ gls2.EnemySoft.TankRD = tm.createClass(
 gls2.EnemySoft.TankRD = gls2.EnemySoft.TankRD();
 
 /**
- * 下へ直進する戦車
- *
- * @class
- * @extends {gls2.EnemySoft}
- */
-gls2.EnemySoft.TankD = tm.createClass(
-/** @lends {gls2.EnemySoft.Tank1.prototype} */
-{
-    superClass: gls2.EnemySoft,
-    /** @constructs */
-    init: function() {
-        this.superInit();
-    },
-    setup: function() {
-        attack(this, "basic2-0");
-        this.dir = 2;
-    },
-    update: function() {
-        this.y += 1;
-        if (this.entered && !this.isInScreen()) {
-            this.remove();
-        }
-    },
-});
-gls2.EnemySoft.TankD = gls2.EnemySoft.TankD();
-
-/**
- * 左下へ直進する戦車
- *
- * @class
- * @extends {gls2.EnemySoft}
- */
-gls2.EnemySoft.TankLD = tm.createClass(
-/** @lends {gls2.EnemySoft.Tank1.prototype} */
-{
-    superClass: gls2.EnemySoft,
-    /** @constructs */
-    init: function() {
-        this.superInit();
-    },
-    setup: function() {
-        attack(this, "basic2-0");
-        this.dir = 3;
-    },
-    update: function() {
-        this.x -= 0.7;
-        this.y += 0.7;
-        if (this.entered && !this.isInScreen()) {
-            this.remove();
-        }
-    },
-});
-gls2.EnemySoft.TankLD = gls2.EnemySoft.TankLD();
-
-/**
  * 左へ直進する戦車
  *
  * @class
  * @extends {gls2.EnemySoft}
  */
 gls2.EnemySoft.TankL = tm.createClass(
-/** @lends {gls2.EnemySoft.Tank1.prototype} */
+/** @lends {gls2.EnemySoft.TankL.prototype} */
 {
     superClass: gls2.EnemySoft,
     /** @constructs */
@@ -280,10 +225,12 @@ gls2.EnemySoft.TankL = tm.createClass(
     },
     setup: function() {
         attack(this, "basic2-0");
-        this.dir = 4;
+        this.speed = 1.0;
+        this.dir = Math.PI;
     },
     update: function() {
-        this.x -= 1;
+        this.x += Math.cos(this.dir) * this.speed;
+        this.y += Math.sin(this.dir) * this.speed;
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
@@ -294,7 +241,7 @@ gls2.EnemySoft.TankL = gls2.EnemySoft.TankL();
 /**
  * 中型戦闘機
  */
-gls2.EnemySoft.MiddleFighter = tm.createClass(
+gls2.EnemySoft.MiddleFighter1 = tm.createClass(
 {
     superClass: gls2.EnemySoft,
     init: function() {
@@ -303,13 +250,19 @@ gls2.EnemySoft.MiddleFighter = tm.createClass(
     setup: function() {
         this.tweener
             .clear()
-            .moveBy(0, SC_H*0.5, 800, "easeOutQuad");
+            .moveBy(0, SC_H*0.5, 800, "easeOutQuad")
+            .call(function() {
+                attack(this, "kurokawa-1");
+            }.bind(this));
     },
     update: function() {
-
+        this.y += 1.0;
+        if (this.entered && !this.isInScreen()) {
+            this.remove();
+        }
     },
 })
-gls2.EnemySoft.MiddleFighter = gls2.EnemySoft.MiddleFighter();
+gls2.EnemySoft.MiddleFighter1 = gls2.EnemySoft.MiddleFighter1();
 
 })();
 

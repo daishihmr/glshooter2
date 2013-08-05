@@ -130,9 +130,10 @@ gls2.Enemy = tm.createClass(
             } else if (r === 2) {
                 this.gameScene.println("ETR reaction gone.")
             }
-            this.remove();
 
             this.stage.onDestroyEnemy(this);
+
+            this.remove();
 
             return true;
         } else {

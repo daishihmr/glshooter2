@@ -60,6 +60,7 @@ gls2.Player = tm.createClass(
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
+        this.boundingRadius = 2;
         this.altitude = 10;
 
         this.laser = gls2.Laser(this, {
@@ -125,6 +126,8 @@ gls2.Player = tm.createClass(
         this.hyperCircle1.update = function() {
             this.rotation -= 2;
         };
+
+        if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
     },
 
     /** @protected */
@@ -152,7 +155,11 @@ gls2.Player = tm.createClass(
     fireLaser: false,
 
     update: function(app) {
-        if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
+        if (this.muteki) {
+            this.visible = app.frame % 2 === 0;
+        } else {
+            this.visible = true;
+        }
 
         var kb = app.keyboard;
         if (this.controllable) {
@@ -210,7 +217,9 @@ gls2.Player = tm.createClass(
                 if (false) {
                     // TODO ハイパー
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
-                    gls2.Bomb(this, this.gameScene).setPosition(Math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3));
+                    gls2.Bomb(this, this.gameScene)
+                        .setPosition(Math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
+                        .addChildTo(this.gameScene);
                 }
             }
         }
@@ -228,6 +237,11 @@ gls2.Player = tm.createClass(
             backfireParticle.clone(20).setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
             backfireParticle.clone(20).setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
         }
+    },
+
+    damage: function() {
+        this.fireShot = false;
+        this.fireLaser = false;
     },
 
     /** @protected */
