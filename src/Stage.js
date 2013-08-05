@@ -90,21 +90,25 @@ gls2.Stage1 = tm.createClass({
             this[this.index] = unit;
         };
 
+        this.at.add(  0, function() {
+            this.gameScene.ground.direction = Math.PI*0.5;
+            this.gameScene.ground.speed = 1;
+        });
         this.at.add(200, "tankRD-center");
         this.at.add(200, "tankRD-left");
         this.at.add( 20, "heri1-right");
         this.at.add( 60, "heri1-center");
         this.at.add( 60, "heri1-left");
         this.at.add( 60, "tankL-top");
-        this.at.add(100, "heri1-right");
-        this.at.add(100, "tankRD-center");
-        this.at.add(100, "heri1-center");
-        this.at.add(100, "heri1-left");
-        this.at.add(100, "heri1-center");
+        this.at.add( 50, "heri1-right");
+        this.at.add( 20, "tankRD-center");
+        this.at.add( 80, "heri1-center");
+        this.at.add( 50, "heri1-left");
+        this.at.add( 50, "heri1-center");
         this.at.add( 50, "fighter-m-1");
         this.at.add( 50, "fighter-m-3");
         this.at.add( 50, "fighter-m-5");
-        this.at.add(100, "heri1-right");
+        this.at.add( 70, "heri1-right");
         this.at.add( 20, "heri1-center");
         this.at.add( 20, "heri1-left");
         this.at.add( 20, "tankL-top");
@@ -119,7 +123,10 @@ gls2.Stage1 = tm.createClass({
         this.at.add( 50, "heri1-left");
         this.at.add( 20, "tankL-top");
         this.at.add( 50, "heri1-right");
-        this.at.add(120, "fighter-m-0");
+        this.at.add(  1, function() {
+            this.gameScene.ground.tweener.clear().to({speed:5}, 5000, "easeInOutQuad");
+        });
+        this.at.add(100, "fighter-m-0");
         this.at.add( 50, "fighter-m-2");
         this.at.add( 50, "fighter-m-4");
         this.at.add( 50, "fighter-m-6");
@@ -127,16 +134,14 @@ gls2.Stage1 = tm.createClass({
         this.at.add( 50, "fighter-m-2");
     },
 
-    onenterframe: function() {
-        if (frame === 0) {
-            this.gameScene.ground.direction = Math.PI*0.5;
-            this.gameScene.ground.speed = 1;
-        }
-    },
-
     getEnemyUnit: function(frame) {
-        if (this.at[frame] !== undefined) {
-            return gls2.EnemyUnit[this.at[frame]];
+        var data = this.at[frame];
+        if (data === undefined) {
+            return null;
+        } else if (gls2.EnemyUnit[data] !== undefined){
+            return gls2.EnemyUnit[data];
+        } else if (typeof(data) === "function") {
+            data.call(this);
         }
 
         return null;
