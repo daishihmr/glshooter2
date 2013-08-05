@@ -140,7 +140,7 @@ gls2.Stage1 = tm.createClass({
             return null;
         } else if (gls2.EnemyUnit[data] !== undefined){
             return gls2.EnemyUnit[data];
-        } else {
+        } else if (typeof(data) === "function") {
             data.call(this);
         }
 
