@@ -42,6 +42,8 @@ gls2.EnemyHard.Heri1 = tm.createClass(
         this.hp = 2;
         this._sprite = _Sprite("tex1", 64, 64);
         this.boundingRadius = 24;
+
+        this.score = 100;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -78,6 +80,8 @@ gls2.EnemyHard.Heri2 = tm.createClass(
         this.hp = 3;
         this._sprite = _Sprite("tex1", 64, 64);
         this.boundingRadius = 24;
+
+        this.score = 300;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -111,9 +115,11 @@ gls2.EnemyHard.Tank1 = tm.createClass({
         this.isGround = true;
         this._sprite = _Sprite("tex1", 48, 48);
         this.boundingRadius = 24;
+
+        this.score = 300;
     },
     update: function() {
-        switch (this.dir) {
+        switch (~~(this.dir/(Math.PI*0.25))) {
         case 0:
             this._sprite.setFrameIndex(16, 64, 64);
             break;
@@ -170,18 +176,23 @@ gls2.EnemyHard.FighterM = tm.createClass(
     setup: function() {
         this.name = "kurokawa";
         this.hp = 80;
-        this._sprite = _Sprite("tex1", 256, 128);
-        this._sprite.srcRect.x = 64;
-        this._sprite.srcRect.y = 128;
-        this._sprite.srcRect.width = 256;
-        this._sprite.srcRect.height = 128;
-        this.boundingWidth = 200;
+        this._sprite = _Sprite("tex1", 128, 128);
+        this._sprite.srcRect.x = 64*5;
+        this._sprite.srcRect.y = 64*2;
+        this._sprite.srcRect.width = 64*2;
+        this._sprite.srcRect.height = 64*2;
+        this.boundingWidth = 100;
         this.boundingHeight = 20;
+
+        this.score = 3000;
     },
     update: function() {
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
     },
 });
 gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();

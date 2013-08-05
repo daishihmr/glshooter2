@@ -41,29 +41,28 @@ gls2.ScoreLabel = tm.createClass({
         this.context.globalCompositeOperation = "lighter";
 
         var text;
-        this.setText("16px Orbitron", "left", "top");
-        var score = (this.gameScene.score + "");
-        if (score.indexOf(".") !== -1) {
-            score = score.substring(0, score.indexOf("."));
-        }
-        score = score.padding(16, "0");
+        this.setText("20px 'Ubuntu Mono'", "right", "top");
+        score = ("" + Math.floor(this.gameScene.score)).padding(16, " ");
         text = "";
         for (var i = 0; i < score.length; i += 4) {
             text += score.substring(i, i+4) + " ";
         }
-        this.fillText(text, 5, 5);
+        this.fillText(text, SC_W*0.4, 5);
 
-        this.setText("14px Orbitron", "left", "top");
-        score = (~~this.gameScene.baseScore + "").padding(8, "0");
+        this.setText("18px 'Ubuntu Mono'", "right", "top");
+        score = ("+" + Math.floor(this.gameScene.baseScore)).padding(8, " ");
         text = "";
         for (var i = 0; i < score.length; i += 4) {
             text += score.substring(i, i+4) + " ";
         }
-        this.fillText(text, 5, 22);
+        this.fillText(text, SC_W*0.4, 22);
+
+        this.setText("bold 18px Orbitron", "left", "top");
+        this.strokeText("max " + ~~this.gameScene.maxComboCount + " hit", 10, 85);
 
         if (this.gameScene.comboCount > 0) {
             this.setText("bold 40px Orbitron", "left", "top");
-            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 85);
+            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 100);
         }
 
     },

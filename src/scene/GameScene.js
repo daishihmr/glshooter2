@@ -1,7 +1,5 @@
 (function() {
 
-var SINGLETON = null;
-
 /**
  * @class
  * @extends {gls2.Scene}
@@ -19,14 +17,24 @@ gls2.GameScene = tm.createClass(
     baseScore: 0,
     /** コンボ数 */
     comboCount: 0,
+    /** maxコンボ数 */
+    maxComboCount: 0,
     /** コンボゲージ */
     comboGauge: 0,
 
     stage: null,
     ground: null,
     zanki: 3,
+
+    /** 現在の保有ボム数 */
     bomb: 0,
-    bombMax: 3,
+    /** ボムスロット数 */
+    bombMax: 0,
+    /** ボムスロット初期数数 */
+    bombMaxInitial: 3,
+    /** ボムスロット最大数 */
+    bombMaxMax: 6,
+
     groundLayer: null,
     playerLayer: null,
     enemyLayer: null,
@@ -45,10 +53,10 @@ gls2.GameScene = tm.createClass(
     rank: 0,
 
     init: function() {
-        if (SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
+        if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
 
         this.superInit();
-        SINGLETON = this;
+        gls2.GameScene.SINGLETON = this;
 
         this.scoreLabel = gls2.ScoreLabel(this);
 
@@ -85,13 +93,16 @@ gls2.GameScene = tm.createClass(
     _createGround: function() {
         var g = this.ground = tm.app.CanvasElement().addChildTo(this);
         g.gx = g.gy = 0;
+        g.gx2 = g.gy2 = 0;
         g.direction = Math.PI * 0.5;
         g.speed = 1;
         g.dx = 0;
         g.dy = 0;
 
-        var c = 8 * 2;
-        var l = 8*Math.sqrt(3);
+        var c = 16 * 2;
+        var l = c/2*Math.sqrt(3);
+        var c2 = c*0.8;
+        var l2 = c2/2*Math.sqrt(3);
 
         g.update = function() {
             this.dx = Math.cos(this.direction) * this.speed;
@@ -104,6 +115,14 @@ gls2.GameScene = tm.createClass(
             this.gy += this.dy;
             while (l*2 < this.gy) this.gy -= l*2;
             while (this.gy < -l*2) this.gy += l*2;
+
+            this.gx2 += this.dx*0.8;
+            while (c2*3 < this.gx2) this.gx2 -= c2*3;
+            while (this.gx2 < -c2*3) this.gx2 += c2*3;
+
+            this.gy2 += this.dy*0.8;
+            while (l2*2 < this.gy2) this.gy2 -= l2*2;
+            while (this.gy2 < -l2*2) this.gy2 += l2*2;
         };
         g.blendMode = "lighter";
         g.draw = function(canvas) {
@@ -125,6 +144,24 @@ gls2.GameScene = tm.createClass(
                 }
             }
             canvas.stroke();
+
+            canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba(128,128,128,1.0)" },
+                    { offset: 1.0, color: "rgba(128,128,128,0.5)" },
+                ])
+                .toStyle();
+            canvas.beginPath();
+            yy = 0;
+            for (var x = this.gx2-c2*3; x < SC_W+c2*3; x += c2*1.5) {
+                yy = (yy === 0) ? l2 : 0;
+                for (var y = this.gy2-l2*2 + yy; y < SC_H+l2*2; y += l2*2) {
+                    canvas.line(x, y, x + c2, y);
+                    canvas.line(x, y, x - c2/2, y + l2);
+                    canvas.line(x, y, x - c2/2, y - l2);
+                }
+            }
+            canvas.stroke();
         };
     },
 
@@ -140,6 +177,7 @@ gls2.GameScene = tm.createClass(
         } else if (child instanceof gls2.BackfireParticle
             || child instanceof gls2.ShotBullet
             || child instanceof gls2.Laser
+            || child instanceof gls2.Bomb
             || child.isEffect) {
             this.effectLayer0.addChild(child);
         } else if (child instanceof gls2.Particle) {
@@ -180,6 +218,11 @@ gls2.GameScene = tm.createClass(
     },
 
     onexitframe: function(app) {
+        if (this.player.controllable === false) {
+            gls2.Danmaku.erase();
+        }
+
+
         var enemies;
 
         // ショットvs敵
@@ -190,10 +233,11 @@ gls2.GameScene = tm.createClass(
                 var e = enemies[i];
                 var shot = shots[j];
                 if (gls2.Collision.isHit(e, shot)) {
-                    shot.remove();
                     shot.genParticle(1);
+                    shot.remove();
                     if (e.damage(shot.attackPower)) {
                         this.comboCount += 1;
+                        this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
                         this.comboGauge = 1;
                         this.baseScore += e.score;
                         this.addScore(this.baseScore);
@@ -218,6 +262,7 @@ gls2.GameScene = tm.createClass(
                     laser.setHitY(e.y + e.boundingHeightBottom);
                     if (e.damage(laser.attackPower)) {
                         this.comboCount += 1;
+                        this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
                         this.comboGauge = 1;
                         this.baseScore += e.score;
                         this.addScore(this.baseScore);
@@ -243,11 +288,13 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(e, aura)) {
                     if(e.damage(laser.attackPower)) {
                         this.comboCount += 1;
+                        this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
                         this.comboGauge = 1;
                         this.baseScore += e.score;
                         this.addScore(this.baseScore);
                     } else {
                         this.comboCount += 0.1;
+                        this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
                         this.comboGauge = Math.max(this.comboGauge, 0.1);
                     }
                     laser.genAuraParticle(2, (this.player.x + e.x) * 0.5, (this.player.y + e.y) * 0.5);
@@ -256,7 +303,9 @@ gls2.GameScene = tm.createClass(
         }
 
         // ボムvs敵
-        if (gls2.Bomb.activeList.length > 0) {
+        if (this.isBombActive) {
+            // すべての弾を消す
+            gls2.Danmaku.erase();
             var enemies = [].concat(gls2.Enemy.activeList);
             for (var i = 0, ilen = enemies.length; i < ilen; i++) {
                 var e = enemies[i];
@@ -270,9 +319,37 @@ gls2.GameScene = tm.createClass(
 
         // TODO? ショットvs敵弾
 
-        // TODO 敵弾vs自機
+        if (this.player.muteki === false) {
+    
+            // 敵弾vs自機
+            for (var i = 0, len = gls2.Bullet.activeList.length; i < len; i++) {
+                var b = gls2.Bullet.activeList[i];
+                if (gls2.Collision.isHit(b, this.player)) {
+                    this.player.damage();
+                    if (this.bomb > 0) {
+                        gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
+                    } else {
+                        this.miss();
+                    }
+                    break;
+                }
+            }
 
-        // TODO 敵vs自機
+            // 敵vs自機
+            for (var i = 0, len = gls2.Enemy.activeList.length; i < len; i++) {
+                var e = gls2.Enemy.activeList[i];
+                if (e.isGround) continue;
+                if (gls2.Collision.isHit(e, this.player)) {
+                    this.player.damage();
+                    if (this.bomb > 0) {
+                        gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
+                    } else {
+                        this.miss();
+                    }
+                    break;
+                }
+            }
+        }
     },
 
     openPauseMenu: function(defaultValue) {
@@ -348,6 +425,23 @@ gls2.GameScene = tm.createClass(
         this.openSetting(1);
     },
 
+    openContinueMenu: function() {
+        this.openDialogMenu("CONTINUE?", [ "yes", "no" ], this.onResultContinue, 0, [
+            "システムを再起動して出撃します",
+            "作戦失敗。帰還します",
+        ], false);
+    },
+    onResultContinue: function(result) {
+        switch (result) {
+        case 0: // yes
+            this.gameContinue();
+            break;
+        case 1: // no
+            this.gameOver();
+            break;
+        }
+    },
+
     draw: function(canvas) {
         if (this.stage === null) return;
         canvas.clearColor(this.stage.background, 0, 0);
@@ -365,6 +459,9 @@ gls2.GameScene = tm.createClass(
     gameStart: function(playerType) {
         this.consoleWindow.clearBuf().clear();
 
+        this.zanki = 3;
+        this.bomb = this.bombMax = this.bombMaxInitial;
+
         if (this.player !== null) this.player.remove();
         gls2.Enemy.clearAll();
         gls2.ShotBullet.clearAll();
@@ -381,20 +478,19 @@ gls2.GameScene = tm.createClass(
 
     launch: function() {
         this.player
-            .setPosition(SC_W*0.5, SC_H+32)
+            .setPosition(SC_W*0.5, SC_H+100)
             .setFrameIndex(3)
             .addChildTo(this);
         this.player.controllable = false;
         this.player.muteki = true;
         this.player.tweener
             .clear()
-            .wait(30)
-            .moveBy(0, -120)
-            .wait(120)
+            .wait(1000)
+            .moveBy(0, -180, 1000, "easeOutBack")
             .call(function() {
                 this.controllable = true;
             }.bind(this.player))
-            .wait(120)
+            .wait(2000)
             .call(function() {
                 this.muteki = false;
             }.bind(this.player));
@@ -402,17 +498,28 @@ gls2.GameScene = tm.createClass(
     },
 
     miss: function() {
-        // TODO ミスエフェクト
+        // ミスエフェクト
+        gls2.Effect.explodeS(this.player.x, this.player.y, this);
+
+        this.player.controllable = false;
         this.player.remove();
         this.zanki -= 1;
         if (this.zanki > 0) {
-            this.launch();
+            this.tweener.clear().wait(1000).call(function() {
+                this.bombMax = Math.min(this.bombMax + 1, this.bombMaxMax);
+                this.launch();
+            }.bind(this));
         } else {
-            // TODO コンティニュー確認画面へ
+            // コンティニュー確認画面へ
+            this.tweener.clear().wait(2000).call(function() {
+                this.openContinueMenu();
+            }.bind(this));
         }
     },
 
     gameContinue: function() {
+        this.zanki = 3;
+        this.bomb = this.bombMax = this.bombMaxInitial;
         this.launch();
     },
 
@@ -421,7 +528,8 @@ gls2.GameScene = tm.createClass(
     },
 
     gameOver: function() {
-        // TODO ゲームオーバー画面へ
+        // ゲームオーバー画面へ
+        this.app.replaceScene(gls2.GameOverScene());
     },
 
     gameClear: function() {
@@ -446,5 +554,7 @@ gls2.GameScene = tm.createClass(
     },
 
 });
+
+gls2.GameScene.SINGLETON = null;
 
 })();

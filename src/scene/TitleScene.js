@@ -25,7 +25,7 @@ gls2.TitleScene = tm.createClass({
 
         this.addEventListener("enter", function() {
             this.gameStarted = false;
-            this.highScoreLabel.text = "HIGH SCORE: " + gls2.core.highScore;
+            this.highScoreLabel.text = "HIGH SCORE: " + Math.floor(gls2.core.highScore);
         });
     },
 

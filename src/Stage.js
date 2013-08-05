@@ -18,36 +18,36 @@ gls2.Stage = tm.createClass(
 
     background: null,
 
-    init: function(gameScene, player) {
+    init: function(gameScene) {
         var scene = this.gameScene = gameScene;
         this.player = gameScene.player;
-        scene.ground.direction = Math.PI*0.5;
-        scene.ground.speed = 0.6;
 
-        this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-            { offset:0, color:"#338" },
-            { offset:1, color:"#114" }
-        ]).toStyle();
+        this.setupBackground();
 
         this.frame = 0;
     },
 
-    update: function() {
-        var scene = this.gameScene;
+    setupBackground: function() {
+        this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
+            { offset:0, color:"#338" },
+            { offset:1, color:"#114" }
+        ]).toStyle();
+    },
 
-        // 敵を出現させる
-        var keys = [];
-        for (var key in gls2.EnemyUnit) {
-            keys.push(key);
-        }
-        var unit = gls2.EnemyUnit[keys.random()];
-        if (this.frame > 200 && this.frame%30 === 0) {
-            for (var i = 0, end = unit.length; i < end; i++) {
+    update: function() {
+        var unit = this.getEnemyUnit(this.frame);
+        if (unit !== null) {
+            for (var i = 0; i < unit.length; i++) {
                 this.launchEnemy(unit[i]);
             }
         }
 
         this.frame += 1;
+    },
+
+    getEnemyUnit: function() {
+        // for override
+        return null;
     },
 
     launchEnemy: function(data) {
@@ -71,5 +71,77 @@ gls2.Stage = tm.createClass(
 });
 
 gls2.Stage.create = function(gameScene, stageNumber) {
-    return gls2.Stage(gameScene);
+    if (stageNumber === 0) {
+        return gls2.Stage1(gameScene);
+    }
 };
+
+gls2.Stage1 = tm.createClass({
+    superClass: gls2.Stage,
+
+    at: null,
+
+    init: function(gameScene) {
+        this.superInit(gameScene);
+        this.at = {};
+        this.at.index = 0;
+        this.at.add = function(f, unit) {
+            this.index += f;
+            this[this.index] = unit;
+        };
+
+        this.at.add(200, "tankRD-center");
+        this.at.add(200, "tankRD-left");
+        this.at.add( 20, "heri1-right");
+        this.at.add( 60, "heri1-center");
+        this.at.add( 60, "heri1-left");
+        this.at.add( 60, "tankL-top");
+        this.at.add(100, "heri1-right");
+        this.at.add(100, "tankRD-center");
+        this.at.add(100, "heri1-center");
+        this.at.add(100, "heri1-left");
+        this.at.add(100, "heri1-center");
+        this.at.add( 50, "fighter-m-1");
+        this.at.add( 50, "fighter-m-3");
+        this.at.add( 50, "fighter-m-5");
+        this.at.add(100, "heri1-right");
+        this.at.add( 20, "heri1-center");
+        this.at.add( 20, "heri1-left");
+        this.at.add( 20, "tankL-top");
+        this.at.add( 20, "tankRD-left");
+        this.at.add( 50, "heri1-right");
+        this.at.add( 50, "heri1-center");
+        this.at.add( 50, "heri1-center");
+        this.at.add( 20, "tankRD-center");
+        this.at.add( 20, "tankRD-left");
+        this.at.add( 50, "heri1-right");
+        this.at.add( 50, "heri1-center");
+        this.at.add( 50, "heri1-left");
+        this.at.add( 20, "tankL-top");
+        this.at.add( 50, "heri1-right");
+        this.at.add(120, "fighter-m-0");
+        this.at.add( 50, "fighter-m-2");
+        this.at.add( 50, "fighter-m-4");
+        this.at.add( 50, "fighter-m-6");
+        this.at.add( 50, "fighter-m-4");
+        this.at.add( 50, "fighter-m-2");
+    },
+
+    onenterframe: function() {
+        if (frame === 0) {
+            this.gameScene.ground.direction = Math.PI*0.5;
+            this.gameScene.ground.speed = 1;
+        }
+    },
+
+    getEnemyUnit: function(frame) {
+        if (this.at[frame] !== undefined) {
+            return gls2.EnemyUnit[this.at[frame]];
+        }
+
+        return null;
+    },
+
+
+
+});

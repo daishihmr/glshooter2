@@ -1,52 +1,6 @@
 (function() {
 
-gls2.Bullet = tm.createClass({
-    superClass: tm.app.Sprite,
-    init: function() {
-        this.superInit("tex0", 20, 20);
-        this.addEventListener("removed", function() {
-            bulletPool.push(this);
-            var idx = activeList.indexOf(this);
-            if (idx !== -1) activeList.splice(idx, 1);
-
-            this.clearEventListener("enterframe");
-        });
-    },
-    destroy: function() {
-        // TODO 弾消しエフェクト
-        tm.app.CircleShape(20*2, 20*2, {
-            strokeStyle: "rgba(0,0,0,0)",
-            fillStyle: tm.graphics.RadialGradient(20,20,0,20,20,20)
-                .addColorStopList([
-                    { offset: 0.0, color: "rgba(255,255,255,0.0)" },
-                    { offset: 0.5, color: "rgba(255,255,255,0.0)" },
-                    { offset: 1.0, color: "rgba(255,255,255,1.0)" },
-                ])
-                .toStyle()
-        })
-        .setBlendMode("lighter")
-        .setPosition(this.x, this.y)
-        .setScale(0.1, 0.1)
-        .addChildTo(this.parent)
-        .update = function() {
-            this.scaleX += 0.1;
-            this.scaleY += 0.1;
-            this.alpha *= 0.9;
-            if (this.alpha < 0.001) {
-                this.remove();
-            }
-        };
-        this.remove();
-    },
-});
-
 gls2.Danmaku = {};
-gls2.Danmaku.erase = function() {
-    var bullets = [].concat(activeList);
-    for (var i = 0, len = bullets.length; i < len; i++) {
-        bullets[i].destroy();
-    }
-};
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 255; i++) {
         bulletPool.push(gls2.Bullet());
@@ -75,7 +29,18 @@ gls2.Danmaku.setup = function() {
     };
     config.speedRate = 3;
 };
-
+/**
+ * エフェクト付きの弾幕全消し
+ */
+gls2.Danmaku.erase = function() {
+    var bullets = [].concat(activeList);
+    for (var i = 0, len = bullets.length; i < len; i++) {
+        bullets[i].destroy();
+    }
+};
+/**
+ * エフェクトなしの弾幕全消し
+ */
 gls2.Danmaku.clearAll = function() {
     var copied = [].concat(activeList);
     for (var i = 0, end = copied.length; i < end; i++) {
@@ -83,10 +48,20 @@ gls2.Danmaku.clearAll = function() {
     }
 };
 
+/** bulletml.js DSL 名前空間 */
 var $ = bulletml.dsl;
 
+// 弾速
+var $spd0 = function(v) { return $.speed("$rank*0.2 + 0.4 + (" + v + "*0.1)" ); };
+var $spd1 = function(v) { return $.speed("$rank*0.2 + 0.6 + (" + v + "*0.1)" ); };
+var $spd2 = function(v) { return $.speed("$rank*0.2 + 0.8 + (" + v + "*0.1)" ); };
+var $spd3 = function(v) { return $.speed("$rank*0.2 + 1.0 + (" + v + "*0.1)" ); };
+var $spd4 = function(v) { return $.speed("$rank*0.2 + 1.2 + (" + v + "*0.1)" ); };
+var $spd5 = function(v) { return $.speed("$rank*0.2 + 1.4 + (" + v + "*0.1)" ); };
+var $spd6 = function(v) { return $.speed("$rank*0.2 + 1.6 + (" + v + "*0.1)" ); };
+
 /** 自機狙い弾 */
-var fire0 = $.fire($.direction(0), $.bullet());
+var fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3(0), $.bullet()) };
 
 gls2.Danmaku["basic0-0"] = new bulletml.Root({
     top: $.action([
@@ -131,6 +106,73 @@ gls2.Danmaku["basic2-0"] = new bulletml.Root({
             fire0,
         ]),
     ]),
+});
+
+gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
+    top: $.action([
+        $.repeat(3, [
+            $.repeat(2, [
+                $.fire($.direction(-45), $spd2("$loop.count"), $.bullet, $.offsetX(-20), $.autonomy(true)),
+                $.fire($.direction(-15), $spd2("$loop.count"), $.bullet, $.offsetX(-20), $.autonomy(true)),
+                $.fire($.direction( 15), $spd2("$loop.count"), $.bullet, $.offsetX(-20), $.autonomy(true)),
+                $.fire($.direction( 45), $spd2("$loop.count"), $.bullet, $.offsetX(-20), $.autonomy(true)),
+                $.fire($.direction(-45), $spd2("$loop.count"), $.bullet, $.offsetX( 20), $.autonomy(true)),
+                $.fire($.direction(-15), $spd2("$loop.count"), $.bullet, $.offsetX( 20), $.autonomy(true)),
+                $.fire($.direction( 15), $spd2("$loop.count"), $.bullet, $.offsetX( 20), $.autonomy(true)),
+                $.fire($.direction( 45), $spd2("$loop.count"), $.bullet, $.offsetX( 20), $.autonomy(true)),
+            ]),
+            $.wait(60),
+        ]),
+    ]),
+});
+
+/**
+ * 弾クラス
+ * @class
+ */
+gls2.Bullet = tm.createClass(
+/** @lends gls2.Bullet.prototype */
+{
+    superClass: tm.app.Sprite,
+    init: function() {
+        this.superInit("tex0", 20, 20);
+
+        this.boundingRadius = 7;
+
+        this.addEventListener("removed", function() {
+            bulletPool.push(this);
+            var idx = activeList.indexOf(this);
+            if (idx !== -1) activeList.splice(idx, 1);
+
+            this.clearEventListener("enterframe");
+        });
+    },
+    destroy: function() {
+        // 弾消しエフェクト
+        tm.app.CircleShape(10*2, 10*2, {
+            strokeStyle: "rgba(0,0,0,0)",
+            fillStyle: tm.graphics.RadialGradient(10,10,0,10,10,10)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba(255,100,100,0.0)" },
+                    { offset: 0.3, color: "rgba(255,100,100,0.0)" },
+                    { offset: 1.0, color: "rgba(255,100,100,1.0)" },
+                ])
+                .toStyle()
+        })
+        .setBlendMode("lighter")
+        .setPosition(this.x, this.y)
+        .setScale(0.1, 0.1)
+        .addChildTo(this.parent)
+        .update = function() {
+            this.scaleX += 0.1;
+            this.scaleY += 0.1;
+            this.alpha *= 0.9;
+            if (this.alpha < 0.001) {
+                this.remove();
+            }
+        };
+        this.remove();
+    },
 });
 
 var bulletPool = [];
