@@ -35,7 +35,7 @@ gls2.Stage = tm.createClass(
     },
 
     update: function() {
-        var unit = this.getEnemyUnit(this.frame);
+        var unit = this.executeFrame(this.frame);
         if (unit !== null) {
             for (var i = 0; i < unit.length; i++) {
                 this.launchEnemy(unit[i]);
@@ -45,7 +45,7 @@ gls2.Stage = tm.createClass(
         this.frame += 1;
     },
 
-    getEnemyUnit: function() {
+    executeFrame: function(frame) {
         // for override
         return null;
     },
@@ -79,63 +79,59 @@ gls2.Stage.create = function(gameScene, stageNumber) {
 gls2.Stage1 = tm.createClass({
     superClass: gls2.Stage,
 
-    at: null,
+    seq: null,
 
     init: function(gameScene) {
         this.superInit(gameScene);
-        this.at = {};
-        this.at.index = 0;
-        this.at.add = function(f, unit) {
-            this.index += f;
-            this[this.index] = unit;
-        };
 
-        this.at.add(  0, function() {
+        this.seq = gls2.StageSequencer();
+
+        this.seq.add(  0, function() {
             this.gameScene.ground.direction = Math.PI*0.5;
             this.gameScene.ground.speed = 1;
         });
-        this.at.add(200, "tankRD-center");
-        this.at.add(200, "tankRD-left");
-        this.at.add( 20, "heri1-right");
-        this.at.add( 60, "heri1-center");
-        this.at.add( 60, "heri1-left");
-        this.at.add( 60, "tankL-top");
-        this.at.add( 50, "heri1-right");
-        this.at.add( 20, "tankRD-center");
-        this.at.add( 80, "heri1-center");
-        this.at.add( 50, "heri1-left");
-        this.at.add( 50, "heri1-center");
-        this.at.add( 50, "fighter-m-1");
-        this.at.add( 50, "fighter-m-3");
-        this.at.add( 50, "fighter-m-5");
-        this.at.add( 70, "heri1-right");
-        this.at.add( 20, "heri1-center");
-        this.at.add( 20, "heri1-left");
-        this.at.add( 20, "tankL-top");
-        this.at.add( 20, "tankRD-left");
-        this.at.add( 50, "heri1-right");
-        this.at.add( 50, "heri1-center");
-        this.at.add( 50, "heri1-center");
-        this.at.add( 20, "tankRD-center");
-        this.at.add( 20, "tankRD-left");
-        this.at.add( 50, "heri1-right");
-        this.at.add( 50, "heri1-center");
-        this.at.add( 50, "heri1-left");
-        this.at.add( 20, "tankL-top");
-        this.at.add( 50, "heri1-right");
-        this.at.add(  1, function() {
+        this.seq.add(200, "tankRD-center");
+        this.seq.add(200, "tankRD-left");
+        this.seq.add( 20, "heri1-right");
+        this.seq.add( 60, "heri1-center");
+        this.seq.add( 60, "heri1-left");
+        this.seq.add( 60, "tankL-top");
+        this.seq.add( 50, "heri1-right");
+        this.seq.add( 20, "tankRD-center");
+        this.seq.add( 80, "heri1-center");
+        this.seq.add( 50, "heri1-left");
+        this.seq.add( 50, "heri1-center");
+        this.seq.add( 50, "fighter-m-1");
+        this.seq.add( 50, "fighter-m-3");
+        this.seq.add( 50, "fighter-m-5");
+        this.seq.add( 70, "heri1-right");
+        this.seq.add( 20, "heri1-center");
+        this.seq.add( 20, "heri1-left");
+        this.seq.add( 20, "tankL-top");
+        this.seq.add( 20, "tankRD-left");
+        this.seq.add( 50, "heri1-right");
+        this.seq.add( 50, "heri1-center");
+        this.seq.add( 50, "heri1-center");
+        this.seq.add( 20, "tankRD-center");
+        this.seq.add( 20, "tankRD-left");
+        this.seq.add( 50, "heri1-right");
+        this.seq.add( 50, "heri1-center");
+        this.seq.add( 50, "heri1-left");
+        this.seq.add( 20, "tankL-top");
+        this.seq.add( 50, "heri1-right");
+        this.seq.add(  1, function() {
             this.gameScene.ground.tweener.clear().to({speed:5}, 5000, "easeInOutQuad");
         });
-        this.at.add(100, "fighter-m-0");
-        this.at.add( 50, "fighter-m-2");
-        this.at.add( 50, "fighter-m-4");
-        this.at.add( 50, "fighter-m-6");
-        this.at.add( 50, "fighter-m-4");
-        this.at.add( 50, "fighter-m-2");
+        this.seq.add(100, "fighter-m-0");
+        this.seq.add( 50, "fighter-m-2");
+        this.seq.add( 50, "fighter-m-4");
+        this.seq.add( 50, "fighter-m-6");
+        this.seq.add( 50, "fighter-m-4");
+        this.seq.add( 50, "fighter-m-2");
     },
 
-    getEnemyUnit: function(frame) {
-        var data = this.at[frame];
+    executeFrame: function(frame) {
+        var data = this.seq.get(frame);
         if (data === undefined) {
             return null;
         } else if (gls2.EnemyUnit[data] !== undefined){
@@ -149,4 +145,21 @@ gls2.Stage1 = tm.createClass({
 
 
 
+});
+
+gls2.StageSequencer = tm.createClass({
+    index: 0,
+    data: null,
+    init: function() {
+        this.data = {};
+    },
+
+    add: function(count, value) {
+        this.index += count;
+        this.data[this.index] = value;
+    },
+
+    get: function(frame) {
+        return this.data[frame];
+    },
 });

@@ -459,6 +459,7 @@ gls2.GameScene = tm.createClass(
     gameStart: function(playerType) {
         this.consoleWindow.clearBuf().clear();
 
+        this.score = 0;
         this.zanki = 3;
         this.bomb = this.bombMax = this.bombMaxInitial;
 
@@ -466,14 +467,29 @@ gls2.GameScene = tm.createClass(
         gls2.Enemy.clearAll();
         gls2.ShotBullet.clearAll();
         gls2.Danmaku.clearAll();
+        var copied = [].concat(this.effectLayer0.children);
+        for (var i = 0; i < copied.length; i++) {
+            copied[i].remove();
+        }
+        copied = [].concat(this.effectLayer1.children);
+        for (var i = 0; i < copied.length; i++) {
+            copied[i].remove();
+        }
 
         this.player = gls2.Player(this, playerType);
         this.startStage(0);
     },
 
     startStage: function(stageNumber) {
+        this.baseScore = 0;
+        this.comboCount = 0;
+        this.comboGauge = 0;
+        this.maxComboCount = 0;
+
         this.stage = gls2.Stage.create(this, stageNumber);
-        this.launch();
+        this.tweener.clear().wait(1000).call(function() {
+            this.launch();
+        }.bind(this));
     },
 
     launch: function() {
@@ -485,7 +501,6 @@ gls2.GameScene = tm.createClass(
         this.player.muteki = true;
         this.player.tweener
             .clear()
-            .wait(1000)
             .moveBy(0, -180, 1000, "easeOutBack")
             .call(function() {
                 this.controllable = true;
