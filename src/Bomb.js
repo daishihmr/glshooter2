@@ -59,6 +59,7 @@ gls2.Bomb = tm.createClass({
             this.gameScene.isBombActive = true;
             this.player.muteki = true;
             this.gameScene.bomb -= 1;
+            this.gameScene.println("drop 'BOMBER'.");
         });
         this.addEventListener("removed", function() {
             this.gameScene.isBombActive = false;

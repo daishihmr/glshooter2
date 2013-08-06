@@ -14,19 +14,19 @@ gls2.Danmaku.setup = function() {
         var b = bulletPool.shift(0);
         if (b) {
             activeList.push(b);
-            b.setFrameIndex((spec.frame === undefined) ? 3 : spec.frame);
+            b.setFrameIndex((spec.frame === undefined) ? 1 : spec.frame);
 
-            if (spec.needle) {
-                b.scaleX = 0.5;
-                b.scaleY = 2.0;
-                b.updateProperties = true;
-            } else {
+            if (spec.ball) {
                 b.scaleX = 0.8;
                 b.scaleY = 0.8;
                 b.updateProperties = false;
                 b.update = function() {
                     this.rotation += 15;
                 };
+            } else {
+                b.scaleX = 0.6;
+                b.scaleY = 1.2;
+                b.updateProperties = true;
             }
 
             return b;
@@ -116,19 +116,24 @@ gls2.Danmaku["basic2-0"] = new bulletml.Root({
 });
 
 gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
-    top: $.action([
+    top0: $.action([
         $.repeat(3, [
-            $.repeat(3, [
-                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({needle:true,frame:2}), $.offsetX(-30), $.autonomy(true)),
-                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({needle:true,frame:2}), $.offsetX(-30), $.autonomy(true)),
-                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({needle:true,frame:2}), $.offsetX(-30), $.autonomy(true)),
-                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({needle:true,frame:2}), $.offsetX(-30), $.autonomy(true)),
-                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({needle:true,frame:2}), $.offsetX( 30), $.autonomy(true)),
-                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({needle:true,frame:2}), $.offsetX( 30), $.autonomy(true)),
-                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({needle:true,frame:2}), $.offsetX( 30), $.autonomy(true)),
-                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({needle:true,frame:2}), $.offsetX( 30), $.autonomy(true)),
-            ]),
+            $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
+            $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
+            $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
+            $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
+            $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
+            $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
+            $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
+            $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
             $.wait(60),
+        ]),
+    ]),
+    top1: $.action([
+        $.repeat(9, [
+            $.fire($.direction(0), $spd4("$loop.count"), $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
+            $.fire($.direction(0), $spd4("$loop.count"), $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
+            $.wait(20),
         ]),
     ]),
 });

@@ -3,6 +3,8 @@ gls2.ScoreLabel = tm.createClass({
 
     gameScene: null,
 
+    consoleWindow: null,
+
     init: function(gameScene) {
         this.superInit("#scoreLabel");
 
@@ -12,6 +14,9 @@ gls2.ScoreLabel = tm.createClass({
 
         this.setText("20px Orbitron", "left", "top");
         this.fillStyle = "rgba(255,255,255,0.01)";
+
+        this.consoleWindow = gls2.ConsoleWindow(200);
+
     },
 
     update: function() {
@@ -35,6 +40,9 @@ gls2.ScoreLabel = tm.createClass({
         for (var i = 0; i < this.gameScene.zanki; i++) {
             this.drawTexture(tm.asset.AssetManager.get("tex1"), 64*3, 0, 64, 64, 5 + (i*32), 40, 32, 32);
         }
+
+        this.consoleWindow.update();
+        this.consoleWindow.draw(this);
     },
 
     draw: function() {
@@ -64,7 +72,6 @@ gls2.ScoreLabel = tm.createClass({
             this.setText("bold 40px Orbitron", "left", "top");
             this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 100);
         }
-
     },
 
 });

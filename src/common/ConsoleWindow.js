@@ -2,21 +2,17 @@
 gls2.ConsoleWindow = tm.createClass(
 /** @lends {gls2.ConsoleWindow.prototype} */
 {
-    superClass: tm.app.RectangleShape,
+    width: 0,
     label: null,
     buf: null,
+    age: 0,
     init: function(w) {
-        this.superInit(w, 64, {
-            fillStyle: "rgba(1,2,48,0.5)",
-            strokeStyle: "rgba(0,0,0,0)",
-        });
+        this.width = w;
         this.label = tm.app.Label("_", 10)
-            // .setFontFamily("'Consolas', 'Monaco', 'ＭＳ ゴシック'")
             .setAlign("left")
             .setBaseline("top")
             .setPosition(-this.width/2+4, -this.height/2+4)
-            .setFillStyle("rgba(255,255,255,0.5)")
-            .addChildTo(this);
+            .setFillStyle("rgba(255,255,255,0.5)");
         this.buf = [];
     },
     addLine: function(string) {
@@ -37,7 +33,7 @@ gls2.ConsoleWindow = tm.createClass(
     update: function(app) {
         var text = this.label.text;
         text = text.substring(0, text.length - 1);
-        if (app.frame % 2 === 0 && this.buf.length !== 0) {
+        if (this.buf.length !== 0) {
             if (this.buf[0] !== "") {
                 var c = this.buf[0][0];
                 this.buf[0] = this.buf[0].substring(1);
@@ -52,6 +48,26 @@ gls2.ConsoleWindow = tm.createClass(
                 text += "\n";
             }
         }
-        this.label.text = text + ((~~(app.frame/6) % 2) ? "_" : " ");
+        this.label.text = text + (this.age%2 === 0 ? "_" : " ");
+
+        this.age += 1;
     },
+    draw: function(canvas) {
+        canvas.save();
+
+        canvas.context.globalCompositeOperation = "source-over";
+
+        canvas.translate(SC_W-this.width-5, 5);
+        canvas.fillStyle = "rgba(1,2,48,0.5)";
+        canvas.fillRect(0, 0, this.width, 64);
+
+        canvas.translate(5, 5);
+        canvas.fillStyle = "rgba(255,255,255,0.5)";
+        canvas.setText(this.label.fontStyle, this.label.align, this.label.baseline);
+        this.label._lines.each(function(elm, i) {
+            canvas.fillText(elm, 0, this.label.textSize*i);
+        }.bind(this));
+
+        canvas.restore();
+    }
 });

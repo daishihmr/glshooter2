@@ -45,8 +45,6 @@ gls2.GameScene = tm.createClass(
 
     lastElement: null,
 
-    consoleWindow: null,
-
     scoreLabel: null,
 
     /** ランク(0.0～1.0) */
@@ -70,10 +68,6 @@ gls2.GameScene = tm.createClass(
         this.bulletLayer = tm.app.Object2D().addChildTo(this);
         this.labelLayer = tm.app.Object2D().addChildTo(this);
 
-        this.consoleWindow = gls2.ConsoleWindow(200)
-            .setPosition(SC_W - 100 - 5, 32 + 5)
-            .addChildTo(this.labelLayer);
-
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
 
         this.lastElement = tm.app.Object2D().addChildTo(this);
@@ -87,7 +81,7 @@ gls2.GameScene = tm.createClass(
     },
 
     println: function(string) {
-        this.consoleWindow.addLine(string);
+        this.scoreLabel.consoleWindow.addLine(string);
     },
 
     _createGround: function() {
@@ -457,7 +451,7 @@ gls2.GameScene = tm.createClass(
     },
 
     gameStart: function(playerType) {
-        this.consoleWindow.clearBuf().clear();
+        this.scoreLabel.consoleWindow.clearBuf().clear();
 
         this.score = 0;
         this.zanki = 3;
@@ -481,6 +475,10 @@ gls2.GameScene = tm.createClass(
     },
 
     startStage: function(stageNumber) {
+        this.println("3.");
+        this.println("2.");
+        this.println("1.");
+
         this.baseScore = 0;
         this.comboCount = 0;
         this.comboGauge = 0;
@@ -493,6 +491,8 @@ gls2.GameScene = tm.createClass(
     },
 
     launch: function() {
+        this.println("Let's go!");
+
         this.player
             .setPosition(SC_W*0.5, SC_H+100)
             .setFrameIndex(3)
@@ -515,6 +515,7 @@ gls2.GameScene = tm.createClass(
     miss: function() {
         // ミスエフェクト
         gls2.Effect.explodeS(this.player.x, this.player.y, this);
+        this.println("I was shot down.");
 
         this.player.controllable = false;
         this.player.remove();
@@ -533,6 +534,8 @@ gls2.GameScene = tm.createClass(
     },
 
     gameContinue: function() {
+        this.println("System rebooted.");
+
         this.zanki = 3;
         this.bomb = this.bombMax = this.bombMaxInitial;
         this.launch();
@@ -565,6 +568,7 @@ gls2.GameScene = tm.createClass(
 
     extendZanki: function() {
         // TODO エクステンドエフェクト
+        this.println("Extended.");
         this.zanki += 1;
     },
 
