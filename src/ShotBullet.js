@@ -11,7 +11,6 @@ gls2.ShotBullet = tm.createClass({
         var SZ = 64;
         this.superInit("shotbullet", SZ, SZ);
         this.blendMode = "lighter";
-        this.setScale(1.5, 1.5);
 
         this.addEventListener("added", function() {
             activeList.push(this);
@@ -21,8 +20,6 @@ gls2.ShotBullet = tm.createClass({
             if (idx !== -1) activeList.splice(idx, 1);
             pool.push(this);
         });
-
-        this.boundingRadius = 32;
 
         if (origParticle === null) {
             var size = 16;
@@ -39,9 +36,6 @@ gls2.ShotBullet = tm.createClass({
                 .element
             );
         }
-
-        // TODO 自機タイプの寄って色を変える
-        this.setFrameIndex(2, 64, 64);
     },
 
     update: function() {
@@ -50,6 +44,22 @@ gls2.ShotBullet = tm.createClass({
 
         if (this.x < -60 || SC_W+60 < this.x || this.y < -60 || SC_H+60 < this.y) {
             this.remove();
+        }
+    },
+
+    /**
+     * col: 0=red, 1=green, 2=blue, 3=hyper
+     */
+    setColor: function(col) {
+        this.setFrameIndex(col, 64, 64);
+        if (col === 3) {
+            this.boundingRadius = 48;
+            this.setScale(2.0, 2.0);
+            this.attackPower = 2;
+        } else {
+            this.boundingRadius = 32;
+            this.setScale(1.5, 1.5);
+            this.attackPower = 1;
         }
     },
 
@@ -86,11 +96,14 @@ gls2.ShotBullet.createPool = function(count) {
         pool.push(gls2.ShotBullet());
     }
 };
-gls2.ShotBullet.fire = function(x, y, dir) {
+gls2.ShotBullet.fire = function(color, x, y, dir) {
     var shotBullet = pool.pop();
     if (shotBullet === undefined) {
         return null;
     }
+
+    shotBullet.setColor(color);
+
     var rad = gls2.math.degToRad(dir);
     shotBullet.vx = Math.cos(rad) * shotBullet.speed;
     shotBullet.vy = Math.sin(rad) * shotBullet.speed;

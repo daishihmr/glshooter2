@@ -41,6 +41,12 @@ gls2.ScoreLabel = tm.createClass({
             this.drawTexture(tm.asset.AssetManager.get("tex1"), 64*3, 0, 64, 64, 5 + (i*32), 40, 32, 32);
         }
 
+        this.context.globalCompositeOperation = "source-over";
+        this.fillStyle = "rgba(255,255,255,0.5)";
+        for (var i = 0; i < this.gameScene.bomb; i++) {
+            this.fillRect(5+i*(20+5), SC_H-5-34, 20, 20);
+        } 
+
         this.consoleWindow.update();
         this.consoleWindow.draw(this);
     },
@@ -72,6 +78,7 @@ gls2.ScoreLabel = tm.createClass({
             this.setText("bold 40px Orbitron", "left", "top");
             this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 100);
         }
+
     },
 
 });

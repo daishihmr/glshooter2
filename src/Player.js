@@ -36,9 +36,6 @@ gls2.Player = tm.createClass(
     muteki: false,
     gameScene : null,
 
-    /** ハイパーゲージ(0～100) */
-    hyperGauge: 100,
-
     /** @protected */
     speed: 4.5,
     bits: null,
@@ -98,11 +95,11 @@ gls2.Player = tm.createClass(
         this.hyperCircle0 = tm.app.CircleShape(80, 80, {
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
-                { offset:0.0, color:"rgba(100,100,255,0.0)" },
-                { offset:0.3, color:"rgba(100,100,255,0.1)" },
+                { offset:0.0, color:"rgba(255,255,100,0.0)" },
+                { offset:0.3, color:"rgba(255,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
-                { offset:0.7, color:"rgba(100,100,255,0.1)" },
-                { offset:1.0, color:"rgba(100,100,255,0.0)" },
+                { offset:0.7, color:"rgba(255,255,100,0.1)" },
+                { offset:1.0, color:"rgba(255,255,100,0.0)" },
             ]).toStyle(),
             lineWidth: 2.0,
         }).addChildTo(this);
@@ -114,11 +111,11 @@ gls2.Player = tm.createClass(
         this.hyperCircle1 = tm.app.CircleShape(80, 80, {
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
-                { offset:0.0, color:"rgba(100,100,255,0.0)" },
-                { offset:0.3, color:"rgba(100,100,255,0.1)" },
+                { offset:0.0, color:"rgba(255,255,100,0.0)" },
+                { offset:0.3, color:"rgba(255,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
-                { offset:0.7, color:"rgba(100,100,255,0.1)" },
-                { offset:1.0, color:"rgba(100,100,255,0.0)" },
+                { offset:0.7, color:"rgba(255,255,100,0.1)" },
+                { offset:1.0, color:"rgba(255,255,100,0.0)" },
             ]).toStyle(),
             lineWidth: 2.0,
         }).addChildTo(this);
@@ -184,7 +181,8 @@ gls2.Player = tm.createClass(
 
             // ショット
             this.fireLaser = (pressZ && pressC) || this.pressTimeC === LASER_FRAME;
-            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % 5 === 0;
+            var shotInterval = this.gameScene.isHyperMode ? 3 : 5;
+            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % shotInterval === 0;
             if (pressZ) {
                 this.pressTimeC = 0;
             }
@@ -207,16 +205,19 @@ gls2.Player = tm.createClass(
             if (this.fireShot) {
                 var s = Math.sin(app.frame * 0.2);
                 var sb;
-                sb = gls2.ShotBullet.fire(this.x-7 - s*6, this.y-5, -90);
+                var color = this.gameScene.isHyperMode?3:this.type;
+                sb = gls2.ShotBullet.fire(color, this.x-7 - s*6, this.y-5, -90);
                 if (sb !== null) sb.addChildTo(this.gameScene);
-                sb = gls2.ShotBullet.fire(this.x+7 + s*6, this.y-5, -90);
+                sb = gls2.ShotBullet.fire(color, this.x+7 + s*6, this.y-5, -90);
                 if (sb !== null) sb.addChildTo(this.gameScene);
             }
 
             if (kb.getKeyDown("x")) {
-                if (false) {
-                    // TODO ハイパー
+                if (this.gameScene.hyperGauge === 1) {
+                    // ハイパー
+                    this.gameScene.startHyperMode();
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
+                    // ボム
                     gls2.Bomb(this, this.gameScene)
                         .setPosition(Math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);
@@ -224,7 +225,7 @@ gls2.Player = tm.createClass(
             }
         }
 
-        this.hyperCircle0.visible = this.hyperCircle1.visible = this.hyperGauge === 100;
+        this.hyperCircle0.visible = this.hyperCircle1.visible = this.gameScene.hyperGauge === 1;
 
         // ビット
         this.controlBit(kb);
@@ -330,8 +331,8 @@ gls2.Bit = tm.createClass(
             this.y = -40;
             this.currentFrameIndex = 3;
         } else {
-            this.x = this.bit.x;
-            this.y = this.bit.y;
+            this.x = this.bit.x * (this.player.gameScene.isHyperMode ? 1.5 : 1);
+            this.y = this.bit.y * (this.player.gameScene.isHyperMode ? 1.5 : 1);
 
             var dir = this.bit.d * this.bit.dt;
             this.rotation = Math.radToDeg(dir);
@@ -344,7 +345,8 @@ gls2.Bit = tm.createClass(
 
             // ショット
             if (this.player.fireShot) {
-                var sb = gls2.ShotBullet.fire(g.x, g.y, this.parent.rotation + this.rotation - 90);
+                var color = this.player.gameScene.isHyperMode ? 3 : this.player.type;
+                var sb = gls2.ShotBullet.fire(color, g.x, g.y, this.parent.rotation + this.rotation - 90);
                 if (sb !== null) sb.addChildTo(core.gameScene);
             }
         }
