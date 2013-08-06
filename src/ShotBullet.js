@@ -4,7 +4,7 @@ var origParticle = null;
 
 gls2.ShotBullet = tm.createClass({
     superClass: tm.app.Sprite,
-    speed: 20,
+    speed: 0,
     attackPower: 1,
 
     init: function() {
@@ -53,10 +53,12 @@ gls2.ShotBullet = tm.createClass({
     setColor: function(col) {
         this.setFrameIndex(col, 64, 64);
         if (col === 3) {
+            this.speed = 30;
             this.boundingRadius = 48;
             this.setScale(2.0, 2.0);
             this.attackPower = 2;
         } else {
+            this.speed = 20;
             this.boundingRadius = 32;
             this.setScale(1.5, 1.5);
             this.attackPower = 1;

@@ -17,15 +17,15 @@ gls2.Danmaku.setup = function() {
             b.setFrameIndex((spec.frame === undefined) ? 1 : spec.frame);
 
             if (spec.ball) {
-                b.scaleX = 0.8;
-                b.scaleY = 0.8;
+                b.scaleX = 1.0;
+                b.scaleY = 1.0;
                 b.updateProperties = false;
                 b.update = function() {
                     this.rotation += 15;
                 };
             } else {
-                b.scaleX = 0.6;
-                b.scaleY = 1.2;
+                b.scaleX = 0.8;
+                b.scaleY = 1.5;
                 b.updateProperties = true;
             }
 
@@ -146,11 +146,15 @@ gls2.Bullet = tm.createClass(
 /** @lends gls2.Bullet.prototype */
 {
     superClass: tm.app.Sprite,
+    hp: 0,
     init: function() {
         this.superInit("tex0", 20, 20);
 
         this.boundingRadius = 7;
 
+        this.addEventListener("added", function() {
+            this.hp = 50;
+        });
         this.addEventListener("removed", function() {
             bulletPool.push(this);
             var idx = activeList.indexOf(this);
@@ -167,19 +171,20 @@ gls2.Bullet = tm.createClass(
                 .addColorStopList([
                     { offset: 0.0, color: "rgba(255,100,100,0.0)" },
                     { offset: 0.3, color: "rgba(255,100,100,0.0)" },
+                    { offset: 0.7, color: "rgba(255,100,100,1.0)" },
                     { offset: 1.0, color: "rgba(255,100,100,1.0)" },
                 ])
                 .toStyle()
         })
-        .setBlendMode("lighter")
+        // .setBlendMode("lighter")
         .setPosition(this.x, this.y)
         .setScale(0.1, 0.1)
         .addChildTo(this.parent)
         .update = function() {
             this.scaleX += 0.1;
             this.scaleY += 0.1;
-            this.alpha *= 0.9;
-            if (this.alpha < 0.001) {
+            this.alpha *= 0.92;
+            if (this.alpha < 0.0001) {
                 this.remove();
             }
         };

@@ -243,6 +243,7 @@ gls2.Player = tm.createClass(
     damage: function() {
         this.fireShot = false;
         this.fireLaser = false;
+        this.gameScene.endHyperMode();
     },
 
     /** @protected */

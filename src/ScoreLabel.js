@@ -37,7 +37,7 @@ gls2.ScoreLabel = tm.createClass({
         }
 
         this.context.globalCompositeOperation = "source-over";
-        for (var i = 0; i < this.gameScene.zanki; i++) {
+        for (var i = 0; i < this.gameScene.zanki-1; i++) {
             this.drawTexture(tm.asset.AssetManager.get("tex1"), 64*3, 0, 64, 64, 5 + (i*32), 40, 32, 32);
         }
 
@@ -45,7 +45,7 @@ gls2.ScoreLabel = tm.createClass({
         this.fillStyle = "rgba(255,255,255,0.5)";
         for (var i = 0; i < this.gameScene.bomb; i++) {
             this.fillRect(5+i*(20+5), SC_H-5-34, 20, 20);
-        } 
+        }
 
         this.consoleWindow.update();
         this.consoleWindow.draw(this);
