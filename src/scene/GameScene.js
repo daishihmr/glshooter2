@@ -195,6 +195,8 @@ gls2.GameScene = tm.createClass(
     },
 
     update: function(app) {
+        // this.record(app.keyboard);
+
         this.stage.update(app.frame);
         if (this.isHyperMode) {
             this.hyperTime -= 1;
@@ -250,7 +252,7 @@ gls2.GameScene = tm.createClass(
                         if (this.isHyperMode === false) this.addHyperGauge(0.01);
 
                         this.addCombo(1);
-                        this.baseScore += e.score;
+                        this.baseScore += e.score*(~~(this.comboCount / 200) + 1);
                         this.addScore(this.baseScore);
                         enemies.erase(e);
                         break;
@@ -275,7 +277,7 @@ gls2.GameScene = tm.createClass(
                         this.addHyperGauge(0.01);
 
                         this.addCombo(1);
-                        this.baseScore += e.score;
+                        this.baseScore += e.score*(~~(this.comboCount / 200) + 1);
                         this.addScore(this.baseScore);
                     } else {
                         this.comboGauge = Math.max(this.comboGauge, 0.1);
@@ -302,7 +304,7 @@ gls2.GameScene = tm.createClass(
                         this.addHyperGauge(0.02);
 
                         this.addCombo(1);
-                        this.baseScore += e.score;
+                        this.baseScore += e.score*(~~(this.comboCount / 200) + 1);
                         this.addScore(this.baseScore);
                     } else {
                         this.comboGauge = Math.max(this.comboGauge, 0.1);
@@ -502,7 +504,9 @@ gls2.GameScene = tm.createClass(
         }
     },
 
-    gameStart: function(playerType) {
+    start: function(playerType) {
+        // generateRandom();
+
         this.scoreLabel.consoleWindow.clearBuf().clear();
 
         this.score = 0;
@@ -525,6 +529,8 @@ gls2.GameScene = tm.createClass(
 
         this.player = gls2.Player(this, playerType);
         this.startStage(0);
+
+        // this.startRec();
     },
 
     startStage: function(stageNumber) {
@@ -648,12 +654,17 @@ gls2.GameScene = tm.createClass(
         this.hyperRank = Math.min(this.hyperRank + 1, 5);
         this.hyperTime = 600;
 
+        this.player.laser.setColor("hyper");
+
         // すべての弾を消す
         // gls2.Danmaku.erase();
     },
 
     endHyperMode: function() {
         this.isHyperMode = false;
+
+        // TODO
+        this.player.laser.setColor("blue");
     },
 
     extendZanki: function() {
@@ -661,6 +672,82 @@ gls2.GameScene = tm.createClass(
         this.println("Extended.");
         this.zanki += 1;
     },
+
+    // rec: null,
+    // recCount : 0,
+    // kbary: null,
+    // RECMODE: 1,
+    // startRec: function() {
+    //     if (this.RECMODE === 1) {
+    //         if (localStorage.getItem("recCount") !== undefined) {
+    //             this.kbary = [];
+    //             var c = ~~localStorage.getItem("recCount");
+    //             for (var i = 0; i < c; i++) {
+    //                 localStorage.removeItem("rec" + i);
+    //             }
+    //             localStorage.removeItem("recCount");
+    //         }
+    //         this.rec = [];
+    //         this.recCount = 0;
+    //     } else if (this.RECMODE === 2) {
+    //         if (localStorage.getItem("recCount") !== undefined) {
+    //             this.kbary = [];
+    //             var c = ~~localStorage.getItem("recCount");
+    //             for (var i = 0; i < c; i++) {
+    //                 var r = localStorage.getItem("rec"+i);
+    //                 var ary = r.split(",");
+    //                 for (var j = 0; j < ary.length; j++) {
+    //                     this.kbary.push(ary[j]);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // },
+    // record: function(kb) {
+    //     if (this.RECMODE === 1) {
+    //         if (1000 < this.rec.length) {
+    //             console.log("save");
+    //             localStorage.setItem("rec" + this.recCount, this.rec);
+    //             localStorage.setItem("recCount", this.recCount);
+    //             this.rec = [];
+    //             this.recCount += 1;
+    //         }
+    //         this.rec.push("" 
+    //             + ~~kb.getKey("up") 
+    //             + ~~kb.getKey("down") 
+    //             + ~~kb.getKey("left") 
+    //             + ~~kb.getKey("right") 
+    //             + ~~kb.getKey("z") 
+    //             + ~~kb.getKey("x") 
+    //             + ~~kb.getKey("c"));
+    //     } else if (this.RECMODE === 2) {
+    //         if (this.kbary) {
+    //             var keylog = this.kbary.shift();
+    //             if (keylog !== undefined) {
+    //                 kb.getKey = function(key) {
+    //                     if (key === "up") return !!~~keylog[0];
+    //                     else if (key === "down") return !!~~keylog[1];
+    //                     else if (key === "left") return !!~~keylog[2];
+    //                     else if (key === "right") return !!~~keylog[3];
+    //                     else if (key === "z") return !!~~keylog[4];
+    //                     else if (key === "x") return !!~~keylog[5];
+    //                     else if (key === "c") return !!~~keylog[6];
+    //                     else false;
+    //                 };
+    //                 kb.getKeyDown = function(key) {
+    //                     if (key === "up") return !!~~keylog[0];
+    //                     else if (key === "down") return !!~~keylog[1];
+    //                     else if (key === "left") return !!~~keylog[2];
+    //                     else if (key === "right") return !!~~keylog[3];
+    //                     else if (key === "z") return !!~~keylog[4];
+    //                     else if (key === "x") return !!~~keylog[5];
+    //                     else if (key === "c") return !!~~keylog[6];
+    //                     else false;
+    //                 };
+    //             }
+    //         }
+    //     }
+    // },
 
 });
 

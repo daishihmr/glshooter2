@@ -94,3 +94,23 @@ tm.app.Label = tm.createClass(
     },
 });
 
+// var generateRandom = function() {
+//     var mt = new MersenneTwister(0);
+//     var _randoms = [];
+//     for (var i = 0; i < 1000; i++) {
+//         _randoms.push(mt.next());
+//     }
+//     var index = 0;
+//     Math.random = function() {
+//         index = (index+1) % _randoms.length;
+//         return _randoms[index];
+//     };
+// };
+
+// tm.setLoop = function(fn, delay) {
+//     var temp = function() {
+//         fn();
+//         setTimeout(arguments.callee, delay);
+//     };
+//     setTimeout(temp, delay);
+// };

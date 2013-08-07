@@ -84,7 +84,7 @@ gls2.GlShooter2 = tm.createClass(
     exitApp: function() {
         this.stop();
         tm.social.Nineleap.postRanking(this.highScore, "");
-    }
+    },
 
 });
 

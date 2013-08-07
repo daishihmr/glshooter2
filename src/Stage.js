@@ -1,3 +1,5 @@
+(function() {
+
 /**
  * @class
  */
@@ -70,13 +72,22 @@ gls2.Stage = tm.createClass(
 
 });
 
+/**
+ * @static
+ */
 gls2.Stage.create = function(gameScene, stageNumber) {
     if (stageNumber === 0) {
         return gls2.Stage1(gameScene);
     }
 };
 
-gls2.Stage1 = tm.createClass({
+/**
+ * @class
+ * @extends {gls2.Stage}
+ */
+gls2.Stage1 = tm.createClass(
+/** @lends {gls2.Stage1.prototype} */
+{
     superClass: gls2.Stage,
 
     seq: null,
@@ -147,7 +158,12 @@ gls2.Stage1 = tm.createClass({
 
 });
 
-gls2.StageSequencer = tm.createClass({
+/**
+ * @class
+ */
+gls2.StageSequencer = tm.createClass(
+/** @lengs {gls2.StageSequencer.prototype} */
+{
     index: 0,
     data: null,
     init: function() {
@@ -163,3 +179,5 @@ gls2.StageSequencer = tm.createClass({
         return this.data[frame];
     },
 });
+
+})();

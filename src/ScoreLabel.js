@@ -1,4 +1,12 @@
-gls2.ScoreLabel = tm.createClass({
+(function() {
+
+/**
+ * @class
+ * @extends {tm.graphics.Canvas}
+ */
+gls2.ScoreLabel = tm.createClass(
+/** @lends {gls2.ScoreLabel} */
+{
     superClass: tm.graphics.Canvas,
 
     gameScene: null,
@@ -82,3 +90,5 @@ gls2.ScoreLabel = tm.createClass({
     },
 
 });
+
+})();

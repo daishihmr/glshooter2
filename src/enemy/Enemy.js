@@ -133,6 +133,12 @@ gls2.Enemy = tm.createClass(
 
             this.stage.onDestroyEnemy(this);
 
+            // TODO 試験的に追加して負荷を見てみる
+            var star = tm.app.StarShape(20, 20).setPosition(this.x, this.y).addChildTo(this.parent);
+            star.update = function() {
+                this.y += 3;
+                if (this.y > SC_H*20) this.remove();
+            };
             this.remove();
 
             return true;

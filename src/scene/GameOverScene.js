@@ -24,8 +24,7 @@ gls2.GameOverScene = tm.createClass(
         });
     },
     update: function(app) {
-        this.superClass.prototype.update.apply(this, arguments);
-        if (app.keyboard.getKeyDown("z") || app.pointing.getPointingStart()) {
+        if (app.keyboard.getKeyDown("z")) {
             app.popScene();
             return;
         }

@@ -68,7 +68,7 @@ gls2.Player = tm.createClass(
             "head": "laserHead",
             "foot": "laserFoot",
             "aura": "aura",
-        }, 50);
+        });
         this.laser.visible = false;
         this.laser.addChildTo(gameScene);
 

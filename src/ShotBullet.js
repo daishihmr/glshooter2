@@ -93,11 +93,15 @@ gls2.ShotBullet.clearAll = function() {
 
 var pool = [];
 var activeList = gls2.ShotBullet.activeList = [];
+
+// TODO 色を指定してプールを作る
 gls2.ShotBullet.createPool = function(count) {
     for (var i = 0; i < count; i++) {
         pool.push(gls2.ShotBullet());
     }
 };
+
+// TODO プールのメソッドにする
 gls2.ShotBullet.fire = function(color, x, y, dir) {
     var shotBullet = pool.pop();
     if (shotBullet === undefined) {
