@@ -1,6 +1,18 @@
+# 2D DANMAKU Shooter on tmlib.js
+
 HTML5弾幕STG、GL-Shooterシリーズの２作目です。
 
 http://daishihmr.github.io/glshooter2/ (Google Chrome専用)
+
+## 操作方法
+
+ * カーソルキー ... 移動
+ * Cキーを連打 ... ショット
+ * Cキーを押しっぱなし ... レーザー
+ * Xキー ... ボンバー or ハイパーシステム起動
+ * Zキー ... ショットをフルオート発射
+
+## コンセプト
 
 コンセプトは「tmlib.jsによる怒首領蜂再現」。
 
