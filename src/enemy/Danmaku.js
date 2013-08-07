@@ -34,7 +34,7 @@ gls2.Danmaku.setup = function() {
             console.warn("弾が足りない！");
         }
     };
-    config.speedRate = 3;
+    config.speedRate = 4;
 };
 /**
  * エフェクト付きの弾幕全消し
@@ -133,10 +133,10 @@ gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
     ]),
     "top1": $.action([
         $.repeat(6, [
-            $.fire($.direction(0), $spd4("$loop.count"), $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
+            $.fire($.direction(0), $spd4, $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
             $.wait(30),
-            $.fire($.direction(0), $spd4("$loop.count"), $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
-            $.wait(30),
+            $.fire($.direction(0), $spd4, $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
+            $.wait(60),
         ]),
     ]),
 });

@@ -113,7 +113,7 @@ gls2.TitleScene = tm.createClass({
                 .wait(1000)
                 .call(function() {
                     gls2.core.gameScene.start(2); // TODO 自機タイプを渡す
-                    gls2.core.pushScene(gls2.core.gameScene);
+                    gls2.core.replaceScene(gls2.core.gameScene);
                 }.bind(this));
             break;
         case 1: // tutorial

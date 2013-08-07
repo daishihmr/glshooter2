@@ -30,37 +30,8 @@ gls2.ScoreLabel = tm.createClass(
     update: function() {
         this.clear();
 
-        this.resetTransform();
         this.fillStyle = "rgba(255,255,255,0.4)";
         this.strokeStyle = "rgba(255,255,255,0.4)";
-        this.draw();
-
-        this.fillStyle = "rgba(255,255,255,0.02)";
-        this.strokeStyle = "rgba(255,255,255,0.02)";
-        for (var i = -2; i <= 2; i++) {
-            for (var j = -2; j <= 2; j++) {
-                this.setTransform(1.0, 0.0, 0.0, 1.0, i, j);
-                this.draw();
-            }
-        }
-
-        this.context.globalCompositeOperation = "source-over";
-        for (var i = 0; i < this.gameScene.zanki-1; i++) {
-            this.drawTexture(tm.asset.AssetManager.get("tex1"), 64*3, 0, 64, 64, 5 + (i*32), 40, 32, 32);
-        }
-
-        this.context.globalCompositeOperation = "source-over";
-        this.fillStyle = "rgba(255,255,255,0.5)";
-        for (var i = 0; i < this.gameScene.bomb; i++) {
-            this.fillRect(5+i*(20+5), SC_H-5-34, 20, 20);
-        }
-
-        this.consoleWindow.update();
-        this.consoleWindow.draw(this);
-    },
-
-    draw: function() {
-        this.context.globalCompositeOperation = "lighter";
 
         var text;
         this.setText("20px 'Ubuntu Mono'", "right", "top");
@@ -87,6 +58,17 @@ gls2.ScoreLabel = tm.createClass(
             this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 100);
         }
 
+        for (var i = 0; i < this.gameScene.zanki-1; i++) {
+            this.drawTexture(tm.asset.AssetManager.get("tex1"), 64*3, 0, 64, 64, 5 + (i*32), 40, 32, 32);
+        }
+
+        this.fillStyle = "rgba(255,255,255,0.5)";
+        for (var i = 0; i < this.gameScene.bomb; i++) {
+            this.fillRect(5+i*(20+5), SC_H-5-34, 20, 20);
+        }
+
+        this.consoleWindow.update();
+        this.consoleWindow.draw(this);
     },
 
 });

@@ -100,6 +100,29 @@ gls2.Effect.genShockwave = function(x, y, scene) {
         });
 };
 
+gls2.Effect.genShockwaveL = function(x, y, scene) {
+    var shockwave = tm.app.CircleShape(300, 300, {
+        strokeStyle: "rgba(0,0,0,0)",
+        fillStyle: tm.graphics.RadialGradient(150, 150, 0, 150, 150, 150)
+            .addColorStopList([
+                { offset: 0.0, color: "rgba(255,255,255,0)" },
+                { offset: 0.5, color: "rgba(255,255,255,0)" },
+                { offset: 0.9, color: "rgba(255,255,255,1)" },
+                { offset: 1.0, color: "rgba(255,255,255,0)" },
+            ])
+            .toStyle()
+    }).setPosition(x, y).setScale(0.1, 0.1).addChildTo(scene);
+    shockwave.tweener.clear()
+        .to({
+            scaleX: 5,
+            scaleY: 5,
+            alpha: 0,
+        }, 500, "easeOutQuad")
+        .call(function() {
+            this.remove();
+        }.bind(shockwave));
+};
+
 gls2.Effect.explodeS = function(x, y, scene, vector) {
     gls2.playSound("soundExplode");
     var e = gls2.Effect["explosion"].random()
@@ -209,5 +232,45 @@ gls2.Effect.explodeM = function(x, y, scene) {
         e.addChildTo(scene);
     }
 };
+
+gls2.ChargeEffect = tm.createClass({
+    superClass: tm.app.Object2D,
+
+    target: null,
+    rad: 0,
+    angle: 0,
+    alpha : 1,
+
+    reverse: false,
+
+    init: function(target, reverse) {
+        this.superInit();
+        this.target = target;
+        this.reverse = reverse;
+
+        this.angle = 0;
+        this.rad = reverse ? 0 : 200;
+        this.alpha = reverse ? 1 : 0;
+    },
+
+    update: function() {
+        if (this.target.parent === null) {
+            this.remove();
+            return;
+        }
+
+        for (var i = 0; i < 9; i++) {
+            var a = this.angle + i/9 * Math.PI*2;
+            gls2.Particle(80, this.alpha, 0.9)
+                .setPosition(Math.cos(a)*this.rad+this.target.x, Math.sin(a)*this.rad+this.target.y)
+                .addChildTo(this.target.parent);
+        }
+        this.angle += 0.05;
+        this.rad += this.reverse ? 4 : -4;
+        this.alpha += this.reverse ? -0.01 : 0.05;
+        if (this.rad < 0 || 200 < this.rad) this.remove();
+    },
+
+});
 
 })();

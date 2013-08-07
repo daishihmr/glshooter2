@@ -216,6 +216,7 @@ gls2.Player = tm.createClass(
                 if (this.gameScene.hyperGauge === 1) {
                     // ハイパー
                     this.gameScene.startHyperMode();
+                    gls2.Effect.genShockwaveL(this.x, this.y, this.gameScene);
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
                     // ボム
                     gls2.Bomb(this, this.gameScene)

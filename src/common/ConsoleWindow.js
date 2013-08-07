@@ -15,7 +15,11 @@ gls2.ConsoleWindow = tm.createClass(
             .setFillStyle("rgba(255,255,255,0.5)");
         this.buf = [];
     },
-    addLine: function(string) {
+    addLine: function(string, intercept) {
+        if (intercept === true) {
+            this.buf.clear();
+            this.buf.push("");
+        }
         if (this.buf.length > 5) {
             this.buf.splice(1, this.buf.length - 4);
         }

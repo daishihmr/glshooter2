@@ -69,7 +69,9 @@ gls2.GameScene = tm.createClass(
 
         this.scoreLabel = gls2.ScoreLabel(this);
 
-        this._createGround();
+        var g = gls2.Ground();
+        this.ground = g.gElement;
+        this.ground.addChildTo(this);
 
         this.groundLayer = tm.app.Object2D().addChildTo(this);
         this.enemyLayer = tm.app.Object2D().addChildTo(this);
@@ -91,83 +93,8 @@ gls2.GameScene = tm.createClass(
         });
     },
 
-    println: function(string) {
-        this.scoreLabel.consoleWindow.addLine(string);
-    },
-
-    _createGround: function() {
-        var g = this.ground = tm.app.CanvasElement().addChildTo(this);
-        g.gx = g.gy = 0;
-        g.gx2 = g.gy2 = 0;
-        g.direction = Math.PI * 0.5;
-        g.speed = 1;
-        g.dx = 0;
-        g.dy = 0;
-
-        var c = 16 * 2;
-        var l = c/2*Math.sqrt(3);
-        var c2 = c*0.8;
-        var l2 = c2/2*Math.sqrt(3);
-
-        g.update = function() {
-            this.dx = Math.cos(this.direction) * this.speed;
-            this.dy = Math.sin(this.direction) * this.speed;
-
-            this.gx += this.dx;
-            while (c*3 < this.gx) this.gx -= c*3;
-            while (this.gx < -c*3) this.gx += c*3;
-
-            this.gy += this.dy;
-            while (l*2 < this.gy) this.gy -= l*2;
-            while (this.gy < -l*2) this.gy += l*2;
-
-            this.gx2 += this.dx*0.8;
-            while (c2*3 < this.gx2) this.gx2 -= c2*3;
-            while (this.gx2 < -c2*3) this.gx2 += c2*3;
-
-            this.gy2 += this.dy*0.8;
-            while (l2*2 < this.gy2) this.gy2 -= l2*2;
-            while (this.gy2 < -l2*2) this.gy2 += l2*2;
-        };
-        g.blendMode = "lighter";
-        g.draw = function(canvas) {
-            canvas.lineWidth = 0.2;
-            canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
-                .addColorStopList([
-                    { offset: 0.0, color: "rgba(255,255,255,1.0)" },
-                    { offset: 1.0, color: "rgba(255,255,255,0.5)" },
-                ])
-                .toStyle();
-            canvas.beginPath();
-            var yy = 0;
-            for (var x = this.gx-c*3; x < SC_W+c*3; x += c*1.5) {
-                yy = (yy === 0) ? l : 0;
-                for (var y = this.gy-l*2 + yy; y < SC_H+l*2; y += l*2) {
-                    canvas.line(x, y, x + c, y);
-                    canvas.line(x, y, x - c/2, y + l);
-                    canvas.line(x, y, x - c/2, y - l);
-                }
-            }
-            canvas.stroke();
-
-            canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
-                .addColorStopList([
-                    { offset: 0.0, color: "rgba(128,128,128,1.0)" },
-                    { offset: 1.0, color: "rgba(128,128,128,0.5)" },
-                ])
-                .toStyle();
-            canvas.beginPath();
-            yy = 0;
-            for (var x = this.gx2-c2*3; x < SC_W+c2*3; x += c2*1.5) {
-                yy = (yy === 0) ? l2 : 0;
-                for (var y = this.gy2-l2*2 + yy; y < SC_H+l2*2; y += l2*2) {
-                    canvas.line(x, y, x + c2, y);
-                    canvas.line(x, y, x - c2/2, y + l2);
-                    canvas.line(x, y, x - c2/2, y - l2);
-                }
-            }
-            canvas.stroke();
-        };
+    println: function(string, intercept) {
+        this.scoreLabel.consoleWindow.addLine(string, intercept);
     },
 
     addChild: function(child) {
@@ -221,7 +148,7 @@ gls2.GameScene = tm.createClass(
         }
 
         if (app.keyboard.getKeyDown("escape")) {
-            this.app.popScene();
+            this.app.replaceScene(gls2.TitleScene());
         } else if (app.keyboard.getKeyDown("space")) {
             this.openPauseMenu(0);
         } else if (app.keyboard.getKeyDown("p")) {
@@ -431,7 +358,7 @@ gls2.GameScene = tm.createClass(
     },
     onResultConfirmExitGame: function(result) {
         if (result === 0) {
-            this.app.popScene();
+            this.app.replaceScene(gls2.TitleScene());
         } else {
             this.openPauseMenu(1);
         }
@@ -474,7 +401,6 @@ gls2.GameScene = tm.createClass(
 
     draw: function(canvas) {
         if (this.stage === null) return;
-        canvas.clearColor(this.stage.background, 0, 0);
         this.drawComboGauge(canvas);
         this.drawHyperGauge(canvas);
     },
@@ -534,9 +460,7 @@ gls2.GameScene = tm.createClass(
     },
 
     startStage: function(stageNumber) {
-        this.println("3.");
-        this.println("2.");
-        this.println("1.");
+        this.println("3...2...1...");
 
         this.baseScore = 0;
         this.comboCount = 0;
@@ -594,7 +518,7 @@ gls2.GameScene = tm.createClass(
     },
 
     gameContinue: function() {
-        this.println("System rebooted.");
+        this.println("System rebooted.", true);
 
         this.zanki = 3;
         this.bomb = this.bombMax = this.bombMaxInitial;
@@ -642,13 +566,16 @@ gls2.GameScene = tm.createClass(
 
         this.hyperGauge = Math.clamp(this.hyperGauge + v, 0, 1);
         if (this.hyperGauge === 1) {
-            this.println("hyper system, ready.");
+            this.println("hyper system, ready.", true);
+            gls2.ChargeEffect(this.player).addChildTo(this);
         } else if (this.hyperGauge === 0) {
             this.endHyperMode();
         }
     },
 
     startHyperMode: function() {
+        this.println("'HYPER SYSTEM' start!!", true)
+
         this.isHyperMode = true;
         this.hyperGauge = 0;
         this.hyperRank = Math.min(this.hyperRank + 1, 5);
@@ -661,7 +588,11 @@ gls2.GameScene = tm.createClass(
     },
 
     endHyperMode: function() {
+        if (this.isHyperMode === false) return;
+
         this.isHyperMode = false;
+
+        gls2.ChargeEffect(this.player, true).addChildTo(this);
 
         // TODO
         this.player.laser.setColor("blue");
@@ -712,13 +643,13 @@ gls2.GameScene = tm.createClass(
     //             this.rec = [];
     //             this.recCount += 1;
     //         }
-    //         this.rec.push("" 
-    //             + ~~kb.getKey("up") 
-    //             + ~~kb.getKey("down") 
-    //             + ~~kb.getKey("left") 
-    //             + ~~kb.getKey("right") 
-    //             + ~~kb.getKey("z") 
-    //             + ~~kb.getKey("x") 
+    //         this.rec.push(""
+    //             + ~~kb.getKey("up")
+    //             + ~~kb.getKey("down")
+    //             + ~~kb.getKey("left")
+    //             + ~~kb.getKey("right")
+    //             + ~~kb.getKey("z")
+    //             + ~~kb.getKey("x")
     //             + ~~kb.getKey("c"));
     //     } else if (this.RECMODE === 2) {
     //         if (this.kbary) {

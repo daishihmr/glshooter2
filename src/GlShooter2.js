@@ -42,7 +42,7 @@ gls2.GlShooter2 = tm.createClass(
         gls2.core = this;
         this.resize(SC_W, SC_H).fitWindow();
         this.fps = 60;
-        this.background = "black";
+        this.background = "rgba(0,0,0,0)";
 
         this.keyboard = tm.input.Keyboard(window);
 
@@ -71,6 +71,11 @@ gls2.GlShooter2 = tm.createClass(
                 return gls2.TitleScene();
             }.bind(this),
         }));
+    },
+
+    draw: function() {
+        this.canvas.globalCompositeOperation = "copy";
+        // this.canvas.clearColor(this.background, 0, 0);
     },
 
     _onLoadAssets: function() {

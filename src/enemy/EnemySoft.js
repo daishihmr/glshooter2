@@ -256,7 +256,7 @@ gls2.EnemySoft.MiddleFighter1 = tm.createClass(
             }.bind(this));
     },
     update: function() {
-        this.y += 1.0;
+        this.y += 0.5;
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
