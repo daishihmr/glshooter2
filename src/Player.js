@@ -166,8 +166,8 @@ gls2.Player = tm.createClass(
                 this.x += m.x * this.speed * (this.fireLaser ? 0.75 : 1);
                 this.y += m.y * this.speed * (this.fireLaser ? 0.75 : 1);
             }
-            this.x = gls2.math.clamp(this.x, 5, SC_W-5);
-            this.y = gls2.math.clamp(this.y, 5, SC_H-5);
+            this.x = gls2.math.clamp(this.x, 15, SC_W-15);
+            this.y = gls2.math.clamp(this.y, 15, SC_H-15);
 
             var pressC = kb.getKey("c");
             var pressZ = kb.getKey("z");
