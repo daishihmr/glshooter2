@@ -76,7 +76,7 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.Danmaku.setup();
         gls2.Effect.setup();
-        gls2.ShotBullet.createPool(50);
+        gls2.ShotBullet.createPool(100);
 
         this.gameScene = gls2.GameScene();
     },
@@ -84,19 +84,22 @@ gls2.GlShooter2 = tm.createClass(
     exitApp: function() {
         this.stop();
         tm.social.Nineleap.postRanking(this.highScore, "");
-    }
+    },
 
 });
 
 gls2.playSound = function(soundName) {
     if (gls2.core.seVolume === 0) return;
+    if (gls2.playSound.played[soundName] === gls2.core.frame) return;
 
     var sound = tm.asset.AssetManager.get(soundName);
     sound.volume = gls2.core.seVolume * 0.1;
     if (sound) {
         sound = sound.clone().play();
     }
+    gls2.playSound.played[soundName] = gls2.core.frame;
 };
+gls2.playSound.played = {};
 
 tm.app.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);

@@ -14,13 +14,20 @@ gls2.Danmaku.setup = function() {
         var b = bulletPool.shift(0);
         if (b) {
             activeList.push(b);
-            b.setFrameIndex(1);
-            b.scaleX = 1.2;
-            b.scaleY = 1.5;
+            b.setFrameIndex((spec.frame === undefined) ? 1 : spec.frame);
 
-            b.addEventListener("enterframe", function() {
-                this.rotation += 15;
-            });
+            if (spec.ball) {
+                b.scaleX = 1.0;
+                b.scaleY = 1.0;
+                b.updateProperties = false;
+                b.update = function() {
+                    this.rotation += 15;
+                };
+            } else {
+                b.scaleX = 0.8;
+                b.scaleY = 1.5;
+                b.updateProperties = true;
+            }
 
             return b;
         } else {
@@ -52,30 +59,30 @@ gls2.Danmaku.clearAll = function() {
 var $ = bulletml.dsl;
 
 // 弾速
-var $spd0 = function(v) { return $.speed("$rank*0.2 + 0.4 + (" + v + "*0.1)" ); };
-var $spd1 = function(v) { return $.speed("$rank*0.2 + 0.6 + (" + v + "*0.1)" ); };
-var $spd2 = function(v) { return $.speed("$rank*0.2 + 0.8 + (" + v + "*0.1)" ); };
-var $spd3 = function(v) { return $.speed("$rank*0.2 + 1.0 + (" + v + "*0.1)" ); };
-var $spd4 = function(v) { return $.speed("$rank*0.2 + 1.2 + (" + v + "*0.1)" ); };
-var $spd5 = function(v) { return $.speed("$rank*0.2 + 1.4 + (" + v + "*0.1)" ); };
-var $spd6 = function(v) { return $.speed("$rank*0.2 + 1.6 + (" + v + "*0.1)" ); };
+var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("$rank*0.2 + 0.4 + (" + v + "*0.1)" ); };
+var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("$rank*0.2 + 0.6 + (" + v + "*0.1)" ); };
+var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("$rank*0.2 + 0.8 + (" + v + "*0.1)" ); };
+var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("$rank*0.2 + 1.0 + (" + v + "*0.1)" ); };
+var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("$rank*0.2 + 1.2 + (" + v + "*0.1)" ); };
+var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("$rank*0.2 + 1.4 + (" + v + "*0.1)" ); };
+var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("$rank*0.2 + 1.6 + (" + v + "*0.1)" ); };
 
 /** 自機狙い弾 */
-var fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3(0), $.bullet()) };
+var $fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3, $.bullet) };
 
 gls2.Danmaku["basic0-0"] = new bulletml.Root({
-    top: $.action([
-        fire0,
+    "top": $.action([
+        $fire0,
     ]),
 });
 
 gls2.Danmaku["basic0-4"] = new bulletml.Root({
-    top: $.action([
+    "top": $.action([
         $.repeat(3, [
             $.repeat(5, [
-                $.fire($.direction(-20), $.speed("$loop.count*0.06+0.75"), $.bullet()),
-                $.fire($.direction(  0), $.speed("$loop.count*0.06+0.75"), $.bullet()),
-                $.fire($.direction(+20), $.speed("$loop.count*0.06+0.75"), $.bullet()),
+                $.fire($.direction(-20), $.speed("$loop.count*0.06+0.75"), $.bullet),
+                $.fire($.direction(  0), $.speed("$loop.count*0.06+0.75"), $.bullet),
+                $.fire($.direction(+20), $.speed("$loop.count*0.06+0.75"), $.bullet),
             ]),
             $.wait(40),
         ]),
@@ -86,9 +93,9 @@ gls2.Danmaku["basic0-4"] = new bulletml.Root({
  * 自機狙い弾を20フレーム間隔で連射.
  */
 gls2.Danmaku["basic1-0"] = new bulletml.Root({
-    top: $.action([
+    "top": $.action([
         $.repeat(999, [
-            fire0,
+            $fire0,
             $.wait(20),
         ]),
     ]),
@@ -99,29 +106,37 @@ gls2.Danmaku["basic1-0"] = new bulletml.Root({
  * 自機狙い弾をランダム間隔で連射.
  */
 gls2.Danmaku["basic2-0"] = new bulletml.Root({
-    top: $.action([
+    "top": $.action([
         $.wait("120"),
         $.repeat(999, [
             $.wait("50*$rand*5"),
-            fire0,
+            $fire0($spd4),
         ]),
     ]),
 });
 
 gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
-    top: $.action([
+    "top0": $.action([
         $.repeat(3, [
-            $.repeat(2, [
-                $.fire($.direction(-45), $spd2("$loop.count"), $.bullet, $.offsetX(-20), $.autonomy(true)),
-                $.fire($.direction(-15), $spd2("$loop.count"), $.bullet, $.offsetX(-20), $.autonomy(true)),
-                $.fire($.direction( 15), $spd2("$loop.count"), $.bullet, $.offsetX(-20), $.autonomy(true)),
-                $.fire($.direction( 45), $spd2("$loop.count"), $.bullet, $.offsetX(-20), $.autonomy(true)),
-                $.fire($.direction(-45), $spd2("$loop.count"), $.bullet, $.offsetX( 20), $.autonomy(true)),
-                $.fire($.direction(-15), $spd2("$loop.count"), $.bullet, $.offsetX( 20), $.autonomy(true)),
-                $.fire($.direction( 15), $spd2("$loop.count"), $.bullet, $.offsetX( 20), $.autonomy(true)),
-                $.fire($.direction( 45), $spd2("$loop.count"), $.bullet, $.offsetX( 20), $.autonomy(true)),
+            $.repeat(3, [
+                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
+                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
+                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
+                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
+                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
+                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
+                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
+                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
             ]),
-            $.wait(60),
+            $.wait(90),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(6, [
+            $.fire($.direction(0), $spd4("$loop.count"), $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
+            $.wait(30),
+            $.fire($.direction(0), $spd4("$loop.count"), $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
+            $.wait(30),
         ]),
     ]),
 });
@@ -134,11 +149,15 @@ gls2.Bullet = tm.createClass(
 /** @lends gls2.Bullet.prototype */
 {
     superClass: tm.app.Sprite,
+    hp: 0,
     init: function() {
         this.superInit("tex0", 20, 20);
 
         this.boundingRadius = 7;
 
+        this.addEventListener("added", function() {
+            this.hp = 50;
+        });
         this.addEventListener("removed", function() {
             bulletPool.push(this);
             var idx = activeList.indexOf(this);
@@ -155,19 +174,20 @@ gls2.Bullet = tm.createClass(
                 .addColorStopList([
                     { offset: 0.0, color: "rgba(255,100,100,0.0)" },
                     { offset: 0.3, color: "rgba(255,100,100,0.0)" },
+                    { offset: 0.7, color: "rgba(255,100,100,1.0)" },
                     { offset: 1.0, color: "rgba(255,100,100,1.0)" },
                 ])
                 .toStyle()
         })
-        .setBlendMode("lighter")
+        // .setBlendMode("lighter")
         .setPosition(this.x, this.y)
         .setScale(0.1, 0.1)
         .addChildTo(this.parent)
         .update = function() {
             this.scaleX += 0.1;
             this.scaleY += 0.1;
-            this.alpha *= 0.9;
-            if (this.alpha < 0.001) {
+            this.alpha *= 0.92;
+            if (this.alpha < 0.0001) {
                 this.remove();
             }
         };

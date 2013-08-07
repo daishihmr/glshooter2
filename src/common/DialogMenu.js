@@ -125,8 +125,6 @@ gls2.DialogMenu = tm.createClass(
     },
 
     update: function(app) {
-        this.superClass.prototype.update.apply(this, arguments);
-
         this.description.text = this.descriptions[this._selected];
 
         if (!this._opened) {

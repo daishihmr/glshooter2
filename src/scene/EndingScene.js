@@ -13,6 +13,5 @@ gls2.EndingScene = tm.createClass(
         this.superInit();
     },
     update: function(app) {
-        this.superClass.prototype.update.apply(this, arguments);
     },
 });
