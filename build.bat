@@ -16,6 +16,7 @@ java -jar tools/compiler.jar ^
 --js src/Stage.js ^
 --js src/StageData.js ^
 --js src/Effect.js ^
+--js src/ScoreLabel.js ^
 --js src/common/Collision.js ^
 --js src/common/Scene.js ^
 --js src/common/DialogMenu.js ^

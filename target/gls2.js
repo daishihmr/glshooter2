@@ -4,638 +4,598 @@
  License
  http://daishihmr.mit-license.org/
 */
-var bulletml = {GLOBAL:this};
+function f(a) {
+  throw a;
+}
+var i = void 0, k = !0, l = null, m = !1;
+function n() {
+  return function() {
+  }
+}
+var p = {de:this};
 (function() {
-  function b(a, b) {
-    for(var d = 0, f = a.length;d < f;d++) {
+  function a(a, b) {
+    for(var d = 0, g = a.length;d < g;d++) {
       if(a[d].label == b) {
         return a[d]
       }
     }
   }
-  bulletml.Root = function(a) {
+  p.Aa = function(a) {
     this.type = "none";
     this.root = this;
-    this.actions = [];
-    this.bullets = [];
-    this.fires = [];
-    if(void 0 !== a) {
+    this.sa = [];
+    this.pc = [];
+    this.uc = [];
+    if(a !== i) {
       for(var b in a) {
-        a.hasOwnProperty(b) && (a[b].label = b, a[b] instanceof bulletml.Action ? this.actions.push(a[b]) : a[b] instanceof bulletml.Bullet ? this.bullets.push(a[b]) : a[b] instanceof bulletml.Fire && this.fires.push(a[b]))
+        a.hasOwnProperty(b) && (a[b].label = b, a[b] instanceof p.Ha ? this.sa.push(a[b]) : a[b] instanceof p.fb ? this.pc.push(a[b]) : a[b] instanceof p.Gb && this.uc.push(a[b]))
       }
       a = 0;
-      for(b = this.actions.length;a < b;a++) {
-        this.actions[a].setRoot(this)
+      for(b = this.sa.length;a < b;a++) {
+        this.sa[a].Na(this)
       }
       a = 0;
-      for(b = this.bullets.length;a < b;a++) {
-        this.bullets[a].setRoot(this)
+      for(b = this.pc.length;a < b;a++) {
+        this.pc[a].Na(this)
       }
       a = 0;
-      for(b = this.fires.length;a < b;a++) {
-        this.fires[a].setRoot(this)
+      for(b = this.uc.length;a < b;a++) {
+        this.uc[a].Na(this)
       }
     }
   };
-  bulletml.Root.prototype.findAction = function(a) {
-    return b(this.actions, a)
+  p.Aa.prototype.Ld = function(c) {
+    return a(this.sa, c)
   };
-  bulletml.Root.prototype.getTopActionLabels = function() {
-    for(var a = [], b = 0, d = this.actions.length;b < d;b++) {
-      var f = this.actions[b];
-      f.label && 0 === f.label.indexOf("top") && (a[a.length] = f.label)
+  p.Aa.prototype.Pe = function() {
+    for(var a = [], b = 0, d = this.sa.length;b < d;b++) {
+      var g = this.sa[b];
+      g.label && 0 === g.label.indexOf("top") && (a[a.length] = g.label)
     }
     return a
   };
-  bulletml.Root.prototype.findActionOrThrow = function(a) {
+  p.Aa.prototype.Ge = function(a) {
     var b;
-    if(b = this.findAction(a)) {
+    if(b = this.Ld(a)) {
       return b
     }
-    throw Error("action labeled '" + a + "' is undefined.");
+    f(Error("action labeled '" + a + "' is undefined."))
   };
-  bulletml.Root.prototype.findBullet = function(a) {
-    return b(this.bullets, a)
+  p.Aa.prototype.He = function(c) {
+    return a(this.pc, c)
   };
-  bulletml.Root.prototype.findBulletOrThrow = function(a) {
+  p.Aa.prototype.Ie = function(a) {
     var b;
-    if(b = this.findBullet(a)) {
+    if(b = this.He(a)) {
       return b
     }
-    throw Error("bullet labeled '" + a + "' is undefined.");
+    f(Error("bullet labeled '" + a + "' is undefined."))
   };
-  bulletml.Root.prototype.findFire = function(a) {
-    return b(this.fires, a)
+  p.Aa.prototype.Je = function(c) {
+    return a(this.uc, c)
   };
-  bulletml.Root.prototype.findFireOrThrow = function(a) {
+  p.Aa.prototype.Ke = function(a) {
     var b;
-    if(b = this.findFire(a)) {
+    if(b = this.Je(a)) {
       return b
     }
-    throw Error("fire labeled '" + a + "' is undefined.");
+    f(Error("fire labeled '" + a + "' is undefined."))
   };
-  bulletml.Bullet = function() {
-    this.root = this.label = null;
-    this.direction = new bulletml.Direction(0);
-    this.speed = new bulletml.Speed(1);
-    this.actions = [];
-    this.option = {};
-    this._localScope = {}
+  p.fb = function() {
+    this.root = this.label = l;
+    this.direction = new p.Wa(0);
+    this.speed = new p.Za(1);
+    this.sa = [];
+    this.ya = {};
+    this.ga = {}
   };
-  bulletml.Bullet.prototype.clone = function(a) {
-    var b = new bulletml.Bullet;
+  p.fb.prototype.clone = function(a) {
+    var b = new p.fb;
     b.label = this.label;
     b.root = this.root;
-    b.actions = this.actions;
-    b.direction = new bulletml.Direction(a._evalParam(this.direction.value));
+    b.sa = this.sa;
+    b.direction = new p.Wa(a.va(this.direction.value));
     b.direction.type = this.direction.type;
-    b.speed = new bulletml.Speed(a._evalParam(this.speed.value));
+    b.speed = new p.Za(a.va(this.speed.value));
     b.speed.type = this.speed.type;
-    b.option = this.option;
-    b._localScope = a._localScope;
+    b.ya = this.ya;
+    b.ga = a.ga;
     return b
   };
-  bulletml.Bullet.prototype.setRoot = function(a) {
+  p.fb.prototype.Na = function(a) {
     this.root = a;
-    for(var b = 0, d = this.actions.length;b < d;b++) {
-      this.actions[b].setRoot(a)
+    for(var b = 0, d = this.sa.length;b < d;b++) {
+      this.sa[b].Na(a)
     }
   };
-  bulletml.BulletRef = function(a) {
-    this.root = null;
+  p.bc = function(a) {
+    this.root = l;
     this.label = a;
-    this.params = []
+    this.qa = []
   };
-  bulletml.BulletRef.prototype.clone = function(a) {
-    var b = a._localScope;
-    a._localScope = a._newScope(this.params);
-    var d = this.root.findBulletOrThrow(this.label).clone(a);
-    a._localScope = b;
+  p.bc.prototype.clone = function(a) {
+    var b = a.ga;
+    a.ga = a.Rc(this.qa);
+    var d = this.root.Ie(this.label).clone(a);
+    a.ga = b;
     return d
   };
-  bulletml.BulletRef.prototype.setRoot = function(a) {
+  p.bc.prototype.Na = function(a) {
     this.root = a
   };
-  bulletml.Command = function() {
-    this.commandName = ""
+  p.ra = function() {
+    this.Ea = ""
   };
-  bulletml.Command.prototype.setRoot = function(a) {
+  p.ra.prototype.Na = function(a) {
     this.root = a
   };
-  bulletml.Action = function() {
-    this.commandName = "action";
-    this.root = this.label = null;
-    this.commands = [];
-    this.params = []
+  p.Ha = function() {
+    this.Ea = "action";
+    this.root = this.label = l;
+    this.Qa = [];
+    this.qa = []
   };
-  bulletml.Action.prototype = new bulletml.Command;
-  bulletml.Action.prototype.setRoot = function(a) {
+  p.Ha.prototype = new p.ra;
+  p.Ha.prototype.Na = function(a) {
     this.root = a;
-    for(var b = 0, d = this.commands.length;b < d;b++) {
-      this.commands[b].setRoot(a)
+    for(var b = 0, d = this.Qa.length;b < d;b++) {
+      this.Qa[b].Na(a)
     }
   };
-  bulletml.Action.prototype.clone = function() {
-    var a = new bulletml.Action;
+  p.Ha.prototype.clone = function() {
+    var a = new p.Ha;
     a.label = this.label;
     a.root = this.root;
-    a.commands = this.commands;
+    a.Qa = this.Qa;
     return a
   };
-  bulletml.ActionRef = function(a) {
-    this.commandName = "actionRef";
+  p.Fb = function(a) {
+    this.Ea = "actionRef";
     this.label = a;
-    this.root = null;
-    this.params = []
+    this.root = l;
+    this.qa = []
   };
-  bulletml.ActionRef.prototype = new bulletml.Command;
-  bulletml.ActionRef.prototype.clone = function() {
-    var a = new bulletml.Action;
+  p.Fb.prototype = new p.ra;
+  p.Fb.prototype.clone = function() {
+    var a = new p.Ha;
     a.root = this.root;
-    a.commands.push(this);
+    a.Qa.push(this);
     return a
   };
-  bulletml.Fire = function() {
-    this.commandName = "fire";
-    this.bullet = this.speed = this.direction = this.root = this.label = null;
-    this.option = new bulletml.FireOption
+  p.Gb = function() {
+    this.Ea = "fire";
+    this.ha = this.speed = this.direction = this.root = this.label = l;
+    this.ya = new p.Kc
   };
-  bulletml.Fire.prototype = new bulletml.Command;
-  bulletml.Fire.prototype.setRoot = function(a) {
+  p.Gb.prototype = new p.ra;
+  p.Gb.prototype.Na = function(a) {
     this.root = a;
-    this.bullet && this.bullet.setRoot(a)
+    this.ha && this.ha.Na(a)
   };
-  bulletml.FireRef = function(a) {
-    this.commandName = "fireRef";
+  p.Lc = function(a) {
+    this.Ea = "fireRef";
     this.label = a;
-    this.params = []
+    this.qa = []
   };
-  bulletml.FireRef.prototype = new bulletml.Command;
-  bulletml.ChangeDirection = function() {
-    this.commandName = "changeDirection";
-    this.direction = new bulletml.Direction;
-    this.term = 0
+  p.Lc.prototype = new p.ra;
+  p.cc = function() {
+    this.Ea = "changeDirection";
+    this.direction = new p.Wa;
+    this.za = 0
   };
-  bulletml.ChangeDirection.prototype = new bulletml.Command;
-  bulletml.ChangeSpeed = function() {
-    this.commandName = "changeSpeed";
-    this.speed = new bulletml.Speed;
-    this.term = 0
+  p.cc.prototype = new p.ra;
+  p.dc = function() {
+    this.Ea = "changeSpeed";
+    this.speed = new p.Za;
+    this.za = 0
   };
-  bulletml.ChangeSpeed.prototype = new bulletml.Command;
-  bulletml.Accel = function() {
-    this.commandName = "accel";
-    this.horizontal = new bulletml.Horizontal;
-    this.vertical = new bulletml.Vertical;
-    this.term = 0
+  p.dc.prototype = new p.ra;
+  p.ac = function() {
+    this.Ea = "accel";
+    this.Ua = new p.Mc;
+    this.Va = new p.Pc;
+    this.za = 0
   };
-  bulletml.Accel.prototype = new bulletml.Command;
-  bulletml.Wait = function(a) {
-    this.commandName = "wait";
+  p.ac.prototype = new p.ra;
+  p.fc = function(a) {
+    this.Ea = "wait";
     this.value = a || 0
   };
-  bulletml.Wait.prototype = new bulletml.Command;
-  bulletml.Vanish = function() {
-    this.commandName = "vanish"
+  p.fc.prototype = new p.ra;
+  p.Oc = function() {
+    this.Ea = "vanish"
   };
-  bulletml.Vanish.prototype = new bulletml.Command;
-  bulletml.Repeat = function() {
-    this.commandName = "repeat";
-    this.times = 0;
-    this.action = null;
-    this.params = []
+  p.Oc.prototype = new p.ra;
+  p.ec = function() {
+    this.Ea = "repeat";
+    this.$d = 0;
+    this.action = l;
+    this.qa = []
   };
-  bulletml.Repeat.prototype = new bulletml.Command;
-  bulletml.Repeat.prototype.setRoot = function(a) {
+  p.ec.prototype = new p.ra;
+  p.ec.prototype.Na = function(a) {
     this.root = a;
-    this.action && this.action.setRoot(a)
+    this.action && this.action.Na(a)
   };
-  bulletml.Bind = function(a, b) {
-    this.commandName = "bind";
-    this.variable = a;
-    this.expression = b
+  p.Jc = function(a, b) {
+    this.Ea = "bind";
+    this.kf = a;
+    this.Ee = b
   };
-  bulletml.Bind.prototype = new bulletml.Command;
-  bulletml.Notify = function(a, b) {
-    this.commandName = "notify";
-    this.eventName = a;
-    this.params = b || null
+  p.Jc.prototype = new p.ra;
+  p.Nc = function(a, b) {
+    this.Ea = "notify";
+    this.Ae = a;
+    this.qa = b || l
   };
-  bulletml.Notify.prototype = new bulletml.Command;
-  bulletml.DummyCommand = new bulletml.Command;
-  bulletml.Direction = function(a) {
+  p.Nc.prototype = new p.ra;
+  p.ce = new p.ra;
+  p.Wa = function(a) {
     this.type = "aim";
     this.value = a || 0
   };
-  bulletml.Speed = function(a) {
+  p.Za = function(a) {
     this.type = "absolute";
-    this.value = void 0 === a ? 1 : a
+    this.value = a === i ? 1 : a
   };
-  bulletml.Horizontal = function(a) {
-    this.type = "absolute";
-    this.value = a || 0
-  };
-  bulletml.Vertical = function(a) {
+  p.Mc = function(a) {
     this.type = "absolute";
     this.value = a || 0
   };
-  bulletml.FireOption = function(a) {
+  p.Pc = function(a) {
+    this.type = "absolute";
+    this.value = a || 0
+  };
+  p.Kc = function(a) {
     a = a || {};
     this.offsetX = a.offsetX || 0;
     this.offsetY = a.offsetY || 0;
-    this.autonomy = !0;
-    void 0 !== a.autonomy && (this.autonomy = !!a.autonomy)
+    this.ta = k;
+    a.ta !== i && (this.ta = !!a.ta)
   };
-  bulletml.OffsetX = function(a) {
+  p.od = function(a) {
     this.value = a || 0
   };
-  bulletml.OffsetY = function(a) {
+  p.pd = function(a) {
     this.value = a || 0
   };
-  bulletml.Autonomy = function(a) {
+  p.nd = function(a) {
     this.value = !!a
   }
 })();
-var BulletML = bulletml;
-(function() {
-  bulletml.Walker = function(b, a) {
-    this._root = b;
-    this._stack = [];
-    this._cursor = -1;
-    this._action = null;
-    this._localScope = {};
-    this._globalScope = {$rank:a || 0}
-  };
-  bulletml.Walker.prototype.next = function() {
-    this._cursor += 1;
-    if(null !== this._action) {
-      var b = this._action.commands[this._cursor];
-      if(void 0 !== b) {
-        if(b instanceof bulletml.Action) {
-          return this._pushStack(), this._action = b, this._localScope = this._cloneScope(), this.next()
-        }
-        if(b instanceof bulletml.ActionRef) {
-          return this._pushStack(), this._action = this._root.findActionOrThrow(b.label), this._localScope = this._newScope(b.params), this.next()
-        }
-        if(b instanceof bulletml.Repeat) {
-          return this._localScope.loopCounter = 0, this._localScope.loopEnd = this._evalParam(b.times) | 0, this._pushStack(), this._action = b.action.clone(), this._localScope = this._cloneScope(), this.next()
-        }
-        if(b instanceof bulletml.Fire) {
-          var a = new bulletml.Fire;
-          a.bullet = b.bullet.clone(this);
-          null !== b.direction && (a.direction = new bulletml.Direction(this._evalParam(b.direction.value)), a.direction.type = b.direction.type);
-          null !== b.speed && (a.speed = new bulletml.Speed(this._evalParam(b.speed.value)), a.speed.type = b.speed.type);
-          a.option = b.option;
-          return a
-        }
-        return b instanceof bulletml.FireRef ? (this._pushStack(), this._action = new bulletml.Action, this._action.commands = [this._root.findFireOrThrow(b.label)], this._localScope = this._newScope(b.params), this.next()) : b instanceof bulletml.ChangeDirection ? (a = new bulletml.ChangeDirection, a.direction.type = b.direction.type, a.direction.value = this._evalParam(b.direction.value), a.term = this._evalParam(b.term), a) : b instanceof bulletml.ChangeSpeed ? (a = new bulletml.ChangeSpeed, a.speed.type = 
-        b.speed.type, a.speed.value = this._evalParam(b.speed.value), a.term = this._evalParam(b.term), a) : b instanceof bulletml.Accel ? (a = new bulletml.Accel, a.horizontal.type = b.horizontal.type, a.horizontal.value = this._evalParam(b.horizontal.value), a.vertical.type = b.vertical.type, a.vertical.value = this._evalParam(b.vertical.value), a.term = this._evalParam(b.term), a) : b instanceof bulletml.Wait ? new bulletml.Wait(this._evalParam(b.value)) : b instanceof bulletml.Vanish ? b : b instanceof 
-        bulletml.Bind ? (this._localScope["$" + b.variable] = this._evalParam(b.expression), bulletml.DummyCommand) : b instanceof bulletml.Notify ? b : null
+p.hb = function(a, c) {
+  this.ud = a;
+  this.hc = [];
+  this.ib = -1;
+  this.ua = l;
+  this.ga = {};
+  this.gc = {$rank:c || 0}
+};
+p.hb.prototype.next = function() {
+  this.ib += 1;
+  if(this.ua !== l) {
+    var a = this.ua.Qa[this.ib];
+    if(a !== i) {
+      if(a instanceof p.Ha) {
+        return this.Pb(), this.ua = a, this.ga = this.Qc(), this.next()
       }
-      this._popStack();
-      if(null === this._action) {
-        return null
+      if(a instanceof p.Fb) {
+        return this.Pb(), this.ua = this.ud.Ge(a.label), this.ga = this.Rc(a.qa), this.next()
       }
-      if((b = this._action.commands[this._cursor]) && "repeat" == b.commandName) {
-        this._localScope.loopCounter++, this._localScope.loopCounter < this._localScope.loopEnd && (this._pushStack(), this._action = b.action.clone(), this._localScope = this._cloneScope())
+      if(a instanceof p.ec) {
+        return this.ga.Lb = 0, this.ga.Ud = this.va(a.$d) | 0, this.Pb(), this.ua = a.action.clone(), this.ga = this.Qc(), this.next()
       }
-      return this.next()
+      if(a instanceof p.Gb) {
+        var c = new p.Gb;
+        c.ha = a.ha.clone(this);
+        a.direction !== l && (c.direction = new p.Wa(this.va(a.direction.value)), c.direction.type = a.direction.type);
+        a.speed !== l && (c.speed = new p.Za(this.va(a.speed.value)), c.speed.type = a.speed.type);
+        c.ya = a.ya;
+        return c
+      }
+      return a instanceof p.Lc ? (this.Pb(), this.ua = new p.Ha, this.ua.Qa = [this.ud.Ke(a.label)], this.ga = this.Rc(a.qa), this.next()) : a instanceof p.cc ? (c = new p.cc, c.direction.type = a.direction.type, c.direction.value = this.va(a.direction.value), c.za = this.va(a.za), c) : a instanceof p.dc ? (c = new p.dc, c.speed.type = a.speed.type, c.speed.value = this.va(a.speed.value), c.za = this.va(a.za), c) : a instanceof p.ac ? (c = new p.ac, c.Ua.type = a.Ua.type, c.Ua.value = this.va(a.Ua.value), 
+      c.Va.type = a.Va.type, c.Va.value = this.va(a.Va.value), c.za = this.va(a.za), c) : a instanceof p.fc ? new p.fc(this.va(a.value)) : a instanceof p.Oc ? a : a instanceof p.Jc ? (this.ga["$" + a.kf] = this.va(a.Ee), p.ce) : a instanceof p.Nc ? a : l
     }
-    return null
-  };
-  bulletml.Walker.prototype._pushStack = function() {
-    this._stack.push({action:this._action, cursor:this._cursor, scope:this._localScope});
-    this._cursor = -1
-  };
-  bulletml.Walker.prototype._popStack = function() {
-    var b = this._stack.pop();
-    b ? (this._cursor = b.cursor, this._action = b.action, this._localScope = b.scope) : (this._cursor = -1, this._action = null, this._localScope = {})
-  };
-  bulletml.Walker.prototype._evalParam = function(b) {
-    var a;
-    if("number" === typeof b) {
-      return b
+    this.pe();
+    if(this.ua === l) {
+      return l
     }
-    if(isNaN(a = Number(b))) {
-      if((a = this._localScope[b]) || (a = this._globalScope[b])) {
-        return a
-      }
-      if("$rand" == b) {
-        return Math.random()
-      }
-    }else {
-      return a
+    if((a = this.ua.Qa[this.ib]) && "repeat" == a.Ea) {
+      this.ga.Lb++, this.ga.Lb < this.ga.Ud && (this.Pb(), this.ua = a.action.clone(), this.ga = this.Qc())
     }
-    a = {};
-    for(var c in this._globalScope) {
-      this._globalScope.hasOwnProperty(c) && (a[c] = this._globalScope[c])
-    }
-    for(c in this._localScope) {
-      this._localScope.hasOwnProperty(c) && (a[c] = this._localScope[c])
-    }
-    a.$rand = Math.random();
-    (c = this._stack[this._stack.length - 1]) && (a.$loop = {index:c.scope.loopCounter, count:c.scope.loopCounter + 1, first:0 === c.scope.loopCounter, last:c.scope.loopCounter + 1 >= c.scope.loopEnd});
-    return(new Function("return " + b.split("$").join("this.$"))).apply(a)
-  };
-  bulletml.Walker.prototype._newScope = function(b) {
-    var a = {};
-    if(b) {
-      for(var c = 0, d = b.length;c < d;c++) {
-        a["$" + (c + 1)] = this._evalParam(b[c])
-      }
-    }else {
-      for(c in this._localScope) {
-        this._localScope.hasOwnProperty(c) && (a[c] = this._localScope[c])
-      }
-    }
+    return this.next()
+  }
+  return l
+};
+p.hb.prototype.Pb = function() {
+  this.hc.push({action:this.ua, cursor:this.ib, scope:this.ga});
+  this.ib = -1
+};
+p.hb.prototype.pe = function() {
+  var a = this.hc.pop();
+  a ? (this.ib = a.cursor, this.ua = a.action, this.ga = a.scope) : (this.ib = -1, this.ua = l, this.ga = {})
+};
+p.hb.prototype.va = function(a) {
+  var c;
+  if("number" === typeof a) {
     return a
-  };
-  bulletml.Walker.prototype._cloneScope = function() {
-    var b = {}, a;
-    for(a in this._localScope) {
-      this._localScope.hasOwnProperty(a) && (b[a] = this._localScope[a])
-    }
-    return b
-  };
-  bulletml.Root.prototype.getWalker = function(b, a) {
-    var c = new bulletml.Walker(this, a), d = this.findAction(b);
-    d && (c._action = d);
-    return c
-  };
-  bulletml.Bullet.prototype.getWalker = function(b) {
-    b = new bulletml.Walker(this.root, b);
-    var a = new bulletml.Action;
-    a.root = this.root;
-    a.commands = this.actions;
-    b._action = a;
-    b._localScope = this._localScope;
-    return b
   }
-})();
-(function() {
-  bulletml.dsl = function(b) {
-    b = b || "";
-    for(var a in bulletml.dsl) {
-      bulletml.dsl.hasOwnProperty(a) && (bulletml.GLOBAL[b + a] = bulletml.dsl[a])
+  if(isNaN(c = Number(a))) {
+    if((c = this.ga[a]) || (c = this.gc[a])) {
+      return c
     }
-  };
-  bulletml.dsl.action = function(b) {
-    if(0 < arguments.length) {
-      for(var a = 0, c = arguments.length;a < c;a++) {
-        arguments[a] instanceof Function && (arguments[a] = arguments[a]())
-      }
+    if("$rand" == a) {
+      return Math.random()
     }
-    if(b instanceof Array) {
-      a = 0;
-      for(c = b.length;a < c;a++) {
-        b[a] instanceof Function && (b[a] = b[a]())
-      }
-    }
-    var d = new bulletml.Action;
-    if(b instanceof Array) {
-      if(b.some(function(a) {
-        return!(a instanceof bulletml.Command)
-      })) {
-        throw Error("argument type error.");
-      }
-      d.commands = b
-    }else {
-      a = 0;
-      for(c = arguments.length;a < c;a++) {
-        if(arguments[a] instanceof bulletml.Command) {
-          d.commands[a] = arguments[a]
-        }else {
-          throw Error("argument type error.");
-        }
-      }
-    }
-    return d
-  };
-  bulletml.dsl.actionRef = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("label is required.");
-    }
-    d = new bulletml.ActionRef(b);
-    if(a instanceof Array) {
-      d.params = a
-    }else {
-      for(c = 1;c < arguments.length;c++) {
-        d.params.push(arguments[c])
-      }
-    }
-    return d
-  };
-  bulletml.dsl.bullet = function(b, a, c, d) {
-    for(var f = 0, g = arguments.length;f < g;f++) {
-      arguments[f] instanceof Function && (arguments[f] = arguments[f]())
-    }
-    g = new bulletml.Bullet;
-    for(f = 0;f < arguments.length;f++) {
-      arguments[f] instanceof bulletml.Direction ? g.direction = arguments[f] : arguments[f] instanceof bulletml.Speed ? g.speed = arguments[f] : arguments[f] instanceof bulletml.Action ? g.actions.push(arguments[f]) : arguments[f] instanceof bulletml.ActionRef ? g.actions.push(arguments[f]) : arguments[f] instanceof Array ? g.actions.push(bulletml.dsl.action(arguments[f])) : arguments[f] instanceof Object ? g.option = arguments[f] : "string" === typeof arguments[f] && (g.label = arguments[f])
-    }
-    return g
-  };
-  bulletml.dsl.bulletRef = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("label is required.");
-    }
-    d = new bulletml.BulletRef(b);
-    if(a instanceof Array) {
-      d.params = a
-    }else {
-      for(c = 1;c < arguments.length;c++) {
-        d.params.push(arguments[c])
-      }
-    }
-    return d
-  };
-  bulletml.dsl.fire = function(b, a, c, d) {
-    for(var f = 0, g = arguments.length;f < g;f++) {
-      arguments[f] instanceof Function && (arguments[f] = arguments[f]())
-    }
-    g = new bulletml.Fire;
-    for(f = 0;f < arguments.length;f++) {
-      arguments[f] instanceof bulletml.Direction ? g.direction = arguments[f] : arguments[f] instanceof bulletml.Speed ? g.speed = arguments[f] : arguments[f] instanceof bulletml.Bullet ? g.bullet = arguments[f] : arguments[f] instanceof bulletml.BulletRef ? g.bullet = arguments[f] : arguments[f] instanceof bulletml.FireOption ? g.option = arguments[f] : arguments[f] instanceof bulletml.OffsetX ? g.option.offsetX = arguments[f].value : arguments[f] instanceof bulletml.OffsetY ? g.option.offsetY = 
-      arguments[f].value : arguments[f] instanceof bulletml.Autonomy && (g.option.autonomy = arguments[f].value)
-    }
-    if(void 0 === g.bullet) {
-      throw Error("bullet (or bulletRef) is required.");
-    }
-    return g
-  };
-  bulletml.dsl.fireRef = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("label is required.");
-    }
-    d = new bulletml.FireRef(b);
-    if(a instanceof Array) {
-      d.params = a
-    }else {
-      for(c = 1;c < arguments.length;c++) {
-        d.params.push(arguments[c])
-      }
-    }
-    return d
-  };
-  bulletml.dsl.changeDirection = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("direction is required.");
-    }
-    if(void 0 === a) {
-      throw Error("term is required.");
-    }
-    c = new bulletml.ChangeDirection;
-    c.direction = b instanceof bulletml.Direction ? b : new bulletml.Direction(b);
-    c.term = a;
+  }else {
     return c
-  };
-  bulletml.dsl.changeSpeed = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("speed is required.");
-    }
-    if(void 0 === a) {
-      throw Error("term is required.");
-    }
-    c = new bulletml.ChangeSpeed;
-    c.speed = b instanceof bulletml.Speed ? b : new bulletml.Speed(b);
-    c.term = a;
-    return c
-  };
-  bulletml.dsl.accel = function(b, a, c) {
-    for(var d = 0, f = arguments.length;d < f;d++) {
-      arguments[d] instanceof Function && (arguments[d] = arguments[d]())
-    }
-    f = new bulletml.Accel;
-    for(d = 0;d < arguments.length;d++) {
-      arguments[d] instanceof bulletml.Horizontal ? f.horizontal = b : arguments[d] instanceof bulletml.Vertical ? f.vertical = a : f.term = arguments[d]
-    }
-    if(void 0 === f.horizontal && void 0 === f.vertical) {
-      throw Error("horizontal or vertical is required.");
-    }
-    if(void 0 === f.term) {
-      throw Error("term is required.");
-    }
-    return f
-  };
-  bulletml.dsl.wait = function(b) {
-    for(var a = 0, c = arguments.length;a < c;a++) {
-      arguments[a] instanceof Function && (arguments[a] = arguments[a]())
-    }
-    if(void 0 === b) {
-      throw Error("value is required.");
-    }
-    return new bulletml.Wait(b)
-  };
-  bulletml.dsl.vanish = function() {
-    return new bulletml.Vanish
-  };
-  bulletml.dsl.repeat = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("times is required.");
-    }
-    if(void 0 === a) {
-      throw Error("action is required.");
-    }
-    d = new bulletml.Repeat;
-    d.times = b;
-    if(a instanceof bulletml.Action || a instanceof bulletml.ActionRef) {
-      d.action = a
-    }else {
-      if(a instanceof Array) {
-        d.action = bulletml.dsl.action(a)
-      }else {
-        for(var f = [], c = 1;c < arguments.length;c++) {
-          f.push(arguments[c])
-        }
-        d.action = bulletml.dsl.action(f)
-      }
-    }
-    return d
-  };
-  bulletml.dsl.bindVar = function(b, a) {
-    return new bulletml.Bind(b, a)
-  };
-  bulletml.dsl.notify = function(b, a) {
-    return new bulletml.Notify(b, a)
-  };
-  bulletml.dsl.direction = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("value is required.");
-    }
-    c = new bulletml.Direction(b);
-    void 0 !== a && (c.type = a);
-    return c
-  };
-  bulletml.dsl.speed = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("value is required.");
-    }
-    c = new bulletml.Speed(b);
-    a && (c.type = a);
-    return c
-  };
-  bulletml.dsl.horizontal = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("value is required.");
-    }
-    c = new bulletml.Horizontal(b);
-    a && (c.type = a);
-    return c
-  };
-  bulletml.dsl.vertical = function(b, a) {
-    for(var c = 0, d = arguments.length;c < d;c++) {
-      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
-    }
-    if(void 0 === b) {
-      throw Error("value is required.");
-    }
-    c = new bulletml.Vertical(b);
-    a && (c.type = a);
-    return c
-  };
-  bulletml.dsl.fireOption = function(b) {
-    return new bulletml.FireOption(b)
-  };
-  bulletml.dsl.offsetX = function(b) {
-    return new bulletml.OffsetX(b)
-  };
-  bulletml.dsl.offsetY = function(b) {
-    return new bulletml.OffsetY(b)
-  };
-  bulletml.dsl.autonomy = function(b) {
-    return new bulletml.Autonomy(b)
   }
-})();
-tm.bulletml = tm.bulletml || {};
+  c = {};
+  for(var b in this.gc) {
+    this.gc.hasOwnProperty(b) && (c[b] = this.gc[b])
+  }
+  for(b in this.ga) {
+    this.ga.hasOwnProperty(b) && (c[b] = this.ga[b])
+  }
+  c.$rand = Math.random();
+  (b = this.hc[this.hc.length - 1]) && (c.$loop = {index:b.scope.Lb, count:b.scope.Lb + 1, first:0 === b.scope.Lb, last:b.scope.Lb + 1 >= b.scope.Ud});
+  return(new Function("return " + a.split("$").join("this.$"))).apply(c)
+};
+p.hb.prototype.Rc = function(a) {
+  var c = {};
+  if(a) {
+    for(var b = 0, d = a.length;b < d;b++) {
+      c["$" + (b + 1)] = this.va(a[b])
+    }
+  }else {
+    for(b in this.ga) {
+      this.ga.hasOwnProperty(b) && (c[b] = this.ga[b])
+    }
+  }
+  return c
+};
+p.hb.prototype.Qc = function() {
+  var a = {}, c;
+  for(c in this.ga) {
+    this.ga.hasOwnProperty(c) && (a[c] = this.ga[c])
+  }
+  return a
+};
+p.Aa.prototype.ad = function(a, c) {
+  var b = new p.hb(this, c), d = this.Ld(a);
+  d && (b.ua = d);
+  return b
+};
+p.fb.prototype.ad = function(a) {
+  a = new p.hb(this.root, a);
+  var c = new p.Ha;
+  c.root = this.root;
+  c.Qa = this.sa;
+  a.ua = c;
+  a.ga = this.ga;
+  return a
+};
+p.ia = function(a) {
+  a = a || "";
+  for(var c in p.ia) {
+    p.ia.hasOwnProperty(c) && (p.de[a + c] = p.ia[c])
+  }
+};
+p.ia.action = function(a) {
+  if(0 < arguments.length) {
+    for(var c = 0, b = arguments.length;c < b;c++) {
+      arguments[c] instanceof Function && (arguments[c] = arguments[c]())
+    }
+  }
+  if(a instanceof Array) {
+    c = 0;
+    for(b = a.length;c < b;c++) {
+      a[c] instanceof Function && (a[c] = a[c]())
+    }
+  }
+  var d = new p.Ha;
+  if(a instanceof Array) {
+    a.some(function(a) {
+      return!(a instanceof p.ra)
+    }) && f(Error("argument type error.")), d.Qa = a
+  }else {
+    c = 0;
+    for(b = arguments.length;c < b;c++) {
+      arguments[c] instanceof p.ra ? d.Qa[c] = arguments[c] : f(Error("argument type error."))
+    }
+  }
+  return d
+};
+p.ia.qf = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("label is required."));
+  d = new p.Fb(a);
+  if(c instanceof Array) {
+    d.qa = c
+  }else {
+    for(b = 1;b < arguments.length;b++) {
+      d.qa.push(arguments[b])
+    }
+  }
+  return d
+};
+p.ia.ha = function(a, c, b, d) {
+  for(var g = 0, h = arguments.length;g < h;g++) {
+    arguments[g] instanceof Function && (arguments[g] = arguments[g]())
+  }
+  h = new p.fb;
+  for(g = 0;g < arguments.length;g++) {
+    arguments[g] instanceof p.Wa ? h.direction = arguments[g] : arguments[g] instanceof p.Za ? h.speed = arguments[g] : arguments[g] instanceof p.Ha ? h.sa.push(arguments[g]) : arguments[g] instanceof p.Fb ? h.sa.push(arguments[g]) : arguments[g] instanceof Array ? h.sa.push(p.ia.action(arguments[g])) : arguments[g] instanceof Object ? h.ya = arguments[g] : "string" === typeof arguments[g] && (h.label = arguments[g])
+  }
+  return h
+};
+p.ia.sf = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("label is required."));
+  d = new p.bc(a);
+  if(c instanceof Array) {
+    d.qa = c
+  }else {
+    for(b = 1;b < arguments.length;b++) {
+      d.qa.push(arguments[b])
+    }
+  }
+  return d
+};
+p.ia.ma = function(a, c, b, d) {
+  for(var g = 0, h = arguments.length;g < h;g++) {
+    arguments[g] instanceof Function && (arguments[g] = arguments[g]())
+  }
+  h = new p.Gb;
+  for(g = 0;g < arguments.length;g++) {
+    arguments[g] instanceof p.Wa ? h.direction = arguments[g] : arguments[g] instanceof p.Za ? h.speed = arguments[g] : arguments[g] instanceof p.fb ? h.ha = arguments[g] : arguments[g] instanceof p.bc ? h.ha = arguments[g] : arguments[g] instanceof p.Kc ? h.ya = arguments[g] : arguments[g] instanceof p.od ? h.ya.offsetX = arguments[g].value : arguments[g] instanceof p.pd ? h.ya.offsetY = arguments[g].value : arguments[g] instanceof p.nd && (h.ya.ta = arguments[g].value)
+  }
+  h.ha === i && f(Error("bullet (or bulletRef) is required."));
+  return h
+};
+p.ia.yf = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("label is required."));
+  d = new p.Lc(a);
+  if(c instanceof Array) {
+    d.qa = c
+  }else {
+    for(b = 1;b < arguments.length;b++) {
+      d.qa.push(arguments[b])
+    }
+  }
+  return d
+};
+p.ia.tf = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("direction is required."));
+  c === i && f(Error("term is required."));
+  b = new p.cc;
+  b.direction = a instanceof p.Wa ? a : new p.Wa(a);
+  b.za = c;
+  return b
+};
+p.ia.uf = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("speed is required."));
+  c === i && f(Error("term is required."));
+  b = new p.dc;
+  b.speed = a instanceof p.Za ? a : new p.Za(a);
+  b.za = c;
+  return b
+};
+p.ia.pf = function(a, c, b) {
+  for(var d = 0, g = arguments.length;d < g;d++) {
+    arguments[d] instanceof Function && (arguments[d] = arguments[d]())
+  }
+  g = new p.ac;
+  for(d = 0;d < arguments.length;d++) {
+    arguments[d] instanceof p.Mc ? g.Ua = a : arguments[d] instanceof p.Pc ? g.Va = c : g.za = arguments[d]
+  }
+  g.Ua === i && g.Va === i && f(Error("horizontal or vertical is required."));
+  g.za === i && f(Error("term is required."));
+  return g
+};
+p.ia.wait = function(a) {
+  for(var c = 0, b = arguments.length;c < b;c++) {
+    arguments[c] instanceof Function && (arguments[c] = arguments[c]())
+  }
+  a === i && f(Error("value is required."));
+  return new p.fc(a)
+};
+p.ia.Jf = function() {
+  return new p.Oc
+};
+p.ia.repeat = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("times is required."));
+  c === i && f(Error("action is required."));
+  d = new p.ec;
+  d.$d = a;
+  if(c instanceof p.Ha || c instanceof p.Fb) {
+    d.action = c
+  }else {
+    if(c instanceof Array) {
+      d.action = p.ia.action(c)
+    }else {
+      for(var g = [], b = 1;b < arguments.length;b++) {
+        g.push(arguments[b])
+      }
+      d.action = p.ia.action(g)
+    }
+  }
+  return d
+};
+p.ia.rf = function(a, c) {
+  return new p.Jc(a, c)
+};
+p.ia.Ef = function(a, c) {
+  return new p.Nc(a, c)
+};
+p.ia.direction = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("value is required."));
+  b = new p.Wa(a);
+  c !== i && (b.type = c);
+  return b
+};
+p.ia.speed = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("value is required."));
+  b = new p.Za(a);
+  c && (b.type = c);
+  return b
+};
+p.ia.Ua = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("value is required."));
+  b = new p.Mc(a);
+  c && (b.type = c);
+  return b
+};
+p.ia.Va = function(a, c) {
+  for(var b = 0, d = arguments.length;b < d;b++) {
+    arguments[b] instanceof Function && (arguments[b] = arguments[b]())
+  }
+  a === i && f(Error("value is required."));
+  b = new p.Pc(a);
+  c && (b.type = c);
+  return b
+};
+p.ia.xf = function(a) {
+  return new p.Kc(a)
+};
+p.ia.offsetX = function(a) {
+  return new p.od(a)
+};
+p.ia.offsetY = function(a) {
+  return new p.pd(a)
+};
+p.ia.ta = function(a) {
+  return new p.nd(a)
+};
+tm.Ca = tm.Ca || {};
 (function() {
-  function b(a) {
+  function a(a) {
     for(;a <= -Math.PI;) {
       a += 2 * Math.PI
     }
@@ -644,283 +604,268 @@ tm.bulletml = tm.bulletml || {};
     }
     return a
   }
-  function a(a, b) {
+  function c(a, b) {
     return Math.atan2(b.y - a.y, b.x - a.x)
   }
-  tm.bulletml.AttackPattern = tm.createClass({init:function(a) {
-    if(!a) {
-      throw Error("argument is invalid.", a);
-    }
-    this._bulletml = a
-  }, createTicker:function(a, b) {
-    var c = this._bulletml.getTopActionLabels();
-    if(void 0 === b && 0 < c.length) {
-      for(var d = [], j = 0, m = c.length;j < m;j++) {
-        d[d.length] = this._createTicker(a, c[j])
+  tm.Ca.tb = tm.createClass({init:function(a) {
+    a || f(Error("argument is invalid.", a));
+    this.rd = a
+  }, qc:function(a, b) {
+    var c = this.rd.Pe();
+    if(b === i && 0 < c.length) {
+      for(var d = [], q = 0, K = c.length;q < K;q++) {
+        d[d.length] = this.sd(a, c[q])
       }
-      for(var k = function() {
+      for(var v = function() {
         for(var a = d.length;a--;) {
           d[a].call(this)
         }
-        k.compChildCount == d.length && (k.completed = !0, this.dispatchEvent(tm.event.Event("completeattack")))
-      }, j = d.length;j--;) {
-        d[j].parentTicker = k
+        v.Xc == d.length && (v.Tb = k, this.dispatchEvent(tm.event.Event("completeattack")))
+      }, q = d.length;q--;) {
+        d[q].Hc = v
       }
-      k.compChildCount = 0;
-      k.completeChild = function() {
-        this.compChildCount++
+      v.Xc = 0;
+      v.Cd = function() {
+        this.Xc++
       };
-      k.compChildCount = 0;
-      k.completed = !1;
-      k.isDanmaku = !0;
-      return k
+      v.Xc = 0;
+      v.Tb = m;
+      v.bd = k;
+      return v
     }
-    return this._createTicker(a, b)
-  }, _createTicker:function(a, b) {
-    a = function(a) {
-      var b = {}, c = tm.bulletml.AttackPattern.defaultConfig, f;
-      for(f in c) {
-        c.hasOwnProperty(f) && (b[f] = c[f])
-      }
-      for(f in a) {
-        a.hasOwnProperty(f) && (b[f] = a[f])
-      }
-      return b
-    }(a);
-    if(!a.target) {
-      throw Error("target is undefined in config.");
-    }
-    var c = function() {
-      c.age += 1;
-      this.age = c.age;
-      var a = c.config, b = c._pattern;
+    return this.sd(a, b)
+  }, sd:function(a, b) {
+    function c() {
+      c.da += 1;
+      this.da = c.da;
+      var a = c.Yc, b = c.oe;
       if(b) {
-        if(c.age < c.chDirEnd ? c.direction += c.dirIncr : c.age === c.chDirEnd && (c.direction = c.dirFin), c.age < c.chSpdEnd ? c.speed += c.spdIncr : c.age === c.chSpdEnd && (c.speed = c.spdFin), c.age < c.aclEnd ? (c.speedH += c.aclIncrH, c.speedV += c.aclIncrV) : c.age === c.aclEnd && (c.speedH = c.aclFinH, c.speedV = c.aclFinV), this.x += Math.cos(c.direction) * c.speed * a.speedRate, this.y += Math.sin(c.direction) * c.speed * a.speedRate, this.x += c.speedH * a.speedRate, this.y += c.speedV * 
-        a.speedRate, a.isInsideOfWorld(this)) {
-          if(a.updateProperties || this.updateProperties) {
+        if(c.da < c.Vc ? c.direction += c.Ib : c.da === c.Vc && (c.direction = c.kb), c.da < c.Wc ? c.speed += c.$b : c.da === c.Wc && (c.speed = c.Ob), c.da < c.Sc ? (c.Bb += c.kc, c.Db += c.lc) : c.da === c.Sc && (c.Bb = c.ic, c.Db = c.jc), this.x += Math.cos(c.direction) * c.speed * a.Cb, this.y += Math.sin(c.direction) * c.speed * a.Cb, this.x += c.Bb * a.Cb, this.y += c.Db * a.Cb, a.cd(this)) {
+          if(a.rb || this.rb) {
             this.rotation = (c.direction + 0.5 * Math.PI) * Math.RAD_TO_DEG, this.speed = c.speed
           }
-          if(!(c.age < c.waitTo || c.completed)) {
-            for(var f;f = c.walker.next();) {
-              switch(f.commandName) {
+          if(!(c.da < c.ae || c.Tb)) {
+            for(var d;d = c.be.next();) {
+              switch(d.Ea) {
                 case "fire":
-                  b._fire.call(this, f, a, c, b);
+                  b.le.call(this, d, a, c, b);
                   break;
                 case "wait":
                   a = 0;
-                  c.waitTo = "number" === typeof f.value ? c.age + f.value : 0 !== (a = ~~f.value) ? c.age + a : c.age + eval(f.value);
+                  c.ae = "number" === typeof d.value ? c.da + d.value : 0 !== (a = ~~d.value) ? c.da + a : c.da + eval(d.value);
                   return;
                 case "changeDirection":
-                  b._changeDirection.call(this, f, a, c);
+                  b.ge.call(this, d, a, c);
                   break;
                 case "changeSpeed":
-                  b._changeSpeed.call(this, f, c);
+                  b.he.call(this, d, c);
                   break;
                 case "accel":
-                  b._accel.call(this, f, c);
+                  b.ee.call(this, d, c);
                   break;
                 case "vanish":
                   this.remove();
                   break;
                 case "notify":
-                  b._notify.call(this, f)
+                  b.me.call(this, d)
               }
             }
-            c.completed = !0;
-            c.parentTicker ? c.parentTicker.completeChild() : this.dispatchEvent(tm.event.Event("completeattack"))
+            c.Tb = k;
+            c.Hc ? c.Hc.Cd() : this.dispatchEvent(tm.event.Event("completeattack"))
           }
         }else {
-          this.remove(), c.completed = !0, c.parentTicker ? c.parentTicker.completeChild() : this.dispatchEvent(tm.event.Event("completeattack"))
+          this.remove(), c.Tb = k, c.Hc ? c.Hc.Cd() : this.dispatchEvent(tm.event.Event("completeattack"))
         }
       }
-    };
-    b = b || "top";
-    if("string" === typeof b) {
-      c.walker = this._bulletml.getWalker(b, a.rank)
-    }else {
-      if(b instanceof bulletml.Bullet) {
-        c.walker = b.getWalker(a.rank)
-      }else {
-        throw window.console.error(a, b), Error("\u5f15\u6570\u304c\u4e0d\u6b63");
-      }
     }
-    c._pattern = this;
-    c.config = a;
-    c.waitTo = -1;
-    c.completed = !1;
-    c.direction = 0;
-    c.lastDirection = 0;
-    c.speed = 0;
-    c.lastSpeed = 0;
-    c.speedH = 0;
-    c.speedV = 0;
-    c.dirIncr = 0;
-    c.dirFin = 0;
-    c.chDirEnd = -1;
-    c.spdIncr = 0;
-    c.spdFin = 0;
-    c.chSpdEnd = -1;
-    c.aclIncrH = 0;
-    c.aclFinH = 0;
-    c.aclIncrV = 0;
-    c.aclFinV = 0;
-    c.aclEnd = -1;
-    c.age = -1;
-    c.isDanmaku = !0;
-    return c
-  }, _createSimpleTicker:function(a) {
     a = function(a) {
-      var b = {}, c = tm.bulletml.AttackPattern.defaultConfig, f;
-      for(f in c) {
-        c.hasOwnProperty(f) && (b[f] = c[f])
+      var b = {}, c = tm.Ca.tb.Vb, d;
+      for(d in c) {
+        c.hasOwnProperty(d) && (b[d] = c[d])
       }
-      for(f in a) {
-        a.hasOwnProperty(f) && (b[f] = a[f])
+      for(d in a) {
+        a.hasOwnProperty(d) && (b[d] = a[d])
       }
       return b
     }(a);
-    if(!a.target) {
-      throw Error("target is undefined in config.");
+    a.target || f(Error("target is undefined in config."));
+    b = b || "top";
+    "string" === typeof b ? c.be = this.rd.ad(b, a.kd) : b instanceof p.fb ? c.be = b.ad(a.kd) : (window.console.error(a, b), f(Error("\u5f15\u6570\u304c\u4e0d\u6b63")));
+    c.oe = this;
+    c.Yc = a;
+    c.ae = -1;
+    c.Tb = m;
+    c.direction = 0;
+    c.Qd = 0;
+    c.speed = 0;
+    c.Td = 0;
+    c.Bb = 0;
+    c.Db = 0;
+    c.Ib = 0;
+    c.kb = 0;
+    c.Vc = -1;
+    c.$b = 0;
+    c.Ob = 0;
+    c.Wc = -1;
+    c.kc = 0;
+    c.ic = 0;
+    c.lc = 0;
+    c.jc = 0;
+    c.Sc = -1;
+    c.da = -1;
+    c.bd = k;
+    return c
+  }, ke:function(a) {
+    function b() {
+      this.x += b.Dd;
+      this.y += b.Ed;
+      b.Yc.cd(this) || (this.remove(), this.dispatchEvent(tm.event.Event("removed")))
     }
-    var b = function() {
-      this.x += b.deltaX;
-      this.y += b.deltaY;
-      b.config.isInsideOfWorld(this) || (this.remove(), this.dispatchEvent(tm.event.Event("removed")))
-    };
-    b.config = a;
+    a = function(a) {
+      var b = {}, c = tm.Ca.tb.Vb, d;
+      for(d in c) {
+        c.hasOwnProperty(d) && (b[d] = c[d])
+      }
+      for(d in a) {
+        a.hasOwnProperty(d) && (b[d] = a[d])
+      }
+      return b
+    }(a);
+    a.target || f(Error("target is undefined in config."));
+    b.Yc = a;
     b.direction = 0;
     b.speed = 0;
-    b.deltaX = 0;
-    b.deltaY = 0;
-    b.isDanmaku = !0;
+    b.Dd = 0;
+    b.Ed = 0;
+    b.bd = k;
     return b
-  }, _fire:function(b, c, d, i) {
-    if(void 0 === this.onfire || this.onfire()) {
-      var j = {label:b.bullet.label}, m;
-      for(m in b.bullet.option) {
-        j[m] = b.bullet.option[m]
+  }, le:function(a, b, d, r) {
+    if(this.$e === i || this.rc) {
+      var q = {label:a.ha.label}, K;
+      for(K in a.ha.ya) {
+        q[K] = a.ha.ya[K]
       }
-      if(j = c.bulletFactory(j)) {
-        var k = (m = !!b.bullet.actions.length) ? i._createSimpleTicker(c) : i.createTicker(c, b.bullet), n = this, l = {x:this.x + b.option.offsetX, y:this.y + b.option.offsetY};
-        d.lastDirection = k.direction = function(i) {
-          var j = eval(i.value) * Math.DEG_TO_RAD;
-          switch(i.type) {
+      if(q = b.Ad(q)) {
+        var v = (K = !!a.ha.sa.length) ? r.ke(b) : r.qc(b, a.ha), ba = this, R = {x:this.x + a.ya.offsetX, y:this.y + a.ya.offsetY};
+        d.Qd = v.direction = function(r) {
+          var q = eval(r.value) * Math.DEG_TO_RAD;
+          switch(r.type) {
             case "aim":
-              return c.target ? b.option.autonomy ? a(l, c.target) + j : a(n, c.target) + j : j - Math.PI / 2;
+              return b.target ? a.ya.ta ? c(R, b.target) + q : c(ba, b.target) + q : q - Math.PI / 2;
             case "absolute":
-              return j - Math.PI / 2;
+              return q - Math.PI / 2;
             case "relative":
-              return d.direction + j;
+              return d.direction + q;
             default:
-              return d.lastDirection + j
+              return d.Qd + q
           }
-        }(b.direction || b.bullet.direction);
-        d.lastSpeed = k.speed = function(a) {
+        }(a.direction || a.ha.direction);
+        d.Td = v.speed = function(a) {
           var b = eval(a.value);
           switch(a.type) {
             case "relative":
               return d.speed + b;
             case "sequence":
-              return d.lastSpeed + b;
+              return d.Td + b;
             default:
               return b
           }
-        }(b.speed || b.bullet.speed);
-        j.x = l.x;
-        j.y = l.y;
-        m && (k.deltaX = Math.cos(k.direction) * k.speed * c.speedRate, k.deltaY = Math.sin(k.direction) * k.speed * c.speedRate);
-        j.updateProperties = !!j.updateProperties;
-        if(c.updateProperties || j.updateProperties) {
-          j.rotation = (k.direction + 0.5 * Math.PI) * Math.RAD_TO_DEG, j.speed = k.speed
+        }(a.speed || a.ha.speed);
+        q.x = R.x;
+        q.y = R.y;
+        K && (v.Dd = Math.cos(v.direction) * v.speed * b.Cb, v.Ed = Math.sin(v.direction) * v.speed * b.Cb);
+        q.rb = !!q.rb;
+        if(b.rb || q.rb) {
+          q.rotation = (v.direction + 0.5 * Math.PI) * Math.RAD_TO_DEG, q.speed = v.speed
         }
-        j.addEventListener("enterframe", k);
-        j.addEventListener("removed", function() {
-          this.removeEventListener("enterframe", k);
+        q.addEventListener("enterframe", v);
+        q.addEventListener("removed", function() {
+          this.removeEventListener("enterframe", v);
           this.removeEventListener("removed", arguments.callee)
         });
-        c.addTarget ? c.addTarget.addChild(j) : this.parent && this.parent.addChild(j)
+        b.wd ? b.wd.addChild(q) : this.parent && this.parent.addChild(q)
       }
     }
-  }, _changeDirection:function(c, d, h) {
-    var i = eval(c.direction.value) * Math.DEG_TO_RAD, j = eval(c.term);
-    switch(c.direction.type) {
+  }, ge:function(b, d, j) {
+    var r = eval(b.direction.value) * Math.DEG_TO_RAD, q = eval(b.za);
+    switch(b.direction.type) {
       case "aim":
-        c = d.target;
-        if(!c) {
+        b = d.target;
+        if(!b) {
           return
         }
-        h.dirFin = a(this, c) + i;
-        h.dirIncr = b(h.dirFin - h.direction) / j;
+        j.kb = c(this, b) + r;
+        j.Ib = a(j.kb - j.direction) / q;
         break;
       case "absolute":
-        h.dirFin = i - Math.PI / 2;
-        h.dirIncr = b(h.dirFin - h.direction) / j;
+        j.kb = r - Math.PI / 2;
+        j.Ib = a(j.kb - j.direction) / q;
         break;
       case "relative":
-        h.dirFin = h.direction + i;
-        h.dirIncr = b(h.dirFin - h.direction) / j;
+        j.kb = j.direction + r;
+        j.Ib = a(j.kb - j.direction) / q;
         break;
       case "sequence":
-        h.dirIncr = i, h.dirFin = h.direction + h.dirIncr * (j - 1)
+        j.Ib = r, j.kb = j.direction + j.Ib * (q - 1)
     }
-    h.chDirEnd = h.age + j
-  }, _changeSpeed:function(a, b) {
-    var c = eval(a.speed.value), d = eval(a.term);
+    j.Vc = j.da + q
+  }, he:function(a, b) {
+    var c = eval(a.speed.value), d = eval(a.za);
     switch(a.speed.type) {
       case "absolute":
-        b.spdFin = c;
-        b.spdIncr = (b.spdFin - b.speed) / d;
+        b.Ob = c;
+        b.$b = (b.Ob - b.speed) / d;
         break;
       case "relative":
-        b.spdFin = c + b.speed;
-        b.spdIncr = (b.spdFin - b.speed) / d;
+        b.Ob = c + b.speed;
+        b.$b = (b.Ob - b.speed) / d;
         break;
       case "sequence":
-        b.spdIncr = c, b.spdFin = b.speed + b.spdIncr * d
+        b.$b = c, b.Ob = b.speed + b.$b * d
     }
-    b.chSpdEnd = b.age + d
-  }, _accel:function(a, b) {
-    var c = eval(a.term);
-    b.aclEnd = b.age + c;
-    if(a.horizontal) {
-      var d = eval(a.horizontal.value);
-      switch(a.horizontal.type) {
+    b.Wc = b.da + d
+  }, ee:function(a, b) {
+    var c = eval(a.za);
+    b.Sc = b.da + c;
+    if(a.Ua) {
+      var d = eval(a.Ua.value);
+      switch(a.Ua.type) {
         case "absolute":
         ;
         case "sequence":
-          b.aclIncrH = (d - b.speedH) / c;
-          b.aclFinH = d;
+          b.kc = (d - b.Bb) / c;
+          b.ic = d;
           break;
         case "relative":
-          b.aclIncrH = d, b.aclFinH = (d - b.speedH) * c
+          b.kc = d, b.ic = (d - b.Bb) * c
       }
     }else {
-      b.aclIncrH = 0, b.aclFinH = b.speedH
+      b.kc = 0, b.ic = b.Bb
     }
-    if(a.vertical) {
-      switch(d = eval(a.vertical.value), a.vertical.type) {
+    if(a.Va) {
+      switch(d = eval(a.Va.value), a.Va.type) {
         case "absolute":
         ;
         case "sequence":
-          b.aclIncrV = (d - b.speedV) / c;
-          b.aclFinV = d;
+          b.lc = (d - b.Db) / c;
+          b.jc = d;
           break;
         case "relative":
-          b.aclIncrV = d, b.aclFinV = (d - b.speedV) * c
+          b.lc = d, b.jc = (d - b.Db) * c
       }
     }else {
-      b.aclIncrV = 0, b.aclFinV = b.speedV
+      b.lc = 0, b.jc = b.Db
     }
-  }, _notify:function(a) {
-    var b = tm.event.Event(a.eventName);
-    if(a.params) {
-      for(var c in a.params) {
-        b[c] = a.params[c]
+  }, me:function(a) {
+    var b = tm.event.Event(a.Ae);
+    if(a.qa) {
+      for(var c in a.qa) {
+        b[c] = a.qa[c]
       }
     }
     this.dispatchEvent(b)
   }});
-  var c = function() {
+  var b = function() {
     var a = tm.graphics.Canvas();
     a.resize(8, 8);
     a.setTransformCenter();
@@ -928,22 +873,22 @@ tm.bulletml = tm.bulletml || {};
     a.setFillStyle(tm.graphics.RadialGradient(0, 0, 0, 0, 0, 4).addColorStopList([{offset:0, color:"white"}, {offset:0.5, color:"white"}, {offset:1, color:"red"}]).toStyle()).fillCircle(0, 0, 4);
     return a
   }();
-  tm.bulletml.defaultBulletFactory = function(a) {
-    var b = tm.app.Sprite(8, 8, c);
-    b.label = a.label;
-    return b
+  tm.Ca.we = function(a) {
+    var c = tm.app.Sprite(8, 8, b);
+    c.label = a.label;
+    return c
   };
-  var d = null;
-  tm.bulletml.defaultIsInsideOfWorld = function(a) {
-    null === d && (d = a.getRoot());
+  var d = l;
+  tm.Ca.xe = function(a) {
+    d === l && (d = a.getRoot());
     return 0 <= a.x && a.x < APP.width && 0 <= a.y && a.y < APP.height
   };
-  tm.bulletml.defaultOnFire = function(a) {
-    return!0
+  tm.Ca.wf = function() {
+    return k
   };
-  tm.bulletml.AttackPattern.defaultConfig = {bulletFactory:tm.bulletml.defaultBulletFactory, isInsideOfWorld:tm.bulletml.defaultIsInsideOfWorld, rank:0, updateProperties:!1, speedRate:2, target:null};
-  bulletml.Root.prototype.createTicker = function(a) {
-    return tm.bulletml.AttackPattern(this).createTicker(a)
+  tm.Ca.tb.Vb = {Ad:tm.Ca.we, cd:tm.Ca.xe, kd:0, rb:m, Cb:2, target:l};
+  p.Aa.prototype.qc = function(a) {
+    return tm.Ca.tb(this).qc(a)
   }
 })();
 /*
@@ -952,582 +897,677 @@ tm.bulletml = tm.bulletml || {};
  License
  http://daishihmr.mit-license.org/
 */
-var STATS = !1;
-tm.preload(function() {
-  STATS && tm.util.ScriptManager.loadStats()
-});
+tm.preload(n());
 tm.main(function() {
-  var b = gls2.GlShooter2("#canvas2d");
-  STATS && b.enableStats();
-  b.run()
+  aa("#canvas2d").run()
 });
-var SC_W = 480, SC_H = 640, gls2 = {core:null};
-gls2.GlShooter2 = tm.createClass({superClass:tm.app.CanvasApp, highScore:0, highStage:0, bgmVolume:1, seVolume:1, difficulty:1, extendScore:[1E9, 1E10], gameScene:null, init:function(b) {
-  if(null !== gls2.core) {
-    throw Error("class 'gls2.GlShooter2' is singleton!!");
-  }
-  this.superInit(b);
-  gls2.core = this;
-  this.resize(SC_W, SC_H).fitWindow();
+var s = l, t, u, w, z, A, B, C, D, E, F, G, H, I, J, L, M, N, aa = tm.createClass({superClass:tm.app.CanvasApp, xc:0, Cf:0, nc:1, Nb:1, Fd:1, Kd:[1E9, 1E10], $:l, init:function(a) {
+  s !== l && f(Error("class 'gls2.GlShooter2' is singleton!!"));
+  this.superInit(a);
+  s = this;
+  this.resize(480, 640).fitWindow();
   this.fps = 60;
   this.background = "black";
   this.keyboard = tm.input.Keyboard(window);
   this.replaceScene(tm.app.LoadingScene({assets:{tex0:"assets/tex0.png", tex1:"assets/tex1.png", laserR:"assets/laser_r.png", laserG:"assets/laser_g.png", laserB:"assets/laser_b.png", laserH:"assets/laser_h.png", laserHead:"assets/laser_head.png", laserFoot:"assets/laser_foot.png", aura:"assets/aura.png", explode0:"assets/explode0.png", explode1:"assets/explode1.png", shotbullet:"assets/shotbullet.png", bomb:"assets/bomb.png", soundExplode:"assets/sen_ge_taihou03.mp3"}, nextScene:function() {
-    this._onLoadAssets();
-    return gls2.TitleScene()
+    this.ne();
+    return t()
   }.bind(this)}))
-}, _onLoadAssets:function() {
-  gls2.Danmaku.setup();
-  gls2.Effect.setup();
-  gls2.ShotBullet.createPool(50);
-  this.gameScene = gls2.GameScene()
-}, exitApp:function() {
+}, ne:function() {
+  u.na();
+  w.na();
+  z.ve();
+  this.$ = A()
+}, Be:function() {
   this.stop();
-  tm.social.Nineleap.postRanking(this.highScore, "")
+  tm.social.Nineleap.postRanking(this.xc, "")
 }});
-gls2.playSound = function(b) {
-  0 !== gls2.core.seVolume && (b = tm.asset.AssetManager.get(b), b.volume = 0.1 * gls2.core.seVolume, b && b.clone().play())
-};
+function O() {
+  if(0 !== s.Nb && P.soundExplode !== s.frame) {
+    var a = tm.asset.AssetManager.get("soundExplode");
+    a.volume = 0.1 * s.Nb;
+    a && a.clone().play();
+    P.soundExplode = s.frame
+  }
+}
+var P = {};
 tm.app.AnimationSprite.prototype.clone = function() {
   return tm.app.AnimationSprite(this.ss, this.width, this.height)
 };
-gls2.distanceSq = function(b, a) {
-  return(b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y)
-};
 (function() {
-  var b = null, a = {"0":{x:1, y:0}, 45:{x:0.7, y:-0.7}, 90:{x:0, y:-1}, 135:{x:-0.7, y:-0.7}, 180:{x:-1, y:0}, 225:{x:-0.7, y:0.7}, 270:{x:0, y:1}, 315:{x:0.7, y:0.7}};
-  gls2.Player = tm.createClass({superClass:tm.app.Sprite, type:0, roll:0, controllable:!0, muteki:!1, gameScene:null, hyperGauge:100, speed:4.5, bits:null, laser:null, hitCircle:null, bitPivot:null, hyperCircle0:null, hyperCircle1:null, init:function(a, b) {
+  var a = l, c = {"0":{x:1, y:0}, 45:{x:0.7, y:-0.7}, 90:{x:0, y:-1}, 135:{x:-0.7, y:-0.7}, 180:{x:-1, y:0}, 225:{x:-0.7, y:0.7}, 270:{x:0, y:1}, 315:{x:0.7, y:0.7}};
+  B = tm.createClass({superClass:tm.app.Sprite, type:0, Sa:0, $a:k, Mb:m, $:l, speed:4.5, wb:l, nb:l, yc:l, oc:l, zc:l, Ac:l, init:function(b, c) {
     this.superInit("tex1", 64, 64);
-    this.type = b;
-    this.gameScene = a;
-    tm.bulletml.AttackPattern.defaultConfig.target = this;
+    this.type = c;
+    this.$ = b;
+    tm.Ca.tb.Vb.target = this;
+    this.boundingRadius = 2;
     this.altitude = 10;
-    this.laser = gls2.Laser(this, {redBody:"laserR", greenBody:"laserG", blueBody:"laserB", hyperBody:"laserH", head:"laserHead", foot:"laserFoot", aura:"aura"}, 50);
-    this.laser.visible = !1;
-    this.laser.addChildTo(a);
-    this._createHitCircle();
-    this.bits = this._createBits();
-    this.bitPivot = tm.app.CanvasElement().addChildTo(this);
-    for(var f = 0, g = this.bits.length;f < g;f++) {
-      var h = this.bits[f];
-      gls2.Bit(this, h).setPosition(h.x, h.y).addChildTo(this.bitPivot)
+    this.nb = C(this, {redBody:"laserR", greenBody:"laserG", blueBody:"laserB", hyperBody:"laserH", head:"laserHead", foot:"laserFoot", aura:"aura"}, 50);
+    this.nb.visible = m;
+    this.nb.addChildTo(b);
+    this.je();
+    this.wb = [{x:-70, y:20, d:0.1, qb:m, lb:-0.7, v:k}, {x:-40, y:40, d:0.1, qb:m, lb:-0.5, v:k}, {x:40, y:40, d:0.1, qb:k, lb:0.5, v:k}, {x:70, y:20, d:0.1, qb:k, lb:0.7, v:k}];
+    this.oc = tm.app.CanvasElement().addChildTo(this);
+    for(var g = 0, h = this.wb.length;g < h;g++) {
+      var j = this.wb[g];
+      D(this, j).setPosition(j.x, j.y).addChildTo(this.oc)
     }
-    this.light = tm.app.CircleShape(140, 140, {strokeStyle:"rgba(0,0,0,0)", fillStyle:tm.graphics.RadialGradient(70, 70, 0, 70, 70, 70).addColorStopList([{offset:0, color:"rgba(255,255,255,0.1)"}, {offset:0.5, color:"rgba(255,255,255,0.1)"}, {offset:1, color:"rgba(255,255,255,0.0)"}]).toStyle()}).addChildTo(this);
-    this.light.blendMode = "lighter";
-    this.hyperCircle0 = tm.app.CircleShape(80, 80, {fillStyle:"rgba(0,0,0,0)", strokeStyle:tm.graphics.LinearGradient(0, 0, 0, 80).addColorStopList([{offset:0, color:"rgba(100,100,255,0.0)"}, {offset:0.3, color:"rgba(100,100,255,0.1)"}, {offset:0.5, color:"rgba(255,255,255,1.0)"}, {offset:0.7, color:"rgba(100,100,255,0.1)"}, {offset:1, color:"rgba(100,100,255,0.0)"}]).toStyle(), lineWidth:2}).addChildTo(this);
-    this.hyperCircle0.blendMode = "lighter";
-    this.hyperCircle0.update = function() {
+    this.Se = tm.app.CircleShape(140, 140, {strokeStyle:"rgba(0,0,0,0)", fillStyle:tm.graphics.RadialGradient(70, 70, 0, 70, 70, 70).addColorStopList([{offset:0, color:"rgba(255,255,255,0.1)"}, {offset:0.5, color:"rgba(255,255,255,0.1)"}, {offset:1, color:"rgba(255,255,255,0.0)"}]).toStyle()}).addChildTo(this);
+    this.Se.blendMode = "lighter";
+    this.zc = tm.app.CircleShape(80, 80, {fillStyle:"rgba(0,0,0,0)", strokeStyle:tm.graphics.LinearGradient(0, 0, 0, 80).addColorStopList([{offset:0, color:"rgba(255,255,100,0.0)"}, {offset:0.3, color:"rgba(255,255,100,0.1)"}, {offset:0.5, color:"rgba(255,255,255,1.0)"}, {offset:0.7, color:"rgba(255,255,100,0.1)"}, {offset:1, color:"rgba(255,255,100,0.0)"}]).toStyle(), lineWidth:2}).addChildTo(this);
+    this.zc.blendMode = "lighter";
+    this.zc.update = function() {
       this.rotation += 2
     };
-    this.hyperCircle1 = tm.app.CircleShape(80, 80, {fillStyle:"rgba(0,0,0,0)", strokeStyle:tm.graphics.LinearGradient(0, 0, 0, 80).addColorStopList([{offset:0, color:"rgba(100,100,255,0.0)"}, {offset:0.3, color:"rgba(100,100,255,0.1)"}, {offset:0.5, color:"rgba(255,255,255,1.0)"}, {offset:0.7, color:"rgba(100,100,255,0.1)"}, {offset:1, color:"rgba(100,100,255,0.0)"}]).toStyle(), lineWidth:2}).addChildTo(this);
-    this.hyperCircle1.blendMode = "lighter";
-    this.hyperCircle1.update = function() {
+    this.Ac = tm.app.CircleShape(80, 80, {fillStyle:"rgba(0,0,0,0)", strokeStyle:tm.graphics.LinearGradient(0, 0, 0, 80).addColorStopList([{offset:0, color:"rgba(255,255,100,0.0)"}, {offset:0.3, color:"rgba(255,255,100,0.1)"}, {offset:0.5, color:"rgba(255,255,255,1.0)"}, {offset:0.7, color:"rgba(255,255,100,0.1)"}, {offset:1, color:"rgba(255,255,100,0.0)"}]).toStyle(), lineWidth:2}).addChildTo(this);
+    this.Ac.blendMode = "lighter";
+    this.Ac.update = function() {
       this.rotation -= 2
-    }
-  }, _createBits:function() {
-    return[{x:-70, y:20, d:0.1, turn:!1, dt:-0.7, v:!0}, {x:-40, y:40, d:0.1, turn:!1, dt:-0.5, v:!0}, {x:40, y:40, d:0.1, turn:!0, dt:0.5, v:!0}, {x:70, y:20, d:0.1, turn:!0, dt:0.7, v:!0}]
-  }, _createHitCircle:function() {
-    this.hitCircle = tm.app.Sprite("tex0", 20, 20).addChildTo(this);
-    this.hitCircle.setFrameIndex(5);
-    this.hitCircle.blendMode = "lighter";
-    this.hitCircle.update = function(a) {
+    };
+    a === l && (a = E(this.$.Ka))
+  }, of:function() {
+    return[{x:-70, y:20, d:0.1, qb:m, lb:-0.7, v:k}, {x:-40, y:40, d:0.1, qb:m, lb:-0.5, v:k}, {x:40, y:40, d:0.1, qb:k, lb:0.5, v:k}, {x:70, y:20, d:0.1, qb:k, lb:0.7, v:k}]
+  }, je:function() {
+    this.yc = tm.app.Sprite("tex0", 20, 20).addChildTo(this);
+    this.yc.setFrameIndex(5);
+    this.yc.blendMode = "lighter";
+    this.yc.update = function(a) {
       a = 0.75 + 0.15 * Math.sin(0.2 * a.frame);
       this.scale.set(a, a)
     }
-  }, pressTimeC:-1, fireShot:!1, fireLaser:!1, update:function(c) {
-    null === b && (b = gls2.BackfireParticle(this.gameScene.ground));
-    var d = c.keyboard;
-    if(this.controllable) {
-      var f = d.getKeyAngle();
-      null !== f && (f = a[f], this.x += f.x * this.speed * (this.fireLaser ? 0.75 : 1), this.y += f.y * this.speed * (this.fireLaser ? 0.75 : 1));
-      this.x = gls2.math.clamp(this.x, 5, SC_W - 5);
-      this.y = gls2.math.clamp(this.y, 5, SC_H - 5);
-      var f = d.getKey("c"), g = d.getKey("z");
-      this.pressTimeC = f ? this.pressTimeC + 1 : this.pressTimeC - 1;
-      this.pressTimeC = gls2.math.clamp(this.pressTimeC, -1, 10);
-      this.fireLaser = g && f || 10 === this.pressTimeC;
-      this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || g) && 0 === c.frame % 5;
-      g && (this.pressTimeC = 0);
-      this.laser.x = this.x;
-      this.laser.y = this.y - 40;
-      if(this.fireLaser) {
-        f = 0;
-        for(g = this.bits.length;f < g;f++) {
-          this.bits[f].v = !1
+  }, pb:-1, tc:m, yb:m, update:function(b) {
+    this.visible = this.Mb ? 0 === b.frame % 2 : k;
+    var d = b.keyboard;
+    if(this.$a) {
+      var g = d.getKeyAngle();
+      g !== l && (g = c[g], this.x += g.x * this.speed * (this.yb ? 0.75 : 1), this.y += g.y * this.speed * (this.yb ? 0.75 : 1));
+      this.x = Q(this.x, 15, 465);
+      this.y = Q(this.y, 15, 625);
+      var h = d.getKey("c"), g = d.getKey("z");
+      this.pb = h ? this.pb + 1 : this.pb - 1;
+      this.pb = Q(this.pb, -1, 10);
+      this.yb = g && h || 10 === this.pb;
+      h = this.$.La ? 3 : 5;
+      this.tc = !this.yb && (0 <= this.pb || g) && 0 === b.frame % h;
+      g && (this.pb = 0);
+      this.nb.x = this.x;
+      this.nb.y = this.y - 40;
+      if(this.yb) {
+        g = 0;
+        for(h = this.wb.length;g < h;g++) {
+          this.wb[g].v = m
         }
-        this.bitPivot.rotation = 0
+        this.oc.rotation = 0
       }else {
-        this.laser.visible = !1;
-        f = 0;
-        for(g = this.bits.length;f < g;f++) {
-          this.bits[f].v = !0
+        this.nb.visible = m;
+        g = 0;
+        for(h = this.wb.length;g < h;g++) {
+          this.wb[g].v = k
         }
       }
-      this.fireShot && (f = Math.sin(0.2 * c.frame), g = gls2.ShotBullet.fire(this.x - 7 - 6 * f, this.y - 5, -90), null !== g && g.addChildTo(this.gameScene), g = gls2.ShotBullet.fire(this.x + 7 + 6 * f, this.y - 5, -90), null !== g && g.addChildTo(this.gameScene));
-      d.getKeyDown("x") && !this.gameScene.isBombActive && 0 < this.gameScene.bomb && gls2.Bomb(this, this.gameScene).setPosition(Math.clamp(this.x, 0.2 * SC_W, 0.8 * SC_W), Math.max(this.y - 0.5 * SC_H, 0.3 * SC_H))
+      if(this.tc) {
+        var g = Math.sin(0.2 * b.frame), j = this.$.La ? 3 : this.type, h = z.ma(j, this.x - 7 - 6 * g, this.y - 5, -90);
+        h !== l && h.addChildTo(this.$);
+        h = z.ma(j, this.x + 7 + 6 * g, this.y - 5, -90);
+        h !== l && h.addChildTo(this.$)
+      }
+      d.getKeyDown("x") && (1 === this.$.Ga ? this.$.gf() : !this.$.Dc && 0 < this.$.Ta && F(this, this.$).setPosition(Math.clamp(this.x, 96, 384), Math.max(this.y - 320, 192)).addChildTo(this.$))
     }
-    this.hyperCircle0.visible = this.hyperCircle1.visible = 100 === this.hyperGauge;
-    this.controlBit(d);
-    this._calcRoll(d);
-    0 === c.frame % 2 && (b.clone(20).setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene), b.clone(20).setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene))
-  }, controlBit:function(a) {
-    var b = this.bitPivot;
-    b.rotation = this.controllable && a.getKey("left") ? Math.max(b.rotation - 3, -40) : this.controllable && a.getKey("right") ? Math.min(b.rotation + 3, 40) : 3 < b.rotation ? b.rotation - 3 : -3 > b.rotation ? b.rotation + 3 : 0
-  }, _calcRoll:function(a) {
-    this.controllable && a.getKey("left") ? this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3) : this.controllable && a.getKey("right") ? this.roll = gls2.math.clamp(this.roll + 0.2, -3, 3) : 0 > this.roll ? this.roll = gls2.math.clamp(this.roll + 0.2, -3, 3) : 0 < this.roll && (this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3));
-    a = 3 + ~~this.roll;
+    this.zc.visible = this.Ac.visible = 1 === this.$.Ga;
+    this.ue(d);
+    this.fe(d);
+    0 === b.frame % 2 && (a.clone(20).setPosition(this.x - 5, this.y + 20).addChildTo(this.$), a.clone(20).setPosition(this.x + 5, this.y + 20).addChildTo(this.$))
+  }, xb:function() {
+    this.yb = this.tc = m;
+    this.$.sc()
+  }, ue:function(a) {
+    var c = this.oc;
+    c.rotation = this.$a && a.getKey("left") ? Math.max(c.rotation - 3, -40) : this.$a && a.getKey("right") ? Math.min(c.rotation + 3, 40) : 3 < c.rotation ? c.rotation - 3 : -3 > c.rotation ? c.rotation + 3 : 0
+  }, fe:function(a) {
+    this.$a && a.getKey("left") ? this.Sa = Q(this.Sa - 0.2, -3, 3) : this.$a && a.getKey("right") ? this.Sa = Q(this.Sa + 0.2, -3, 3) : 0 > this.Sa ? this.Sa = Q(this.Sa + 0.2, -3, 3) : 0 < this.Sa && (this.Sa = Q(this.Sa - 0.2, -3, 3));
+    a = 3 + ~~this.Sa;
     this.setFrameIndex(a);
     return a
   }});
-  gls2.Bit = tm.createClass({superClass:tm.app.AnimationSprite, bit:null, player:null, init:function(a, b) {
+  D = tm.createClass({superClass:tm.app.AnimationSprite, vb:l, ba:l, init:function(a, c) {
     this.superInit(tm.app.SpriteSheet({image:"tex1", frame:{width:32, height:32}, animations:{anim0:{frames:[136, 137, 138, 152, 153, 154], next:"anim0", frequency:3}, anim1:{frames:[137, 138, 152, 153, 154, 136].reverse(), next:"anim1", frequency:3}}}), 32, 32);
-    this.bit = b;
-    this.player = a;
+    this.vb = c;
+    this.ba = a;
     this.altitude = 10;
-    this.gotoAndPlay(b.turn ? "anim0" : "anim1")
-  }, update:function(a) {
-    if(this.bit.v) {
-      this.x = this.bit.x;
-      this.y = this.bit.y;
-      this.rotation = Math.radToDeg(this.bit.d * this.bit.dt);
-      var d = this.parent.localToGlobal(this);
-      this.bit.v && 0 === a.frame % 2 && b.clone(40).setPosition(d.x, d.y).addChildTo(a.gameScene);
-      this.player.fireShot && (d = gls2.ShotBullet.fire(d.x, d.y, this.parent.rotation + this.rotation - 90), null !== d && d.addChildTo(a.gameScene))
+    this.gotoAndPlay(c.qb ? "anim0" : "anim1")
+  }, update:function(b) {
+    if(this.vb.v) {
+      this.x = this.vb.x * (this.ba.$.La ? 1.5 : 1);
+      this.y = this.vb.y * (this.ba.$.La ? 1.5 : 1);
+      this.rotation = Math.radToDeg(this.vb.d * this.vb.lb);
+      var c = this.parent.localToGlobal(this);
+      this.vb.v && 0 === b.frame % 2 && a.clone(40).setPosition(c.x, c.y).addChildTo(b.$);
+      this.ba.tc && (c = z.ma(this.ba.$.La ? 3 : this.ba.type, c.x, c.y, this.parent.rotation + this.rotation - 90), c !== l && c.addChildTo(b.$))
     }else {
       this.x = 0, this.y = -40, this.currentFrameIndex = 3
     }
   }})
 })();
 (function() {
-  var b = null;
-  gls2.ShotBullet = tm.createClass({superClass:tm.app.Sprite, speed:20, attackPower:1, init:function() {
+  var a = l;
+  z = tm.createClass({superClass:tm.app.Sprite, speed:0, jb:1, init:function() {
     this.superInit("shotbullet", 64, 64);
     this.blendMode = "lighter";
-    this.setScale(1.5, 1.5);
-    this.addEventListener("added", function() {
-      c.push(this)
-    });
-    this.addEventListener("removed", function() {
-      var b = c.indexOf(this);
-      -1 !== b && c.splice(b, 1);
-      a.push(this)
-    });
-    this.boundingRadius = 32;
-    null === b && (b = gls2.Particle(16, 1, 0.9, tm.graphics.Canvas().resize(16, 16).setFillStyle(tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(255,128,  0,0.0)"}]).toStyle()).fillRect(0, 0, 16, 16).element));
-    this.setFrameIndex(2, 64, 64)
-  }, update:function() {
-    this.x += this.vx;
-    this.y += this.vy;
-    (-60 > this.x || SC_W + 60 < this.x || -60 > this.y || SC_H + 60 < this.y) && this.remove()
-  }, genParticle:function(a) {
-    for(var c = 0;c < a;c++) {
-      var g = b.clone().setPosition(this.x, this.y).addChildTo(this.parent), h = gls2.math.randf(2, 8), i = 2 * Math.random() * Math.PI;
-      g.dx = Math.cos(i) * h;
-      g.dy = Math.sin(i) * h;
-      g.scaleX = g.scaleY = (gls2.math.randf(0.1, 0.5) + gls2.math.randf(0.1, 0.5)) / 2;
-      g.addEventListener("enterframe", function() {
-        this.x += this.dx;
-        this.y += this.dy;
-        this.dx *= 0.9;
-        this.dy *= 0.9
-      })
-    }
-  }});
-  gls2.ShotBullet.clearAll = function() {
-    for(var a = [].concat(c), b = 0, g = a.length;b < g;b++) {
-      a[b].remove()
-    }
-  };
-  var a = [], c = gls2.ShotBullet.activeList = [];
-  gls2.ShotBullet.createPool = function(b) {
-    for(var c = 0;c < b;c++) {
-      a.push(gls2.ShotBullet())
-    }
-  };
-  gls2.ShotBullet.fire = function(b, c, g) {
-    var h = a.pop();
-    if(void 0 === h) {
-      return null
-    }
-    var i = gls2.math.degToRad(g);
-    h.vx = Math.cos(i) * h.speed;
-    h.vy = Math.sin(i) * h.speed;
-    h.setPosition(b, c);
-    h.rotation = g + 90;
-    return h
-  }
-})();
-(function() {
-  var b = null;
-  gls2.Laser = tm.createClass({superClass:tm.app.Sprite, player:null, gameScene:null, attackPower:2, _hitY:0, frame:0, textures:null, color:null, beforeFrameVisible:!1, head:null, foot:null, aura:null, init:function(a, b, d) {
-    this.player = a;
-    this.gameScene = a.gameScene;
-    var f = this;
-    this.textures = b;
-    this.superInit(b.redBody, d, 100);
-    this.boundingWidth = d;
-    this.boundingHeightBottom = 1;
-    this.scrollOffset = 0;
-    this.origin.y = 1;
-    a = this.aura = tm.app.AnimationSprite(tm.app.SpriteSheet({image:b.aura, frame:{width:100, height:100}, animations:{red:{frames:[0, 1, 2, 3], next:"red", frequency:2}, green:{frames:[4, 5, 6, 7], next:"green", frequency:2}, blue:{frames:[8, 9, 10, 11], next:"blue", frequency:2}, hyper:{frames:[12, 13, 14, 15], next:"hyper", frequency:2}}}), 140, 140);
-    a.y = 60;
-    a.addChildTo(this);
-    (this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({image:b.foot, frame:{width:120, height:80}, animations:{red:{frames:[0, 1, 2, 3], next:"red", frequency:2}, green:{frames:[4, 5, 6, 7], next:"green", frequency:2}, blue:{frames:[8, 9, 10, 11], next:"blue", frequency:2}, hyper:{frames:[12, 13, 14, 15], next:"hyper", frequency:2}}}), 140, 80)).addChildTo(this);
-    b = this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({image:b.head, frame:{width:80, height:80}, animations:{red:{frames:[0, 1, 2, 3], next:"red", frequency:2}, green:{frames:[4, 5, 6, 7], next:"green", frequency:2}, blue:{frames:[8, 9, 10, 11], next:"blue", frequency:2}, hyper:{frames:[12, 13, 14, 15], next:"hyper", frequency:2}}}), 130, 130);
-    b.addChildTo(this);
-    b.update = function() {
-      this.y = f._hitY - f.y;
-      -10 < this.y && (this.y = -10);
-      this.visible = 0 < f._hitY
-    };
-    this.setColor("blue")
-  }, setColor:function(a) {
-    this.color = a;
-    this.image = tm.asset.AssetManager.get(this.textures[this.color + "Body"]);
-    this.srcRect.x = 0;
-    this.srcRect.y = 0;
-    this.srcRect.width = this.image.width / 16;
-    this.aura.gotoAndPlay(this.color);
-    this.foot.gotoAndPlay(this.color);
-    this.head.gotoAndPlay(this.color);
-    b = gls2.Particle(16, 1, 0.9, tm.graphics.Canvas().resize(16, 16).setFillStyle(tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(  0,  0,255,0.0)"}]).toStyle()).fillRect(0, 0, 16, 16).element);
-    return this
-  }, genParticle:function(a, c) {
-    c = c || this._hitY;
-    for(var d = 0;d < a;d++) {
-      var f = b.clone().setPosition(this.x, c).addChildTo(this.gameScene), g = gls2.math.randf(8, 14), h = gls2.math.randf(0, Math.PI);
-      f.dx = Math.cos(h) * g;
-      f.dy = Math.sin(h) * g;
-      f.scaleX = f.scaleY = (gls2.math.randf(0.5, 1.5) + gls2.math.randf(0.5, 1.5)) / 2;
-      f.addEventListener("enterframe", function() {
-        this.x += this.dx;
-        this.y += this.dy;
-        this.dx *= 0.95;
-        this.dy *= 0.95
-      })
-    }
-  }, genAuraParticle:function(a, c, d) {
-    c = c || this.x;
-    d = d || this._hitY;
-    for(var f = 0;f < a;f++) {
-      var g = b.clone().setPosition(c, d).addChildTo(this.gameScene), h = gls2.math.randf(12, 20), i = gls2.math.randf(0, Math.PI);
-      g.dx = Math.cos(i) * h;
-      g.dy = Math.sin(i) * h;
-      g.scaleX = g.scaleY = (gls2.math.randf(1, 3) + gls2.math.randf(1, 3)) / 2;
-      g.addEventListener("enterframe", function() {
-        this.x += this.dx;
-        this.y += this.dy;
-        this.dx *= 0.95;
-        this.dy *= 0.95
-      })
-    }
-  }, update:function(a) {
-    (this.visible = this.player.fireLaser) ? (this._hitY = Math.max(0, this._hitY - 40), this.height = this.y - this._hitY, 0 === a.frame % 3 && (this.frame = (this.frame + 1) % 16)) : this._hitY = this.y - 40;
-    this.beforeFrameVisible = this.visible
-  }, draw:function(a) {
-    var b = this.srcRect, d = this._image.element;
-    b.x = b.width * this.frame;
-    a.context.drawImage(d, b.x, b.height - this.height, b.width, this.height, -this.width * this.origin.x, -this.height * this.origin.y, this.width, this.height)
-  }, getHitY:function() {
-    return this._hitY
-  }, setHitY:function(a) {
-    this._hitY = a;
-    this.head.update()
-  }});
-  gls2.Laser.prototype.getter("boundingHeightTop", function() {
-    return this.position.y - this._hitY
-  })
-})();
-(function() {
-  gls2.Bomb = tm.createClass({superClass:tm.app.Object2D, gameScene:null, init:function(a, c) {
-    this.superInit();
-    this.player = a;
-    this.player.muteki = !0;
-    this.gameScene = c;
-    this.gameScene.bomb -= 1;
-    this.shockwave = tm.app.CircleShape(300, 300, {strokeStyle:"rgba(0,0,0,0)", fillStyle:tm.graphics.RadialGradient(150, 150, 0, 150, 150, 150).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.5, color:"rgba(255,255,255,0)"}, {offset:0.9, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()}).setScale(0.1, 0.1).addChildTo(this);
-    this.shockwave.tweener.clear().to({scaleX:5, scaleY:5, alpha:0}, 500, "easeOutQuad").call(function() {
-      this.remove()
-    }.bind(this.shockwave));
-    this.core = tm.app.AnimationSprite(tm.app.SpriteSheet({image:"bomb", frame:{width:280, height:280}, animations:{animation:{frames:Array.range(0, 8), next:"animation", frequency:3}}}), 400, 400).addChildTo(this);
-    this.core.gotoAndPlay("animation");
-    this.core.blendMode = "lighter";
-    this.core.setScale(0.1, 0.1);
-    this.core.tweener.clear().to({scaleX:1, scaleY:1}, 200, "easeOutBack").call(function() {
-      this.update = function() {
-        this.scaleX = this.scaleY = Math.randf(0.9, 1.1)
-      }
-    }.bind(this.core));
-    this.origParticle = gls2.Particle(60, 1, 0.92, tm.graphics.Canvas().resize(10, 10).setFillStyle(tm.graphics.RadialGradient(5, 5, 0, 5, 5, 5).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(  0,  0,255,0.0)"}]).toStyle()).fillRect(0, 0, 10, 10).element);
-    this.r = this.a = 0;
-    this.b = 8;
-    this.age = 0;
-    this.rd = 1;
     this.addEventListener("added", function() {
       b.push(this)
     });
     this.addEventListener("removed", function() {
       var a = b.indexOf(this);
-      -1 !== a && b.splice(a, 1)
+      -1 !== a && b.splice(a, 1);
+      c.push(this)
     });
-    this.addChildTo(this.gameScene)
+    a === l && (a = G(16, 1, 0.9, tm.graphics.Canvas().resize(16, 16).setFillStyle(tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(255,128,  0,0.0)"}]).toStyle()).fillRect(0, 0, 16, 16).element))
+  }, update:function() {
+    this.x += this.lf;
+    this.y += this.mf;
+    (-60 > this.x || 540 < this.x || -60 > this.y || 700 < this.y) && this.remove()
+  }, ld:function(a) {
+    this.setFrameIndex(a, 64, 64);
+    3 === a ? (this.speed = 45, this.boundingRadius = 48, this.setScale(2, 2), this.jb = 2) : (this.speed = 30, this.boundingRadius = 32, this.setScale(1.5, 1.5), this.jb = 1)
+  }, wc:function(b) {
+    for(var c = 0;c < b;c++) {
+      var h = a.clone().setPosition(this.x, this.y).addChildTo(this.parent), j = S(2, 8), r = 2 * Math.random() * Math.PI;
+      h.ka = Math.cos(r) * j;
+      h.la = Math.sin(r) * j;
+      h.scaleX = h.scaleY = (S(0.1, 0.5) + S(0.1, 0.5)) / 2;
+      h.addEventListener("enterframe", function() {
+        this.x += this.ka;
+        this.y += this.la;
+        this.ka *= 0.9;
+        this.la *= 0.9
+      })
+    }
+  }});
+  z.Sb = function() {
+    for(var a = [].concat(b), c = 0, h = a.length;c < h;c++) {
+      a[c].remove()
+    }
+  };
+  var c = [], b = z.wa = [];
+  z.ve = function() {
+    for(var a = 0;100 > a;a++) {
+      c.push(z())
+    }
+  };
+  z.ma = function(a, b, h, j) {
+    var r = c.pop();
+    if(r === i) {
+      return l
+    }
+    r.ld(a);
+    a = T(j);
+    r.lf = Math.cos(a) * r.speed;
+    r.mf = Math.sin(a) * r.speed;
+    r.setPosition(b, h);
+    r.rotation = j + 90;
+    return r
+  }
+})();
+(function() {
+  var a = l;
+  C = tm.createClass({superClass:tm.app.Sprite, ba:l, $:l, jb:2, Pa:0, frame:0, Zd:l, color:l, re:m, head:l, Md:l, xd:l, init:function(a, b, d) {
+    this.ba = a;
+    this.$ = a.$;
+    var g = this;
+    this.Zd = b;
+    this.superInit(b.redBody, d, 100);
+    this.boundingWidth = d;
+    this.boundingHeightBottom = 1;
+    this.Ff = 0;
+    this.origin.y = 1;
+    a = this.xd = tm.app.AnimationSprite(tm.app.SpriteSheet({image:b.aura, frame:{width:100, height:100}, animations:{red:{frames:[0, 1, 2, 3], next:"red", frequency:2}, green:{frames:[4, 5, 6, 7], next:"green", frequency:2}, blue:{frames:[8, 9, 10, 11], next:"blue", frequency:2}, hyper:{frames:[12, 13, 14, 15], next:"hyper", frequency:2}}}), 140, 140);
+    a.y = 60;
+    a.addChildTo(this);
+    (this.Md = tm.app.AnimationSprite(tm.app.SpriteSheet({image:b.foot, frame:{width:120, height:80}, animations:{red:{frames:[0, 1, 2, 3], next:"red", frequency:2}, green:{frames:[4, 5, 6, 7], next:"green", frequency:2}, blue:{frames:[8, 9, 10, 11], next:"blue", frequency:2}, hyper:{frames:[12, 13, 14, 15], next:"hyper", frequency:2}}}), 140, 80)).addChildTo(this);
+    b = this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({image:b.head, frame:{width:80, height:80}, animations:{red:{frames:[0, 1, 2, 3], next:"red", frequency:2}, green:{frames:[4, 5, 6, 7], next:"green", frequency:2}, blue:{frames:[8, 9, 10, 11], next:"blue", frequency:2}, hyper:{frames:[12, 13, 14, 15], next:"hyper", frequency:2}}}), 130, 130);
+    b.addChildTo(this);
+    b.update = function() {
+      this.y = g.Pa - g.y;
+      -10 < this.y && (this.y = -10);
+      this.visible = 0 < g.Pa
+    };
+    this.ld("blue")
+  }, ld:function(c) {
+    this.color = c;
+    this.image = tm.asset.AssetManager.get(this.Zd[this.color + "Body"]);
+    this.srcRect.x = 0;
+    this.srcRect.y = 0;
+    this.srcRect.width = this.image.width / 16;
+    this.xd.gotoAndPlay(this.color);
+    this.Md.gotoAndPlay(this.color);
+    this.head.gotoAndPlay(this.color);
+    a = G(16, 1, 0.9, tm.graphics.Canvas().resize(16, 16).setFillStyle(tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(  0,  0,255,0.0)"}]).toStyle()).fillRect(0, 0, 16, 16).element);
+    return this
+  }, wc:function(c, b) {
+    b = b || this.Pa;
+    for(var d = 0;d < c;d++) {
+      var g = a.clone().setPosition(this.x, b).addChildTo(this.$), h = S(8, 14), j = S(0, Math.PI);
+      g.ka = Math.cos(j) * h;
+      g.la = Math.sin(j) * h;
+      g.scaleX = g.scaleY = (S(0.5, 1.5) + S(0.5, 1.5)) / 2;
+      g.addEventListener("enterframe", function() {
+        this.x += this.ka;
+        this.y += this.la;
+        this.ka *= 0.95;
+        this.la *= 0.95
+      })
+    }
+  }, Oe:function(c, b, d) {
+    b = b || this.x;
+    d = d || this.Pa;
+    for(var g = 0;g < c;g++) {
+      var h = a.clone().setPosition(b, d).addChildTo(this.$), j = S(12, 20), r = S(0, Math.PI);
+      h.ka = Math.cos(r) * j;
+      h.la = Math.sin(r) * j;
+      h.scaleX = h.scaleY = (S(1, 3) + S(1, 3)) / 2;
+      h.addEventListener("enterframe", function() {
+        this.x += this.ka;
+        this.y += this.la;
+        this.ka *= 0.95;
+        this.la *= 0.95
+      })
+    }
   }, update:function(a) {
-    gls2.Danmaku.erase();
-    for(a = 0;a < this.b;a++) {
-      var b = this.a * this.rd + 2 * a * Math.PI / this.b;
-      this.origParticle.clone().setPosition(Math.cos(b) * this.r + this.x, Math.sin(b) * this.r + this.y).addChildTo(this.parent)
+    (this.visible = this.ba.yb) ? (this.Pa = Math.max(0, this.Pa - 40), this.height = this.y - this.Pa, 0 === a.frame % 3 && (this.frame = (this.frame + 1) % 16)) : this.Pa = this.y - 40;
+    this.re = this.visible
+  }, draw:function(a) {
+    var b = this.srcRect, d = this._image.element;
+    b.x = b.width * this.frame;
+    a.context.drawImage(d, b.x, b.height - this.height, b.width, this.height, -this.width * this.origin.x, -this.height * this.origin.y, this.width, this.height)
+  }, Bf:function() {
+    return this.Pa
+  }, ef:function(a) {
+    this.Pa = a;
+    this.head.update()
+  }});
+  C.prototype.getter("boundingHeightTop", function() {
+    return this.position.y - this.Pa
+  })
+})();
+(function() {
+  F = tm.createClass({superClass:tm.app.Object2D, $:l, init:function(c, b) {
+    this.superInit();
+    this.ba = c;
+    this.$ = b;
+    this.Yd = tm.app.CircleShape(300, 300, {strokeStyle:"rgba(0,0,0,0)", fillStyle:tm.graphics.RadialGradient(150, 150, 0, 150, 150, 150).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.5, color:"rgba(255,255,255,0)"}, {offset:0.9, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()}).setScale(0.1, 0.1).addChildTo(this);
+    this.Yd.tweener.clear().to({scaleX:5, scaleY:5, alpha:0}, 500, "easeOutQuad").call(function() {
+      this.remove()
+    }.bind(this.Yd));
+    this.vd();
+    a === l && (a = G(60, 1, 0.92, tm.graphics.Canvas().resize(10, 10).setFillStyle(tm.graphics.RadialGradient(5, 5, 0, 5, 5, 5).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(  0,  0,255,0.0)"}]).toStyle()).fillRect(0, 0, 10, 10).element));
+    this.r = this.a = 0;
+    this.b = 8;
+    this.da = 0;
+    this.Yb = 1;
+    this.addEventListener("added", function() {
+      this.$.Dc = k;
+      this.ba.Mb = k;
+      this.$.Ta -= 1;
+      this.$.sc();
+      this.$.Ma("drop 'BOMBER'.")
+    });
+    this.addEventListener("removed", function() {
+      this.$.Dc = m;
+      this.ba.Mb = m
+    })
+  }, vd:function() {
+    this.Ra = tm.app.AnimationSprite(tm.app.SpriteSheet({image:"bomb", frame:{width:280, height:280}, animations:{animation:{frames:Array.range(0, 8), next:"animation", frequency:3}}}), 400, 400).addChildTo(this);
+    this.Ra.gotoAndPlay("animation");
+    this.Ra.blendMode = "lighter";
+    this.Ra.setScale(0.1, 0.1);
+    this.Ra.tweener.clear().to({scaleX:1, scaleY:1}, 200, "easeOutBack").call(function() {
+      this.update = function() {
+        this.scaleX = this.scaleY = Math.randf(0.9, 1.1)
+      }
+    }.bind(this.Ra))
+  }, update:function() {
+    for(var c = 0;c < this.b;c++) {
+      var b = this.a * this.Yb + 2 * c * Math.PI / this.b;
+      a.clone().setPosition(Math.cos(b) * this.r + this.x, Math.sin(b) * this.r + this.y).addChildTo(this.parent)
     }
     this.a += 0.04;
-    a = 0.02 * this.age;
-    this.r = 250 * Math.sin(a);
-    2 * Math.PI < a ? (this.player.muteki = !1, this.remove()) : Math.PI < a ? (this.b = 16, this.age += 3.6, this.rd = -1) : (this.b = 8, this.age += 1.8, this.rd = 1)
+    c = 0.02 * this.da;
+    this.r = 250 * Math.sin(c);
+    2 * Math.PI < c ? this.remove() : Math.PI < c ? (this.b = 16, this.da += 3.6, this.Yb = -1) : (this.b = 8, this.da += 1.8, this.Yb = 1)
   }});
-  gls2.Bomb.attackPower = 2;
-  var b = gls2.Bomb.activeList = []
+  H = tm.createClass({superClass:F, init:function(a, b) {
+    this.superInit(a, b);
+    this.addEventListener("added", function() {
+      this.$.Ta = 0
+    })
+  }, vd:function() {
+    this.Ra = tm.app.AnimationSprite(tm.app.SpriteSheet({image:"bomb", frame:{width:280, height:280}, animations:{animation:{frames:Array.range(0, 8), next:"animation", frequency:3}}}), 400, 400).addChildTo(this);
+    this.Ra.gotoAndPlay("animation");
+    this.Ra.blendMode = "lighter";
+    this.Ra.setScale(0.1, 0.1);
+    this.Ra.tweener.clear().to({scaleX:0.5, scaleY:0.5}, 200, "easeOutBack").call(function() {
+      this.update = function() {
+        this.scaleX = this.scaleY = Math.randf(0.4, 0.6)
+      }
+    }.bind(this.Ra))
+  }, update:function() {
+    for(var c = 0;c < this.b;c++) {
+      var b = this.a * this.Yb + 2 * c * Math.PI / this.b;
+      a.clone().setPosition(Math.cos(b) * this.r + this.x, Math.sin(b) * this.r + this.y).setScale(0.7, 0.7).addChildTo(this.parent)
+    }
+    this.a += 0.04;
+    c = 0.04 * this.da;
+    this.r = 100 * Math.sin(c);
+    Math.PI < c ? this.remove() : (this.b = 8, this.da += 1.8, this.Yb = 1)
+  }});
+  var a = l;
+  F.jb = 2
 })();
-gls2.Stage = tm.createClass({starItem:0, killCount:0, enemyCount:0, player:null, gameScene:null, frame:0, background:null, init:function(b, a) {
-  var c = this.gameScene = b;
-  this.player = b.player;
-  c.ground.direction = 0.5 * Math.PI;
-  c.ground.speed = 0.6;
-  this.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([{offset:0, color:"#338"}, {offset:1, color:"#114"}]).toStyle();
+var U = tm.createClass({Gf:0, Pd:0, Gd:0, ba:l, $:l, frame:0, background:l, init:function(a) {
+  this.$ = a;
+  this.ba = a.ba;
+  this.ff();
   this.frame = 0
+}, ff:function() {
+  this.background = tm.graphics.LinearGradient(0, 0, 0, 640).addColorStopList([{offset:0, color:"#338"}, {offset:1, color:"#114"}]).toStyle()
 }, update:function() {
-  var b = [], a;
-  for(a in gls2.EnemyUnit) {
-    b.push(a)
-  }
-  b = gls2.EnemyUnit[b.random()];
-  if(200 < this.frame && 0 === this.frame % 30) {
-    a = 0;
-    for(var c = b.length;a < c;a++) {
-      this.launchEnemy(b[a])
+  var a = this.Id(this.frame);
+  if(a !== l) {
+    for(var c = 0;c < a.length;c++) {
+      this.Re(a[c])
     }
   }
   this.frame += 1
-}, launchEnemy:function(b) {
-  var a = gls2.Enemy.pool.shift();
-  a ? (this.enemyCount += 1, a.setup(this.gameScene, this, b.soft, b.hard).setPosition(b.x, b.y).addChildTo(this.gameScene).onLaunch()) : console.warn("\u6575\u304c\u8db3\u308a\u306a\u3044\uff01")
-}, onDestroyEnemy:function(b) {
-  this.killCount += 1
+}, Id:function() {
+  return l
+}, Re:function(a) {
+  var c = I.df.shift();
+  c ? (this.Gd += 1, c.na(this.$, this, a.ca, a.aa).setPosition(a.x, a.y).addChildTo(this.$).Ab()) : console.warn("\u6575\u304c\u8db3\u308a\u306a\u3044\uff01")
+}, Te:function() {
+  this.Pd += 1
 }});
-gls2.Stage.create = function(b, a) {
-  return gls2.Stage(b)
-};
-(function() {
-  gls2.StageData = [];
-  gls2.StageData[0] = {}
-})();
-(function() {
-  gls2.Effect = {};
-  gls2.Effect.setup = function() {
-    gls2.Noise.generate(256);
-    gls2.Effect.explosion = Array.range(0, 2).map(function(b) {
-      return tm.app.AnimationSprite(tm.app.SpriteSheet({image:"explode" + b, frame:{width:100, height:100}, animations:{"default":{frame:Array.range(0, 64), next:null}}}, 100, 100))
-    });
-    gls2.Effect.shockwaveImage = tm.graphics.Canvas().resize(100, 100).setStrokeStyle("rgba(0,0,0,0)").setFillStyle(tm.graphics.RadialGradient(50, 50, 0, 50, 50, 50).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.7, color:"rgba(255,255,255,0)"}, {offset:0.95, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()).fillCircle(50, 50, 50);
-    gls2.Effect.shockwaveImage = tm.graphics.Canvas().resize(100, 100).setStrokeStyle("rgba(0,0,0,0)").setFillStyle(tm.graphics.RadialGradient(50, 50, 0, 50, 50, 50).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.7, color:"rgba(255,255,255,0)"}, {offset:0.95, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()).fillCircle(50, 50, 50);
-    gls2.Effect.particle16 = gls2.Particle(16, 1, 0.9, tm.graphics.Canvas().resize(16, 16).setFillStyle(tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(255,128,  0,0.0)"}]).toStyle()).fillRect(0, 0, 16, 16).element)
-  };
-  gls2.Effect.genParticle = function(b, a, c) {
-    b = gls2.Effect.particle16.clone().setPosition(b, a).addChildTo(c);
-    a = gls2.math.randf(5, 20);
-    c = gls2.math.randf(Math.PI, 2 * Math.PI);
-    b.dx = Math.cos(c) * a;
-    b.dy = Math.sin(c) * a;
-    b.scaleX = b.scaleY = (gls2.math.randf(0.1, 0.5) + gls2.math.randf(0.1, 0.5)) / 2;
-    b.addEventListener("enterframe", function() {
-      this.x += this.dx;
-      this.y += this.dy;
-      this.dx *= 0.9;
-      this.dy *= 0.9
-    })
-  };
-  gls2.Effect.genShockwave = function(b, a, c) {
-    var d = tm.app.Sprite().setPosition(b, a).setScale(0.1).setBlendMode("lighter").addChildTo(c);
-    d.image = gls2.Effect.shockwaveImage;
-    d.tweener.clear().to({scaleX:1.4, scaleY:1.4, alpha:0}, 800, "easeOutQuad").call(function() {
-      d.remove()
-    })
-  };
-  gls2.Effect.explodeS = function(b, a, c, d) {
-    gls2.playSound("soundExplode");
-    b = gls2.Effect.explosion.random().clone().addEventListener("animationend", function() {
-      this.remove()
-    }).setScale(0.75).setPosition(b, a).setRotation(360 * Math.random()).gotoAndPlay();
-    b.isEffect = !0;
-    if(void 0 !== d) {
-      var f = d.x, g = d.y;
-      b.addEventListener("enterframe", function() {
-        this.x += f;
-        this.y += g;
-        f *= 0.99;
-        g *= 0.99
-      })
-    }
-    b.addChildTo(c)
-  };
-  gls2.Effect.explodeGS = function(b, a, c) {
-    gls2.playSound("soundExplode");
-    var d = gls2.Effect.explosion.random().clone().addEventListener("animationend", function() {
-      this.remove()
-    }).addEventListener("enterframe", function() {
-      this.y -= 1.4;
-      this.scaleX += 0.01;
-      this.scaleY += 0.01
-    }).setScale(0.5).setPosition(b, a).setRotation(360 * Math.random()).gotoAndPlay();
-    d.isEffect = !0;
-    d.addChildTo(c);
-    d = gls2.Effect.explosion.random().clone().addEventListener("animationend", function() {
-      this.remove()
-    }).addEventListener("enterframe", function() {
-      this.rotation += 2;
-      this.x += 0.7;
-      this.y -= 0.7;
-      this.scaleX += 0.01;
-      this.scaleY += 0.01
-    }).setScale(0.5).setPosition(b + 12, a).setRotation(360 * Math.random()).setBlendMode("lighter").gotoAndPlay();
-    d.isEffect = !0;
-    d.addChildTo(c);
-    d = gls2.Effect.explosion.random().clone().addEventListener("animationend", function() {
-      this.remove()
-    }).addEventListener("enterframe", function() {
-      this.rotation -= 2;
-      this.x -= 0.7;
-      this.y -= 0.7;
-      this.scaleX += 0.01;
-      this.scaleY += 0.01
-    }).setScale(0.5).setPosition(b - 12, a).setRotation(360 * Math.random()).setBlendMode("lighter").gotoAndPlay();
-    d.isEffect = !0;
-    d.addChildTo(c)
-  };
-  gls2.Effect.explodeM = function(b, a, c) {
-    gls2.playSound("soundExplode");
-    for(var d = 0, f = gls2.math.rand(5, 10);d < f;d++) {
-      var g = gls2.Effect.explosion.random().clone().addEventListener("animationend", function() {
-        this.remove()
-      }).setPosition(b, a).setRotation(360 * Math.random()).gotoAndPlay();
-      g.isEffect = !0;
-      g.addChildTo(c)
-    }
-    for(d = 0;10 > d;d++) {
-      gls2.Effect.genParticle(b, a, c)
-    }
+U.create = function(a, c) {
+  if(0 === c) {
+    return ca(a)
   }
-})();
-gls2.ScoreLabel = tm.createClass({superClass:tm.graphics.Canvas, gameScene:null, init:function(b) {
+};
+var ca = tm.createClass({superClass:U, ea:l, init:function(a) {
+  this.superInit(a);
+  this.ea = da();
+  this.ea.add(0, function() {
+    this.$.Ka.direction = 0.5 * Math.PI;
+    this.$.Ka.speed = 1
+  });
+  this.ea.add(200, "tankRD-center");
+  this.ea.add(200, "tankRD-left");
+  this.ea.add(20, "heri1-right");
+  this.ea.add(60, "heri1-center");
+  this.ea.add(60, "heri1-left");
+  this.ea.add(60, "tankL-top");
+  this.ea.add(50, "heri1-right");
+  this.ea.add(20, "tankRD-center");
+  this.ea.add(80, "heri1-center");
+  this.ea.add(50, "heri1-left");
+  this.ea.add(50, "heri1-center");
+  this.ea.add(50, "fighter-m-1");
+  this.ea.add(50, "fighter-m-3");
+  this.ea.add(50, "fighter-m-5");
+  this.ea.add(70, "heri1-right");
+  this.ea.add(20, "heri1-center");
+  this.ea.add(20, "heri1-left");
+  this.ea.add(20, "tankL-top");
+  this.ea.add(20, "tankRD-left");
+  this.ea.add(50, "heri1-right");
+  this.ea.add(50, "heri1-center");
+  this.ea.add(50, "heri1-center");
+  this.ea.add(20, "tankRD-center");
+  this.ea.add(20, "tankRD-left");
+  this.ea.add(50, "heri1-right");
+  this.ea.add(50, "heri1-center");
+  this.ea.add(50, "heri1-left");
+  this.ea.add(20, "tankL-top");
+  this.ea.add(50, "heri1-right");
+  this.ea.add(1, function() {
+    this.$.Ka.tweener.clear().to({speed:5}, 5E3, "easeInOutQuad")
+  });
+  this.ea.add(100, "fighter-m-0");
+  this.ea.add(50, "fighter-m-2");
+  this.ea.add(50, "fighter-m-4");
+  this.ea.add(50, "fighter-m-6");
+  this.ea.add(50, "fighter-m-4");
+  this.ea.add(50, "fighter-m-2")
+}, Id:function(a) {
+  a = this.ea.get(a);
+  if(a !== i) {
+    if(J[a] !== i) {
+      return J[a]
+    }
+    "function" === typeof a && a.call(this)
+  }
+  return l
+}}), da = tm.createClass({index:0, data:l, init:function() {
+  this.data = {}
+}, add:function(a, c) {
+  this.index += a;
+  this.data[this.index] = c
+}, get:function(a) {
+  return this.data[a]
+}});
+w = {na:function() {
+  ea();
+  w.explosion = Array.range(0, 2).map(function(a) {
+    return tm.app.AnimationSprite(tm.app.SpriteSheet({image:"explode" + a, frame:{width:100, height:100}, animations:{"default":{frame:Array.range(0, 64), next:l}}}, 100, 100))
+  });
+  w.shockwaveImage = tm.graphics.Canvas().resize(100, 100).setStrokeStyle("rgba(0,0,0,0)").setFillStyle(tm.graphics.RadialGradient(50, 50, 0, 50, 50, 50).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.7, color:"rgba(255,255,255,0)"}, {offset:0.95, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()).fillCircle(50, 50, 50);
+  w.shockwaveImage = tm.graphics.Canvas().resize(100, 100).setStrokeStyle("rgba(0,0,0,0)").setFillStyle(tm.graphics.RadialGradient(50, 50, 0, 50, 50, 50).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.7, color:"rgba(255,255,255,0)"}, {offset:0.95, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()).fillCircle(50, 50, 50);
+  w.particle16 = G(16, 1, 0.9, tm.graphics.Canvas().resize(16, 16).setFillStyle(tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(255,128,  0,0.0)"}]).toStyle()).fillRect(0, 0, 16, 16).element)
+}, wc:function(a, c, b) {
+  a = w.particle16.clone().setPosition(a, c).addChildTo(b);
+  c = S(5, 20);
+  b = S(Math.PI, 2 * Math.PI);
+  a.ka = Math.cos(b) * c;
+  a.la = Math.sin(b) * c;
+  a.scaleX = a.scaleY = (S(0.1, 0.5) + S(0.1, 0.5)) / 2;
+  a.addEventListener("enterframe", function() {
+    this.x += this.ka;
+    this.y += this.la;
+    this.ka *= 0.9;
+    this.la *= 0.9
+  })
+}, Af:function(a, c, b) {
+  var d = tm.app.Sprite().setPosition(a, c).setScale(0.1).setBlendMode("lighter").addChildTo(b);
+  d.image = w.shockwaveImage;
+  d.tweener.clear().to({scaleX:1.4, scaleY:1.4, alpha:0}, 800, "easeOutQuad").call(function() {
+    d.remove()
+  })
+}, Jd:function(a, c, b, d) {
+  O();
+  a = w.explosion.random().clone().addEventListener("animationend", function() {
+    this.remove()
+  }).setScale(0.75).setPosition(a, c).setRotation(360 * Math.random()).gotoAndPlay();
+  a.Wb = k;
+  if(d !== i) {
+    var g = d.x, h = d.y;
+    a.addEventListener("enterframe", function() {
+      this.x += g;
+      this.y += h;
+      g *= 0.99;
+      h *= 0.99
+    })
+  }
+  a.addChildTo(b)
+}, Ce:function(a, c, b) {
+  O();
+  var d = w.explosion.random().clone().addEventListener("animationend", function() {
+    this.remove()
+  }).addEventListener("enterframe", function() {
+    this.scaleX += 0.01;
+    this.scaleY += 0.01
+  }).setScale(0.5).setPosition(a, c).setRotation(360 * Math.random()).gotoAndPlay();
+  d.Wb = k;
+  d.addChildTo(b);
+  d = w.explosion.random().clone().addEventListener("animationend", function() {
+    this.remove()
+  }).addEventListener("enterframe", function() {
+    this.rotation += 2;
+    this.x += 0.7;
+    this.y -= 0.3;
+    this.scaleX += 0.01;
+    this.scaleY += 0.01
+  }).setScale(0.5).setPosition(a + 12, c).setRotation(360 * Math.random()).setBlendMode("lighter").gotoAndPlay();
+  d.Wb = k;
+  d.addChildTo(b);
+  d = w.explosion.random().clone().addEventListener("animationend", function() {
+    this.remove()
+  }).addEventListener("enterframe", function() {
+    this.rotation -= 2;
+    this.x -= 0.7;
+    this.y -= 0.3;
+    this.scaleX += 0.01;
+    this.scaleY += 0.01
+  }).setScale(0.5).setPosition(a - 12, c).setRotation(360 * Math.random()).setBlendMode("lighter").gotoAndPlay();
+  d.Wb = k;
+  d.addChildTo(b)
+}, De:function(a, c, b) {
+  O();
+  for(var d = 0;10 > d;d++) {
+    var g = w.explosion.random().clone().addEventListener("animationend", function() {
+      this.remove()
+    }).addEventListener("enterframe", function() {
+      this.x += 2 * Math.cos(this.a);
+      this.y += 2 * Math.sin(this.a);
+      this.scaleX += 0.01;
+      this.scaleY += 0.01
+    }).setScale(0.7).setBlendMode(0 === d % 2 ? "lighter" : "source-over").setPosition(a, c).gotoAndPlay();
+    g.a = 2 * Math.PI * Math.random();
+    g.Wb = k;
+    g.addChildTo(b)
+  }
+}};
+var ga = tm.createClass({superClass:tm.graphics.Canvas, $:l, Ub:l, init:function(a) {
   this.superInit("#scoreLabel");
-  this.gameScene = b;
-  this.resize(SC_W, SC_H).fitWindow();
+  this.$ = a;
+  this.resize(480, 640).fitWindow();
   this.setText("20px Orbitron", "left", "top");
-  this.fillStyle = "rgba(255,255,255,0.01)"
+  this.fillStyle = "rgba(255,255,255,0.01)";
+  this.Ub = fa(200)
 }, update:function() {
   this.clear();
   this.resetTransform();
   this.strokeStyle = this.fillStyle = "rgba(255,255,255,0.4)";
   this.draw();
   this.strokeStyle = this.fillStyle = "rgba(255,255,255,0.02)";
-  for(var b = -2;2 >= b;b++) {
-    for(var a = -2;2 >= a;a++) {
-      this.setTransform(1, 0, 0, 1, b, a), this.draw()
+  for(var a = -2;2 >= a;a++) {
+    for(var c = -2;2 >= c;c++) {
+      this.setTransform(1, 0, 0, 1, a, c), this.draw()
     }
   }
   this.context.globalCompositeOperation = "source-over";
-  for(b = 0;b < this.gameScene.zanki;b++) {
-    this.drawTexture(tm.asset.AssetManager.get("tex1"), 192, 0, 64, 64, 5 + 32 * b, 40, 32, 32)
+  for(a = 0;a < this.$.sb - 1;a++) {
+    this.drawTexture(tm.asset.AssetManager.get("tex1"), 192, 0, 64, 64, 5 + 32 * a, 40, 32, 32)
   }
+  this.context.globalCompositeOperation = "source-over";
+  this.fillStyle = "rgba(255,255,255,0.5)";
+  for(a = 0;a < this.$.Ta;a++) {
+    this.fillRect(5 + 25 * a, 601, 20, 20)
+  }
+  this.Ub.update();
+  this.Ub.draw(this)
 }, draw:function() {
   this.context.globalCompositeOperation = "lighter";
-  var b;
-  this.setText("16px Orbitron", "left", "top");
-  var a = this.gameScene.score + "";
-  a.substring(a.indexOf("."), a.length);
-  a = a.padding(16, "0");
-  b = "";
-  for(var c = 0;c < a.length;c += 4) {
-    b += a.substring(c, c + 4) + " "
+  var a;
+  this.setText("20px 'Ubuntu Mono'", "right", "top");
+  score = ("" + Math.floor(this.$.score)).padding(16, " ");
+  a = "";
+  for(var c = 0;c < score.length;c += 4) {
+    a += score.substring(c, c + 4) + " "
   }
-  this.fillText(b, 5, 5);
-  this.setText("14px Orbitron", "left", "top");
-  a = (~~this.gameScene.baseScore + "").padding(8, "0");
-  b = "";
-  for(c = 0;c < a.length;c += 4) {
-    b += a.substring(c, c + 4) + " "
+  this.fillText(a, 192, 5);
+  this.setText("18px 'Ubuntu Mono'", "right", "top");
+  score = ("+" + Math.floor(this.$.Ba)).padding(8, " ");
+  a = "";
+  for(c = 0;c < score.length;c += 4) {
+    a += score.substring(c, c + 4) + " "
   }
-  this.fillText(b, 5, 22);
-  0 < this.gameScene.comboCount && (this.setText("bold 40px Orbitron", "left", "top"), this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 85))
+  this.fillText(a, 192, 22);
+  this.setText("bold 18px Orbitron", "left", "top");
+  this.strokeText("max " + ~~this.$.Fc + " hit", 10, 85);
+  0 < this.$.Da && (this.setText("bold 40px Orbitron", "left", "top"), this.strokeText(~~this.$.Da + " HIT!!", 10, 100))
 }});
-gls2.Collision = {isHit:function(b, a) {
-  var c = b.x + b.boundingWidthRight, d = b.y - b.boundingHeightTop, f = b.y + b.boundingHeightBottom, g = a.x - a.boundingWidthLeft, h = a.y - a.boundingHeightTop, i = a.y + a.boundingHeightBottom;
-  return b.x - b.boundingWidthLeft < a.x + a.boundingWidthRight && c > g && d < i && f > h
-}};
-gls2.Scene = tm.createClass({superClass:tm.app.Scene, _sceneResultCallback:null, init:function() {
+function V(a, c) {
+  if(a.parent === l || c.parent === l) {
+    return m
+  }
+  var b = a.x + a.boundingWidthRight, d = a.y - a.boundingHeightTop, g = a.y + a.boundingHeightBottom, h = c.x - c.boundingWidthLeft, j = c.y - c.boundingHeightTop, r = c.y + c.boundingHeightBottom;
+  return a.x - a.boundingWidthLeft < c.x + c.boundingWidthRight && b > h && d < r && g > j
+}
+;var W = tm.createClass({superClass:tm.app.Scene, _sceneResultCallback:l, init:function() {
   this.superInit()
-}, startSceneForResult:function(b, a) {
-  "function" === typeof b ? this.app.pushScene(b()) : b instanceof tm.app.Scene && this.app.pushScene(b);
-  this._sceneResultCallback = a
-}, finish:function(b) {
-  var a = this.app;
-  a.popScene();
-  (a = a.currentScene) && a._sceneResultCallback && a._sceneResultCallback.bind(a)(b)
-}, update:function(b) {
-  b.pointing.getPointingEnd() && gls2.PointerEffect(b.pointing).addChildTo(this)
-}});
-gls2.PointerEffect = tm.createClass({superClass:tm.app.CircleShape, init:function(b) {
+}, hf:function(a, c) {
+  "function" === typeof a ? this.app.pushScene(a()) : a instanceof tm.app.Scene && this.app.pushScene(a);
+  this._sceneResultCallback = c
+}, finish:function(a) {
+  var c = this.app;
+  c.popScene();
+  (c = c.currentScene) && c._sceneResultCallback && c._sceneResultCallback.bind(c)(a)
+}, update:function(a) {
+  a.pointing.getPointingEnd() && ha(a.pointing).addChildTo(this)
+}}), ha = tm.createClass({superClass:tm.app.CircleShape, init:function(a) {
   this.superInit(150, 150, {strokeStyle:"rgba(0,0,0,0)", fillStyle:tm.graphics.RadialGradient(75, 75, 0, 75, 75, 75).addColorStopList([{offset:0, color:"rgba(255,255,255,0.0)"}, {offset:0.6, color:"rgba(255,255,255,0.0)"}, {offset:1, color:"rgba(255,255,255,0.8)"}]).toStyle()});
-  this.setPosition(b.x, b.y);
+  this.setPosition(a.x, a.y);
   this.width = this.height = 1;
   this.tweener.clear().to({width:150, height:150, alpha:0}, 300, "easeOutQuad").call(function() {
     this.remove()
   }.bind(this))
 }});
-gls2.DialogMenu = tm.createClass({superClass:gls2.Scene, titleText:null, menu:null, descriptions:null, showExit:!1, title:null, selections:[], description:null, box:null, cursor:null, _selected:0, _opened:!1, _finished:!1, init:function(b, a, c, d, f) {
+var ia = tm.createClass({superClass:W, titleText:l, menu:l, descriptions:l, showExit:m, title:l, selections:[], description:l, box:l, cursor:l, _selected:0, _opened:m, _finished:m, init:function(a, c, b, d, g) {
   this.superInit();
-  this.titleText = b;
-  this.menu = a;
-  this._selected = ~~c;
-  this.showExit = !!f;
-  this.descriptions = d ? d : [].concat(a);
-  this.showExit && (a.push("exit"), this.descriptions.push("\u524d\u306e\u753b\u9762\u3078\u623b\u308a\u307e\u3059"));
-  b = Math.max(50 * (1 + a.length), 50) + 40;
-  this.box = tm.app.RectangleShape(0.8 * SC_W, b, {strokeStyle:"rgba(0,0,0,0)", fillStyle:"rgba(1,2,48,0.8)"}).setPosition(0.5 * SC_W, 0.5 * SC_H);
+  this.titleText = a;
+  this.menu = c;
+  this._selected = ~~b;
+  this.showExit = !!g;
+  this.descriptions = d ? d : [].concat(c);
+  this.showExit && (c.push("exit"), this.descriptions.push("\u524d\u306e\u753b\u9762\u3078\u623b\u308a\u307e\u3059"));
+  a = Math.max(50 * (1 + c.length), 50) + 40;
+  this.box = tm.app.RectangleShape(384, a, {strokeStyle:"rgba(0,0,0,0)", fillStyle:"rgba(1,2,48,0.8)"}).setPosition(240, 320);
   this.box.width = 1;
   this.box.height = 1;
-  this.box.tweener.to({width:0.8 * SC_W, height:b}, 200, "easeOutExpo").call(this._onOpen.bind(this));
+  this.box.tweener.to({width:384, height:a}, 200, "easeOutExpo").call(this._onOpen.bind(this));
   this.box.addChildTo(this);
-  this.description = tm.app.Label("", 14).setPosition(0.5 * SC_W, SC_H - 10).addChildTo(this)
+  this.description = tm.app.Label("", 14).setPosition(240, 630).addChildTo(this)
 }, _onOpen:function() {
-  var b = 0.5 * SC_H - 25 * this.menu.length;
-  this.title = tm.app.Label(this.titleText, 30).setPosition(0.5 * SC_W, b).addChildTo(this);
-  this.selections = this.menu.map(function(a, c) {
+  var a = 320 - 25 * this.menu.length;
+  this.title = tm.app.Label(this.titleText, 30).setPosition(240, a).addChildTo(this);
+  this.selections = this.menu.map(function(c, b) {
     var d = this;
-    b += 50;
-    var f = tm.app.Label(a).setPosition(0.5 * SC_W, b).addChildTo(this);
-    f.interactive = !0;
-    f.addEventListener("touchend", function() {
-      d._selected === c ? d.closeDialog(d._selected) : d._selected = c
+    a += 50;
+    var g = tm.app.Label(c).setPosition(240, a).addChildTo(this);
+    g.interactive = k;
+    g.addEventListener("touchend", function() {
+      d._selected === b ? d.closeDialog(d._selected) : d._selected = b
     });
-    f.width = 0.7 * SC_W;
-    return f
+    g.width = 336;
+    return g
   }.bind(this));
   this._createCursor();
-  this._opened = !0
+  this._opened = k
 }, _createCursor:function() {
-  this.cursor = tm.app.RectangleShape(0.7 * SC_W, 10, {strokeStyle:"rgba(0,0,0,0)", fillStyle:tm.graphics.LinearGradient(0, 0, 0.7 * SC_W, 0).addColorStopList([{offset:0, color:"rgba(  0,255,100,0.0)"}, {offset:0.2, color:"rgba(  0,255,100,0.3)"}, {offset:0.5, color:"rgba(  0,255,255,0.5)"}, {offset:0.8, color:"rgba(  0,255,100,0.3)"}, {offset:1, color:"rgba(  0,255,100,0.0)"}]).toStyle()}).addChildTo(this);
+  this.cursor = tm.app.RectangleShape(336, 10, {strokeStyle:"rgba(0,0,0,0)", fillStyle:tm.graphics.LinearGradient(0, 0, 336, 0).addColorStopList([{offset:0, color:"rgba(  0,255,100,0.0)"}, {offset:0.2, color:"rgba(  0,255,100,0.3)"}, {offset:0.5, color:"rgba(  0,255,255,0.5)"}, {offset:0.8, color:"rgba(  0,255,100,0.3)"}, {offset:1, color:"rgba(  0,255,100,0.0)"}]).toStyle()}).addChildTo(this);
   this.cursor.blendMode = "lighter";
-  this.cursor.x = 0.5 * SC_W;
+  this.cursor.x = 240;
   this.cursor.s = this._selected;
   this.cursor.y = this.selections[this._selected].y;
   this.cursor.update = function() {
     this.s !== this.parent._selected && (this.s = this.parent._selected, this.tweener.clear(), this.tweener.to({y:this.parent.selections[this.parent._selected].y}, 200, "easeOutExpo"))
   }
-}, update:function(b) {
+}, update:function(a) {
   this.superClass.prototype.update.apply(this, arguments);
   this.description.text = this.descriptions[this._selected];
-  this._opened && (this._finished ? this.cursor.visible = 0 === ~~(b.frame / 2) % 2 : this.showExit && b.keyboard.getKeyDown("x") ? (this._selected = this.selections.length - 1, this.closeDialog(this._selected)) : b.keyboard.getKeyDown("z") || b.keyboard.getKeyDown("space") ? this.closeDialog(this._selected) : b.keyboard.getKeyDown("down") ? (this._selected += 1, this._selected = gls2.math.clamp(this._selected, 0, this.selections.length - 1)) : b.keyboard.getKeyDown("up") && (this._selected -= 1, 
-  this._selected = gls2.math.clamp(this._selected, 0, this.selections.length - 1)))
-}, closeDialog:function(b) {
-  this._finished = !0;
+  this._opened && (this._finished ? this.cursor.visible = 0 === ~~(a.frame / 2) % 2 : this.showExit && a.keyboard.getKeyDown("x") ? (this._selected = this.selections.length - 1, this.closeDialog(this._selected)) : a.keyboard.getKeyDown("z") || a.keyboard.getKeyDown("space") ? this.closeDialog(this._selected) : a.keyboard.getKeyDown("down") ? (this._selected += 1, this._selected = Q(this._selected, 0, this.selections.length - 1)) : a.keyboard.getKeyDown("up") && (this._selected -= 1, this._selected = 
+  Q(this._selected, 0, this.selections.length - 1)))
+}, closeDialog:function(a) {
+  this._finished = k;
   this.tweener.clear().wait(200).call(function() {
     this.cursor.remove();
     this.title.remove();
@@ -1536,610 +1576,738 @@ gls2.DialogMenu = tm.createClass({superClass:gls2.Scene, titleText:null, menu:nu
     });
     this.box.tweener.clear();
     this.box.tweener.to({width:1, height:1}, 200, "easeInExpo").call(function() {
-      this.finish(b)
+      this.finish(a)
     }.bind(this))
   }.bind(this))
-}, draw:function(b) {
-  b.fillStyle = "rgba(0,0,0,0.8)";
-  b.fillRect(0, 0, SC_W, SC_H)
+}, draw:function(a) {
+  a.fillStyle = "rgba(0,0,0,0.8)";
+  a.fillRect(0, 0, 480, 640)
 }});
-gls2.Scene.prototype.openDialogMenu = function(b, a, c, d, f, g) {
-  void 0 === g && (g = !0);
-  this.startSceneForResult(gls2.DialogMenu(b, a, d, f, g), c)
-};
-(function() {
-  gls2.Particle = tm.createClass({superClass:tm.app.CanvasElement, alpha:1, alphaDecayRate:0.85, size:0, image:null, init:function(b, a, c, d) {
-    this.superInit();
-    this.width = this.height = this.size = b;
-    void 0 !== a && (this.alpha = a);
-    void 0 !== c && (this.alphaDecayRate = c);
-    this.blendMode = "lighter";
-    this.image = d ? d : tm.graphics.Canvas().resize(b, b).setFillStyle(tm.graphics.RadialGradient(0.5 * b, 0.5 * b, 0, 0.5 * b, 0.5 * b, 0.5 * b).addColorStopList([{offset:0, color:"rgba(255,255,255,0.1)"}, {offset:1, color:"rgba(  0,  0,  0,0.0)"}]).toStyle()).fillRect(0, 0, b, b).element
-  }, update:function(b) {
-    this.alpha *= this.alphaDecayRate;
-    0.0010 > this.alpha ? this.remove() : 1 < this.alpha && (this.alpha = 1)
-  }, draw:function(b) {
-    b.context.drawImage(this.image, -this.width * this.origin.x, -this.height * this.origin.y, this.width, this.height)
-  }, clone:function() {
-    return gls2.Particle(this.size, this.initialAlpha, this.alphaDecayRate, this.image)
-  }});
-  gls2.BackfireParticle = tm.createClass({superClass:gls2.Particle, ground:null, init:function(b, a) {
-    a = a || 20;
-    this.superInit(a, 1, 0.82, tm.graphics.Canvas().resize(a, a).setFillStyle(tm.graphics.RadialGradient(0.5 * a, 0.5 * a, 0, 0.5 * a, 0.5 * a, 0.5 * a).addColorStopList([{offset:0, color:"rgba(255,255,255,0.5)"}, {offset:1, color:"rgba(  0,  0,  0,0.0)"}]).toStyle()).fillRect(0, 0, a, a).element);
-    this.ground = b
-  }, update:function(b) {
-    this.superClass.prototype.update.apply(this, b);
-    this.x += this.ground.dx;
-    this.y += this.ground.dy + 0.3
-  }, clone:function(b) {
-    return gls2.BackfireParticle(this.ground, b)
-  }})
-})();
-gls2.ConsoleWindow = tm.createClass({superClass:tm.app.RectangleShape, label:null, buf:null, init:function(b) {
-  this.superInit(b, 64, {fillStyle:"rgba(1,2,48,0.5)", strokeStyle:"rgba(0,0,0,0)"});
-  this.label = tm.app.Label("_", 10).setAlign("left").setBaseline("top").setPosition(-this.width / 2 + 4, -this.height / 2 + 4).setFillStyle("rgba(255,255,255,0.5)").addChildTo(this);
-  this.buf = []
-}, addLine:function(b) {
-  5 < this.buf.length && this.buf.splice(1, this.buf.length - 4);
-  this.buf.push(b);
+function X(a, c, b, d, g, h, j) {
+  j === i && (j = k);
+  a.hf(ia(c, b, g, h, j), d)
+}
+;G = tm.createClass({superClass:tm.app.CanvasElement, alpha:1, Uc:0.85, size:0, image:l, init:function(a, c, b, d) {
+  this.superInit();
+  this.width = this.height = this.size = a;
+  c !== i && (this.alpha = c);
+  b !== i && (this.Uc = b);
+  this.blendMode = "lighter";
+  this.image = d ? d : tm.graphics.Canvas().resize(a, a).setFillStyle(tm.graphics.RadialGradient(0.5 * a, 0.5 * a, 0, 0.5 * a, 0.5 * a, 0.5 * a).addColorStopList([{offset:0, color:"rgba(255,255,255,0.1)"}, {offset:1, color:"rgba(  0,  0,  0,0.0)"}]).toStyle()).fillRect(0, 0, a, a).element
+}, update:function() {
+  this.alpha *= this.Uc;
+  0.001 > this.alpha ? this.remove() : 1 < this.alpha && (this.alpha = 1)
+}, draw:function(a) {
+  a.context.drawImage(this.image, -this.width * this.origin.x, -this.height * this.origin.y, this.width, this.height)
+}, clone:function() {
+  return G(this.size, this.Df, this.Uc, this.image)
+}});
+E = tm.createClass({superClass:G, Ka:l, init:function(a, c) {
+  c = c || 20;
+  this.superInit(c, 1, 0.82, tm.graphics.Canvas().resize(c, c).setFillStyle(tm.graphics.RadialGradient(0.5 * c, 0.5 * c, 0, 0.5 * c, 0.5 * c, 0.5 * c).addColorStopList([{offset:0, color:"rgba(255,255,255,0.5)"}, {offset:1, color:"rgba(  0,  0,  0,0.0)"}]).toStyle()).fillRect(0, 0, c, c).element);
+  this.Ka = a
+}, update:function(a) {
+  this.superClass.prototype.update.apply(this, a);
+  this.x += this.Ka.ka;
+  this.y += this.Ka.la + 0.3
+}, clone:function(a) {
+  return E(this.Ka, a)
+}});
+var fa = tm.createClass({width:0, label:l, Ja:l, da:0, init:function(a) {
+  this.width = a;
+  this.label = tm.app.Label("_", 10).setAlign("left").setBaseline("top").setPosition(-this.width / 2 + 4, -this.height / 2 + 4).setFillStyle("rgba(255,255,255,0.5)");
+  this.Ja = []
+}, qe:function(a) {
+  5 < this.Ja.length && this.Ja.splice(1, this.Ja.length - 4);
+  this.Ja.push(a);
   return this
-}, clearBuf:function() {
-  this.buf.clear();
+}, te:function() {
+  this.Ja.clear();
   return this
 }, clear:function() {
   this.label.text = "_";
   return this
-}, update:function(b) {
+}, update:function() {
   var a = this.label.text, a = a.substring(0, a.length - 1);
-  if(0 === b.frame % 2 && 0 !== this.buf.length) {
-    if("" !== this.buf[0]) {
-      var c = this.buf[0][0];
-      this.buf[0] = this.buf[0].substring(1);
+  if(0 !== this.Ja.length) {
+    if("" !== this.Ja[0]) {
+      var c = this.Ja[0][0];
+      this.Ja[0] = this.Ja[0].substring(1);
       a += c
     }else {
-      this.buf.shift(), c = a.split("\n"), 3 < c.length && (c.shift(), a = c.join("\n")), a += "\n"
+      this.Ja.shift(), c = a.split("\n"), 3 < c.length && (c.shift(), a = c.join("\n")), a += "\n"
     }
   }
-  this.label.text = a + (~~(b.frame / 6) % 2 ? "_" : " ")
+  this.label.text = a + (0 === this.da % 2 ? "_" : " ");
+  this.da += 1
+}, draw:function(a) {
+  a.save();
+  a.context.globalCompositeOperation = "source-over";
+  a.translate(480 - this.width - 5, 5);
+  a.fillStyle = "rgba(1,2,48,0.5)";
+  a.fillRect(0, 0, this.width, 64);
+  a.translate(5, 5);
+  a.fillStyle = "rgba(255,255,255,0.5)";
+  a.setText(this.label.fontStyle, this.label.align, this.label.baseline);
+  this.label._lines.each(function(c, b) {
+    a.fillText(c, 0, this.label.textSize * b)
+  }.bind(this));
+  a.restore()
 }});
-gls2.Noise = {generate:function(b) {
-  for(var a = function(a, b, c) {
+function ea() {
+  function a(a) {
+    if(1 > a) {
+      return l
+    }
+    var b = [], d = Math.random(), g, h;
+    for(h = 0;256 > h;h += ~~a) {
+      g = Math.random();
+      for(var j = 0;j < a;j++) {
+        b[h + j] = c(d, g, j / a)
+      }
+      d = g
+    }
+    d = b[256 - ~~a];
+    g = b[0];
+    for(j = 0;j < a;j++) {
+      b[256 - ~~a + j] = c(d, g, j / a)
+    }
+    return b
+  }
+  function c(a, b, c) {
     c = 0.5 * (1 - Math.cos(c * Math.PI));
     return a * (1 - c) + b * c
-  }, c = function(c) {
-    if(1 > c) {
-      return null
-    }
-    var d = [], f = Math.random(), g, h;
-    for(h = 0;h < b;h += ~~c) {
-      g = Math.random();
-      for(var l = 0;l < c;l++) {
-        d[h + l] = a(f, g, l / c)
-      }
-      f = g
-    }
-    f = d[b - ~~c];
-    g = d[0];
-    for(l = 0;l < c;l++) {
-      d[b - ~~c + l] = a(f, g, l / c)
-    }
-    return d
-  }, d = [], f = 0, g = Math.pow(2, 4);8 > f;f++, g *= 2) {
-    var h = c(b / g);
-    if(null === h) {
+  }
+  for(var b = [], d = 0, g = Math.pow(2, 4);8 > d;d++, g *= 2) {
+    var h = a(256 / g);
+    if(h === l) {
       break
     }
-    d.push(h)
+    b.push(h)
   }
-  c = [].concat(d[0]);
-  f = 1;
-  for(g = 0.5;f < d.length;f++, g *= 0.5) {
-    for(h = 0;h < b;h++) {
-      c[h] += d[f][h] * g
+  h = [].concat(b[0]);
+  d = 1;
+  for(g = 0.5;d < b.length;d++, g *= 0.5) {
+    for(var j = 0;256 > j;j++) {
+      h[j] += b[d][j] * g
     }
   }
-  for(f = 0;f < c.length;f++) {
-    c[f] /= 2
+  for(d = 0;d < h.length;d++) {
+    h[d] /= 2
   }
-  return c
-}};
-(function() {
-  var b = null, a = null;
-  gls2.TitleScene = tm.createClass({superClass:gls2.Scene, result:null, age:0, particles:[], gameStarted:!1, highScoreLabel:null, lastMainMenu:0, lastSetting:0, init:function() {
+}
+;(function() {
+  var a = l, c = l;
+  t = tm.createClass({superClass:W, result:l, da:0, Xb:[], vc:m, Od:l, Sd:0, Ec:0, init:function() {
     this.superInit();
-    tm.app.Label("GL-Shooter 2", 50).setPosition(0.5 * SC_W, 0.25 * SC_H).addChildTo(this);
-    tm.app.Label("version 1.0-beta", 22).setPosition(0.9 * SC_W, 0.3 * SC_H).setAlign("right").addChildTo(this);
-    this.highScoreLabel = tm.app.Label().setPosition(0.5 * SC_W, 0.4 * SC_H).addChildTo(this);
-    tm.app.Label("press space key").setPosition(0.5 * SC_W, 0.9 * SC_H).addChildTo(this);
+    tm.app.Label("GL-Shooter 2", 50).setPosition(240, 160).addChildTo(this);
+    tm.app.Label("version 1.0-beta", 22).setPosition(432, 192).setAlign("right").addChildTo(this);
+    this.Od = tm.app.Label().setPosition(240, 256).addChildTo(this);
+    tm.app.Label("press space key").setPosition(240, 576).addChildTo(this);
     this.addEventListener("enter", function() {
-      this.gameStarted = !1;
-      this.highScoreLabel.text = "HIGH SCORE: " + gls2.core.highScore
+      this.vc = m;
+      this.Od.text = "HIGH SCORE: " + Math.floor(s.xc)
     })
   }, draw:function(a) {
     a.fillStyle = "black";
-    a.fillRect(0, 0, SC_W, SC_H)
+    a.fillRect(0, 0, 480, 640)
   }, update:function(a) {
-    this._generateParticle(80 * Math.cos(0.01 * this.age) + 0.5 * SC_W, 80 * Math.sin(0.01 * this.age) + 0.5 * SC_H, 0);
-    this._generateParticle(80 * Math.cos(0.01 * this.age + Math.PI) + 0.5 * SC_W, 80 * Math.sin(0.01 * this.age + Math.PI) + 0.5 * SC_H, 1);
-    (a.keyboard.getKeyDown("z") || a.keyboard.getKeyDown("space") || a.pointing.getPointingEnd()) && !this.gameStarted && this.openMainMenu();
-    this.age += 1
-  }, _generateParticle:function(c, d, f) {
-    if(!this.gameStarted) {
-      null === b && (b = gls2.Particle(80, 1, 0.8, tm.graphics.Canvas().resize(80, 80).setFillStyle(tm.graphics.RadialGradient(40, 40, 0, 40, 40, 40).addColorStopList([{offset:0, color:"rgba(255,255,255,0.1)"}, {offset:1, color:"rgba(155,  0,  0,0.0)"}]).toStyle()).fillRect(0, 0, 80, 80).element));
-      null === a && (a = gls2.Particle(80, 1, 0.8, tm.graphics.Canvas().resize(80, 80).setFillStyle(tm.graphics.RadialGradient(40, 40, 0, 40, 40, 40).addColorStopList([{offset:0, color:"rgba(255,255,255,0.1)"}, {offset:1, color:"rgba(  0,  0,155,0.0)"}]).toStyle()).fillRect(0, 0, 80, 80).element));
-      f = 0 === f ? b.clone().addChildTo(this) : a.clone().addChildTo(this);
-      f.speed = 0.6;
-      var g = gls2.math.randf(0, 2 * Math.PI), h = gls2.math.rand(0, 20);
-      f.setPosition(Math.cos(g) * h + c, Math.sin(g) * h + d);
-      var i = this;
-      f.update = function() {
-        this.x += Math.cos(g) * this.speed;
-        this.y += Math.sin(g) * this.speed;
-        if(-50 > this.x || SC_W + 50 < this.x || -50 > this.y || SC_H + 50 < this.y) {
+    this.td(80 * Math.cos(0.01 * this.da) + 240, 80 * Math.sin(0.01 * this.da) + 320, 0);
+    this.td(80 * Math.cos(0.01 * this.da + Math.PI) + 240, 80 * Math.sin(0.01 * this.da + Math.PI) + 320, 1);
+    (a.keyboard.getKeyDown("z") || a.keyboard.getKeyDown("space") || a.pointing.getPointingEnd()) && !this.vc && this.Wd();
+    this.da += 1
+  }, td:function(b, d, g) {
+    if(!this.vc) {
+      a === l && (a = G(80, 1, 0.8, tm.graphics.Canvas().resize(80, 80).setFillStyle(tm.graphics.RadialGradient(40, 40, 0, 40, 40, 40).addColorStopList([{offset:0, color:"rgba(255,255,255,0.1)"}, {offset:1, color:"rgba(155,  0,  0,0.0)"}]).toStyle()).fillRect(0, 0, 80, 80).element));
+      c === l && (c = G(80, 1, 0.8, tm.graphics.Canvas().resize(80, 80).setFillStyle(tm.graphics.RadialGradient(40, 40, 0, 40, 40, 40).addColorStopList([{offset:0, color:"rgba(255,255,255,0.1)"}, {offset:1, color:"rgba(  0,  0,155,0.0)"}]).toStyle()).fillRect(0, 0, 80, 80).element));
+      g = 0 === g ? a.clone().addChildTo(this) : c.clone().addChildTo(this);
+      g.speed = 0.6;
+      var h = S(0, 2 * Math.PI), j = Y(0, 20);
+      g.setPosition(Math.cos(h) * j + b, Math.sin(h) * j + d);
+      var r = this;
+      g.update = function() {
+        this.x += Math.cos(h) * this.speed;
+        this.y += Math.sin(h) * this.speed;
+        if(-50 > this.x || 530 < this.x || -50 > this.y || 690 < this.y) {
           this.remove();
-          var a = i.particles.indexOf(this);
-          -1 !== a && i.particles.splice(a, 1)
+          var a = r.Xb.indexOf(this);
+          -1 !== a && r.Xb.splice(a, 1)
         }
       };
-      this.particles.push(f)
+      this.Xb.push(g)
     }
-  }, openMainMenu:function() {
-    this.openDialogMenu("MAIN MENU", ["start", "tutorial", "setting", "save score"], this.onResultMainMenu, this.lastMainMenu, ["\u30b2\u30fc\u30e0\u3092\u958b\u59cb\u3057\u307e\u3059", "\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u3092\u958b\u59cb\u3057\u307e\u3059", "\u8a2d\u5b9a\u3092\u5909\u66f4\u3057\u307e\u3059", "\u30b2\u30fc\u30e0\u3092\u7d42\u4e86\u30579leap\u306b\u30b9\u30b3\u30a2\u3092\u767b\u9332\u3057\u307e\u3059"])
-  }, onResultMainMenu:function(a) {
-    4 !== a && (this.lastMainMenu = a);
+  }, Wd:function() {
+    X(this, "MAIN MENU", ["start", "tutorial", "setting", "save score"], this.Xe, this.Sd, ["\u30b2\u30fc\u30e0\u3092\u958b\u59cb\u3057\u307e\u3059", "\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u3092\u958b\u59cb\u3057\u307e\u3059", "\u8a2d\u5b9a\u3092\u5909\u66f4\u3057\u307e\u3059", "\u30b2\u30fc\u30e0\u3092\u7d42\u4e86\u30579leap\u306b\u30b9\u30b3\u30a2\u3092\u767b\u9332\u3057\u307e\u3059"])
+  }, Xe:function(a) {
+    4 !== a && (this.Sd = a);
     switch(a) {
       case 0:
         this.tweener.clear().call(function() {
-          this.gameStarted = !0;
-          for(var a = 0, b = this.particles.length;a < b;a++) {
-            this.particles[a].speed = 8
+          this.vc = k;
+          for(var a = 0, b = this.Xb.length;a < b;a++) {
+            this.Xb[a].speed = 8
           }
         }.bind(this)).wait(1E3).call(function() {
-          gls2.core.gameScene.gameStart(2);
-          gls2.core.pushScene(gls2.core.gameScene)
+          s.$.Ne(2);
+          s.pushScene(s.$)
         }.bind(this));
         break;
       case 2:
-        this.openSetting();
+        this.ob();
         break;
       case 3:
-        gls2.core.exitApp()
+        s.Be()
     }
-  }, openSetting:function() {
-    this.openDialogMenu("SETTING", ["bgm volume", "sound volume", "difficulty"], this.onResultSetting, this.lastSetting, ["BGM\u30dc\u30ea\u30e5\u30fc\u30e0\u3092\u8a2d\u5b9a\u3057\u307e\u3059", "\u52b9\u679c\u97f3\u30dc\u30ea\u30e5\u30fc\u30e0\u3092\u8a2d\u5b9a\u3057\u307e\u3059", "\u96e3\u6613\u5ea6\u3092\u8a2d\u5b9a\u3057\u307e\u3059"])
-  }, onResultSetting:function(a) {
-    3 !== a && (this.lastSetting = a);
+  }, ob:function() {
+    X(this, "SETTING", ["bgm volume", "sound volume", "difficulty"], this.gd, this.Ec, ["BGM\u30dc\u30ea\u30e5\u30fc\u30e0\u3092\u8a2d\u5b9a\u3057\u307e\u3059", "\u52b9\u679c\u97f3\u30dc\u30ea\u30e5\u30fc\u30e0\u3092\u8a2d\u5b9a\u3057\u307e\u3059", "\u96e3\u6613\u5ea6\u3092\u8a2d\u5b9a\u3057\u307e\u3059"])
+  }, gd:function(a) {
+    3 !== a && (this.Ec = a);
     switch(a) {
       case 0:
-        this.openBgmSetting();
+        this.hd();
         break;
       case 1:
-        this.openSeSetting();
+        this.jd();
         break;
       case 2:
-        this.openDifficultySetting();
+        this.cf();
         break;
       default:
-        this.openMainMenu()
+        this.Wd()
     }
-  }, openBgmSetting:function() {
-    this.openDialogMenu("BGM VOLUME", "012345".split(""), this.onResultBgmSetting, gls2.core.bgmVolume)
-  }, onResultBgmSetting:function(a) {
-    6 !== a && (gls2.core.bgmVolume = a);
-    this.openSetting()
-  }, openSeSetting:function() {
-    this.openDialogMenu("SE VOLUME", "012345".split(""), this.onResultSeSetting, gls2.core.seVolume)
-  }, onResultSeSetting:function(a) {
-    6 !== a && (gls2.core.seVolume = a);
-    this.openSetting()
-  }, openDifficultySetting:function() {
-    this.openDialogMenu("DIFFICULTY", ["easy", "normal", "hard", "very hard", "hell"], this.onResultDifficultySetting, gls2.core.difficulty, ["\u521d\u5fc3\u8005\u3067\u3082\u5b89\u5fc3\u3057\u3066\u6311\u6226\u53ef\u80fd\u306a\u5165\u9580\u30b3\u30fc\u30b9", "\u666e\u901a\u306e\u96e3\u6613\u5ea6\u3002easy\u3067\u306f\u7269\u8db3\u308a\u306a\u3044\u4eba\u3078", "\u4e00\u822c\u7684\u306a\u5f3e\u5e55STG\u306e\u96e3\u6613\u5ea6", "hard\u306f\u30cc\u30eb\u3059\u304e\u308b\u3068\u3044\u3046\u4eba\u5411\u3051", 
-    "\u6b7b\u306c\u304c\u3088\u3044"])
-  }, onResultDifficultySetting:function(a) {
-    5 !== a && (gls2.core.difficulty = a);
-    this.openSetting()
+  }, hd:function() {
+    X(this, "BGM VOLUME", "012345".split(""), this.ed, s.nc)
+  }, ed:function(a) {
+    6 !== a && (s.nc = a);
+    this.ob()
+  }, jd:function() {
+    X(this, "SE VOLUME", "012345".split(""), this.fd, s.Nb)
+  }, fd:function(a) {
+    6 !== a && (s.Nb = a);
+    this.ob()
+  }, cf:function() {
+    X(this, "DIFFICULTY", ["easy", "normal", "hard", "very hard", "hell"], this.We, s.Fd, ["\u521d\u5fc3\u8005\u3067\u3082\u5b89\u5fc3\u3057\u3066\u6311\u6226\u53ef\u80fd\u306a\u5165\u9580\u30b3\u30fc\u30b9", "\u666e\u901a\u306e\u96e3\u6613\u5ea6\u3002easy\u3067\u306f\u7269\u8db3\u308a\u306a\u3044\u4eba\u3078", "\u4e00\u822c\u7684\u306a\u5f3e\u5e55STG\u306e\u96e3\u6613\u5ea6", "hard\u306f\u30cc\u30eb\u3059\u304e\u308b\u3068\u3044\u3046\u4eba\u5411\u3051", "\u6b7b\u306c\u304c\u3088\u3044"])
+  }, We:function(a) {
+    5 !== a && (s.Fd = a);
+    this.ob()
   }, toString:function() {
     return"gls2.TitleScene"
   }})
 })();
-gls2.ShipSelectScene = tm.createClass({superClass:gls2.Scene, init:function() {
+tm.createClass({superClass:W, init:function() {
   this.superInit();
-  tm.app.Label("This is ShipSelectScene").setAlign("center").setBaseline("middle").setPosition(SC_W / 2, SC_H / 2).addChildTo(this)
+  tm.app.Label("This is ShipSelectScene").setAlign("center").setBaseline("middle").setPosition(240, 320).addChildTo(this)
+}});
+A = tm.createClass({superClass:W, ba:l, score:0, Ba:0, Da:0, Fc:0, xa:0, Eb:l, Ka:l, sb:3, Ta:0, Rb:0, zd:3, se:6, Dc:m, Ga:0, Bc:0, La:m, Cc:0, Nd:l, Xd:l, Hd:l, Zc:l, $c:l, Bd:l, Qe:l, Rd:l, Zb:l, kd:0, init:function() {
+  A.qd !== l && f(Error("class 'gls2.GameScene' is singleton!!"));
+  this.superInit();
+  A.qd = this;
+  this.Zb = ga(this);
+  this.ie();
+  this.Nd = tm.app.Object2D().addChildTo(this);
+  this.Hd = tm.app.Object2D().addChildTo(this);
+  this.Zc = tm.app.Object2D().addChildTo(this);
+  this.Xd = tm.app.Object2D().addChildTo(this);
+  this.$c = tm.app.Object2D().addChildTo(this);
+  this.Bd = tm.app.Object2D().addChildTo(this);
+  this.Qe = tm.app.Object2D().addChildTo(this);
+  tm.Ca.tb.Vb.wd = this;
+  this.Rd = tm.app.Object2D().addChildTo(this);
+  this.Rd.update = function(a) {
+    this.Ze(a)
+  }.bind(this);
+  this.addEventListener("exit", function() {
+    this.Zb.clear()
+  })
+}, Ma:function(a) {
+  this.Zb.Ub.qe(a)
+}, ie:function() {
+  var a = this.Ka = tm.app.CanvasElement().addChildTo(this);
+  a.ab = a.cb = 0;
+  a.bb = a.eb = 0;
+  a.direction = 0.5 * Math.PI;
+  a.speed = 1;
+  a.ka = 0;
+  a.la = 0;
+  var c = 16 * Math.sqrt(3), b = 12.8 * Math.sqrt(3);
+  a.update = function() {
+    this.ka = Math.cos(this.direction) * this.speed;
+    this.la = Math.sin(this.direction) * this.speed;
+    for(this.ab += this.ka;96 < this.ab;) {
+      this.ab -= 96
+    }
+    for(;-96 > this.ab;) {
+      this.ab += 96
+    }
+    for(this.cb += this.la;2 * c < this.cb;) {
+      this.cb -= 2 * c
+    }
+    for(;this.cb < 2 * -c;) {
+      this.cb += 2 * c
+    }
+    for(this.bb += 0.8 * this.ka;25.6 * 3 < this.bb;) {
+      this.bb -= 25.6 * 3
+    }
+    for(;this.bb < -25.6 * 3;) {
+      this.bb += 25.6 * 3
+    }
+    for(this.eb += 0.8 * this.la;2 * b < this.eb;) {
+      this.eb -= 2 * b
+    }
+    for(;this.eb < 2 * -b;) {
+      this.eb += 2 * b
+    }
+  };
+  a.blendMode = "lighter";
+  a.draw = function(a) {
+    a.lineWidth = 0.2;
+    a.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, 640).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(255,255,255,0.5)"}]).toStyle();
+    a.beginPath();
+    for(var g = 0, h = this.ab - 96;576 > h;h += 48) {
+      for(var g = 0 === g ? c : 0, j = this.cb - 2 * c + g;j < 640 + 2 * c;j += 2 * c) {
+        a.line(h, j, h + 32, j), a.line(h, j, h - 16, j + c), a.line(h, j, h - 16, j - c)
+      }
+    }
+    a.stroke();
+    a.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, 640).addColorStopList([{offset:0, color:"rgba(128,128,128,1.0)"}, {offset:1, color:"rgba(128,128,128,0.5)"}]).toStyle();
+    a.beginPath();
+    g = 0;
+    for(h = this.bb - 25.6 * 3;h < 480 + 25.6 * 3;h += 25.6 * 1.5) {
+      g = 0 === g ? b : 0;
+      for(j = this.eb - 2 * b + g;j < 640 + 2 * b;j += 2 * b) {
+        a.line(h, j, h + 25.6, j), a.line(h, j, h - 12.8, j + b), a.line(h, j, h - 12.8, j - b)
+      }
+    }
+    a.stroke()
+  }
+}, addChild:function(a) {
+  a instanceof B ? this.Xd.addChild(a) : a instanceof I ? a.Jb ? this.Nd.addChild(a) : this.Hd.addChild(a) : a instanceof E || a instanceof z || a instanceof C || a instanceof F || a.Wb ? this.Zc.addChild(a) : a instanceof G ? this.$c.addChild(a) : a instanceof L ? this.Bd.addChild(a) : this.superClass.prototype.addChild.apply(this, arguments)
+}, update:function(a) {
+  this.Eb.update(a.frame);
+  this.La && (this.Cc -= 1, 0 >= this.Cc && this.sc());
+  0 === a.frame % 5 && this.Zb.update();
+  this.xa -= 0.02;
+  0 >= this.xa && (0 < this.Da && (this.Ba = this.Ba * (this.Da - 6) / this.Da), this.Da -= 6, 0 > this.Da && (this.Da = this.Ba = 0), this.xa = 0);
+  a.keyboard.getKeyDown("escape") ? this.app.popScene() : a.keyboard.getKeyDown("space") ? this.Gc(0) : a.keyboard.getKeyDown("p") && (a.canvas.saveAsImage(), this.Gc(0))
+}, Ze:function() {
+  this.ba.$a === m && u.erase();
+  var a;
+  a = [].concat(I.wa);
+  for(var c = [].concat(z.wa), b = c.length;c[--b] !== i;) {
+    for(var d = a.length;a[--d] !== i;) {
+      var g = a[d], h = c[b];
+      if(V(g, h) && (h.wc(1), h.remove(), g.xb(h.jb))) {
+        this.La === m && this.Qb(0.01);
+        this.mc(1);
+        this.Ba += g.score;
+        this.Tc(this.Ba);
+        a.erase(g);
+        break
+      }
+    }
+  }
+  h = this.ba.nb;
+  if(this.ba.nb.visible) {
+    a = [].concat(I.wa);
+    a.sort(function(a, b) {
+      return a.y - b.y
+    });
+    for(d = a.length;a[--d] !== i;) {
+      if(g = a[d], V(g, h)) {
+        h.ef(g.y + g.boundingHeightBottom);
+        g.xb(h.jb) ? (this.Qb(0.01), this.mc(1), this.Ba += g.score, this.Tc(this.Ba)) : (this.xa = Math.max(this.xa, 0.1), this.Qb(0.001));
+        h.wc(2);
+        break
+      }
+    }
+    c = {x:this.ba.x, y:this.ba.y, boundingWidthLeft:50, boundingWidthRight:50, boundingHeightTop:50, boundingHeightBottom:40};
+    a = [].concat(I.wa);
+    for(d = a.length;a[--d] !== i;) {
+      g = a[d], V(g, c) && (g.xb(h.jb) ? (this.Qb(0.02), this.mc(1), this.Ba += g.score, this.Tc(this.Ba)) : (this.xa = Math.max(this.xa, 0.1), this.Qb(0.002)), h.Oe(2, 0.5 * (this.ba.x + g.x), 0.5 * (this.ba.y + g.y)))
+    }
+  }
+  if(this.Dc) {
+    u.erase();
+    a = [].concat(I.wa);
+    for(d = a.length;a[--d] !== i;) {
+      g = a[d], g.Kb() && g.xb(F.jb)
+    }
+    this.xa = this.Da = 0
+  }
+  if(this.La) {
+    d = [].concat(z.wa);
+    for(g = d.length;d[--g] !== i;) {
+      h = d[g];
+      c = [].concat(L.wa);
+      for(a = c.length;c[--a] !== i;) {
+        b = c[a], V(h, b) && (b.Fa -= 6 - this.Bc, 0 > b.Fa && (b.Hb(), this.mc(1)))
+      }
+    }
+  }
+  if(this.ba.Mb === m) {
+    for(d = L.wa.length;L.wa[--d] !== i;) {
+      if(a = L.wa[d], V(a, this.ba)) {
+        this.ba.xb();
+        0 < this.Ta ? H(this.ba, this).setPosition(this.ba.x, this.ba.y).addChildTo(this) : this.Vd();
+        break
+      }
+    }
+    for(d = I.wa.length;I.wa[--d] !== i;) {
+      if(g = I.wa[d], !g.Jb && V(g, this.ba)) {
+        this.ba.xb();
+        0 < this.Ta ? H(this.ba, this).setPosition(this.ba.x, this.ba.y).addChildTo(this) : this.Vd();
+        break
+      }
+    }
+  }
+}, Gc:function(a) {
+  X(this, "PAUSE", ["resume", "setting", "exit game"], this.Ye, a, ["\u30b2\u30fc\u30e0\u3092\u518d\u958b\u3057\u307e\u3059", "\u8a2d\u5b9a\u3092\u5909\u66f4\u3057\u307e\u3059", "\u30b2\u30fc\u30e0\u3092\u4e2d\u65ad\u3057\u3001\u30bf\u30a4\u30c8\u30eb\u753b\u9762\u306b\u623b\u308a\u307e\u3059"], m)
+}, Ye:function(a) {
+  switch(a) {
+    case 1:
+      this.ob();
+      break;
+    case 2:
+      this.af()
+  }
+}, ob:function() {
+  X(this, "SETTING", ["bgm volume", "sound volume"], this.gd, this.Ec, ["BGM\u30dc\u30ea\u30e5\u30fc\u30e0\u3092\u8a2d\u5b9a\u3057\u307e\u3059", "\u52b9\u679c\u97f3\u30dc\u30ea\u30e5\u30fc\u30e0\u3092\u8a2d\u5b9a\u3057\u307e\u3059"])
+}, gd:function(a) {
+  3 !== a && (this.Ec = a);
+  switch(a) {
+    case 0:
+      this.hd();
+      break;
+    case 1:
+      this.jd();
+      break;
+    default:
+      this.Gc()
+  }
+}, af:function() {
+  X(this, "REARY?", ["yes", "no"], this.Ue, 1, ["\u30b2\u30fc\u30e0\u3092\u4e2d\u65ad\u3057\u3001\u30bf\u30a4\u30c8\u30eb\u753b\u9762\u306b\u623b\u308a\u307e\u3059", "\u524d\u306e\u753b\u9762\u3078\u623b\u308a\u307e\u3059"], m)
+}, Ue:function(a) {
+  0 === a ? this.app.popScene() : this.Gc(1)
+}, hd:function() {
+  X(this, "BGM VOLUME", "012345".split(""), this.ed, s.nc)
+}, ed:function(a) {
+  6 !== a && (s.nc = a);
+  this.ob(1)
+}, jd:function() {
+  X(this, "SE VOLUME", "012345".split(""), this.fd, s.Nb)
+}, fd:function(a) {
+  6 !== a && (s.Nb = a);
+  this.ob(1)
+}, bf:function() {
+  X(this, "CONTINUE?", ["yes", "no"], this.Ve, 0, ["\u30b7\u30b9\u30c6\u30e0\u3092\u518d\u8d77\u52d5\u3057\u3066\u51fa\u6483\u3057\u307e\u3059", "\u4f5c\u6226\u5931\u6557\u3002\u5e30\u9084\u3057\u307e\u3059"], m)
+}, Ve:function(a) {
+  switch(a) {
+    case 0:
+      this.Le();
+      break;
+    case 1:
+      this.Me()
+  }
+}, draw:function(a) {
+  this.Eb !== l && (a.clearColor(this.Eb.background, 0, 0), this.ye(a), this.ze(a))
+}, ye:function(a) {
+  if(0 < this.xa) {
+    a.fillStyle = "rgba(255," + ~~(255 * this.xa) + "," + ~~Math.min(255, 512 * this.xa) + ",0.5)";
+    var c = 500 * this.xa;
+    a.fillRect(465, 635 - c, 10, c)
+  }
+}, ze:function(a) {
+  1 === this.Ga ? 0 === this.app.frame % 2 && (a.fillStyle = "rgba(255,255,255,0.6)", a.fillRect(5, 628, 200, 9)) : (a.fillStyle = "rgba(255,255,0,0.3)", a.fillRect(5, 628, 200, 9), 0 < this.Ga && (a.fillStyle = "rgba(255,255,100,1.0)", a.fillRect(5, 628, 200 * this.Ga, 9)))
+}, Ne:function(a) {
+  this.Zb.Ub.te().clear();
+  this.score = 0;
+  this.sb = 3;
+  this.Ta = this.Rb = this.zd;
+  this.Ga = 0;
+  this.ba !== l && this.ba.remove();
+  I.Sb();
+  z.Sb();
+  u.Sb();
+  for(var c = [].concat(this.Zc.children), b = 0;b < c.length;b++) {
+    c[b].remove()
+  }
+  c = [].concat(this.$c.children);
+  for(b = 0;b < c.length;b++) {
+    c[b].remove()
+  }
+  this.ba = B(this, a);
+  this.jf(0)
+}, jf:function(a) {
+  this.Ma("3.");
+  this.Ma("2.");
+  this.Ma("1.");
+  this.Bc = this.Fc = this.xa = this.Da = this.Ba = 0;
+  this.Eb = U.create(this, a);
+  this.tweener.clear().wait(1E3).call(function() {
+    this.dd()
+  }.bind(this))
+}, dd:function() {
+  this.Ma("Let's go!");
+  this.ba.setPosition(240, 740).setFrameIndex(3).addChildTo(this);
+  this.ba.$a = m;
+  this.ba.Mb = k;
+  this.ba.tweener.clear().moveBy(0, -180, 1E3, "easeOutBack").call(function() {
+    this.$a = k
+  }.bind(this.ba)).wait(2E3).call(function() {
+    this.Mb = m
+  }.bind(this.ba));
+  this.Ta = this.Rb
+}, Vd:function() {
+  w.Jd(this.ba.x, this.ba.y, this);
+  this.Ma("I was shot down.");
+  this.ba.$a = m;
+  this.ba.remove();
+  this.sb -= 1;
+  0 < this.sb ? this.tweener.clear().wait(1E3).call(function() {
+    this.Rb = Math.min(this.Rb + 1, this.se);
+    this.dd()
+  }.bind(this)) : this.tweener.clear().wait(2E3).call(function() {
+    this.bf()
+  }.bind(this))
+}, Le:function() {
+  this.Ma("System rebooted.");
+  this.sb = 3;
+  this.Ta = this.Rb = this.zd;
+  this.dd()
+}, vf:n(), Me:function() {
+  this.app.replaceScene(ja())
+}, zf:n(), Tc:function(a) {
+  var c = this.score;
+  this.score += a;
+  for(a = 0;a < s.Kd.length;a++) {
+    var b = s.Kd[a];
+    c < b && b <= this.score && this.Fe()
+  }
+  s.xc = Math.max(s.xc, this.score)
+}, mc:function(a) {
+  this.La && (a *= 7);
+  this.Da += a;
+  this.Fc = Math.max(this.Fc, this.Da);
+  this.xa = 1
+}, Qb:function(a) {
+  !(0 < a && 1 === this.Ga) && !(0 > a && 0 === this.Ga) && (this.La && (a *= 2), this.Ga = Math.clamp(this.Ga + a, 0, 1), 1 === this.Ga ? this.Ma("hyper system, ready.") : 0 === this.Ga && this.sc())
+}, gf:function() {
+  this.La = k;
+  this.Ga = 0;
+  this.Bc = Math.min(this.Bc + 1, 5);
+  this.Cc = 600
+}, sc:function() {
+  this.La = m
+}, Fe:function() {
+  this.Ma("Extended.");
+  this.sb += 1
+}});
+A.qd = l;
+tm.createClass({superClass:W, init:function() {
+  this.superInit()
+}, update:function(a) {
+  this.superClass.prototype.update.apply(this, arguments)
+}});
+var ja = tm.createClass({superClass:W, init:function() {
+  this.superInit();
+  var a = tm.app.Label("GAME OVER");
+  a.fillStyle = "red";
+  a.setPosition(240, 320).addChildTo(this);
+  this.interactive = k;
+  this.addEventListener("enter", function() {
+    this.tweener.clear().wait(5E3).call(function() {
+      this.app.popScene()
+    }.bind(this))
+  })
+}, update:function(a) {
+  this.superClass.prototype.update.apply(this, arguments);
+  (a.keyboard.getKeyDown("z") || a.pointing.getPointingStart()) && a.popScene()
+}, draw:function(a) {
+  a.clear()
+}});
+tm.createClass({superClass:W, init:function() {
+  this.superInit()
+}, update:function(a) {
+  this.superClass.prototype.update.apply(this, arguments)
+}});
+tm.createClass({superClass:W, init:function() {
+  this.superInit()
+}, update:function(a) {
+  this.superClass.prototype.update.apply(this, arguments)
 }});
 (function() {
-  var b = null;
-  gls2.GameScene = tm.createClass({superClass:gls2.Scene, player:null, score:0, baseScore:0, comboCount:0, comboGauge:0, stage:null, ground:null, zanki:3, bomb:0, bombMax:3, groundLayer:null, playerLayer:null, enemyLayer:null, effectLayer0:null, effectLayer1:null, bulletLayer:null, labelLayer:null, lastElement:null, consoleWindow:null, scoreLabel:null, rank:0, init:function() {
-    if(null !== b) {
-      throw Error("class 'gls2.GameScene' is singleton!!");
-    }
-    this.superInit();
-    b = this;
-    this.scoreLabel = gls2.ScoreLabel(this);
-    this._createGround();
-    this.groundLayer = tm.app.Object2D().addChildTo(this);
-    this.enemyLayer = tm.app.Object2D().addChildTo(this);
-    this.effectLayer0 = tm.app.Object2D().addChildTo(this);
-    this.playerLayer = tm.app.Object2D().addChildTo(this);
-    this.effectLayer1 = tm.app.Object2D().addChildTo(this);
-    this.bulletLayer = tm.app.Object2D().addChildTo(this);
-    this.labelLayer = tm.app.Object2D().addChildTo(this);
-    this.consoleWindow = gls2.ConsoleWindow(200).setPosition(SC_W - 100 - 5, 37).addChildTo(this.labelLayer);
-    tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
-    this.lastElement = tm.app.Object2D().addChildTo(this);
-    this.lastElement.update = function(a) {
-      this.onexitframe(a)
-    }.bind(this)
-  }, println:function(a) {
-    this.consoleWindow.addLine(a)
-  }, _createGround:function() {
-    var a = this.ground = tm.app.CanvasElement().addChildTo(this);
-    a.gx = a.gy = 0;
-    a.direction = 0.5 * Math.PI;
-    a.speed = 1;
-    a.dx = 0;
-    a.dy = 0;
-    var b = 8 * Math.sqrt(3);
-    a.update = function() {
-      this.dx = Math.cos(this.direction) * this.speed;
-      this.dy = Math.sin(this.direction) * this.speed;
-      for(this.gx += this.dx;48 < this.gx;) {
-        this.gx -= 48
-      }
-      for(;-48 > this.gx;) {
-        this.gx += 48
-      }
-      for(this.gy += this.dy;2 * b < this.gy;) {
-        this.gy -= 2 * b
-      }
-      for(;this.gy < 2 * -b;) {
-        this.gy += 2 * b
-      }
-    };
-    a.blendMode = "lighter";
-    a.draw = function(a) {
-      a.lineWidth = 0.2;
-      a.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(255,255,255,0.5)"}]).toStyle();
-      a.beginPath();
-      for(var f = 0, g = this.gx - 48;g < SC_W + 48;g += 24) {
-        for(var f = 0 === f ? b : 0, h = this.gy - 2 * b + f;h < SC_H + 2 * b;h += 2 * b) {
-          a.line(g, h, g + 16, h), a.line(g, h, g - 8, h + b), a.line(g, h, g - 8, h - b)
-        }
-      }
-      a.stroke()
-    }
-  }, addChild:function(a) {
-    a instanceof gls2.Player ? this.playerLayer.addChild(a) : a instanceof gls2.Enemy ? a.isGround ? this.groundLayer.addChild(a) : this.enemyLayer.addChild(a) : a instanceof gls2.BackfireParticle || a instanceof gls2.ShotBullet || a instanceof gls2.Laser || a.isEffect ? this.effectLayer0.addChild(a) : a instanceof gls2.Particle ? this.effectLayer1.addChild(a) : a instanceof gls2.Bullet ? this.bulletLayer.addChild(a) : this.superClass.prototype.addChild.apply(this, arguments)
-  }, update:function(a) {
-    this.stage.update(a.frame);
-    0 === a.frame % 5 && this.scoreLabel.update();
-    this.comboGauge -= 0.01;
-    0 >= this.comboGauge && (0 < this.comboCount && (this.baseScore = this.baseScore * (this.comboCount - 6) / this.comboCount), this.comboCount -= 6, 0 > this.comboCount && (this.comboCount = this.baseScore = 0), this.comboGauge = 0);
-    a.keyboard.getKeyDown("escape") ? this.app.popScene() : a.keyboard.getKeyDown("space") ? this.openPauseMenu(0) : a.keyboard.getKeyDown("p") && (a.canvas.saveAsImage(), this.openPauseMenu(0))
-  }, onexitframe:function(a) {
-    a = [].concat(gls2.Enemy.activeList);
-    for(var b = [].concat(gls2.ShotBullet.activeList), d = 0, f = b.length;d < f;d++) {
-      for(var g = 0, h = a.length;g < h;g++) {
-        var i = a[g], j = b[d];
-        if(gls2.Collision.isHit(i, j) && (j.remove(), j.genParticle(1), i.damage(j.attackPower))) {
-          this.comboCount += 1;
-          this.comboGauge = 1;
-          this.baseScore += i.score;
-          this.addScore(this.baseScore);
-          a.erase(i);
-          break
-        }
-      }
-    }
-    b = this.player.laser;
-    if(this.player.laser.visible) {
-      a = [].concat(gls2.Enemy.activeList);
-      a.sort(function(a, b) {
-        return b.y - a.y
-      });
-      g = 0;
-      for(d = a.length;g < d;g++) {
-        if(i = a[g], gls2.Collision.isHit(i, b)) {
-          b.setHitY(i.y + i.boundingHeightBottom);
-          i.damage(b.attackPower) ? (this.comboCount += 1, this.comboGauge = 1, this.baseScore += i.score, this.addScore(this.baseScore)) : this.comboGauge = Math.max(this.comboGauge, 0.1);
-          b.genParticle(2);
-          break
-        }
-      }
-      f = {x:this.player.x, y:this.player.y, boundingWidthLeft:50, boundingWidthRight:50, boundingHeightTop:50, boundingHeightBottom:40};
-      a = [].concat(gls2.Enemy.activeList);
-      g = 0;
-      for(d = a.length;g < d;g++) {
-        i = a[g], gls2.Collision.isHit(i, f) && (i.damage(b.attackPower) ? (this.comboCount += 1, this.comboGauge = 1, this.baseScore += i.score, this.addScore(this.baseScore)) : (this.comboCount += 0.1, this.comboGauge = Math.max(this.comboGauge, 0.1)), b.genAuraParticle(2, 0.5 * (this.player.x + i.x), 0.5 * (this.player.y + i.y)))
-      }
-    }
-    if(0 < gls2.Bomb.activeList.length) {
-      a = [].concat(gls2.Enemy.activeList);
-      g = 0;
-      for(h = a.length;g < h;g++) {
-        i = a[g], i.isInScreen() && i.damage(gls2.Bomb.attackPower)
-      }
-      this.comboGauge = this.comboCount = 0
-    }
-  }, openPauseMenu:function(a) {
-    this.openDialogMenu("PAUSE", ["resume", "setting", "exit game"], this.onResultPause, a, ["\u30b2\u30fc\u30e0\u3092\u518d\u958b\u3057\u307e\u3059", "\u8a2d\u5b9a\u3092\u5909\u66f4\u3057\u307e\u3059", "\u30b2\u30fc\u30e0\u3092\u4e2d\u65ad\u3057\u3001\u30bf\u30a4\u30c8\u30eb\u753b\u9762\u306b\u623b\u308a\u307e\u3059"], !1)
-  }, onResultPause:function(a) {
-    switch(a) {
-      case 1:
-        this.openSetting();
-        break;
-      case 2:
-        this.openConfirmExitGame()
-    }
-  }, openSetting:function() {
-    this.openDialogMenu("SETTING", ["bgm volume", "sound volume"], this.onResultSetting, this.lastSetting, ["BGM\u30dc\u30ea\u30e5\u30fc\u30e0\u3092\u8a2d\u5b9a\u3057\u307e\u3059", "\u52b9\u679c\u97f3\u30dc\u30ea\u30e5\u30fc\u30e0\u3092\u8a2d\u5b9a\u3057\u307e\u3059"])
-  }, onResultSetting:function(a) {
-    3 !== a && (this.lastSetting = a);
-    switch(a) {
-      case 0:
-        this.openBgmSetting();
-        break;
-      case 1:
-        this.openSeSetting();
-        break;
-      default:
-        this.openPauseMenu()
-    }
-  }, openConfirmExitGame:function() {
-    this.openDialogMenu("REARY?", ["yes", "no"], this.onResultConfirmExitGame, 1, ["\u30b2\u30fc\u30e0\u3092\u4e2d\u65ad\u3057\u3001\u30bf\u30a4\u30c8\u30eb\u753b\u9762\u306b\u623b\u308a\u307e\u3059", "\u524d\u306e\u753b\u9762\u3078\u623b\u308a\u307e\u3059"], !1)
-  }, onResultConfirmExitGame:function(a) {
-    0 === a ? this.app.popScene() : this.openPauseMenu(1)
-  }, openBgmSetting:function() {
-    this.openDialogMenu("BGM VOLUME", "012345".split(""), this.onResultBgmSetting, gls2.core.bgmVolume)
-  }, onResultBgmSetting:function(a) {
-    6 !== a && (gls2.core.bgmVolume = a);
-    this.openSetting(1)
-  }, openSeSetting:function() {
-    this.openDialogMenu("SE VOLUME", "012345".split(""), this.onResultSeSetting, gls2.core.seVolume)
-  }, onResultSeSetting:function(a) {
-    6 !== a && (gls2.core.seVolume = a);
-    this.openSetting(1)
-  }, draw:function(a) {
-    null !== this.stage && (a.clearColor(this.stage.background, 0, 0), this.drawComboGauge(a))
-  }, drawComboGauge:function(a) {
-    if(0 < this.comboGauge) {
-      a.fillStyle = "rgba(255," + ~~(255 * this.comboGauge) + "," + ~~Math.min(255, 512 * this.comboGauge) + ",0.5)";
-      var b = 500 * this.comboGauge;
-      a.fillRect(SC_W - 15, SC_H - 5 - b, 10, b)
-    }
-  }, gameStart:function(a) {
-    this.consoleWindow.clearBuf().clear();
-    null !== this.player && this.player.remove();
-    gls2.Enemy.clearAll();
-    gls2.ShotBullet.clearAll();
-    gls2.Danmaku.clearAll();
-    this.player = gls2.Player(this, a);
-    this.startStage(0)
-  }, startStage:function(a) {
-    this.stage = gls2.Stage.create(this, a);
-    this.launch()
-  }, launch:function() {
-    this.player.setPosition(0.5 * SC_W, SC_H + 32).setFrameIndex(3).addChildTo(this);
-    this.player.controllable = !1;
-    this.player.muteki = !0;
-    this.player.tweener.clear().wait(30).moveBy(0, -120).wait(120).call(function() {
-      this.controllable = !0
-    }.bind(this.player)).wait(120).call(function() {
-      this.muteki = !1
-    }.bind(this.player));
-    this.bomb = this.bombMax
-  }, miss:function() {
-    this.player.remove();
-    this.zanki -= 1;
-    0 < this.zanki && this.launch()
-  }, gameContinue:function() {
-    this.launch()
-  }, clearStage:function() {
-  }, gameOver:function() {
-  }, gameClear:function() {
-  }, addScore:function(a) {
-    var b = this.score;
-    this.score += a;
-    for(a = 0;a < gls2.core.extendScore.length;a++) {
-      var d = gls2.core.extendScore[a];
-      b < d && d <= this.score && this.extendZanki()
-    }
-    gls2.core.highScore = Math.max(gls2.core.highScore, this.score)
-  }, extendZanki:function() {
-    this.zanki += 1
-  }})
-})();
-gls2.ResultScene = tm.createClass({superClass:gls2.Scene, init:function() {
-  this.superInit()
-}, update:function(b) {
-  this.superClass.prototype.update.apply(this, arguments)
-}});
-gls2.GameOverScene = tm.createClass({superClass:gls2.Scene, init:function() {
-  this.superInit()
-}, update:function(b) {
-  this.superClass.prototype.update.apply(this, arguments)
-}});
-gls2.ContinueConfirmScene = tm.createClass({superClass:gls2.Scene, init:function() {
-  this.superInit()
-}, update:function(b) {
-  this.superClass.prototype.update.apply(this, arguments)
-}});
-gls2.EndingScene = tm.createClass({superClass:gls2.Scene, init:function() {
-  this.superInit()
-}, update:function(b) {
-  this.superClass.prototype.update.apply(this, arguments)
-}});
-(function() {
-  gls2.Enemy = tm.createClass({superClass:tm.app.CanvasElement, age:0, direction:0, speed:0, player:null, gameScene:null, stage:null, hard:null, soft:null, hp:0, enableFire:!0, isGround:!1, score:0, entered:!1, velocity:null, init:function() {
+  I = tm.createClass({superClass:tm.app.CanvasElement, da:0, direction:0, speed:0, ba:l, $:l, Eb:l, aa:l, ca:l, Fa:0, rc:k, Jb:m, score:0, mb:m, Ic:l, init:function() {
     this.superInit();
     this.addEventListener("completeattack", function() {
-      this.onCompleteAttack()
+      this.zb()
     });
     this.addEventListener("added", function() {
-      this.age = 0;
-      this.entered = !1;
-      this.enableFire = !0;
-      b.push(this)
+      this.da = 0;
+      this.mb = m;
+      this.rc = k;
+      a.push(this)
     });
     this.addEventListener("removed", function() {
-      var c = [].concat(this._listeners.enterframe);
-      if(c) {
-        for(var f = 0, g = c.length;f < g;f++) {
-          c[f] && c[f].isDanmaku && this.removeEventListener("enterframe", c[f])
+      var b = [].concat(this._listeners.enterframe);
+      if(b) {
+        for(var g = 0, h = b.length;g < h;g++) {
+          b[g] && b[g].bd && this.removeEventListener("enterframe", b[g])
         }
       }
       this.tweener.clear();
       this.scaleX = this.scaleY = 1;
-      this.isGround = !1;
-      a.push(this);
-      c = b.indexOf(this);
-      -1 !== c && b.splice(c, 1)
+      this.Jb = m;
+      c.push(this);
+      b = a.indexOf(this);
+      -1 !== b && a.splice(b, 1)
     })
-  }, setup:function(a, b, c, h) {
-    this.gameScene = a;
-    this.player = a.player;
-    this.stage = b;
-    this.soft = c;
-    this.hard = h;
+  }, na:function(a, b, c, j) {
+    this.$ = a;
+    this.ba = a.ba;
+    this.Eb = b;
+    this.ca = c;
+    this.aa = j;
     this.score = 100;
-    this.soft.setup.apply(this);
-    this.hard.setup.apply(this);
-    this.altitude = this.isGround ? 1 : 10;
-    this.velocity = {x:0, y:0};
+    this.ca.na.apply(this);
+    this.aa.na.apply(this);
+    this.altitude = this.Jb ? 1 : 10;
+    this.Ic = {x:0, y:0};
     return this
-  }, onLaunch:function() {
-    this.soft.onLaunch.apply(this);
-    this.hard.onLaunch.apply(this)
-  }, onCompleteAttack:function() {
-    this.soft.onCompleteAttack.apply(this);
-    this.hard.onCompleteAttack.apply(this)
+  }, Ab:function() {
+    this.ca.Ab.apply(this);
+    this.aa.Ab.apply(this)
+  }, zb:function() {
+    this.ca.zb.apply(this);
+    this.aa.zb.apply(this)
   }, update:function() {
-    0 <= this.x - this.boundingWidthLeft && (this.x + this.boundingWidthRight < SC_W && 0 <= this.y - this.boundingHeightTop && this.y + this.boundingHeightBottom < SC_H) && (this.entered = !0);
+    0 <= this.x - this.boundingWidthLeft && (480 > this.x + this.boundingWidthRight && 0 <= this.y - this.boundingHeightTop && 640 > this.y + this.boundingHeightBottom) && (this.mb = k);
     var a = this.x, b = this.y;
-    this.soft.update.apply(this);
-    this.hard.update.apply(this);
-    this.isGround && (this.x += this.gameScene.ground.dx, this.y += this.gameScene.ground.dy);
-    this.age += 1;
-    this.velocity.x = this.x - a;
-    this.velocity.y = this.y - b
-  }, damage:function(a) {
-    if(!this.entered) {
-      return!1
+    this.ca.update.apply(this);
+    this.aa.update.apply(this);
+    this.Jb && (this.x += this.$.Ka.ka, this.y += this.$.Ka.la);
+    this.da += 1;
+    this.Ic.x = this.x - a;
+    this.Ic.y = this.y - b
+  }, xb:function(a) {
+    if(!this.mb) {
+      return m
     }
-    this.hp -= a;
-    return 0 >= this.hp ? (this.hard.destroy.apply(this), a = gls2.math.rand(0, 2), 0 === a ? this.gameScene.println("enemy destroy.") : 1 === a ? this.gameScene.println(this.name + " destroy.") : 2 === a && this.gameScene.println("ETR reaction gone."), this.remove(), this.stage.onDestroyEnemy(this), !0) : !1
+    this.Fa -= a;
+    return 0 >= this.Fa ? (this.aa.Hb.apply(this), a = Y(0, 2), 0 === a ? this.$.Ma("enemy destroy.") : 1 === a ? this.$.Ma(this.name + " destroy.") : 2 === a && this.$.Ma("ETR reaction gone."), this.Eb.Te(this), this.remove(), k) : m
   }, draw:function(a) {
-    this.hard.draw.call(this, a)
-  }, isInScreen:function() {
-    return 0 <= this.x + this.width / 2 && this.x - this.width / 2 < SC_W && 0 <= this.y + this.height / 2 && this.y - this.height / 2 < SC_H
-  }, onfire:function() {
-    return this.enableFire
+    this.aa.draw.call(this, a)
+  }, Kb:function() {
+    return 0 <= this.x + this.width / 2 && 480 > this.x - this.width / 2 && 0 <= this.y + this.height / 2 && 640 > this.y - this.height / 2
+  }, $e:function() {
+    return this.rc
   }});
-  gls2.Enemy.clearAll = function() {
-    for(var a = [].concat(b), c = 0, g = a.length;c < g;c++) {
-      a[c].remove()
+  I.Sb = function() {
+    for(var b = [].concat(a), c = 0, h = b.length;c < h;c++) {
+      b[c].remove()
     }
   };
-  for(var b = gls2.Enemy.activeList = [], a = gls2.Enemy.pool = [], c = 0;256 > c;c++) {
-    a.push(gls2.Enemy())
+  for(var a = I.wa = [], c = I.df = [], b = 0;256 > b;b++) {
+    c.push(I())
   }
 })();
 (function() {
-  gls2.EnemyHard = tm.createClass({setup:function() {
+  M = tm.createClass({na:function() {
     this.name = "abstract enemy";
-    this.hp = 9999
-  }, onLaunch:function() {
-  }, onCompleteAttack:function() {
-  }, update:function() {
-  }, draw:function(a) {
-  }, destroy:function() {
-    gls2.Effect.explodeS(this.x, this.y, this.gameScene, this.velocity)
+    this.Fa = 9999
+  }, Ab:n(), zb:n(), update:n(), draw:n(), Hb:function() {
+    w.Jd(this.x, this.y, this.$, this.Ic)
   }});
-  gls2.EnemyHard.Heri1 = tm.createClass({superClass:gls2.EnemyHard, init:function() {
+  M.oa = tm.createClass({superClass:M, init:function() {
     this.superInit()
-  }, setup:function() {
+  }, na:function() {
     this.name = "kujo";
-    this.hp = 2;
-    this._sprite = b("tex1", 64, 64);
-    this.boundingRadius = 24
+    this.Fa = 2;
+    this.ja = a("tex1", 64, 64);
+    this.boundingRadius = 24;
+    this.score = 100
   }, update:function() {
-    this.scaleX = this.x < this.player.x ? -1 : 1
+    this.scaleX = this.x < this.ba.x ? -1 : 1
   }, draw:function(a) {
-    2 > this.age % 4 ? this._sprite.setFrameIndex(7) : this._sprite.setFrameIndex(8);
-    this._sprite.draw(a)
+    2 > this.da % 4 ? this.ja.setFrameIndex(7) : this.ja.setFrameIndex(8);
+    this.ja.draw(a)
   }});
-  gls2.EnemyHard.Heri1 = gls2.EnemyHard.Heri1();
-  gls2.EnemyHard.Heri2 = tm.createClass({superClass:gls2.EnemyHard, init:function() {
+  M.oa = M.oa();
+  M.fa = tm.createClass({superClass:M, init:function() {
     this.superInit()
-  }, setup:function() {
+  }, na:function() {
     this.name = "kiryu";
-    this.hp = 3;
-    this._sprite = b("tex1", 64, 64);
-    this.boundingRadius = 24
+    this.Fa = 3;
+    this.ja = a("tex1", 64, 64);
+    this.boundingRadius = 24;
+    this.score = 300
   }, update:function() {
-    this.scaleX = this.x < this.player.x ? -1 : 1
+    this.scaleX = this.x < this.ba.x ? -1 : 1
   }, draw:function(a) {
-    2 > this.age % 4 ? this._sprite.setFrameIndex(9) : this._sprite.setFrameIndex(10);
-    this._sprite.draw(a)
+    2 > this.da % 4 ? this.ja.setFrameIndex(9) : this.ja.setFrameIndex(10);
+    this.ja.draw(a)
   }});
-  gls2.EnemyHard.Heri2 = gls2.EnemyHard.Heri2();
-  gls2.EnemyHard.Tank1 = tm.createClass({superClass:gls2.EnemyHard, init:function() {
+  M.fa = M.fa();
+  M.pa = tm.createClass({superClass:M, init:function() {
     this.superInit()
-  }, setup:function() {
+  }, na:function() {
     this.name = "natsuki";
-    this.hp = 5;
-    this.isGround = !0;
-    this._sprite = b("tex1", 48, 48);
-    this.boundingRadius = 24
+    this.Fa = 5;
+    this.Jb = k;
+    this.ja = a("tex1", 48, 48);
+    this.boundingRadius = 24;
+    this.score = 300
   }, update:function() {
-    switch(this.dir) {
+    switch(~~(this.dir / (0.25 * Math.PI))) {
       case 0:
-        this._sprite.setFrameIndex(16, 64, 64);
+        this.ja.setFrameIndex(16, 64, 64);
         break;
       case 1:
-        this._sprite.setFrameIndex(24, 64, 64);
+        this.ja.setFrameIndex(24, 64, 64);
         break;
       case 2:
-        this._sprite.setFrameIndex(23, 64, 64);
+        this.ja.setFrameIndex(23, 64, 64);
         break;
       case 3:
-        this._sprite.setFrameIndex(11, 64, 64);
+        this.ja.setFrameIndex(11, 64, 64);
         break;
       case 4:
-        this._sprite.setFrameIndex(12, 64, 64);
+        this.ja.setFrameIndex(12, 64, 64);
         break;
       case 5:
-        this._sprite.setFrameIndex(13, 64, 64);
+        this.ja.setFrameIndex(13, 64, 64);
         break;
       case 6:
-        this._sprite.setFrameIndex(14, 64, 64);
+        this.ja.setFrameIndex(14, 64, 64);
         break;
       case 7:
-        this._sprite.setFrameIndex(15, 64, 64)
+        this.ja.setFrameIndex(15, 64, 64)
     }
   }, draw:function(a) {
-    this._sprite.draw(a)
-  }, destroy:function() {
-    gls2.Effect.explodeGS(this.x, this.y, this.gameScene)
+    this.ja.draw(a)
+  }, Hb:function() {
+    w.Ce(this.x, this.y, this.$)
   }});
-  gls2.EnemyHard.Tank1 = gls2.EnemyHard.Tank1();
-  gls2.EnemyHard.FighterM = tm.createClass({superClass:gls2.EnemyHard, init:function() {
+  M.pa = M.pa();
+  M.Xa = tm.createClass({superClass:M, init:function() {
     this.superInit()
-  }, setup:function() {
+  }, na:function() {
     this.name = "kurokawa";
-    this.hp = 80;
-    this._sprite = b("tex1", 256, 128);
-    this._sprite.srcRect.x = 64;
-    this._sprite.srcRect.y = 128;
-    this._sprite.srcRect.width = 256;
-    this._sprite.srcRect.height = 128;
-    this.boundingWidth = 200;
-    this.boundingHeight = 20
-  }, update:function() {
-  }, draw:function(a) {
-    this._sprite.draw(a)
+    this.Fa = 80;
+    this.ja = a("tex1", 128, 128);
+    this.ja.srcRect.x = 320;
+    this.ja.srcRect.y = 128;
+    this.ja.srcRect.width = 128;
+    this.ja.srcRect.height = 128;
+    this.boundingWidth = 100;
+    this.boundingHeight = 20;
+    this.score = 3E3
+  }, update:n(), draw:function(a) {
+    this.ja.draw(a)
+  }, Hb:function() {
+    w.De(this.x, this.y, this.$)
   }});
-  gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();
-  var b = tm.createClass({superClass:tm.app.Sprite, init:function(a, b, d) {
+  M.Xa = M.Xa();
+  var a = tm.createClass({superClass:tm.app.Sprite, init:function(a, b, d) {
     this.superInit(a, b, d)
   }, draw:function(a) {
     var b = this.srcRect;
@@ -2147,226 +2315,185 @@ gls2.EndingScene = tm.createClass({superClass:gls2.Scene, init:function() {
   }})
 })();
 (function() {
-  gls2.EnemySoft = tm.createClass({setup:function() {
-  }, onLaunch:function() {
-  }, onCompleteAttack:function() {
-  }, update:function() {
-  }});
-  var b = function(a, b) {
-    var d = gls2.Danmaku[b].createTicker();
+  function a(a, b) {
+    var d = u[b].qc();
     a.addEventListener("enterframe", d);
     a.addEventListener("completeattack", function() {
       this.removeEventListener("enterframe", d)
     })
-  };
-  gls2.EnemySoft.Heri1a = tm.createClass({superClass:gls2.EnemySoft, init:function() {
+  }
+  N = tm.createClass({na:n(), Ab:n(), zb:n(), update:n()});
+  N.Oa = tm.createClass({superClass:N, init:function() {
     this.superInit()
-  }, onLaunch:function() {
-    var a = gls2.math.randf(0.1 * SC_H, 0.3 * SC_H);
-    this.tweener.clear().wait(gls2.math.rand(10, 500)).move(this.x, a, 7 * a, "easeOutQuad").call(function() {
-      b(this, "basic0-0")
+  }, Ab:function() {
+    var c = S(64, 192);
+    this.tweener.clear().wait(Y(10, 500)).move(this.x, c, 7 * c, "easeOutQuad").call(function() {
+      a(this, "basic0-0")
     }.bind(this))
-  }, onCompleteAttack:function() {
-    this.tweener.clear().wait(1E3).moveBy(0, -SC_H, 2E3, "easeInQuad").call(function() {
+  }, zb:function() {
+    this.tweener.clear().wait(1E3).moveBy(0, -640, 2E3, "easeInQuad").call(function() {
       this.remove()
     }.bind(this))
   }});
-  gls2.EnemySoft.Heri1a = gls2.EnemySoft.Heri1a();
-  gls2.EnemySoft.Heri1b = tm.createClass({superClass:gls2.EnemySoft, init:function() {
+  N.Oa = N.Oa();
+  N.gb = tm.createClass({superClass:N, init:function() {
     this.superInit()
-  }, onLaunch:function() {
-    var a = gls2.math.randf(0.3 * SC_H, 0.5 * SC_H);
-    this.tweener.clear().wait(gls2.math.rand(10, 500)).move(this.x, a, 7 * a, "easeOutQuad").call(function() {
-      b(this, "basic0-0")
+  }, Ab:function() {
+    var c = S(192, 320);
+    this.tweener.clear().wait(Y(10, 500)).move(this.x, c, 7 * c, "easeOutQuad").call(function() {
+      a(this, "basic0-0")
     }.bind(this))
-  }, onCompleteAttack:function() {
-    this.tweener.clear().wait(1E3).moveBy(0, -SC_H, 2E3, "easeInQuad").call(function() {
+  }, zb:function() {
+    this.tweener.clear().wait(1E3).moveBy(0, -640, 2E3, "easeInQuad").call(function() {
       this.remove()
     }.bind(this))
   }});
-  gls2.EnemySoft.Heri1b = gls2.EnemySoft.Heri1b();
-  gls2.EnemySoft.Heri2 = tm.createClass({superClass:gls2.EnemySoft, init:function() {
+  N.gb = N.gb();
+  N.fa = tm.createClass({superClass:N, init:function() {
     this.superInit()
-  }, setup:function() {
+  }, na:function() {
     this.angle = 0.5 * Math.PI;
-    this.startFrame = gls2.math.rand(0, 60);
+    this.md = Y(0, 60);
     this.speed = 0
   }, update:function() {
-    if(this.age === this.startFrame) {
-      this.speed = 8
-    }else {
-      if(this.age === this.startFrame + 10) {
-        b(this, "basic1-0")
-      }else {
-        if(this.startFrame < this.age && this.y < this.player.y) {
-          var a = Math.atan2(this.player.y - this.y, this.player.x - this.x);
-          this.angle += a < this.angle ? -0.02 : 0.02;
-          this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI - 0.5)
-        }
-      }
-    }
+    this.da === this.md ? this.speed = 8 : this.da === this.md + 10 ? a(this, "basic1-0") : this.md < this.da && this.y < this.ba.y && (this.angle += Math.atan2(this.ba.y - this.y, this.ba.x - this.x) < this.angle ? -0.02 : 0.02, this.angle = Q(this.angle, 0.5, Math.PI - 0.5));
     this.x += Math.cos(this.angle) * this.speed;
     this.y += Math.sin(this.angle) * this.speed;
-    !this.isInScreen() && this.entered && this.remove();
-    if(9E4 > gls2.distanceSq(this, this.player) || this.y > this.player.y) {
-      this.enableFire = !1
+    !this.Kb() && this.mb && this.remove();
+    if(9E4 > (this.x - this.ba.x) * (this.x - this.ba.x) + (this.y - this.ba.y) * (this.y - this.ba.y) || this.y > this.ba.y) {
+      this.rc = m
     }
   }});
-  gls2.EnemySoft.Heri2 = gls2.EnemySoft.Heri2();
-  gls2.EnemySoft.TankR = tm.createClass({superClass:gls2.EnemySoft, init:function() {
+  N.fa = N.fa();
+  N.nf = tm.createClass({superClass:N, init:function() {
     this.superInit()
-  }, setup:function() {
-    b(this, "basic2-0");
+  }, na:function() {
+    a(this, "basic2-0");
+    this.speed = 0.8;
     this.dir = 0
   }, update:function() {
-    this.x += 1;
-    this.entered && !this.isInScreen() && this.remove()
+    this.x += Math.cos(this.dir) * this.speed;
+    this.y += Math.sin(this.dir) * this.speed;
+    this.mb && !this.Kb() && this.remove()
   }});
-  gls2.EnemySoft.TankR = gls2.EnemySoft.TankR();
-  gls2.EnemySoft.TankRD = tm.createClass({superClass:gls2.EnemySoft, init:function() {
+  N.Ia = tm.createClass({superClass:N, init:function() {
     this.superInit()
-  }, setup:function() {
-    b(this, "basic2-0");
-    this.dir = 1
+  }, na:function() {
+    a(this, "basic2-0");
+    this.speed = 0.7;
+    this.dir = 0.25 * Math.PI
   }, update:function() {
-    this.x += 0.7;
-    this.y += 0.7;
-    this.entered && !this.isInScreen() && this.remove()
+    this.x += Math.cos(this.dir) * this.speed;
+    this.y += Math.sin(this.dir) * this.speed;
+    this.mb && !this.Kb() && this.remove()
   }});
-  gls2.EnemySoft.TankRD = gls2.EnemySoft.TankRD();
-  gls2.EnemySoft.TankD = tm.createClass({superClass:gls2.EnemySoft, init:function() {
+  N.Ia = N.Ia();
+  N.ub = tm.createClass({superClass:N, init:function() {
     this.superInit()
-  }, setup:function() {
-    b(this, "basic2-0");
-    this.dir = 2
+  }, na:function() {
+    a(this, "basic2-0");
+    this.speed = 1;
+    this.dir = Math.PI
+  }, update:function() {
+    this.x += Math.cos(this.dir) * this.speed;
+    this.y += Math.sin(this.dir) * this.speed;
+    this.mb && !this.Kb() && this.remove()
+  }});
+  N.ub = N.ub();
+  N.Ya = tm.createClass({superClass:N, init:function() {
+    this.superInit()
+  }, na:function() {
+    this.tweener.clear().moveBy(0, 320, 800, "easeOutQuad").call(function() {
+      a(this, "kurokawa-1")
+    }.bind(this))
   }, update:function() {
     this.y += 1;
-    this.entered && !this.isInScreen() && this.remove()
+    this.mb && !this.Kb() && this.remove()
   }});
-  gls2.EnemySoft.TankD = gls2.EnemySoft.TankD();
-  gls2.EnemySoft.TankLD = tm.createClass({superClass:gls2.EnemySoft, init:function() {
-    this.superInit()
-  }, setup:function() {
-    b(this, "basic2-0");
-    this.dir = 3
-  }, update:function() {
-    this.x -= 0.7;
-    this.y += 0.7;
-    this.entered && !this.isInScreen() && this.remove()
-  }});
-  gls2.EnemySoft.TankLD = gls2.EnemySoft.TankLD();
-  gls2.EnemySoft.TankL = tm.createClass({superClass:gls2.EnemySoft, init:function() {
-    this.superInit()
-  }, setup:function() {
-    b(this, "basic2-0");
-    this.dir = 4
-  }, update:function() {
-    this.x -= 1;
-    this.entered && !this.isInScreen() && this.remove()
-  }});
-  gls2.EnemySoft.TankL = gls2.EnemySoft.TankL();
-  gls2.EnemySoft.MiddleFighter = tm.createClass({superClass:gls2.EnemySoft, init:function() {
-    this.superInit()
-  }, setup:function() {
-    this.tweener.clear().moveBy(0, 0.5 * SC_H, 800, "easeOutQuad")
-  }, update:function() {
-  }});
-  gls2.EnemySoft.MiddleFighter = gls2.EnemySoft.MiddleFighter()
+  N.Ya = N.Ya()
 })();
+var Z = N, $ = M;
+J = {"heri1-left":[{ca:Z.Oa, aa:$.fa, x:48, y:-100}, {ca:Z.gb, aa:$.fa, x:96, y:-100}, {ca:Z.Oa, aa:$.fa, x:144, y:-100}, {ca:Z.gb, aa:$.fa, x:192, y:-100}, {ca:Z.Oa, aa:$.fa, x:240, y:-100}], "heri1-center":[{ca:Z.Oa, aa:$.fa, x:144, y:-100}, {ca:Z.gb, aa:$.fa, x:192, y:-100}, {ca:Z.Oa, aa:$.fa, x:240, y:-100}, {ca:Z.gb, aa:$.fa, x:288, y:-100}, {ca:Z.Oa, aa:$.fa, x:336, y:-100}], "heri1-right":[{ca:Z.Oa, aa:$.fa, x:240, y:-100}, {ca:Z.gb, aa:$.fa, x:288, y:-100}, {ca:Z.Oa, aa:$.fa, x:336, y:-100}, 
+{ca:Z.gb, aa:$.fa, x:384, y:-100}, {ca:Z.Oa, aa:$.fa, x:432, y:-100}], "heri2-left":[{ca:Z.fa, aa:$.oa, x:48, y:-100}, {ca:Z.fa, aa:$.oa, x:96, y:-100}, {ca:Z.fa, aa:$.oa, x:144, y:-100}, {ca:Z.fa, aa:$.oa, x:192, y:-100}, {ca:Z.fa, aa:$.oa, x:240, y:-100}], "heri2-center":[{ca:Z.fa, aa:$.oa, x:144, y:-100}, {ca:Z.fa, aa:$.oa, x:192, y:-100}, {ca:Z.fa, aa:$.oa, x:240, y:-100}, {ca:Z.fa, aa:$.oa, x:288, y:-100}, {ca:Z.fa, aa:$.oa, x:336, y:-100}], "heri2-right":[{ca:Z.fa, aa:$.oa, x:240, y:-100}, 
+{ca:Z.fa, aa:$.oa, x:288, y:-100}, {ca:Z.fa, aa:$.oa, x:336, y:-100}, {ca:Z.fa, aa:$.oa, x:384, y:-100}, {ca:Z.fa, aa:$.oa, x:432, y:-100}], "tankRD-left":[{ca:Z.Ia, aa:$.pa, x:78, y:-50}, {ca:Z.Ia, aa:$.pa, x:28, y:-100}, {ca:Z.Ia, aa:$.pa, x:-22, y:-150}, {ca:Z.Ia, aa:$.pa, x:-72, y:-200}, {ca:Z.Ia, aa:$.pa, x:-122, y:-250}], "tankRD-center":[{ca:Z.Ia, aa:$.pa, x:222, y:-50}, {ca:Z.Ia, aa:$.pa, x:172, y:-100}, {ca:Z.Ia, aa:$.pa, x:122, y:-150}, {ca:Z.Ia, aa:$.pa, x:72, y:-200}, {ca:Z.Ia, aa:$.pa, 
+x:22, y:-250}], "tankL-top":[{ca:Z.ub, aa:$.pa, x:550, y:-128}, {ca:Z.ub, aa:$.pa, x:620, y:-128}, {ca:Z.ub, aa:$.pa, x:690, y:-128}, {ca:Z.ub, aa:$.pa, x:760, y:-128}, {ca:Z.ub, aa:$.pa, x:830, y:-128}], "fighter-m-0":[{ca:Z.Ya, aa:$.Xa, x:96, y:-192}], "fighter-m-1":[{ca:Z.Ya, aa:$.Xa, x:144, y:-192}], "fighter-m-2":[{ca:Z.Ya, aa:$.Xa, x:192, y:-192}], "fighter-m-3":[{ca:Z.Ya, aa:$.Xa, x:240, y:-192}], "fighter-m-4":[{ca:Z.Ya, aa:$.Xa, x:288, y:-192}], "fighter-m-5":[{ca:Z.Ya, aa:$.Xa, x:336, y:-192}], 
+"fighter-m-6":[{ca:Z.Ya, aa:$.Xa, x:384, y:-192}]};
 (function() {
-  var b = gls2.EnemySoft, a = gls2.EnemyHard;
-  gls2.EnemyUnit = {"heri1-left":[{soft:b.Heri1a, hard:a.Heri2, x:0.1 * SC_W, y:-100}, {soft:b.Heri1b, hard:a.Heri2, x:0.2 * SC_W, y:-100}, {soft:b.Heri1a, hard:a.Heri2, x:0.3 * SC_W, y:-100}, {soft:b.Heri1b, hard:a.Heri2, x:0.4 * SC_W, y:-100}, {soft:b.Heri1a, hard:a.Heri2, x:0.5 * SC_W, y:-100}], "heri1-center":[{soft:b.Heri1a, hard:a.Heri2, x:0.3 * SC_W, y:-100}, {soft:b.Heri1b, hard:a.Heri2, x:0.4 * SC_W, y:-100}, {soft:b.Heri1a, hard:a.Heri2, x:0.5 * SC_W, y:-100}, {soft:b.Heri1b, hard:a.Heri2, 
-  x:0.6 * SC_W, y:-100}, {soft:b.Heri1a, hard:a.Heri2, x:0.7 * SC_W, y:-100}], "heri1-right":[{soft:b.Heri1a, hard:a.Heri2, x:0.5 * SC_W, y:-100}, {soft:b.Heri1b, hard:a.Heri2, x:0.6 * SC_W, y:-100}, {soft:b.Heri1a, hard:a.Heri2, x:0.7 * SC_W, y:-100}, {soft:b.Heri1b, hard:a.Heri2, x:0.8 * SC_W, y:-100}, {soft:b.Heri1a, hard:a.Heri2, x:0.9 * SC_W, y:-100}], "heri2-left":[{soft:b.Heri2, hard:a.Heri1, x:0.1 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.2 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, 
-  x:0.3 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.4 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.5 * SC_W, y:-100}], "heri2-center":[{soft:b.Heri2, hard:a.Heri1, x:0.3 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.4 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.5 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.6 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.7 * SC_W, y:-100}], "heri2-right":[{soft:b.Heri2, hard:a.Heri1, x:0.5 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, 
-  x:0.6 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.7 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.8 * SC_W, y:-100}, {soft:b.Heri2, hard:a.Heri1, x:0.9 * SC_W, y:-100}], "tank-left":[{soft:b.TankR, hard:a.Tank1, x:-64, y:0.3 * SC_H}, {soft:b.TankR, hard:a.Tank1, x:-128, y:0.3 * SC_H}, {soft:b.TankR, hard:a.Tank1, x:-192, y:0.3 * SC_H}, {soft:b.TankR, hard:a.Tank1, x:-256, y:0.3 * SC_H}, {soft:b.TankR, hard:a.Tank1, x:-320, y:0.3 * SC_H}], "tank-leftUpper":[{soft:b.TankRD, hard:a.Tank1, 
-  x:-110, y:-46}, {soft:b.TankRD, hard:a.Tank1, x:-156, y:-92}, {soft:b.TankRD, hard:a.Tank1, x:-202, y:-138}, {soft:b.TankRD, hard:a.Tank1, x:-248, y:-184}, {soft:b.TankRD, hard:a.Tank1, x:-294, y:-230}], "tank-upper0":[{soft:b.TankD, hard:a.Tank1, x:0.25 * SC_W, y:-64}, {soft:b.TankD, hard:a.Tank1, x:0.25 * SC_W, y:-128}, {soft:b.TankD, hard:a.Tank1, x:0.25 * SC_W, y:-192}, {soft:b.TankD, hard:a.Tank1, x:0.25 * SC_W, y:-256}, {soft:b.TankD, hard:a.Tank1, x:0.25 * SC_W, y:-320}], "tank-upper1":[{soft:b.TankD, 
-  hard:a.Tank1, x:0.5 * SC_W, y:-64}, {soft:b.TankD, hard:a.Tank1, x:0.5 * SC_W, y:-128}, {soft:b.TankD, hard:a.Tank1, x:0.5 * SC_W, y:-192}, {soft:b.TankD, hard:a.Tank1, x:0.5 * SC_W, y:-256}, {soft:b.TankD, hard:a.Tank1, x:0.5 * SC_W, y:-320}], "tank-upper2":[{soft:b.TankD, hard:a.Tank1, x:0.75 * SC_W, y:-64}, {soft:b.TankD, hard:a.Tank1, x:0.75 * SC_W, y:-128}, {soft:b.TankD, hard:a.Tank1, x:0.75 * SC_W, y:-192}, {soft:b.TankD, hard:a.Tank1, x:0.75 * SC_W, y:-256}, {soft:b.TankD, hard:a.Tank1, 
-  x:0.75 * SC_W, y:-320}], "fighter-m":[{soft:b.MiddleFighter, hard:a.FighterM, x:0.5 * SC_W, y:-0.3 * SC_H}]}
-})();
-(function() {
-  gls2.Bullet = tm.createClass({superClass:tm.app.Sprite, init:function() {
-    this.superInit("tex0", 20, 20);
-    this.addEventListener("removed", function() {
-      c.push(this);
-      var a = d.indexOf(this);
-      -1 !== a && d.splice(a, 1);
-      this.clearEventListener("enterframe")
-    })
-  }, destroy:function() {
-    tm.app.CircleShape(40, 40, {strokeStyle:"rgba(0,0,0,0)", fillStyle:tm.graphics.RadialGradient(20, 20, 0, 20, 20, 20).addColorStopList([{offset:0, color:"rgba(255,255,255,0.0)"}, {offset:0.5, color:"rgba(255,255,255,0.0)"}, {offset:1, color:"rgba(255,255,255,1.0)"}]).toStyle()}).setBlendMode("lighter").setPosition(this.x, this.y).setScale(0.1, 0.1).addChildTo(this.parent).update = function() {
-      this.scaleX += 0.1;
-      this.scaleY += 0.1;
-      this.alpha *= 0.9;
-      0.0010 > this.alpha && this.remove()
-    };
-    this.remove()
-  }});
-  gls2.Danmaku = {};
-  gls2.Danmaku.erase = function() {
-    for(var a = [].concat(d), b = 0, c = a.length;b < c;b++) {
-      a[b].destroy()
-    }
-  };
-  gls2.Danmaku.setup = function() {
+  function a(a) {
+    return b.ma(b.direction(0), a || b.speed("$rank*0.2 + 1.0 + (0*0.1)"), b.ha())
+  }
+  function c() {
+    return b.speed("$rank*0.2 + 1.2 + ($loop.count*0.1)")
+  }
+  u = {na:function() {
     for(var a = 0;255 > a;a++) {
-      c.push(gls2.Bullet())
+      d.push(L())
     }
-    a = tm.bulletml.AttackPattern.defaultConfig;
-    a.isInsideOfWorld = function(a) {
-      return!(a instanceof gls2.Bullet) || !(-50 > a.x || SC_W + 50 < a.x || -50 > a.y || SC_H + 50 < a.y)
+    a = tm.Ca.tb.Vb;
+    a.cd = function(a) {
+      return!(a instanceof L) || !(-50 > a.x || 530 < a.x || -50 > a.y || 690 < a.y)
     };
-    a.bulletFactory = function(a) {
-      if(a = c.shift(0)) {
-        return d.push(a), a.setFrameIndex(1), a.scaleX = 1.2, a.scaleY = 1.5, a.addEventListener("enterframe", function() {
+    a.Ad = function(a) {
+      var b = d.shift(0);
+      if(b) {
+        return g.push(b), b.setFrameIndex(a.frame === i ? 1 : a.frame), a.yd ? (b.scaleX = 1, b.scaleY = 1, b.rb = m, b.update = function() {
           this.rotation += 15
-        }), a
+        }) : (b.scaleX = 0.8, b.scaleY = 1.5, b.rb = k), b
       }
       console.warn("\u5f3e\u304c\u8db3\u308a\u306a\u3044\uff01")
     };
-    a.speedRate = 3
-  };
-  gls2.Danmaku.clearAll = function() {
-    for(var a = [].concat(d), b = 0, c = a.length;b < c;b++) {
+    a.Cb = 3
+  }, erase:function() {
+    for(var a = [].concat(g), b = 0, c = a.length;b < c;b++) {
+      a[b].Hb()
+    }
+  }, Sb:function() {
+    for(var a = [].concat(g), b = 0, c = a.length;b < c;b++) {
       a[b].remove()
     }
-  };
-  var b = bulletml.dsl, a = b.fire(b.direction(0), b.bullet());
-  gls2.Danmaku["basic0-0"] = new bulletml.Root({top:b.action([a])});
-  gls2.Danmaku["basic0-4"] = new bulletml.Root({top:b.action([b.repeat(3, [b.repeat(5, [b.fire(b.direction(-20), b.speed("$loop.count*0.06+0.75"), b.bullet()), b.fire(b.direction(0), b.speed("$loop.count*0.06+0.75"), b.bullet()), b.fire(b.direction(20), b.speed("$loop.count*0.06+0.75"), b.bullet())]), b.wait(40)])])});
-  gls2.Danmaku["basic1-0"] = new bulletml.Root({top:b.action([b.repeat(999, [a, b.wait(20)])])});
-  gls2.Danmaku["basic2-0"] = new bulletml.Root({top:b.action([b.wait("120"), b.repeat(999, [b.wait("50*$rand*5"), a])])});
-  var c = [], d = gls2.Bullet.activeList = []
+  }};
+  var b = p.ia;
+  u["basic0-0"] = new p.Aa({top:b.action([a])});
+  u["basic0-4"] = new p.Aa({top:b.action([b.repeat(3, [b.repeat(5, [b.ma(b.direction(-20), b.speed("$loop.count*0.06+0.75"), b.ha()), b.ma(b.direction(0), b.speed("$loop.count*0.06+0.75"), b.ha()), b.ma(b.direction(20), b.speed("$loop.count*0.06+0.75"), b.ha())]), b.wait(40)])])});
+  u["basic1-0"] = new p.Aa({top:b.action([b.repeat(999, [a, b.wait(20)])])});
+  u["basic2-0"] = new p.Aa({top:b.action([b.wait("120"), b.repeat(999, [b.wait("50*$rand*5"), a])])});
+  u["kurokawa-1"] = new p.Aa({Hf:b.action([b.repeat(3, [b.ma(b.direction(-45), c(), b.ha({frame:2}), b.offsetX(-30), b.ta(k)), b.ma(b.direction(-15), c(), b.ha({frame:2}), b.offsetX(-30), b.ta(k)), b.ma(b.direction(15), c(), b.ha({frame:2}), b.offsetX(-30), b.ta(k)), b.ma(b.direction(45), c(), b.ha({frame:2}), b.offsetX(-30), b.ta(k)), b.ma(b.direction(-45), c(), b.ha({frame:2}), b.offsetX(30), b.ta(k)), b.ma(b.direction(-15), c(), b.ha({frame:2}), b.offsetX(30), b.ta(k)), b.ma(b.direction(15), c(), 
+  b.ha({frame:2}), b.offsetX(30), b.ta(k)), b.ma(b.direction(45), c(), b.ha({frame:2}), b.offsetX(30), b.ta(k)), b.wait(60)])]), If:b.action([b.repeat(9, [b.ma(b.direction(0), c(), b.ha({yd:k, frame:3}), b.offsetX(-30), b.ta(k)), b.ma(b.direction(0), c(), b.ha({yd:k, frame:3}), b.offsetX(-30), b.ta(k)), b.wait(20)])])});
+  L = tm.createClass({superClass:tm.app.Sprite, Fa:0, init:function() {
+    this.superInit("tex0", 20, 20);
+    this.boundingRadius = 7;
+    this.addEventListener("added", function() {
+      this.Fa = 50
+    });
+    this.addEventListener("removed", function() {
+      d.push(this);
+      var a = g.indexOf(this);
+      -1 !== a && g.splice(a, 1);
+      this.clearEventListener("enterframe")
+    })
+  }, Hb:function() {
+    tm.app.CircleShape(20, 20, {strokeStyle:"rgba(0,0,0,0)", fillStyle:tm.graphics.RadialGradient(10, 10, 0, 10, 10, 10).addColorStopList([{offset:0, color:"rgba(255,100,100,0.0)"}, {offset:0.3, color:"rgba(255,100,100,0.0)"}, {offset:0.7, color:"rgba(255,100,100,1.0)"}, {offset:1, color:"rgba(255,100,100,1.0)"}]).toStyle()}).setPosition(this.x, this.y).setScale(0.1, 0.1).addChildTo(this.parent).update = function() {
+      this.scaleX += 0.1;
+      this.scaleY += 0.1;
+      this.alpha *= 0.92;
+      1E-4 > this.alpha && this.remove()
+    };
+    this.remove()
+  }});
+  var d = [], g = L.wa = []
 })();
-gls2.math = {};
-(function() {
-  gls2.math.clamp = function(b, a, c) {
-    return b < a ? a : b > c ? c : b
-  };
-  gls2.math.DEG_TO_RAD = Math.PI / 180;
-  gls2.math.RAD_TO_DEG = 180 / Math.PI;
-  gls2.math.degToRad = function(b) {
-    return b * gls2.math.DEG_TO_RAD
-  };
-  gls2.math.radToDeg = function(b) {
-    return b * gls2.math.RAD_TO_DEG
-  };
-  gls2.math.rand = function(b, a) {
-    return window.Math.floor(Math.random() * (a - b + 1)) + b
-  };
-  gls2.math.randf = function(b, a) {
-    return window.Math.random() * (a - b) + b
-  };
-  gls2.math.magnitude = function() {
-    return Math.sqrt(gls2.math.magnitudeSq.apply(null, arguments))
-  };
-  gls2.math.magnitudeSq = function() {
-    for(var b = 0, a = 0, c = arguments.length;a < c;++a) {
-      b += arguments[a] * arguments[a]
-    }
-    return b
-  };
-  gls2.math.inside = function(b, a, c) {
-    return b >= a && b <= c
-  }
-})();
+var Q, S, T, Y, ka;
+Q = function(a, c, b) {
+  return a < c ? c : a > b ? b : a
+};
+ka = Math.PI / 180;
+T = function(a) {
+  return a * ka
+};
+Y = function(a, c) {
+  return window.Math.floor(Math.random() * (c - a + 1)) + a
+};
+S = function(a, c) {
+  return window.Math.random() * (c - a) + a
+};
 
