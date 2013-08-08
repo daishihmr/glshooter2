@@ -134,7 +134,7 @@ gls2.GameScene = tm.createClass(
 
         if (app.frame % 5 === 0) this.scoreLabel.update();
 
-        this.comboGauge -= 0.02;
+        this.comboGauge -= this.isHyperMode ? 0.01 : 0.02;
         if (this.comboGauge <= 0) {
             if (this.comboCount > 0) {
                 this.baseScore = this.baseScore * (this.comboCount-6)/this.comboCount;
