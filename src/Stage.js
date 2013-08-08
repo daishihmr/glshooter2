@@ -139,6 +139,7 @@ gls2.Stage1 = tm.createClass(
         this.seq.add( 50, "fighter-m-6");
         this.seq.add( 50, "fighter-m-4");
         this.seq.add( 50, "fighter-m-2");
+        this.seq.add(100, "yukishiro");
     },
 
     executeFrame: function(frame) {

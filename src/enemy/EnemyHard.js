@@ -53,7 +53,7 @@ gls2.EnemyHard.Heri1 = tm.createClass(
         }
     },
     draw: function(canvas) {
-        if (this.age % 4 < 2) {
+        if (this.frame % 4 < 2) {
             this._sprite.setFrameIndex(7);
         } else {
             this._sprite.setFrameIndex(8);
@@ -91,7 +91,7 @@ gls2.EnemyHard.Heri2 = tm.createClass(
         }
     },
     draw: function(canvas) {
-        if (this.age % 4 < 2) {
+        if (this.frame % 4 < 2) {
             this._sprite.setFrameIndex(9);
         } else {
             this._sprite.setFrameIndex(10);
@@ -212,6 +212,26 @@ gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();
 /**
  * ステージ１中ボス「ユキシロ」
  */
+gls2.EnemyHard.Honoka = tm.createClass({
+    superClass: gls2.EnemyHard,
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.name = "yukishiro";
+        this.erase = true;
+        this.hp = 1500;
+        this.score = 50000;
+        this.boundingWidth = 200;
+        this.boundingHeight = 40;
+    },
+    draw: function(canvas) {
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-100, -20, 200, 40);
+    },
+});
+gls2.EnemyHard.Honoka = gls2.EnemyHard.Honoka();
+
 /**
  * ステージ２中ボス「ミショウ」
  */

@@ -19,13 +19,13 @@ gls2.GameOverScene = tm.createClass(
             this.tweener.clear()
                 .wait(5000)
                 .call(function() {
-                    this.app.popScene();
+                    this.app.replaceScene(gls2.TitleScene());
                 }.bind(this));
         });
     },
     update: function(app) {
         if (app.keyboard.getKeyDown("z")) {
-            app.popScene();
+            app.replaceScene(gls2.TitleScene());
             return;
         }
     },

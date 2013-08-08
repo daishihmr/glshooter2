@@ -25,6 +25,16 @@ var attack = function(enemy, danmakuName) {
         this.removeEventListener("enterframe", ticker);
     });
 };
+var stopAttack = function(enemy) {
+    var listeners = [].concat(enemy._listeners["enterframe"]);
+    if (listeners) {
+        for (var i = 0, len = listeners.length; i < len; i++) {
+            if (listeners[i] && listeners[i].isDanmaku) {
+                enemy.removeEventListener("enterframe", listeners[i]);
+            }
+        }
+    }
+};
 
 /**
  * heri1a.
@@ -130,11 +140,11 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         this.speed = 0;
     },
     update: function() {
-        if (this.age === this.startFrame) {
+        if (this.frame === this.startFrame) {
             this.speed = 8;
-        } else if (this.age === this.startFrame + 10) {
+        } else if (this.frame === this.startFrame + 10) {
             attack(this, "basic1-0");
-        } else if (this.startFrame < this.age && this.y < this.player.y) {
+        } else if (this.startFrame < this.frame && this.y < this.player.y) {
             var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
             this.angle += (a < this.angle) ? -0.02 : 0.02;
             this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI-0.5);
@@ -263,6 +273,65 @@ gls2.EnemySoft.MiddleFighter1 = tm.createClass(
     },
 })
 gls2.EnemySoft.MiddleFighter1 = gls2.EnemySoft.MiddleFighter1();
+
+/**
+ * 中ボス共通
+ */
+gls2.EnemySoft.MBossCommon = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    init: function(patterns) {
+        this.superInit();
+        this.patterns = patterns;
+    },
+    setup: function() {
+        this.startAttack = false;
+        this.endAttack = false;
+        this.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.3, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.onCompleteAttack();
+                var temp = function() {
+                    var a = Math.random() * Math.PI*2;
+                    var d = Math.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(this));
+    },
+    update: function() {
+        if (this.startAttack === false) return;
+        if (1500 < this.frame && this.endAttack === false) {
+            console.log("end");
+            this.endAttack = true;
+            stopAttack(this);
+            this.tweener
+                .clear()
+                .move(this.x, -100, 1200, "easeInQuad")
+                .call(function() {
+                    this.remove();
+                }.bind(this));
+        }
+    },
+    onCompleteAttack: function() {
+        if (this.endAttack) return;
+        var pattern = this.soft.patterns.shift();
+        attack(this, pattern);
+        this.soft.patterns.push(pattern);
+    },
+});
+
+/**
+ * ステージ１中ボス「ユキシロ」
+ */
+gls2.EnemySoft.Honoka = gls2.EnemySoft.MBossCommon([
+    "honoka-1"
+]);
 
 })();
 

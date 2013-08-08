@@ -109,6 +109,13 @@ gls2.EnemyUnit = {
     { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.8, y:SC_H*-0.3 },
 ],
 
+/**
+ * ステージ１中ボス「ユキシロ」
+ */
+"yukishiro": [
+    { soft:$s.Honoka, hard:$h.Honoka, x:SC_W*0.5, y:-100 },
+],
+
 };
 
 })();

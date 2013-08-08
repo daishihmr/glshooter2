@@ -220,7 +220,7 @@ gls2.GameScene = tm.createClass(
                 y: this.player.y,
                 boundingWidthLeft: 50,
                 boundingWidthRight: 50,
-                boundingHeightTop: 50,
+                boundingHeightTop: 100,
                 boundingHeightBottom: 40,
             };
             enemies = [].concat(gls2.Enemy.activeList);
@@ -237,7 +237,7 @@ gls2.GameScene = tm.createClass(
                         this.comboGauge = Math.max(this.comboGauge, 0.1);
                         this.addHyperGauge(0.002);
                     }
-                    laser.genAuraParticle(2, (this.player.x + e.x) * 0.5, (this.player.y + e.y) * 0.5);
+                    laser.genAuraParticle(2, this.player.x, this.player.y-30);
                 }
             }
         }
@@ -385,7 +385,7 @@ gls2.GameScene = tm.createClass(
     openContinueMenu: function() {
         this.openDialogMenu("CONTINUE?", [ "yes", "no" ], this.onResultContinue, 0, [
             "システムを再起動して出撃します",
-            "作戦失敗。帰還します",
+            "作戦失敗。退却します",
         ], false);
     },
     onResultContinue: function(result) {

@@ -8,7 +8,7 @@ gls2.Enemy = tm.createClass(
 /** @lends {gls2.Enemy.prototype} */
 {
     superClass: tm.app.CanvasElement,
-    age: 0,
+    frame: 0,
     direction: 0,
     speed: 0,
     player: null,
@@ -37,20 +37,22 @@ gls2.Enemy = tm.createClass(
             this.onCompleteAttack();
         });
         this.addEventListener("added", function() {
-            this.age = 0;
+            this.frame = 0;
             this.entered = false;
             this.enableFire = true;
             activeList.push(this);
         });
         this.addEventListener("removed", function() {
-            var listeners = [].concat(this._listeners["enterframe"]);
-            if (listeners) {
-                for (var i = 0, len = listeners.length; i < len; i++) {
-                    if (listeners[i] && listeners[i].isDanmaku) {
-                        this.removeEventListener("enterframe", listeners[i]);
-                    }
-                }
-            }
+            // var listeners = [].concat(this._listeners["enterframe"]);
+            // if (listeners) {
+            //     for (var i = 0, len = listeners.length; i < len; i++) {
+            //         if (listeners[i] && listeners[i].isDanmaku) {
+            //             this.removeEventListener("enterframe", listeners[i]);
+            //         }
+            //     }
+            // }
+
+            this.clearEventListener("enterframe");
 
             this.tweener.clear();
 
@@ -70,6 +72,7 @@ gls2.Enemy = tm.createClass(
         this.hard = hardware;
 
         this.score = 100;
+        this.erase = false;
 
         this.soft.setup.apply(this);
         this.hard.setup.apply(this);
@@ -109,7 +112,7 @@ gls2.Enemy = tm.createClass(
             this.x += this.gameScene.ground.dx;
             this.y += this.gameScene.ground.dy;
         }
-        this.age += 1;
+        this.frame += 1;
 
         this.velocity.x = this.x - before.x;
         this.velocity.y = this.y - before.y;
@@ -133,12 +136,16 @@ gls2.Enemy = tm.createClass(
 
             this.stage.onDestroyEnemy(this);
 
+            if (this.erase) {
+                gls2.Danmaku.erase();
+            }
+
             // TODO 試験的に追加して負荷を見てみる
-            var star = tm.app.StarShape(20, 20).setPosition(this.x, this.y).addChildTo(this.parent);
-            star.update = function() {
-                this.y += 3;
-                if (this.y > SC_H*20) this.remove();
-            };
+            // var star = tm.app.StarShape(20, 20).setPosition(this.x, this.y).addChildTo(this.parent);
+            // star.update = function() {
+            //     this.y += 3;
+            //     if (this.y > SC_H*20) this.remove();
+            // };
             this.remove();
 
             return true;

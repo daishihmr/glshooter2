@@ -119,24 +119,68 @@ gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(3, [
             $.repeat(3, [
-                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
-                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
-                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
-                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-30), $.autonomy(true)),
-                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
-                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
-                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
-                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX( 30), $.autonomy(true)),
+                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
+                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
+                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
+                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
+                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
+                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
+                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
+                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
             ]),
             $.wait(90),
         ]),
     ]),
     "top1": $.action([
-        $.repeat(6, [
-            $.fire($.direction(0), $spd4, $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
+        $.repeat(3, [
+            $.fire($.direction(0), $spd4, $.bullet({ball:true,frame:3}), $.offsetX(-45), $.autonomy(true)),
+            $.wait(45),
+            $.fire($.direction(0), $spd4, $.bullet({ball:true,frame:3}), $.offsetX(+45), $.autonomy(true)),
+            $.wait(45),
+        ]),
+    ]),
+});
+
+gls2.Danmaku["honoka-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(10, [
+            $.fire($.direction(-30), $spd3, $.bullet({ball:true,frame:4})),
+            $.repeat(60/18, [
+                $.fire($.direction(18, "sequence"), $spd3, $.bullet({ball:true,frame:4})),
+            ]),
             $.wait(30),
-            $.fire($.direction(0), $spd4, $.bullet({ball:true,frame:3}), $.offsetX(-30), $.autonomy(true)),
-            $.wait(60),
+            $.fire($.direction(-39), $spd3, $.bullet({ball:true,frame:4})),
+            $.repeat(78/18, [
+                $.fire($.direction(18, "sequence"), $spd3, $.bullet({ball:true,frame:4})),
+            ]),
+            $.wait(30),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(5, [
+            $.fire($.direction(-6), $spd2, $.bullet({ball:true,frame:4})),
+            $.repeat(12/2, [
+                $.fire($.direction(2, "sequence"), $spd2, $.bullet({ball:true,frame:3})),
+            ]),
+            $.wait(110),
+        ]),
+    ]),
+    "top2": $.action([
+        $.repeat(20, [
+            $.fire($.direction(-120-30, "absolute"), $spd1, $.bullet({ball:true,frame:2}), $.offsetX(-60)),
+            $.repeat(60/12, [
+                $.fire($.direction(12, "sequence"), $spd1, $.bullet({ball:true,frame:2}), $.offsetX(-60)),
+            ]),
+            $.wait(30),
+        ]),
+    ]),
+    "top3": $.action([
+        $.repeat(20, [
+            $.fire($.direction(+120+30, "absolute"), $spd1, $.bullet({ball:true,frame:0}), $.offsetX(+60)),
+            $.repeat(60/12, [
+                $.fire($.direction(-12, "sequence"), $spd1, $.bullet({ball:true,frame:0}), $.offsetX(+60)),
+            ]),
+            $.wait(30),
         ]),
     ]),
 });
