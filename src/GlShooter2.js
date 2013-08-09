@@ -81,7 +81,6 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.Danmaku.setup();
         gls2.Effect.setup();
-        gls2.ShotBullet.createPool(100);
 
         this.gameScene = gls2.GameScene();
     },

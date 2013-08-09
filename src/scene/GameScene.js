@@ -581,7 +581,10 @@ gls2.GameScene = tm.createClass(
         this.hyperRank = Math.min(this.hyperRank + 1, 5);
         this.hyperTime = 600;
 
+        this.player.currentShotPool = this.player.hyperShotPool;
         this.player.laser.setColor("hyper");
+
+        gls2.Effect.genShockwaveL(this.player.x, this.player.y, this);
 
         // すべての弾を消す
         // gls2.Danmaku.erase();
@@ -595,6 +598,7 @@ gls2.GameScene = tm.createClass(
         gls2.ChargeEffect(this.player, true).addChildTo(this);
 
         // TODO
+        this.player.currentShotPool = this.player.normalShotPool;
         this.player.laser.setColor("blue");
     },
 

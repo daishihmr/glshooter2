@@ -40,6 +40,13 @@ gls2.Player = tm.createClass(
     speed: 4.5,
     bits: null,
 
+    /** @type {gls2.ShotBulletPool0} */
+    currentShotPool: null,
+    /** @type {gls2.ShotBulletPool0} */
+    normalShotPool: null,
+    /** @type {gls2.ShotBulletPool0} */
+    hyperShotPool: null,
+
     /** @type {gls2.Laser} */
     laser: null,
 
@@ -59,6 +66,9 @@ gls2.Player = tm.createClass(
 
         this.boundingRadius = 2;
         this.altitude = 10;
+
+        this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type);
+        this.hyperShotPool = gls2.ShotBulletPool(3);
 
         this.laser = gls2.Laser(this, {
             "redBody": "laserR",
@@ -205,10 +215,9 @@ gls2.Player = tm.createClass(
             if (this.fireShot) {
                 var s = Math.sin(app.frame * 0.2);
                 var sb;
-                var color = this.gameScene.isHyperMode?3:this.type;
-                sb = gls2.ShotBullet.fire(color, this.x-7 - s*6, this.y-5, -90);
+                sb = this.currentShotPool.fire(this.x-7 - s*6, this.y-5, -90);
                 if (sb !== null) sb.addChildTo(this.gameScene);
-                sb = gls2.ShotBullet.fire(color, this.x+7 + s*6, this.y-5, -90);
+                sb = this.currentShotPool.fire(this.x+7 + s*6, this.y-5, -90);
                 if (sb !== null) sb.addChildTo(this.gameScene);
             }
 
@@ -216,7 +225,6 @@ gls2.Player = tm.createClass(
                 if (this.gameScene.hyperGauge === 1) {
                     // ハイパー
                     this.gameScene.startHyperMode();
-                    gls2.Effect.genShockwaveL(this.x, this.y, this.gameScene);
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
                     // ボム
                     gls2.Bomb(this, this.gameScene)
@@ -347,8 +355,7 @@ gls2.Bit = tm.createClass(
 
             // ショット
             if (this.player.fireShot) {
-                var color = this.player.gameScene.isHyperMode ? 3 : this.player.type;
-                var sb = gls2.ShotBullet.fire(color, g.x, g.y, this.parent.rotation + this.rotation - 90);
+                var sb = this.currentShotPool.fire(g.x, g.y, this.parent.rotation + this.rotation - 90);
                 if (sb !== null) sb.addChildTo(core.gameScene);
             }
         }

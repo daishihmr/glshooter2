@@ -7,19 +7,10 @@ gls2.ShotBullet = tm.createClass({
     speed: 0,
     attackPower: 1,
 
-    init: function() {
+    init: function(color) {
         var SZ = 64;
         this.superInit("shotbullet", SZ, SZ);
         this.blendMode = "lighter";
-
-        this.addEventListener("added", function() {
-            activeList.push(this);
-        });
-        this.addEventListener("removed", function() {
-            var idx = activeList.indexOf(this);
-            if (idx !== -1) activeList.splice(idx, 1);
-            pool.push(this);
-        });
 
         if (origParticle === null) {
             var size = 16;
@@ -36,6 +27,8 @@ gls2.ShotBullet = tm.createClass({
                 .element
             );
         }
+
+        if (color !== undefined) this.setColor(color);
     },
 
     update: function() {
@@ -91,33 +84,46 @@ gls2.ShotBullet.clearAll = function() {
     }
 };
 
-var pool = [];
 var activeList = gls2.ShotBullet.activeList = [];
 
-// TODO 色を指定してプールを作る
-gls2.ShotBullet.createPool = function(count) {
-    for (var i = 0; i < count; i++) {
-        pool.push(gls2.ShotBullet());
-    }
-};
+gls2.ShotBulletPool = tm.createClass({
+    /** @type {Array.<gls2.ShotBullet>} */
+    pool: null,
+    init: function(color, count) {
+        this.pool = [];
+        for (var i = 0; i < count; i++) {
+            var sb = gls2.ShotBullet(color);
 
-// TODO プールのメソッドにする
-gls2.ShotBullet.fire = function(color, x, y, dir) {
-    var shotBullet = pool.pop();
-    if (shotBullet === undefined) {
-        return null;
-    }
+            var self = this;
+            this.addEventListener("added", function() {
+                activeList.push(this);
+            });
+            this.addEventListener("removed", function() {
+                var idx = activeList.indexOf(this);
+                if (idx !== -1) activeList.splice(idx, 1);
+                self.pool.push(this);
+            });
 
-    shotBullet.setColor(color);
+            this.pool.push(sb);
+        }
+    },
+    fire: function(x, y, dir) {
+        var shotBullet = pool.pop();
+        if (shotBullet === undefined) {
+            return null;
+        }
 
-    var rad = gls2.math.degToRad(dir);
-    shotBullet.vx = Math.cos(rad) * shotBullet.speed;
-    shotBullet.vy = Math.sin(rad) * shotBullet.speed;
+        shotBullet.setColor(color);
 
-    shotBullet.setPosition(x, y);
-    shotBullet.rotation = dir+90;
+        var rad = gls2.math.degToRad(dir);
+        shotBullet.vx = Math.cos(rad) * shotBullet.speed;
+        shotBullet.vy = Math.sin(rad) * shotBullet.speed;
 
-    return shotBullet;
-};
+        shotBullet.setPosition(x, y);
+        shotBullet.rotation = dir+90;
+
+        return shotBullet;
+    },
+});
 
 })();
