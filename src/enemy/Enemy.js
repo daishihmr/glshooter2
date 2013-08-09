@@ -53,6 +53,8 @@ gls2.Enemy = tm.createClass(
             // }
 
             this.clearEventListener("enterframe");
+            this.dispatchEvent(tm.event.Event("enemyconsumed"));
+            this.clearEventListener("enemyconsumed");
 
             this.tweener.clear();
 

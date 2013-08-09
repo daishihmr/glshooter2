@@ -67,8 +67,8 @@ gls2.Player = tm.createClass(
         this.boundingRadius = 2;
         this.altitude = 10;
 
-        this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type);
-        this.hyperShotPool = gls2.ShotBulletPool(3);
+        this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type, 100);
+        this.hyperShotPool = gls2.ShotBulletPool(3, 100);
 
         this.laser = gls2.Laser(this, {
             "redBody": "laserR",
@@ -355,7 +355,7 @@ gls2.Bit = tm.createClass(
 
             // ショット
             if (this.player.fireShot) {
-                var sb = this.currentShotPool.fire(g.x, g.y, this.parent.rotation + this.rotation - 90);
+                var sb = this.player.currentShotPool.fire(g.x, g.y, this.parent.rotation + this.rotation - 90);
                 if (sb !== null) sb.addChildTo(core.gameScene);
             }
         }

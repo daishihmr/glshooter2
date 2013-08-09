@@ -73,17 +73,18 @@ gls2.GameScene = tm.createClass(
         this.ground = g.gElement;
         this.ground.addChildTo(this);
 
-        this.groundLayer = tm.app.Object2D().addChildTo(this);
-        this.enemyLayer = tm.app.Object2D().addChildTo(this);
-        this.effectLayer0 = tm.app.Object2D().addChildTo(this);
-        this.playerLayer = tm.app.Object2D().addChildTo(this);
-        this.effectLayer1 = tm.app.Object2D().addChildTo(this);
-        this.bulletLayer = tm.app.Object2D().addChildTo(this);
-        this.labelLayer = tm.app.Object2D().addChildTo(this);
+        this.groundLayer = gls2.GameScene.Layer().addChildTo(this);
+        this.enemyLayer = gls2.GameScene.Layer().addChildTo(this);
+        this.effectLayer0 = gls2.GameScene.Layer().addChildTo(this);
+        this.playerLayer = gls2.GameScene.Layer().addChildTo(this);
+        this.effectLayer1 = gls2.GameScene.Layer().addChildTo(this);
+        this.bulletLayer = gls2.GameScene.Layer().addChildTo(this);
+        this.labelLayer = gls2.GameScene.Layer().addChildTo(this);
 
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
 
-        this.lastElement = tm.app.Object2D().addChildTo(this);
+        this.lastElement = tm.app.Object2D();
+        this.lastElement.addChildTo(this);
         this.lastElement.update = function(app) {
             this.onexitframe(app);
         }.bind(this);
@@ -93,11 +94,8 @@ gls2.GameScene = tm.createClass(
         });
     },
 
-    println: function(string, intercept) {
-        this.scoreLabel.consoleWindow.addLine(string, intercept);
-    },
-
     addChild: function(child) {
+        // 必ずいずれかのレイヤーに入れる(lastElement以外)
         if (child instanceof gls2.Player) {
             this.playerLayer.addChild(child);
         } else if (child instanceof gls2.Enemy) {
@@ -106,18 +104,23 @@ gls2.GameScene = tm.createClass(
             } else {
                 this.enemyLayer.addChild(child);
             }
-        } else if (child instanceof gls2.BackfireParticle
+        } else if (child.isEffect
+            || child instanceof gls2.BackfireParticle
             || child instanceof gls2.ShotBullet
             || child instanceof gls2.Laser
-            || child instanceof gls2.Bomb
-            || child.isEffect) {
+            || child instanceof gls2.Bomb) {
             this.effectLayer0.addChild(child);
         } else if (child instanceof gls2.Particle) {
             this.effectLayer1.addChild(child);
         } else if (child instanceof gls2.Bullet) {
             this.bulletLayer.addChild(child);
-        } else {
+        } else if (child === this.lastElement
+            || child === this.ground
+            || child instanceof gls2.GameScene.Layer) {
             this.superClass.prototype.addChild.apply(this, arguments);
+        } else {
+            console.error("unknown type child.");
+            throw new Error(child);
         }
     },
 
@@ -207,7 +210,8 @@ gls2.GameScene = tm.createClass(
                         this.baseScore += e.score*(~~(this.comboCount / 200) + 1);
                         this.addScore(this.baseScore);
                     } else {
-                        this.comboGauge = Math.max(this.comboGauge, 0.1);
+                        this.addCombo(0.01);
+                        this.comboGauge = Math.max(this.comboGauge, 0.05);
                         this.addHyperGauge(0.001);
                     }
                     laser.genParticle(2);
@@ -234,7 +238,8 @@ gls2.GameScene = tm.createClass(
                         this.baseScore += e.score*(~~(this.comboCount / 200) + 1);
                         this.addScore(this.baseScore);
                     } else {
-                        this.comboGauge = Math.max(this.comboGauge, 0.1);
+                        this.addCombo(0.01);
+                        this.comboGauge = Math.max(this.comboGauge, 0.05);
                         this.addHyperGauge(0.002);
                     }
                     laser.genAuraParticle(2, this.player.x, this.player.y-30);
@@ -276,7 +281,7 @@ gls2.GameScene = tm.createClass(
             }
         }
 
-        if (this.player.muteki === false) {
+        if (this.player.muteki === false && this.isBombActive === false) {
 
             // 敵弾vs自機
             for (var i = gls2.Bullet.activeList.length; gls2.Bullet.activeList[--i] !== undefined;) {
@@ -305,127 +310,6 @@ gls2.GameScene = tm.createClass(
                     }
                     break;
                 }
-            }
-        }
-    },
-
-    openPauseMenu: function(defaultValue) {
-        this.openDialogMenu("PAUSE", [ "resume", "setting", "exit game" ], this.onResultPause, defaultValue, [
-            "ゲームを再開します",
-            "設定を変更します",
-            "ゲームを中断し、タイトル画面に戻ります",
-        ], false);
-    },
-    onResultPause: function(result) {
-        switch (result) {
-        case 0: // resume
-            break;
-        case 1: // setting
-            this.openSetting();
-            break;
-        case 2: // exit title
-            this.openConfirmExitGame();
-            break;
-        }
-    },
-
-    openSetting: function() {
-        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume" ], this.onResultSetting, this.lastSetting, [
-            "BGMボリュームを設定します",
-            "効果音ボリュームを設定します",
-        ]);
-    },
-    onResultSetting: function(result) {
-        if (result !== 3) this.lastSetting = result;
-        switch (result) {
-        case 0:
-            this.openBgmSetting();
-            break;
-        case 1:
-            this.openSeSetting();
-            break;
-        default:
-            this.openPauseMenu();
-            break;
-        }
-    },
-
-    openConfirmExitGame: function() {
-        this.openDialogMenu("REARY?", [ "yes", "no" ], this.onResultConfirmExitGame, 1, [
-            "ゲームを中断し、タイトル画面に戻ります",
-            "前の画面へ戻ります",
-        ], false);
-    },
-    onResultConfirmExitGame: function(result) {
-        if (result === 0) {
-            this.app.replaceScene(gls2.TitleScene());
-        } else {
-            this.openPauseMenu(1);
-        }
-    },
-
-    openBgmSetting: function() {
-        this.openDialogMenu("BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultBgmSetting, gls2.core.bgmVolume);
-    },
-    onResultBgmSetting: function(result) {
-        if (result !== 6) gls2.core.bgmVolume = result;
-        this.openSetting(1);
-    },
-
-    openSeSetting: function() {
-        this.openDialogMenu("SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultSeSetting, gls2.core.seVolume);
-    },
-    onResultSeSetting: function(result) {
-        if (result !== 6) {
-            gls2.core.seVolume = result;
-        }
-        this.openSetting(1);
-    },
-
-    openContinueMenu: function() {
-        this.openDialogMenu("CONTINUE?", [ "yes", "no" ], this.onResultContinue, 0, [
-            "システムを再起動して出撃します",
-            "作戦失敗。退却します",
-        ], false);
-    },
-    onResultContinue: function(result) {
-        switch (result) {
-        case 0: // yes
-            this.gameContinue();
-            break;
-        case 1: // no
-            this.gameOver();
-            break;
-        }
-    },
-
-    draw: function(canvas) {
-        if (this.stage === null) return;
-        this.drawComboGauge(canvas);
-        this.drawHyperGauge(canvas);
-    },
-
-    drawComboGauge: function(canvas) {
-        if (this.comboGauge > 0) {
-            canvas.fillStyle = "rgba(255," + ~~(this.comboGauge * 255) + "," + ~~Math.min(255, this.comboGauge * 512) + ",0.5)";
-            var h = 500 * this.comboGauge;
-            canvas.fillRect(SC_W-15, SC_H-5 - h, 10, h);
-        }
-    },
-
-    drawHyperGauge: function(canvas) {
-        if (this.hyperGauge === 1) {
-            if (this.app.frame % 2 === 0) {
-                canvas.fillStyle = "rgba(255,255,255,0.6)";
-                canvas.fillRect(5, SC_H-12, 200, 9);
-            }
-        } else {
-            canvas.fillStyle = "rgba(255,255,0,0.3)";
-            canvas.fillRect(5, SC_H-12, 200, 9);
-            if (0 < this.hyperGauge) {
-                canvas.fillStyle = "rgba(255,255,100,1.0)";
-                var w = 200 * this.hyperGauge;
-                canvas.fillRect(5, SC_H-12, w, 9);
             }
         }
     },
@@ -555,7 +439,7 @@ gls2.GameScene = tm.createClass(
 
         this.comboCount += v;
         this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
-        this.comboGauge = 1;
+        if (1 <= v) this.comboGauge = 1;
     },
 
     addHyperGauge: function(v) {
@@ -606,6 +490,131 @@ gls2.GameScene = tm.createClass(
         // TODO エクステンドエフェクト
         this.println("Extended.");
         this.zanki += 1;
+    },
+
+    println: function(string, intercept) {
+        this.scoreLabel.consoleWindow.addLine(string, intercept);
+    },
+
+    openPauseMenu: function(defaultValue) {
+        this.openDialogMenu("PAUSE", [ "resume", "setting", "exit game" ], this.onResultPause, defaultValue, [
+            "ゲームを再開します",
+            "設定を変更します",
+            "ゲームを中断し、タイトル画面に戻ります",
+        ], false);
+    },
+    onResultPause: function(result) {
+        switch (result) {
+        case 0: // resume
+            break;
+        case 1: // setting
+            this.openSetting();
+            break;
+        case 2: // exit title
+            this.openConfirmExitGame();
+            break;
+        }
+    },
+
+    openSetting: function() {
+        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume" ], this.onResultSetting, this.lastSetting, [
+            "BGMボリュームを設定します",
+            "効果音ボリュームを設定します",
+        ]);
+    },
+    onResultSetting: function(result) {
+        if (result !== 3) this.lastSetting = result;
+        switch (result) {
+        case 0:
+            this.openBgmSetting();
+            break;
+        case 1:
+            this.openSeSetting();
+            break;
+        default:
+            this.openPauseMenu();
+            break;
+        }
+    },
+
+    openConfirmExitGame: function() {
+        this.openDialogMenu("REARY?", [ "yes", "no" ], this.onResultConfirmExitGame, 1, [
+            "ゲームを中断し、タイトル画面に戻ります",
+            "前の画面へ戻ります",
+        ], false);
+    },
+    onResultConfirmExitGame: function(result) {
+        if (result === 0) {
+            this.app.replaceScene(gls2.TitleScene());
+        } else {
+            this.openPauseMenu(1);
+        }
+    },
+
+    openBgmSetting: function() {
+        this.openDialogMenu("BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultBgmSetting, gls2.core.bgmVolume);
+    },
+    onResultBgmSetting: function(result) {
+        if (result !== 6) gls2.core.bgmVolume = result;
+        this.openSetting(1);
+    },
+
+    openSeSetting: function() {
+        this.openDialogMenu("SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultSeSetting, gls2.core.seVolume);
+    },
+    onResultSeSetting: function(result) {
+        if (result !== 6) {
+            gls2.core.seVolume = result;
+        }
+        this.openSetting(1);
+    },
+
+    openContinueMenu: function() {
+        this.openDialogMenu("CONTINUE?", [ "yes", "no" ], this.onResultContinue, 0, [
+            "システムを再起動して出撃します",
+            "作戦失敗。退却します",
+        ], false);
+    },
+    onResultContinue: function(result) {
+        switch (result) {
+        case 0: // yes
+            this.gameContinue();
+            break;
+        case 1: // no
+            this.gameOver();
+            break;
+        }
+    },
+
+    draw: function(canvas) {
+        if (this.stage === null) return;
+        this.drawComboGauge(canvas);
+        this.drawHyperGauge(canvas);
+    },
+
+    drawComboGauge: function(canvas) {
+        if (this.comboGauge > 0) {
+            canvas.fillStyle = "rgba(255," + ~~(this.comboGauge * 255) + "," + ~~Math.min(255, this.comboGauge * 512) + ",0.5)";
+            var h = 500 * this.comboGauge;
+            canvas.fillRect(SC_W-15, SC_H-5 - h, 10, h);
+        }
+    },
+
+    drawHyperGauge: function(canvas) {
+        if (this.hyperGauge === 1) {
+            if (this.app.frame % 2 === 0) {
+                canvas.fillStyle = "rgba(255,255,255,0.6)";
+                canvas.fillRect(5, SC_H-12, 200, 9);
+            }
+        } else {
+            canvas.fillStyle = "rgba(255,255,0,0.3)";
+            canvas.fillRect(5, SC_H-12, 200, 9);
+            if (0 < this.hyperGauge) {
+                canvas.fillStyle = "rgba(255,255,100,1.0)";
+                var w = 200 * this.hyperGauge;
+                canvas.fillRect(5, SC_H-12, w, 9);
+            }
+        }
     },
 
     // rec: null,
@@ -684,6 +693,13 @@ gls2.GameScene = tm.createClass(
     //     }
     // },
 
+});
+
+gls2.GameScene.Layer = tm.createClass({
+    superClass: tm.app.Object2D,
+    init: function() {
+        this.superInit();
+    }
 });
 
 gls2.GameScene.SINGLETON = null;

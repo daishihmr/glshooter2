@@ -95,10 +95,10 @@ gls2.ShotBulletPool = tm.createClass({
             var sb = gls2.ShotBullet(color);
 
             var self = this;
-            this.addEventListener("added", function() {
+            sb.addEventListener("added", function() {
                 activeList.push(this);
             });
-            this.addEventListener("removed", function() {
+            sb.addEventListener("removed", function() {
                 var idx = activeList.indexOf(this);
                 if (idx !== -1) activeList.splice(idx, 1);
                 self.pool.push(this);
@@ -108,12 +108,10 @@ gls2.ShotBulletPool = tm.createClass({
         }
     },
     fire: function(x, y, dir) {
-        var shotBullet = pool.pop();
+        var shotBullet = this.pool.pop();
         if (shotBullet === undefined) {
             return null;
         }
-
-        shotBullet.setColor(color);
 
         var rad = gls2.math.degToRad(dir);
         shotBullet.vx = Math.cos(rad) * shotBullet.speed;

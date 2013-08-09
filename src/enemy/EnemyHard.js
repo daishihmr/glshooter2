@@ -223,11 +223,11 @@ gls2.EnemyHard.Honoka = tm.createClass({
         this.hp = 1500;
         this.score = 50000;
         this.boundingWidth = 200;
-        this.boundingHeight = 40;
+        this.boundingHeight = 80;
     },
     draw: function(canvas) {
         canvas.fillStyle = "yellow";
-        canvas.fillRect(-100, -20, 200, 40);
+        canvas.fillRect(-100, -40, 200, 80);
     },
 });
 gls2.EnemyHard.Honoka = gls2.EnemyHard.Honoka();

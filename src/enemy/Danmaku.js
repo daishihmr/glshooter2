@@ -1,59 +1,6 @@
 (function() {
 
 gls2.Danmaku = {};
-gls2.Danmaku.setup = function() {
-    for (var i = 0; i < 255; i++) {
-        bulletPool.push(gls2.Bullet());
-    }
-
-    var config = tm.bulletml.AttackPattern.defaultConfig;
-    config.isInsideOfWorld = function(b) {
-        return !(b instanceof gls2.Bullet) || !(b.x < -50 || SC_W+50 < b.x || b.y < -50 || SC_H+50 < b.y);
-    };
-    config.bulletFactory = function(spec) {
-        var b = bulletPool.shift(0);
-        if (b) {
-            activeList.push(b);
-            b.setFrameIndex((spec.frame === undefined) ? 1 : spec.frame);
-
-            if (spec.ball) {
-                b.scaleX = 1.0;
-                b.scaleY = 1.0;
-                b.updateProperties = false;
-                b.update = function() {
-                    this.rotation += 15;
-                };
-            } else {
-                b.scaleX = 0.8;
-                b.scaleY = 1.5;
-                b.updateProperties = true;
-            }
-
-            return b;
-        } else {
-            console.warn("弾が足りない！");
-        }
-    };
-    config.speedRate = 4;
-};
-/**
- * エフェクト付きの弾幕全消し
- */
-gls2.Danmaku.erase = function() {
-    var bullets = [].concat(activeList);
-    for (var i = 0, len = bullets.length; i < len; i++) {
-        bullets[i].destroy();
-    }
-};
-/**
- * エフェクトなしの弾幕全消し
- */
-gls2.Danmaku.clearAll = function() {
-    var copied = [].concat(activeList);
-    for (var i = 0, end = copied.length; i < end; i++) {
-        copied[i].remove();
-    }
-};
 
 /** bulletml.js DSL 名前空間 */
 var $ = bulletml.dsl;
@@ -69,6 +16,16 @@ var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("$rank*0.2 + 1.6
 
 /** 自機狙い弾 */
 var $fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3, $.bullet) };
+
+/** 自機狙いn-way弾 */
+var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {
+    return $.action([
+        $.fire($.direction(rangeFrom), speed, bullet, offsetX, offsetY, autonomy),
+        $.repeat(way, [
+            $.fire($.direction((rangeTo-rangeFrom)/way, "sequence"), speed, bullet, offsetX, offsetY, autonomy),
+        ])
+    ]);
+};
 
 gls2.Danmaku["basic0-0"] = new bulletml.Root({
     "top": $.action([
@@ -119,16 +76,19 @@ gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(3, [
             $.repeat(3, [
-                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
-                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
-                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
-                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
-                $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
-                $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
-                $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
-                $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
+                $.repeat(3, [
+                    $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
+                    $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
+                    $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
+                    $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
+                    $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
+                    $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
+                    $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
+                    $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
+                ]),
+                $.wait(90),
             ]),
-            $.wait(90),
+            $.wait(120),
         ]),
     ]),
     "top1": $.action([
@@ -143,47 +103,95 @@ gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
 
 gls2.Danmaku["honoka-1"] = new bulletml.Root({
     "top0": $.action([
+        $.wait(60),
         $.repeat(10, [
-            $.fire($.direction(-30), $spd3, $.bullet({ball:true,frame:4})),
-            $.repeat(60/18, [
-                $.fire($.direction(18, "sequence"), $spd3, $.bullet({ball:true,frame:4})),
-            ]),
+            $nway(6, -40, 40, $spd3, $.bullet({ball:true,frame:4})),
             $.wait(30),
-            $.fire($.direction(-39), $spd3, $.bullet({ball:true,frame:4})),
-            $.repeat(78/18, [
-                $.fire($.direction(18, "sequence"), $spd3, $.bullet({ball:true,frame:4})),
-            ]),
+            $nway(7, -40, 40, $spd2, $.bullet({ball:true,frame:4})),
             $.wait(30),
         ]),
     ]),
     "top1": $.action([
+        $.wait(60),
         $.repeat(5, [
-            $.fire($.direction(-6), $spd2, $.bullet({ball:true,frame:4})),
-            $.repeat(12/2, [
-                $.fire($.direction(2, "sequence"), $spd2, $.bullet({ball:true,frame:3})),
-            ]),
+            $nway(2, -2, 2, $spd2(2), $.bullet({frame:1})),
+            $nway(3, -3, 3, $spd2(3), $.bullet({frame:1})),
+            $nway(4, -4, 4, $spd2(4), $.bullet({frame:1})),
+            $nway(5, -5, 5, $spd2(5), $.bullet({frame:1})),
             $.wait(110),
         ]),
     ]),
     "top2": $.action([
         $.repeat(20, [
-            $.fire($.direction(-120-30, "absolute"), $spd1, $.bullet({ball:true,frame:2}), $.offsetX(-60)),
-            $.repeat(60/12, [
-                $.fire($.direction(12, "sequence"), $spd1, $.bullet({ball:true,frame:2}), $.offsetX(-60)),
-            ]),
+            $nway(12, +120, +20, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(-80)),
             $.wait(30),
         ]),
     ]),
     "top3": $.action([
         $.repeat(20, [
-            $.fire($.direction(+120+30, "absolute"), $spd1, $.bullet({ball:true,frame:0}), $.offsetX(+60)),
-            $.repeat(60/12, [
-                $.fire($.direction(-12, "sequence"), $spd1, $.bullet({ball:true,frame:0}), $.offsetX(+60)),
-            ]),
+            $nway(12, -120, -20, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(+80)),
             $.wait(30),
         ]),
     ]),
 });
+
+gls2.Danmaku.setup = function() {
+    for (var i = 0; i < 255; i++) {
+        bulletPool.push(gls2.Bullet());
+    }
+
+    var config = gls2.Danmaku.config = tm.bulletml.AttackPattern.defaultConfig;
+    config.isInsideOfWorld = function(b) {
+        return !(b instanceof gls2.Bullet) || !(b.x < -50 || SC_W+50 < b.x || b.y < -50 || SC_H+50 < b.y);
+    };
+    config.bulletFactory = function(spec) {
+        var b = bulletPool.shift(0);
+        if (b) {
+            activeList.push(b);
+            b.setFrameIndex((spec.frame === undefined) ? 1 : spec.frame);
+
+            if (spec.ball) {
+                b.scaleX = 1.0;
+                b.scaleY = 1.0;
+                b.updateProperties = false;
+                b.update = function() {
+                    this.rotation += 15;
+                };
+            } else {
+                b.scaleX = 0.8;
+                b.scaleY = 1.5;
+                b.updateProperties = true;
+            }
+
+            return b;
+        } else {
+            console.warn("弾が足りない！");
+        }
+    };
+    config.defaultIsInsideOfWorld = function(bullet) {
+        return -80 <= bullet.x && bullet.x < SC_W+80 && -80 <= bullet.y && bullet.y < SC_H+80;
+    };
+    config.speedRate = 4;
+    config.rank = 0.5;
+};
+/**
+ * エフェクト付きの弾幕全消し
+ */
+gls2.Danmaku.erase = function() {
+    var bullets = [].concat(activeList);
+    for (var i = 0, len = bullets.length; i < len; i++) {
+        bullets[i].destroy();
+    }
+};
+/**
+ * エフェクトなしの弾幕全消し
+ */
+gls2.Danmaku.clearAll = function() {
+    var copied = [].concat(activeList);
+    for (var i = 0, end = copied.length; i < end; i++) {
+        copied[i].remove();
+    }
+};
 
 /**
  * 弾クラス

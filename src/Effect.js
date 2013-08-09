@@ -111,7 +111,9 @@ gls2.Effect.genShockwaveL = function(x, y, scene) {
                 { offset: 1.0, color: "rgba(255,255,255,0)" },
             ])
             .toStyle()
-    }).setPosition(x, y).setScale(0.1, 0.1).addChildTo(scene);
+    }).setPosition(x, y).setScale(0.1, 0.1)
+    shockwave.isEffect = true;
+    shockwave.addChildTo(scene);
     shockwave.tweener.clear()
         .to({
             scaleX: 5,
@@ -240,6 +242,7 @@ gls2.ChargeEffect = tm.createClass({
     rad: 0,
     angle: 0,
     alpha : 1,
+    isEffect: true,
 
     reverse: false,
 

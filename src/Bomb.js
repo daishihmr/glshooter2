@@ -106,7 +106,7 @@ gls2.Bomb = tm.createClass({
                 .addChildTo(this.parent);
         }
         this.a += 0.04;
-        var theta = this.age * 0.02;
+        var theta = this.age * 0.015;
         this.r = Math.sin(theta) * 250;
 
         if (Math.PI * 2 < theta) {
@@ -188,6 +188,6 @@ gls2.MiniBomb = tm.createClass({
 });
 
 var origParticle = null;
-gls2.Bomb.attackPower = 2;
+gls2.Bomb.attackPower = 4;
 
 })();
