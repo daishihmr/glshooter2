@@ -116,6 +116,7 @@ gls2.Player = tm.createClass(
         this.hyperCircle0.blendMode = "lighter";
         this.hyperCircle0.update = function() {
             this.rotation += 2;
+            this.visible = gameScene.hyperGauge === 1;
         };
 
         this.hyperCircle1 = tm.app.CircleShape(80, 80, {
@@ -132,6 +133,32 @@ gls2.Player = tm.createClass(
         this.hyperCircle1.blendMode = "lighter";
         this.hyperCircle1.update = function() {
             this.rotation -= 2;
+            this.visible = gameScene.hyperGauge === 1;
+        };
+
+        this.hyperCircle2 = tm.app.CanvasElement(80, 80).addChildTo(this);
+        this.hyperCircle2.blendMode = "lighter";
+        this.hyperCircle2.strokeStyle = "rgba(180,180,255,0.8)";
+        this.hyperCircle2.rotation = -90;
+        this.hyperCircle2.update = function() {
+            this.visible = gameScene.isHyperMode;
+        };
+        this.hyperCircle2.draw = function(canvas) {
+            canvas.lineWidth = "6";
+            canvas.lineCap = "round";
+            var value = gameScene.hyperTime / gls2.Setting.HYPERMODE_TIME;
+            canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
+        };
+        this.hyperCircle3 = tm.app.CircleShape(80, 80, {
+            fillStyle: tm.graphics.RadialGradient(40,40,0,40,40,35).addColorStopList([
+                { offset:0.0, color:"rgba(0,0,0,0.0)" },
+                { offset:0.9, color:"rgba(0,0,0,0.8)" },
+                { offset:1.0, color:"rgba(0,0,0,0.0)" },
+            ]).toStyle(),
+            strokeStyle: "rgba(0,0,0,0)",
+        }).addChildTo(this);
+        this.hyperCircle3.update = function() {
+            this.visible = gameScene.isHyperMode;
         };
 
         if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
@@ -222,7 +249,7 @@ gls2.Player = tm.createClass(
             }
 
             if (kb.getKeyDown("x")) {
-                if (this.gameScene.hyperGauge === 1) {
+                if (this.gameScene.hyperGauge === 1 && !this.gameScene.isHyperMode) {
                     // ハイパー
                     this.gameScene.startHyperMode();
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
@@ -233,8 +260,6 @@ gls2.Player = tm.createClass(
                 }
             }
         }
-
-        this.hyperCircle0.visible = this.hyperCircle1.visible = this.gameScene.hyperGauge === 1;
 
         // ビット
         this.controlBit(kb);

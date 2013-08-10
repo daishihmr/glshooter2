@@ -187,6 +187,8 @@ gls2.EnemySoft.Tank = tm.createClass(
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
+
+        this.enableFire = this.y < this.player.y;
     },
 });
 
@@ -215,6 +217,8 @@ gls2.EnemySoft.TankRD = tm.createClass(
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
+
+        this.enableFire = this.y < this.player.y;
     },
 });
 gls2.EnemySoft.TankRD = gls2.EnemySoft.TankRD();
@@ -244,6 +248,8 @@ gls2.EnemySoft.TankL = tm.createClass(
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
+
+        this.enableFire = this.y < this.player.y;
     },
 });
 gls2.EnemySoft.TankL = gls2.EnemySoft.TankL();
@@ -270,6 +276,8 @@ gls2.EnemySoft.MiddleFighter1 = tm.createClass(
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
+
+        this.enableFire = this.y < this.player.y;
     },
 })
 gls2.EnemySoft.MiddleFighter1 = gls2.EnemySoft.MiddleFighter1();

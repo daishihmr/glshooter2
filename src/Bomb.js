@@ -188,6 +188,5 @@ gls2.MiniBomb = tm.createClass({
 });
 
 var origParticle = null;
-gls2.Bomb.attackPower = 4;
 
 })();

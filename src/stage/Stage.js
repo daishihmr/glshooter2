@@ -68,19 +68,11 @@ gls2.Stage = tm.createClass(
     },
 
     launchEnemy: function(data) {
-        var enemy = gls2.Enemy.pool.shift();
-        if (enemy) {
-            this.enemyCount += 1;
-            enemy
-                .setup(this.gameScene, this, data.soft, data.hard)
-                .setPosition(data.x, data.y)
-                .addChildTo(this.gameScene)
-                .onLaunch();
-            return enemy;
-        } else {
-            console.warn("敵が足りない！");
-            return null;
-        }
+        this.enemyCount += 1;
+        return gls2.Enemy(this.gameScene, this, data.soft, data.hard)
+            .setPosition(data.x, data.y)
+            .addChildTo(this.gameScene)
+            .onLaunch();
     },
 
     onDestroyEnemy: function(enemy) {

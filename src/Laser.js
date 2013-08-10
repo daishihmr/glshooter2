@@ -11,7 +11,6 @@ gls2.Laser = tm.createClass(
     superClass: tm.app.Sprite,
     player: null,
     gameScene: null,
-    attackPower: 0,
 
     _hitY: 0,
     frame: 0,
@@ -179,12 +178,10 @@ gls2.Laser = tm.createClass(
         if (color === "hyper") {
             this.width = 75;
             this.boundingWidth = 75;
-            this.attackPower = 4;
             this.head.setScale(1.5, 1.5);
         } else {
             this.width = 50;
             this.boundingWidth = 50;
-            this.attackPower = 2;
             this.head.setScale(1.0, 1.0);
         }
 

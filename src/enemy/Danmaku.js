@@ -27,6 +27,15 @@ var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, a
     ]);
 };
 
+var $absoluteNway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {
+    return $.action([
+        $.fire($.direction(rangeFrom, "absolute"), speed, bullet, offsetX, offsetY, autonomy),
+        $.repeat(way, [
+            $.fire($.direction((rangeTo-rangeFrom)/way, "sequence"), speed, bullet, offsetX, offsetY, autonomy),
+        ])
+    ]);
+};
+
 gls2.Danmaku["basic0-0"] = new bulletml.Root({
     "top": $.action([
         $fire0,
@@ -52,7 +61,7 @@ gls2.Danmaku["basic0-4"] = new bulletml.Root({
 gls2.Danmaku["basic1-0"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
-            $fire0,
+            $fire0($spd5),
             $.wait(20),
         ]),
     ]),
@@ -123,13 +132,13 @@ gls2.Danmaku["honoka-1"] = new bulletml.Root({
     ]),
     "top2": $.action([
         $.repeat(20, [
-            $nway(12, +120, +20, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(-80)),
+            $absoluteNway(12, -10, -170, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(-80)),
             $.wait(30),
         ]),
     ]),
     "top3": $.action([
         $.repeat(20, [
-            $nway(12, -120, -20, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(+80)),
+            $absoluteNway(12, +10, +170, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(+80)),
             $.wait(30),
         ]),
     ]),

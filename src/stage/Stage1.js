@@ -57,21 +57,36 @@ gls2.Stage1 = tm.createClass(
 
         this.seq.add(150, "yukishiro", true);
 
-        this.seq.add(100, "heri1-left");
-        this.seq.add(100, "heri1-center");
-        this.seq.add(100, "heri1-right");
-        this.seq.add(100, "heri1-left");
-        this.seq.add(100, "heri1-center");
-        this.seq.add(100, "heri1-right");
-        this.seq.add(100, "heri1-left");
-        this.seq.add(100, "heri1-center");
-        this.seq.add(100, "heri1-right");
-        this.seq.add(100, "heri1-left");
-        this.seq.add(100, "heri1-center");
-        this.seq.add(100, "heri1-right");
-        this.seq.add(100, "heri1-left");
-        this.seq.add(100, "heri1-center");
-        this.seq.add(100, "heri1-right");
+        this.seq.add( 50, "heri2-left");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "heri2-left");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "fighter-m-0");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "heri2-left");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "fighter-m-6");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "heri2-left");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "fighter-m-0");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "heri2-left");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "fighter-m-2");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "heri2-left");
+        this.seq.add( 50, "heri2-center");
+        this.seq.add( 50, "heri2-right");
 
         this.seq.add(100, "fighter-m-2");
     },

@@ -43,6 +43,8 @@ gls2.GameScene = tm.createClass(
     hyperRank: 0,
     /** ハイパーモード中 */
     isHyperMode: false,
+    /** ハイパーモード無敵残り時間 */
+    hyperMutekiTime: 0,
     /** ハイパーモード残り時間 */
     hyperTime: 0,
 
@@ -134,15 +136,16 @@ gls2.GameScene = tm.createClass(
                 this.endHyperMode();
             }
         }
+        this.hyperMutekiTime = Math.max(this.hyperMutekiTime-1, 0);
 
         if (app.frame % 5 === 0) this.scoreLabel.update();
 
-        this.comboGauge -= this.isHyperMode ? 0.01 : 0.02;
+        this.comboGauge -= gls2.Setting.COMBO_GAUGE_DECR * gls2.Setting.COMBO_GAUGE_DECR_RATE_WHEN_HYPERMODE;
         if (this.comboGauge <= 0) {
             if (this.comboCount > 0) {
-                this.baseScore = this.baseScore * (this.comboCount-6)/this.comboCount;
+                this.baseScore = this.baseScore * (this.comboCount-gls2.Setting.COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO)/this.comboCount;
             }
-            this.comboCount -= 6;
+            this.comboCount -= gls2.Setting.COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO;
             if (this.comboCount < 0) {
                 this.baseScore = 0;
                 this.comboCount = 0;
@@ -178,11 +181,11 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(e, shot)) {
                     shot.genParticle(1);
                     shot.remove();
-                    if (e.damage(shot.attackPower)) {
-                        if (this.isHyperMode === false) this.addHyperGauge(0.01);
+                    if (e.damage(this.isHyperMode ? gls2.Setting.HYPER_SHOT_ATTACK_POWER : gls2.Setting.SHOT_ATTACK_POWER)) {
+                        if (this.isHyperMode === false) this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_SHOT);
 
                         this.addCombo(1);
-                        this.baseScore += e.score*(~~(this.comboCount / 200) + 1);
+                        this.baseScore += e.score*(~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
                         this.addScore(this.baseScore);
                         enemies.erase(e);
                         break;
@@ -203,16 +206,16 @@ gls2.GameScene = tm.createClass(
                 var e = enemies[i];
                 if (gls2.Collision.isHit(e, laser)) {
                     laser.setHitY(e.y + e.boundingHeightBottom);
-                    if (e.damage(laser.attackPower)) {
-                        this.addHyperGauge(0.01);
+                    if (e.damage(this.isHyperMode ? gls2.Setting.HYPER_LASER_ATTACK_POWER : gls2.Setting.LASER_ATTACK_POWER)) {
+                        this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER);
 
                         this.addCombo(1);
-                        this.baseScore += e.score*(~~(this.comboCount / 200) + 1);
+                        this.baseScore += e.score*(~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
                         this.addScore(this.baseScore);
                     } else {
                         this.addCombo(0.01);
                         this.comboGauge = Math.max(this.comboGauge, 0.05);
-                        this.addHyperGauge(0.001);
+                        this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT);
                     }
                     laser.genParticle(2);
                     break;
@@ -231,16 +234,16 @@ gls2.GameScene = tm.createClass(
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
                 if (gls2.Collision.isHit(e, aura)) {
-                    if(e.damage(laser.attackPower)) {
-                        this.addHyperGauge(0.02);
+                    if(e.damage(this.isHyperMode ? gls2.Setting.HYPER_AURA_ATTACK_POWER : gls2.Setting.AURA_ATTACK_POWER)) {
+                        this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA);
 
                         this.addCombo(1);
-                        this.baseScore += e.score*(~~(this.comboCount / 200) + 1);
+                        this.baseScore += e.score*(~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
                         this.addScore(this.baseScore);
                     } else {
                         this.addCombo(0.01);
                         this.comboGauge = Math.max(this.comboGauge, 0.05);
-                        this.addHyperGauge(0.002);
+                        this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA_HIT);
                     }
                     laser.genAuraParticle(2, this.player.x, this.player.y-30);
                 }
@@ -255,14 +258,14 @@ gls2.GameScene = tm.createClass(
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
                 if (e.isInScreen()) {
-                    e.damage(gls2.Bomb.attackPower);
+                    e.damage(gls2.Setting.BOMB_ATTACK_POWER);
                 }
             }
             this.comboCount = 0;
             this.comboGauge = 0;
         }
 
-        // TODO? ショットvs敵弾
+        // ショットvs敵弾
         if (this.isHyperMode) {
             var shotBullets = [].concat(gls2.ShotBullet.activeList);
             for (var s = shotBullets.length; shotBullets[--s] !== undefined;) {
@@ -273,6 +276,7 @@ gls2.GameScene = tm.createClass(
                     if (gls2.Collision.isHit(shot, bullet)) {
                         bullet.hp -= (6 - this.hyperRank);
                         if (bullet.hp < 0) {
+                            shot.remove();
                             bullet.destroy();
                             this.addCombo(1);
                         }
@@ -281,7 +285,7 @@ gls2.GameScene = tm.createClass(
             }
         }
 
-        if (this.player.muteki === false && this.isBombActive === false) {
+        if (this.player.muteki === false && this.isBombActive === false && this.hyperMutekiTime <= 0) {
 
             // 敵弾vs自機
             for (var i = gls2.Bullet.activeList.length; gls2.Bullet.activeList[--i] !== undefined;) {
@@ -339,6 +343,9 @@ gls2.GameScene = tm.createClass(
 
         this.player = gls2.Player(this, playerType);
         this.startStage(0);
+
+        this.endHyperMode();
+        this.isBombActive = false;
 
         // this.startRec();
     },
@@ -435,7 +442,7 @@ gls2.GameScene = tm.createClass(
     },
 
     addCombo: function(v) {
-        if (this.isHyperMode) v *= 7;
+        if (this.isHyperMode) v *= gls2.Setting.COMBO_RATE_WHEN_HYPERMODE;
 
         this.comboCount += v;
         this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
@@ -446,9 +453,9 @@ gls2.GameScene = tm.createClass(
         if (0<v && this.hyperGauge === 1) return;
         if (v<0 && this.hyperGauge === 0) return;
 
-        if (this.isHyperMode) v *= 2;
+        if (this.isHyperMode) v *= gls2.Setting.HYPER_CHARGE_RATE_WHEN_HYPERMODE;
 
-        this.hyperGauge = Math.clamp(this.hyperGauge + v, 0, 1);
+        this.hyperGauge = Math.clamp(this.hyperGauge + v*gls2.Setting.HYPER_CHARGE_RATE, 0, 1);
         if (this.hyperGauge === 1) {
             this.println("hyper system, ready.", true);
             gls2.ChargeEffect(this.player).addChildTo(this);
@@ -463,7 +470,8 @@ gls2.GameScene = tm.createClass(
         this.isHyperMode = true;
         this.hyperGauge = 0;
         this.hyperRank = Math.min(this.hyperRank + 1, 5);
-        this.hyperTime = 600;
+        this.hyperTime = gls2.Setting.HYPERMODE_TIME;
+        this.hyperMutekiTime = gls2.Setting.HYPERMODE_START_MUTEKI_TIME;
 
         this.player.currentShotPool = this.player.hyperShotPool;
         this.player.laser.setColor("hyper");
@@ -471,7 +479,7 @@ gls2.GameScene = tm.createClass(
         gls2.Effect.genShockwaveL(this.player.x, this.player.y, this);
 
         // すべての弾を消す
-        // gls2.Danmaku.erase();
+        gls2.Danmaku.erase();
     },
 
     endHyperMode: function() {
@@ -481,9 +489,15 @@ gls2.GameScene = tm.createClass(
 
         gls2.ChargeEffect(this.player, true).addChildTo(this);
 
-        // TODO
         this.player.currentShotPool = this.player.normalShotPool;
+        // TODO 自機タイプのよって変える
         this.player.laser.setColor("blue");
+
+        this.hyperMutekiTime = gls2.Setting.HYPERMODE_END_MUTEKI_TIME;
+        this.hyperTime = 0;
+
+        // すべての弾を消す
+        gls2.Danmaku.erase();
     },
 
     extendZanki: function() {

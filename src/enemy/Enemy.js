@@ -30,7 +30,7 @@ gls2.Enemy = tm.createClass(
     /**
      * @constructs
      */
-    init: function() {
+    init: function(gameScene, stage, software, hardware) {
         this.superInit();
 
         this.addEventListener("completeattack", function() {
@@ -38,35 +38,17 @@ gls2.Enemy = tm.createClass(
         });
         this.addEventListener("added", function() {
             this.frame = 0;
-            this.entered = false;
-            this.enableFire = true;
             activeList.push(this);
         });
         this.addEventListener("removed", function() {
-            // var listeners = [].concat(this._listeners["enterframe"]);
-            // if (listeners) {
-            //     for (var i = 0, len = listeners.length; i < len; i++) {
-            //         if (listeners[i] && listeners[i].isDanmaku) {
-            //             this.removeEventListener("enterframe", listeners[i]);
-            //         }
-            //     }
-            // }
-
-            this.clearEventListener("enterframe");
             this.dispatchEvent(tm.event.Event("enemyconsumed"));
-            this.clearEventListener("enemyconsumed");
-
-            this.tweener.clear();
-
-            this.scaleX = this.scaleY = 1;
-            this.isGround = false;
-
-            enemyPool.push(this);
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);
         });
-    },
-    setup: function(gameScene, stage, software, hardware) {
+
+        this.enableFire = true;
+        this.entered = false;
+
         this.gameScene = gameScene;
         this.player = gameScene.player;
         this.stage = stage;
@@ -86,12 +68,12 @@ gls2.Enemy = tm.createClass(
         }
 
         this.velocity = {x:0, y:0};
-
-        return this;
     },
     onLaunch: function() {
         this.soft.onLaunch.apply(this);
         this.hard.onLaunch.apply(this);
+
+        return this;
     },
     onCompleteAttack: function() {
         this.soft.onCompleteAttack.apply(this);
@@ -127,12 +109,12 @@ gls2.Enemy = tm.createClass(
         if (this.hp <= 0) {
             this.hard.destroy.apply(this);
 
-            var r = gls2.math.rand(0, 2);
-            if (r === 0) {
+            var r = gls2.math.randf(0, 5);
+            if (r < 2) {
                 this.gameScene.println("enemy destroy.");
-            } else if (r === 1) {
+            } else if (r < 4) {
                 this.gameScene.println(this.name + " destroy.");
-            } else if (r === 2) {
+            } else {
                 this.gameScene.println("ETR reaction gone.")
             }
 
@@ -178,9 +160,5 @@ gls2.Enemy.clearAll = function() {
 };
 
 var activeList = gls2.Enemy.activeList = [];
-var enemyPool = gls2.Enemy.pool = [];
-for (var i = 0; i < 256; i++) {
-    enemyPool.push(gls2.Enemy());
-}
 
 })();
