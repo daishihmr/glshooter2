@@ -3,6 +3,8 @@
 gls2.Bomb = tm.createClass({
     superClass: tm.app.Object2D,
 
+    isEffect: true,
+
     gameScene: null,
 
     init: function(player, gameScene) {

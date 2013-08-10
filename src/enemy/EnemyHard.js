@@ -18,6 +18,8 @@ gls2.EnemyHard = tm.createClass(
     },
     update: function() {
     },
+    onenter: function() {
+    },
     draw: function(canvas) {
     },
     destroy: function() {

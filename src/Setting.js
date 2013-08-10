@@ -78,7 +78,7 @@ gls2.Setting = {
     HYPER_CHARGE_BY_AURA_HIT: 0.002,
 
     /**
-     * ハイパーゲージチャージ基本速度
+     * ハイパーゲージチャージ基本係数
      * @const
      */
     HYPER_CHARGE_RATE: 0.75,
@@ -126,16 +126,21 @@ gls2.Setting = {
     COMBO_GAUGE_DECR_RATE_WHEN_HYPERMODE: 0.5,
 
     /**
-     * 1フレームあたりのコンボゲージゼロ時のコンボ数減少値
+     * 1フレームあたりのコンボゲージゼロ時のコンボ数減少率
      * @const
      */
-    COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO: 6,
+    COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO: 0.01,
 
     /**
      * コンボボーナス。何点ごとに倍率が1上がるか
      * @const
      */
     COMBO_BONUS: 200,
+
+    /**
+     * 弾破壊時のスコア
+     */
+    BULLET_SCORE: 50,
 
 };
 

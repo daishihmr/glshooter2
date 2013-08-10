@@ -257,9 +257,9 @@ tm.bulletml = tm.bulletml || {};
 
             action = action || "top";
             if (typeof (action) === "string") {
-                ticker.walker = this._bulletml.getWalker(action, config.rank);
+                ticker.walker = this._bulletml.getWalker(action);
             } else if (action instanceof bulletml.Bullet) {
-                ticker.walker = action.getWalker(config.rank);
+                ticker.walker = action.getWalker();
             } else {
                 window.console.error(config, action);
                 throw new Error("引数が不正");
@@ -611,7 +611,8 @@ tm.bulletml = tm.bulletml || {};
         /** @type {number} */
         speedRate: 2,
         /** @type {tm.app.Element} */
-        target: null
+        target: null,
+        globalScope: {},
     };
 
     /**

@@ -16,6 +16,8 @@ gls2.EnemySoft = tm.createClass(
     },
     update: function() {
     },
+    onenter: function() {
+    },
 });
 
 var attack = function(enemy, danmakuName) {
@@ -177,9 +179,11 @@ gls2.EnemySoft.Tank = tm.createClass(
         this.superInit();
     },
     setup: function() {
-        attack(this, "basic2-0");
         this.speed = 0.8;
         this.dir = 0;
+    },
+    onenter: function() {
+        attack(this, "basic2-0");
     },
     update: function() {
         this.x += Math.cos(this.dir) * this.speed;
@@ -207,9 +211,11 @@ gls2.EnemySoft.TankRD = tm.createClass(
         this.superInit();
     },
     setup: function() {
-        attack(this, "basic2-0");
         this.speed = 0.7;
         this.dir = Math.PI*0.25;
+    },
+    onenter: function() {
+        attack(this, "basic2-0");
     },
     update: function() {
         this.x += Math.cos(this.dir) * this.speed;
@@ -238,9 +244,11 @@ gls2.EnemySoft.TankL = tm.createClass(
         this.superInit();
     },
     setup: function() {
-        attack(this, "basic2-0");
         this.speed = 1.0;
         this.dir = Math.PI;
+    },
+    onenter: function() {
+        attack(this, "basic2-0");
     },
     update: function() {
         this.x += Math.cos(this.dir) * this.speed;

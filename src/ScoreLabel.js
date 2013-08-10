@@ -51,11 +51,14 @@ gls2.ScoreLabel = tm.createClass(
         this.fillText(text, SC_W*0.4, 22);
 
         this.setText("bold 18px Orbitron", "left", "top");
-        this.strokeText("max " + ~~this.gameScene.maxComboCount + " hit", 10, 85);
+        this.strokeText("rank " + ~~(bulletml.Bullet.globalScope.$rank*100), 10, 85);
+
+        this.setText("bold 18px Orbitron", "left", "top");
+        this.strokeText("max " + ~~this.gameScene.maxComboCount + " hit", 10, 105);
 
         if (0 < ~~this.gameScene.comboCount) {
             this.setText("bold 40px Orbitron", "left", "top");
-            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 100);
+            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 125);
         }
 
         for (var i = 0; i < this.gameScene.zanki-1; i++) {

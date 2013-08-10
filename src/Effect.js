@@ -276,4 +276,39 @@ gls2.ChargeEffect = tm.createClass({
 
 });
 
+gls2.StartHyperEffect = tm.createClass({
+    superClass: tm.app.Object2D,
+
+    target: null,
+    angle: 0,
+    isEffect: true,
+
+    init: function(target) {
+        this.superInit();
+        this.target = target;
+
+        this.angle = 0;
+    },
+
+    update: function() {
+        if (this.target.parent === null) {
+            this.remove();
+            return;
+        }
+
+        for (var i = 0; i < 5; i++) {
+            gls2.Particle(80, 1, 0.9)
+                .setPosition(
+                    Math.cos(this.angle-Math.PI*0.5)*40+this.target.x + Math.rand(-2, 2),
+                    Math.sin(this.angle-Math.PI*0.5)*40+this.target.y + Math.rand(-2, 2)
+                )
+                .addChildTo(this.target.parent);
+        }
+
+        this.angle += 0.2;
+        if (Math.PI*2 < this.angle) this.remove();
+    },
+
+});
+
 })();

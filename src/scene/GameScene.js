@@ -21,6 +21,8 @@ gls2.GameScene = tm.createClass(
     maxComboCount: 0,
     /** コンボゲージ */
     comboGauge: 0,
+    /** コンボダウン */
+    comboDown: 0,
 
     stage: null,
     ground: null,
@@ -59,9 +61,6 @@ gls2.GameScene = tm.createClass(
     lastElement: null,
 
     scoreLabel: null,
-
-    /** ランク(0.0～1.0) */
-    rank: 0,
 
     init: function() {
         if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
@@ -106,14 +105,8 @@ gls2.GameScene = tm.createClass(
             } else {
                 this.enemyLayer.addChild(child);
             }
-        } else if (child.isEffect
-            || child instanceof gls2.BackfireParticle
-            || child instanceof gls2.ShotBullet
-            || child instanceof gls2.Laser
-            || child instanceof gls2.Bomb) {
+        } else if (child.isEffect) {
             this.effectLayer0.addChild(child);
-        } else if (child instanceof gls2.Particle) {
-            this.effectLayer1.addChild(child);
         } else if (child instanceof gls2.Bullet) {
             this.bulletLayer.addChild(child);
         } else if (child === this.lastElement
@@ -142,15 +135,19 @@ gls2.GameScene = tm.createClass(
 
         this.comboGauge -= gls2.Setting.COMBO_GAUGE_DECR * gls2.Setting.COMBO_GAUGE_DECR_RATE_WHEN_HYPERMODE;
         if (this.comboGauge <= 0) {
-            if (this.comboCount > 0) {
-                this.baseScore = this.baseScore * (this.comboCount-gls2.Setting.COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO)/this.comboCount;
-            }
-            this.comboCount -= gls2.Setting.COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO;
-            if (this.comboCount < 0) {
-                this.baseScore = 0;
-                this.comboCount = 0;
-            }
             this.comboGauge = 0;
+            if (this.comboCount > 0) {
+                if (this.comboDown === 0) {
+                    this.comboDown = this.comboCount * gls2.Setting.COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO;
+                }
+                this.baseScore = this.baseScore * (this.comboCount-this.comboDown)/this.comboCount;
+                this.comboCount -= this.comboDown;
+                if (this.comboCount < 0) {
+                    this.baseScore = 0;
+                    this.comboCount = 0;
+                    this.comboDown = 0;
+                }
+            }
         }
 
         if (app.keyboard.getKeyDown("escape")) {
@@ -279,6 +276,8 @@ gls2.GameScene = tm.createClass(
                             shot.remove();
                             bullet.destroy();
                             this.addCombo(1);
+                            this.baseScore += gls2.Setting.BULLET_SCORE*(~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+                            this.addScore(this.baseScore);
                         }
                     }
                 }
@@ -293,6 +292,7 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(b, this.player)) {
                     this.player.damage();
                     if (this.bomb > 0) {
+                        bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank-0.01, 0, 1);
                         gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                     } else {
                         this.miss();
@@ -308,6 +308,7 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(e, this.player)) {
                     this.player.damage();
                     if (this.bomb > 0) {
+                        bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank-0.01, 0, 1);
                         gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                     } else {
                         this.miss();
@@ -395,6 +396,12 @@ gls2.GameScene = tm.createClass(
         this.player.controllable = false;
         this.player.remove();
         this.zanki -= 1;
+        this.comboGauge = 0;
+        this.comboCount = 0;
+        this.comboDown = 0;
+
+        bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank-0.03, 0, 1);
+
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
                 this.bombMax = Math.min(this.bombMax + 1, this.bombMaxMax);
@@ -444,6 +451,7 @@ gls2.GameScene = tm.createClass(
     addCombo: function(v) {
         if (this.isHyperMode) v *= gls2.Setting.COMBO_RATE_WHEN_HYPERMODE;
 
+        this.comboDown = 0;
         this.comboCount += v;
         this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
         if (1 <= v) this.comboGauge = 1;
@@ -470,6 +478,10 @@ gls2.GameScene = tm.createClass(
         this.isHyperMode = true;
         this.hyperGauge = 0;
         this.hyperRank = Math.min(this.hyperRank + 1, 5);
+
+        bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank+0.01, 0, 1);
+        bulletml.Bullet.globalScope.$hyperOff = 0.5;
+
         this.hyperTime = gls2.Setting.HYPERMODE_TIME;
         this.hyperMutekiTime = gls2.Setting.HYPERMODE_START_MUTEKI_TIME;
 
@@ -492,6 +504,8 @@ gls2.GameScene = tm.createClass(
         this.player.currentShotPool = this.player.normalShotPool;
         // TODO 自機タイプのよって変える
         this.player.laser.setColor("blue");
+
+        bulletml.Bullet.globalScope.$hyperOff = 1.0;
 
         this.hyperMutekiTime = gls2.Setting.HYPERMODE_END_MUTEKI_TIME;
         this.hyperTime = 0;

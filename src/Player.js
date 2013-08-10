@@ -106,34 +106,34 @@ gls2.Player = tm.createClass(
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
                 { offset:0.0, color:"rgba(255,255,100,0.0)" },
-                { offset:0.3, color:"rgba(255,255,100,0.1)" },
+                { offset:0.4, color:"rgba(255,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
-                { offset:0.7, color:"rgba(255,255,100,0.1)" },
+                { offset:0.6, color:"rgba(255,255,100,0.1)" },
                 { offset:1.0, color:"rgba(255,255,100,0.0)" },
             ]).toStyle(),
-            lineWidth: 2.0,
+            lineWidth: 4.0,
         }).addChildTo(this);
         this.hyperCircle0.blendMode = "lighter";
         this.hyperCircle0.update = function() {
             this.rotation += 2;
-            this.visible = gameScene.hyperGauge === 1;
+            this.visible = gameScene.hyperGauge === 1 && !gameScene.isHyperMode;
         };
 
         this.hyperCircle1 = tm.app.CircleShape(80, 80, {
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
                 { offset:0.0, color:"rgba(255,255,100,0.0)" },
-                { offset:0.3, color:"rgba(255,255,100,0.1)" },
+                { offset:0.4, color:"rgba(255,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
-                { offset:0.7, color:"rgba(255,255,100,0.1)" },
+                { offset:0.6, color:"rgba(255,255,100,0.1)" },
                 { offset:1.0, color:"rgba(255,255,100,0.0)" },
             ]).toStyle(),
-            lineWidth: 2.0,
+            lineWidth: 4.0,
         }).addChildTo(this);
         this.hyperCircle1.blendMode = "lighter";
         this.hyperCircle1.update = function() {
             this.rotation -= 2;
-            this.visible = gameScene.hyperGauge === 1;
+            this.visible = gameScene.hyperGauge === 1 && !gameScene.isHyperMode;
         };
 
         this.hyperCircle2 = tm.app.CanvasElement(80, 80).addChildTo(this);
@@ -147,19 +147,21 @@ gls2.Player = tm.createClass(
             canvas.lineCap = "round";
             var value = gameScene.hyperTime / gls2.Setting.HYPERMODE_TIME;
 
-            canvas.strokeStyle = "rgba(180,180,255,0.4)";
+            canvas.strokeStyle = "rgba(50,50,255,0.4)";
             canvas.lineWidth = "10";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
+            canvas.strokeStyle = "rgba(100,100,255,0.4)";
             canvas.lineWidth = "6";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
+            canvas.strokeStyle = "rgba(180,180,255,0.4)";
             canvas.lineWidth = "2";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
         };
         this.hyperCircle3 = tm.app.CircleShape(80, 80, {
             fillStyle: tm.graphics.RadialGradient(40,40,0,40,40,35).addColorStopList([
-                { offset:0.0, color:"rgba(0,0,0,0.0)" },
-                { offset:0.9, color:"rgba(0,0,0,0.8)" },
-                { offset:1.0, color:"rgba(0,0,0,0.0)" },
+                { offset:0.0, color:"rgba(0,0,50,0.0)" },
+                { offset:0.9, color:"rgba(0,0,50,0.8)" },
+                { offset:1.0, color:"rgba(0,0,50,0.0)" },
             ]).toStyle(),
             strokeStyle: "rgba(0,0,0,0)",
         }).addChildTo(this);
@@ -258,8 +260,10 @@ gls2.Player = tm.createClass(
                 if (this.gameScene.hyperGauge === 1 && !this.gameScene.isHyperMode) {
                     // ハイパー
                     this.gameScene.startHyperMode();
+                    gls2.StartHyperEffect(this).addChildTo(this.gameScene);
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
                     // ボム
+                    bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank-0.02, 0, 1);
                     gls2.Bomb(this, this.gameScene)
                         .setPosition(Math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);

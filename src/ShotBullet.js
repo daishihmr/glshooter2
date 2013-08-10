@@ -6,6 +6,8 @@ gls2.ShotBullet = tm.createClass({
     superClass: tm.app.Sprite,
     speed: 0,
 
+    isEffect: true,
+
     init: function(color) {
         var SZ = 64;
         this.superInit("shotbullet", SZ, SZ);

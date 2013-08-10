@@ -80,9 +80,12 @@ gls2.Enemy = tm.createClass(
         this.hard.onCompleteAttack.apply(this);
     },
     update: function() {
-        if (0 <= this.x - this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
+        if (this.entered === false
+            && 0 <= this.x - this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
             && 0 <= this.y - this.boundingHeightTop && this.y + this.boundingHeightBottom < SC_H) {
             this.entered = true;
+            this.soft.onenter.apply(this);
+            this.hard.onenter.apply(this);
         }
 
         var before = {

@@ -24,6 +24,8 @@ gls2.Laser = tm.createClass(
     foot: null,
     aura: null,
 
+    isEffect: true,
+
     init: function(player, textures) {
         this.player = player;
         this.gameScene = player.gameScene;
