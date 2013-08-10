@@ -11,9 +11,14 @@
     font-family: Orbitron;
     src: url(Orbitron-Regular.ttf) format("truetype");
 }
+@font-face {
+    font-family: 'Ubuntu Mono';
+    src: url(UbuntuMono-Bold.ttf) format("truetype");
+}
 </style>
 </head>
 <body style="text-align:center;background:#000011">
+<canvas id="background"></canvas>
 <canvas id="canvas2d"></canvas>
 <canvas id="scoreLabel"></canvas>
 
@@ -26,14 +31,18 @@
 
 <script src="src/main.js"></script>
 <script src="src/GlShooter2.js"></script>
+<script src="src/Setting.js"></script>
 <script src="src/Player.js"></script>
 <script src="src/ShotBullet.js"></script>
 <script src="src/Laser.js"></script>
 <script src="src/Bomb.js"></script>
-<script src="src/Stage.js"></script>
 <script src="src/StageData.js"></script>
 <script src="src/Effect.js"></script>
 <script src="src/ScoreLabel.js"></script>
+<script src="src/Ground.js"></script>
+
+<script src="src/stage/Stage.js"></script>
+<script src="src/stage/Stage1.js"></script>
 
 <script src="src/common/Collision.js"></script>
 <script src="src/common/Scene.js"></script>
@@ -47,7 +56,6 @@
 <script src="src/scene/GameScene.js"></script>
 <script src="src/scene/ResultScene.js"></script>
 <script src="src/scene/GameOverScene.js"></script>
-<script src="src/scene/ContinueConfirmScene.js"></script>
 <script src="src/scene/EndingScene.js"></script>
 
 <script src="src/enemy/Enemy.js"></script>

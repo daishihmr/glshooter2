@@ -6,6 +6,7 @@ gls2.Particle = tm.createClass({
     alphaDecayRate: 0.85,
     size: 0,
     image: null,
+    isEffect: true,
 
     /**
      * @param {number} size サイズ

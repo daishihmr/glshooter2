@@ -36,12 +36,16 @@ gls2.Player = tm.createClass(
     muteki: false,
     gameScene : null,
 
-    /** ハイパーゲージ(0～100) */
-    hyperGauge: 100,
-
     /** @protected */
     speed: 4.5,
     bits: null,
+
+    /** @type {gls2.ShotBulletPool0} */
+    currentShotPool: null,
+    /** @type {gls2.ShotBulletPool0} */
+    normalShotPool: null,
+    /** @type {gls2.ShotBulletPool0} */
+    hyperShotPool: null,
 
     /** @type {gls2.Laser} */
     laser: null,
@@ -60,7 +64,11 @@ gls2.Player = tm.createClass(
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
+        this.boundingRadius = 2;
         this.altitude = 10;
+
+        this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type, 100);
+        this.hyperShotPool = gls2.ShotBulletPool(3, 100);
 
         this.laser = gls2.Laser(this, {
             "redBody": "laserR",
@@ -70,7 +78,7 @@ gls2.Player = tm.createClass(
             "head": "laserHead",
             "foot": "laserFoot",
             "aura": "aura",
-        }, 50);
+        });
         this.laser.visible = false;
         this.laser.addChildTo(gameScene);
 
@@ -97,34 +105,71 @@ gls2.Player = tm.createClass(
         this.hyperCircle0 = tm.app.CircleShape(80, 80, {
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
-                { offset:0.0, color:"rgba(100,100,255,0.0)" },
-                { offset:0.3, color:"rgba(100,100,255,0.1)" },
+                { offset:0.0, color:"rgba(255,255,100,0.0)" },
+                { offset:0.4, color:"rgba(255,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
-                { offset:0.7, color:"rgba(100,100,255,0.1)" },
-                { offset:1.0, color:"rgba(100,100,255,0.0)" },
+                { offset:0.6, color:"rgba(255,255,100,0.1)" },
+                { offset:1.0, color:"rgba(255,255,100,0.0)" },
             ]).toStyle(),
-            lineWidth: 2.0,
+            lineWidth: 4.0,
         }).addChildTo(this);
         this.hyperCircle0.blendMode = "lighter";
         this.hyperCircle0.update = function() {
             this.rotation += 2;
+            this.visible = gameScene.hyperGauge === 1 && !gameScene.isHyperMode;
         };
 
         this.hyperCircle1 = tm.app.CircleShape(80, 80, {
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
-                { offset:0.0, color:"rgba(100,100,255,0.0)" },
-                { offset:0.3, color:"rgba(100,100,255,0.1)" },
+                { offset:0.0, color:"rgba(255,255,100,0.0)" },
+                { offset:0.4, color:"rgba(255,255,100,0.1)" },
                 { offset:0.5, color:"rgba(255,255,255,1.0)" },
-                { offset:0.7, color:"rgba(100,100,255,0.1)" },
-                { offset:1.0, color:"rgba(100,100,255,0.0)" },
+                { offset:0.6, color:"rgba(255,255,100,0.1)" },
+                { offset:1.0, color:"rgba(255,255,100,0.0)" },
             ]).toStyle(),
-            lineWidth: 2.0,
+            lineWidth: 4.0,
         }).addChildTo(this);
         this.hyperCircle1.blendMode = "lighter";
         this.hyperCircle1.update = function() {
             this.rotation -= 2;
+            this.visible = gameScene.hyperGauge === 1 && !gameScene.isHyperMode;
         };
+
+        this.hyperCircle2 = tm.app.CanvasElement(80, 80).addChildTo(this);
+        this.hyperCircle2.blendMode = "lighter";
+        this.hyperCircle2.rotation = -90;
+        this.hyperCircle2.strokeStyle = "rgba(180,180,255,0.4)";
+        this.hyperCircle2.update = function() {
+            this.visible = gameScene.isHyperMode;
+        };
+        this.hyperCircle2.draw = function(canvas) {
+            canvas.lineCap = "round";
+            var value = gameScene.hyperTime / gls2.Setting.HYPERMODE_TIME;
+
+            canvas.strokeStyle = "rgba(50,50,255,0.4)";
+            canvas.lineWidth = "10";
+            canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
+            canvas.strokeStyle = "rgba(100,100,255,0.4)";
+            canvas.lineWidth = "6";
+            canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
+            canvas.strokeStyle = "rgba(180,180,255,0.4)";
+            canvas.lineWidth = "2";
+            canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
+        };
+        this.hyperCircle3 = tm.app.CircleShape(80, 80, {
+            fillStyle: tm.graphics.RadialGradient(40,40,0,40,40,35).addColorStopList([
+                { offset:0.0, color:"rgba(0,0,50,0.0)" },
+                { offset:0.9, color:"rgba(0,0,50,0.8)" },
+                { offset:1.0, color:"rgba(0,0,50,0.0)" },
+            ]).toStyle(),
+            strokeStyle: "rgba(0,0,0,0)",
+        }).addChildTo(this);
+        this.hyperCircle3.update = function() {
+            this.visible = gameScene.isHyperMode;
+        };
+
+        if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
     },
 
     /** @protected */
@@ -152,7 +197,11 @@ gls2.Player = tm.createClass(
     fireLaser: false,
 
     update: function(app) {
-        if (backfireParticle === null) backfireParticle = gls2.BackfireParticle(this.gameScene.ground);
+        if (this.muteki) {
+            this.visible = app.frame % 2 === 0;
+        } else {
+            this.visible = true;
+        }
 
         var kb = app.keyboard;
         if (this.controllable) {
@@ -162,8 +211,8 @@ gls2.Player = tm.createClass(
                 this.x += m.x * this.speed * (this.fireLaser ? 0.75 : 1);
                 this.y += m.y * this.speed * (this.fireLaser ? 0.75 : 1);
             }
-            this.x = gls2.math.clamp(this.x, 5, SC_W-5);
-            this.y = gls2.math.clamp(this.y, 5, SC_H-5);
+            this.x = gls2.math.clamp(this.x, 15, SC_W-15);
+            this.y = gls2.math.clamp(this.y, 15, SC_H-15);
 
             var pressC = kb.getKey("c");
             var pressZ = kb.getKey("z");
@@ -177,7 +226,8 @@ gls2.Player = tm.createClass(
 
             // ショット
             this.fireLaser = (pressZ && pressC) || this.pressTimeC === LASER_FRAME;
-            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % 5 === 0;
+            var shotInterval = this.gameScene.isHyperMode ? 3 : 5;
+            this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % shotInterval === 0;
             if (pressZ) {
                 this.pressTimeC = 0;
             }
@@ -200,22 +250,26 @@ gls2.Player = tm.createClass(
             if (this.fireShot) {
                 var s = Math.sin(app.frame * 0.2);
                 var sb;
-                sb = gls2.ShotBullet.fire(this.x-7 - s*6, this.y-5, -90);
+                sb = this.currentShotPool.fire(this.x-7 - s*6, this.y-5, -90);
                 if (sb !== null) sb.addChildTo(this.gameScene);
-                sb = gls2.ShotBullet.fire(this.x+7 + s*6, this.y-5, -90);
+                sb = this.currentShotPool.fire(this.x+7 + s*6, this.y-5, -90);
                 if (sb !== null) sb.addChildTo(this.gameScene);
             }
 
             if (kb.getKeyDown("x")) {
-                if (false) {
-                    // TODO ハイパー
+                if (this.gameScene.hyperGauge === 1 && !this.gameScene.isHyperMode) {
+                    // ハイパー
+                    this.gameScene.startHyperMode();
+                    gls2.StartHyperEffect(this).addChildTo(this.gameScene);
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
-                    gls2.Bomb(this, this.gameScene).setPosition(Math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3));
+                    // ボム
+                    bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank-0.02, 0, 1);
+                    gls2.Bomb(this, this.gameScene)
+                        .setPosition(Math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
+                        .addChildTo(this.gameScene);
                 }
             }
         }
-
-        this.hyperCircle0.visible = this.hyperCircle1.visible = this.hyperGauge === 100;
 
         // ビット
         this.controlBit(kb);
@@ -228,6 +282,12 @@ gls2.Player = tm.createClass(
             backfireParticle.clone(20).setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
             backfireParticle.clone(20).setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
         }
+    },
+
+    damage: function() {
+        this.fireShot = false;
+        this.fireLaser = false;
+        this.gameScene.endHyperMode();
     },
 
     /** @protected */
@@ -316,8 +376,8 @@ gls2.Bit = tm.createClass(
             this.y = -40;
             this.currentFrameIndex = 3;
         } else {
-            this.x = this.bit.x;
-            this.y = this.bit.y;
+            this.x = this.bit.x * (this.player.gameScene.isHyperMode ? 1.5 : 1);
+            this.y = this.bit.y * (this.player.gameScene.isHyperMode ? 1.5 : 1);
 
             var dir = this.bit.d * this.bit.dt;
             this.rotation = Math.radToDeg(dir);
@@ -330,7 +390,7 @@ gls2.Bit = tm.createClass(
 
             // ショット
             if (this.player.fireShot) {
-                var sb = gls2.ShotBullet.fire(g.x, g.y, this.parent.rotation + this.rotation - 90);
+                var sb = this.player.currentShotPool.fire(g.x, g.y, this.parent.rotation + this.rotation - 90);
                 if (sb !== null) sb.addChildTo(core.gameScene);
             }
         }

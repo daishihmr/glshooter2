@@ -1,6 +1,7 @@
 gls2.Collision = {
 
     isHit: function(a, b) {
+        if (a.parent === null || b.parent === null) return false;
 
         var awl = a.boundingWidthLeft;
         var awr = a.boundingWidthRight;

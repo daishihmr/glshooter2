@@ -16,6 +16,7 @@ java -jar tools/compiler.jar ^
 --js src/Stage.js ^
 --js src/StageData.js ^
 --js src/Effect.js ^
+--js src/ScoreLabel.js ^
 --js src/common/Collision.js ^
 --js src/common/Scene.js ^
 --js src/common/DialogMenu.js ^
@@ -27,7 +28,6 @@ java -jar tools/compiler.jar ^
 --js src/scene/GameScene.js ^
 --js src/scene/ResultScene.js ^
 --js src/scene/GameOverScene.js ^
---js src/scene/ContinueConfirmScene.js ^
 --js src/scene/EndingScene.js ^
 --js src/enemy/Enemy.js ^
 --js src/enemy/EnemyHard.js ^
@@ -38,4 +38,4 @@ java -jar tools/compiler.jar ^
 --compilation_level ADVANCED_OPTIMIZATIONS ^
 --language_in ECMASCRIPT5 ^
 --js_output_file target/gls2.js ^
---formatting PRETTY_PRINT
+--formatting SINGLE_QUOTES

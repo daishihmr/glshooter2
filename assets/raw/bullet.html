@@ -25,12 +25,12 @@ tm.main(function() {
     var cx = SZ*i + SZ*0.5;
     var cy = SZ*0.5;
     canvas
-        .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 6).addColorStopList([
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 8).addColorStopList([
             { offset:0.0, color:"rgba(255,255,255,1.0)"},
             { offset:0.4, color:"rgba(255,255,255,1.0)"},
             { offset:1.0, color:"rgba(  0,  0,255,1.0)"},
         ]).toStyle())
-        .fillCircle(cx, cy, 6);
+        .fillCircle(cx, cy, 8);
 
     // 1
     i = 1;
@@ -39,12 +39,12 @@ tm.main(function() {
     var cx = SZ*i + SZ*0.5;
     var cy = SZ*0.5;
     canvas
-        .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 6).addColorStopList([
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 8).addColorStopList([
             { offset:0.0, color:"rgba(255,255,255,1.0)"},
             { offset:0.4, color:"rgba(255,255,255,1.0)"},
             { offset:1.0, color:"rgba(255,  0,  0,1.0)"},
         ]).toStyle())
-        .fillCircle(cx, cy, 6);
+        .fillCircle(cx, cy, 8);
 
     // 2
     i = 2;
@@ -53,7 +53,7 @@ tm.main(function() {
     var cx = SZ*i + SZ*0.5;
     var cy = SZ*0.5;
     canvas
-        .setFillStyle(tm.graphics.RadialGradient(cx+5, cy, 0, cx, cy, 10).addColorStopList([
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy+5, 0, cx, cy, 10).addColorStopList([
             { offset:0.0, color:"rgba(255,255,255,1.0)"},
             { offset:0.4, color:"rgba(255,255,255,1.0)"},
             { offset:1.0, color:"rgba(  0,  0,255,1.0)"},
@@ -67,7 +67,7 @@ tm.main(function() {
     var cx = SZ*i + SZ*0.5;
     var cy = SZ*0.5;
     canvas
-        .setFillStyle(tm.graphics.RadialGradient(cx+5, cy, 0, cx, cy, 10).addColorStopList([
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy+5, 0, cx, cy, 10).addColorStopList([
             { offset:0.0, color:"rgba(255,255,255,1.0)"},
             { offset:0.4, color:"rgba(255,255,255,1.0)"},
             { offset:1.0, color:"rgba(255,  0,  0,1.0)"},
@@ -114,7 +114,7 @@ tm.main(function() {
     canvas
         .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 8).addColorStopList([
             { offset:0.0, color:"rgba(255,255,255,1.0)"},
-            { offset:1.0, color:"rgba(255,255,  0,0.0)"},
+            { offset:1.0, color:"rgba(  0,255,  0,0.0)"},
         ]).toStyle())
         .fillCircle(cx, cy, 8);
 

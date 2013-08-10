@@ -11,7 +11,6 @@ gls2.Laser = tm.createClass(
     superClass: tm.app.Sprite,
     player: null,
     gameScene: null,
-    attackPower: 2,
 
     _hitY: 0,
     frame: 0,
@@ -25,7 +24,9 @@ gls2.Laser = tm.createClass(
     foot: null,
     aura: null,
 
-    init: function(player, textures, width) {
+    isEffect: true,
+
+    init: function(player, textures) {
         this.player = player;
         this.gameScene = player.gameScene;
 
@@ -33,9 +34,8 @@ gls2.Laser = tm.createClass(
 
         this.textures = textures;
 
-        this.superInit(textures["redBody"], width, 100);
+        this.superInit(textures["redBody"], 50, 100);
 
-        this.boundingWidth = width;
         this.boundingHeightBottom = 1;
 
         this.scrollOffset = 0;
@@ -176,6 +176,16 @@ gls2.Laser = tm.createClass(
             .fillRect(0, 0, size, size)
             .element
         );
+
+        if (color === "hyper") {
+            this.width = 75;
+            this.boundingWidth = 75;
+            this.head.setScale(1.5, 1.5);
+        } else {
+            this.width = 50;
+            this.boundingWidth = 50;
+            this.head.setScale(1.0, 1.0);
+        }
 
         return this;
     },

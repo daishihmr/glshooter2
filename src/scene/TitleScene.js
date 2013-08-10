@@ -18,14 +18,22 @@ gls2.TitleScene = tm.createClass({
     init: function() {
         this.superInit();
 
-        tm.app.Label("GL-Shooter 2", 50).setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
-        tm.app.Label("version 1.0-beta", 22).setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
-        this.highScoreLabel = tm.app.Label().setPosition(SC_W * 0.5, SC_H * 0.40).addChildTo(this);
+        tm.app.Label("GL-Shooter 2", 50)
+            .setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
+        tm.app.Label("version 1.0-beta", 22)
+            .setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
+        this.highScoreLabel = tm.app.Label()
+            .setPosition(SC_W * 0.5, SC_H * 0.40).addChildTo(this);
         tm.app.Label("press space key").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.addEventListener("enter", function() {
             this.gameStarted = false;
-            this.highScoreLabel.text = "HIGH SCORE: " + gls2.core.highScore;
+            var score = ("" + Math.floor(gls2.core.highScore)).padding(16, " ");
+            var text = "";
+            for (var i = 0; i < score.length; i += 4) {
+                text += score.substring(i, i+4) + " ";
+            }
+            this.highScoreLabel.text = "HIGH SCORE: " + text;
         });
     },
 
@@ -38,7 +46,7 @@ gls2.TitleScene = tm.createClass({
         this._generateParticle(Math.cos(this.age*0.01)        *80+SC_W*0.5, Math.sin(this.age*0.01)        *80+SC_H*0.5, 0);
         this._generateParticle(Math.cos(this.age*0.01+Math.PI)*80+SC_W*0.5, Math.sin(this.age*0.01+Math.PI)*80+SC_H*0.5, 1);
 
-        if ((app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space") || app.pointing.getPointingEnd()) && !this.gameStarted) {
+        if ((app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) && !this.gameStarted) {
             this.openMainMenu()
         }
 
@@ -112,8 +120,8 @@ gls2.TitleScene = tm.createClass({
                 }.bind(this))
                 .wait(1000)
                 .call(function() {
-                    gls2.core.gameScene.gameStart(2); // TODO 自機タイプを渡す
-                    gls2.core.pushScene(gls2.core.gameScene);
+                    gls2.core.gameScene.start(2); // TODO 自機タイプを渡す
+                    gls2.core.replaceScene(gls2.core.gameScene);
                 }.bind(this));
             break;
         case 1: // tutorial

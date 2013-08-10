@@ -60,54 +60,60 @@ gls2.EnemyUnit = {
     { soft:$s.Heri2, hard:$h.Heri1, x:SC_W*0.9, y:-100 },
 ],
 
-/** 戦車5台。左から */
-"tank-left": [
-    { soft:$s.TankR, hard:$h.Tank1, x:-64*1, y:SC_H*0.3 },
-    { soft:$s.TankR, hard:$h.Tank1, x:-64*2, y:SC_H*0.3 },
-    { soft:$s.TankR, hard:$h.Tank1, x:-64*3, y:SC_H*0.3 },
-    { soft:$s.TankR, hard:$h.Tank1, x:-64*4, y:SC_H*0.3 },
-    { soft:$s.TankR, hard:$h.Tank1, x:-64*5, y:SC_H*0.3 },
-],
-
 /** 戦車5台。左上から */
-"tank-leftUpper": [
-    { soft:$s.TankRD, hard:$h.Tank1, x:-46*1-64, y:-46*1 },
-    { soft:$s.TankRD, hard:$h.Tank1, x:-46*2-64, y:-46*2 },
-    { soft:$s.TankRD, hard:$h.Tank1, x:-46*3-64, y:-46*3 },
-    { soft:$s.TankRD, hard:$h.Tank1, x:-46*4-64, y:-46*4 },
-    { soft:$s.TankRD, hard:$h.Tank1, x:-46*5-64, y:-46*5 },
+"tankRD-left": [
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.4-50*1-64, y:-50*1 },
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.4-50*2-64, y:-50*2 },
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.4-50*3-64, y:-50*3 },
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.4-50*4-64, y:-50*4 },
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.4-50*5-64, y:-50*5 },
 ],
 
-
-/** 戦車5台。上から(0) */
-"tank-upper0": [
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.25, y:-64*1 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.25, y:-64*2 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.25, y:-64*3 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.25, y:-64*4 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.25, y:-64*5 },
+/** 戦車5台。上から */
+"tankRD-center": [
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.7-50*1-64, y:-50*1 },
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.7-50*2-64, y:-50*2 },
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.7-50*3-64, y:-50*3 },
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.7-50*4-64, y:-50*4 },
+    { soft:$s.TankRD, hard:$h.Tank1, x:SC_W*0.7-50*5-64, y:-50*5 },
 ],
 
-/** 戦車5台。上から(1) */
-"tank-upper1": [
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.5, y:-64*1 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.5, y:-64*2 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.5, y:-64*3 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.5, y:-64*4 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.5, y:-64*5 },
+/** 戦車5台。右から */
+"tankL-top": [
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*1, y:SC_H*-0.2 },
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*2, y:SC_H*-0.2 },
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*3, y:SC_H*-0.2 },
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*4, y:SC_H*-0.2 },
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*5, y:SC_H*-0.2 },
 ],
 
-/** 戦車5台。上から(2) */
-"tank-upper2": [
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.75, y:-64*1 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.75, y:-64*2 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.75, y:-64*3 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.75, y:-64*4 },
-    { soft:$s.TankD, hard:$h.Tank1, x:SC_W*0.75, y:-64*5 },
+"fighter-m-0": [
+    { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.2, y:SC_H*-0.3 },
+],
+"fighter-m-1": [
+    { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.3, y:SC_H*-0.3 },
+],
+"fighter-m-2": [
+    { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.4, y:SC_H*-0.3 },
+],
+"fighter-m-3": [
+    { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.5, y:SC_H*-0.3 },
+],
+"fighter-m-4": [
+    { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.6, y:SC_H*-0.3 },
+],
+"fighter-m-5": [
+    { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.7, y:SC_H*-0.3 },
+],
+"fighter-m-6": [
+    { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.8, y:SC_H*-0.3 },
 ],
 
-"fighter-m": [
-    { soft:$s.MiddleFighter, hard:$h.FighterM, x:SC_W*0.5, y:SC_H*-0.3 },
+/**
+ * ステージ１中ボス「ユキシロ」
+ */
+"yukishiro": [
+    { soft:$s.Honoka, hard:$h.Honoka, x:SC_W*0.5, y:-100 },
 ],
 
 };

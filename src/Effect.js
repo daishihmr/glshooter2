@@ -100,6 +100,31 @@ gls2.Effect.genShockwave = function(x, y, scene) {
         });
 };
 
+gls2.Effect.genShockwaveL = function(x, y, scene) {
+    var shockwave = tm.app.CircleShape(300, 300, {
+        strokeStyle: "rgba(0,0,0,0)",
+        fillStyle: tm.graphics.RadialGradient(150, 150, 0, 150, 150, 150)
+            .addColorStopList([
+                { offset: 0.0, color: "rgba(255,255,255,0)" },
+                { offset: 0.5, color: "rgba(255,255,255,0)" },
+                { offset: 0.9, color: "rgba(255,255,255,1)" },
+                { offset: 1.0, color: "rgba(255,255,255,0)" },
+            ])
+            .toStyle()
+    }).setPosition(x, y).setScale(0.1, 0.1)
+    shockwave.isEffect = true;
+    shockwave.addChildTo(scene);
+    shockwave.tweener.clear()
+        .to({
+            scaleX: 5,
+            scaleY: 5,
+            alpha: 0,
+        }, 500, "easeOutQuad")
+        .call(function() {
+            this.remove();
+        }.bind(shockwave));
+};
+
 gls2.Effect.explodeS = function(x, y, scene, vector) {
     gls2.playSound("soundExplode");
     var e = gls2.Effect["explosion"].random()
@@ -133,7 +158,6 @@ gls2.Effect.explodeGS = function(x, y, scene) {
             this.remove();
         })
         .addEventListener("enterframe", function() {
-            this.y -= 1.4;
             this.scaleX += 0.01;
             this.scaleY += 0.01;
         })
@@ -152,7 +176,7 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         .addEventListener("enterframe", function() {
             this.rotation += 2;
             this.x += 0.7;
-            this.y -= 0.7;
+            this.y -= 0.3;
             this.scaleX += 0.01;
             this.scaleY += 0.01;
         })
@@ -172,7 +196,7 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         .addEventListener("enterframe", function() {
             this.rotation -= 2;
             this.x -= 0.7;
-            this.y -= 0.7;
+            this.y -= 0.3;
             this.scaleX += 0.01;
             this.scaleY += 0.01;
         })
@@ -189,22 +213,102 @@ var noise;
 
 gls2.Effect.explodeM = function(x, y, scene) {
     gls2.playSound("soundExplode");
-    for (var i = 0, end = gls2.math.rand(5, 10); i < end; i++) {
+    for (var i = 0; i < 10; i++) {
         var e = gls2.Effect["explosion"].random()
             .clone()
             .addEventListener("animationend", function() {
                 this.remove();
             })
+            .addEventListener("enterframe", function() {
+                this.x += Math.cos(this.a) * 2;
+                this.y += Math.sin(this.a) * 2;
+                this.scaleX += 0.01;
+                this.scaleY += 0.01;
+            })
+            .setScale(0.7)
+            .setBlendMode(i%2===0?"lighter":"source-over")
             .setPosition(x, y)
-            .setRotation(Math.random() * 360)
             .gotoAndPlay();
+        e.a = Math.PI*2 * Math.random();
         e.isEffect = true;
-        // e.tweener.moveBy()
         e.addChildTo(scene);
     }
-    for (var i = 0; i < 10; i++) {
-        gls2.Effect.genParticle(x, y, scene);
-    }
 };
+
+gls2.ChargeEffect = tm.createClass({
+    superClass: tm.app.Object2D,
+
+    target: null,
+    rad: 0,
+    angle: 0,
+    alpha : 1,
+    isEffect: true,
+
+    reverse: false,
+
+    init: function(target, reverse) {
+        this.superInit();
+        this.target = target;
+        this.reverse = reverse;
+
+        this.angle = 0;
+        this.rad = reverse ? 0 : 200;
+        this.alpha = reverse ? 1 : 0;
+    },
+
+    update: function() {
+        if (this.target.parent === null) {
+            this.remove();
+            return;
+        }
+
+        for (var i = 0; i < 9; i++) {
+            var a = this.angle + i/9 * Math.PI*2;
+            gls2.Particle(80, this.alpha, 0.9)
+                .setPosition(Math.cos(a)*this.rad+this.target.x, Math.sin(a)*this.rad+this.target.y)
+                .addChildTo(this.target.parent);
+        }
+        this.angle += 0.05;
+        this.rad += this.reverse ? 4 : -4;
+        this.alpha += this.reverse ? -0.01 : 0.05;
+        if (this.rad < 0 || 200 < this.rad) this.remove();
+    },
+
+});
+
+gls2.StartHyperEffect = tm.createClass({
+    superClass: tm.app.Object2D,
+
+    target: null,
+    angle: 0,
+    isEffect: true,
+
+    init: function(target) {
+        this.superInit();
+        this.target = target;
+
+        this.angle = 0;
+    },
+
+    update: function() {
+        if (this.target.parent === null) {
+            this.remove();
+            return;
+        }
+
+        for (var i = 0; i < 5; i++) {
+            gls2.Particle(80, 1, 0.9)
+                .setPosition(
+                    Math.cos(this.angle-Math.PI*0.5)*40+this.target.x + Math.rand(-2, 2),
+                    Math.sin(this.angle-Math.PI*0.5)*40+this.target.y + Math.rand(-2, 2)
+                )
+                .addChildTo(this.target.parent);
+        }
+
+        this.angle += 0.2;
+        if (Math.PI*2 < this.angle) this.remove();
+    },
+
+});
 
 })();

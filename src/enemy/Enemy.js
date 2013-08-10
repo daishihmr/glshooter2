@@ -8,7 +8,7 @@ gls2.Enemy = tm.createClass(
 /** @lends {gls2.Enemy.prototype} */
 {
     superClass: tm.app.CanvasElement,
-    age: 0,
+    frame: 0,
     direction: 0,
     speed: 0,
     player: null,
@@ -30,39 +30,25 @@ gls2.Enemy = tm.createClass(
     /**
      * @constructs
      */
-    init: function() {
+    init: function(gameScene, stage, software, hardware) {
         this.superInit();
 
         this.addEventListener("completeattack", function() {
             this.onCompleteAttack();
         });
         this.addEventListener("added", function() {
-            this.age = 0;
-            this.entered = false;
-            this.enableFire = true;
+            this.frame = 0;
             activeList.push(this);
         });
         this.addEventListener("removed", function() {
-            var listeners = [].concat(this._listeners["enterframe"]);
-            if (listeners) {
-                for (var i = 0, len = listeners.length; i < len; i++) {
-                    if (listeners[i] && listeners[i].isDanmaku) {
-                        this.removeEventListener("enterframe", listeners[i]);
-                    }
-                }
-            }
-
-            this.tweener.clear();
-
-            this.scaleX = this.scaleY = 1;
-            this.isGround = false;
-
-            enemyPool.push(this);
+            this.dispatchEvent(tm.event.Event("enemyconsumed"));
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);
         });
-    },
-    setup: function(gameScene, stage, software, hardware) {
+
+        this.enableFire = true;
+        this.entered = false;
+
         this.gameScene = gameScene;
         this.player = gameScene.player;
         this.stage = stage;
@@ -70,6 +56,7 @@ gls2.Enemy = tm.createClass(
         this.hard = hardware;
 
         this.score = 100;
+        this.erase = false;
 
         this.soft.setup.apply(this);
         this.hard.setup.apply(this);
@@ -81,21 +68,24 @@ gls2.Enemy = tm.createClass(
         }
 
         this.velocity = {x:0, y:0};
-
-        return this;
     },
     onLaunch: function() {
         this.soft.onLaunch.apply(this);
         this.hard.onLaunch.apply(this);
+
+        return this;
     },
     onCompleteAttack: function() {
         this.soft.onCompleteAttack.apply(this);
         this.hard.onCompleteAttack.apply(this);
     },
     update: function() {
-        if (0 <= this.x - this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
+        if (this.entered === false
+            && 0 <= this.x - this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
             && 0 <= this.y - this.boundingHeightTop && this.y + this.boundingHeightBottom < SC_H) {
             this.entered = true;
+            this.soft.onenter.apply(this);
+            this.hard.onenter.apply(this);
         }
 
         var before = {
@@ -109,7 +99,7 @@ gls2.Enemy = tm.createClass(
             this.x += this.gameScene.ground.dx;
             this.y += this.gameScene.ground.dy;
         }
-        this.age += 1;
+        this.frame += 1;
 
         this.velocity.x = this.x - before.x;
         this.velocity.y = this.y - before.y;
@@ -122,17 +112,28 @@ gls2.Enemy = tm.createClass(
         if (this.hp <= 0) {
             this.hard.destroy.apply(this);
 
-            var r = gls2.math.rand(0, 2);
-            if (r === 0) {
+            var r = gls2.math.randf(0, 5);
+            if (r < 2) {
                 this.gameScene.println("enemy destroy.");
-            } else if (r === 1) {
+            } else if (r < 4) {
                 this.gameScene.println(this.name + " destroy.");
-            } else if (r === 2) {
+            } else {
                 this.gameScene.println("ETR reaction gone.")
             }
-            this.remove();
 
             this.stage.onDestroyEnemy(this);
+
+            if (this.erase) {
+                gls2.Danmaku.erase();
+            }
+
+            // TODO 試験的に追加して負荷を見てみる
+            // var star = tm.app.StarShape(20, 20).setPosition(this.x, this.y).addChildTo(this.parent);
+            // star.update = function() {
+            //     this.y += 3;
+            //     if (this.y > SC_H*20) this.remove();
+            // };
+            this.remove();
 
             return true;
         } else {
@@ -162,9 +163,5 @@ gls2.Enemy.clearAll = function() {
 };
 
 var activeList = gls2.Enemy.activeList = [];
-var enemyPool = gls2.Enemy.pool = [];
-for (var i = 0; i < 256; i++) {
-    enemyPool.push(gls2.Enemy());
-}
 
 })();

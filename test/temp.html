@@ -1,0 +1,21 @@
+<html>
+<head>
+<script src="../libs/tmlib.js"></script>
+<script src="../src/common/Bezier.js"></script>
+<script>
+tm.main(function() {
+    var c = tm.graphics.Canvas("#c");
+    c.resize(500, 500).fitWindow();
+    c.strokeStyle = "green";
+    c.strokeBezierCurve([
+        {x:250, y:0},
+        {x:500, y:750},
+        {x:250, y:250},
+    ], 100);
+})
+</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+</body>
+</html>
