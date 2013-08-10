@@ -292,7 +292,7 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(b, this.player)) {
                     this.player.damage();
                     if (this.bomb > 0) {
-                        bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank-0.01, 0, 1);
+                        bulletml.Bullet.globalScope["$rank"] = Math.clamp(bulletml.Bullet.globalScope["$rank"]-0.01, 0, 1);
                         gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                     } else {
                         this.miss();
@@ -308,7 +308,7 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(e, this.player)) {
                     this.player.damage();
                     if (this.bomb > 0) {
-                        bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank-0.01, 0, 1);
+                        bulletml.Bullet.globalScope["$rank"] = Math.clamp(bulletml.Bullet.globalScope["$rank"]-0.01, 0, 1);
                         gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                     } else {
                         this.miss();
@@ -400,7 +400,7 @@ gls2.GameScene = tm.createClass(
         this.comboCount = 0;
         this.comboDown = 0;
 
-        bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank-0.03, 0, 1);
+        bulletml.Bullet.globalScope["$rank"] = Math.clamp(bulletml.Bullet.globalScope["$rank"]-0.03, 0, 1);
 
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
@@ -479,8 +479,8 @@ gls2.GameScene = tm.createClass(
         this.hyperGauge = 0;
         this.hyperRank = Math.min(this.hyperRank + 1, 5);
 
-        bulletml.Bullet.globalScope.$rank = Math.clamp(bulletml.Bullet.globalScope.$rank+0.01, 0, 1);
-        bulletml.Bullet.globalScope.$hyperOff = 0.5;
+        bulletml.Bullet.globalScope["$rank"] = Math.clamp(bulletml.Bullet.globalScope["$rank"]+0.01, 0, 1);
+        bulletml.Bullet.globalScope["$hyperOff"] = 0.5;
 
         this.hyperTime = gls2.Setting.HYPERMODE_TIME;
         this.hyperMutekiTime = gls2.Setting.HYPERMODE_START_MUTEKI_TIME;
@@ -505,7 +505,7 @@ gls2.GameScene = tm.createClass(
         // TODO 自機タイプのよって変える
         this.player.laser.setColor("blue");
 
-        bulletml.Bullet.globalScope.$hyperOff = 1.0;
+        bulletml.Bullet.globalScope["$hyperOff"] = 1.0;
 
         this.hyperMutekiTime = gls2.Setting.HYPERMODE_END_MUTEKI_TIME;
         this.hyperTime = 0;
