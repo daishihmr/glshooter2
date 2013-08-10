@@ -138,15 +138,21 @@ gls2.Player = tm.createClass(
 
         this.hyperCircle2 = tm.app.CanvasElement(80, 80).addChildTo(this);
         this.hyperCircle2.blendMode = "lighter";
-        this.hyperCircle2.strokeStyle = "rgba(180,180,255,0.8)";
         this.hyperCircle2.rotation = -90;
+        this.hyperCircle2.strokeStyle = "rgba(180,180,255,0.4)";
         this.hyperCircle2.update = function() {
             this.visible = gameScene.isHyperMode;
         };
         this.hyperCircle2.draw = function(canvas) {
-            canvas.lineWidth = "6";
             canvas.lineCap = "round";
             var value = gameScene.hyperTime / gls2.Setting.HYPERMODE_TIME;
+
+            canvas.strokeStyle = "rgba(180,180,255,0.4)";
+            canvas.lineWidth = "10";
+            canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
+            canvas.lineWidth = "6";
+            canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
+            canvas.lineWidth = "2";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
         };
         this.hyperCircle3 = tm.app.CircleShape(80, 80, {
