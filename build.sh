@@ -19,6 +19,7 @@ java -jar tools/compiler.jar \
 --js src/Effect.js \
 --js src/ScoreLabel.js \
 --js src/Ground.js \
+--js src/StarItem.js \
 --js src/common/Collision.js \
 --js src/common/Scene.js \
 --js src/common/DialogMenu.js \
@@ -40,6 +41,6 @@ java -jar tools/compiler.jar \
 --compilation_level ADVANCED_OPTIMIZATIONS \
 --language_in ECMASCRIPT5 \
 --js_output_file target/gls2.js \
---formatting SINGLE_QUOTES
+--formatting PRETTY_PRINT
+# --formatting SINGLE_QUOTES
 
-# --formatting PRETTY_PRINT

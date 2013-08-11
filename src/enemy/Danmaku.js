@@ -19,6 +19,7 @@ var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 2.0
 
 /** 自機狙い弾 */
 var $fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3, $.bullet) };
+var $fire1 = function(spd) { return $.fire($.direction(0), spd || $spd3, $.bullet({frame:0})) };
 
 /** 自機狙いn-way弾 */
 var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {
@@ -70,7 +71,6 @@ gls2.Danmaku["basic1-0"] = new bulletml.Root({
     ]),
 });
 
-
 /**
  * 自機狙い弾を50間隔で連射.
  */
@@ -80,6 +80,21 @@ gls2.Danmaku["basic2-0"] = new bulletml.Root({
         $.repeat(999, [
             $interval(50),
             $fire0($spd4),
+        ]),
+    ]),
+});
+
+/**
+ * 自機狙い弾*3を100間隔で連射.
+ */
+gls2.Danmaku["basic3-0"] = new bulletml.Root({
+    "top": $.action([
+        $.wait(20),
+        $.repeat(999, [
+            $interval(100),
+            $fire1($spd4(0)),
+            $fire1($spd4(1)),
+            $fire1($spd4(2)),
         ]),
     ]),
 });
@@ -193,9 +208,13 @@ gls2.Danmaku.setup = function() {
 /**
  * エフェクト付きの弾幕全消し
  */
-gls2.Danmaku.erase = function() {
+gls2.Danmaku.erase = function(star) {
     var bullets = [].concat(activeList);
     for (var i = 0, len = bullets.length; i < len; i++) {
+        if (star) {
+            gls2.StarItemSky(false)
+                .setPosition(bullets[i].x, bullets[i].y);
+        }
         bullets[i].destroy();
     }
 };
@@ -224,7 +243,7 @@ gls2.Bullet = tm.createClass(
         this.boundingRadius = 7;
 
         this.addEventListener("added", function() {
-            this.hp = 50;
+            this.hp = 40;
         });
         this.addEventListener("removed", function() {
             bulletPool.push(this);
@@ -235,30 +254,26 @@ gls2.Bullet = tm.createClass(
         });
     },
     destroy: function() {
-        // 弾消しエフェクト
-        tm.app.CircleShape(10*2, 10*2, {
-            strokeStyle: "rgba(0,0,0,0)",
-            fillStyle: tm.graphics.RadialGradient(10,10,0,10,10,10)
-                .addColorStopList([
-                    { offset: 0.0, color: "rgba(255,100,100,0.0)" },
-                    { offset: 0.3, color: "rgba(255,100,100,0.0)" },
-                    { offset: 0.7, color: "rgba(255,100,100,1.0)" },
-                    { offset: 1.0, color: "rgba(255,100,100,1.0)" },
-                ])
-                .toStyle()
-        })
-        // .setBlendMode("lighter")
-        .setPosition(this.x, this.y)
-        .setScale(0.1, 0.1)
-        .addChildTo(this.parent)
-        .update = function() {
+        var p = gls2.Particle(10, 1, 0.92, tm.graphics.Canvas()
+                .resize(10, 10)
+                .setFillStyle(
+                    tm.graphics.RadialGradient(10*0.5, 10*0.5, 0, 10*0.5, 10*0.5, 10*0.5)
+                        .addColorStopList([
+                            { offset: 0.0, color: "rgba(255,100,100,0.0)" },
+                            { offset: 0.3, color: "rgba(255,100,100,0.0)" },
+                            { offset: 0.9, color: "rgba(255,180,180,1.0)" },
+                            { offset: 1.0, color: "rgba(255,100,100,0.0)" },
+                        ]).toStyle()
+                )
+                .fillRect(0, 0, 10, 10)
+                .element
+        ).setScale(0.1, 0.1).setPosition(this.x, this.y);
+        p.addEventListener("enterframe", function() {
             this.scaleX += 0.1;
             this.scaleY += 0.1;
-            this.alpha *= 0.92;
-            if (this.alpha < 0.0001) {
-                this.remove();
-            }
-        };
+        });
+        p.addChildTo(this.parent);
+
         this.remove();
     },
 });

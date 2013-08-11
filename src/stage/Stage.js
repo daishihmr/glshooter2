@@ -21,8 +21,6 @@ gls2.Stage = tm.createClass(
 
     frame: 0,
 
-    background: null,
-
     init: function(gameScene) {
         var scene = this.gameScene = gameScene;
         this.player = gameScene.player;
@@ -36,8 +34,8 @@ gls2.Stage = tm.createClass(
 
     setupBackground: function() {
         this.gameScene.ground.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-            { offset:0, color:"#338" },
-            { offset:1, color:"#114" }
+            { offset:0, color:"rgba(51,51,136,0.5)" },
+            { offset:1, color:"rgba(17,17, 68,0.5)" }
         ]).toStyle();
     },
 

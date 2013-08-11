@@ -65,6 +65,11 @@ gls2.GlShooter2 = tm.createClass(
 
                 // sound
                 "soundExplode": "assets/sen_ge_taihou03.mp3",
+                "soundExplode2": "assets/sen_ge_bom13.mp3",
+                "soundExplode3": "assets/sen_ge_bom02.mp3",
+
+                // test
+                "star": "assets/star.png",
             },
             nextScene: function() {
                 this._onLoadAssets();
