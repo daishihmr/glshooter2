@@ -1,6 +1,22 @@
 // すべてsingletonかつimmutableに実装する
 (function() {
 
+var data = {
+    "kujo":      [   2,    100, false, false ],
+    "kiryu":     [   3,    300, false, false ],
+    "natsuki":   [   5,    300,  true, false ],
+    "kise":      [  30,    300,  true, false ],
+    "kurokawa":  [  60,   3000, false, false ],
+    "yukishiro": [ 1500, 50000, false,  true ],
+};
+var setData = function(name, enemy) {
+    enemy.name = name;
+    enemy.hp = data[name][0];
+    enemy.score = data[name][1];
+    enemy.isGround = data[name][2];
+    enemy.erase = data[name][3];
+};
+
 /**
  * 敵の見た目や性能
  * @class
@@ -24,6 +40,7 @@ gls2.EnemyHard = tm.createClass(
     },
     destroy: function() {
         gls2.Effect.explodeS(this.x, this.y, this.gameScene, this.velocity);
+        this.remove();
     },
 });
 
@@ -40,12 +57,10 @@ gls2.EnemyHard.Heri1 = tm.createClass(
         this.superInit();
     },
     setup: function() {
-        this.name = "kujo";
-        this.hp = 2;
+        setData("kujo", this);
+
         this._sprite = _Sprite("tex1", 64, 64);
         this.boundingRadius = 24;
-
-        this.score = 100;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -78,12 +93,10 @@ gls2.EnemyHard.Heri2 = tm.createClass(
         this.superInit();
     },
     setup: function() {
-        this.name = "kiryu";
-        this.hp = 3;
+        setData("kiryu", this);
+
         this._sprite = _Sprite("tex1", 64, 64);
         this.boundingRadius = 24;
-
-        this.score = 300;
     },
     update: function() {
         if (this.x < this.player.x) {
@@ -112,13 +125,10 @@ gls2.EnemyHard.Tank1 = tm.createClass({
         this.superInit();
     },
     setup: function() {
-        this.name = "natsuki";
-        this.hp = 5;
-        this.isGround = true;
+        setData("natsuki", this);
+
         this._sprite = _Sprite("tex1", 48, 48);
         this.boundingRadius = 24;
-
-        this.score = 300;
     },
     update: function() {
         switch (~~(this.dir/(Math.PI*0.25))) {
@@ -153,6 +163,7 @@ gls2.EnemyHard.Tank1 = tm.createClass({
     },
     destroy: function() {
         gls2.Effect.explodeGS(this.x, this.y, this.gameScene);
+        this.remove();
     },
 });
 gls2.EnemyHard.Tank1 = gls2.EnemyHard.Tank1();
@@ -176,8 +187,8 @@ gls2.EnemyHard.FighterM = tm.createClass(
         this.superInit();
     },
     setup: function() {
-        this.name = "kurokawa";
-        this.hp = 80;
+        setData("kurokawa", this);
+
         this._sprite = _Sprite("tex1", 128, 128);
         this._sprite.srcRect.x = 64*5;
         this._sprite.srcRect.y = 64*2;
@@ -185,8 +196,6 @@ gls2.EnemyHard.FighterM = tm.createClass(
         this._sprite.srcRect.height = 64*2;
         this.boundingWidth = 100;
         this.boundingHeight = 20;
-
-        this.score = 3000;
     },
     update: function() {
     },
@@ -195,6 +204,7 @@ gls2.EnemyHard.FighterM = tm.createClass(
     },
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
     },
 });
 gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();
@@ -202,6 +212,23 @@ gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();
 /**
  * 固定砲台「キセ」
  */
+gls2.EnemyHard.Cannon = tm.createClass({
+    superClass: gls2.EnemyHard,
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        setData("kise", this);
+
+        this.boundingWidth = 20;
+        this.boundingHeight = 20;
+    },
+    draw: function(canvas) {
+        canvas.strokeStyle = "yellow";
+        canvas.strokeRect(-20*0.5, -20*0.5, 20, 20);
+    },
+});
+gls2.EnemyHard.Cannon = gls2.EnemyHard.Cannon();
 
 /**
  * 大型固定砲台「ケンザキ」
@@ -220,12 +247,34 @@ gls2.EnemyHard.Honoka = tm.createClass({
         this.superInit();
     },
     setup: function() {
-        this.name = "yukishiro";
-        this.erase = true;
-        this.hp = 1500;
-        this.score = 50000;
+        setData("yukishiro", this);
+
         this.boundingWidth = 200;
         this.boundingHeight = 80;
+    },
+    destroy: function() {
+        this.remove();
+        this.isGround = true;
+        this.gameScene.addChild(this);
+        this.addEventListener("enterframe", function() {
+            if (Math.random() < 0.2) {
+                gls2.Effect.explodeS(this.x + Math.rand(-100, 100), this.y + Math.rand(-40, 40), this.gameScene, {
+                    "x": 0,
+                    "y": -3,
+                });
+            }
+        });
+        this.tweener
+            .clear()
+            .to({
+                "altitude": 0,
+                "y": this.y + 200,
+                "rotation": 10,
+            }, 2000)
+            .call(function() {
+                gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+                this.remove();
+            }.bind(this));
     },
     draw: function(canvas) {
         canvas.fillStyle = "yellow";
@@ -237,12 +286,15 @@ gls2.EnemyHard.Honoka = gls2.EnemyHard.Honoka();
 /**
  * ステージ２中ボス「ミショウ」
  */
+
 /**
  * ステージ３中ボス「ヒガシ」
  */
+
 /**
  * ステージ４中ボス「ミナミノ」
  */
+
 /**
  * ステージ５中ボス「ヒシカワ」
  */

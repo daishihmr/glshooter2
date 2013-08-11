@@ -1,25 +1,6 @@
 // すべてsingletonかつimmutableに実装する
 (function() {
 
-/**
- * 敵の行動パターン
- * @class
- */
-gls2.EnemySoft = tm.createClass(
-/** @lends {gls2.EnemySoft.prototype} */
-{
-    setup: function() {
-    },
-    onLaunch: function() {
-    },
-    onCompleteAttack: function() {
-    },
-    update: function() {
-    },
-    onenter: function() {
-    },
-});
-
 var attack = function(enemy, danmakuName) {
     var ticker = gls2.Danmaku[danmakuName].createTicker();
     enemy.addEventListener("enterframe", ticker);
@@ -37,6 +18,28 @@ var stopAttack = function(enemy) {
         }
     }
 };
+
+/**
+ * 敵の行動パターン
+ * @class
+ */
+gls2.EnemySoft = tm.createClass(
+/** @lends {gls2.EnemySoft.prototype} */
+{
+    setup: function() {
+    },
+    onLaunch: function() {
+    },
+    onCompleteAttack: function() {
+    },
+    update: function() {
+    },
+    onenter: function() {
+    },
+    destroy: function() {
+        stopAttack(this);
+    },
+});
 
 /**
  * heri1a.
@@ -263,6 +266,37 @@ gls2.EnemySoft.TankL = tm.createClass(
 gls2.EnemySoft.TankL = gls2.EnemySoft.TankL();
 
 /**
+ * 固定砲台1
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+gls2.EnemySoft.Cannon = tm.createClass(
+/** @lends {gls2.EnemySoft.Cannon.prototype} */
+{
+    superClass: gls2.EnemySoft,
+    /** @constructs */
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.speed = 1.0;
+        this.dir = Math.PI;
+    },
+    onenter: function() {
+        attack(this, "basic3-0");
+    },
+    update: function() {
+        if (this.entered && !this.isInScreen()) {
+            this.remove();
+        }
+
+        this.enableFire = this.y < this.player.y;
+    },
+});
+gls2.EnemySoft.Cannon = gls2.EnemySoft.Cannon();
+
+/**
  * 中型戦闘機
  */
 gls2.EnemySoft.MiddleFighter1 = tm.createClass(
@@ -321,7 +355,7 @@ gls2.EnemySoft.MBossCommon = tm.createClass(
             }.bind(this));
     },
     update: function() {
-        if (this.startAttack === false) return;
+        if (this.startAttack === false || this.hp <= 0) return;
         if (1500 < this.frame && this.endAttack === false) {
             console.log("end");
             this.endAttack = true;

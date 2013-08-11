@@ -110,7 +110,6 @@ gls2.Enemy = tm.createClass(
 
         this.hp -= damagePoint;
         if (this.hp <= 0) {
-            this.hard.destroy.apply(this);
 
             var r = gls2.math.randf(0, 5);
             if (r < 2) {
@@ -124,16 +123,11 @@ gls2.Enemy = tm.createClass(
             this.stage.onDestroyEnemy(this);
 
             if (this.erase) {
-                gls2.Danmaku.erase();
+                gls2.Danmaku.erase(true);
             }
 
-            // TODO 試験的に追加して負荷を見てみる
-            // var star = tm.app.StarShape(20, 20).setPosition(this.x, this.y).addChildTo(this.parent);
-            // star.update = function() {
-            //     this.y += 3;
-            //     if (this.y > SC_H*20) this.remove();
-            // };
-            this.remove();
+            this.soft.destroy.apply(this);
+            this.hard.destroy.apply(this);
 
             return true;
         } else {

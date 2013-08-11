@@ -93,13 +93,13 @@ gls2.Setting = {
      * ハイパーモード継続時間
      * @const
      */
-    HYPERMODE_TIME: 900,
+    HYPERMODE_TIME: 800,
 
     /**
      * ハイパーモード起動時の無敵時間
      * @const
      */
-    HYPERMODE_START_MUTEKI_TIME: 120,
+    HYPERMODE_START_MUTEKI_TIME: 200,
 
     /**
      * ハイパーモード終了時の無敵時間
@@ -139,8 +139,27 @@ gls2.Setting = {
 
     /**
      * 弾破壊時のスコア
+     * @const
      */
     BULLET_SCORE: 50,
+
+    /**
+     * 星アイテム（大）取得時のスコア
+     * @const
+     */
+    STAR_ITEM_SCORE_LARGE: 200,
+
+    /**
+     * 星アイテム（小）取得時のスコア
+     * @const
+     */
+    STAR_ITEM_SCORE: 100,
+
+    /**
+     * ハイパーモード中の敵弾幕発射間隔
+     * @const
+     */
+    ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.3,
 
 };
 

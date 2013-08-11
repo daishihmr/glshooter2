@@ -87,6 +87,34 @@ gls2.EnemyUnit = {
     { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*5, y:SC_H*-0.2 },
 ],
 
+"cannon-0": [
+    { soft:$s.Cannon, hard:$h.Cannon, x:SC_W*0.1, y:-100 },
+],
+"cannon-1": [
+    { soft:$s.Cannon, hard:$h.Cannon, x:SC_W*0.2, y:-100 },
+],
+"cannon-2": [
+    { soft:$s.Cannon, hard:$h.Cannon, x:SC_W*0.3, y:-100 },
+],
+"cannon-3": [
+    { soft:$s.Cannon, hard:$h.Cannon, x:SC_W*0.4, y:-100 },
+],
+"cannon-4": [
+    { soft:$s.Cannon, hard:$h.Cannon, x:SC_W*0.5, y:-100 },
+],
+"cannon-5": [
+    { soft:$s.Cannon, hard:$h.Cannon, x:SC_W*0.6, y:-100 },
+],
+"cannon-6": [
+    { soft:$s.Cannon, hard:$h.Cannon, x:SC_W*0.7, y:-100 },
+],
+"cannon-7": [
+    { soft:$s.Cannon, hard:$h.Cannon, x:SC_W*0.8, y:-100 },
+],
+"cannon-8": [
+    { soft:$s.Cannon, hard:$h.Cannon, x:SC_W*0.9, y:-100 },
+],
+
 "fighter-m-0": [
     { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.2, y:SC_H*-0.3 },
 ],

@@ -212,7 +212,8 @@ gls2.Effect.explodeGS = function(x, y, scene) {
 var noise;
 
 gls2.Effect.explodeM = function(x, y, scene) {
-    gls2.playSound("soundExplode");
+    gls2.playSound("soundExplode2");
+    gls2.playSound("soundExplode3");
     for (var i = 0; i < 10; i++) {
         var e = gls2.Effect["explosion"].random()
             .clone()
