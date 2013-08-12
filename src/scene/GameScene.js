@@ -24,16 +24,26 @@ gls2.GameScene = tm.createClass(
     /** コンボダウン */
     comboDown: 0,
 
+    /** @type {gls2.Stage} */
     stage: null,
+    /** @type {gls2.GroundElement} */
     ground: null,
+
     zanki: 3,
+
+    /** ステージ中の星アイテム（小）ゲット数 */
+    starItem: 0,
+    /** ステージ中の星アイテム（大）ゲット数 */
+    starItemLarge: 0,
+    /** 撃墜数 */
+    killCount: 0,
+    /** 出現敵数 */
+    enemyCount: 0,
 
     /** 現在の保有ボム数 */
     bomb: 0,
     /** ボムスロット数 */
     bombMax: 0,
-    /** ボムスロット初期数数 */
-    bombMaxInitial: 3,
     /** ボムスロット最大数 */
     bombMaxMax: 6,
     /** ボム発動中 */
@@ -50,16 +60,25 @@ gls2.GameScene = tm.createClass(
     /** ハイパーモード残り時間 */
     hyperTime: 0,
 
+    /** @type {gls2.GameScene.Layer} */
     groundLayer: null,
+    /** @type {gls2.GameScene.Layer} */
     playerLayer: null,
+    /** @type {gls2.GameScene.Layer} */
     enemyLayer: null,
+    /** @type {gls2.GameScene.Layer} */
     effectLayer0: null,
+    /** @type {gls2.GameScene.Layer} */
     effectLayer1: null,
+    /** @type {gls2.GameScene.Layer} */
     bulletLayer: null,
+    /** @type {gls2.GameScene.LabelLayer} */
     labelLayer: null,
 
+    /** @type {tm.app.Object2D} */
     lastElement: null,
 
+    /** @type {gls2.ScoreLabel} */
     scoreLabel: null,
 
     init: function() {
@@ -80,7 +99,7 @@ gls2.GameScene = tm.createClass(
         this.playerLayer = gls2.GameScene.Layer().addChildTo(this);
         this.effectLayer1 = gls2.GameScene.Layer().addChildTo(this);
         this.bulletLayer = gls2.GameScene.Layer().addChildTo(this);
-        this.labelLayer = gls2.GameScene.Layer().addChildTo(this);
+        this.labelLayer = gls2.GameScene.LabelLayer(this).addChildTo(this);
 
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
 
@@ -96,9 +115,11 @@ gls2.GameScene = tm.createClass(
     },
 
     addChild: function(child) {
-        // 必ずいずれかのレイヤーに入れる(lastElement以外)
-        if (child instanceof gls2.Player) {
-            this.playerLayer.addChild(child);
+        // 必ずいずれかのレイヤーに入れる(lastElementとground以外)
+        if (child.isEffect) {
+            this.effectLayer0.addChild(child);
+        } else if (child instanceof gls2.Bullet) {
+            this.bulletLayer.addChild(child);
         } else if (child instanceof gls2.StarItem) {
             this.groundLayer.addChild(child);
         } else if (child instanceof gls2.Enemy) {
@@ -107,13 +128,12 @@ gls2.GameScene = tm.createClass(
             } else {
                 this.enemyLayer.addChild(child);
             }
-        } else if (child.isEffect) {
-            this.effectLayer0.addChild(child);
-        } else if (child instanceof gls2.Bullet) {
-            this.bulletLayer.addChild(child);
+        } else if (child instanceof gls2.Player) {
+            this.playerLayer.addChild(child);
         } else if (child === this.lastElement
             || child === this.ground
-            || child instanceof gls2.GameScene.Layer) {
+            || child instanceof gls2.GameScene.Layer
+            || child instanceof gls2.GameScene.LabelLayer) {
             this.superClass.prototype.addChild.apply(this, arguments);
         } else {
             console.error("unknown type child.");
@@ -135,16 +155,26 @@ gls2.GameScene = tm.createClass(
 
         if (app.frame % 5 === 0) this.scoreLabel.update();
 
+        // コンボゲージ減少
         this.comboGauge -= gls2.Setting.COMBO_GAUGE_DECR * gls2.Setting.COMBO_GAUGE_DECR_RATE_WHEN_HYPERMODE;
         if (this.comboGauge <= 0) {
+            // コンボゲージ切れ
             this.comboGauge = 0;
-            if (this.comboCount > 0) {
-                if (this.comboDown === 0) {
-                    this.comboDown = this.comboCount * gls2.Setting.COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO;
+            if (this.isHyperMode || this.hyperGauge === 1) {
+                // ハイパー中orハイパーゲージMAXの場合は即コンボ切れ
+                this.baseScore = 0;
+                this.comboCount = 0;
+                this.comboDown = 0;
+            } else {
+                // NoハイパーかつハイパーゲージがNoMAXの場合は徐々にコンボが低下
+                if (this.comboCount > 0) {
+                    if (this.comboDown <= 0) {
+                        this.comboDown = this.comboCount * gls2.Setting.COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO;
+                    }
+                    this.baseScore = this.baseScore * (this.comboCount-this.comboDown)/this.comboCount;
+                    this.comboCount -= this.comboDown;
                 }
-                this.baseScore = this.baseScore * (this.comboCount-this.comboDown)/this.comboCount;
-                this.comboCount -= this.comboDown;
-                if (this.comboCount < 0) {
+                if (this.comboCount <= 0) {
                     this.baseScore = 0;
                     this.comboCount = 0;
                     this.comboDown = 0;
@@ -153,10 +183,13 @@ gls2.GameScene = tm.createClass(
         }
 
         if (app.keyboard.getKeyDown("escape")) {
+            // タイトル画面に戻る
             this.app.replaceScene(gls2.TitleScene());
         } else if (app.keyboard.getKeyDown("space")) {
+            // ポーズ
             this.openPauseMenu(0);
         } else if (app.keyboard.getKeyDown("p")) {
+            // スクショを撮る
             var out = tm.graphics.Canvas();
             out.resize(SC_W, SC_H);
             out.clearColor("black");
@@ -168,12 +201,16 @@ gls2.GameScene = tm.createClass(
         }
     },
 
+    /**
+     * フレームの最後に実行される
+     */
     onexitframe: function(app) {
         if (this.player.controllable === false) {
             gls2.Danmaku.erase();
         }
 
 
+        /** @type {Array.<gls2.Enemy>} */
         var enemies;
 
         // ショットvs敵
@@ -188,14 +225,20 @@ gls2.GameScene = tm.createClass(
                     shot.genParticle(1);
                     shot.remove();
                     if (e.damage(this.isHyperMode ? gls2.Setting.HYPER_SHOT_ATTACK_POWER : gls2.Setting.SHOT_ATTACK_POWER)) {
+                        this.killCount += 1;
+
                         if (this.isHyperMode === false) this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_SHOT);
 
-                        this.generateStar(e.isGround, false, e.x, e.y);
+                        this.generateStar(e.isGround, gls2.distanceSq(e,this.player)<gls2.Setting.CROSS_RANGE, e.x, e.y, e.star);
 
                         this.addCombo(1);
-                        this.baseScore += e.score*(~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
-                        this.addScore(this.baseScore);
-                        enemies.erase(e);
+                        if (!this.isHyperMode && this.hyperGauge === 1) {
+                            var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+                            this.addScore(this.baseScore + e.score*bonus);
+                        } else {
+                            this.addScore(this.baseScore + e.score);
+                        }
+                        this.baseScore += e.score;
                         break;
                     }
                 }
@@ -216,13 +259,20 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(e, laser)) {
                     laser.setHitY(e.y + e.boundingHeightBottom);
                     if (e.damage(this.isHyperMode ? gls2.Setting.HYPER_LASER_ATTACK_POWER : gls2.Setting.LASER_ATTACK_POWER)) {
+                        this.killCount += 1;
+
                         this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER);
 
-                        this.generateStar(e.isGround, false, e.x, e.y);
+                        this.generateStar(e.isGround, gls2.distanceSq(e,this.player)<gls2.Setting.CROSS_RANGE, e.x, e.y, e.star);
 
                         this.addCombo(1);
-                        this.baseScore += e.score*(~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
-                        this.addScore(this.baseScore);
+                        if (!this.isHyperMode && this.hyperGauge === 1) {
+                            var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+                            this.addScore(this.baseScore + e.score*bonus);
+                        } else {
+                            this.addScore(this.baseScore + e.score);
+                        }
+                        this.baseScore += e.score;
                     } else {
                         this.addCombo(0.01);
                         this.comboGauge = Math.max(this.comboGauge, 0.05);
@@ -247,13 +297,20 @@ gls2.GameScene = tm.createClass(
                 if (e.hp <= 0) continue;
                 if (gls2.Collision.isHit(e, aura)) {
                     if(e.damage(this.isHyperMode ? gls2.Setting.HYPER_AURA_ATTACK_POWER : gls2.Setting.AURA_ATTACK_POWER)) {
+                        this.killCount += 1;
+
                         this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA);
 
-                        this.generateStar(e.isGround, false, e.x, e.y);
+                        this.generateStar(e.isGround, gls2.distanceSq(e,this.player)<gls2.Setting.CROSS_RANGE, e.x, e.y, e.star);
 
                         this.addCombo(1);
-                        this.baseScore += e.score*(~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
-                        this.addScore(this.baseScore);
+                        if (!this.isHyperMode && this.hyperGauge === 1) {
+                            var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+                            this.addScore(this.baseScore + e.score*bonus);
+                        } else {
+                            this.addScore(this.baseScore + e.score);
+                        }
+                        this.baseScore += e.score;
                     } else {
                         this.addCombo(0.01);
                         this.comboGauge = Math.max(this.comboGauge, 0.05);
@@ -268,12 +325,15 @@ gls2.GameScene = tm.createClass(
         if (this.isBombActive) {
             // すべての弾を消す
             gls2.Danmaku.erase();
-            var enemies = [].concat(gls2.Enemy.activeList);
+            enemies = [].concat(gls2.Enemy.activeList);
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
                 if (e.hp <= 0) continue;
                 if (e.isInScreen()) {
-                    e.damage(gls2.Setting.BOMB_ATTACK_POWER);
+                    if (e.damage(gls2.Setting.BOMB_ATTACK_POWER)) {
+                        this.addScore(e.score);
+                        this.killCount += 1;
+                    }
                 }
             }
             this.comboCount = 0;
@@ -288,22 +348,22 @@ gls2.GameScene = tm.createClass(
                 var bullets = [].concat(gls2.Bullet.activeList);
                 for (var b = bullets.length; bullets[--b] !== undefined;) {
                     var bullet = bullets[b];
-                    if (gls2.Collision.isHit(shot, bullet)) {
+                    if (shot.hp > 0 && gls2.Collision.isHit(shot, bullet)) {
                         bullet.hp -= (6 - this.hyperRank);
                         if (bullet.hp < 0) {
-                            shot.remove();
                             bullet.destroy();
-                            this.addScore(gls2.Setting.BULLET_SCORE * this.comboCount);
+                            this.addScore(gls2.Setting.BULLET_SCORE);
                             this.addCombo(1);
 
-                            this.generateStar(false, false, bullet.x, bullet.y);
+                            this.generateStar(false, false, bullet.x, bullet.y, 1);
                         }
+                        shot.hp -= 1;
                     }
                 }
             }
         }
 
-        if (this.player.muteki === false && this.isBombActive === false && this.hyperMutekiTime <= 0) {
+        if (this.player.parent !== null && this.player.muteki === false && this.isBombActive === false && this.hyperMutekiTime <= 0) {
 
             // 敵弾vs自機
             for (var i = gls2.Bullet.activeList.length; gls2.Bullet.activeList[--i] !== undefined;) {
@@ -311,7 +371,8 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(b, this.player)) {
                     this.player.damage();
                     if (this.bomb > 0) {
-                        bulletml.Bullet.globalScope["$rank"] = Math.clamp(bulletml.Bullet.globalScope["$rank"]-0.01, 0, 1);
+                        this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
+                        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]-0.01, 0, 1);
                         gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                     } else {
                         this.miss();
@@ -328,7 +389,8 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(e, this.player)) {
                     this.player.damage();
                     if (this.bomb > 0) {
-                        bulletml.Bullet.globalScope["$rank"] = Math.clamp(bulletml.Bullet.globalScope["$rank"]-0.01, 0, 1);
+                        this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
+                        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]-0.01, 0, 1);
                         gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                     } else {
                         this.miss();
@@ -339,11 +401,10 @@ gls2.GameScene = tm.createClass(
         }
     },
 
-    generateStar: function(ground, large, x, y) {
-        if (ground) {
-            gls2.StarItemGround(large).setPosition(x, y);
-        } else {
-            gls2.StarItemSky(large).setPosition(x, y);
+    generateStar: function(ground, large, x, y, count) {
+        var s = ground ? gls2.StarItemGround : gls2.StarItemSky;
+        for (var i = 0; i < count; i++) {
+            s(large).setPosition(x, y);
         }
     },
 
@@ -353,9 +414,13 @@ gls2.GameScene = tm.createClass(
         this.scoreLabel.consoleWindow.clearBuf().clear();
 
         this.score = 0;
-        this.zanki = 3;
-        this.bomb = this.bombMax = this.bombMaxInitial;
+        this.zanki = gls2.Setting.INITIAL_ZANKI;
+        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
         this.hyperGauge = 0;
+        this.hyperRank = 0;
+        bulletml.Bullet.globalScope["$rank"] = 0;
+        this.endHyperMode();
+        this.isBombActive = false;
 
         if (this.player !== null && this.player.parent !== null) this.player.remove();
         gls2.Enemy.clearAll();
@@ -372,9 +437,6 @@ gls2.GameScene = tm.createClass(
 
         this.player = gls2.Player(this, playerType);
         this.startStage(0);
-
-        this.endHyperMode();
-        this.isBombActive = false;
 
         // this.startRec();
     },
@@ -428,7 +490,8 @@ gls2.GameScene = tm.createClass(
         this.comboCount = 0;
         this.comboDown = 0;
 
-        bulletml.Bullet.globalScope["$rank"] = Math.clamp(bulletml.Bullet.globalScope["$rank"]-0.03, 0, 1);
+        this.hyperRank = gls2.math.clamp(this.hyperRank - 3, 0, 1);
+        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]-0.03, 0, 1);
 
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
@@ -446,8 +509,11 @@ gls2.GameScene = tm.createClass(
     gameContinue: function() {
         this.println("System rebooted.", true);
 
-        this.zanki = 3;
-        this.bomb = this.bombMax = this.bombMaxInitial;
+        this.zanki = gls2.Setting.INITIAL_ZANKI;
+        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
+        this.hyperRank = 0;
+        bulletml.Bullet.globalScope["$rank"] = 0;
+
         this.launch();
     },
 
@@ -491,9 +557,13 @@ gls2.GameScene = tm.createClass(
 
         if (this.isHyperMode) v *= gls2.Setting.HYPER_CHARGE_RATE_WHEN_HYPERMODE;
 
-        this.hyperGauge = Math.clamp(this.hyperGauge + v*gls2.Setting.HYPER_CHARGE_RATE, 0, 1);
+        this.hyperGauge = gls2.math.clamp(this.hyperGauge + v*gls2.Setting.HYPER_CHARGE_RATE, 0, 1);
         if (this.hyperGauge === 1) {
-            this.println("hyper system, ready.", true);
+            if (Math.random() < 0.5) {
+                this.println("HYPER SYSTEM, ready.", true);
+            } else {
+                this.println("HYPER SYSTEM, stand by.", true);
+            }
             gls2.ChargeEffect(this.player).addChildTo(this);
         } else if (this.hyperGauge === 0) {
             this.endHyperMode();
@@ -501,13 +571,17 @@ gls2.GameScene = tm.createClass(
     },
 
     startHyperMode: function() {
-        this.println("'HYPER SYSTEM' start!!", true)
+        if (Math.random() < 0.5) {
+            this.println("HYPER SYSTEM start!!", true);
+        } else {
+            this.println("start counting to system limit.", true);
+        }
 
         this.isHyperMode = true;
         this.hyperGauge = 0;
-        this.hyperRank = Math.min(this.hyperRank + 1, 5);
 
-        bulletml.Bullet.globalScope["$rank"] = Math.clamp(bulletml.Bullet.globalScope["$rank"]+0.01, 0, 1);
+        this.hyperRank = gls2.math.clamp(this.hyperRank + 1, 0, 5);
+        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]+this.hyperRank*0.01, 0, 1);
         bulletml.Bullet.globalScope["$hyperOff"] = gls2.Setting.ENEMY_ATTACK_INTERVAL_RATE_HYPER;
 
         this.hyperTime = gls2.Setting.HYPERMODE_TIME;
@@ -544,14 +618,16 @@ gls2.GameScene = tm.createClass(
 
     extendZanki: function() {
         // TODO エクステンドエフェクト
-        this.println("Extended.");
+        this.println("extended.");
         this.zanki += 1;
     },
 
     onGetStar: function(star) {
         if (star.large) {
+            this.starItemLarge += 1;
             this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE * this.comboCount);
         } else {
+            this.starItem += 1;
             this.addScore(gls2.Setting.STAR_ITEM_SCORE * this.comboCount);
         }
     },
@@ -652,34 +728,7 @@ gls2.GameScene = tm.createClass(
 
     draw: function(canvas) {
         if (this.stage === null) return;
-        canvas.clearColor(this.ground.background, 0, 0);
-        this.drawComboGauge(canvas);
-        this.drawHyperGauge(canvas);
-    },
-
-    drawComboGauge: function(canvas) {
-        if (this.comboGauge > 0) {
-            canvas.fillStyle = "rgba(255," + ~~(this.comboGauge * 255) + "," + ~~Math.min(255, this.comboGauge * 512) + ",0.5)";
-            var h = 500 * this.comboGauge;
-            canvas.fillRect(SC_W-15, SC_H-5 - h, 10, h);
-        }
-    },
-
-    drawHyperGauge: function(canvas) {
-        if (this.hyperGauge === 1) {
-            if (this.app.frame % 2 === 0) {
-                canvas.fillStyle = "rgba(255,255,255,0.6)";
-                canvas.fillRect(5, SC_H-12, 200, 9);
-            }
-        } else {
-            canvas.fillStyle = "rgba(255,255,0,0.3)";
-            canvas.fillRect(5, SC_H-12, 200, 9);
-            if (0 < this.hyperGauge) {
-                canvas.fillStyle = "rgba(255,255,100,1.0)";
-                var w = 200 * this.hyperGauge;
-                canvas.fillRect(5, SC_H-12, w, 9);
-            }
-        }
+        // canvas.clearColor(this.ground.background, 0, 0);
     },
 
     // rec: null,
@@ -767,6 +816,49 @@ gls2.GameScene.Layer = tm.createClass({
     }
 });
 
+gls2.GameScene.LabelLayer = tm.createClass({
+    superClass: tm.app.CanvasElement,
+
+    gameScene: null,
+    frame: 0,
+
+    init: function(gameScene) {
+        this.superInit();
+        this.gameScene = gameScene;
+    },
+    update: function(app) {
+        this.frame = app.frame;
+    },
+    draw: function(canavs) {
+        this.drawComboGauge(canavs);
+        this.drawHyperGauge(canavs);
+    },
+    drawComboGauge: function(canvas) {
+        if (this.gameScene.comboGauge > 0) {
+            canvas.fillStyle = "rgba(255," + ~~(this.gameScene.comboGauge * 255) + "," + ~~Math.min(255, this.gameScene.comboGauge * 512) + ",0.5)";
+            var h = 500 * this.gameScene.comboGauge;
+            canvas.fillRect(SC_W-15, SC_H-5 - h, 10, h);
+        }
+    },
+    drawHyperGauge: function(canvas) {
+        if (this.gameScene.hyperGauge === 1) {
+            if (this.frame % 2 === 0) {
+                canvas.fillStyle = "rgba(255,255,255,0.6)";
+                canvas.fillRect(5, SC_H-12, 200, 9);
+            }
+        } else {
+            canvas.fillStyle = "rgba(255,255,0,0.3)";
+            canvas.fillRect(5, SC_H-12, 200, 9);
+            if (0 < this.gameScene.hyperGauge) {
+                canvas.fillStyle = "rgba(255,255,100,1.0)";
+                var w = 200 * this.gameScene.hyperGauge;
+                canvas.fillRect(5, SC_H-12, w, 9);
+            }
+        }
+    },
+});
+
+/** @const */
 gls2.GameScene.SINGLETON = null;
 
 })();

@@ -2,12 +2,14 @@
 (function() {
 
 var data = {
-    "kujo":      [   2,    100, false, false ],
-    "kiryu":     [   3,    300, false, false ],
-    "natsuki":   [   5,    300,  true, false ],
-    "kise":      [  30,    300,  true, false ],
-    "kurokawa":  [  60,   3000, false, false ],
-    "yukishiro": [ 1500, 50000, false,  true ],
+    //name         hp     score   ground erase  star
+    "kujo":      [     2,    100, false, false,  1 ],
+    "kiryu":     [     3,    300, false, false,  1 ],
+    "natsuki":   [     5,    300,  true, false,  1 ],
+    "kise":      [    30,    300,  true, false,  1 ],
+    "kurokawa":  [    70,   3000, false, false,  5 ],
+    "akimoto":   [   500,  10000, false,  true, 10 ],
+    "yukishiro": [  1500,  50000, false,  true, 20 ],
 };
 var setData = function(name, enemy) {
     enemy.name = name;
@@ -15,6 +17,61 @@ var setData = function(name, enemy) {
     enemy.score = data[name][1];
     enemy.isGround = data[name][2];
     enemy.erase = data[name][3];
+    enemy.star = data[name][4];
+};
+
+/**
+ * 大型機の墜落
+ */
+var fallDown = function() {
+    this.remove();
+    this.isGround = true;
+    this.gameScene.addChild(this);
+    this.addEventListener("enterframe", function() {
+        if (Math.random() < 0.2) {
+            gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {
+                "x": 0,
+                "y": -3,
+            });
+        }
+    });
+    this.tweener
+        .clear()
+        .to({
+            "altitude": 2,
+            "y": this.y + 200,
+        }, 2000)
+        .call(function() {
+            gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+            this.remove();
+        }.bind(this));
+};
+
+/**
+ * ボス破壊
+ */
+var bossExplode = function() {
+    this.remove();
+    this.isGround = true;
+    this.gameScene.addChild(this);
+    this.addEventListener("enterframe", function() {
+        if (Math.random() < 0.2) {
+            gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {
+                "x": 0,
+                "y": -3,
+            });
+        }
+    });
+    this.tweener
+        .clear()
+        .to({
+            "altitude": 2,
+            "y": this.y + 200,
+        }, 2000)
+        .call(function() {
+            gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+            this.remove();
+        }.bind(this));
 };
 
 /**
@@ -210,6 +267,39 @@ gls2.EnemyHard.FighterM = tm.createClass(
 gls2.EnemyHard.FighterM = gls2.EnemyHard.FighterM();
 
 /**
+ * 中型戦闘機「アキモト」
+ */
+gls2.EnemyHard.Komachi = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.EnemyHard,
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        setData("akimoto", this);
+
+        this._sprite = _Sprite("tex1", 64*4, 64*2);
+        this._sprite.srcRect.x = 64*1;
+        this._sprite.srcRect.y = 64*2;
+        this._sprite.srcRect.width = 64*4;
+        this._sprite.srcRect.height = 64*2;
+        this.boundingWidth = 200;
+        this.boundingHeightBottom = 10;
+        this.boundingHeightTop = 60;
+    },
+    update: function() {
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        fallDown.call(this);
+    },
+});
+gls2.EnemyHard.Komachi = gls2.EnemyHard.Komachi();
+
+/**
  * 固定砲台「キセ」
  */
 gls2.EnemyHard.Cannon = tm.createClass({
@@ -220,12 +310,16 @@ gls2.EnemyHard.Cannon = tm.createClass({
     setup: function() {
         setData("kise", this);
 
+        this._sprite = _Sprite("tex1", 64*2, 64*2);
+        this._sprite.srcRect.x = 64*2;
+        this._sprite.srcRect.y = 64*4;
+        this._sprite.srcRect.width = 64*2;
+        this._sprite.srcRect.height = 64*2;
         this.boundingWidth = 20;
         this.boundingHeight = 20;
     },
     draw: function(canvas) {
-        canvas.strokeStyle = "yellow";
-        canvas.strokeRect(-20*0.5, -20*0.5, 20, 20);
+        this._sprite.draw(canvas);
     },
 });
 gls2.EnemyHard.Cannon = gls2.EnemyHard.Cannon();
@@ -253,28 +347,7 @@ gls2.EnemyHard.Honoka = tm.createClass({
         this.boundingHeight = 80;
     },
     destroy: function() {
-        this.remove();
-        this.isGround = true;
-        this.gameScene.addChild(this);
-        this.addEventListener("enterframe", function() {
-            if (Math.random() < 0.2) {
-                gls2.Effect.explodeS(this.x + Math.rand(-100, 100), this.y + Math.rand(-40, 40), this.gameScene, {
-                    "x": 0,
-                    "y": -3,
-                });
-            }
-        });
-        this.tweener
-            .clear()
-            .to({
-                "altitude": 0,
-                "y": this.y + 200,
-                "rotation": 10,
-            }, 2000)
-            .call(function() {
-                gls2.Effect.explodeM(this.x, this.y, this.gameScene);
-                this.remove();
-            }.bind(this));
+        fallDown.call(this);
     },
     draw: function(canvas) {
         canvas.fillStyle = "yellow";
@@ -301,7 +374,22 @@ gls2.EnemyHard.Honoka = gls2.EnemyHard.Honoka();
 
 /**
  * ステージ１ボス「ミスミ」
+ * @class
+ * @extends {gls2.EnemyHard}
  */
+gls2.EnemyHard.Nagisa = tm.createClass(
+/** @lends {gls2.EnemyHard.Nagisa.prototype} */
+{
+    superClass: gls2.EnemyHard,
+    init: function() {
+        this.superInit();
+    },
+    destroy: function() {
+        bossExplode.call(this);
+    },
+
+});
+gls2.EnemyHard.Nagisa = gls2.EnemyHard.Nagisa();
 
 /**
  * ステージ２ボス「ヒュウガ」
@@ -321,6 +409,10 @@ gls2.EnemyHard.Honoka = gls2.EnemyHard.Honoka();
 
 /**
  * エクストラボス「ユメハラ」
+ */
+
+/**
+ * エクストラボス2「|)|23@[v]」
  */
 
 var _Sprite = tm.createClass({

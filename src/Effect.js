@@ -6,7 +6,7 @@ gls2.Effect.setup = function() {
     noise = gls2.Noise.generate(256);
 
     gls2.Effect["explosion"] = Array.range(0, 2).map(function(i) {
-        var exp = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        return tm.app.AnimationSprite(tm.app.SpriteSheet({
             image: "explode" + i,
             frame: {
                 width: 100,
@@ -18,8 +18,7 @@ gls2.Effect.setup = function() {
                     next: null,
                 },
             },
-        }, 100, 100))
-        return exp;
+        }, 100, 100));
     });
 
     gls2.Effect["shockwaveImage"] = tm.graphics.Canvas()
@@ -214,15 +213,17 @@ var noise;
 gls2.Effect.explodeM = function(x, y, scene) {
     gls2.playSound("soundExplode2");
     gls2.playSound("soundExplode3");
-    for (var i = 0; i < 10; i++) {
+    var count = 20;
+    var offset = ~~(Math.random() * gls2.Noise.noise.length);
+    for (var i = 0; i < count; i++) {
         var e = gls2.Effect["explosion"].random()
             .clone()
             .addEventListener("animationend", function() {
                 this.remove();
             })
             .addEventListener("enterframe", function() {
-                this.x += Math.cos(this.a) * 2;
-                this.y += Math.sin(this.a) * 2;
+                this.x += Math.cos(this.a) * this.v;
+                this.y += Math.sin(this.a) * this.v;
                 this.scaleX += 0.01;
                 this.scaleY += 0.01;
             })
@@ -231,6 +232,37 @@ gls2.Effect.explodeM = function(x, y, scene) {
             .setPosition(x, y)
             .gotoAndPlay();
         e.a = Math.PI*2 * Math.random();
+        var idx = ~~(gls2.Noise.noise.length * i/count) + offset;
+        e.v = Math.pow(gls2.Noise.noise.at(idx), 2) * 10;
+        e.isEffect = true;
+        e.addChildTo(scene);
+    }
+};
+
+gls2.Effect.explodeL = function(x, y, scene) {
+    gls2.playSound("soundExplode2");
+    gls2.playSound("soundExplode3");
+    var count = 60;
+    var offset = ~~(Math.random() * gls2.Noise.noise.length);
+    for (var i = 0; i < count; i++) {
+        var e = gls2.Effect["explosion"].random()
+            .clone()
+            .addEventListener("animationend", function() {
+                this.remove();
+            })
+            .addEventListener("enterframe", function() {
+                this.x += Math.cos(this.a) * this.v;
+                this.y += Math.sin(this.a) * this.v;
+                this.scaleX += 0.01;
+                this.scaleY += 0.01;
+            })
+            .setScale(1.0)
+            .setBlendMode(i%2===0 ? "source-over" : "lighter")
+            .setPosition(x, y)
+            .gotoAndPlay();
+        e.a = (Math.PI*2 * i/count)
+        var idx = ~~(gls2.Noise.noise.length * i/count) + offset;
+        e.v = Math.pow(gls2.Noise.noise.at(idx), 3) * 10;
         e.isEffect = true;
         e.addChildTo(scene);
     }
@@ -300,8 +332,8 @@ gls2.StartHyperEffect = tm.createClass({
         for (var i = 0; i < 5; i++) {
             gls2.Particle(80, 1, 0.9)
                 .setPosition(
-                    Math.cos(this.angle-Math.PI*0.5)*40+this.target.x + Math.rand(-2, 2),
-                    Math.sin(this.angle-Math.PI*0.5)*40+this.target.y + Math.rand(-2, 2)
+                    Math.cos(this.angle-Math.PI*0.5)*40+this.target.x + gls2.math.rand(-2, 2),
+                    Math.sin(this.angle-Math.PI*0.5)*40+this.target.y + gls2.math.rand(-2, 2)
                 )
                 .addChildTo(this.target.parent);
         }

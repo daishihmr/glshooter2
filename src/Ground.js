@@ -57,11 +57,11 @@ gls2.Ground = tm.createClass(
     },
 
     draw: function() {
-        // if (this.gElement.background !== null) {
-        //     this.clearColor(this.gElement.background, 0, 0);
-        // } else {
+        if (this.gElement.background !== null) {
+            this.clearColor(this.gElement.background, 0, 0);
+        } else {
             this.clear();
-        // }
+        }
 
         this.lineWidth = 0.2;
         this.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)

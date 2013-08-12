@@ -8,19 +8,29 @@ gls2.Enemy = tm.createClass(
 /** @lends {gls2.Enemy.prototype} */
 {
     superClass: tm.app.CanvasElement,
+
     frame: 0,
     direction: 0,
     speed: 0,
-    player: null,
-    gameScene: null,
-    stage: null,
-    hard: null,
-    soft: null,
-    hp: 0,
-    enableFire: true,
-    isGround: false,
 
+    /** @type {gls2.Player} */
+    player: null,
+    /** @type {gls2.GameScene} */
+    gameScene: null,
+    /** @type {gls2.Stage} */
+    stage: null,
+    /** @type {gls2.EnemyHard} */
+    hard: null,
+    /** @type {gls2.EnemySoft} */
+    soft: null,
+
+    hp: 0,
     score: 0,
+    isGround: false,
+    erase: false,
+    star: 1,
+
+    enableFire: true,
 
     /** 出現してから一度でも可視範囲に入ったか */
     entered: false,

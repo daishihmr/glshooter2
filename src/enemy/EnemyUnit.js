@@ -137,6 +137,13 @@ gls2.EnemyUnit = {
     { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.8, y:SC_H*-0.3 },
 ],
 
+"komachi-0": [
+    { soft:$s.LargeFighter1, hard:$h.Komachi, x:SC_W*0.4, y:SC_H*-0.3 },
+],
+"komachi-1": [
+    { soft:$s.LargeFighter1, hard:$h.Komachi, x:SC_W*0.6, y:SC_H*-0.3 },
+],
+
 /**
  * ステージ１中ボス「ユキシロ」
  */

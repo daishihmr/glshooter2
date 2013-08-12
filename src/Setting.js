@@ -6,6 +6,15 @@
 gls2.Setting = {
 
     /**
+     * 初期残機数
+     * @const
+     */
+    INITIAL_ZANKI: 3,
+
+    /** ボムスロット初期数 */
+    INITIAL_BOMB_MAX: 3,
+
+    /**
      * ショットの攻撃力
      * @const
      */
@@ -141,7 +150,7 @@ gls2.Setting = {
      * 弾破壊時のスコア
      * @const
      */
-    BULLET_SCORE: 50,
+    BULLET_SCORE: 10,
 
     /**
      * 星アイテム（大）取得時のスコア
@@ -161,6 +170,29 @@ gls2.Setting = {
      */
     ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.3,
 
+    /**
+     * 星アイテム（大）が出る距離
+     * @const
+     */
+    CROSS_RANGE: 200*200,
+
+    /**
+     * 敵弾のHP
+     * @const
+     */
+    BULLET_HP: 20,
+
+    /**
+     * ショットのHP
+     * @const
+     */
+    SHOT_HP: 10,
+
+    /**
+     * オートボム発動時に残ボム数をすべて消費するか
+     * @const
+     */
+    AUTO_BOMB_TO_ZERO: false,
 };
 
 })();

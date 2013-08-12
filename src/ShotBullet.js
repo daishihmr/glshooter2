@@ -95,6 +95,7 @@ gls2.ShotBulletPool = tm.createClass({
 
             var self = this;
             sb.addEventListener("added", function() {
+                this.hp = gls2.Setting.SHOT_HP;
                 activeList.push(this);
             });
             sb.addEventListener("removed", function() {

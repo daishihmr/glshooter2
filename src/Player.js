@@ -263,9 +263,10 @@ gls2.Player = tm.createClass(
                     gls2.StartHyperEffect(this).addChildTo(this.gameScene);
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
                     // ボム
-                    bulletml.Bullet.globalScope["$rank"] = Math.clamp(bulletml.Bullet.globalScope["$rank"]-0.02, 0, 1);
+                    this.hyperRank = gls2.math.clamp(this.hyperRank - 2, 0, 1);
+                    bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]-0.02, 0, 1);
                     gls2.Bomb(this, this.gameScene)
-                        .setPosition(Math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
+                        .setPosition(gls2.math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);
                 }
             }
@@ -288,6 +289,9 @@ gls2.Player = tm.createClass(
         this.fireShot = false;
         this.fireLaser = false;
         this.gameScene.endHyperMode();
+        this.gameScene.baseScore = 0;
+        this.gameScene.comboGauge = 0;
+        this.gameScene.comboCount = 0;
     },
 
     /** @protected */

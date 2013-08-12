@@ -1,3 +1,5 @@
+(function() {
+
 tm.app.Object2D.prototype.accessor("boundingWidthLeft", {
     "get": function() {
         return this._boundingWidthLeft;
@@ -64,8 +66,8 @@ tm.app.CanvasElement.prototype.accessor("altitude", {
     "set": function(v) {
         this._altitude = v;
         if (this._altitude > 0) {
-            this.shadowColor = "rgba(0,0,0,0.5)";
-            this.shadowBlur = 30;
+            this.shadowColor = "rgba(0,0,0," + (0.5+0.5*(1-v/10)) + ")";
+            this.shadowBlur = 50 * v/10;
             this.shadowOffsetX = 2 * this._altitude;
             this.shadowOffsetY = 7 * this._altitude;
         } else {
@@ -114,3 +116,5 @@ tm.app.Label = tm.createClass(
 //     };
 //     setTimeout(temp, delay);
 // };
+
+})();

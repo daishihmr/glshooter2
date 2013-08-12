@@ -30,6 +30,6 @@ gls2.GameOverScene = tm.createClass(
         }
     },
     draw: function(canvas) {
-        canvas.clear();
+        canvas.clearColor("black");
     },
 });

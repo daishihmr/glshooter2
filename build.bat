@@ -2,21 +2,24 @@ erase target\gls2.js
 
 java -jar tools/compiler.jar ^
 --externs libs/tmlib.js ^
---externs src/extern/extern.js ^
+--externs extern/extern.js ^
 --js libs/bulletml.js ^
 --js libs/bulletml.walker.js ^
 --js libs/bulletml.dsl.js ^
 --js libs/bulletml.tmlib.js ^
 --js src/main.js ^
 --js src/GlShooter2.js ^
+--js src/Setting.js ^
 --js src/Player.js ^
 --js src/ShotBullet.js ^
 --js src/Laser.js ^
 --js src/Bomb.js ^
---js src/Stage.js ^
---js src/StageData.js ^
+--js src/stage/Stage.js ^
+--js src/stage/Stage1.js ^
 --js src/Effect.js ^
 --js src/ScoreLabel.js ^
+--js src/Ground.js ^
+--js src/StarItem.js ^
 --js src/common/Collision.js ^
 --js src/common/Scene.js ^
 --js src/common/DialogMenu.js ^
@@ -39,3 +42,5 @@ java -jar tools/compiler.jar ^
 --language_in ECMASCRIPT5 ^
 --js_output_file target/gls2.js ^
 --formatting SINGLE_QUOTES
+
+rem --formatting PRETTY_PRINT
