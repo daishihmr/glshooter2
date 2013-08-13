@@ -1,3 +1,7 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 (function() {
 
 /**
@@ -51,14 +55,15 @@ gls2.ScoreLabel = tm.createClass(
         this.fillText(text, SC_W*0.4, 22);
 
         this.setText("bold 18px Orbitron", "left", "top");
-        this.strokeText("rank " + ~~(bulletml.Bullet.globalScope["$rank"]*100), 10, 85);
+        this.strokeText("rank " + ~~(bulletml.Bullet.globalScope["$rank"]*100), 10, 75);
+        // this.strokeText("hyper level " + this.gameScene.hyperRank, 10, 105);
 
         this.setText("bold 18px Orbitron", "left", "top");
-        this.strokeText("max " + ~~this.gameScene.maxComboCount + " hit", 10, 105);
+        this.strokeText("max " + ~~this.gameScene.maxComboCount + " hit", 10, 95);
 
         if (0 < ~~this.gameScene.comboCount) {
             this.setText("bold 40px Orbitron", "left", "top");
-            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 125);
+            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, 115);
         }
 
         for (var i = 0; i < this.gameScene.zanki-1; i++) {
@@ -72,6 +77,14 @@ gls2.ScoreLabel = tm.createClass(
 
         this.consoleWindow.update();
         this.consoleWindow.draw(this);
+
+        // debug
+        if (DEBUG) {
+            this.setText("bold 20px Orbitron", "right", "bottom");
+            this.strokeText(this.gameScene.killCount + "/" + this.gameScene.enemyCount, SC_W-30, SC_H);
+            this.strokeText("S:" + this.gameScene.starItem + " L:" + this.gameScene.starItemLarge, SC_W-30, SC_H - 25);
+        }
+
     },
 
 });

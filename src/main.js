@@ -10,6 +10,11 @@
  */
 var STATS = false;
 
+/**
+ * @define {boolean}
+ */
+var DEBUG = true;
+
 tm.preload(function() {
     if (STATS) tm.util.ScriptManager.loadStats();
 });

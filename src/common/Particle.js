@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 (function() {
 
 gls2.Particle = tm.createClass({

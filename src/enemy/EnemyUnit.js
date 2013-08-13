@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 (function() {
 
 var $s = gls2.EnemySoft;
@@ -135,6 +140,13 @@ gls2.EnemyUnit = {
 ],
 "fighter-m-6": [
     { soft:$s.MiddleFighter1, hard:$h.FighterM, x:SC_W*0.8, y:SC_H*-0.3 },
+],
+
+"komachi-0": [
+    { soft:$s.LargeFighter1, hard:$h.Komachi, x:SC_W*0.4, y:SC_H*-0.3 },
+],
+"komachi-1": [
+    { soft:$s.LargeFighter1, hard:$h.Komachi, x:SC_W*0.6, y:SC_H*-0.3 },
 ],
 
 /**

@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 /**
  * @class
  * @extends {gls2.Scene}
@@ -27,6 +32,8 @@ gls2.DialogMenu = tm.createClass(
     /** @type {tm.app.RectangleShape} */
     cursor: null,
 
+    onCursorMove: null,
+
     _selected: 0,
     _opened: false,
     _finished: false,
@@ -35,26 +42,20 @@ gls2.DialogMenu = tm.createClass(
      * @constructs
      * @param {string} title
      * @param {Array.<string>} menu
-     * @param {number=} defaultSelected
-     * @param {Array.<string>} menuDesctiptions
-     * @param {boolean=} showExit
      */
-    init: function(title, menu, defaultSelected, menuDesctiptions, showExit) {
+    init: function(title, menu, param) {
         this.superInit();
 
         this.titleText = title;
         this.menu = menu;
-        this._selected = ~~defaultSelected;
-        this.showExit = !!showExit;
-        if (menuDesctiptions) {
-            this.descriptions = menuDesctiptions;
-        } else {
-            this.descriptions = [].concat(menu);
-        }
+        this._selected = ~~param["defaultValue"];
+        this.showExit = param["showExit"];
+        this.descriptions = param["menuDescriptions"];
         if (this.showExit) {
             menu.push("exit");
             this.descriptions.push("前の画面へ戻ります");
         }
+        this.onCursorMove = param["onCursorMove"];
 
         var height = Math.max((1+menu.length)*50, 50) + 40;
         this.box = tm.app.RectangleShape(SC_W * 0.8, height, {
@@ -120,6 +121,8 @@ gls2.DialogMenu = tm.createClass(
                 this.tweener.to({
                     y: this.parent.selections[this.parent._selected].y
                 }, 200, "easeOutExpo");
+
+                if (this.parent.onCursorMove !== null) this.parent.onCursorMove(this.s);
             }
         };
     },
@@ -185,7 +188,12 @@ gls2.DialogMenu = tm.createClass(
  * @param {Array.<string>=} menuDescriptions
  * @param {boolean=} showExit
  */
-gls2.Scene.prototype.openDialogMenu = function(title, menu, callback, defaultValue, menuDescriptions, showExit) {
-    if (showExit === undefined) showExit = true;
-    this.startSceneForResult(gls2.DialogMenu(title, menu, defaultValue, menuDescriptions, showExit), callback);
+gls2.Scene.prototype.openDialogMenu = function(title, menu, callback, param) {
+    param = {}.$extend({
+        "menuDescriptions": [].concat(menu),
+        "showExit": true,
+        "defaultValue": 0,
+        "onCursorMove": function() {},
+    }, param);
+    this.startSceneForResult(gls2.DialogMenu(title, menu, param), callback);
 };

@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 /** @const */
 var SC_W = 480;
 /** @const */
@@ -10,7 +15,7 @@ var gls2 = {
 };
 
 /**
-　* GL-Shooter2アプリケーション
+ * GL-Shooter2アプリケーション
  * @class
  */
 gls2.GlShooter2 = tm.createClass(
@@ -22,9 +27,9 @@ gls2.GlShooter2 = tm.createClass(
     /** ハイスコア取得時の最終到達ステージ */
     highStage: 0,
     /** BGM音量(0～5) */
-    bgmVolume: 1,
+    bgmVolume: 3,
     /** SE音量(0～5) */
-    seVolume: 1,
+    seVolume: 3,
     /** 難易度(0～4) */
     difficulty: 1,
 
@@ -60,13 +65,25 @@ gls2.GlShooter2 = tm.createClass(
                 "aura": "assets/aura.png",
                 "explode0": "assets/explode0.png",
                 "explode1": "assets/explode1.png",
+                "explodeL": "assets/explode2.png",
                 "shotbullet": "assets/shotbullet.png",
                 "bomb": "assets/bomb.png",
 
+                // bgm
+                "bgm1": "assets2/nc54073.mp3",
+
                 // sound
-                "soundExplode": "assets/sen_ge_taihou03.mp3",
-                "soundExplode2": "assets/sen_ge_bom13.mp3",
-                "soundExplode3": "assets/sen_ge_bom02.mp3",
+                "sound/explode": "assets2/sen_ge_taihou03.mp3",
+                "sound/explode2": "assets2/sen_ge_bom13.mp3",
+                "sound/explode3": "assets2/sen_ge_bom02.mp3",
+                "sound/star": "assets2/se_maoudamashii_system24.mp3",
+                "sound/bomb": "assets2/sen_ge_bom17.mp3",
+
+                // voice
+                "sound/voHyperReady": "assets/vo_hyper_ready.mp3",
+                "sound/voHyperStart0": "assets/vo_hyper_start.mp3",
+                "sound/voHyperStart1": "assets/vo_hyper_start2.mp3",
+                "sound/voBomb": "assets/vo_bomb.mp3",
 
                 // test
                 "star": "assets/star.png",
@@ -97,16 +114,40 @@ gls2.GlShooter2 = tm.createClass(
 
 });
 
+gls2.currentBgm = null;
+gls2.playBgm = function(bgmName) {
+    gls2.stopBgm();
+
+    if (gls2.core.bgmVolume === 0) return;
+
+    var bgm = tm.asset.AssetManager.get(bgmName);
+    if (bgm) {
+        gls2.currentBgm = bgm.clone();
+        gls2.currentBgm.volume = gls2.core.bgmVolume * 0.1;
+        gls2.currentBgm.loop = true;
+        gls2.currentBgm.play();
+    }
+};
+gls2.stopBgm = function() {
+    if (gls2.currentBgm !== null) {
+        gls2.currentBgm.stop();
+    }
+};
+
 gls2.playSound = function(soundName) {
     if (gls2.core.seVolume === 0) return;
-    if (gls2.playSound.played[soundName] === gls2.core.frame) return;
+    if (gls2.playSound.played["sound/"+soundName] === gls2.core.frame) return;
 
-    var sound = tm.asset.AssetManager.get(soundName);
-    sound.volume = gls2.core.seVolume * 0.1;
+    var sound = tm.asset.AssetManager.get("sound/"+soundName);
     if (sound) {
+        if (soundName.substring(0, 2) === "vo") {
+            sound.volume = gls2.core.seVolume * 0.5;
+        } else {
+            sound.volume = gls2.core.seVolume * 0.1;
+        }
         sound = sound.clone().play();
     }
-    gls2.playSound.played[soundName] = gls2.core.frame;
+    gls2.playSound.played["sound/"+soundName] = gls2.core.frame;
 };
 gls2.playSound.played = {};
 

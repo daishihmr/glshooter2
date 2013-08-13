@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 /**
  * @class
  */
@@ -30,6 +35,6 @@ gls2.GameOverScene = tm.createClass(
         }
     },
     draw: function(canvas) {
-        canvas.clear();
+        canvas.clearColor("black");
     },
 });

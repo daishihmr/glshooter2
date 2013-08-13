@@ -1,3 +1,7 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 (function() {
 
 var origParticle0 = null;
@@ -33,7 +37,7 @@ gls2.TitleScene = tm.createClass({
             for (var i = 0; i < score.length; i += 4) {
                 text += score.substring(i, i+4) + " ";
             }
-            this.highScoreLabel.text = "HIGH SCORE: " + text;
+            this.highScoreLabel.text = "HIGH SCORE: " + text.trim();
         });
     },
 
@@ -99,12 +103,15 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        this.openDialogMenu("MAIN MENU", [ "start", "tutorial", "setting", "save score" ], this.onResultMainMenu, this.lastMainMenu, [
-            "ゲームを開始します",
-            "チュートリアルを開始します",
-            "設定を変更します",
-            "ゲームを終了し9leapにスコアを登録します",
-        ]);
+        this.openDialogMenu("MAIN MENU", [ "start", "tutorial", "setting", "save score" ], this.onResultMainMenu, {
+            "defaultValue": this.lastMainMenu,
+            "menuDescriptions": [
+                "ゲームを開始します",
+                "チュートリアルを開始します",
+                "設定を変更します",
+                "ゲームを終了し9leapにスコアを登録します",
+            ]
+        });
     },
     onResultMainMenu: function(result) {
         if (result !== 4) this.lastMainMenu = result;
@@ -136,11 +143,14 @@ gls2.TitleScene = tm.createClass({
     },
 
     openSetting: function() {
-        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume", "difficulty" ], this.onResultSetting, this.lastSetting, [
-            "BGMボリュームを設定します",
-            "効果音ボリュームを設定します",
-            "難易度を設定します",
-        ]);
+        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume", "difficulty" ], this.onResultSetting, {
+            "defaultValue": this.lastSetting,
+            "menuDescriptions": [
+                "BGMボリュームを設定します",
+                "効果音ボリュームを設定します",
+                "難易度を設定します",
+            ],
+        });
     },
     onResultSetting: function(result) {
         if (result !== 3) this.lastSetting = result;
@@ -161,7 +171,14 @@ gls2.TitleScene = tm.createClass({
     },
 
     openBgmSetting: function() {
-        this.openDialogMenu("BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultBgmSetting, gls2.core.bgmVolume);
+        this.openDialogMenu("BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultBgmSetting, {
+            "defaultValue": gls2.core.bgmVolume,
+            "onCursorMove": function(s) {
+                if (gls2.currentBgm !== null && s !== "exit") gls2.currentBgm.volume = s*0.1;
+            },
+            "showExit": false,
+        });
+
     },
     onResultBgmSetting: function(result) {
         if (result !== 6) gls2.core.bgmVolume = result;
@@ -169,7 +186,10 @@ gls2.TitleScene = tm.createClass({
     },
 
     openSeSetting: function() {
-        this.openDialogMenu("SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultSeSetting, gls2.core.seVolume);
+        this.openDialogMenu("SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultSeSetting, {
+            "defaultValue": gls2.core.seVolume,
+            "showExit": false,
+        });
     },
     onResultSeSetting: function(result) {
         if (result !== 6) {
@@ -179,13 +199,16 @@ gls2.TitleScene = tm.createClass({
     },
 
     openDifficultySetting: function() {
-        this.openDialogMenu("DIFFICULTY", [ "easy", "normal", "hard", "very hard", "hell" ], this.onResultDifficultySetting, gls2.core.difficulty, [
-            "初心者でも安心して挑戦可能な入門コース",
-            "普通の難易度。easyでは物足りない人へ",
-            "一般的な弾幕STGの難易度",
-            "hardはヌルすぎるという人向け",
-            "死ぬがよい",
-        ]);
+        this.openDialogMenu("DIFFICULTY", [ "easy", "normal", "hard", "very hard", "hell" ], this.onResultDifficultySetting, {
+            "defaultValue": gls2.core.difficulty,
+            "menuDescriptions": [
+                "初心者でも安心して挑戦可能な入門コース",
+                "普通の難易度。easyでは物足りない人へ",
+                "一般的な弾幕STGの難易度",
+                "hardはヌルすぎるという人向け",
+                "死ぬがよい",
+            ],
+        });
     },
     onResultDifficultySetting: function(result) {
         if (result !== 5) gls2.core.difficulty = result;

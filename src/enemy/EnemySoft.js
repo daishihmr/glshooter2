@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 // すべてsingletonかつimmutableに実装する
 (function() {
 
@@ -325,6 +330,34 @@ gls2.EnemySoft.MiddleFighter1 = tm.createClass(
 gls2.EnemySoft.MiddleFighter1 = gls2.EnemySoft.MiddleFighter1();
 
 /**
+ * 大型戦闘機
+ */
+gls2.EnemySoft.LargeFighter1 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.tweener
+            .clear()
+            .moveBy(0, SC_H*0.5, 1800, "easeOutQuad")
+            .call(function() {
+                attack(this, "komachi-1");
+            }.bind(this));
+    },
+    update: function() {
+        this.y += 0.3;
+        if (this.entered && !this.isInScreen()) {
+            this.remove();
+        }
+
+        this.enableFire = this.y < this.player.y;
+    },
+})
+gls2.EnemySoft.LargeFighter1 = gls2.EnemySoft.LargeFighter1();
+
+/**
  * 中ボス共通
  */
 gls2.EnemySoft.MBossCommon = tm.createClass(
@@ -346,7 +379,7 @@ gls2.EnemySoft.MBossCommon = tm.createClass(
                 this.onCompleteAttack();
                 var temp = function() {
                     var a = Math.random() * Math.PI*2;
-                    var d = Math.randf(SC_W*0.1, SC_W*0.3);
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad")
                         .call(temp);

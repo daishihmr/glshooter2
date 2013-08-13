@@ -1,3 +1,7 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 (function() {
 
 gls2.Bomb = tm.createClass({
@@ -62,7 +66,9 @@ gls2.Bomb = tm.createClass({
             this.player.muteki = true;
             this.gameScene.bomb -= 1;
             this.gameScene.endHyperMode();
-            this.gameScene.println("drop 'BOMBER'!!", true);
+            this.gameScene.println("drop BOMBER!!", true);
+            gls2.playSound("bomb");
+            gls2.playSound("voBomb");
         });
         this.addEventListener("removed", function() {
             this.gameScene.isBombActive = false;
@@ -95,7 +101,7 @@ gls2.Bomb = tm.createClass({
             }, 200, "easeOutBack")
             .call(function() {
                 this.update = function() {
-                    this.scaleX = this.scaleY = Math.randf(0.9, 1.1);
+                    this.scaleX = this.scaleY = gls2.math.randf(0.9, 1.1);
                 };
             }.bind(this.core));
     },
@@ -131,9 +137,11 @@ gls2.MiniBomb = tm.createClass({
     init: function(player, gameScene) {
         this.superInit(player, gameScene);
 
-        this.addEventListener("added", function() {
-            this.gameScene.bomb = 0;
-        });
+        if (gls2.Setting.AUTO_BOMB_TO_ZERO) {
+            this.addEventListener("added", function() {
+                this.gameScene.bomb = 0;
+            });
+        }
     },
 
     _setupCore: function() {
@@ -161,7 +169,7 @@ gls2.MiniBomb = tm.createClass({
             }, 200, "easeOutBack")
             .call(function() {
                 this.update = function() {
-                    this.scaleX = this.scaleY = Math.randf(0.4, 0.6);
+                    this.scaleX = this.scaleY = gls2.math.randf(0.4, 0.6);
                 };
             }.bind(this.core));
     },

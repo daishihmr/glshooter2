@@ -1,3 +1,7 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 (function() {
 
 gls2.Danmaku = {};
@@ -128,6 +132,51 @@ gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
     ]),
 });
 
+gls2.Danmaku["komachi-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(20, [
+            $.fire($.direction(210, "absolute"), $spd1(1), $.bullet, $.offsetX(-40)),
+            $.fire($.direction(120, "sequence"), $spd1(1), $.bullet, $.offsetX(-40)),
+            $.fire($.direction(120, "sequence"), $spd1(1), $.bullet, $.offsetX(-40)),
+            $.repeat(57, [
+                $interval(8),
+                $.fire($.direction(-720/57, "sequence"), $spd1(1), $.bullet, $.offsetX(-40)),
+                $.fire($.direction(    120, "sequence"), $spd1(1), $.bullet, $.offsetX(-40)),
+                $.fire($.direction(    120, "sequence"), $spd1(1), $.bullet, $.offsetX(-40)),
+            ]),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(20, [
+            $.fire($.direction(-210, "absolute"), $spd1(1), $.bullet, $.offsetX(40)),
+            $.fire($.direction( 120, "sequence"), $spd1(1), $.bullet, $.offsetX(40)),
+            $.fire($.direction( 120, "sequence"), $spd1(1), $.bullet, $.offsetX(40)),
+            $.repeat(57, [
+                $interval(8),
+                $.fire($.direction(720/57, "sequence"), $spd1(1), $.bullet, $.offsetX(40)),
+                $.fire($.direction(   120, "sequence"), $spd1(1), $.bullet, $.offsetX(40)),
+                $.fire($.direction(   120, "sequence"), $spd1(1), $.bullet, $.offsetX(40)),
+            ]),
+        ]),
+    ]),
+    "top2": $.action([
+        $.repeat(70, [
+            $.fire($.direction(0), $spd3(0), $.bullet({ball:true,frame:0}), $.offsetX(-110), $.autonomy(true)),
+            $.repeat(3, [
+                $.wait(3),
+                $.fire($.direction(0, "sequence"), $spd3(0), $.bullet({ball:true,frame:0}), $.offsetX(-110), $.autonomy(true)),
+            ]),
+            $interval(10),
+            $.fire($.direction(0), $spd3(0), $.bullet({ball:true,frame:0}), $.offsetX(+110), $.autonomy(true)),
+            $.repeat(3, [
+                $.wait(3),
+                $.fire($.direction(0, "sequence"), $spd3(0), $.bullet({ball:true,frame:0}), $.offsetX(+110), $.autonomy(true)),
+            ]),
+            $interval(10),
+        ]),
+    ]),
+});
+
 gls2.Danmaku["honoka-1"] = new bulletml.Root({
     "top0": $.action([
         $.wait(60),
@@ -163,7 +212,7 @@ gls2.Danmaku["honoka-1"] = new bulletml.Root({
 });
 
 gls2.Danmaku.setup = function() {
-    for (var i = 0; i < 500; i++) {
+    for (var i = 0; i < 800; i++) {
         bulletPool.push(gls2.Bullet());
     }
 
@@ -243,7 +292,7 @@ gls2.Bullet = tm.createClass(
         this.boundingRadius = 7;
 
         this.addEventListener("added", function() {
-            this.hp = 40;
+            this.hp = gls2.Setting.BULLET_HP;
         });
         this.addEventListener("removed", function() {
             bulletPool.push(this);

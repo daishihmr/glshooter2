@@ -1,3 +1,7 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 (function() {
 
 /**
@@ -6,12 +10,6 @@
 gls2.Stage = tm.createClass(
 /** @lends {gls2.Stage.prototype} */
 {
-    /** ステージ中の星アイテムゲット数 */
-    starItem: 0,
-    /** 撃墜数 */
-    killCount: 0,
-    /** 出現敵数 */
-    enemyCount: 0,
 
     player: null,
     gameScene: null,
@@ -33,10 +31,6 @@ gls2.Stage = tm.createClass(
     },
 
     setupBackground: function() {
-        this.gameScene.ground.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-            { offset:0, color:"rgba(51,51,136,0.5)" },
-            { offset:1, color:"rgba(17,17, 68,0.5)" }
-        ]).toStyle();
     },
 
     update: function() {
@@ -66,7 +60,7 @@ gls2.Stage = tm.createClass(
     },
 
     launchEnemy: function(data) {
-        this.enemyCount += 1;
+        this.gameScene.enemyCount += 1;
         return gls2.Enemy(this.gameScene, this, data.soft, data.hard)
             .setPosition(data.x, data.y)
             .addChildTo(this.gameScene)
@@ -74,7 +68,6 @@ gls2.Stage = tm.createClass(
     },
 
     onDestroyEnemy: function(enemy) {
-        this.killCount += 1;
     },
 
 });

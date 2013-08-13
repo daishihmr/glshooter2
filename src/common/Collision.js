@@ -1,3 +1,7 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 gls2.Collision = {
 
     isHit: function(a, b) {
@@ -12,7 +16,7 @@ gls2.Collision = {
         var aright = a.x + awr;
         var atop = a.y - aht;
         var abottom = a.y + ahb;
-    
+
         var bwl = b.boundingWidthLeft;
         var bwr = b.boundingWidthRight;
         var bht = b.boundingHeightTop;

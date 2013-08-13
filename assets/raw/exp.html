@@ -21,13 +21,13 @@ var fireParticle = {
     /** 生成開始フレーム */
     start: 0,
     /** 生成終了フレーム */
-    end: 20,
+    end: 40,
     /** 生成個数 */
     generate: {
         /** 初期生成個数 */
         initial: 50,
         /** 減衰率 */
-        rate: 0.9,
+        rate: 0.99,
     },
     /** パーティクル初期値 */
     initial: {
@@ -76,7 +76,7 @@ var fireParticle = {
             },
             a: {
                 finalValue: 0,
-                duration: 26,
+                duration: 40,
             },
         },
         /** 外縁色 */
@@ -178,7 +178,10 @@ tm.main(function() {
 
         if (outIndex < NUM_OF_CELL_SQRT * NUM_OF_CELL_SQRT) {
             if (this.frame % SKIP_FRAME === 0) {
-                out.drawImage(canvas.element, (outIndex % NUM_OF_CELL_SQRT) * CELL_SIZE, ~~(outIndex / NUM_OF_CELL_SQRT) * CELL_SIZE);
+                out.drawImage(
+                    canvas.element,
+                    (outIndex % NUM_OF_CELL_SQRT) * CELL_SIZE,
+                    ~~(outIndex / NUM_OF_CELL_SQRT) * CELL_SIZE);
                 outIndex++;
             }
         }
@@ -251,7 +254,8 @@ var Particle = tm.createClass({
                     { offset: 1.0, color: color1.toStyleAsRGBA() },
                 ]).toStyle()
             )
-            .fillRect(this.x+cx-this.radius, this.y+cy-this.radius, this.radius*2, this.radius*2);
+            .fillStar(this.x+cx, this.y+cy, this.radius, 5)
+            //.fillRect(this.x+cx-this.radius, this.y+cy-this.radius, this.radius*2, this.radius*2);
     },
 });
 
@@ -394,7 +398,7 @@ var ParticleGenerator = tm.createClass({
 </head>
 <body>
 <div>
-    <canvas id="c" style="background:url(background.png) repeat;border:1px solid white"></canvas>
+    <canvas id="c" style="background:url(../../tools/background.png) repeat;border:1px solid white"></canvas>
 </div>
 <div>
     <button id="restart">restart</button>

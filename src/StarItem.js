@@ -1,3 +1,7 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 (function() {
 
 /**
@@ -13,6 +17,7 @@ gls2.StarItem = tm.createClass(
     large: false,
     gameScene: null,
     player: null,
+    isGround: false,
 
     grub: false,
 
@@ -34,8 +39,9 @@ gls2.StarItem = tm.createClass(
         this.addChildTo(this.gameScene);
 
         var a = Math.random() * Math.PI*0.5 - Math.PI*0.75;
-        this.dx = Math.cos(a) * 20;
-        this.dy = Math.sin(a) * 20;
+        var s = 30;
+        this.dx = Math.cos(a) * s;
+        this.dy = Math.sin(a) * s;
     },
 
     update: function() {
@@ -53,7 +59,7 @@ gls2.StarItem = tm.createClass(
                 this.grub = true;
             }
 
-            if (this.grub) {
+            if (this.stability && this.grub) {
                 var a = Math.atan2(this.player.y - this.y, this.player.x - this.x);
                 this.x += Math.cos(a) * 10;
                 this.y += Math.sin(a) * 10;
@@ -68,7 +74,7 @@ gls2.StarItem = tm.createClass(
             }
         }
 
-        if (this.x < -50 || SC_W+50 < this.x || this.y < -50 || SC_H+50 < this.y) this.remove();
+        if (this.x < -200 || SC_W+200 < this.x || this.y < -200 || SC_H+50 < this.y) this.remove();
     },
 
 });
@@ -81,6 +87,7 @@ gls2.StarItemSky = tm.createClass(
 /** @lends {gls2.StarItemSky.prototype} */
 {
     superClass: gls2.StarItem,
+    isGround: false,
     init: function(large) {
         this.superInit(large);
     },
@@ -99,6 +106,7 @@ gls2.StarItemGround = tm.createClass(
 /** @lends {gls2.StarItemGround.prototype} */
 {
     superClass: gls2.StarItem,
+    isGround: true,
     init: function(large) {
         this.superInit(large);
     },

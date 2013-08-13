@@ -1,9 +1,22 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 (function() {
 
 /**
  * @namespace
  */
 gls2.Setting = {
+
+    /**
+     * 初期残機数
+     * @const
+     */
+    INITIAL_ZANKI: 3,
+
+    /** ボムスロット初期数 */
+    INITIAL_BOMB_MAX: 3,
 
     /**
      * ショットの攻撃力
@@ -15,7 +28,7 @@ gls2.Setting = {
      * ハイパーショットの攻撃力
      * @const
      */
-    HYPER_SHOT_ATTACK_POWER: 2,
+    HYPER_SHOT_ATTACK_POWER: 1,
 
     /**
      * レーザーの攻撃力
@@ -93,25 +106,25 @@ gls2.Setting = {
      * ハイパーモード継続時間
      * @const
      */
-    HYPERMODE_TIME: 800,
+    HYPERMODE_TIME: 600,
 
     /**
      * ハイパーモード起動時の無敵時間
      * @const
      */
-    HYPERMODE_START_MUTEKI_TIME: 200,
+    HYPERMODE_START_MUTEKI_TIME: 0.75,
 
     /**
      * ハイパーモード終了時の無敵時間
      * @const
      */
-    HYPERMODE_END_MUTEKI_TIME: 120,
+    HYPERMODE_END_MUTEKI_TIME: 0.25,
 
     /**
      * ハイパーモード中のコンボ数増加倍率
      * @const
      */
-    COMBO_RATE_WHEN_HYPERMODE: 7,
+    COMBO_RATE_WHEN_HYPERMODE: 1,
 
     /**
      * 1フレームあたりのコンボゲージ減少値
@@ -141,25 +154,61 @@ gls2.Setting = {
      * 弾破壊時のスコア
      * @const
      */
-    BULLET_SCORE: 50,
+    BULLET_SCORE: 10,
 
     /**
      * 星アイテム（大）取得時のスコア
      * @const
      */
-    STAR_ITEM_SCORE_LARGE: 200,
+    STAR_ITEM_SCORE_LARGE: 500,
 
     /**
      * 星アイテム（小）取得時のスコア
      * @const
      */
-    STAR_ITEM_SCORE: 100,
+    STAR_ITEM_SCORE: 250,
+
+    /**
+     * 星アイテム（大）取得時の素点増分
+     * @const
+     */
+    STAR_ITEM_BASESCORE_LARGE: 100,
+
+    /**
+     * 星アイテム（小）取得時の素点増分
+     * @const
+     */
+    STAR_ITEM_BASESCORE: 50,
 
     /**
      * ハイパーモード中の敵弾幕発射間隔
      * @const
      */
     ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.3,
+
+    /**
+     * 星アイテム（大）が出る距離
+     * @const
+     */
+    CROSS_RANGE: 200*200,
+
+    /**
+     * 敵弾のHP
+     * @const
+     */
+    BULLET_HP: 50,
+
+    /**
+     * ショットのHP
+     * @const
+     */
+    SHOT_HP: 10,
+
+    /**
+     * オートボム発動時に残ボム数をすべて消費するか
+     * @const
+     */
+    AUTO_BOMB_TO_ZERO: true,
 
 };
 
