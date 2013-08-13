@@ -1,0 +1,554 @@
+<html>
+<head>
+<meta charset=UTF-8>
+<script src="../../libs/tmlib.min.js"></script>
+<script>
+/** フレームの大きさ(= CELL_SIZExCELL_SIZEの正方形) */
+var CELL_SIZE = 100;
+/** フレーム数(= NUM_OF_CELL_SQRTxNUM_OF_CELL_SQRT) */
+var NUM_OF_CELL_SQRT = 8;
+/** 何フレームごとに記録するか */
+var SKIP_FRAME = 1;
+
+/**
+ * パーティクル生成パラメータ.
+ *
+ * 炎用.
+ */
+var fireParticle = {
+    /** アルファブレンドモード */
+    blendMode: "lighter",
+    /** 生成開始フレーム */
+    start: 0,
+    /** 生成終了フレーム */
+    end: 40,
+    /** 生成個数 */
+    generate: {
+        /** 初期生成個数 */
+        initial: 50,
+        /** 減衰率 */
+        rate: 0.99,
+    },
+    /** パーティクル初期値 */
+    initial: {
+        /** 位置(中心からの距離) */
+        position: 0,
+        /** 半径 */
+        radius: 2,
+        /** 中心色 */
+        colorCenter:  { r: 220, g: 220, b: 255, a: 0.1 },
+        /** 外縁色 */
+        colorOuterEdge: { r: 20, g: 20, b: 255, a: 0.0 },
+    },
+    /** 変化 */
+    transition: {
+        /** 位置(中心からの距離) */
+        position: {
+            /** 最終値 */
+            finalValue: [10, 40], // 値に配列を指定した場合はv[0]～v[1]間のランダムな値
+            /** フレーム数 */
+            duration: 18,
+            /** イージング関数 */
+            easeFunc: "easeOutQuad",
+        },
+        /** 半径 */
+        radius: {
+            finalValue: 15,
+            duration: 6,
+            easeFunc: "easeOutQuad",
+        },
+        /** 中心色 */
+        colorCenter: {
+            r: {
+                finalValue: 0,
+                duration: 20,
+                easeFunc: "easeInExpo",
+            },
+            g: {
+                finalValue: 0,
+                duration: 20,
+                easeFunc: "easeInExpo",
+            },
+            b: {
+                finalValue: 0,
+                duration: 30,
+                easeFunc: "easeInExpo",
+            },
+            a: {
+                finalValue: 0,
+                duration: 40,
+            },
+        },
+        /** 外縁色 */
+        colorOuterEdge: {
+            r: {
+                finalValue: 0,
+                duration: 40,
+                easeFunc: "easeInExpo",
+            },
+            g: {
+                finalValue: 0,
+                duration: 40,
+                easeFunc: "easeInExpo",
+            },
+            b: {
+                finalValue: 0,
+                duration: 40,
+                easeFunc: "easeInExpo",
+            },
+        },
+    },
+};
+
+/**
+ * パーティクル生成パラメータ.
+ *
+ * 煙用.
+ */
+var smokeParticle = {
+    start: 8,
+    end: 12,
+    generate: {
+        initial: 10,
+    },
+    initial: {
+        position: [ 2, 25 ],
+        radius: 5,
+        colorCenter:  { r: 0, g: 0, b: 0, a: 0.05 },
+        colorOuterEdge: { r: 0, g: 0, b: 0, a: 0.00 },
+    },
+    transition: {
+        position: {
+            finalValue: [ 10, 40 ],
+            duration: 10,
+        },
+        radius: {
+            finalValue: 15,
+            duration: 20,
+            easeFunc: "easeOutQuad",
+        },
+        colorCenter: {
+            a: {
+                finalValue: 0,
+                duration: 50,
+                easeFunc: "easeInExpo",
+            },
+        },
+    },
+};
+
+tm.main(function() {
+    var canvas = tm.graphics.Canvas("#c");
+    canvas.resize(CELL_SIZE, CELL_SIZE);
+
+    var out = tm.graphics.Canvas();
+    out.resize(CELL_SIZE * NUM_OF_CELL_SQRT, CELL_SIZE * NUM_OF_CELL_SQRT);
+    var outIndex = 0;
+
+    var particles = [];
+    var generators = [];
+
+    generators.push(ParticleGenerator(fireParticle));
+    generators.push(ParticleGenerator(smokeParticle));
+
+    tm.dom.Element("#restart").event.click(function() {
+        canvas.clear();
+        generators.each(function(gen) {
+            gen.reset();
+        });
+        particles = [];
+    });
+    tm.dom.Element("#output").event.click(function() {
+        out.saveAsImage();
+    });
+
+    var app = tm.app.CanvasApp("#c");
+    app.background = "rgba(0,0,0,0)";
+    app.update = function() {
+        canvas.clear();
+
+        generators.each(function(gen) {
+            particles = gen.generate().concat(particles);
+        });
+
+        particles.each(function(p) {
+            p.update();
+            p.draw(canvas);
+        });
+
+        if (outIndex < NUM_OF_CELL_SQRT * NUM_OF_CELL_SQRT) {
+            if (this.frame % SKIP_FRAME === 0) {
+                out.drawImage(
+                    canvas.element,
+                    (outIndex % NUM_OF_CELL_SQRT) * CELL_SIZE,
+                    ~~(outIndex / NUM_OF_CELL_SQRT) * CELL_SIZE);
+                outIndex++;
+            }
+        }
+    };
+    app.run();
+});
+
+var Tweens = tm.createClass({
+    tweens: null,
+    init: function() {
+        this.tweens = [];
+    },
+    update: function() {
+        this.tweens.each(function(t) {
+            t._setTime(t.time + 1);
+            t.update();
+        });
+    },
+    push: function(tween) {
+        this.tweens.push(tween);
+    },
+    add: function(target, finalProps, duration, easeFunc) {
+        this.tweens.push(tm.anim.Tween(target, finalProps, duration, easeFunc));
+    },
+});
+
+var Particle = tm.createClass({
+    tweens: null,
+    blendMode: null,
+    init: function(x, y, radius, r0, g0, b0, a0, r1, g1, b1, a1) {
+        this.tweens = Tweens();
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.r0 = r0;
+        this.g0 = g0;
+        this.b0 = b0;
+        this.a0 = a0;
+        this.r1 = r1;
+        this.g1 = g1;
+        this.b1 = b1;
+        this.a1 = a1;
+
+        this.blendMode = "source-over";
+    },
+
+    addTween: function(finalProps, duration, easeFunc) {
+        this.tweens.add(this, finalProps, duration, easeFunc);
+    },
+
+    update: function() {
+        this.tweens.update();
+    },
+
+    draw: function(canvas) {
+        canvas.globalCompositeOperation = this.blendMode;
+        var cx = canvas.width/2;
+        var cy = canvas.height/2;
+        var color0 = tm.graphics.Color(this.r0, this.g0, this.b0, this.a0);
+        var color1 = tm.graphics.Color(this.r1, this.g1, this.b1, this.a1);
+        canvas
+            .setStrokeStyle("rgba(0,0,0,0)")
+            .setFillStyle(
+                tm.graphics.RadialGradient(
+                    this.x+cx, this.y+cy, 0,
+                    this.x+cx, this.y+cy, this.radius
+                )
+                .addColorStopList([
+                    { offset: 0.0, color: color0.toStyleAsRGBA() },
+                    { offset: 1.0, color: color1.toStyleAsRGBA() },
+                ]).toStyle()
+            )
+            .fillStar(this.x+cx, this.y+cy, this.radius, 5)
+            //.fillRect(this.x+cx-this.radius, this.y+cy-this.radius, this.radius*2, this.radius*2);
+    },
+});
+
+var ParticleGenerator = tm.createClass({
+    params: null,
+    genCount: 0,
+    frame: 0,
+    init: function(params) {
+        this.params = params;
+        if (!this.params.start || this.params.start === -1) {
+            this.params.start = 0;
+        }
+        if (!this.params.end || this.params.end === -1) {
+            this.params.end = Number.POSITIVE_INFINITY;
+        }
+        if (!this.params.generate.rate) {
+            this.params.generate.rate = 1;
+        }
+        this.reset();
+    },
+    reset: function() {
+        this.genCount = this.params.generate.initial;
+        this.frame = 0;
+    },
+    generate: function() {
+        var array = [];
+        if (this.params.start <= this.frame && this.frame < this.params.end) {
+            for (var i = 0; i < this.genCount; i++) {
+                array.push(this._generate());
+            }
+        }
+        this.genCount *= this.params.generate.rate;
+        if (this.genCount < 1) this.genCount = 0;
+        this.frame += 1;
+        return array;
+    },
+    _generate: function() {
+        var v = function(v) {
+            if (typeof(v) === "number") {
+                return v;
+            } else if (v instanceof Array) {
+                return Math.randf(v[0], v[1]);
+            }
+        };
+
+        var angle = Math.random() * Math.PI * 2;
+        var ipos = v(this.params.initial.position);
+
+        var p = Particle(
+            Math.cos(angle) * ipos,
+            Math.sin(angle) * ipos,
+            v(this.params.initial.radius),
+            v(this.params.initial.colorCenter.r),
+            v(this.params.initial.colorCenter.g),
+            v(this.params.initial.colorCenter.b),
+            v(this.params.initial.colorCenter.a),
+            v(this.params.initial.colorOuterEdge.r),
+            v(this.params.initial.colorOuterEdge.g),
+            v(this.params.initial.colorOuterEdge.b),
+            v(this.params.initial.colorOuterEdge.a)
+        );
+        if (this.params.blendMode) {
+            p.blendMode = this.params.blendMode;
+        }
+
+        var tp = this.params.transition.position;
+        if (tp) {
+            var fpos = v(tp.finalValue);
+            p.addTween({
+                x: Math.cos(angle) * fpos,
+                y: Math.sin(angle) * fpos,
+            }, v(tp.duration), tp.easeFunc);
+        }
+
+        var tr = this.params.transition.radius;
+        if (tr) {
+            p.addTween({
+                radius: v(tr.finalValue),
+            }, v(tr.duration), tr.easeFunc);
+        }
+
+        if (this.params.transition.colorCenter) {
+            var tccr = this.params.transition.colorCenter.r;
+            if (tccr) {
+                p.addTween({
+                    r0: v(tccr.finalValue),
+                }, v(tccr.duration), tccr.easeFunc);
+            }
+            var tccg = this.params.transition.colorCenter.g;
+            if (tccg) {
+                p.addTween({
+                    g0: v(tccg.finalValue),
+                }, v(tccg.duration), tccg.easeFunc);
+            }
+            var tccb = this.params.transition.colorCenter.b;
+            if (tccb) {
+                p.addTween({
+                    b0: v(tccb.finalValue),
+                }, v(tccb.duration), tccb.easeFunc);
+            }
+            var tcca = this.params.transition.colorCenter.a;
+            if (tcca) {
+                p.addTween({
+                    a0: v(tcca.finalValue),
+                }, v(tcca.duration), tcca.easeFunc);
+            }
+        }
+
+        if (this.params.transition.colorOuterEdge) {
+            var tcor = this.params.transition.colorOuterEdge.r;
+            if (tcor) {
+                p.addTween({
+                    r1: v(tcor.finalValue),
+                }, v(tcor.duration), tcor.easeFunc);
+            }
+            var tcog = this.params.transition.colorOuterEdge.g;
+            if (tcog) {
+                p.addTween({
+                    g1: v(tcog.finalValue),
+                }, v(tcog.duration), tcog.easeFunc);
+            }
+            var tcob = this.params.transition.colorOuterEdge.b;
+            if (tcob) {
+                p.addTween({
+                    b1: v(tcob.finalValue),
+                }, v(tcob.duration), tcob.easeFunc);
+            }
+            var tcoa = this.params.transition.colorOuterEdge.a;
+            if (tcoa) {
+                p.addTween({
+                    a1: v(tcoa.finalValue),
+                }, v(tcoa.duration), tcoa.easeFunc);
+            }
+        }
+
+        return p;
+    },
+});
+</script>
+</head>
+<body>
+<div>
+    <canvas id="c" style="background:url(../../tools/background.png) repeat;border:1px solid white"></canvas>
+</div>
+<div>
+    <button id="restart">restart</button>
+    <button id="output">output</button>
+</div>
+<div>
+<table border="1">
+    <tr>
+        <th>ブレンドモード</th>
+        <td>
+            <select name="blendMode">
+                <option>source-over</option>
+                <option>lighter</option>
+                <option>source-atop</option>
+                <option>source-in</option>
+                <option>source-out</option>
+                <option>destination-atop</option>
+                <option>destination-in</option>
+                <option>destination-out</option>
+                <option>destination-over</option>
+                <option>copy</option>
+                <option>xor</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>生成開始フレーム</th>
+        <td><input type="text" name="start" /></td>
+    </tr>
+    <tr>
+        <th>生成終了フレーム</th>
+        <td><input type="text" name="end" /></td>
+    </tr>
+    <tr>
+        <th>フレーム毎の生成個数</th>
+        <td>
+            初期値：<br>
+            <input type="text" name="generate-init" /><br>
+            減衰率：<br>
+            <input type="text" name="generate-rate" /><br>
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <th>initial</th>
+        <th>final</th>
+        <th>duration</th>
+        <th>easeFunc</th>
+    </tr>
+    <tr>
+        <th>位置</th>
+        <td><input type="text" name="position-initial" /></td>
+        <td><input type="text" name="position-final" /></td>
+        <td><input type="text" name="position-duration" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>半径</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>中心色(R)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>中心色(G)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>中心色(B)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>中心色(A)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>外縁色(R)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>外縁色(G)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>外縁色(B)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>外縁色(A)</th>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td>
+            <select class="easeFuncSelect">
+            </select>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

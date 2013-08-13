@@ -1,0 +1,59 @@
+atr "#01"
+{
+	col ( rgb ( 0.450 0.640 0.920 ) )
+	amb ( 0.200 )
+	dif ( 0.800 )
+	ref ( 0.300 )
+	spc ( 0.900 1.000 0.650 )
+	colormap ( "L3\effect\horizon.png" 0.500 1.000 )
+	mapsize ( 0 0 1 1 )
+	opt ( castshadow receiveshadow )
+}
+atr "#02"
+{
+	col ( rgb ( 0.970 0.530 0.540 ) )
+	amb ( 0.200 )
+	dif ( 0.800 )
+	ref ( 0.150 )
+	spc ( 0.900 1.500 0.000 )
+	colormap ( "L3\effect\horizon.png" )
+	mapsize ( 0 0 1 1 )
+	opt ( castshadow receiveshadow )
+}
+atr "#03"
+{
+	col ( 1.000 )
+	amb ( 0.330 )
+	dif ( 0.800 )
+	spc ( 0.050 0.100 0.000 )
+	colormap ( "L3\effect\horizon.png" 0.400 1.000 )
+	mapsize ( 0 0 1 1 )
+	opt ( castshadow receiveshadow )
+}
+atr "#04"
+{
+	col ( 1.000 )
+	amb ( 1.000 )
+	dif ( 0.000 )
+	tra ( 1.000 )
+	spc ( 0.000 45.507 0.000 )
+}
+atr "#05"
+{
+	col ( rgb ( 0.480 0.480 0.520 ) )
+	amb ( 0.200 )
+	dif ( 0.800 )
+	ref ( 0.300 )
+	spc ( 0.900 1.000 0.650 )
+}
+atr "#06"
+{
+	col ( rgb ( 0.970 0.530 0.540 ) )
+	amb ( 0.200 )
+	dif ( 0.800 )
+	ref ( 0.150 )
+	spc ( 0.900 1.500 0.000 )
+	colormap ( "L3\effect\horizon.png" 1.000 0.000 )
+	mapsize ( 0 0 1 1 )
+	opt ( castshadow receiveshadow )
+}

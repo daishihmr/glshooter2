@@ -1,11 +1,10 @@
 /*
- * tmlib.js v0.1.6
+ * tmlib.js 0.1.8
  * http://github.com/phi1618/tmlib.js
- * MIT licensed
+ * MIT Licensed
  * 
  * Copyright (C) 2010 phi, http://tmlife.net
  */
-
 
 (function() { "use strict"; })();
 
@@ -15,12 +14,18 @@
 var tm = tm || {};
 tm.global = window || global || this;
 
+// node.js
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = tm;
+}
+
+
 (function() {
 
     /**
      * バージョン
      */
-    tm.VERSION = "0.1.5";
+    tm.VERSION = "0.1.8";
 
     /**
      * tmlib.js のルートパス
@@ -1796,7 +1801,13 @@ tm.util = tm.util || {};
         },
         
         json: function(data) {
-            return JSON.parse(data);
+            try {
+                return JSON.parse(data);
+            }
+            catch(e) {
+                console.dir(e);
+                console.dir(data);
+            }
         },
         
         script: function(data) {
@@ -2144,10 +2155,10 @@ tm.util = tm.util || {};
         version = version || "r11";
         var path = null;
         if (["r6", "r7", "r8", "r9", "10"].indexOf(version) != -1) {
-            path = "https://raw.github.com/mrdoob/stats.js/" + version + "/build/Stats.js";
+            path = "http://rawgithub.com/mrdoob/stats.js/" + version + "/build/Stats.js";
         }
         else {
-            path = "https://raw.github.com/mrdoob/stats.js/" + version + "/build/stats.min.js";
+            path = "http://rawgithub.com/mrdoob/stats.js/" + version + "/build/stats.min.js";
         }
         this.load(path);
     };
@@ -2175,7 +2186,7 @@ tm.util = tm.util || {};
      * Three.js を動的ロード
      */
     tm.util.ScriptManager.loadThree = function(version) {
-        var THREE_JS_URL = "https://raw.github.com/mrdoob/three.js/{version}/build/three.js";
+        var THREE_JS_URL = "http://rawgithub.com/mrdoob/three.js/{version}/build/three.js";
 //        var THREE_JS_URL = "https://raw.github.com/mrdoob/three.js/{version}/build/three.min.js";
         version = version || "r55";
 
@@ -2190,7 +2201,7 @@ tm.util = tm.util || {};
      * BulletML を動的ロード
      */
     tm.util.ScriptManager.loadBulletML = function(version) {
-        var BULLETML_FOR_TMLIB_JS_URL   = "https://raw.github.com/daishihmr/bulletml.js/{version}/target/bulletml.for.tmlib.js";
+        var BULLETML_FOR_TMLIB_JS_URL   = "http://rawgithub.com/daishihmr/bulletml.js/{version}/target/bulletml.for.tmlib.js";
         version = version || "v0.4.1";
         var path = BULLETML_FOR_TMLIB_JS_URL.format({version: version});        
         this.load(path);
@@ -5107,6 +5118,14 @@ tm.dom = tm.dom || {};
             this.element.webkitRequestFullScreen();
         },
         
+        show: function() {
+            this.visible = true;
+        },
+        
+        hide: function() {
+            this.visible = false;
+        },
+        
         /**
          * 文字列化
          */
@@ -5761,6 +5780,18 @@ tm.dom = tm.dom || {};
 
 (function() {
     
+    var prefix = tm.VENDER_PREFIX;
+    
+    var ANIMATION                   = prefix + "Animation";
+    var ANIMATION_END               = prefix + "AnimationEnd";
+    var ANIMATION_PLAY_STATE        = prefix + "AnimationPlayState";
+    var ANIMATION_NAME              = prefix + "AnimationName";
+    var ANIMATION_DURATION          = prefix + "AnimationDuration";
+    var ANIMATION_TIMING_FUNCTION   = prefix + "AnimationTimingFunction";
+    var ANIMATION_DELAY             = prefix + "AnimationDelay";
+    var ANIMATION_DIRECTION         = prefix + "AnimationDirection";
+    var ANIMATION_ITERATION_COUNT   = prefix + "AnimationIterationCount";
+    
     /**
      * @class
      * アニメーションクラス
@@ -5775,7 +5806,7 @@ tm.dom = tm.dom || {};
             
             // アニメーションが終了したらステートを "paused" にする(何度も再生できるようにする為)
             var self = this;
-            this.element.addEventListener("webkitAnimationEnd", function() {
+            this.element.addEventListener(ANIMATION_END, function() {
                 self.stop();
             }, false);
         },
@@ -5785,7 +5816,7 @@ tm.dom = tm.dom || {};
          * アニメーション開始
          */
         start: function() {
-            this.element.style["webkitAnimationPlayState"] = "running";
+            this.element.style[ANIMATION_PLAY_STATE] = "running";
             return this;
         },
         
@@ -5793,7 +5824,7 @@ tm.dom = tm.dom || {};
          * アニメーション終了
          */
         stop: function() {
-            this.element.style["webkitAnimationPlayState"] = "paused";
+            this.element.style[ANIMATION_PLAY_STATE] = "paused";
             return this;
         },
         
@@ -5802,7 +5833,7 @@ tm.dom = tm.dom || {};
          */
         setProperty: function(prop) {
             if (typeof prop == "string") {
-                this.element.style["webkitAnimation"] = prop;
+                this.element.style[ANIMATION] = prop;
             }
             else {
                 for (var key in prop) {
@@ -5818,7 +5849,7 @@ tm.dom = tm.dom || {};
          * 名前をセット
          */
         setName: function(name) {
-            this.element.style["webkitAnimationName"] = name;
+            this.element.style[ANIMATION_NAME] = name;
             return this;
         },
         
@@ -5826,7 +5857,7 @@ tm.dom = tm.dom || {};
          * アニメーション時間の長さをセット
          */
         setDuration: function(s) {
-            this.element.style["webkitAnimationDuration"] = s;
+            this.element.style[ANIMATION_DURATION] = s;
             return this;
         },
         
@@ -5834,7 +5865,7 @@ tm.dom = tm.dom || {};
          * 補間関数をセット
          */
         setTimingFunction: function(func) {
-            this.element.style["webkitAnimationTimingFunction"] = func;
+            this.element.style[ANIMATION_TIMING_FUNCTION] = func;
             return this;
         },
         
@@ -5842,7 +5873,7 @@ tm.dom = tm.dom || {};
          * イテレータカウントをセット
          */
         setIterationCount: function(n) {
-            this.element.style["webkitAnimationIterationCount"] = n;
+            this.element.style[ANIMATION_ITERATION_COUNT] = n;
             return this;
         },
         
@@ -5850,7 +5881,7 @@ tm.dom = tm.dom || {};
          * アニメーション開始待ち時間をセット
          */
         setDelay: function(s) {
-            this.element.style["webkitAnimationDelay"] = s;
+            this.element.style[ANIMATION_DELAY] = s;
             return this;
         },
         
@@ -5859,7 +5890,7 @@ tm.dom = tm.dom || {};
          * "normal" or "alternate"
          */
         setDirection: function(t) {
-            this.element.style["webkitAnimationDirection"] = t;
+            this.element.style[ANIMATION_DURATION] = t;
             return this;
         },
     });
@@ -6261,6 +6292,15 @@ tm.event = tm.event || {};
         init: function() {
             this._listeners = {};
         },
+
+        on: function(type, listener) {
+            if (this._listeners[type] === undefined) {
+                this._listeners[type] = [];
+            }
+            
+            this._listeners[type].push(listener);
+            return this;
+        },
         
         /**
          * イベントリスナー追加
@@ -6321,6 +6361,461 @@ tm.event = tm.event || {};
     
 })();
 
+/*
+ * texture.js
+ */
+
+(function() {
+    
+    /**
+     * @class tm.asset.Texture
+     * テクスチャクラス
+     */
+    tm.define("tm.asset.Texture", {
+        superClass: tm.event.EventDispatcher,
+        
+        element: null,
+        loaded: false,
+        
+        /**
+         * 初期化
+         */
+        init: function(src) {
+            this.superInit();
+            
+            this.element = new Image();
+            this.element.src = src;
+            
+            var self = this;
+            this.element.onload = function() {
+                self.loaded = true;
+                var e = tm.event.Event("load");
+                self.dispatchEvent( e );
+            };
+        },
+        
+        getElement: function() {
+            return this.element;
+        },
+    });
+    
+    /**
+     * @property    width
+     * 幅
+     */
+    tm.asset.Texture.prototype.getter("width", function() {
+        return this.element.width;
+    });
+    
+    /**
+     * @property    height
+     * 高さ
+     */
+    tm.asset.Texture.prototype.getter("height", function() {
+        return this.element.height;
+    });
+    
+})();
+
+(function(){
+
+    /*
+     * @static
+     * @method
+     * ### ref
+     * http://dummyimage.com/
+     */
+    /*
+    tm.graphics.TextureManager.loadDummy = function(key, param)
+    {
+        param = param || {};
+
+        var paths = ["http://dummyimage.com"];
+        paths.push(param.size || 256);
+        paths.push(param.bgColor || "aaa");
+        paths.push(param.color || "000");
+        paths.push(param.format || "png");
+
+        var src = paths.join('/');
+        if (param.text) {
+            src += '&text=' + param.text;
+        }
+
+        this.textures[key] = tm.graphics.Texture(src);
+        this.loaded = false;
+    };
+    */
+
+})();
+
+
+
+
+
+(function() {
+    
+    tm.define("tm.asset.SpriteSheet", {
+
+        superClass: "tm.event.EventDispatcher",
+
+        init: function(src) {
+            this.superInit();
+
+            if (typeof src == "string") {
+            	this.load(src);
+            }
+            else {
+	            this.parse(src);
+    			this.loaded = true;
+    			this.dispatchEvent(tm.event.Event("load"));
+            }
+
+        },
+
+        load: function(path) {
+        	tm.util.Ajax.load({
+        		url: path,
+        		dataType: "json",
+        		success: function(d) {
+        			this.parse(d);
+        			this.loaded = true;
+        			this.dispatchEvent(tm.event.Event("load"));
+        		}.bind(this),
+        	});
+        },
+
+        parse: function(param) {
+            this.frame = param.frame;
+
+            if (typeof param.image == "string") {
+                if (!tm.asset.AssetManager.contains(param.image)) {
+                    tm.asset.AssetManager.load(param.image);
+                }
+                this.image = tm.asset.AssetManager.get(param.image);
+            }
+            else {
+                this.image = param.image;
+            }
+
+            if (this.image.loaded === false) {
+                this.image.addEventListener("load", function() {
+                    this._calcFrames(param.frame);
+                    var e = tm.event.Event("load");
+                    this.dispatchEvent(e);
+                }.bind(this), false);
+            }
+            else {
+                this._calcFrames(param.frame);
+                var e = tm.event.Event("load");
+                this.dispatchEvent(e);
+            }
+
+            this._calcAnim(param.animations);
+        },
+
+        getFrame: function(index) {
+            return this.frames[index];
+        },
+        
+        getAnimation: function(name) {
+            return this.animations[name];
+        },
+        
+        _calcFrames: function(frame) {
+            var frames = this.frames = [];
+            
+            var w = frame.width;
+            var h = frame.height;
+            var row = ~~(this.image.width / w);
+            var col = ~~(this.image.height/ h);
+            
+            if (!frame.count) frame.count = row*col;
+
+            for (var i=0,len=frame.count; i<len; ++i) {
+                var x   = i%row;
+                var y   = (i/row)|0;
+                var rect = {
+                    x:x*w,
+                    y:y*h,
+                    width: w,
+                    height: h
+                };
+                frames.push(rect);
+            }
+        },
+
+        _calcAnim: function(animations) {
+            this.animations = {};
+            for (var key in animations) {
+                var anim = animations[key];
+
+                if (anim instanceof Array) {
+                    this.animations[key] = {
+                        frames: [].range(anim[0], anim[1]),
+                        next: anim[2],
+                        frequency: anim[3] || 1
+                    };
+                }
+                else if (typeof anim == "number") {
+                    this.animations[key] = {
+                        frames: [anim],
+                        next: null,
+                        frequency: 1
+                    };
+                }
+                else {
+                    this.animations[key] = {
+                        frames: anim.frames,
+                        next: anim.next,
+                        frequency: anim.frequency || 1
+                    };
+                }
+            }
+            
+            // デフォルトアニメーション
+            this.animations["default"] = {
+                frames: [].range(0, this.frame.count),
+                next: "default",
+                frequency: 1,
+            };
+        }
+
+    });
+
+})();
+
+/*
+ * mapsheet.js
+ */
+
+
+
+(function() {
+
+    /**
+     * @class tm.asset.MapSheet
+     * マップシート
+     */
+    tm.define("tm.asset.MapSheet", {
+        superClass: "tm.event.EventDispatcher",
+        
+        init: function(path) {
+            this.superInit();
+            
+            this.loaded = false;
+
+            if (typeof path == "string") {
+                tm.util.Ajax.load({
+                    url: path,
+                    success: function(e) {
+                        var d = this._parse(e);
+                        this.$extend(d);
+                        this._checkImage();
+                    }.bind(this),
+                });
+            }
+            else {
+                this.$extend(arguments[0]);
+                
+                this._checkImage();
+            }
+        },
+
+        _parse: function(str) {
+            var each = Array.prototype.forEach;
+            var data = {};
+            var parser = new DOMParser();
+            var xml = parser.parseFromString(str, 'text/xml');
+            var map = this._attrToJSON(xml.getElementsByTagName('map')[0]);
+
+            this.$extend(map);
+
+            // tilesets(image)
+            data.tilesets = this._parseTilesets(xml);
+
+            // layer
+            data.layers = this._parseLayers(xml);
+            
+            return data;
+        },
+        
+        _parseTilesets: function(xml) {
+            var each = Array.prototype.forEach;
+            var self = this;
+            var data = [];
+            var tilesets = xml.getElementsByTagName('tileset');
+            each.call(tilesets, function(tileset) {
+                var t = {};
+                var props = self._propertiesToJson(tileset);
+                
+                if (props.src) {
+                    t.image = props.src;
+                }
+                else {
+                    t.image = tileset.getElementsByTagName('image')[0].getAttribute('source');
+                }
+                data.push(t);
+            });
+            
+            return data;
+        },
+        
+        _parseLayers: function(xml) {
+            var each = Array.prototype.forEach;
+            var data = [];
+
+            var map = xml.getElementsByTagName("map")[0];
+            var layers = [];
+            each.call(map.childNodes, function(elm) {
+                if (elm.tagName == "layer" || elm.tagName == "objectgroup") {
+                    layers.push(elm);
+                }
+            });
+
+            layers.each(function(layer) {
+                if (layer.tagName == "layer") {
+                    var d = layer.getElementsByTagName('data')[0];
+                    var encoding = d.getAttribute("encoding");
+                    var l = {
+                        type: "layer",
+                        name: layer.getAttribute("name"),
+                    };
+
+                    if (encoding == "csv") {
+                        l.data = this._parseCSV(d.textContent);
+                    }
+                    else if (encoding == "base64") {
+                        l.data = this._parseBase64(d.textContent);
+                    }
+
+                    data.push(l);
+                }
+                else if (layer.tagName == "objectgroup") {
+                    var l = {
+                        type: "objectgroup",
+                        objects: [],
+                        name: layer.getAttribute("name"),
+                    };
+                    each.call(layer.childNodes, function(elm) {
+                        if (elm.nodeType == 3) return ;
+                        
+                        var d = this._attrToJSON(elm);
+                        d.properties = this._propertiesToJson(elm);
+                        
+                        l.objects.push(d);
+                    }.bind(this));
+                    
+                    data.push(l);
+                }
+            }.bind(this));
+
+            return data;
+        },
+
+        _parseCSV: function(data) {
+            var dataList = data.split(',');
+            var layer = [];
+
+            dataList.each(function(elm, i) {
+                var num = parseInt(elm, 10) - 1;
+                layer.push(num);
+            });
+
+            return layer;
+        },
+
+        /**
+         * http://thekannon-server.appspot.com/herpity-derpity.appspot.com/pastebin.com/75Kks0WH
+         */
+        _parseBase64: function(data) {
+            var dataList = atob(data.trim());
+            var rst = [];
+
+            dataList = dataList.split('').map(function(e) {
+                return e.charCodeAt(0);
+            });
+
+            for (var i=0,len=dataList.length/4; i<len; ++i) {
+                var n = dataList[i*4];
+                rst[i] = parseInt(n, 10) - 1;
+            }
+            
+            return rst;
+        },
+        
+        _propertiesToJson: function(elm) {
+            var obj = {};
+            var properties = elm.getElementsByTagName('property');
+            for (var k = 0;k < properties.length;k++) {
+                obj[properties[k].getAttribute('name')] = properties[k].getAttribute('value');
+            }
+            
+            return obj;
+        },
+        
+        _attrToJSON: function(source) {
+            var obj = {};
+            for (var i = 0; i < source.attributes.length; i++) {
+                var val = source.attributes[i].value;
+                val = isNaN(parseFloat(val))? val: parseFloat(val);
+                obj[source.attributes[i].name] = val;
+            }
+            
+            return obj;
+        },
+        
+        _checkImage: function() {
+            var self = this;
+            if (this.tilesets.length) {
+                var i = 0;
+                var len = this.tilesets.length;
+                
+                var _onloadimage = function() {
+                    i++;
+                    if (i==len) {
+                        this.loaded = true;
+                        var e = tm.event.Event("load");
+                        this.dispatchEvent(e);
+                    }
+                }.bind(this);
+                
+                this.tilesets.each(function(elm) {
+                    var image = tm.asset.AssetManager.get(elm.image)
+                    
+                    if (image) {
+                        if (image.loaded) {
+                            // ロード済み
+                            ++i;
+                            if (i==len) {
+                                this.loaded = true;
+                                var e = tm.event.Event("load");
+                                self.dispatchEvent(e);
+                            }
+                        }
+                        else {
+                            image.addEventListener("load", _onloadimage);
+                        }
+                    }
+                    else {
+                        tm.asset.AssetManager.load(elm.image);
+                        var texture = tm.asset.AssetManager.get(elm.image);
+                        texture.addEventListener("load", _onloadimage);
+                    }
+                });
+                
+            }
+            else {
+                this.loaded = true;
+                var e = tm.event.Event("load");
+                this.dispatchEvent(e);
+            }
+        },
+        
+    });
+
+
+
+})();
 /*
  * assetmanger.js
  */
@@ -6422,7 +6917,12 @@ tm.event = tm.event || {};
     };
     
     var _tmxFunc = function(path) {
-        var mapSheet = tm.app.MapSheet(path);
+        var mapSheet = tm.asset.MapSheet(path);
+        return mapSheet;
+    };
+    
+    var _tmssFunc = function(path) {
+        var mapSheet = tm.asset.SpriteSheet(path);
         return mapSheet;
     };
 
@@ -6437,104 +6937,17 @@ tm.event = tm.event || {};
     
     tm.asset.AssetManager.register("tmx", _tmxFunc);
     
-})();
-
-
-
-
-
-
-
-
-
-
-
-/*
- * texture.js
- */
-
-(function() {
-    
-    /**
-     * @class
-     * テクスチャクラス
-     */
-    tm.define("tm.asset.Texture", {
-        superClass: tm.event.EventDispatcher,
-        
-        element: null,
-        loaded: false,
-        
-        /**
-         * 初期化
-         */
-        init: function(src) {
-            this.superInit();
-            
-            this.element = new Image();
-            this.element.src = src;
-            
-            var self = this;
-            this.element.onload = function() {
-                self.loaded = true;
-                var e = tm.event.Event("load");
-                self.dispatchEvent( e );
-            };
-        },
-        
-        getElement: function() {
-            return this.element;
-        },
-    });
-    
-    /**
-     * @property    width
-     * 幅
-     */
-    tm.asset.Texture.prototype.getter("width", function() {
-        return this.element.width;
-    });
-    
-    /**
-     * @property    height
-     * 高さ
-     */
-    tm.asset.Texture.prototype.getter("height", function() {
-        return this.element.height;
-    });
+    tm.asset.AssetManager.register("tmss", _tmssFunc);
     
 })();
 
-(function(){
 
-    /**
-     * @static
-     * @method
-     * ### ref
-     * http://dummyimage.com/
-     */
-    /*
-    tm.graphics.TextureManager.loadDummy = function(key, param)
-    {
-        param = param || {};
 
-        var paths = ["http://dummyimage.com"];
-        paths.push(param.size || 256);
-        paths.push(param.bgColor || "aaa");
-        paths.push(param.color || "000");
-        paths.push(param.format || "png");
 
-        var src = paths.join('/');
-        if (param.text) {
-            src += '&text=' + param.text;
-        }
 
-        this.textures[key] = tm.graphics.Texture(src);
-        this.loaded = false;
-    };
-    */
 
-})();
+
+
 
 
 
@@ -6612,7 +7025,8 @@ tm.input = tm.input || {};
             var self = this;
             fps = fps || 30;
             tm.setLoop(function(){
-                self.update();
+                self._update();
+                if (self.update) self.update();
             }, 1000/fps);
         },
         
@@ -6620,7 +7034,7 @@ tm.input = tm.input || {};
          * 情報更新処理
          * マイフレーム呼んで下さい.
          */
-        update: function() {
+        _update: function() {
             // TODO: 一括ビット演算で行うよう修正する
             for (var k in this.key) {
                 this.last[k]    = this.press[k];
@@ -6686,6 +7100,23 @@ tm.input = tm.input || {};
             }
             
             return angle;
+        },
+        
+        /**
+         * キーの状態を設定する
+         */
+        setKey: function(key, flag) {
+            if (typeof(key) == "string") {
+                key = KEY_CODE[key];
+            }
+            return this.press[key] = flag;
+        },
+
+        /**
+         * キーを全て離したことにする
+         */
+        clearKey: function() {
+            this.press = {};
         }
         
     });
@@ -7327,13 +7758,16 @@ tm.input = tm.input || {};
                 var acceleration = self.acceleration;
                 var gravity = self.gravity;
                 
-                acceleration.x = e.acceleration.x;
-                acceleration.y = e.acceleration.y;
-                acceleration.z = e.acceleration.z;
-                
-                gravity.x = e.accelerationIncludingGravity.x;
-                gravity.y = e.accelerationIncludingGravity.y;
-                gravity.z = e.accelerationIncludingGravity.z;
+                if (e.acceleration) {
+                    acceleration.x = e.acceleration.x;
+                    acceleration.y = e.acceleration.y;
+                    acceleration.z = e.acceleration.z;
+                }
+                if (e.accelerationIncludingGravity) {
+                    gravity.x = e.accelerationIncludingGravity.x;
+                    gravity.y = e.accelerationIncludingGravity.y;
+                    gravity.z = e.accelerationIncludingGravity.z;
+                }
             });
             
             window.addEventListener("deviceorientation", function(e) {
@@ -7472,7 +7906,11 @@ tm.graphics = tm.graphics || {};
          * CSS 用 RGB文字列に変換
          */
         toStyleAsRGB: function() {
-            return "rgb({r},{g},{b})".format(this);
+            return "rgb({r},{g},{b})".format({
+                r: ~~this.r,
+                g: ~~this.g,
+                b: ~~this.b
+            });
         },
         
         
@@ -7480,14 +7918,24 @@ tm.graphics = tm.graphics || {};
          * CSS 用 RGBA文字列に変換
          */
         toStyleAsRGBA: function() {
-            return "rgba({r},{g},{b},{a})".format(this);
+            return "rgba({r},{g},{b},{a})".format({
+                r: ~~this.r,
+                g: ~~this.g,
+                b: ~~this.b,
+                a: this.a
+            });
         },
 
         /**
          * CSS 用 RGBA 文字列に変換
          */
         toStyle: function() {
-            return "rgba({r},{g},{b},{a})".format(this);
+            return "rgba({r},{g},{b},{a})".format({
+                r: ~~this.r,
+                g: ~~this.g,
+                b: ~~this.b,
+                a: this.a
+            });
         },
         
     });
@@ -8699,6 +9147,21 @@ tm.graphics = tm.graphics || {};
     tm.graphics.Canvas.prototype.getter("centerY", function(){
         return this.canvas.height/2;
     });
+
+    /**
+     * @property    imageSmoothingEnabled
+     * 画像スムージング設定
+     */
+    tm.graphics.Canvas.prototype.accessor("imageSmoothingEnabled", {
+        "get": function() {
+            return this.context.imageSmoothingEnabled;
+        },
+        "set": function(v) {
+            this.context.imageSmoothingEnabled = v;
+            this.context.webkitImageSmoothingEnabled = v;
+            this.context.mozImageSmoothingEnabled = v;
+        }
+    });
     
 })();
 
@@ -9887,6 +10350,8 @@ tm.app = tm.app || {};
         {
             console.assert(this.parent);
             this.parent.removeChild(this);
+
+            this.parent = null;
             
             return this;
         },
@@ -9945,6 +10410,7 @@ tm.app = tm.app || {};
         {
             var index = this.children.indexOf(child);
             if (index != -1) {
+                this.children[index].parent = null;
                 this.children.splice(index, 1);
                 var e = tm.event.Event("removed");
                 child.dispatchEvent(e);
@@ -10015,6 +10481,10 @@ tm.app = tm.app || {};
 
 (function() {
     
+    /**
+     * @class tm.app.Object2D
+     * Object2D
+     */
     tm.define("tm.app.Object2D", {
         superClass: "tm.app.Element",
         
@@ -10048,7 +10518,11 @@ tm.app = tm.app || {};
             this.origin   = tm.geom.Vector2(0.5, 0.5);
             this._matrix  = tm.geom.Matrix33();
             this._matrix.identity();
+            
             this.boundingType = "circle";
+            this.interactive = false;
+            this.hitFlags = [];
+            this.downFlags= [];
 
             this._worldMatrix = tm.geom.Matrix33();
             this._worldMatrix.identity();
@@ -10190,17 +10664,25 @@ tm.app = tm.app || {};
          * グローバル座標をローカル座標に変換
          */
         globalToLocal: function(p) {
-            var matrix = this.getFinalMatrix();
+            // var matrix = this.getFinalMatrix();
+            var matrix = this._worldMatrix.clone();
             matrix.invert();
+            matrix.transpose();
             
             return matrix.multiplyVector2(p);
         },
         
+        /**
+         * X 座標値をセット
+         */
         setX: function(x) {
             this.position.x = x;
             return this;
         },
         
+        /**
+         * Y 座標値をセット
+         */
         setY: function(y) {
             this.position.y = y;
             return this;
@@ -10211,30 +10693,161 @@ tm.app = tm.app || {};
             this.position.y = y;
             return this;
         },
+
+        setRotation: function(rotation) {
+            this.rotation = rotation;
+            return this;
+        },
+
+        setScale: function(x, y) {
+            this.scale.x = x;
+            if (arguments.length <= 1) {
+                this.scale.y = x;
+            } else {
+                this.scale.y = y;
+            }
+            return this;
+        },
         
+        /**
+         * 幅をセット
+         */
         setWidth: function(width) {
             this.width = width;
             return this;
         },
         
+        /**
+         * 高さをセット
+         */
         setHeight: function(height) {
             this.height = height;
             return this;
         },
         
+        /**
+         * サイズ(幅, 高さ)をセット
+         */
         setSize: function(width, height) {
             this.width  = width;
             this.height = height;
             return this;
         },
-        _dirtyCalc: function() {
-            if (!this.parent) {
-            	this._worldAlpha = this.alpha;
-            	return ;
+        
+        /**
+         * 起動
+         */
+        wakeUp: function() {
+            this.isUpdate = true;
+            return this;
+        },
+        
+        /**
+         * 停止
+         */
+        sleep: function() {
+            this.isUpdate = false;
+            return this;
+        },
+        
+        /**
+         * タッチ判定の有効/無効をセット
+         */
+        setInteractive: function(flag) {
+            this.interactive = flag;
+            return this;
+        },
+        
+        /**
+         * バウンディングタイプをセット("circle" or "rect")
+         */
+        setBoundingType: function(type) {
+            this.boundingType = type;
+            return this;
+        },
+        
+        _update: function(app) {
+            // 更新有効チェック
+            if (this.isUpdate == false) return ;
+            
+            if (this.update) this.update(app);
+            
+            if (this.hasEventListener("enterframe")) {
+                var e = tm.event.Event("enterframe");
+                e.app = app;
+                this.dispatchEvent(e);
             }
+            
+            if (this.interactive) {
+                this._checkPointing(app);
+            }
+            
+            // 子供達も実行
+            if (this.children.length > 0) {
+                var tempChildren = this.children.slice();
+                for (var i=0,len=tempChildren.length; i<len; ++i) {
+                    tempChildren[i]._update(app);
+                }
+            }
+        },
+        
+        _checkPointing: function(app) {
+            console.assert(false);
+        },
+        
+        _checkMouse: function(app) {
+            this.__checkPointing(app, app.pointing, 0);
+        },
 
-            // alpha
-            this._worldAlpha = this.parent._worldAlpha * this.alpha;
+        _checkTouch: function(app) {
+            var self = this;
+            app.touches.each(function(touch, i) {
+                self.__checkPointing(app, touch, i);
+            });
+        },
+        
+        __checkPointing: function(app, p, index) {
+            var elm = this.element;
+            
+            var prevHitFlag = this.hitFlags[index];
+            
+            this.hitFlags[index]    = this.isHitPoint(p.x, p.y);
+            
+            if (!prevHitFlag && this.hitFlags[index]) {
+                this._dispatchPointingEvent("mouseover", "touchover", "pointingover", app, p);
+            }
+            
+            if (prevHitFlag && !this.hitFlags[index]) {
+                this._dispatchPointingEvent("mouseout", "touchout", "pointingout", app, p);
+            }
+            
+            if (this.hitFlags[index]) {
+                if (p.getPointingStart()) {
+                    this._dispatchPointingEvent("mousedown", "touchstart", "pointingstart", app, p);
+                    this.downFlags[index] = true;
+                }
+            }
+            
+            if (this.downFlags[index]) {
+                this._dispatchPointingEvent("mousemove", "touchmove", "pointingmove", app, p);
+            }
+            
+            if (this.downFlags[index]==true && p.getPointingEnd()) {
+                this._dispatchPointingEvent("mouseup", "touchend", "pointingend", app, p);
+                this.downFlags[index] = false;
+            }
+        },
+        
+        _dispatchPointingEvent: function(mouse, touch, pointing, app, p) {
+            this.dispatchEvent( tm.event.MouseEvent(mouse, app, p) );
+            this.dispatchEvent( tm.event.TouchEvent(touch, app, p) );
+            this.dispatchEvent( tm.event.PointingEvent(pointing, app, p) );
+        },
+        
+        _calcWorldMatrix: function() {
+            if (!this.parent) {
+                return ;
+            }
 
             // 行列
             if(this.rotation != this.rotationCache)
@@ -10274,7 +10887,9 @@ tm.app = tm.app || {};
             worldTransform[5] = b10 * a02 + b11 * a12 + b12;
         },
         
-        
+        _dirtyCalc: function() {
+            this._calcWorldMatrix();
+        },
     });
  
     /**
@@ -10339,7 +10954,7 @@ tm.app = tm.app || {};
      */
     tm.app.Object2D.prototype.accessor("width", {
         "get": function()   { return this._width; },
-        "set": function(v)  { this._width = v; this._refreshSize(); }
+        "set": function(v)  { this._width = v; }
     });
     
     
@@ -10349,7 +10964,7 @@ tm.app = tm.app || {};
      */
     tm.app.Object2D.prototype.accessor("height", {
         "get": function()   { return this._height; },
-        "set": function(v)  { this._height = v; this._refreshSize(); }
+        "set": function(v)  { this._height = v; }
     });
     
     /**
@@ -10471,58 +11086,60 @@ tm.app = tm.app || {};
         this.isHitPoint   = (isHitFuncMap[boundingType]) ? (isHitFuncMap[boundingType]) : (isHitFuncMap["true"]);
         this.isHitElement = (_isHitElementMap[boundingType]) ? (_isHitElementMap[boundingType]) : (_isHitElementMap["true"]);
     };
- 
- 
+    
+    tm.app.Object2D.prototype._checkPointing = (tm.isMobile) ?
+        tm.app.Object2D.prototype._checkTouch : tm.app.Object2D.prototype._checkMouse;
+
     
 })();
 
 /*
- * 
+ *
  */
- 
+
 tm.app = tm.app || {};
 
- 
+
 (function() {
-    
+
     /**
      * @class
      * キャンバスエレメント
      */
     tm.app.CanvasElement = tm.createClass({
-        
+
         superClass: tm.app.Object2D,
-        
+
         /**
          * 更新フラグ
          */
         isUpdate: true,
-        
+
         /**
          * 表示フラグ
          */
         visible: true,
-        
+
         /**
          * fillStyle
          */
         fillStyle: "white",
-        
+
         /**
          * strokeStyle
          */
         strokeStyle: "white",
-        
+
         /**
          * アルファ
          */
         alpha: 1.0,
-        
+
         /**
          * ブレンドモード
          */
         blendMode: "source-over",
-        
+
         /**
          * シャドウカラー
          */
@@ -10530,28 +11147,28 @@ tm.app = tm.app || {};
         shadowOffsetX: 0,
         shadowOffsetY: 0,
         shadowBlur: 0,
-        
+
         /**
          * ゲーム用エレメントクラス
          */
         init: function() {
             this.superInit();
         },
-        
+
         drawBoundingCircle: function(canvas) {
             canvas.save();
             canvas.lineWidth = 2;
             canvas.strokeCircle(0, 0, this.radius);
             canvas.restore();
         },
-        
+
         drawBoundingRect: function(canvas) {
             canvas.save();
             canvas.lineWidth = 2;
             canvas.strokeRect(-this.width*this.originX, -this.height*this.originY, this.width, this.height);
             canvas.restore();
         },
-        
+
         drawFillRect: function(ctx) {
             ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
             return this;
@@ -10560,7 +11177,7 @@ tm.app = tm.app || {};
             ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
             return this;
         },
-        
+
         drawFillArc: function(ctx) {
             ctx.beginPath();
             ctx.arc(0, 0, this.radius, 0, Math.PI*2, false);
@@ -10575,49 +11192,47 @@ tm.app = tm.app || {};
             ctx.closePath();
             return this;
         },
-        
-        wakeUp: function() {
-            this.isUpdate = true;
-            return this;
-        },
-        
-        sleep: function() {
-            this.isUpdate = false;
-            return this;
-        },
-        
+
         show: function() {
             this.visible = true;
             return this;
         },
-        
+
         hide: function() {
             this.visible = false;
             return this;
         },
-        
+
         setFillStyle: function(style) {
             this.fillStyle = style;
             return this;
         },
-        
+
         setStrokeStyle: function(style) {
             this.strokeStyle = style;
             return this;
         },
-        
+
+        setBlendMode: function(blendMode) {
+            this.blendMode = blendMode;
+            return this;
+        },
+
         load: function(data) {
             var self = this;
-            
+
             data.layers.forEach(function(layer) {
                 if (layer.type != "objectgroup") return ;
-                
+
                 var group = tm.app.CanvasElement().addChildTo(self);
                 group.width = layer.width;
                 group.height = layer.height;
-                
+
                 layer.objects.forEach(function(obj) {
-                    var _class  = window[obj.type] || tm.app[obj.type];
+                    var _class = tm.using(obj.type);
+                    if (Object.keys(_class).length === 0) {
+                        _class=tm.app[obj.type];
+                    }
                     var initParam = null;
                     if (obj.properties.init) {
                         initParam = JSON.parse(obj.properties.init);
@@ -10629,17 +11244,17 @@ tm.app = tm.app || {};
                         var value = props[key];
                         element[key] = value;
                     }
-                    
+
                     element.x = obj.x;
                     element.y = obj.y;
                     element.width = obj.width;
                     element.height = obj.height;
                 });
-                
+
                 self[layer.name] = group;
             });
         },
-        
+
         fromJSON: function(data) {
             for (var key in data) {
                 var value = data[key];
@@ -10647,7 +11262,10 @@ tm.app = tm.app || {};
                     for (var i=0,len=value.length; i<len; ++i) {
                         var data = value[i];
                         var init = data["init"] || [];
-                        var _class = window[data.type] || tm.app[data.type];
+                        var _class = tm.using(data.type);
+                        if (Object.keys(_class).length === 0) {
+                            _class=tm.app[data.type];
+                        }
                         var elm = _class.apply(null, init).addChildTo(this);
                         elm.fromJSON(data);
                         this[data.name] = elm;
@@ -10657,42 +11275,36 @@ tm.app = tm.app || {};
                     this[key] = value;
                 }
             }
-            
+
             return this;
         },
-        
+
         toJSON: function() {
             // TODO:
         },
-        
-        _update: function(app) {
-            // 更新有効チェック
-            if (this.isUpdate == false) return ;
-            
-            if (this.update) this.update(app);
-            
-            if (this.hasEventListener("enterframe")) {
-                var e = tm.event.Event("enterframe");
-                e.app = app;
-                this.dispatchEvent(e);
+
+
+        _calcAlpha: function() {
+            if (!this.parent) {
+                this._worldAlpha = this.alpha;
+                return ;
             }
-            
-            // 子供達も実行
-            if (this.children.length > 0) {
-                var tempChildren = this.children.slice();
-                for (var i=0,len=tempChildren.length; i<len; ++i) {
-                    tempChildren[i]._update(app);
-                }
+            else {
+                // alpha
+                this._worldAlpha = this.parent._worldAlpha * this.alpha;
             }
         },
-        
-        _refreshSize: function() {},
-        
+
+        _dirtyCalc: function() {
+            this._calcAlpha();
+            this._calcWorldMatrix();
+        },
+
     });
-    
+
 
 })();
- 
+
 
 
 
@@ -10772,6 +11384,8 @@ tm.app = tm.app || {};
             this.srcRect.y = y*h;
             this.srcRect.width  = w;
             this.srcRect.height = h;
+
+            return this;
         },
         
         _refreshSize: function() {
@@ -10811,7 +11425,7 @@ tm.app = tm.app || {};
 
 
 (function() {
-    
+
     /**
      * @class
      * AnimationSprite
@@ -10823,14 +11437,22 @@ tm.app = tm.app || {};
         /**
          * 初期化
          */
-        init: function(width, height, ss)
+        init: function(ss, width, height)
         {
             this.superInit();
-            
-            this.width  = width || 64;
-            this.height = height|| 64;
-            
+
+            if (typeof ss == "string") {
+                var ss = tm.asset.AssetManager.get(ss);
+                console.assert(ss, "not found " + ss);
+            }
+
+            console.assert(typeof ss == "object", "AnimationSprite の第一引数はスプライトシートもしくはスプライトシート名に変わりました");
+
             this.ss = ss;
+
+            this.width  = width || ss.frame.width;
+            this.height = height|| ss.frame.height;
+
             this.currentFrame = 0;
             this.currentFrameIndex = 0;
             this.paused = true;
@@ -10857,23 +11479,27 @@ tm.app = tm.app || {};
         },
 
         gotoAndPlay: function(name) {
-            name = name || "default";
-            
+            name = (name !== undefined) ? name : "default";
+
             this.paused = false;
             this.currentAnimation = this.ss.animations[name];
             this.currentFrame = 0;
             this.currentFrameIndex = 0;
             this._normalizeFrame();
+
+            return this;
         },
 
         gotoAndStop: function(name) {
-            name = name || "default";
-            
+            name = (name !== undefined) ? name : "default";
+
             this.paused = true;
             this.currentAnimation = this.ss.animations[name];
             this.currentFrame = 0;
             this.currentFrameIndex = 0;
             this._normalizeFrame();
+
+            return this;
         },
 
         _updateFrame: function() {
@@ -10909,7 +11535,7 @@ tm.app = tm.app || {};
 
 
 (function() {
-    
+
     tm.app.SpriteSheet = tm.createClass({
         superClass: tm.event.EventDispatcher,
 
@@ -10946,19 +11572,19 @@ tm.app = tm.app || {};
         getFrame: function(index) {
             return this.frames[index];
         },
-        
+
         getAnimation: function(name) {
             return this.animations[name];
         },
-        
+
         _calcFrames: function(frame) {
             var frames = this.frames = [];
-            
+
             var w = frame.width;
             var h = frame.height;
             var row = ~~(this.image.width / w);
             var col = ~~(this.image.height/ h);
-            
+
             if (!frame.count) frame.count = row*col;
 
             for (var i=0,len=frame.count; i<len; ++i) {
@@ -10994,7 +11620,7 @@ tm.app = tm.app || {};
                     };
                 }
             }
-            
+
             // デフォルトアニメーション
             this.animations["default"] = {
                 frames: [].range(0, this.frame.count),
@@ -11131,6 +11757,8 @@ tm.app = tm.app || {};
             c.fillStyle = param.fillStyle;
             c.strokeStyle = param.strokeStyle;
             c.lineWidth = param.lineWidth;
+            c.textAlign = "center";
+            c.textBaseline = "middle";
             
             // 描画
             var lw          = Number(c.lineWidth);
@@ -11158,6 +11786,27 @@ tm.app = tm.app || {};
             // 描画
             c.fillHeart(this.width/2, this.height/2, this.radius, param.angle);
             c.strokeHeart(this.width/2, this.height/2, this.radius-Number(c.lineWidth)/2, param.angle);
+            
+            c.restore();
+        },
+
+        renderText: function(param) {
+            var c = this.canvas;
+            param = {}.$extend(tm.app.Shape.DEFAULT_SHAPE_PARAM_TEXT, param);
+
+            c.save();
+            
+            // パラメータセット
+            c.fillStyle     = param.fillStyle;
+            c.strokeStyle   = param.strokeStyle;
+            c.lineWidth     = param.lineWidth;
+            c.font          = param.font;
+            c.textAlign     = param.textAlign;
+            c.textBaseline  = param.textBaseline;
+
+            // 描画
+            c.strokeText(param.text, this.width/2, this.height/2);
+            c.fillText(param.text, this.width/2, this.height/2);
             
             c.restore();
         },
@@ -11207,6 +11856,16 @@ tm.app = tm.app || {};
         lineWidth: "2",
         
         angle: 45,
+    };
+
+    tm.app.Shape.DEFAULT_SHAPE_PARAM_TEXT = {
+        text: "hello, world",
+        fillStyle: "pink",
+        strokeStyle: "white",
+        lineWidth: "1",
+        textAlign: "center",
+        textBaseline: "middle",
+        font: "24px 'Consolas', 'Monaco', 'ＭＳ ゴシック'",
     };
     
 })();
@@ -11364,6 +12023,31 @@ tm.app = tm.app || {};
 
 
 
+(function() {
+    
+    /**
+     * @class
+     * HeartShape
+     */
+    tm.define("tm.app.TextShape", {
+
+        superClass: "tm.app.Shape",
+        
+        /**
+         * 初期化
+         */
+        init: function(width, height, param) {
+            this.superInit(width, height);
+            // 描画
+            this.renderText(param);
+        },
+    });
+    
+})();
+
+
+
+
 
 
 
@@ -11387,6 +12071,9 @@ tm.app = tm.app || {};
 
 
 (function() {
+    
+    var dummyCanvas  = null;
+    var dummyContext = null;
     
     /**
      * @class
@@ -11413,8 +12100,13 @@ tm.app = tm.app || {};
             this.superInit();
             
             this.text       = text || "";
-            this.fontSize   = size || 24;
-            this.fontFamily = "'Consolas', 'Monaco', 'ＭＳ ゴシック'";
+            
+            this._fontSize   = size || 24;
+            this._fontFamily = "'Consolas', 'Monaco', 'ＭＳ ゴシック'";
+            this._fontWeight = "";
+            this._lineHeight = 1.2;
+            this._updateFont();
+            
             this.align      = "start";
             this.baseline   = "alphabetic";
 
@@ -11441,10 +12133,42 @@ tm.app = tm.app || {};
             return this;
         },
         
+        setFontWeight: function(weight) {
+            this.fontWeight= weight;
+            return this;
+        },
+        
         _updateFont: function() {
-            this.fontStyle = "{fontSize}px {fontFamily}".format(this);
+            this.fontStyle = "{fontWeight} {fontSize}px {fontFamily}".format(this);
+            if (!dummyCanvas) {
+                dummyCanvas = document.createElement("canvas");
+                dummyContext = dummyCanvas.getContext('2d');
+            }
+            dummyContext.font = this.fontStyle;
+            this.textSize = dummyContext.measureText('あ').width * this.lineHeight;
+        },
+        
+        _updateLines: function() {
+            this._lines = (this._text+'').split('\n');
         }
         
+    });
+    
+    /**
+     * @property    text
+     * サイズ
+     */
+    tm.app.Label.prototype.accessor("text", {
+        "get": function() { return this._text; },
+        "set": function(v){
+            if (v == null || v == undefined) {
+                this._text = "";
+            }
+            else {
+                this._text = v;
+            }
+            this._updateLines();
+        }
     });
     
     /**
@@ -11457,13 +12181,36 @@ tm.app = tm.app || {};
     });
     
     /**
-     * @property    font
+     * @property    fontFamily
      * フォント
      */
     tm.app.Label.prototype.accessor("fontFamily", {
         "get": function() { return this._fontFamily; },
         "set": function(v){ this._fontFamily = v; this._updateFont(); }
     });
+    
+    /**
+     * @property fontWeight
+     * フォント
+     */
+    tm.app.Label.prototype.accessor("fontWeight", {
+        "get": function() { return this._fontWeight; },
+        "set": function(v) {
+            this._fontWeight = v; this._updateFont();
+        },
+    });
+    
+    /**
+     * @property lineHeight
+     * フォント
+     */
+    tm.app.Label.prototype.accessor("lineHeight", {
+        "get": function() { return this._lineHeight; },
+        "set": function(v) {
+            this._lineHeight = v; this._updateFont();
+        },
+    });
+
     
 })();
 
@@ -11493,8 +12240,8 @@ tm.app = tm.app || {};
             this.alpha = tm.app.LabelButton.DEFAULT_ALPHA;
             this.setAlign("center").setBaseline("middle");
             
-            this.interaction.enabled = true;
-            this.interaction.boundingType = "rect";
+            this.setInteractive(true);
+            this.boundingType = "rect";
             
             this.addEventListener("pointingover", function() {
                 this.tweener.clear();
@@ -11545,8 +12292,8 @@ tm.app = tm.app || {};
             
             this.alpha = tm.app.IconButton.DEFAULT_ALPHA;
             
-            this.interaction.enabled = true;
-            this.interaction.boundingType = "rect";
+            this.setInteractive(true);
+            this.boundingType = "rect";
             this.addEventListener("pointingover", function() {
                 this.tweener.clear();
                 this.tweener.fade(1, 250);
@@ -11579,8 +12326,8 @@ tm.app = tm.app || {};
             this.backgroundColor = backgroundColor || "black";
             this.alpha = tm.app.GlossyButton.DEFAULT_ALPHA;
             
-            this.interaction.enabled = true;
-            this.interaction.boundingType = "rect";
+            this.setInteractive(true);
+            this.boundingType = "rect";
             this.addEventListener("pointingover", function() {
                 this.tweener.clear();
                 this.tweener.fade(1.0, 250);
@@ -11643,6 +12390,36 @@ tm.app = tm.app || {};
 })();
 
 
+(function() {
+
+    tm.define("tm.app.FlatButton", {
+        superClass: tm.app.Shape,
+
+        init: function(param) {
+            param.$safe({
+                width: 300,
+                height: 100,
+                bgColor: "rgb(180, 180, 180)",
+                text: "ABC",
+                fontSize: 50,
+                fontFamily: "'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', 'Meiryo', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif",
+            });
+
+            this.superInit(param.width, param.height);
+
+            this.canvas.clearColor(param.bgColor);
+
+            this.setInteractive(true);
+            this.setBoundingType("rect");
+
+            this.label = tm.app.Label(param.text).addChildTo(this);
+            this.label.setFontSize(param.fontSize).setFontFamily(param.fontFamily).setAlign("center").setBaseline("middle");
+        },
+    });
+
+
+
+})();
 
 
 
@@ -11664,7 +12441,9 @@ tm.app = tm.app || {};
     tm.app.Scene = tm.createClass({
         
         superClass: tm.app.CanvasElement,
-        
+    
+        _sceneResultCallback: null,
+
         /**
          * 初期化
          */
@@ -11674,8 +12453,9 @@ tm.app = tm.app || {};
             this.boundingType = "none";
             
             // タッチに反応させる
-            this.interaction.enabled = true;
+            this.setInteractive(true);
         },
+
     });
     
 })();
@@ -11860,13 +12640,6 @@ tm.app = tm.app || {};
 
 
         },
-        
-        /*
-        onpointingstart: function() {
-            var e = tm.event.Event("nextscene");
-            this.dispatchEvent(e);
-        },
-        */
     });
     
 })();
@@ -11875,230 +12648,6 @@ tm.app = tm.app || {};
  * mapsprite.js
  */
 
-tm.app = tm.app || {};
-
-(function() {
-
-    tm.define("tm.app.MapSheet", {
-        superClass: "tm.event.EventDispatcher",
-        
-        init: function(path) {
-            this.superInit();
-            
-            this.loaded = false;
-
-            if (typeof path == "string") {
-                tm.util.Ajax.load({
-                    url: path,
-                    success: function(e) {
-                        var d = this._parse(e);
-                        this.$extend(d);
-                        this._checkImage();
-                    }.bind(this),
-                });
-            }
-            else {
-                this.$extend(arguments[0]);
-                
-                this._checkImage();
-            }
-        },
-
-        _parse: function(str) {
-            var each = Array.prototype.forEach;
-            var data = {};
-            var parser = new DOMParser();
-            var xml = parser.parseFromString(str, 'text/xml');
-            var map = this._attrToJSON(xml.getElementsByTagName('map')[0]);
-
-            this.$extend(map);
-
-            // tilesets(image)
-            data.tilesets = this._parseTilesets(xml);
-
-            // layer
-            data.layers = this._parseLayers(xml);
-            
-            return data;
-        },
-        
-        _parseTilesets: function(xml) {
-            var each = Array.prototype.forEach;
-            var self = this;
-            var data = [];
-            var tilesets = xml.getElementsByTagName('tileset');
-            each.call(tilesets, function(tileset) {
-                var t = {};
-                var props = self._propertiesToJson(tileset);
-                
-                if (props.src) {
-                    t.image = props.src;
-                }
-                else {
-                    t.image = tileset.getElementsByTagName('image')[0].getAttribute('source');
-                }
-                data.push(t);
-            });
-            
-            return data;
-        },
-        
-        _parseLayers: function(xml) {
-            var each = Array.prototype.forEach;
-            var data = [];
-
-            var map = xml.getElementsByTagName("map")[0];
-            var layers = [];
-            each.call(map.childNodes, function(elm) {
-                if (elm.tagName == "layer" || elm.tagName == "objectgroup") {
-                    layers.push(elm);
-                }
-            });
-
-            layers.each(function(layer) {
-                if (layer.tagName == "layer") {
-                    var d = layer.getElementsByTagName('data')[0];
-                    var encoding = d.getAttribute("encoding");
-                    var l = {
-                        type: "layer",
-                        name: layer.getAttribute("name"),
-                    };
-
-                    if (encoding == "csv") {
-                        l.data = this._parseCSV(d.textContent);
-                    }
-                    else if (encoding == "base64") {
-                        l.data = this._parseBase64(d.textContent);
-                    }
-
-                    data.push(l);
-                }
-                else if (layer.tagName == "objectgroup") {
-                    var l = {
-                        type: "objectgroup",
-                        objects: [],
-                        name: layer.getAttribute("name"),
-                    };
-                    each.call(layer.childNodes, function(elm) {
-                        if (elm.nodeType == 3) return ;
-                        
-                        var d = this._attrToJSON(elm);
-                        d.properties = this._propertiesToJson(elm);
-                        
-                        l.objects.push(d);
-                    }.bind(this));
-                    
-                    data.push(l);
-                }
-            }.bind(this));
-
-            return data;
-        },
-
-        _parseCSV: function(data) {
-            var dataList = data.split(',');
-            var layer = [];
-
-            dataList.each(function(elm, i) {
-                var num = parseInt(elm, 10) - 1;
-                layer.push(num);
-            });
-
-            return layer;
-        },
-
-        /**
-         * http://thekannon-server.appspot.com/herpity-derpity.appspot.com/pastebin.com/75Kks0WH
-         */
-        _parseBase64: function(data) {
-            var dataList = atob(data.trim());
-            var rst = [];
-
-            dataList = dataList.split('').map(function(e) {
-                return e.charCodeAt(0);
-            });
-
-            for (var i=0,len=dataList.length/4; i<len; ++i) {
-                var n = dataList[i*4];
-                rst[i] = parseInt(n, 10) - 1;
-            }
-            
-            return rst;
-        },
-        
-        _propertiesToJson: function(elm) {
-            var obj = {};
-            var properties = elm.getElementsByTagName('property');
-            for (var k = 0;k < properties.length;k++) {
-                obj[properties[k].getAttribute('name')] = properties[k].getAttribute('value');
-            }
-            
-            return obj;
-        },
-        
-        _attrToJSON: function(source) {
-            var obj = {};
-            for (var i = 0; i < source.attributes.length; i++) {
-                var val = source.attributes[i].value;
-                val = isNaN(parseFloat(val))? val: parseFloat(val);
-                obj[source.attributes[i].name] = val;
-            }
-            
-            return obj;
-        },
-        
-        _checkImage: function() {
-            var self = this;
-            if (this.tilesets.length) {
-                var i = 0;
-                var len = this.tilesets.length;
-                
-                var _onloadimage = function() {
-                    i++;
-                    if (i==len) {
-                        this.loaded = true;
-                        var e = tm.event.Event("load");
-                        this.dispatchEvent(e);
-                    }
-                }.bind(this);
-                
-                this.tilesets.each(function(elm) {
-                    var image = tm.asset.AssetManager.get(elm.image)
-                    
-                    if (image) {
-                        if (image.loaded) {
-                            // ロード済み
-                            ++i;
-                            if (i==len) {
-                                this.loaded = true;
-                                var e = tm.event.Event("load");
-                                self.dispatchEvent(e);
-                            }
-                        }
-                        else {
-                            image.addEventListener("load", _onloadimage);
-                        }
-                    }
-                    else {
-                        tm.asset.AssetManager.load(elm.image);
-                        var texture = tm.asset.AssetManager.get(elm.image);
-                        texture.addEventListener("load", _onloadimage);
-                    }
-                });
-                
-            }
-            else {
-                this.loaded = true;
-                var e = tm.event.Event("load");
-                this.dispatchEvent(e);
-            }
-        },
-        
-    });
-
-
-
-})();
 
 (function() {
 
@@ -12179,7 +12728,11 @@ tm.app = tm.app || {};
             group.height = layer.height;
             
             layer.objects.forEach(function(obj) {
-                var _class  = window[obj.type] || tm.app[obj.type];
+                var _class = tm.using(obj.type);
+                if (Object.keys(_class).length === 0) {
+                    _class=tm.app[obj.type];
+                }
+
                 var initParam = null;
                 if (obj.properties.init) {
                     initParam = JSON.parse(obj.properties.init);
@@ -12344,9 +12897,8 @@ tm.app = tm.app || {};
             e = tm.event.Event("enter");
             e.app = this;
             this.currentScene = scene;
-            this.currentScene.dispatchEvent(e);
-
             this.currentScene.app = this;
+            this.currentScene.dispatchEvent(e);
         },
         
         /**
@@ -12364,9 +12916,8 @@ tm.app = tm.app || {};
             
             e = tm.event.Event("enter");
             e.app = this;
-            scene.dispatchEvent(e);
-
             scene.app = this;
+            scene.dispatchEvent(e);
         },
         
         /**
@@ -12375,7 +12926,7 @@ tm.app = tm.app || {};
          */
         popScene: function()
         {
-            var scene = this._scenes.pop(scene);
+            var scene = this._scenes.pop();
             --this._sceneIndex;
             
             e = tm.event.Event("exit");
@@ -12428,7 +12979,7 @@ tm.app = tm.app || {};
         {
             // デバイス系 Update
             this.mouse.update();
-            this.keyboard.update();
+            this.keyboard._update();
             this.touches.update();
             
             if (this.isPlaying) {
@@ -12712,18 +13263,26 @@ tm.app = tm.app || {};
             canvas.setText(this.fontStyle, this.align, this.baseline);
             if (this.fill) {
                 if (this.maxWidth) {
-                    canvas.fillText(this.text, 0, 0, this.maxWidth);
+                    this._lines.each(function(elm, i) {
+                        canvas.fillText(elm, 0, this.textSize*i, this.maxWidth);
+                    }.bind(this));
                 }
                 else {
-                    canvas.fillText(this.text, 0, 0);
+                    this._lines.each(function(elm, i) {
+                        canvas.fillText(elm, 0, this.textSize*i);
+                    }.bind(this));
                 }
             }
             if (this.stroke) {
                 if (this.maxWidth) {
-                    canvas.strokeText(this.text, 0, 0, this.maxWidth);
+                    this._lines.each(function(elm, i) {
+                        canvas.strokeText(elm, 0, this.textSize*i, this.maxWidth);
+                    }.bind(this));
                 }
                 else {
-                    canvas.strokeText(this.text, 0, 0);
+                    this._lines.each(function(elm, i) {
+                        canvas.strokeText(elm, 0, this.textSize*i);
+                    }.bind(this));
                 }
             }
             
@@ -12766,155 +13325,6 @@ tm.app = tm.app || {};
 
 
 
-
-
-
-
-
-
-
-/*
- * interactive.js
- */
-
-tm.app = tm.app || {};
-
-
-
-(function() {
-    
-    /**
-     * @class
-     * インタラクティブクラス
-     */
-    tm.app.Interaction = tm.createClass({
-        
-        hitFlag: false,
-        downFlag: false,
-        enabled: true,
-        hitTestFunc: null,
-        
-        _boundingType: "circle",
-        
-        init: function(element) {
-            this.element = element;
-
-            this.hitFlags = [];
-            this.downFlags= [];
-        },
-        
-        update: function(app) {
-            if (this.enabled === false) return ;
-
-            var elm = this.element;
-            var p   = app.pointing;
-            
-            var prevHitFlag = this.hitFlag;
-            
-            this.hitFlag    = elm.isHitPoint(p.x, p.y);
-            
-            if (!prevHitFlag && this.hitFlag) {
-                this._dispatchEvent("mouseover", "touchover", "pointingover");
-            }
-            
-            if (prevHitFlag && !this.hitFlag) {
-                this._dispatchEvent("mouseout", "touchout", "pointingout");
-            }
-            
-            if (this.hitFlag) {
-                if (p.getPointingStart()) {
-                    this._dispatchEvent("mousedown", "touchstart", "pointingstart");
-                    this.downFlag = true;
-                }
-            }
-            
-            if (this.downFlag) {
-                this._dispatchEvent("mousemove", "touchmove", "pointingmove");
-            }
-            
-            if (this.downFlag==true && p.getPointingEnd()) {
-                this._dispatchEvent("mouseup", "touchend", "pointingend");
-                this.downFlag = false;
-            }
-        },
-
-        _check: function(app, p, index) {
-            if (this.enabled === false) return ;
-
-            var elm = this.element;
-            
-            var prevHitFlag = this.hitFlags[index];
-            
-            this.hitFlags[index]    = elm.isHitPoint(p.x, p.y);
-            
-            if (!prevHitFlag && this.hitFlags[index]) {
-                this._dispatchEvent("mouseover", "touchover", "pointingover", app, p);
-            }
-            
-            if (prevHitFlag && !this.hitFlags[index]) {
-                this._dispatchEvent("mouseout", "touchout", "pointingout", app, p);
-            }
-            
-            if (this.hitFlags[index]) {
-                if (p.getPointingStart()) {
-                    this._dispatchEvent("mousedown", "touchstart", "pointingstart", app, p);
-                    this.downFlags[index] = true;
-                }
-            }
-            
-            if (this.downFlags[index]) {
-                this._dispatchEvent("mousemove", "touchmove", "pointingmove", app, p);
-            }
-            
-            if (this.downFlags[index]==true && p.getPointingEnd()) {
-                this._dispatchEvent("mouseup", "touchend", "pointingend", app, p);
-                this.downFlags[index] = false;
-            }
-        },
-
-        _updatePC: function(app) {
-            this._check(app, app.pointing, 0);
-        },
-
-        _updateMobile: function(app) {
-            var self = this;
-            app.touches.each(function(touch, i) {
-                self._check(app, touch, i);
-            });
-        },
-
-        _dispatchEvent: function(mouse, touch, pointing, app, p) {
-            var elm = this.element;
-
-            elm.dispatchEvent( tm.event.MouseEvent(mouse, app, p) );
-            elm.dispatchEvent( tm.event.TouchEvent(touch, app, p) );
-            elm.dispatchEvent( tm.event.PointingEvent(pointing, app, p) );
-        },
-        
-        setBoundingType: function(type) { this.boundingType = type; },
-    });
-    
-    tm.app.Interaction.prototype.update = (tm.isMobile) ?
-        tm.app.Interaction.prototype._updateMobile : tm.app.Interaction.prototype._updatePC;
-
-    
-    /**
-     * @member      tm.app.Element
-     * @property    interaction
-     * インタラクション
-     */
-    tm.app.Element.prototype.getter("interaction", function() {
-        if (!this._interaction) {
-            this._interaction = tm.app.Interaction(this);
-            this.addEventListener("enterframe", function(e){
-                this._interaction.update(e.app);
-            });
-        }
-        
-        return this._interaction;
-    });
-    
-})();
 
 
 
@@ -13753,7 +14163,7 @@ tm.app = tm.app || {};
             
             this._createCircle();
             
-            this.interaction;
+            this.setInteractive(true);
             
             this.alpha = 0.75;
         },
@@ -13802,6 +14212,206 @@ tm.app = tm.app || {};
 
 
 
+(function() {
+    
+    /**
+     * @class tm.app.MenuDialog
+     * メニューダイアログ
+     */
+    tm.define("tm.app.MenuDialog", {
+        superClass: tm.app.Scene,
+
+        /** @type {string} タイトル */
+        titleText: null,
+        /** @type {Array.<string>} メニュー名リスト */
+        menu: null,
+        /** @type {Array.<string>} メニュー詳細リスト */
+        descriptions: null,
+        /** @type {boolean} exit の表示/非表示 */
+        showExit: false,
+
+        /** @type {tm.app.Label} dummy */
+        title: null,
+        /** @type {Array.<tm.app.LabelButton>} dummy */
+        selections: [],
+        /** @type {tm.app.Label} dummy */
+        description: null,
+        /** @type {tm.app.RectangleShape} dummy */
+        box: null,
+        /** @type {tm.app.RectangleShape} dummy */
+        cursor: null,
+
+        _selected: 0,
+        _opened: false,
+        _finished: false,
+
+        _screenWidth: 0,
+        _screenHeight: 0,
+
+        /**
+         * 初期化
+         * @param {Object} params
+         */
+        init: function(params) {
+            this.superInit();
+
+            this._screenWidth = params.screenWidth;
+            this._screenHeight = params.screenHeight;
+
+            this.titleText = params.title;
+            this.menu = [].concat(params.menu);
+            this._selected = ~~params.defaultSelected;
+            this.showExit = !!params.showExit;
+            if (params.menuDesctiptions) {
+                this.descriptions = params.menuDesctiptions;
+            } else {
+                this.descriptions = [].concat(params.menu);
+            }
+
+            if (this.showExit) {
+                this.menu.push("exit");
+                this.descriptions.push("前の画面へ戻ります");
+            }
+
+            var height = Math.max((1+this.menu.length)*50, 50) + 40;
+            this.box = tm.app.RectangleShape(this._screenWidth * 0.8, height, {
+                strokeStyle: "rgba(0,0,0,0)",
+                fillStyle: "rgba(43,156,255, 0.8)",
+            }).setPosition(this._screenWidth*0.5, this._screenHeight*0.5);
+            this.box.width = 1;
+            this.box.height = 1;
+            this.box.setBoundingType("rect");
+            this.box.tweener
+                .to({ width: this._screenWidth*0.8, height: height }, 200, "easeOutExpo")
+                .call(this._onOpen.bind(this));
+            this.box.addChildTo(this);
+
+            this.description = tm.app.Label("", 14)
+                .setAlign("center")
+                .setBaseline("middle")
+                .setPosition(this._screenWidth*0.5, this._screenHeight-10)
+                .addChildTo(this);
+        },
+
+        _onOpen: function() {
+            var self = this;
+            var y = this._screenHeight*0.5 - this.menu.length * 25;
+
+            this.title = tm.app.Label(this.titleText, 30)
+                .setAlign("center")
+                .setBaseline("middle")
+                .setPosition(this._screenWidth*0.5, y)
+                .addChildTo(this);
+
+            this.cursor = this._createCursor();
+
+            this.selections = this.menu.map(function(text, i) {
+                var self = this;
+                y += 50;
+                var selection = tm.app.LabelButton(text)
+                    .setPosition(this._screenWidth*0.5, y)
+                    .addChildTo(this);
+                selection.interactive = true;
+                selection.addEventListener("click", function() {
+                    if (self._selected === i) {
+                        self.closeDialog(self._selected);
+                    } else {
+                        self._selected = i;
+                        var e = tm.event.Event("menuselect");
+                        e.selectValue = self.menu[self._selected];
+                        e.selectIndex = i;
+                        self.dispatchEvent(e);
+                    }
+                });
+                selection.width = this._screenWidth * 0.7;
+                return selection;
+            }.bind(this));
+
+            this.cursor.y = this.selections[this._selected].y;
+
+            this._opened = true;
+
+            // close window when touch bg outside
+            this.addEventListener("pointingend", function(e) {
+                var p = e.app.pointing;
+                if (!self.box.isHitPoint(p.x, p.y)) {
+                    self.closeDialog(self._selected);
+                }
+            });
+
+            // dispatch opened event
+            var e = tm.event.Event("menuopened");
+            this.dispatchEvent(e);
+        },
+
+        _createCursor: function() {
+            var cursor = tm.app.RectangleShape(this._screenWidth*0.7, 30, {
+                strokeStyle: "rgba(0,0,0,0)",
+                fillStyle: "rgba(12,79,138,1)"
+            }).addChildTo(this);
+            cursor.x = this._screenWidth*0.5;
+            cursor.target = this._selected;
+            
+            cursor.update = function() {
+                if (this.target !== this.parent._selected) {
+                    this.target = this.parent._selected;
+                    this.tweener.clear();
+                    this.tweener.to({
+                        y: this.parent.selections[this.parent._selected].y
+                    }, 200, "easeOutExpo");
+                }
+            };
+
+            return cursor;
+        },
+
+        update: function(app) {
+            this.description.text = this.descriptions[this._selected];
+        },
+
+        closeDialog: function(result) {
+            this._finished = true;
+
+            var e = tm.event.Event("menuselected");
+            e.selectIndex = result;
+            this.dispatchEvent(e);
+
+            this.tweener
+                .clear()
+                .wait(200)
+                .call(function() {
+                    this.cursor.remove();
+                    this.title.remove();
+                    this.selections.each(function(sel) {
+                        sel.remove();
+                    });
+                    this.box.tweener.clear();
+                    this.box.tweener
+                        .to({ width: 1, height: 1 }, 200, "easeInExpo")
+                        .call(function() {
+                            this.app.popScene();
+                            var e = tm.event.Event("menuclosed");
+                            e.selectIndex = result;
+                            this.dispatchEvent(e);
+                        }.bind(this));
+                }.bind(this));
+            this.cursor.tweener
+                .clear()
+                .call(function() {
+                    this.visible = !this.visible;
+                }.bind(this.cursor))
+                .setLoop(true);
+        },
+
+        draw: function(canvas) {
+            canvas.fillStyle = "rgba(0,0,0,0.8)";
+            canvas.fillRect(0,0,this._screenWidth,this._screenHeight);
+        },
+
+    });
+
+})();
+
 /*
  * 
  */
@@ -13822,17 +14432,8 @@ tm.three = tm.three || {};
 
         superClass: tm.app.BaseApp,
         
-        element     : null,
         canvas      : null,
-        mouse       : null,
-        touch       : null,
-        pointing    : null,
-        keyboard    : null,
-        stats       : null,
-        frame       : 0,
-        fps         : 30,
         background  : null,
-        isPlaying   : null,
         
         _scenes      : null,
         _sceneIndex  : 0,
@@ -14988,18 +15589,15 @@ tm.google = tm.google || {};
 
 
 ;(function() {
-
-    tm.app.Interaction.prototype.setBoundingType = function(type) {
-        this.boundingType = type;
-    };
-
-    tm.app.Interaction.prototype.accessor("boundingType", {
-        "get": function()   {
-            return this.element.boundingType;
-        },
-        "set": function(v)  {
-            this.element.boundingType = v;
-        }
+    
+    /**
+     * @member      tm.app.Element
+     * @property    interaction
+     * インタラクション
+     */
+    tm.app.Element.prototype.getter("interaction", function() {
+        console.assert(false, "interaction は Object2d に統合されました. obj.setInteractive(true); とすればタッチ判定が有効になります.");
     });
+
 
 })();

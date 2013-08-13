@@ -1,0 +1,22 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var canvas = tm.graphics.Canvas("#c");
+    canvas.resize(50, 50);
+    canvas.fillStyle = tm.graphics.RadialGradient(35, 15, 0, 25, 25, 25)
+        .addColorStopList([
+            { offset:0, color:"rgba(255,255,255,1)"},
+            { offset:1, color:"rgba(255,200,  0,1)"},
+        ]).toStyle();
+    canvas.fillStar(25, 25, 25, 5, 0.5);
+    canvas.saveAsImage();
+
+})
+</script>
+</head>
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>

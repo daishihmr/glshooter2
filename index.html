@@ -1,19 +1,28 @@
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset=UTF-8>
-
-<script src="libs/tmlib.js"></script>
-<script src="libs/bulletml.for.tmlib.js"></script>
-
-<script src="src/main.js"></script>
-<script src="src/GameScene.js"></script>
-<script src="src/enemy/Enemy.js"></script>
-<script src="src/enemy/EnemyHard.js"></script>
-<script src="src/enemy/EnemySoft.js"></script>
-<script src="src/enemy/EnemyUnit.js"></script>
-<script src="src/enemy/Danmaku.js"></script>
+<meta name="author" content="daishi.hmr@gmail.com">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+@font-face {
+    font-family: Orbitron;
+    src: url(font/Orbitron-Regular.ttf) format("truetype");
+}
+@font-face {
+    font-family: 'Ubuntu Mono';
+    src: url(font/UbuntuMono-Bold.ttf) format("truetype");
+}
+</style>
 </head>
-<body style="background:white;margin:0">
-    <canvas id="canvas2d"></canvas>
+<body style="text-align:center;background:#000011">
+<canvas id="background"></canvas>
+<canvas id="canvas2d"></canvas>
+<canvas id="scoreLabel"></canvas>
+<script src="libs/tmlib.min.js"></script>
+<script src="extern/extern.js"></script>
+<script src="target/gls2.js"></script>
 </body>
 </html>

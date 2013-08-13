@@ -1,0 +1,48 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	G2\G207.suf
+	SD\SD03.suf
+	SD\SD08.suf
+	TK\TK09.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000 -65.054 )
+	DisplayScale: 0.088388347648
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr "#01" { col ( 1.000 ) amb ( 1.000 ) dif ( 0.000 ) tra ( 1.000 ) }
+	1: atr noname { col ( rgb ( 0.560 0.740 0.890 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -49 -50 -70 )
+	{	mov ( 903.618 2.39832 2811.16 ) eye deg( 45 ) }
+	{	mov ( 0 0 0 ) target }
+	{	mov ( 9.24079 0 472.5 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.1 1.21 0.99 ) obj G207 /* "G2\G207.suf" atr "noname" */
+	}
+	{	mov ( -29.4092 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.8 0.8 1 ) obj TK09 /* "TK\TK09.suf" atr "noname" */
+	}
+	{	mov ( 112.369 -76.8 650.4 ) rotz ( 0 ) roty ( -20 ) rotx ( -90 )
+		scal ( 0.792 1.32 0.84 ) obj SD08 /* "SD\SD08.suf" atr "noname" */
+	}
+	{	mov ( -47.6 -240 400.8 ) rotz ( 0 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.528 1.32 1.56 ) obj SD03 /* "SD\SD03.suf" atr "noname" */
+	}
+	{	mov ( 112.369 76.8 650.4 ) rotz ( 0 ) roty ( -20 ) rotx ( 90 )
+		scal ( 0.792 -1.32 0.84 ) obj SD08 /* "SD\SD08.suf" atr "noname" */
+	}
+	{	mov ( -47.6 240 400.8 ) rotz ( 0 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.528 -1.32 1.56 ) obj SD03 /* "SD\SD03.suf" atr "noname" */
+	}
+}

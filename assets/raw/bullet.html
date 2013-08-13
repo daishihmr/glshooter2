@@ -1,0 +1,127 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var sin = Math.sin;
+    var cos = Math.cos;
+
+    var canvas = tm.graphics.Canvas("#c");
+    tm.dom.Element("#c").event.click(function() {
+        canvas.saveAsImage();
+    });
+
+    var SZ = 20;
+    canvas.resize(SZ*8, SZ); //.fitWindow();
+
+    // canvas.globalCompositeOperation = "lighter";
+
+    var i;
+
+    // 0
+    i = 0;
+    var x = SZ*i;
+    var y = 0;
+    var cx = SZ*i + SZ*0.5;
+    var cy = SZ*0.5;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 8).addColorStopList([
+            { offset:0.0, color:"rgba(255,255,255,1.0)"},
+            { offset:0.4, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(  0,  0,255,1.0)"},
+        ]).toStyle())
+        .fillCircle(cx, cy, 8);
+
+    // 1
+    i = 1;
+    var x = SZ*i;
+    var y = 0;
+    var cx = SZ*i + SZ*0.5;
+    var cy = SZ*0.5;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 8).addColorStopList([
+            { offset:0.0, color:"rgba(255,255,255,1.0)"},
+            { offset:0.4, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(255,  0,  0,1.0)"},
+        ]).toStyle())
+        .fillCircle(cx, cy, 8);
+
+    // 2
+    i = 2;
+    var x = SZ*i;
+    var y = 0;
+    var cx = SZ*i + SZ*0.5;
+    var cy = SZ*0.5;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy+5, 0, cx, cy, 10).addColorStopList([
+            { offset:0.0, color:"rgba(255,255,255,1.0)"},
+            { offset:0.4, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(  0,  0,255,1.0)"},
+        ]).toStyle())
+        .fillCircle(cx, cy, 10);
+
+    // 3
+    i = 3;
+    var x = SZ*i;
+    var y = 0;
+    var cx = SZ*i + SZ*0.5;
+    var cy = SZ*0.5;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy+5, 0, cx, cy, 10).addColorStopList([
+            { offset:0.0, color:"rgba(255,255,255,1.0)"},
+            { offset:0.4, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(255,  0,  0,1.0)"},
+        ]).toStyle())
+        .fillCircle(cx, cy, 10);
+
+    // 4
+    i = 4;
+    var x = SZ*i;
+    var y = 0;
+    var cx = SZ*i + SZ*0.5;
+    var cy = SZ*0.5;
+    var t = 0;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx+cos(t)*3, cy+sin(t)*3, 0, cx+cos(t)*3, cy+sin(t)*3, 4).addColorStopList([
+            { offset:0.0, color:"rgba(255,255,255,1.0)"},
+            { offset:0.2, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(255,  0,  0,1.0)"},
+        ]).toStyle())
+        .fillCircle(cx+cos(t)*3, cy+sin(t)*3, 4);
+    t += Math.PI*2/3;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx+cos(t)*3, cy+sin(t)*3, 0, cx+cos(t)*3, cy+sin(t)*3, 4).addColorStopList([
+            { offset:0.0, color:"rgba(255,255,255,1.0)"},
+            { offset:0.2, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(255,  0,  0,1.0)"},
+        ]).toStyle())
+        .fillCircle(cx+cos(t)*3, cy+sin(t)*3, 4);
+    t += Math.PI*2/3;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx+cos(t)*3, cy+sin(t)*3, 0, cx+cos(t)*3, cy+sin(t)*3, 4).addColorStopList([
+            { offset:0.0, color:"rgba(255,255,255,1.0)"},
+            { offset:0.2, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(255,  0,  0,1.0)"},
+        ]).toStyle())
+        .fillCircle(cx+cos(t)*3, cy+sin(t)*3, 4);
+
+    // 5
+    i = 5;
+    var x = SZ*i;
+    var y = 0;
+    var cx = SZ*i + SZ*0.5;
+    var cy = SZ*0.5;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 8).addColorStopList([
+            { offset:0.0, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(  0,255,  0,0.0)"},
+        ]).toStyle())
+        .fillCircle(cx, cy, 8);
+
+});
+</script>
+</head>
+<body style="background:black">
+<canvas id="c"></canvas>
+</body>
+</html>

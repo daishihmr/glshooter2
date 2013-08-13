@@ -1,0 +1,56 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var out = tm.graphics.Canvas();
+    out.resize(80*4, 80*4);
+
+    var col0 = [
+    "rgba(255, 100, 100, 0.1)",
+    "rgba(100, 255, 100, 0.1)",
+    "rgba(100, 100, 255, 0.1)",
+    "rgba(255, 200,  50, 0.1)",
+    ];
+    var col1 = [
+    "rgba(255,   0,   0, 0.0)",
+    "rgba(  0, 255,   0, 0.0)",
+    "rgba(  0,   0, 255, 0.0)",
+    "rgba(255, 100,   0, 0.0)",
+    ];
+
+    var d = function(x, y) {
+        var canvas = tm.graphics.Canvas("#c");
+
+        canvas.resize(80, 80); //.fitWindow();
+        canvas.globalCompositeOperation = "lighter";
+
+        for (var i = 0; i < 60; i++) {
+            var cx = (Math.rand(40-10, 40+10) + Math.rand(40-10, 40+10)) / 2;
+            var cy = (Math.rand(40-10, 40+10) + Math.rand(40-10, 40+10)) / 2;
+            var rd = Math.rand(35, 40);
+            canvas.fillStyle = tm.graphics.RadialGradient(cx, cy, 0, cx, cy, rd*1.2).addColorStopList([
+                { offset: 0.00, color: col0[y] },
+                { offset: 0.20, color: col0[y] },
+                { offset: 1.00, color: col1[y] },
+            ]).toStyle();
+            canvas.fillStar(cx, cy, rd, 13, 0.3);
+        }
+
+        out.drawImage(canvas.element, 80*x, 80*y);
+    };
+
+    for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+            d(j, i);
+        }
+    }
+
+    out.saveAsImage();
+});
+</script>
+</head>
+<body style="background:black">
+<canvas id="c"></canvas>
+</body>
+</html>

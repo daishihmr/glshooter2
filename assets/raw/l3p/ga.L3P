@@ -1,0 +1,57 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	F1\F110.suf
+	RB\RB03.suf
+	RB\RB15.suf
+	S2\S209.suf
+	SL\SL14.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (  34.033   0.000   0.000 )
+	DisplayScale: 0.176776695297
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
+	{	mov ( 3496.18 -0.629218 4031.31 ) eye deg( 45 ) }
+	{	mov ( -375.639 -0.0939953 -134.498 ) target }
+	{	mov ( -300 1150 0 ) rotz ( 110 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1 1 1.7 ) obj S209 /* "S2\S209.suf" atr "noname" */
+	}
+	{	mov ( -300 -1150 0 ) rotz ( -110 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1 -1 1.7 ) obj S209 /* "S2\S209.suf" atr "noname" */
+	}
+	{	mov ( -700 -600 0 ) rotz ( 15 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1 1 1.8 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( -700 600 0 ) rotz ( -15 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1 -1 1.8 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( -450 350 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1.4 1.1 1 ) obj rb03 /* "RB\RB03.suf" atr "noname" */
+	}
+	{	mov ( -450 -350 0 ) rotz ( 0 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1.4 -1.1 1 ) obj rb03 /* "RB\RB03.suf" atr "noname" */
+	}
+	{	mov ( 600 1050 -345 ) rotz ( -90 ) roty ( -90 ) rotx ( -90 )
+		scal ( 1 0.5 1.5 ) obj rb15 /* "RB\RB15.suf" atr "noname" */
+	}
+	{	mov ( 600 -1050 -345 ) rotz ( 90 ) roty ( -90 ) rotx ( 90 )
+		scal ( 1 -0.5 1.5 ) obj rb15 /* "RB\RB15.suf" atr "noname" */
+	}
+	{	mov ( -400 0 150 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.2 0.9 1.8 ) obj SL14 /* "SL\SL14.suf" atr "noname" */
+	}
+}

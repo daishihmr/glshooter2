@@ -1,0 +1,147 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var canvas = tm.graphics.Canvas("#c");
+    canvas.resize(50, 640 + 20*2);
+
+    var frameSize = 16;
+
+    var out = tm.graphics.Canvas();
+    out.resize(canvas.width * frameSize, 640);
+
+    var noise = createPNoise(16);
+
+    canvas.p = function(x, y, rad, col0, col1) {
+        this.setFillStyle(
+            tm.graphics.RadialGradient(x, y, 0, x, y, rad)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba("+~~col0[0]+","+~~col0[1]+","+~~col0[2]+","+col0[3]+")" },
+                    { offset: 0.8, color: "rgba("+~~col1[0]+","+~~col1[1]+","+~~col1[2]+","+col1[3]+")" },
+                    { offset: 1.0, color: "rgba("+~~col1[0]+","+~~col1[1]+","+~~col1[2]+","+col1[3]+")" },
+                ])
+                .toStyle()
+        );
+        this.fillRect(x - rad, y - rad, rad*2, rad*2);
+    };
+
+    // var col0 = [255,255,255,0.05];
+    // var col1 = [255,255,255];
+    // var col2 = [255,0,0,0.0];
+
+    // var col0 = [255,255,255,0.05];
+    // var col1 = [255,255,255];
+    // var col2 = [0,255,0,0.0];
+
+    var col0 = [255,255,255,0.05];
+    var col1 = [255,255,255];
+    var col2 = [0,0,255,0.0];
+
+    // var col0 = [255,180,100,0.08];
+    // var col1 = [255,180,100];
+    // var col2 = [255,180,0,0];
+
+    var draw = function(frame) {
+        canvas.globalCompositeOperation = "lighter";
+        for (var y = canvas.height; y >= 0; y--) {
+            canvas.p(25, y, 23, col0, col2);
+        }
+        // canvas.globalCompositeOperation = "source-over";
+        for (var c = 0; c < noise.length; c++) {
+            var a = (c/noise.length + frame/frameSize) * Math.PI*2;
+            for (var y = canvas.height; y >= 0; y--) {
+                var alpha = (1 + Math.cos(a)) * 0.06 * noise[c];
+                if (alpha > 0.0001)
+                    canvas.p(Math.sin(a)*12 + 25, y, 8, col1.concat([alpha]), col2);
+                a -= 0.004;
+            }
+        }
+    };
+
+    for (var frame = 0; frame < frameSize; frame++) {
+        canvas.clear();
+        draw(frame);
+        out.drawImage(canvas.element, 0, 20, canvas.width, 640, canvas.width * frame, 0, canvas.width, 640);
+    }
+    tm.dom.Element("#c").event.click(function() {
+        out.saveAsImage();
+    });
+
+
+    var app = tm.app.CanvasApp("#app");
+    app.fps = 60;
+    app.resize(640, 640);
+
+    var s = tm.app.Sprite();
+    s.width = 50;
+    s.height = 640;
+    s.image = out;
+    s.update = function(app) {
+        s.setFrameIndex(~~(app.frame*0.5) % frameSize);
+    };
+    s.setPosition(320, 320);
+    s.addChildTo(app.currentScene);
+    app.run();
+});
+
+var createPNoise = function(dataSize) {
+    var interpolation = function(a, b, ratio) {
+        var f = (1 - Math.cos(ratio*Math.PI)) * 0.5;
+        return a*(1-f) + b*f;
+    };
+    var createLayer = function(interval) {
+        if (interval < 1) {
+            return null;
+        }
+
+        var data = [];
+        var a = Math.random();
+        var b;
+        var i;
+        for (i = 0; i < dataSize; i += ~~interval) {
+            b = Math.random();
+            for (var j = 0; j < interval; j++) {
+                data[i+j] = interpolation(a, b, j/interval);
+            }
+            a = b;
+        }
+
+        a = data[dataSize - ~~interval];
+        b = data[0];
+        for (var j = 0; j < interval; j++) {
+            data[dataSize - ~~interval + j] = interpolation(a, b, j/interval);
+        }
+
+        return data;
+    };
+
+    var layers = [];
+    for (var i = 0, b = Math.pow(2, 4); i < 8; i++, b *= 2) {
+        var d = createLayer(dataSize / b);
+        if (d === null) {
+            break;
+        }
+        layers.push(d);
+    }
+
+    var result = [].concat(layers[0]);
+    for (var i = 1, b = 0.5; i < layers.length; i++, b *= 0.5) {
+        for (var j = 0; j < dataSize; j++) {
+            result[j] += layers[i][j] * b;
+        }
+    }
+    for (var i = 0; i < result.length; i++) {
+        result[i] /= 2;
+    }
+    return result;
+};
+</script>
+</head>
+<body style="background:url(background.png)">
+<canvas id="c"></canvas>
+
+<canvas id="app"></canvas>
+
+</body>
+</html>

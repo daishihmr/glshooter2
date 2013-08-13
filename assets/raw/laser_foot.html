@@ -1,0 +1,77 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var out = tm.graphics.Canvas();
+    out.resize(120*4, 80*4);
+
+    var col0 = [
+    "rgba(255, 100, 100, 0.1)",
+    "rgba(100, 255, 100, 0.1)",
+    "rgba(100, 100, 255, 0.1)",
+    "rgba(255, 200,  50, 0.1)",
+    ];
+    var col1 = [
+    "rgba(255,   0,   0, 0.0)",
+    "rgba(  0, 255,   0, 0.0)",
+    "rgba(  0,   0, 255, 0.0)",
+    "rgba(255, 100,   0, 0.0)",
+    ];
+
+    var d = function(x, y) {
+        var canvas = tm.graphics.Canvas("#c");
+
+        canvas.resize(120, 80); //.fitWindow();
+        canvas.globalCompositeOperation = "lighter";
+
+        for (var i = 0; i < 50; i++) {
+            var cx = (Math.rand(40-15, 40+15) + Math.rand(40-15, 40+15)) / 2;
+            var cy = (Math.rand(40-15, 40+15) + Math.rand(40-15, 40+15)) / 2;
+            var rd = Math.rand(10, 20);
+            canvas.fillStyle = tm.graphics.RadialGradient(cx, cy, 0, cx, cy, rd*1.2).addColorStopList([
+                { offset: 0.00, color: col0[y] },
+                { offset: 0.20, color: col0[y] },
+                { offset: 1.00, color: col1[y] },
+            ]).toStyle();
+            canvas.fillStar(cx, cy, rd, 8, 0.4);
+
+            var cx = (Math.rand(60-15, 60+15) + Math.rand(60-15, 60+15)) / 2;
+            var cy = (Math.rand(40-15, 40+15) + Math.rand(40-15, 40+15)) / 2;
+            var rd = Math.rand(15, 30);
+            canvas.fillStyle = tm.graphics.RadialGradient(cx, cy, 0, cx, cy, rd*1.2).addColorStopList([
+                { offset: 0.00, color: col0[y] },
+                { offset: 0.20, color: col0[y] },
+                { offset: 1.00, color: col1[y] },
+            ]).toStyle();
+            canvas.fillStar(cx, cy, rd, 8, 0.4);
+
+            var cx = (Math.rand(80-15, 80+15) + Math.rand(80-15, 80+15)) / 2;
+            var cy = (Math.rand(40-15, 40+15) + Math.rand(40-15, 40+15)) / 2;
+            var rd = Math.rand(10, 20);
+            canvas.fillStyle = tm.graphics.RadialGradient(cx, cy, 0, cx, cy, rd*1.2).addColorStopList([
+                { offset: 0.00, color: col0[y] },
+                { offset: 0.20, color: col0[y] },
+                { offset: 1.00, color: col1[y] },
+            ]).toStyle();
+            canvas.fillStar(cx, cy, rd, 8, 0.4);
+        }
+
+        out.drawImage(canvas.element, 120*x, 80*y);
+    };
+
+    for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+            d(j, i);
+        }
+    }
+
+    out.saveAsImage();
+});
+</script>
+</head>
+<body style="background:black">
+<canvas id="c"></canvas>
+<canvas id="out"></canvas>
+</body>
+</html>
