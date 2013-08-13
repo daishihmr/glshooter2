@@ -1,6 +1,7 @@
 rm -f target/gls2.js
 
 java -jar tools/compiler.jar \
+--define DEBUG=false \
 --externs libs/tmlib.js \
 --externs extern/extern.js \
 --js libs/bulletml.js \

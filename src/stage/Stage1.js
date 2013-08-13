@@ -111,16 +111,18 @@ gls2.Stage1 = tm.createClass(
         this.seq.add(100, "komachi-0");
         this.seq.add(100, "komachi-1");
 
-        this.seq.add(600, function() {
-            this.gameScene.ground.speed = 1;
-            this.frame = 0;
-        });
+        if (DEBUG) {
+            this.seq.add(600, function() {
+                this.gameScene.ground.speed = 1;
+                this.frame = 0;
+            });
+        }
 
     },
 
     setupBackground: function() {
         this.gameScene.ground.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-            { offset:0, color:"hsl(230,50%,45%)" },
+            { offset:0, color:"hsl(230,50%,30%)" },
             { offset:1, color:"hsl(230,50%,15%)" },
         ]).toStyle();
     },

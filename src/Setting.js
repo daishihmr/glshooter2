@@ -209,6 +209,7 @@ gls2.Setting = {
      * @const
      */
     AUTO_BOMB_TO_ZERO: true,
+
 };
 
 })();
