@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 // すべてsingletonかつimmutableに実装する
 (function() {
 

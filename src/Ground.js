@@ -1,3 +1,7 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 (function() {
 
 /** @const */

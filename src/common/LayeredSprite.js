@@ -1,3 +1,7 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
 (function() {
 
 gls2.LayeredSprite = tm.createClass({
@@ -8,5 +12,5 @@ gls2.LayeredSprite = tm.createClass({
     },
 
 });
-    
+
 })();

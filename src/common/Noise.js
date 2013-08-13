@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 gls2.Noise = {
     generate: function(dataSize) {
         var interpolation = function(a, b, ratio) {

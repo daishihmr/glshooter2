@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 /** @class */
 gls2.ShipSelectScene = tm.createClass(
 /** @lends {gls2.ShipSelectScene.prototype} */

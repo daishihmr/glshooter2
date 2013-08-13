@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 (function() {
 
 var $s = gls2.EnemySoft;

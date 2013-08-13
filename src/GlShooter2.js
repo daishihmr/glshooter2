@@ -1,3 +1,8 @@
+/*
+ * License
+ * http://daishihmr.mit-license.org/
+ */
+
 /** @const */
 var SC_W = 480;
 /** @const */
@@ -65,14 +70,14 @@ gls2.GlShooter2 = tm.createClass(
                 "bomb": "assets/bomb.png",
 
                 // bgm
-                "bgm1": "assets/nc54073.mp3",
+                "bgm1": "assets2/nc54073.mp3",
 
                 // sound
-                "sound/explode": "assets/sen_ge_taihou03.mp3",
-                "sound/explode2": "assets/sen_ge_bom13.mp3",
-                "sound/explode3": "assets/sen_ge_bom02.mp3",
-                "sound/star": "assets/se_maoudamashii_system24.mp3",
-                "sound/bomb": "assets/sen_ge_bom17.mp3",
+                "sound/explode": "assets2/sen_ge_taihou03.mp3",
+                "sound/explode2": "assets2/sen_ge_bom13.mp3",
+                "sound/explode3": "assets2/sen_ge_bom02.mp3",
+                "sound/star": "assets2/se_maoudamashii_system24.mp3",
+                "sound/bomb": "assets2/sen_ge_bom17.mp3",
 
                 // voice
                 "sound/voHyperReady": "assets/vo_hyper_ready.mp3",
