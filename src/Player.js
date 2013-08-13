@@ -198,7 +198,7 @@ gls2.Player = tm.createClass(
 
     update: function(app) {
         if (this.muteki) {
-            this.visible = app.frame % 2 === 0;
+            this.visible = (app.frame/2) % 2 === 0;
         } else {
             this.visible = true;
         }

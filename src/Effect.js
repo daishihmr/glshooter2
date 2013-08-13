@@ -303,7 +303,7 @@ gls2.ChargeEffect = tm.createClass({
         }
         this.angle += 0.05;
         this.rad += this.reverse ? 4 : -4;
-        this.alpha += this.reverse ? -0.01 : 0.05;
+        this.alpha += this.reverse ? -0.02 : 0.05;
         if (this.rad < 0 || 200 < this.rad) this.remove();
     },
 

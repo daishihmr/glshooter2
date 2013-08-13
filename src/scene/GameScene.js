@@ -832,10 +832,8 @@ gls2.GameScene.LabelLayer = tm.createClass({
     },
     drawHyperGauge: function(canvas) {
         if (this.gameScene.hyperGauge === 1) {
-            if (this.frame % 2 === 0) {
-                canvas.fillStyle = "rgba(255,255,255,0.6)";
-                canvas.fillRect(5, SC_H-12, 200, 9);
-            }
+            canvas.fillStyle = (this.frame % 2 === 0) ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,1.0)";
+            canvas.fillRect(5, SC_H-12, 200, 9);
         } else {
             canvas.fillStyle = "rgba(255,255,0,0.3)";
             canvas.fillRect(5, SC_H-12, 200, 9);

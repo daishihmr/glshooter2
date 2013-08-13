@@ -3,13 +3,13 @@
 
 var data = {
     //name         hp     score   ground erase  star
-    "kujo":      [     2,    300, false, false,  1 ],
-    "kiryu":     [     3,    400, false, false,  1 ],
-    "natsuki":   [     5,    900,  true, false,  1 ],
-    "kise":      [    30,   2000,  true, false,  1 ],
-    "kurokawa":  [    70,   5000, false, false,  5 ],
-    "akimoto":   [   500,  20000, false,  true, 10 ],
-    "yukishiro": [  1500, 100000, false,  true, 20 ],
+    "kujo":      [     2,      300, false, false,  1 ],
+    "kiryu":     [     3,      400, false, false,  1 ],
+    "natsuki":   [     5,      900,  true, false,  1 ],
+    "kise":      [    70,    15000,  true, false,  1 ],
+    "kurokawa":  [    70,     5000, false, false,  5 ],
+    "akimoto":   [   500,   300000, false,  true, 10 ],
+    "yukishiro": [  1500,   800000, false,  true, 20 ],
 };
 var setData = function(name, enemy) {
     enemy.name = name;
@@ -320,6 +320,10 @@ gls2.EnemyHard.Cannon = tm.createClass({
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
     },
 });
 gls2.EnemyHard.Cannon = gls2.EnemyHard.Cannon();
