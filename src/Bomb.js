@@ -63,6 +63,8 @@ gls2.Bomb = tm.createClass({
             this.gameScene.bomb -= 1;
             this.gameScene.endHyperMode();
             this.gameScene.println("drop BOMBER!!", true);
+            gls2.playSound("bomb");
+            gls2.playSound("voBomb");
         });
         this.addEventListener("removed", function() {
             this.gameScene.isBombActive = false;

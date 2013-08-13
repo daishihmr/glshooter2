@@ -5,7 +5,7 @@ gls2.Noise = {
             return a*(1-f) + b*f;
         };
         var createLayer = function(interval) {
-            if (interval < 1) { 
+            if (interval < 1) {
                 return null;
             }
 
@@ -51,5 +51,3 @@ gls2.Noise = {
         return result;
     }
 };
-
-gls2.Noise.noise = gls2.Noise.generate(512);

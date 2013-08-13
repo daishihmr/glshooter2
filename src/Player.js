@@ -64,7 +64,7 @@ gls2.Player = tm.createClass(
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
-        this.boundingRadius = 2;
+        this.boundingRadius = 3;
         this.altitude = 10;
 
         this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type, 100);

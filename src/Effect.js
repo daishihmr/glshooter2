@@ -5,6 +5,8 @@ gls2.Effect.setup = function() {
 
     noise = gls2.Noise.generate(256);
 
+    gls2.effectSprite = {};
+
     gls2.Effect["explosion"] = Array.range(0, 2).map(function(i) {
         return tm.app.AnimationSprite(tm.app.SpriteSheet({
             image: "explode" + i,
@@ -20,6 +22,21 @@ gls2.Effect.setup = function() {
             },
         }, 100, 100));
     });
+
+    gls2.effectSprite["explodeL"] = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        image: "explodeL",
+        frame: {
+            width: 100,
+            height: 100,
+        },
+        animations: {
+            "default": {
+                frame: Array.range(0, 64),
+                next: null,
+                frequency: 3,
+            },
+        },
+    }, 100, 100));
 
     gls2.Effect["shockwaveImage"] = tm.graphics.Canvas()
         .resize(100, 100)
@@ -125,7 +142,7 @@ gls2.Effect.genShockwaveL = function(x, y, scene) {
 };
 
 gls2.Effect.explodeS = function(x, y, scene, vector) {
-    gls2.playSound("soundExplode");
+    gls2.playSound("explode");
     var e = gls2.Effect["explosion"].random()
         .clone()
         .addEventListener("animationend", function() {
@@ -150,7 +167,7 @@ gls2.Effect.explodeS = function(x, y, scene, vector) {
 };
 
 gls2.Effect.explodeGS = function(x, y, scene) {
-    gls2.playSound("soundExplode");
+    gls2.playSound("explode");
     var e = gls2.Effect["explosion"].random()
         .clone()
         .addEventListener("animationend", function() {
@@ -211,8 +228,8 @@ gls2.Effect.explodeGS = function(x, y, scene) {
 var noise;
 
 gls2.Effect.explodeM = function(x, y, scene) {
-    gls2.playSound("soundExplode2");
-    gls2.playSound("soundExplode3");
+    gls2.playSound("explode2");
+    gls2.playSound("explode3");
     var count = 20;
     var offset = ~~(Math.random() * gls2.Noise.noise.length);
     for (var i = 0; i < count; i++) {
@@ -240,31 +257,41 @@ gls2.Effect.explodeM = function(x, y, scene) {
 };
 
 gls2.Effect.explodeL = function(x, y, scene) {
-    gls2.playSound("soundExplode2");
-    gls2.playSound("soundExplode3");
-    var count = 60;
+    gls2.playSound("explode2");
+    gls2.playSound("explode3");
+    var count = 40;
     var offset = ~~(Math.random() * gls2.Noise.noise.length);
     for (var i = 0; i < count; i++) {
-        var e = gls2.Effect["explosion"].random()
-            .clone()
-            .addEventListener("animationend", function() {
-                this.remove();
-            })
-            .addEventListener("enterframe", function() {
-                this.x += Math.cos(this.a) * this.v;
-                this.y += Math.sin(this.a) * this.v;
-                this.scaleX += 0.01;
-                this.scaleY += 0.01;
-            })
-            .setScale(1.0)
-            .setBlendMode(i%2===0 ? "source-over" : "lighter")
-            .setPosition(x, y)
-            .gotoAndPlay();
-        e.a = (Math.PI*2 * i/count)
+        var a = (Math.PI*2 * i/count)
         var idx = ~~(gls2.Noise.noise.length * i/count) + offset;
-        e.v = Math.pow(gls2.Noise.noise.at(idx), 3) * 10;
-        e.isEffect = true;
-        e.addChildTo(scene);
+        var v = Math.pow(gls2.Noise.noise.at(idx), 2);
+        for (var j = 0; j < 4; j++) {
+            var ev = v * (j+1) * 5;
+            var e = gls2.effectSprite["explodeL"]
+                .clone()
+                .addEventListener("animationend", function() {
+                    this.remove();
+                })
+                .addEventListener("enterframe", function() {
+                    this.x += Math.cos(this.a) * this.v;
+                    this.y += Math.sin(this.a) * this.v;
+                    this.scaleX += 0.01;
+                    this.scaleY += 0.01;
+                    if (this.age > 32) this.blendMode = "source-over";
+                    this.age += 1;
+                })
+                .setScale(0.3 * (5-j))
+                .setBlendMode("lighter")
+                .setPosition(x, y)
+                .gotoAndPlay();
+            e.rotation = Math.random() * Math.PI*2;
+            e.isEffect = true;
+            e.alpha = 0.5;
+            e.age = 0;
+            e.a = a;
+            e.v = ev;
+            e.addChildTo(scene);
+        }
     }
 };
 

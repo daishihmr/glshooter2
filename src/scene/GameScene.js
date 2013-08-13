@@ -145,6 +145,10 @@ gls2.GameScene = tm.createClass(
     update: function(app) {
         // this.record(app.keyboard);
 
+        if (app.frame % 500 === 0) {
+            gls2.Noise.noise = gls2.Noise.generate(512);
+        }
+
         this.stage.update(app.frame);
         if (this.isHyperMode) {
             this.hyperTime -= 1;
@@ -186,6 +190,7 @@ gls2.GameScene = tm.createClass(
         if (app.keyboard.getKeyDown("escape")) {
             // タイトル画面に戻る
             this.app.replaceScene(gls2.TitleScene());
+            gls2.stopBgm();
         } else if (app.keyboard.getKeyDown("space")) {
             // ポーズ
             this.openPauseMenu(0);
@@ -209,7 +214,6 @@ gls2.GameScene = tm.createClass(
         if (this.player.controllable === false) {
             gls2.Danmaku.erase();
         }
-
 
         /** @type {Array.<gls2.Enemy>} */
         var enemies;
@@ -255,7 +259,7 @@ gls2.GameScene = tm.createClass(
                     } else {
                         this.addCombo(0.01);
                         this.comboGauge = Math.max(this.comboGauge, 0.05);
-                        this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT);
+                        if (this.isHyperMode === false) this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT);
                     }
                     laser.genParticle(2);
                     break;
@@ -313,6 +317,7 @@ gls2.GameScene = tm.createClass(
             var shotBullets = [].concat(gls2.ShotBullet.activeList);
             for (var s = shotBullets.length; shotBullets[--s] !== undefined;) {
                 var shot = shotBullets[s];
+                if (shot.hp <= 0) continue;
                 var bullets = [].concat(gls2.Bullet.activeList);
                 for (var b = bullets.length; bullets[--b] !== undefined;) {
                     var bullet = bullets[b];
@@ -370,13 +375,18 @@ gls2.GameScene = tm.createClass(
     },
 
     onEnemyDestroy: function(enemy) {
-        this.generateStar(enemy.isGround, gls2.distanceSq(e,this.player)<gls2.Setting.CROSS_RANGE, enemy.x, enemy.y, enemy.star);
+        this.generateStar(
+            enemy.isGround,
+            this.isHyperMode || gls2.distanceSq(enemy,this.player) < gls2.Setting.CROSS_RANGE,
+            enemy.x,
+            enemy.y,
+            enemy.star
+        );
 
         this.addCombo(1);
         if (!this.isHyperMode && this.hyperGauge === 1) {
-            var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
             var base = this.baseScore;
-            for (;bonus>0; bonus--) {
+            for (var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1); bonus > 0; bonus--) {
                 base += enemy.score
                 this.addScore(base);
             }
@@ -395,15 +405,16 @@ gls2.GameScene = tm.createClass(
     },
 
     onGetStar: function(star) {
+        gls2.playSound("star");
         if (star.large) {
             this.starItemLarge += 1;
             this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE);
-            this.addScore(this.baseScore);
+            this.addScore(this.baseScore * 0.4);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE_LARGE;
         } else {
             this.starItem += 1;
             this.addScore(gls2.Setting.STAR_ITEM_SCORE);
-            this.addScore(this.baseScore);
+            this.addScore(this.baseScore * 0.2);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE;
         }
     },
@@ -426,14 +437,12 @@ gls2.GameScene = tm.createClass(
         gls2.Enemy.clearAll();
         gls2.ShotBullet.clearAll();
         gls2.Danmaku.clearAll();
-        var copied = [].concat(this.effectLayer0.children);
-        for (var i = 0; i < copied.length; i++) {
-            copied[i].remove();
-        }
-        copied = [].concat(this.effectLayer1.children);
-        for (var i = 0; i < copied.length; i++) {
-            copied[i].remove();
-        }
+
+        this.groundLayer.clear();
+        this.effectLayer0.clear();
+        this.effectLayer1.clear();
+        this.playerLayer.clear();
+        this.bulletLayer.clear();
 
         this.player = gls2.Player(this, playerType);
         this.startStage(0);
@@ -448,7 +457,14 @@ gls2.GameScene = tm.createClass(
         this.comboCount = 0;
         this.comboGauge = 0;
         this.maxComboCount = 0;
-        this.hyperRank = 0;
+        this.starItem = 0;
+        this.starItemLarge = 0;
+        this.enemyCount = 0;
+        this.killCount = 0;
+
+        // TODO ステージ開始時にランクリセット？
+        // this.hyperRank = 0;
+        // bulletml.Bullet.globalScope["$rank"] = 0;
 
         this.stage = gls2.Stage.create(this, stageNumber);
         this.tweener.clear().wait(1000).call(function() {
@@ -509,6 +525,7 @@ gls2.GameScene = tm.createClass(
     gameContinue: function() {
         this.println("System rebooted.", true);
 
+        this.score = 0;
         this.zanki = gls2.Setting.INITIAL_ZANKI;
         this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
         this.hyperRank = 0;
@@ -523,6 +540,7 @@ gls2.GameScene = tm.createClass(
 
     gameOver: function() {
         // ゲームオーバー画面へ
+        gls2.stopBgm();
         this.app.replaceScene(gls2.GameOverScene());
     },
 
@@ -565,6 +583,7 @@ gls2.GameScene = tm.createClass(
                 this.println("HYPER SYSTEM, stand by.", true);
             }
             gls2.ChargeEffect(this.player).addChildTo(this);
+            gls2.playSound("voHyperReady");
         } else if (this.hyperGauge === 0) {
             this.endHyperMode();
         }
@@ -573,19 +592,21 @@ gls2.GameScene = tm.createClass(
     startHyperMode: function() {
         if (Math.random() < 0.5) {
             this.println("HYPER SYSTEM start!!", true);
+            gls2.playSound("voHyperStart0");
         } else {
             this.println("start counting to system limit.", true);
+            gls2.playSound("voHyperStart1");
         }
 
         this.isHyperMode = true;
         this.hyperGauge = 0;
 
         this.hyperRank = gls2.math.clamp(this.hyperRank + 1, 0, 5);
-        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]+this.hyperRank*0.01, 0, 1);
+        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]+this.hyperRank*0.02, 0, 1);
         bulletml.Bullet.globalScope["$hyperOff"] = gls2.Setting.ENEMY_ATTACK_INTERVAL_RATE_HYPER;
 
         this.hyperTime = gls2.Setting.HYPERMODE_TIME;
-        this.hyperMutekiTime = gls2.Setting.HYPERMODE_START_MUTEKI_TIME;
+        this.hyperMutekiTime = gls2.Setting.HYPERMODE_TIME * gls2.Setting.HYPERMODE_START_MUTEKI_TIME;
 
         this.player.currentShotPool = this.player.hyperShotPool;
         this.player.laser.setColor("hyper");
@@ -609,7 +630,7 @@ gls2.GameScene = tm.createClass(
 
         bulletml.Bullet.globalScope["$hyperOff"] = 1.0;
 
-        this.hyperMutekiTime = gls2.Setting.HYPERMODE_END_MUTEKI_TIME;
+        this.hyperMutekiTime = gls2.Setting.HYPERMODE_TIME * gls2.Setting.HYPERMODE_END_MUTEKI_TIME;
         this.hyperTime = 0;
 
         // すべての弾を消す
@@ -627,11 +648,15 @@ gls2.GameScene = tm.createClass(
     },
 
     openPauseMenu: function(defaultValue) {
-        this.openDialogMenu("PAUSE", [ "resume", "setting", "exit game" ], this.onResultPause, defaultValue, [
-            "ゲームを再開します",
-            "設定を変更します",
-            "ゲームを中断し、タイトル画面に戻ります",
-        ], false);
+        this.openDialogMenu("PAUSE", [ "resume", "setting", "exit game" ], this.onResultPause, {
+            "defaultValue": defaultValue,
+            "menuDescriptions": [
+                "ゲームを再開します",
+                "設定を変更します",
+                "ゲームを中断し、タイトル画面に戻ります",
+            ],
+            "showExit": false,
+        });
     },
     onResultPause: function(result) {
         switch (result) {
@@ -647,10 +672,13 @@ gls2.GameScene = tm.createClass(
     },
 
     openSetting: function() {
-        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume" ], this.onResultSetting, this.lastSetting, [
-            "BGMボリュームを設定します",
-            "効果音ボリュームを設定します",
-        ]);
+        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume" ], this.onResultSetting, {
+            "defaultValue": this.lastSetting,
+            "menuDescriptions": [
+                "BGMボリュームを設定します",
+                "効果音ボリュームを設定します",
+            ],
+        });
     },
     onResultSetting: function(result) {
         if (result !== 3) this.lastSetting = result;
@@ -668,13 +696,18 @@ gls2.GameScene = tm.createClass(
     },
 
     openConfirmExitGame: function() {
-        this.openDialogMenu("REARY?", [ "yes", "no" ], this.onResultConfirmExitGame, 1, [
-            "ゲームを中断し、タイトル画面に戻ります",
-            "前の画面へ戻ります",
-        ], false);
+        this.openDialogMenu("REARY?", [ "yes", "no" ], this.onResultConfirmExitGame, {
+            "defaultValue": 1,
+            "menuDescriptions": [
+                "ゲームを中断し、タイトル画面に戻ります",
+                "前の画面へ戻ります",
+            ],
+            "showExit": false,
+        });
     },
     onResultConfirmExitGame: function(result) {
         if (result === 0) {
+            gls2.stopBgm();
             this.app.replaceScene(gls2.TitleScene());
         } else {
             this.openPauseMenu(1);
@@ -682,7 +715,13 @@ gls2.GameScene = tm.createClass(
     },
 
     openBgmSetting: function() {
-        this.openDialogMenu("BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultBgmSetting, gls2.core.bgmVolume);
+        this.openDialogMenu("BGM VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultBgmSetting, {
+            "defaultValue": gls2.core.bgmVolume,
+            "onCursorMove": function(s) {
+                if (gls2.currentBgm !== null && s !== 6) gls2.currentBgm.volume = s*0.1;
+            },
+            "showExit": false,
+        });
     },
     onResultBgmSetting: function(result) {
         if (result !== 6) gls2.core.bgmVolume = result;
@@ -690,7 +729,10 @@ gls2.GameScene = tm.createClass(
     },
 
     openSeSetting: function() {
-        this.openDialogMenu("SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultSeSetting, gls2.core.seVolume);
+        this.openDialogMenu("SE VOLUME", [ "0", "1", "2", "3", "4", "5" ], this.onResultSeSetting, {
+            "defaultValue": gls2.core.seVolume,
+            "showExit": false,
+        });
     },
     onResultSeSetting: function(result) {
         if (result !== 6) {
@@ -700,10 +742,14 @@ gls2.GameScene = tm.createClass(
     },
 
     openContinueMenu: function() {
-        this.openDialogMenu("CONTINUE?", [ "yes", "no" ], this.onResultContinue, 0, [
-            "システムを再起動して出撃します",
-            "作戦失敗。退却します",
-        ], false);
+        this.openDialogMenu("CONTINUE?", [ "yes", "no" ], this.onResultContinue, {
+            "defaultValue": 0,
+            "menuDescriptions": [
+                "システムを再起動して出撃します",
+                "作戦失敗。退却します",
+            ],
+            "showExit": false,
+        });
     },
     onResultContinue: function(result) {
         switch (result) {
@@ -803,7 +849,13 @@ gls2.GameScene.Layer = tm.createClass({
     superClass: tm.app.Object2D,
     init: function() {
         this.superInit();
-    }
+    },
+    clear: function() {
+        var temp = [].concat(this.children);
+        for (var i = 0; i < temp.length; i++) {
+            this.removeChild(temp[i]);
+        }
+    },
 });
 
 gls2.GameScene.LabelLayer = tm.createClass({
@@ -832,8 +884,10 @@ gls2.GameScene.LabelLayer = tm.createClass({
     },
     drawHyperGauge: function(canvas) {
         if (this.gameScene.hyperGauge === 1) {
-            canvas.fillStyle = (this.frame % 2 === 0) ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,1.0)";
-            canvas.fillRect(5, SC_H-12, 200, 9);
+            if (this.frame % 2 === 0) {
+                canvas.fillStyle = "rgba(255,255,255,0.8)";
+                canvas.fillRect(5, SC_H-12, 200, 9);
+            }
         } else {
             canvas.fillStyle = "rgba(255,255,0,0.3)";
             canvas.fillRect(5, SC_H-12, 200, 9);

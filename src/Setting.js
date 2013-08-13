@@ -24,7 +24,7 @@ gls2.Setting = {
      * ハイパーショットの攻撃力
      * @const
      */
-    HYPER_SHOT_ATTACK_POWER: 2,
+    HYPER_SHOT_ATTACK_POWER: 1,
 
     /**
      * レーザーの攻撃力
@@ -102,19 +102,19 @@ gls2.Setting = {
      * ハイパーモード継続時間
      * @const
      */
-    HYPERMODE_TIME: 800,
+    HYPERMODE_TIME: 600,
 
     /**
      * ハイパーモード起動時の無敵時間
      * @const
      */
-    HYPERMODE_START_MUTEKI_TIME: 200,
+    HYPERMODE_START_MUTEKI_TIME: 0.75,
 
     /**
      * ハイパーモード終了時の無敵時間
      * @const
      */
-    HYPERMODE_END_MUTEKI_TIME: 120,
+    HYPERMODE_END_MUTEKI_TIME: 0.25,
 
     /**
      * ハイパーモード中のコンボ数増加倍率
@@ -192,7 +192,7 @@ gls2.Setting = {
      * 敵弾のHP
      * @const
      */
-    BULLET_HP: 20,
+    BULLET_HP: 50,
 
     /**
      * ショットのHP
@@ -204,7 +204,7 @@ gls2.Setting = {
      * オートボム発動時に残ボム数をすべて消費するか
      * @const
      */
-    AUTO_BOMB_TO_ZERO: false,
+    AUTO_BOMB_TO_ZERO: true,
 };
 
 })();

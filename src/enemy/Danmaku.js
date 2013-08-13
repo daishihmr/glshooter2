@@ -159,13 +159,13 @@ gls2.Danmaku["komachi-1"] = new bulletml.Root({
         $.repeat(70, [
             $.fire($.direction(0), $spd3(0), $.bullet({ball:true,frame:0}), $.offsetX(-110), $.autonomy(true)),
             $.repeat(3, [
-                $interval(3),
+                $.wait(3),
                 $.fire($.direction(0, "sequence"), $spd3(0), $.bullet({ball:true,frame:0}), $.offsetX(-110), $.autonomy(true)),
             ]),
             $interval(10),
             $.fire($.direction(0), $spd3(0), $.bullet({ball:true,frame:0}), $.offsetX(+110), $.autonomy(true)),
             $.repeat(3, [
-                $interval(3),
+                $.wait(3),
                 $.fire($.direction(0, "sequence"), $spd3(0), $.bullet({ball:true,frame:0}), $.offsetX(+110), $.autonomy(true)),
             ]),
             $interval(10),

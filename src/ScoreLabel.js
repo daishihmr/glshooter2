@@ -73,6 +73,12 @@ gls2.ScoreLabel = tm.createClass(
 
         this.consoleWindow.update();
         this.consoleWindow.draw(this);
+
+        // debug
+        this.setText("bold 20px Orbitron", "right", "bottom");
+        this.strokeText(this.gameScene.killCount + "/" + this.gameScene.enemyCount, SC_W-30, SC_H);
+        this.strokeText("S:" + this.gameScene.starItem + " L:" + this.gameScene.starItemLarge, SC_W-30, SC_H - 25);
+
     },
 
 });

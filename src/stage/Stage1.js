@@ -13,6 +13,7 @@ gls2.Stage1 = tm.createClass(
         this.superInit(gameScene);
 
         this.seq.add(  0, function() {
+            gls2.playBgm("bgm1"),
             this.gameScene.ground.direction = Math.PI*0.5;
             this.gameScene.ground.speed = 1;
         });
@@ -100,15 +101,23 @@ gls2.Stage1 = tm.createClass(
         this.seq.add( 50, "heri2-right");
         this.seq.add( 60, "heri1-center");
 
+        this.seq.add(  1, function() {
+            this.gameScene.ground.tweener.clear().to({speed:1}, 2000, "easeInOutQuad");
+        });
         this.seq.add(100, "komachi-0");
         this.seq.add(100, "komachi-1");
+
+        this.seq.add(600, function() {
+            this.gameScene.ground.speed = 1;
+            this.frame = 0;
+        });
 
     },
 
     setupBackground: function() {
         this.gameScene.ground.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
             { offset:0, color:"hsl(230,50%,45%)" },
-            { offset:1, color:"hsl(230,50%,25%)" },
+            { offset:1, color:"hsl(230,50%,15%)" },
         ]).toStyle();
     },
 
