@@ -3,13 +3,13 @@
 
 var data = {
     //name         hp     score   ground erase  star
-    "kujo":      [     2,    100, false, false,  1 ],
-    "kiryu":     [     3,    300, false, false,  1 ],
-    "natsuki":   [     5,    300,  true, false,  1 ],
-    "kise":      [    30,    300,  true, false,  1 ],
-    "kurokawa":  [    70,   3000, false, false,  5 ],
-    "akimoto":   [   500,  10000, false,  true, 10 ],
-    "yukishiro": [  1500,  50000, false,  true, 20 ],
+    "kujo":      [     2,    300, false, false,  1 ],
+    "kiryu":     [     3,    400, false, false,  1 ],
+    "natsuki":   [     5,    900,  true, false,  1 ],
+    "kise":      [    30,   2000,  true, false,  1 ],
+    "kurokawa":  [    70,   5000, false, false,  5 ],
+    "akimoto":   [   500,  20000, false,  true, 10 ],
+    "yukishiro": [  1500, 100000, false,  true, 20 ],
 };
 var setData = function(name, enemy) {
     enemy.name = name;

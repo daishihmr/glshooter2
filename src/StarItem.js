@@ -13,6 +13,7 @@ gls2.StarItem = tm.createClass(
     large: false,
     gameScene: null,
     player: null,
+    isGround: false,
 
     grub: false,
 
@@ -82,6 +83,7 @@ gls2.StarItemSky = tm.createClass(
 /** @lends {gls2.StarItemSky.prototype} */
 {
     superClass: gls2.StarItem,
+    isGround: false,
     init: function(large) {
         this.superInit(large);
     },
@@ -100,6 +102,7 @@ gls2.StarItemGround = tm.createClass(
 /** @lends {gls2.StarItemGround.prototype} */
 {
     superClass: gls2.StarItem,
+    isGround: true,
     init: function(large) {
         this.superInit(large);
     },

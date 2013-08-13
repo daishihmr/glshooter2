@@ -35,6 +35,7 @@ gls2.GameScene = tm.createClass(
     starItem: 0,
     /** ステージ中の星アイテム（大）ゲット数 */
     starItemLarge: 0,
+
     /** 撃墜数 */
     killCount: 0,
     /** 出現敵数 */
@@ -226,19 +227,8 @@ gls2.GameScene = tm.createClass(
                     shot.remove();
                     if (e.damage(this.isHyperMode ? gls2.Setting.HYPER_SHOT_ATTACK_POWER : gls2.Setting.SHOT_ATTACK_POWER)) {
                         this.killCount += 1;
-
                         if (this.isHyperMode === false) this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_SHOT);
-
-                        this.generateStar(e.isGround, gls2.distanceSq(e,this.player)<gls2.Setting.CROSS_RANGE, e.x, e.y, e.star);
-
-                        this.addCombo(1);
-                        if (!this.isHyperMode && this.hyperGauge === 1) {
-                            var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
-                            this.addScore(this.baseScore + e.score*bonus);
-                        } else {
-                            this.addScore(this.baseScore + e.score);
-                        }
-                        this.baseScore += e.score;
+                        this.onEnemyDestroy(e);
                         break;
                     }
                 }
@@ -260,19 +250,8 @@ gls2.GameScene = tm.createClass(
                     laser.setHitY(e.y + e.boundingHeightBottom);
                     if (e.damage(this.isHyperMode ? gls2.Setting.HYPER_LASER_ATTACK_POWER : gls2.Setting.LASER_ATTACK_POWER)) {
                         this.killCount += 1;
-
-                        this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER);
-
-                        this.generateStar(e.isGround, gls2.distanceSq(e,this.player)<gls2.Setting.CROSS_RANGE, e.x, e.y, e.star);
-
-                        this.addCombo(1);
-                        if (!this.isHyperMode && this.hyperGauge === 1) {
-                            var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
-                            this.addScore(this.baseScore + e.score*bonus);
-                        } else {
-                            this.addScore(this.baseScore + e.score);
-                        }
-                        this.baseScore += e.score;
+                        if (this.isHyperMode === false) this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER);
+                        this.onEnemyDestroy(e);
                     } else {
                         this.addCombo(0.01);
                         this.comboGauge = Math.max(this.comboGauge, 0.05);
@@ -298,19 +277,8 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(e, aura)) {
                     if(e.damage(this.isHyperMode ? gls2.Setting.HYPER_AURA_ATTACK_POWER : gls2.Setting.AURA_ATTACK_POWER)) {
                         this.killCount += 1;
-
                         this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA);
-
-                        this.generateStar(e.isGround, gls2.distanceSq(e,this.player)<gls2.Setting.CROSS_RANGE, e.x, e.y, e.star);
-
-                        this.addCombo(1);
-                        if (!this.isHyperMode && this.hyperGauge === 1) {
-                            var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
-                            this.addScore(this.baseScore + e.score*bonus);
-                        } else {
-                            this.addScore(this.baseScore + e.score);
-                        }
-                        this.baseScore += e.score;
+                        this.onEnemyDestroy(e);
                     } else {
                         this.addCombo(0.01);
                         this.comboGauge = Math.max(this.comboGauge, 0.05);
@@ -401,10 +369,42 @@ gls2.GameScene = tm.createClass(
         }
     },
 
+    onEnemyDestroy: function(enemy) {
+        this.generateStar(enemy.isGround, gls2.distanceSq(e,this.player)<gls2.Setting.CROSS_RANGE, enemy.x, enemy.y, enemy.star);
+
+        this.addCombo(1);
+        if (!this.isHyperMode && this.hyperGauge === 1) {
+            var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+            var base = this.baseScore;
+            for (;bonus>0; bonus--) {
+                base += enemy.score
+                this.addScore(base);
+            }
+            this.baseScore += enemy.score*bonus;
+        } else {
+            this.addScore(this.baseScore + enemy.score);
+            this.baseScore += enemy.score;
+        }
+    },
+
     generateStar: function(ground, large, x, y, count) {
         var s = ground ? gls2.StarItemGround : gls2.StarItemSky;
         for (var i = 0; i < count; i++) {
             s(large).setPosition(x, y);
+        }
+    },
+
+    onGetStar: function(star) {
+        if (star.large) {
+            this.starItemLarge += 1;
+            this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE);
+            this.addScore(this.baseScore);
+            this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE_LARGE;
+        } else {
+            this.starItem += 1;
+            this.addScore(gls2.Setting.STAR_ITEM_SCORE);
+            this.addScore(this.baseScore);
+            this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE;
         }
     },
 
@@ -620,16 +620,6 @@ gls2.GameScene = tm.createClass(
         // TODO エクステンドエフェクト
         this.println("extended.");
         this.zanki += 1;
-    },
-
-    onGetStar: function(star) {
-        if (star.large) {
-            this.starItemLarge += 1;
-            this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE * this.comboCount);
-        } else {
-            this.starItem += 1;
-            this.addScore(gls2.Setting.STAR_ITEM_SCORE * this.comboCount);
-        }
     },
 
     println: function(string, intercept) {
