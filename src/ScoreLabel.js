@@ -55,7 +55,7 @@ gls2.ScoreLabel = tm.createClass(
         this.fillText(text, SC_W*0.4, 22);
 
         this.setText("bold 18px Orbitron", "left", "top");
-        this.strokeText("rank " + ~~(bulletml.Bullet.globalScope["$rank"]*100), 10, 75);
+        this.strokeText("rank " + ~~(bulletml.Walker.globalScope["$rank"]*100), 10, 75);
         // this.strokeText("hyper level " + this.gameScene.hyperRank, 10, 105);
 
         this.setText("bold 18px Orbitron", "left", "top");

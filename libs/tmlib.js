@@ -10350,9 +10350,6 @@ tm.app = tm.app || {};
         {
             console.assert(this.parent);
             this.parent.removeChild(this);
-
-            this.parent = null;
-            
             return this;
         },
         

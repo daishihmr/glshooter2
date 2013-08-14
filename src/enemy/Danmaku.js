@@ -250,9 +250,9 @@ gls2.Danmaku.setup = function() {
     config.speedRate = 4;
 
     // ランク
-    bulletml.Bullet.globalScope["$rank"] = 0;
+    bulletml.Walker.globalScope["$rank"] = 0;
     // ハイパー？
-    bulletml.Bullet.globalScope["$hyperOff"] = 1.0;
+    bulletml.Walker.globalScope["$hyperOff"] = 1.0;
 };
 /**
  * エフェクト付きの弾幕全消し

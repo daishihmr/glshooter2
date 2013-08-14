@@ -349,7 +349,7 @@ gls2.GameScene = tm.createClass(
                     this.player.damage();
                     if (this.bomb > 0) {
                         this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
-                        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]-0.01, 0, 1);
+                        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
                         gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                     } else {
                         this.miss();
@@ -367,7 +367,7 @@ gls2.GameScene = tm.createClass(
                     this.player.damage();
                     if (this.bomb > 0) {
                         this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
-                        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]-0.01, 0, 1);
+                        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
                         gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                     } else {
                         this.miss();
@@ -433,7 +433,7 @@ gls2.GameScene = tm.createClass(
         this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
         this.hyperGauge = 0;
         this.hyperRank = 0;
-        bulletml.Bullet.globalScope["$rank"] = 0;
+        bulletml.Walker.globalScope["$rank"] = 0;
         this.endHyperMode();
         this.isBombActive = false;
 
@@ -468,7 +468,7 @@ gls2.GameScene = tm.createClass(
 
         // TODO ステージ開始時にランクリセット？
         // this.hyperRank = 0;
-        // bulletml.Bullet.globalScope["$rank"] = 0;
+        // bulletml.Walker.globalScope["$rank"] = 0;
 
         this.stage = gls2.Stage.create(this, stageNumber);
         this.tweener.clear().wait(1000).call(function() {
@@ -511,7 +511,7 @@ gls2.GameScene = tm.createClass(
         this.comboDown = 0;
 
         this.hyperRank = gls2.math.clamp(this.hyperRank - 3, 0, 1);
-        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]-0.03, 0, 1);
+        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.03, 0, 1);
 
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
@@ -533,7 +533,7 @@ gls2.GameScene = tm.createClass(
         this.zanki = gls2.Setting.INITIAL_ZANKI;
         this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
         this.hyperRank = 0;
-        bulletml.Bullet.globalScope["$rank"] = 0;
+        bulletml.Walker.globalScope["$rank"] = 0;
 
         this.launch();
     },
@@ -606,8 +606,8 @@ gls2.GameScene = tm.createClass(
         this.hyperGauge = 0;
 
         this.hyperRank = gls2.math.clamp(this.hyperRank + 1, 0, 5);
-        bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]+this.hyperRank*0.02, 0, 1);
-        bulletml.Bullet.globalScope["$hyperOff"] = gls2.Setting.ENEMY_ATTACK_INTERVAL_RATE_HYPER;
+        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]+this.hyperRank*0.02, 0, 1);
+        bulletml.Walker.globalScope["$hyperOff"] = gls2.Setting.ENEMY_ATTACK_INTERVAL_RATE_HYPER;
 
         this.hyperTime = gls2.Setting.HYPERMODE_TIME;
         this.hyperMutekiTime = gls2.Setting.HYPERMODE_TIME * gls2.Setting.HYPERMODE_START_MUTEKI_TIME;
@@ -632,7 +632,7 @@ gls2.GameScene = tm.createClass(
         // TODO 自機タイプのよって変える
         this.player.laser.setColor("blue");
 
-        bulletml.Bullet.globalScope["$hyperOff"] = 1.0;
+        bulletml.Walker.globalScope["$hyperOff"] = 1.0;
 
         this.hyperMutekiTime = gls2.Setting.HYPERMODE_TIME * gls2.Setting.HYPERMODE_END_MUTEKI_TIME;
         this.hyperTime = 0;
