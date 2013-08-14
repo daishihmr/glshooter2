@@ -45,6 +45,9 @@ var fallDown = function() {
         .to({
             "altitude": 2,
             "y": this.y + 200,
+            "scaleX": 0.9,
+            "scaleY": 0.9,
+            "rotation": Math.rand(-10, 10),
         }, 2000)
         .call(function() {
             gls2.Effect.explodeL(this.x, this.y, this.gameScene);

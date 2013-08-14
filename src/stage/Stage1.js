@@ -109,7 +109,7 @@ gls2.Stage1 = tm.createClass(
             this.gameScene.ground.tweener.clear().to({speed:1}, 2000, "easeInOutQuad");
         });
         this.seq.add(100, "komachi-0");
-        this.seq.add(100, "komachi-1");
+        this.seq.add(160, "komachi-1");
 
         if (DEBUG) {
             this.seq.add(600, function() {

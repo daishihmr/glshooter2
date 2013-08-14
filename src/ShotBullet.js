@@ -36,7 +36,7 @@ gls2.ShotBullet = tm.createClass({
         if (color !== undefined) this.setColor(color);
     },
 
-    update: function() {
+    update: function(app) {
         this.x += this.vx;
         this.y += this.vy;
 
@@ -107,6 +107,12 @@ gls2.ShotBulletPool = tm.createClass({
                 if (idx !== -1) activeList.splice(idx, 1);
                 self.pool.push(this);
             });
+
+            if (color === 3) {
+                sb.addEventListener("enterframe", function(e) {
+                    this.scaleX = e.app.frame % 2 === 0 ? 3.0 : 2.0;
+                });
+            }
 
             this.pool.push(sb);
         }

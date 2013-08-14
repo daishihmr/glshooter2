@@ -118,8 +118,6 @@ gls2.currentBgm = null;
 gls2.playBgm = function(bgmName) {
     gls2.stopBgm();
 
-    if (gls2.core.bgmVolume === 0) return;
-
     var bgm = tm.asset.AssetManager.get(bgmName);
     if (bgm) {
         gls2.currentBgm = bgm.clone();

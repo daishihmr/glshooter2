@@ -143,10 +143,10 @@ gls2.EnemyUnit = {
 ],
 
 "komachi-0": [
-    { soft:$s.LargeFighter1, hard:$h.Komachi, x:SC_W*0.4, y:SC_H*-0.3 },
+    { soft:$s.LargeFighter1, hard:$h.Komachi, x:SC_W*0.3, y:SC_H*-0.3 },
 ],
 "komachi-1": [
-    { soft:$s.LargeFighter1, hard:$h.Komachi, x:SC_W*0.6, y:SC_H*-0.3 },
+    { soft:$s.LargeFighter1, hard:$h.Komachi, x:SC_W*0.7, y:SC_H*-0.3 },
 ],
 
 /**
