@@ -34,25 +34,25 @@ gls2.Setting = {
      * レーザーの攻撃力
      * @const
      */
-    LASER_ATTACK_POWER: 2,
+    LASER_ATTACK_POWER: 1,
 
     /**
      * ハイパーレーザーの攻撃力
      * @const
      */
-    HYPER_LASER_ATTACK_POWER: 4,
+    HYPER_LASER_ATTACK_POWER: 2,
 
     /**
      * オーラの攻撃力
      * @const
      */
-    AURA_ATTACK_POWER: 2,
+    AURA_ATTACK_POWER: 1,
 
     /**
      * ハイパーオーラの攻撃力
      * @const
      */
-    HYPER_AURA_ATTACK_POWER: 4,
+    HYPER_AURA_ATTACK_POWER: 2,
 
     /**
      * ボムの攻撃力

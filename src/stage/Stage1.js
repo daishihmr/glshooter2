@@ -22,6 +22,14 @@ gls2.Stage1 = tm.createClass(
             this.gameScene.ground.speed = 1;
         });
 
+        this.seq.add(200, function() {
+            this.gameScene.showBossLife();
+        });
+
+        this.seq.add(200, function() {
+            this.gameScene.hideBossLife();
+        });
+
         this.seq.add(200, "tankRD-center");
         this.seq.add(200, "tankRD-left");
         this.seq.add( 20, "heri1-right");

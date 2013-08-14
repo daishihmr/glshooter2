@@ -11,10 +11,10 @@ var data = {
     "kujo":      [     2,      300, false, false,  1 ],
     "kiryu":     [     3,      400, false, false,  1 ],
     "natsuki":   [     5,      900,  true, false,  1 ],
-    "kise":      [    70,    15000,  true, false,  1 ],
-    "kurokawa":  [    70,     5000, false, false,  5 ],
-    "akimoto":   [   500,   300000, false,  true, 10 ],
-    "yukishiro": [  1500,   800000, false,  true, 20 ],
+    "kise":      [    35,    15000,  true, false,  1 ],
+    "kurokawa":  [    35,     5000, false, false,  5 ],
+    "akimoto":   [   250,   300000, false,  true, 10 ],
+    "yukishiro": [   750,   800000, false,  true, 20 ],
 };
 var setData = function(name, enemy) {
     enemy.name = name;

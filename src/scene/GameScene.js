@@ -86,6 +86,9 @@ gls2.GameScene = tm.createClass(
     /** @type {gls2.ScoreLabel} */
     scoreLabel: null,
 
+    /** @type {gls2.Boss} */
+    boss: null,
+
     init: function() {
         if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
 
@@ -93,6 +96,7 @@ gls2.GameScene = tm.createClass(
         gls2.GameScene.SINGLETON = this;
 
         this.scoreLabel = gls2.ScoreLabel(this);
+        this.scoreLabel.scoreLabelElement.addChildTo(this);
 
         var g = gls2.Ground();
         this.ground = g.gElement;
@@ -138,7 +142,8 @@ gls2.GameScene = tm.createClass(
         } else if (child === this.lastElement
             || child === this.ground
             || child instanceof gls2.GameScene.Layer
-            || child instanceof gls2.GameScene.LabelLayer) {
+            || child instanceof gls2.GameScene.LabelLayer
+            || child instanceof gls2.ScoreLabelElement) {
             this.superClass.prototype.addChild.apply(this, arguments);
         } else {
             console.error("unknown type child.");
@@ -769,6 +774,30 @@ gls2.GameScene = tm.createClass(
     draw: function(canvas) {
         if (this.stage === null) return;
         // canvas.clearColor(this.ground.background, 0, 0);
+    },
+
+    showBossLife: function() {
+        this.scoreLabel.scoreLabelElement.tweener
+            .clear()
+            .to({
+                gpsOffsetX: -SC_W,
+            }, 1600, "easeInQuad")
+            .to({
+                gpsOffsetY: 22,
+            }, 800, "easeInOutQuad")
+        ;
+    },
+
+    hideBossLife: function() {
+        this.scoreLabel.scoreLabelElement.tweener
+            .clear()
+            .to({
+                gpsOffsetY: 0,
+            }, 800, "easeInOutQuad")
+            .to({
+                gpsOffsetX: 0,
+            }, 1600, "easeOutQuad")
+        ;
     },
 
     // rec: null,
