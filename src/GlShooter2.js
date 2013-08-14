@@ -71,6 +71,7 @@ gls2.GlShooter2 = tm.createClass(
 
                 // bgm
                 "bgm1": "assets2/nc54073.mp3",
+                "bgmBoss": "assets2/nc29206.mp3",
 
                 // sound
                 "sound/explode": "assets2/sen_ge_taihou03.mp3",
@@ -78,6 +79,7 @@ gls2.GlShooter2 = tm.createClass(
                 "sound/explode3": "assets2/sen_ge_bom02.mp3",
                 "sound/star": "assets2/se_maoudamashii_system24.mp3",
                 "sound/bomb": "assets2/sen_ge_bom17.mp3",
+                "sound/warning": "assets2/meka_ge_keihou06.mp3",
 
                 // voice
                 "sound/voHyperReady": "assets/vo_hyper_ready.mp3",
@@ -115,8 +117,8 @@ gls2.GlShooter2 = tm.createClass(
 });
 
 gls2.currentBgm = null;
-gls2.playBgm = function(bgmName) {
-    gls2.stopBgm();
+gls2.playBgm = function(bgmName, continuePrevBgm) {
+    if (!continuePrevBgm) gls2.stopBgm();
 
     var bgm = tm.asset.AssetManager.get(bgmName);
     if (bgm) {
@@ -136,7 +138,7 @@ gls2.fadeOutBgm = function() {
         var bgm = gls2.currentBgm;
         bgm.loop = false;
         gls2.GameScene.SINGLETON.addEventListener("enterframe", function() {
-            bgm.volume -= 0.005;
+            bgm.volume -= 0.002;
             if (bgm.volume <= 0) {
                 bgm.stop();
                 this.removeEventListener("enterframe", arguments.callee);

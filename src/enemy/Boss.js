@@ -47,11 +47,13 @@ gls2.Boss = tm.createClass(
         // TODO 形態変化
         if (this.hp <= this.hpMax*0.5 && this.hpMax*0.5 < beforeHp) {
             // HPが50%以下になった
+
         } else if (this.hp <= this.hpMax*0.25 && this.hpMax*0.25 < beforeHp) {
             // HPが25%以下になった
+
         }
     },
 
 });
-    
+
 })();

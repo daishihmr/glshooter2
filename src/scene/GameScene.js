@@ -167,7 +167,7 @@ gls2.GameScene = tm.createClass(
         }
         this.hyperMutekiTime = Math.max(this.hyperMutekiTime-1, 0);
 
-        if (app.frame % 5 === 0) this.scoreLabel.update();
+        if (app.frame % 2 === 0) this.scoreLabel.update();
 
         // コンボゲージ減少
         this.comboGauge -= gls2.Setting.COMBO_GAUGE_DECR * gls2.Setting.COMBO_GAUGE_DECR_RATE_WHEN_HYPERMODE;
@@ -470,6 +470,9 @@ gls2.GameScene = tm.createClass(
         this.starItemLarge = 0;
         this.enemyCount = 0;
         this.killCount = 0;
+
+        this.scoreLabel.scoreLabelElement.gpsOffsetX = 0;
+        this.scoreLabel.scoreLabelElement.gpsOffsetY = 0;
 
         // TODO ステージ開始時にランクリセット？
         // this.hyperRank = 0;

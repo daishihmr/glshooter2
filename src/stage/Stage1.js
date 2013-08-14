@@ -115,8 +115,48 @@ gls2.Stage1 = tm.createClass(
 
         this.seq.add(800, function() {
             gls2.fadeOutBgm();
-            // TODO WARNING表示
-            // TODO ボスBGMスタート
+
+            // WARNING表示
+            gls2.playSound("warning");
+            var warn = tm.app.Object2D().setPosition(SC_W*0.5, SC_H*0.5);
+            for (var i = -4; i <= 4; i++) {
+                for (var j = -4; j <= 4; j++) {
+                    var label = tm.app.Label("WARNING!!", 70)
+                        .setFillStyle(
+                            tm.graphics.LinearGradient(0,0,0,20).addColorStopList([
+                                { offset: 0.0, color: "hsla( 0, 100%, 50%, 0.05)" },
+                                { offset: 0.5, color: "hsla(50, 100%, 50%, 0.05)" },
+                                { offset: 1.0, color: "hsla( 0, 100%, 50%, 0.05)" },
+                            ]).toStyle()
+                        )
+                        .setBlendMode("lighter")
+                        .setPosition(i, j);
+                    label.age = 0;
+                    label.update = function() {
+                        this.alpha = Math.cos(this.age * 0.1) * -0.5 + 0.5;
+                        this.age += 1;
+                    };
+                    label.addChildTo(warn);
+                }
+            }
+
+            warn.tweener
+                .wait(3000)
+                .call(function() {
+                    // ボスBGMスタート
+                    gls2.playBgm("bgmBoss", true);
+                })
+                .wait(3000)
+
+                .call(function() {
+                    console.log(1);
+                    this.gameScene.showBossLife();
+                }.bind(this)) // TODO あとでけす
+
+                .call(function() {
+                    this.remove();
+                }.bind(warn));
+            warn.addChildTo(this.gameScene.effectLayer1);
         });
 
         // if (DEBUG) {

@@ -38,6 +38,7 @@ java -jar tools/compiler.jar \
 --js src/enemy/EnemySoft.js \
 --js src/enemy/EnemyUnit.js \
 --js src/enemy/Danmaku.js \
+--js src/enemy/Boss.js \
 --js libs/math.js \
 --compilation_level ADVANCED_OPTIMIZATIONS \
 --language_in ECMASCRIPT5 \
