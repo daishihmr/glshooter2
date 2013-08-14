@@ -418,12 +418,12 @@ gls2.GameScene = tm.createClass(
         if (star.large) {
             this.starItemLarge += 1;
             this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE);
-            this.addScore(this.baseScore * 0.4);
+            this.addScore(this.baseScore * 0.2);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE_LARGE;
         } else {
             this.starItem += 1;
             this.addScore(gls2.Setting.STAR_ITEM_SCORE);
-            this.addScore(this.baseScore * 0.2);
+            this.addScore(this.baseScore * 0.1);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE;
         }
     },
