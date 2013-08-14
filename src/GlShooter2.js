@@ -133,6 +133,19 @@ gls2.stopBgm = function() {
         gls2.currentBgm.stop();
     }
 };
+gls2.fadeOutBgm = function() {
+    if (gls2.currentBgm !== null) {
+        var bgm = gls2.currentBgm;
+        bgm.loop = false;
+        gls2.GameScene.SINGLETON.addEventListener("enterframe", function() {
+            bgm.volume -= 0.005;
+            if (bgm.volume <= 0) {
+                bgm.stop();
+                this.removeEventListener("enterframe", arguments.callee);
+            }
+        });
+    }
+}
 
 gls2.playSound = function(soundName) {
     if (gls2.core.seVolume === 0) return;

@@ -29,18 +29,35 @@ var $fire1 = function(spd) { return $.fire($.direction(0), spd || $spd3, $.bulle
 var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {
     return $.action([
         $.fire($.direction(rangeFrom), speed, bullet, offsetX, offsetY, autonomy),
-        $.repeat(way, [
-            $.fire($.direction((rangeTo-rangeFrom)/way, "sequence"), speed, bullet, offsetX, offsetY, autonomy),
+        $.repeat(way-1, [
+            $.fire($.direction((rangeTo-rangeFrom)/(way-1), "sequence"), speed, bullet, offsetX, offsetY, autonomy),
         ])
     ]);
 };
 
+/** 絶対n-way弾 */
 var $absoluteNway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {
     return $.action([
         $.fire($.direction(rangeFrom, "absolute"), speed, bullet, offsetX, offsetY, autonomy),
-        $.repeat(way, [
-            $.fire($.direction((rangeTo-rangeFrom)/way, "sequence"), speed, bullet, offsetX, offsetY, autonomy),
+        $.repeat(way-1, [
+            $.fire($.direction((rangeTo-rangeFrom)/(way-1), "sequence"), speed, bullet, offsetX, offsetY, autonomy),
         ])
+    ]);
+};
+
+/**
+ * ウィップ
+ * @param {bulletml.Speed} baseSpeed 初回のスピード
+ * @param {number} delta 2回目以降のスピード増分
+ * @param {number} count 回数
+ * @param {function(bulletml.Speed):bulletml.Action} スピードを受け取りActionを返す関数
+ */
+var $whip = function(baseSpeed, delta, count, actionFunc) {
+    return $.action([
+        actionFunc(baseSpeed),
+        $.repeat(count, [
+            actionFunc($.speed(delta, "sequence")),
+        ]),
     ]);
 };
 
@@ -105,25 +122,18 @@ gls2.Danmaku["basic3-0"] = new bulletml.Root({
 
 gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
     "top0": $.action([
-        $.repeat(3, [
-            $.repeat(3, [
-                $.repeat(3, [
-                    $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
-                    $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
-                    $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
-                    $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true)),
-                    $.fire($.direction(-45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
-                    $.fire($.direction(-15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
-                    $.fire($.direction( 15), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
-                    $.fire($.direction( 45), $spd4("$loop.count"), $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true)),
-                ]),
-                $interval(90),
-            ]),
-            $interval(120),
+        $.repeat(999, [
+            $whip($spd4, 0.01, 4, function(spd) {
+                return $nway(4, -45, 45, spd, $.bullet({frame:2}), $.offsetX(-45), $.autonomy(true));
+            }),
+            $whip($spd4, 0.01, 4, function(spd) {
+                return $nway(4, -45, 45, spd, $.bullet({frame:2}), $.offsetX(+45), $.autonomy(true));
+            }),
+            $interval(90),
         ]),
     ]),
     "top1": $.action([
-        $.repeat(3, [
+        $.repeat(999, [
             $.fire($.direction(0), $spd4, $.bullet({ball:true,frame:3}), $.offsetX(-45), $.autonomy(true)),
             $interval(45),
             $.fire($.direction(0), $spd4, $.bullet({ball:true,frame:3}), $.offsetX(+45), $.autonomy(true)),

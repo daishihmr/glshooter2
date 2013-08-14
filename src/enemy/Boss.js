@@ -30,7 +30,9 @@ gls2.Boss = tm.createClass(
             this.gameScene.showBossLife();
         });
         this.addEventListener("removed", function() {
-            // TODO ボスHPゲージを消去
+            // ボスHPゲージを消去
+            this.gameScene.hideBossLife();
+
             // TODO ステージクリア
         });
     },
