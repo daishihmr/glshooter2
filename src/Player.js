@@ -152,13 +152,13 @@ gls2.Player = tm.createClass(
             var value = gameScene.hyperTime / gls2.Setting.HYPERMODE_TIME;
 
             canvas.strokeStyle = "rgba(50,50,255,0.4)";
-            canvas.lineWidth = "10";
+            canvas.lineWidth = "12";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
             canvas.strokeStyle = "rgba(100,100,255,0.4)";
-            canvas.lineWidth = "6";
+            canvas.lineWidth = "8";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
             canvas.strokeStyle = "rgba(180,180,255,0.4)";
-            canvas.lineWidth = "2";
+            canvas.lineWidth = "4";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
         };
         this.hyperCircle3 = tm.app.CircleShape(80, 80, {
@@ -268,7 +268,7 @@ gls2.Player = tm.createClass(
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
                     // ボム
                     this.hyperRank = gls2.math.clamp(this.hyperRank - 2, 0, 1);
-                    bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]-0.02, 0, 1);
+                    bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.02, 0, 1);
                     gls2.Bomb(this, this.gameScene)
                         .setPosition(gls2.math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);

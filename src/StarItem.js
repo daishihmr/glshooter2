@@ -111,8 +111,10 @@ gls2.StarItemGround = tm.createClass(
         this.superInit(large);
     },
     update: function() {
-        this.x += this.gameScene.ground.dx;
-        this.y += this.gameScene.ground.dy;
+        if (!this.grub) {
+            this.x += this.gameScene.ground.dx;
+            this.y += this.gameScene.ground.dy;
+        }
         this.superClass.prototype.update.call(this);
     },
 });

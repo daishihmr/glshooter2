@@ -19,7 +19,8 @@ gls2.Stage1 = tm.createClass(
         this.seq.add(  0, function() {
             gls2.playBgm("bgm1"),
             this.gameScene.ground.direction = Math.PI*0.5;
-            this.gameScene.ground.speed = 1;
+            this.gameScene.ground.speed = 8;
+            this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
         });
 
         this.seq.add(200, "tankRD-center");
@@ -106,17 +107,24 @@ gls2.Stage1 = tm.createClass(
         this.seq.add( 60, "heri1-center");
 
         this.seq.add(  1, function() {
-            this.gameScene.ground.tweener.clear().to({speed:1}, 2000, "easeInOutQuad");
+            this.gameScene.ground.tweener.clear().to({speed:10}, 5000, "easeInOutQuad");
         });
+
         this.seq.add(100, "komachi-0");
         this.seq.add(160, "komachi-1");
 
-        if (DEBUG) {
-            this.seq.add(600, function() {
-                this.gameScene.ground.speed = 1;
-                this.frame = 0;
-            });
-        }
+        this.seq.add(800, function() {
+            gls2.fadeOutBgm();
+            // TODO WARNING表示
+            // TODO ボスBGMスタート
+        });
+
+        // if (DEBUG) {
+        //     this.seq.add(600, function() {
+        //         this.gameScene.ground.speed = 1;
+        //         this.frame = 0;
+        //     });
+        // }
 
     },
 

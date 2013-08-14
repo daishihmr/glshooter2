@@ -34,6 +34,8 @@ gls2.Enemy = tm.createClass(
     erase: false,
     star: 1,
 
+    isBoss: false,
+
     enableFire: true,
 
     /** 出現してから一度でも可視範囲に入ったか */
