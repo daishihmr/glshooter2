@@ -15,6 +15,7 @@ var data = {
     "kurokawa":  [    35,     5000, false, false,  5 ],
     "akimoto":   [   250,   300000, false,  true, 10 ],
     "yukishiro": [   750,   800000, false,  true, 20 ],
+    "misumi":    [  3000,  2000000, false,  true,  0 ],
 };
 var setData = function(name, enemy) {
     enemy.name = name;
@@ -59,9 +60,6 @@ var fallDown = function() {
  * ボス破壊
  */
 var bossExplode = function() {
-    this.remove();
-    this.isGround = true;
-    this.gameScene.addChild(this);
     this.addEventListener("enterframe", function() {
         if (Math.random() < 0.2) {
             gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {
@@ -396,10 +394,19 @@ gls2.EnemyHard.Nagisa = tm.createClass(
     init: function() {
         this.superInit();
     },
+    setup: function() {
+        setData("misumi", this);
+
+        this.boundingWidth = 200;
+        this.boundingHeight = 150;
+    },
+    draw: function(canvas) {
+        canvas.strokeStyle = "yellow";
+        canvas.strokeRect(-100, -75, 200, 150);
+    },
     destroy: function() {
         bossExplode.call(this);
     },
-
 });
 gls2.EnemyHard.Nagisa = gls2.EnemyHard.Nagisa();
 

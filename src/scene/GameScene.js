@@ -28,6 +28,7 @@ gls2.GameScene = tm.createClass(
     /** コンボダウン */
     comboDown: 0,
 
+    stageNumber: 0,
     /** @type {gls2.Stage} */
     stage: null,
     /** @type {gls2.GroundElement} */
@@ -44,6 +45,10 @@ gls2.GameScene = tm.createClass(
     killCount: 0,
     /** 出現敵数 */
     enemyCount: 0,
+    /** ミス数 */
+    missCount: 0,
+    /** トータルミス数 */
+    missCountTotal: 0,
 
     /** 現在の保有ボム数 */
     bomb: 0,
@@ -88,6 +93,8 @@ gls2.GameScene = tm.createClass(
 
     /** @type {gls2.Boss} */
     boss: null,
+    demoPlaying: false,
+    isBossBattle: false,
 
     init: function() {
         if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
@@ -152,49 +159,14 @@ gls2.GameScene = tm.createClass(
     },
 
     update: function(app) {
-        // this.record(app.keyboard);
+        this.record(app.keyboard);
 
         if (app.frame % 500 === 0) {
             gls2.Noise.noise = gls2.Noise.generate(512);
         }
 
         this.stage.update(app.frame);
-        if (this.isHyperMode) {
-            this.hyperTime -= 1;
-            if (this.hyperTime <= 0) {
-                this.endHyperMode();
-            }
-        }
-        this.hyperMutekiTime = Math.max(this.hyperMutekiTime-1, 0);
-
         if (app.frame % 2 === 0) this.scoreLabel.update();
-
-        // コンボゲージ減少
-        this.comboGauge -= gls2.Setting.COMBO_GAUGE_DECR * gls2.Setting.COMBO_GAUGE_DECR_RATE_WHEN_HYPERMODE;
-        if (this.comboGauge <= 0) {
-            // コンボゲージ切れ
-            this.comboGauge = 0;
-            if (this.isHyperMode || this.hyperGauge === 1) {
-                // ハイパー中orハイパーゲージMAXの場合は即コンボ切れ
-                this.baseScore = 0;
-                this.comboCount = 0;
-                this.comboDown = 0;
-            } else {
-                // NoハイパーかつハイパーゲージがNoMAXの場合は徐々にコンボが低下
-                if (this.comboCount > 0) {
-                    if (this.comboDown <= 0) {
-                        this.comboDown = this.comboCount * gls2.Setting.COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO;
-                    }
-                    this.baseScore = this.baseScore * (this.comboCount-this.comboDown)/this.comboCount;
-                    this.comboCount -= this.comboDown;
-                }
-                if (this.comboCount <= 0) {
-                    this.baseScore = 0;
-                    this.comboCount = 0;
-                    this.comboDown = 0;
-                }
-            }
-        }
 
         if (app.keyboard.getKeyDown("escape")) {
             // タイトル画面に戻る
@@ -204,16 +176,20 @@ gls2.GameScene = tm.createClass(
             // ポーズ
             this.openPauseMenu(0);
         } else if (app.keyboard.getKeyDown("p")) {
-            // スクショを撮る
-            var out = tm.graphics.Canvas();
-            out.resize(SC_W, SC_H);
-            out.clearColor("black");
-            out.drawImage(this.ground.ground.element, 0, 0);
-            out.drawImage(app.canvas.element, 0, 0)
-            out.drawImage(this.scoreLabel.element, 0, 0);
-            out.saveAsImage();
+            this.shotScreen().saveAsImage();
             this.openPauseMenu(0);
         }
+    },
+
+    shotScreen: function() {
+        // スクショを撮る
+        var out = tm.graphics.Canvas();
+        out.resize(SC_W, SC_H);
+        out.clearColor("black");
+        out.drawImage(this.ground.ground.element, 0, 0);
+        out.drawImage(this.app.canvas.element, 0, 0);
+        out.drawImage(this.scoreLabel.element, 0, 0);
+        return out;
     },
 
     /**
@@ -345,42 +321,85 @@ gls2.GameScene = tm.createClass(
             }
         }
 
-        if (this.player.parent !== null && this.player.muteki === false && this.isBombActive === false && this.hyperMutekiTime <= 0) {
+        if (this.demoPlaying) {
+            gls2.Danmaku.erase();
+        } else {
 
-            // 敵弾vs自機
-            for (var i = gls2.Bullet.activeList.length; gls2.Bullet.activeList[--i] !== undefined;) {
-                var b = gls2.Bullet.activeList[i];
-                if (gls2.Collision.isHit(b, this.player)) {
-                    this.player.damage();
-                    if (this.bomb > 0) {
-                        this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
-                        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
-                        gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
-                    } else {
-                        this.miss();
+            if (this.player.parent !== null && this.player.muteki === false && this.isBombActive === false && this.hyperMutekiTime <= 0) {
+
+                // 敵弾vs自機
+                for (var i = gls2.Bullet.activeList.length; gls2.Bullet.activeList[--i] !== undefined;) {
+                    var b = gls2.Bullet.activeList[i];
+                    if (gls2.Collision.isHit(b, this.player)) {
+                        this.player.damage();
+                        if (this.bomb > 0) {
+                            this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
+                            bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
+                            gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
+                        } else {
+                            this.miss();
+                        }
+                        break;
                     }
-                    break;
+                }
+
+                // 敵vs自機
+                for (var i = gls2.Enemy.activeList.length; gls2.Enemy.activeList[--i] !== undefined;) {
+                    var e = gls2.Enemy.activeList[i];
+                    if (e.hp <= 0) continue;
+                    if (e.isGround) continue;
+                    if (gls2.Collision.isHit(e, this.player)) {
+                        this.player.damage();
+                        if (this.bomb > 0) {
+                            this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
+                            bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
+                            gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
+                        } else {
+                            this.miss();
+                        }
+                        break;
+                    }
                 }
             }
 
-            // 敵vs自機
-            for (var i = gls2.Enemy.activeList.length; gls2.Enemy.activeList[--i] !== undefined;) {
-                var e = gls2.Enemy.activeList[i];
-                if (e.hp <= 0) continue;
-                if (e.isGround) continue;
-                if (gls2.Collision.isHit(e, this.player)) {
-                    this.player.damage();
-                    if (this.bomb > 0) {
-                        this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
-                        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
-                        gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
-                    } else {
-                        this.miss();
-                    }
-                    break;
+            // ハイパー残り時間減少
+            if (this.isHyperMode) {
+                this.hyperTime -= 1;
+                if (this.hyperTime <= 0) {
+                    this.endHyperMode();
                 }
             }
+            this.hyperMutekiTime = Math.max(this.hyperMutekiTime-1, 0);
+
+            // コンボゲージ減少
+            this.comboGauge -= gls2.Setting.COMBO_GAUGE_DECR * gls2.Setting.COMBO_GAUGE_DECR_RATE_WHEN_HYPERMODE;
+            if (this.comboGauge <= 0) {
+                // コンボゲージ切れ
+                this.comboGauge = 0;
+                if (this.isHyperMode || this.hyperGauge === 1) {
+                    // ハイパー中orハイパーゲージMAXの場合は即コンボ切れ
+                    this.baseScore = 0;
+                    this.comboCount = 0;
+                    this.comboDown = 0;
+                } else {
+                    // NoハイパーかつハイパーゲージがNoMAXの場合は徐々にコンボが低下
+                    if (this.comboCount > 0) {
+                        if (this.comboDown <= 0) {
+                            this.comboDown = this.comboCount * gls2.Setting.COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO;
+                        }
+                        this.baseScore = this.baseScore * (this.comboCount-this.comboDown)/this.comboCount;
+                        this.comboCount -= this.comboDown;
+                    }
+                    if (this.comboCount <= 0) {
+                        this.baseScore = 0;
+                        this.comboCount = 0;
+                        this.comboDown = 0;
+                    }
+                }
+            }
+
         }
+
     },
 
     onEnemyDestroy: function(enemy) {
@@ -429,8 +448,6 @@ gls2.GameScene = tm.createClass(
     },
 
     start: function(playerType) {
-        // generateRandom();
-
         this.scoreLabel.consoleWindow.clearBuf().clear();
 
         this.score = 0;
@@ -441,26 +458,29 @@ gls2.GameScene = tm.createClass(
         bulletml.Walker.globalScope["$rank"] = 0;
         this.endHyperMode();
         this.isBombActive = false;
-
-        if (this.player !== null && this.player.parent !== null) this.player.remove();
-        gls2.Enemy.clearAll();
-        gls2.ShotBullet.clearAll();
-        gls2.Danmaku.clearAll();
-
-        this.groundLayer.clear();
-        this.effectLayer0.clear();
-        this.effectLayer1.clear();
-        this.playerLayer.clear();
-        this.bulletLayer.clear();
+        this.missCount = this.missCountTotal = 0;
 
         this.player = gls2.Player(this, playerType);
+
         this.startStage(0);
 
-        // this.startRec();
+        this.startRec();
     },
 
     startStage: function(stageNumber) {
         this.println("3...2...1...");
+
+        if (this.player.parent !== null) this.player.remove();
+        gls2.Enemy.clearAll();
+        gls2.ShotBullet.clearAll();
+        gls2.Danmaku.clearAll();
+
+        this.groundLayer.removeChildren();
+        this.effectLayer0.removeChildren();
+        this.effectLayer1.removeChildren();
+        this.playerLayer.removeChildren();
+        this.bulletLayer.removeChildren();
+        this.lastElement.removeChildren();
 
         this.baseScore = 0;
         this.comboCount = 0;
@@ -470,6 +490,10 @@ gls2.GameScene = tm.createClass(
         this.starItemLarge = 0;
         this.enemyCount = 0;
         this.killCount = 0;
+        this.boss = null
+        this.demoPlaying = false;
+        this.isBossBattle = false;
+        this.missCount = 0;
 
         this.scoreLabel.scoreLabelElement.gpsOffsetX = 0;
         this.scoreLabel.scoreLabelElement.gpsOffsetY = 0;
@@ -478,6 +502,7 @@ gls2.GameScene = tm.createClass(
         // this.hyperRank = 0;
         // bulletml.Walker.globalScope["$rank"] = 0;
 
+        this.stageNumber = stageNumber;
         this.stage = gls2.Stage.create(this, stageNumber);
         this.tweener.clear().wait(1000).call(function() {
             this.launch();
@@ -491,6 +516,7 @@ gls2.GameScene = tm.createClass(
             .setPosition(SC_W*0.5, SC_H+100)
             .setFrameIndex(3)
             .addChildTo(this);
+        this.player.laser.addChildTo(this);
         this.player.controllable = false;
         this.player.muteki = true;
         this.player.tweener
@@ -503,7 +529,6 @@ gls2.GameScene = tm.createClass(
             .call(function() {
                 this.muteki = false;
             }.bind(this.player));
-        this.bomb = this.bombMax;
     },
 
     miss: function() {
@@ -518,12 +543,16 @@ gls2.GameScene = tm.createClass(
         this.comboCount = 0;
         this.comboDown = 0;
 
+        this.missCount += 1;
+        this.missCountTotal += 1;
+
         this.hyperRank = gls2.math.clamp(this.hyperRank - 3, 0, 1);
         bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.03, 0, 1);
 
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
                 this.bombMax = Math.min(this.bombMax + 1, this.bombMaxMax);
+                this.bomb = this.bombMax;
                 this.launch();
             }.bind(this));
         } else {
@@ -548,6 +577,8 @@ gls2.GameScene = tm.createClass(
 
     clearStage: function() {
         // TODO リザルト画面へ
+        gls2.stopBgm();
+        this.app.pushScene(gls2.ResultScene(this, this.shotScreen()));
     },
 
     gameOver: function() {
@@ -573,7 +604,7 @@ gls2.GameScene = tm.createClass(
     },
 
     addCombo: function(v) {
-        if (this.isHyperMode) v *= gls2.Setting.COMBO_RATE_WHEN_HYPERMODE;
+        if (this.isHyperMode) v *= gls2.Setting.COMBO_RATE_WHEN_HYPERMODE * this.hyperRank;
 
         this.comboDown = 0;
         this.comboCount += v;
@@ -803,81 +834,87 @@ gls2.GameScene = tm.createClass(
         ;
     },
 
-    // rec: null,
-    // recCount : 0,
-    // kbary: null,
-    // RECMODE: 1,
-    // startRec: function() {
-    //     if (this.RECMODE === 1) {
-    //         if (localStorage.getItem("recCount") !== undefined) {
-    //             this.kbary = [];
-    //             var c = ~~localStorage.getItem("recCount");
-    //             for (var i = 0; i < c; i++) {
-    //                 localStorage.removeItem("rec" + i);
-    //             }
-    //             localStorage.removeItem("recCount");
-    //         }
-    //         this.rec = [];
-    //         this.recCount = 0;
-    //     } else if (this.RECMODE === 2) {
-    //         if (localStorage.getItem("recCount") !== undefined) {
-    //             this.kbary = [];
-    //             var c = ~~localStorage.getItem("recCount");
-    //             for (var i = 0; i < c; i++) {
-    //                 var r = localStorage.getItem("rec"+i);
-    //                 var ary = r.split(",");
-    //                 for (var j = 0; j < ary.length; j++) {
-    //                     this.kbary.push(ary[j]);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // },
-    // record: function(kb) {
-    //     if (this.RECMODE === 1) {
-    //         if (1000 < this.rec.length) {
-    //             console.log("save");
-    //             localStorage.setItem("rec" + this.recCount, this.rec);
-    //             localStorage.setItem("recCount", this.recCount);
-    //             this.rec = [];
-    //             this.recCount += 1;
-    //         }
-    //         this.rec.push(""
-    //             + ~~kb.getKey("up")
-    //             + ~~kb.getKey("down")
-    //             + ~~kb.getKey("left")
-    //             + ~~kb.getKey("right")
-    //             + ~~kb.getKey("z")
-    //             + ~~kb.getKey("x")
-    //             + ~~kb.getKey("c"));
-    //     } else if (this.RECMODE === 2) {
-    //         if (this.kbary) {
-    //             var keylog = this.kbary.shift();
-    //             if (keylog !== undefined) {
-    //                 kb.getKey = function(key) {
-    //                     if (key === "up") return !!~~keylog[0];
-    //                     else if (key === "down") return !!~~keylog[1];
-    //                     else if (key === "left") return !!~~keylog[2];
-    //                     else if (key === "right") return !!~~keylog[3];
-    //                     else if (key === "z") return !!~~keylog[4];
-    //                     else if (key === "x") return !!~~keylog[5];
-    //                     else if (key === "c") return !!~~keylog[6];
-    //                     else false;
-    //                 };
-    //                 kb.getKeyDown = function(key) {
-    //                     if (key === "up") return !!~~keylog[0];
-    //                     else if (key === "down") return !!~~keylog[1];
-    //                     else if (key === "left") return !!~~keylog[2];
-    //                     else if (key === "right") return !!~~keylog[3];
-    //                     else if (key === "z") return !!~~keylog[4];
-    //                     else if (key === "x") return !!~~keylog[5];
-    //                     else if (key === "c") return !!~~keylog[6];
-    //                     else false;
-    //                 };
-    //             }
-    //         }
-    //     }
-    // },
+    rec: null,
+    recCount : 0,
+    kbary: null,
+    /**
+     * 0:何もしない 1:記録 2:再生
+     * @const
+     */
+    RECMODE: 0,
+    startRec: function() {
+        if (this.RECMODE === 1) {
+            console.log("rec start");
+            if (localStorage.getItem("recCount") !== undefined) {
+                this.kbary = [];
+                var c = ~~localStorage.getItem("recCount");
+                for (var i = 0; i < c; i++) {
+                    localStorage.removeItem("rec" + i);
+                }
+                localStorage.removeItem("recCount");
+            }
+            this.rec = [];
+            this.recCount = 0;
+        } else if (this.RECMODE === 2) {
+            console.log("replay start");
+            if (localStorage.getItem("recCount") !== undefined) {
+                this.kbary = [];
+                var c = ~~localStorage.getItem("recCount");
+                for (var i = 0; i < c; i++) {
+                    var r = localStorage.getItem("rec"+i);
+                    var ary = r.split(",");
+                    for (var j = 0; j < ary.length; j++) {
+                        this.kbary.push(ary[j]);
+                    }
+                }
+            }
+        }
+    },
+    record: function(kb) {
+        if (this.RECMODE === 1) {
+            if (1000 < this.rec.length) {
+                console.log("save");
+                localStorage.setItem("rec" + this.recCount, this.rec);
+                localStorage.setItem("recCount", this.recCount);
+                this.rec = [];
+                this.recCount += 1;
+            }
+            this.rec.push(""
+                + ~~kb.getKey("up")
+                + ~~kb.getKey("down")
+                + ~~kb.getKey("left")
+                + ~~kb.getKey("right")
+                + ~~kb.getKey("z")
+                + ~~kb.getKey("x")
+                + ~~kb.getKey("c"));
+        } else if (this.RECMODE === 2) {
+            if (this.kbary) {
+                var keylog = this.kbary.shift();
+                if (keylog !== undefined) {
+                    kb.getKey = function(key) {
+                        if (key === "up") return !!~~keylog[0];
+                        else if (key === "down") return !!~~keylog[1];
+                        else if (key === "left") return !!~~keylog[2];
+                        else if (key === "right") return !!~~keylog[3];
+                        else if (key === "z") return !!~~keylog[4];
+                        else if (key === "x") return !!~~keylog[5];
+                        else if (key === "c") return !!~~keylog[6];
+                        else false;
+                    };
+                    kb.getKeyDown = function(key) {
+                        if (key === "up") return !!~~keylog[0];
+                        else if (key === "down") return !!~~keylog[1];
+                        else if (key === "left") return !!~~keylog[2];
+                        else if (key === "right") return !!~~keylog[3];
+                        else if (key === "z") return !!~~keylog[4];
+                        else if (key === "x") return !!~~keylog[5];
+                        else if (key === "c") return !!~~keylog[6];
+                        else false;
+                    };
+                }
+            }
+        }
+    },
 
 });
 
@@ -885,12 +922,6 @@ gls2.GameScene.Layer = tm.createClass({
     superClass: tm.app.Object2D,
     init: function() {
         this.superInit();
-    },
-    clear: function() {
-        var temp = [].concat(this.children);
-        for (var i = 0; i < temp.length; i++) {
-            this.removeChild(temp[i]);
-        }
     },
 });
 

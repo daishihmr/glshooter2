@@ -47,12 +47,16 @@ gls2.Stage = tm.createClass(
         } else if (gls2.EnemyUnit[data.value] !== undefined){
             var unit = gls2.EnemyUnit[data.value];
             if (unit !== null) {
-                for (var i = 0; i < unit.length; i++) {
-                    var enemy = this.launchEnemy(unit[i]);
-                    if (data.stop) {
-                        enemy.addEventListener("enemyconsumed", function() {
-                            this.seq.stoping = false;
-                        }.bind(this));
+                if (unit[0].boss === true) {
+                    this.launchBoss(unit[0]);
+                } else {
+                    for (var i = 0; i < unit.length; i++) {
+                        var enemy = this.launchEnemy(unit[i]);
+                        if (data.stop) {
+                            enemy.addEventListener("enemyconsumed", function() {
+                                this.seq.stoping = false;
+                            }.bind(this));
+                        }
                     }
                 }
             }
@@ -61,13 +65,54 @@ gls2.Stage = tm.createClass(
 
     launchEnemy: function(data) {
         this.gameScene.enemyCount += 1;
-        return gls2.Enemy(this.gameScene, this, data.soft, data.hard)
+        return gls2.Enemy(this.gameScene, data.soft, data.hard)
+            .setPosition(data.x, data.y)
+            .addChildTo(this.gameScene)
+            .onLaunch();
+    },
+    launchBoss: function(data) {
+        this.gameScene.enemyCount += 1;
+        return gls2.Boss(this.gameScene, data.soft, data.hard)
             .setPosition(data.x, data.y)
             .addChildTo(this.gameScene)
             .onLaunch();
     },
 
-    onDestroyEnemy: function(enemy) {
+    alartWarning: function(callback) {
+        // WARNING表示
+        gls2.fadeOutBgm();
+
+        this.gameScene.demoPlaying = true;
+        gls2.playSound("warning");
+        var warn = tm.app.Object2D().setPosition(SC_W*0.5, SC_H*0.5);
+        for (var i = -4; i <= 4; i++) {
+            for (var j = -4; j <= 4; j++) {
+                var label = tm.app.Label("WARNING!!", 75)
+                    .setFillStyle(
+                        tm.graphics.LinearGradient(0,0,0,20).addColorStopList([
+                            { offset: 0.0, color: "hsla( 0, 100%, 50%, 0.07)" },
+                            { offset: 1.0, color: "hsla(50, 100%, 50%, 0.07)" },
+                        ]).toStyle()
+                    )
+                    .setBlendMode("lighter")
+                    .setPosition(i, j);
+                label.age = 0;
+                label.update = function() {
+                    this.alpha = Math.cos(this.age * 0.08) * -0.5 + 0.5;
+                    this.age += 1;
+                };
+                label.addChildTo(warn);
+            }
+        }
+
+        warn.tweener
+            .wait(3000)
+            .call(callback)
+            .wait(3000)
+            .call(function() {
+                this.remove();
+            }.bind(warn));
+        warn.addChildTo(this.gameScene.effectLayer1);
     },
 
 });
@@ -76,8 +121,10 @@ gls2.Stage = tm.createClass(
  * @static
  */
 gls2.Stage.create = function(gameScene, stageNumber) {
-    if (stageNumber === 0) {
-        return gls2.Stage1(gameScene);
+    switch (stageNumber) {
+        case 0:  return gls2.Stage1(gameScene);
+        // case 1:  return gls2.Stage2(gameScene);
+        default: return gls2.Stage1(gameScene);
     }
 };
 
@@ -97,10 +144,10 @@ gls2.StageSequencer = tm.createClass(
         this.data = {};
     },
 
-    add: function(count, value, isMBoss) {
+    add: function(count, value, stop) {
         this.index += count;
         this.data[this.index] = {
-            stop: isMBoss,
+            stop: stop,
             value: value
         };
     },

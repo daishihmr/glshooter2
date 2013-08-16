@@ -84,7 +84,6 @@ gls2.Player = tm.createClass(
             "aura": "aura",
         });
         this.laser.visible = false;
-        this.laser.addChildTo(gameScene);
 
         this._createHitCircle();
 

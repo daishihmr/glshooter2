@@ -72,6 +72,7 @@ gls2.GlShooter2 = tm.createClass(
                 // bgm
                 "bgm1": "assets2/nc54073.mp3",
                 "bgmBoss": "assets2/nc29206.mp3",
+                "bgmResult": "assets2/nc54077.mp3",
 
                 // sound
                 "sound/explode": "assets2/sen_ge_taihou03.mp3",
@@ -103,6 +104,7 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     _onLoadAssets: function() {
+        gls2.FixedRandom.setup(12345);
         gls2.Danmaku.setup();
         gls2.Effect.setup();
 

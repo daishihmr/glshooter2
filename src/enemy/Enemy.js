@@ -21,8 +21,6 @@ gls2.Enemy = tm.createClass(
     player: null,
     /** @type {gls2.GameScene} */
     gameScene: null,
-    /** @type {gls2.Stage} */
-    stage: null,
     /** @type {gls2.EnemyHard} */
     hard: null,
     /** @type {gls2.EnemySoft} */
@@ -46,7 +44,7 @@ gls2.Enemy = tm.createClass(
     /**
      * @constructs
      */
-    init: function(gameScene, stage, software, hardware) {
+    init: function(gameScene, software, hardware) {
         this.superInit();
 
         this.addEventListener("completeattack", function() {
@@ -67,7 +65,6 @@ gls2.Enemy = tm.createClass(
 
         this.gameScene = gameScene;
         this.player = gameScene.player;
-        this.stage = stage;
         this.soft = software;
         this.hard = hardware;
 
@@ -135,8 +132,6 @@ gls2.Enemy = tm.createClass(
             } else {
                 this.gameScene.println("ETR reaction gone.")
             }
-
-            this.stage.onDestroyEnemy(this);
 
             if (this.erase) {
                 gls2.Danmaku.erase(true);

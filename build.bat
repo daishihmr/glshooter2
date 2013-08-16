@@ -1,6 +1,7 @@
 erase target\gls2.js
 
 java -jar tools/compiler.jar ^
+--define DEBUG=false ^
 --externs libs/tmlib.js ^
 --externs extern/extern.js ^
 --js libs/bulletml.js ^
@@ -26,6 +27,7 @@ java -jar tools/compiler.jar ^
 --js src/common/Particle.js ^
 --js src/common/ConsoleWindow.js ^
 --js src/common/Noise.js ^
+--js src/common/FixedRandom.js ^
 --js src/scene/TitleScene.js ^
 --js src/scene/ShipSelectScene.js ^
 --js src/scene/GameScene.js ^
@@ -37,10 +39,12 @@ java -jar tools/compiler.jar ^
 --js src/enemy/EnemySoft.js ^
 --js src/enemy/EnemyUnit.js ^
 --js src/enemy/Danmaku.js ^
+--js src/enemy/Boss.js ^
 --js libs/math.js ^
 --compilation_level ADVANCED_OPTIMIZATIONS ^
 --language_in ECMASCRIPT5 ^
 --js_output_file target/gls2.js ^
---formatting SINGLE_QUOTES
+--formatting PRETTY_PRINT
 
-rem --formatting PRETTY_PRINT
+rem --formatting SINGLE_QUOTES
+rem --externs libs/mt.js ^

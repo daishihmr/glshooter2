@@ -65,10 +65,10 @@ gls2.EnemySoft.Heri1a = tm.createClass(
         this.superInit();
     },
     onLaunch: function() {
-        var y = gls2.math.randf(SC_H*0.1, SC_H*0.3);
+        var y = gls2.FixedRandom.randf(SC_H*0.1, SC_H*0.3); // TODO 固定乱数化
         this.tweener
             .clear()
-            .wait(gls2.math.rand(10, 500))
+            .wait(gls2.FixedRandom.rand(10, 500)) // TODO 固定乱数化
             .move(this.x, y, y*7, "easeOutQuad")
             .call(function() {
                 attack(this, "basic0-0");
@@ -105,10 +105,10 @@ gls2.EnemySoft.Heri1b = tm.createClass(
         this.superInit();
     },
     onLaunch: function() {
-        var y = gls2.math.randf(SC_H*0.3, SC_H*0.5);
+        var y = gls2.FixedRandom.randf(SC_H*0.3, SC_H*0.5); // TODO 固定乱数化
         this.tweener
             .clear()
-            .wait(gls2.math.rand(10, 500))
+            .wait(gls2.FixedRandom.rand(10, 500)) // TODO 固定乱数化
             .move(this.x, y, y*7, "easeOutQuad")
             .call(function() {
                 attack(this, "basic0-0");
@@ -125,6 +125,46 @@ gls2.EnemySoft.Heri1b = tm.createClass(
     },
 });
 gls2.EnemySoft.Heri1b = gls2.EnemySoft.Heri1b();
+
+/**
+ * heri1b.
+ * まっすぐ降りてきて下方で停止後、弾を撃って上へ離脱.
+ * 出現位置はy=-100
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+gls2.EnemySoft.Heri1c = tm.createClass(
+/** @lends {gls2.EnemySoft.Heri1c.prototype} */
+{
+    superClass: gls2.EnemySoft,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+    },
+    onLaunch: function() {
+        var y = gls2.FixedRandom.randf(SC_H*0.7, SC_H*0.9); // TODO 固定乱数化
+        this.tweener
+            .clear()
+            .wait(gls2.FixedRandom.rand(10, 500)) // TODO 固定乱数化
+            .move(this.x, y, y*7, "easeOutQuad")
+            .call(function() {
+                attack(this, "basic0-0");
+            }.bind(this));
+    },
+    onCompleteAttack: function() {
+        this.tweener
+            .clear()
+            .wait(1000)
+            .moveBy(0, -SC_H, 2000, "easeInQuad")
+            .call(function() {
+                this.remove();
+            }.bind(this));
+    },
+});
+gls2.EnemySoft.Heri1c = gls2.EnemySoft.Heri1c();
 
 /**
  * heri2.
@@ -146,7 +186,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     },
     setup: function() {
         this.angle = Math.PI * 0.5;
-        this.startFrame = gls2.math.rand(0, 60);
+        this.startFrame = gls2.FixedRandom.rand(0, 60); // TODO 固定乱数化
         this.speed = 0;
     },
     update: function() {
@@ -378,8 +418,8 @@ gls2.EnemySoft.MBossCommon = tm.createClass(
                 this.startAttack = true;
                 this.onCompleteAttack();
                 var temp = function() {
-                    var a = Math.random() * Math.PI*2;
-                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
+                    var a = gls2.FixedRandom.random() * Math.PI*2; // TODO 固定乱数化
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3); // TODO 固定乱数化
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad")
                         .call(temp);
@@ -390,7 +430,6 @@ gls2.EnemySoft.MBossCommon = tm.createClass(
     update: function() {
         if (this.startAttack === false || this.hp <= 0) return;
         if (1500 < this.frame && this.endAttack === false) {
-            console.log("end");
             this.endAttack = true;
             stopAttack(this);
             this.tweener
@@ -415,6 +454,89 @@ gls2.EnemySoft.MBossCommon = tm.createClass(
 gls2.EnemySoft.Honoka = gls2.EnemySoft.MBossCommon([
     "honoka-1"
 ]);
+
+/**
+ * ステージ１ボス「ミスミ」第1形態
+ */
+gls2.EnemySoft.Nagisa = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    init: function(patterns) {
+        this.superInit();
+        this.patterns = patterns;
+    },
+    setup: function() {
+        this.startAttack = false;
+        this.endAttack = false;
+        this.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.2, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.onCompleteAttack();
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2; // TODO 固定乱数化
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3); // TODO 固定乱数化
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.1+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(this));
+    },
+    onCompleteAttack: function() {
+        if (this.endAttack) return;
+        var pattern = this.soft.patterns.shift();
+        attack(this, pattern);
+        this.soft.patterns.push(pattern);
+    },
+});
+gls2.EnemySoft.Nagisa1 = gls2.EnemySoft.Nagisa([ "honoka-1" ]);
+/**
+ * 第2形態
+ */
+gls2.EnemySoft.Nagisa2 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.d = -1;
+    },
+    update: function() {
+        this.x += this.d;
+        if (this.x < 10) {
+            this.d = +1;
+        } else if (SC_W-10 < this.x) {
+            this.d = -1;
+        }
+    },
+});
+gls2.EnemySoft.Nagisa2 = gls2.EnemySoft.Nagisa2();
+/**
+ * 第3形態（発狂）
+ */
+gls2.EnemySoft.Nagisa3 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    init: function() {
+        this.superInit();
+    },
+    setup: function() {
+        this.d = -1;
+    },
+    update: function() {
+        this.y += this.d;
+        if (this.y < 10) {
+            this.d = +1;
+        } else if (SC_W-10 < this.x) {
+            this.d = -1;
+        }
+    },
+});
+gls2.EnemySoft.Nagisa3 = gls2.EnemySoft.Nagisa3();
 
 })();
 

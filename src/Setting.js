@@ -106,25 +106,25 @@ gls2.Setting = {
      * ハイパーモード継続時間
      * @const
      */
-    HYPERMODE_TIME: 600,
+    HYPERMODE_TIME: 800,
 
     /**
      * ハイパーモード起動時の無敵時間
      * @const
      */
-    HYPERMODE_START_MUTEKI_TIME: 0.75,
+    HYPERMODE_START_MUTEKI_TIME: 0.25,
 
     /**
      * ハイパーモード終了時の無敵時間
      * @const
      */
-    HYPERMODE_END_MUTEKI_TIME: 0.25,
+    HYPERMODE_END_MUTEKI_TIME: 0.10,
 
     /**
      * ハイパーモード中のコンボ数増加倍率
      * @const
      */
-    COMBO_RATE_WHEN_HYPERMODE: 1,
+    COMBO_RATE_WHEN_HYPERMODE: 5,
 
     /**
      * 1フレームあたりのコンボゲージ減少値
@@ -208,7 +208,7 @@ gls2.Setting = {
      * オートボム発動時に残ボム数をすべて消費するか
      * @const
      */
-    AUTO_BOMB_TO_ZERO: true,
+    AUTO_BOMB_TO_ZERO: false,
 
 };
 
