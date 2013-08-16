@@ -462,9 +462,9 @@ gls2.EnemySoft.Nagisa = tm.createClass(
 {
     superClass: gls2.EnemySoft,
     patterns: null,
-    init: function(patterns) {
+    init: function() {
         this.superInit();
-        this.patterns = patterns;
+        this.patterns = [ "nagisa-1-1", "nagisa-1-2", "nagisa-1-3" ];
     },
     setup: function() {
         this.startAttack = false;
@@ -492,26 +492,31 @@ gls2.EnemySoft.Nagisa = tm.createClass(
         this.soft.patterns.push(pattern);
     },
 });
-gls2.EnemySoft.Nagisa1 = gls2.EnemySoft.Nagisa([ "honoka-1" ]);
+gls2.EnemySoft.Nagisa1 = gls2.EnemySoft.Nagisa();
 /**
  * 第2形態
  */
 gls2.EnemySoft.Nagisa2 = tm.createClass(
 {
     superClass: gls2.EnemySoft,
+    patterns: null,
     init: function() {
         this.superInit();
+        this.patterns = [ "nagisa-2-1", "nagisa-2-2", "nagisa-2-3" ];
     },
     setup: function() {
-        this.d = -1;
+        this.tweener.clear()
+            .wait(800)
+            .call(function() {
+                this.onCompleteAttack();
+            }.bind(this));
     },
     update: function() {
-        this.x += this.d;
-        if (this.x < 10) {
-            this.d = +1;
-        } else if (SC_W-10 < this.x) {
-            this.d = -1;
-        }
+    },
+    onCompleteAttack: function() {
+        var pattern = this.soft.patterns.shift();
+        attack(this, pattern);
+        this.soft.patterns.push(pattern);
     },
 });
 gls2.EnemySoft.Nagisa2 = gls2.EnemySoft.Nagisa2();
@@ -525,15 +530,16 @@ gls2.EnemySoft.Nagisa3 = tm.createClass(
         this.superInit();
     },
     setup: function() {
-        this.d = -1;
+        this.tweener.clear()
+            .wait(800)
+            .call(function() {
+                this.onCompleteAttack();
+            }.bind(this));
     },
     update: function() {
-        this.y += this.d;
-        if (this.y < 10) {
-            this.d = +1;
-        } else if (SC_W-10 < this.x) {
-            this.d = -1;
-        }
+    },
+    onCompleteAttack: function() {
+        attack(this, "nagisa-3-1");
     },
 });
 gls2.EnemySoft.Nagisa3 = gls2.EnemySoft.Nagisa3();

@@ -87,7 +87,7 @@ gls2.ScoreLabel = tm.createClass(
 
         // ボム数
         for (var i = 0; i < this.gameScene.bomb; i++) {
-            this.fillRect(5+i*(20+5), SC_H-5-34, 20, 20);
+            this.fillRect(SC_W-(i+1)*(20+5) - 20, SC_H-(20+5), 20, 20);
         }
 
         this.consoleWindow.update();
@@ -99,7 +99,7 @@ gls2.ScoreLabel = tm.createClass(
             this.fillStyle = "rgba(255,255,255,0.2)";
             this.setText("bold 20px Orbitron", "right", "bottom");
             this.fillText(this.gameScene.killCount + "/" + this.gameScene.enemyCount, SC_W-30, SC_H);
-            this.fillText("STAR S:" + this.gameScene.starItem + " STAR L:" + this.gameScene.starItemLarge, SC_W-30, SC_H-25);
+            this.fillText("STAR S:" + this.gameScene.starItem + " L:" + this.gameScene.starItemLarge, SC_W-30, SC_H-25);
             this.fillText("hyper rank " + this.gameScene.hyperRank, SC_W-30, SC_H-50);
         }
 

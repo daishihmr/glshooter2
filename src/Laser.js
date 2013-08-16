@@ -30,6 +30,8 @@ gls2.Laser = tm.createClass(
 
     isEffect: true,
 
+    attackPower: gls2.Setting.LASER_ATTACK_POWER,
+
     init: function(player, textures) {
         this.player = player;
         this.gameScene = player.gameScene;
@@ -153,6 +155,7 @@ gls2.Laser = tm.createClass(
 
         // TODO
         this.setColor("blue");
+        this.setLevel(0);
     },
 
     setColor: function(color) {
@@ -181,17 +184,14 @@ gls2.Laser = tm.createClass(
             .element
         );
 
-        if (color === "hyper") {
-            this.width = 75;
-            this.boundingWidth = 75;
-            this.head.setScale(1.5, 1.5);
-        } else {
-            this.width = 50;
-            this.boundingWidth = 50;
-            this.head.setScale(1.0, 1.0);
-        }
-
         return this;
+    },
+
+    setLevel: function(hyperLevel) {
+        this.width = 50 + 30 * hyperLevel / gls2.Setting.HYPER_LEVEL_MAX;
+        this.boundingWidth = this.width;
+        this.head.setScale(this.width*0.02, this.width*0.02);
+        this.attackPower = gls2.Setting.LASER_ATTACK_POWER + gls2.Setting.LASER_ATTACK_POWER_RATE * hyperLevel;
     },
 
     genParticle: function(count, y) {
@@ -213,8 +213,6 @@ gls2.Laser = tm.createClass(
     },
 
     genAuraParticle: function(count, x, y) {
-        var x = x || this.x;
-        var y = y || this._hitY;
         for (var i = 0; i < count; i++) {
             var p = origParticle.clone().setPosition(x, y).addChildTo(this.gameScene);
             var speed = gls2.math.randf(12, 20);

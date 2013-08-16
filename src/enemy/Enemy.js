@@ -134,7 +134,7 @@ gls2.Enemy = tm.createClass(
             }
 
             if (this.erase) {
-                gls2.Danmaku.erase(true);
+                gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
             }
 
             this.soft.destroy.apply(this);

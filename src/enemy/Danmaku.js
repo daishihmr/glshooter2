@@ -221,6 +221,72 @@ gls2.Danmaku["honoka-1"] = new bulletml.Root({
     ]),
 });
 
+gls2.Danmaku["nagisa-1-1"] = new bulletml.Root({
+    "top0": $.action([
+        $nway(60, -60, 60, $spd2, $.bullet),
+        $.repeat(10, [
+            $nway(3, -60, 60, $spd2, $.bullet),
+            $interval(20),
+        ])
+    ]),
+});
+gls2.Danmaku["nagisa-1-2"] = new bulletml.Root({
+    "top0": $.action([
+        $nway(60, -60, 60, $spd2, $.bullet),
+        $.repeat(10, [
+            $nway(6, -60, 60, $spd2, $.bullet),
+            $interval(20),
+        ])
+    ]),
+});
+gls2.Danmaku["nagisa-1-3"] = new bulletml.Root({
+    "top0": $.action([
+        $nway(60, -60, 60, $spd2, $.bullet),
+        $.repeat(10, [
+            $nway(12, -60, 60, $spd2, $.bullet),
+            $interval(20),
+        ])
+    ]),
+});
+
+gls2.Danmaku["nagisa-2-1"] = new bulletml.Root({
+    "top0": $.action([
+        $nway(60, -60, 60, $spd2, $.bullet({frame:0})),
+        $.repeat(10, [
+            $nway(3, -60, 60, $spd2, $.bullet({frame:0})),
+            $interval(20),
+        ])
+    ]),
+});
+gls2.Danmaku["nagisa-2-2"] = new bulletml.Root({
+    "top0": $.action([
+        $nway(60, -60, 60, $spd2, $.bullet({frame:0})),
+        $.repeat(10, [
+            $nway(5, -60, 60, $spd2, $.bullet({frame:0})),
+            $interval(20),
+        ])
+    ]),
+});
+gls2.Danmaku["nagisa-2-3"] = new bulletml.Root({
+    "top0": $.action([
+        $nway(60, -60, 60, $spd2, $.bullet({frame:0})),
+        $.repeat(10, [
+            $nway(73, -60, 60, $spd2, $.bullet({frame:0})),
+            $interval(20),
+        ])
+    ]),
+});
+
+gls2.Danmaku["nagisa-3-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(10, [
+            $nway(60, -60, 60, $spd1, $.bullet),
+            $interval(20),
+        ]),
+        $interval(100),
+    ]),
+});
+
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 800; i++) {
         bulletPool.push(gls2.Bullet());
@@ -267,11 +333,11 @@ gls2.Danmaku.setup = function() {
 /**
  * エフェクト付きの弾幕全消し
  */
-gls2.Danmaku.erase = function(star) {
+gls2.Danmaku.erase = function(star, large) {
     var bullets = [].concat(activeList);
     for (var i = 0, len = bullets.length; i < len; i++) {
         if (star) {
-            gls2.StarItemSky(false)
+            gls2.StarItemSky(!!large)
                 .setPosition(bullets[i].x, bullets[i].y);
         }
         bullets[i].destroy();

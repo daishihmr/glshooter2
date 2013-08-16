@@ -74,7 +74,7 @@ gls2.Boss = tm.createClass(
         var beforeHp = this.hp;
         if (this.superClass.prototype.damage.call(this, damagePoint)) {
             this.gameScene.demoPlaying = true;
-            gls2.stopBgm();
+            gls2.fadeOutBgm();
             return true;
         }
 
@@ -84,6 +84,8 @@ gls2.Boss = tm.createClass(
             this.tweener.clear();
 
             // TODO 爆発エフェクト
+            gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+            gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
 
             // 第2形態へ
             this.soft = this.softwares[1];
@@ -94,6 +96,8 @@ gls2.Boss = tm.createClass(
             this.tweener.clear();
 
             // TODO 爆発エフェクト
+            gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+            gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
 
             // 発狂へ
             this.soft = this.softwares[2];

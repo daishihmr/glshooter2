@@ -15,7 +15,10 @@ gls2.Setting = {
      */
     INITIAL_ZANKI: 3,
 
-    /** ボムスロット初期数 */
+    /** 
+     * ボムスロット初期数
+     * @const
+     */
     INITIAL_BOMB_MAX: 3,
 
     /**
@@ -40,7 +43,7 @@ gls2.Setting = {
      * ハイパーレーザーの攻撃力
      * @const
      */
-    HYPER_LASER_ATTACK_POWER: 2,
+    LASER_ATTACK_POWER_RATE: 0.1,
 
     /**
      * オーラの攻撃力
@@ -64,13 +67,13 @@ gls2.Setting = {
      * ショットによる敵破壊でチャージされるハイパーゲージ値
      * @const
      */
-    HYPER_CHARGE_BY_SHOT: 0.01,
+    HYPER_CHARGE_BY_SHOT: 0.005,
 
     /**
      * レーザーによる敵破壊でチャージされるハイパーゲージ値
      * @const
      */
-    HYPER_CHARGE_BY_LASER: 0.015,
+    HYPER_CHARGE_BY_LASER: 0.010,
 
     /**
      * レーザーを敵に当てることでチャージされるハイパーゲージ値
@@ -91,16 +94,71 @@ gls2.Setting = {
     HYPER_CHARGE_BY_AURA_HIT: 0.002,
 
     /**
+     * 星アイテム取得でチャージされるハイパーゲージ値
+     * @const
+     */
+    HYPER_CHARGE_BY_STAR: 0.001,
+
+    /**
+     * 星アイテム（大）取得にチャージされるハイパーゲージ値
+     * @const
+     */
+    HYPER_CHARGE_BY_STAR_LARGE: 0.01,
+
+
+    /**
+     * ショットによる敵破壊でチャージされるハイパーゲージ値
+     * @const
+     */
+    HYPER_CHARGE_BY_SHOT_IN_HYPER: 0,
+
+    /**
+     * レーザーによる敵破壊でチャージされるハイパーゲージ値
+     * @const
+     */
+    HYPER_CHARGE_BY_LASER_IN_HYPER: 0,
+
+    /**
+     * レーザーを敵に当てることでチャージされるハイパーゲージ値
+     * @const
+     */
+    HYPER_CHARGE_BY_LASER_HIT_IN_HYPER: 0,
+
+    /**
+     * オーラによる敵破壊でチャージされるハイパーゲージ値
+     * @const
+     */
+    HYPER_CHARGE_BY_AURA_IN_HYPER: 0.030,
+
+    /**
+     * オーラを敵に当てることでチャージされるハイパーゲージ値
+     * @const
+     */
+    HYPER_CHARGE_BY_AURA_HIT_IN_HYPER: 0.004,
+
+    /**
+     * 星アイテム取得でチャージされるハイパーゲージ値
+     * @const
+     */
+    HYPER_CHARGE_BY_STAR_IN_HYPER: 0,
+
+    /**
+     * 星アイテム（大）取得にチャージされるハイパーゲージ値
+     * @const
+     */
+    HYPER_CHARGE_BY_STAR_LARGE_IN_HYPER: 0,
+
+    /**
      * ハイパーゲージチャージ基本係数
      * @const
      */
     HYPER_CHARGE_RATE: 0.75,
 
     /**
-     * ハイパーモード中のハイパーゲージチャージ倍率
+     * ハイパーレベル最大値
      * @const
      */
-    HYPER_CHARGE_RATE_WHEN_HYPERMODE: 2.0,
+    HYPER_LEVEL_MAX: 10,
 
     /**
      * ハイパーモード継続時間
@@ -130,7 +188,7 @@ gls2.Setting = {
      * 1フレームあたりのコンボゲージ減少値
      * @const
      */
-    COMBO_GAUGE_DECR: 0.02,
+    COMBO_GAUGE_DECR: 0.03,
 
     /**
      * ハイパーモード中のコンボゲージ減少倍率
@@ -190,7 +248,7 @@ gls2.Setting = {
      * 星アイテム（大）が出る距離
      * @const
      */
-    CROSS_RANGE: 200*200,
+    CROSS_RANGE: 100*100,
 
     /**
      * 敵弾のHP

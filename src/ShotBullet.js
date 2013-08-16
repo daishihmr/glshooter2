@@ -132,6 +132,11 @@ gls2.ShotBulletPool = tm.createClass({
 
         return shotBullet;
     },
+
+    setLevel: function(hyperLevel) {
+        // TODO
+    },
+
 });
 
 })();

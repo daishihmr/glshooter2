@@ -119,7 +119,7 @@ gls2.Player = tm.createClass(
         this.hyperCircle0.blendMode = "lighter";
         this.hyperCircle0.update = function() {
             this.rotation += 2;
-            this.visible = gameScene.hyperGauge === 1 && !gameScene.isHyperMode;
+            this.visible = gameScene.hyperLevel > 0 && !gameScene.isHyperMode;
         };
 
         this.hyperCircle1 = tm.app.CircleShape(80, 80, {
@@ -136,7 +136,7 @@ gls2.Player = tm.createClass(
         this.hyperCircle1.blendMode = "lighter";
         this.hyperCircle1.update = function() {
             this.rotation -= 2;
-            this.visible = gameScene.hyperGauge === 1 && !gameScene.isHyperMode;
+            this.visible = gameScene.hyperLevel > 0 && !gameScene.isHyperMode;
         };
 
         this.hyperCircle2 = tm.app.CanvasElement(80, 80).addChildTo(this);
@@ -260,7 +260,7 @@ gls2.Player = tm.createClass(
             }
 
             if (kb.getKeyDown("x")) {
-                if (this.gameScene.hyperGauge === 1 && !this.gameScene.isHyperMode) {
+                if (this.gameScene.hyperLevel > 0 && !this.gameScene.isHyperMode) {
                     // ハイパー
                     this.gameScene.startHyperMode();
                     gls2.StartHyperEffect(this).addChildTo(this.gameScene);
