@@ -153,8 +153,7 @@ gls2.Laser = tm.createClass(
         // f.blendMode = "lighter";
         // h.blendMode = "lighter";
 
-        // TODO
-        this.setColor("blue");
+        this.setColor(["red", "green", "blue"][this.player.type]);
         this.setLevel(0);
     },
 
@@ -192,6 +191,12 @@ gls2.Laser = tm.createClass(
         this.boundingWidth = this.width;
         this.head.setScale(this.width*0.02, this.width*0.02);
         this.attackPower = gls2.Setting.LASER_ATTACK_POWER + gls2.Setting.LASER_ATTACK_POWER_RATE * hyperLevel;
+
+        if (hyperLevel === 0) {
+            this.setColor(["red", "green", "blue"][this.player.type]);
+        } else {
+            this.setColor("hyper");
+        }
     },
 
     genParticle: function(count, y) {

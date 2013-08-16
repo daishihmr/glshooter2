@@ -1,0 +1,49 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+	var app = tm.app.CanvasApp("#app");
+	app.resize(100, 100);
+
+	var assets = {};
+	for (var i = 1; i <= 7; i++) {
+		assets["fighterA" + i] = "fighterA" + i + ".png";
+		assets["fighterB" + i + "_1"] = "fighterB" + i + "_1.png";
+		assets["fighterB" + i + "_2"] = "fighterB" + i + "_2.png";
+		assets["fighterB" + i + "_3"] = "fighterB" + i + "_3.png";
+		assets["fighterC" + i] = "fighterC" + i + ".png";
+	}
+
+	app.replaceScene(
+		tm.app.LoadingScene({
+			width: 100,
+			height: 100,
+			nextScene: main,
+			assets: assets
+		})
+	);
+	app.run();
+});
+var main = tm.createClass({
+	superClass: tm.app.Scene,
+	init: function() {
+		this.superInit();
+		var canvas = tm.graphics.Canvas();
+		canvas.resize(64*7, 64*5);
+		for (var i = 1; i <= 7; i++) {
+			canvas.drawTexture(tm.asset.AssetManager.get("fighterA" + i), (i-1)*64, 0*64);
+			canvas.drawTexture(tm.asset.AssetManager.get("fighterB" + i + "_1"), (i-1)*64, 1*64);
+			canvas.drawTexture(tm.asset.AssetManager.get("fighterB" + i + "_2"), (i-1)*64, 2*64);
+			canvas.drawTexture(tm.asset.AssetManager.get("fighterB" + i + "_3"), (i-1)*64, 3*64);
+			canvas.drawTexture(tm.asset.AssetManager.get("fighterC" + i), (i-1)*64, 4*64);
+		}
+		canvas.saveAsImage();
+	},
+});
+</script>
+</head>
+<body>
+<canvas id="app"></canvas>
+</body>
+</html>

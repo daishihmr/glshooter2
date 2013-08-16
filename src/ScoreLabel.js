@@ -67,8 +67,9 @@ gls2.ScoreLabel = tm.createClass(
         this.fillText(text, this.scoreLabelElement.gpsOffsetX + SC_W*0.4, 22);
 
         // 残機数
+        var y = [0, 1, 4][this.gameScene.player.type];
         for (var i = 0; i < this.gameScene.zanki-1; i++) {
-            this.drawTexture(tm.asset.AssetManager.get("tex1"), 64*3, 0, 64, 64, 5 + (i*32), 40, 32, 32);
+            this.drawTexture(tm.asset.AssetManager.get("fighter"), 64*3, 64*y, 64, 64, 5 + (i*32), 40, 32, 32);
         }
 
         // ランク

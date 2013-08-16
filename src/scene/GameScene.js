@@ -702,7 +702,6 @@ gls2.GameScene = tm.createClass(
         this.player.laser.setLevel(this.hyperLevel);
 
         this.player.currentShotPool = this.player.hyperShotPool;
-        this.player.laser.setColor("hyper");
 
         gls2.Effect.genShockwaveL(this.player.x, this.player.y, this);
 

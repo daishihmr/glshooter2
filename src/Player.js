@@ -40,8 +40,7 @@ gls2.Player = tm.createClass(
     muteki: false,
     gameScene : null,
 
-    /** @protected */
-    speed: 4.5,
+    speed: 0,
     bits: null,
 
     /** @type {gls2.ShotBulletPool0} */
@@ -61,12 +60,14 @@ gls2.Player = tm.createClass(
 
     /** @constructs */
     init: function(gameScene, type) {
-        this.superInit("tex1", 64, 64);
+        this.superInit("fighter", 64, 64);
 
         this.type = type;
         this.gameScene = gameScene;
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
+
+        this.speed = [5.5, 4.5, 4.0][type];
 
         this.boundingRadius = 3;
         this.altitude = 10;
@@ -177,12 +178,28 @@ gls2.Player = tm.createClass(
 
     /** @protected */
     _createBits: function() {
-        return [
-            { x: -70, y: 20, d: 0.1, turn: false, dt: -0.7, v: true },
-            { x: -40, y: 40, d: 0.1, turn: false, dt: -0.5, v: true },
-            { x:  40, y: 40, d: 0.1, turn:  true, dt:  0.5, v: true },
-            { x:  70, y: 20, d: 0.1, turn:  true, dt:  0.7, v: true },
-        ];
+        if (this.type === 0) {
+            return [
+                { x: -60, y:  20, d: 0.0, turn: false, dt: -0.7, v: true },
+                { x: -10, y: -40, d: 0.0, turn: false, dt: -0.5, v: true },
+                { x:  10, y: -40, d: 0.0, turn:  true, dt:  0.5, v: true },
+                { x:  60, y:  20, d: 0.0, turn:  true, dt:  0.7, v: true },
+            ];
+        } else if (this.type === 1) {
+            return [
+                { x: -70, y: 20, d: 0.1, turn: false, dt: -0.7, v: true },
+                { x: -40, y: 40, d: 0.1, turn: false, dt: -0.5, v: true },
+                { x:  40, y: 40, d: 0.1, turn:  true, dt:  0.5, v: true },
+                { x:  70, y: 20, d: 0.1, turn:  true, dt:  0.7, v: true },
+            ];
+        } else if (this.type === 2) {
+            return [
+                { x: -70, y: 40, d: 0.4, turn: false, dt: -0.7, v: true },
+                { x: -40, y: 20, d: 0.2, turn: false, dt: -0.5, v: true },
+                { x:  40, y: 20, d: 0.2, turn:  true, dt:  0.5, v: true },
+                { x:  70, y: 40, d: 0.4, turn:  true, dt:  0.7, v: true },
+            ];
+        }
     },
 
     _createHitCircle: function() {
@@ -279,7 +296,7 @@ gls2.Player = tm.createClass(
         this.controlBit(kb);
 
         // ロール
-        this._calcRoll(kb);
+        this._calcRoll(kb, app.frame);
 
         // バックファイア
         if (app.frame % 2 === 0) {
@@ -297,25 +314,26 @@ gls2.Player = tm.createClass(
         this.gameScene.comboCount = 0;
     },
 
-    /** @protected */
     controlBit: function(kb) {
+        if (this.type !== 1) return;
+
         var p = this.bitPivot;
         if (this.controllable && kb.getKey("left")) {
-            p.rotation = Math.max(p.rotation - 3, -40);
+            p.rotation = Math.max(p.rotation - 5, -50);
         } else if (this.controllable && kb.getKey("right")) {
-            p.rotation = Math.min(p.rotation + 3,  40);
+            p.rotation = Math.min(p.rotation + 5,  50);
         } else {
-            if (3 < p.rotation) {
-                p.rotation -= 3;
-            } else if (p.rotation < -3) {
-                p.rotation += 3;
+            if (5 < p.rotation) {
+                p.rotation -= 5;
+            } else if (p.rotation < -5) {
+                p.rotation += 5;
             } else {
                 p.rotation = 0;
             }
         }
     },
 
-    _calcRoll: function(kb) {
+    _calcRoll: function(kb, frame) {
         if (this.controllable && kb.getKey("left")) {
             this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3);
         } else if (this.controllable && kb.getKey("right")) {
@@ -327,8 +345,13 @@ gls2.Player = tm.createClass(
                 this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3);
             }
         }
-        var frame = 3 + ~~this.roll
-        this.setFrameIndex(frame);
+        if (this.type === 0) {
+            this.setFrameIndex(3 + ~~this.roll);
+        } else if (this.type === 1) {
+            this.setFrameIndex((10 + ~~(frame/2)%3 * 7) + ~~this.roll);
+        } else if (this.type === 2) {
+            this.setFrameIndex(31 + ~~this.roll);
+        }
         return frame;
     },
 

@@ -30,8 +30,8 @@ gls2.ResultScene = tm.createClass(
         1000, // 星アイテム（小）
         2000, // 星アイテム（大）
         4000, // 撃墜率
-        1,    // ノーミス
         1000, // 最大コンボ数
+        1,    // ノーミス
     ],
 
     labelTotal: null,
@@ -154,7 +154,7 @@ gls2.ResultScene = tm.createClass(
                             i*CELL + part.px, j*CELL + part.py, CELL, CELL);
                         part.px += part.vx;
                         part.py += part.vy;
-                        part.vy += 0.2;
+                        part.vy += 0.3;
                         ok = false;
                     }
                 }
