@@ -103,6 +103,7 @@ gls2.Boss = tm.createClass(
             this.soft = this.softwares[2];
             this.soft.setup.call(this);
 
+            gls2.playSound("voJacms");
         }
     },
 

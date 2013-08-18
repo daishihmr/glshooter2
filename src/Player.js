@@ -35,6 +35,8 @@ gls2.Player = tm.createClass(
     superClass: tm.app.Sprite,
 
     type: 0,
+    style: 0,
+
     roll: 0,
     controllable: true,
     muteki: false,
@@ -67,7 +69,7 @@ gls2.Player = tm.createClass(
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
-        this.speed = [5.5, 4.5, 4.0][type];
+        this.speed = [6.0, 5.0, 4.5][type];
 
         this.boundingRadius = 3;
         this.altitude = 10;
@@ -180,10 +182,10 @@ gls2.Player = tm.createClass(
     _createBits: function() {
         if (this.type === 0) {
             return [
-                { x: -60, y:  20, d: 0.0, turn: false, dt: -0.7, v: true },
-                { x: -10, y: -40, d: 0.0, turn: false, dt: -0.5, v: true },
-                { x:  10, y: -40, d: 0.0, turn:  true, dt:  0.5, v: true },
-                { x:  60, y:  20, d: 0.0, turn:  true, dt:  0.7, v: true },
+                { x: -50, y:  20, d: 0.0, turn: false, dt: -0.7, v: true },
+                { x: -20, y:  40, d: 0.0, turn: false, dt: -0.5, v: true },
+                { x:  20, y:  40, d: 0.0, turn:  true, dt:  0.5, v: true },
+                { x:  50, y:  20, d: 0.0, turn:  true, dt:  0.7, v: true },
             ];
         } else if (this.type === 1) {
             return [
@@ -194,10 +196,10 @@ gls2.Player = tm.createClass(
             ];
         } else if (this.type === 2) {
             return [
-                { x: -70, y: 40, d: 0.4, turn: false, dt: -0.7, v: true },
-                { x: -40, y: 20, d: 0.2, turn: false, dt: -0.5, v: true },
-                { x:  40, y: 20, d: 0.2, turn:  true, dt:  0.5, v: true },
-                { x:  70, y: 40, d: 0.4, turn:  true, dt:  0.7, v: true },
+                { x: -60, y: 40, d: 0.6, turn: false, dt: -0.7, v: true },
+                { x: -30, y: 20, d: 0.3, turn: false, dt: -0.5, v: true },
+                { x:  30, y: 20, d: 0.3, turn:  true, dt:  0.5, v: true },
+                { x:  60, y: 40, d: 0.6, turn:  true, dt:  0.7, v: true },
             ];
         }
     },
@@ -315,20 +317,20 @@ gls2.Player = tm.createClass(
     },
 
     controlBit: function(kb) {
-        if (this.type !== 1) return;
-
-        var p = this.bitPivot;
-        if (this.controllable && kb.getKey("left")) {
-            p.rotation = Math.max(p.rotation - 5, -50);
-        } else if (this.controllable && kb.getKey("right")) {
-            p.rotation = Math.min(p.rotation + 5,  50);
-        } else {
-            if (5 < p.rotation) {
-                p.rotation -= 5;
-            } else if (p.rotation < -5) {
-                p.rotation += 5;
+        if (this.type === 1) {
+            var p = this.bitPivot;
+            if (this.controllable && kb.getKey("left")) {
+                p.rotation = Math.max(p.rotation - 3, -50);
+            } else if (this.controllable && kb.getKey("right")) {
+                p.rotation = Math.min(p.rotation + 3,  50);
             } else {
-                p.rotation = 0;
+                if (3 < p.rotation) {
+                    p.rotation -= 3;
+                } else if (p.rotation < -3) {
+                    p.rotation += 3;
+                } else {
+                    p.rotation = 0;
+                }
             }
         }
     },

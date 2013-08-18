@@ -487,6 +487,7 @@ gls2.GameScene = tm.createClass(
         this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
         this.hyperGauge = 0;
         this.hyperRank = 0;
+        this.hyperLevel = 0;
         bulletml.Walker.globalScope["$rank"] = 0;
         this.endHyperMode();
         this.isBombActive = false;
@@ -495,6 +496,8 @@ gls2.GameScene = tm.createClass(
         this.player = gls2.Player(this, playerType);
 
         this.startStage(0);
+
+        gls2.playSound("voLetsGo");
 
         this.startRec();
     },
@@ -662,6 +665,7 @@ gls2.GameScene = tm.createClass(
             this.hyperLevel += 1;
             if (this.hyperLevel === 1) {
                 this.println("HYPER SYSTEM, stand by.", true);
+                gls2.playSound("voHyperStandBy");
             } else {
                 this.println("HYPER SYSTEM, ready.", true);
                 gls2.playSound("voHyperReady");
@@ -675,6 +679,7 @@ gls2.GameScene = tm.createClass(
             this.hyperGauge -= 1;
             if (this.hyperLevel === 1) {
                 this.println("HYPER SYSTEM, stand by.", true);
+                gls2.playSound("voHyperStandBy");
             } else {
                 this.println("HYPER SYSTEM, ready.", true);
                 gls2.playSound("voHyperReady");
@@ -738,6 +743,7 @@ gls2.GameScene = tm.createClass(
 
     extendZanki: function() {
         // TODO エクステンドエフェクト
+        gls2.playSound("voExtend");
         this.println("extended.");
         this.zanki += 1;
     },

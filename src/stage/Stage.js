@@ -83,7 +83,6 @@ gls2.Stage = tm.createClass(
         gls2.fadeOutBgm();
 
         this.gameScene.demoPlaying = true;
-        gls2.playSound("warning");
         var warn = tm.app.Object2D().setPosition(SC_W*0.5, SC_H*0.5);
         for (var i = -4; i <= 4; i++) {
             for (var j = -4; j <= 4; j++) {
@@ -108,11 +107,21 @@ gls2.Stage = tm.createClass(
         warn.tweener
             .wait(3000)
             .call(callback)
-            .wait(3000)
+            .wait(2000)
+            .call(function() {
+                this.execChildren(function() {
+                    this.update = function() {};
+                    this.tweener.clear().fadeOut(500);
+                });
+            }.bind(warn))
+            .wait(1000)
             .call(function() {
                 this.remove();
             }.bind(warn));
         warn.addChildTo(this.gameScene.effectLayer1);
+
+        gls2.playSound("warning");
+        gls2.playSound("voWarning");
     },
 
 });

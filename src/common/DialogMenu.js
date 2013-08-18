@@ -148,9 +148,11 @@ gls2.DialogMenu = tm.createClass(
         } else if (app.keyboard.getKeyDown("down")) {
             this._selected += 1;
             this._selected = gls2.math.clamp(this._selected, 0, this.selections.length-1);
+            gls2.playSound("select");
         } else if (app.keyboard.getKeyDown("up")) {
             this._selected -= 1;
             this._selected = gls2.math.clamp(this._selected, 0, this.selections.length-1);
+            gls2.playSound("select");
         }
     },
 

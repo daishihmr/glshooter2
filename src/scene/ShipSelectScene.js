@@ -3,14 +3,304 @@
  * http://daishihmr.mit-license.org/
  */
 
+(function() {
+
 /** @class */
 gls2.ShipSelectScene = tm.createClass(
 /** @lends {gls2.ShipSelectScene.prototype} */
 {
     superClass: gls2.Scene,
+
+    typeA: null,
+    typeB: null,
+    typeC: null,
+
+    labelType: null,
+    labelStyle: null,
+
+    typeCursor: 0,
+    styleCursor: 0,
+
     /** @constructs */
     init: function() {
         this.superInit();
-        tm.app.Label("This is ShipSelectScene").setAlign("center").setBaseline("middle").setPosition(SC_W/2,SC_H/2).addChildTo(this);
+        tm.app.Label("PLAYER SELECT", 40)
+            .setPosition(SC_W*0.5,SC_H*0.1)
+            .addChildTo(this);
+
+        this.addEventListener("enter", function() {
+            gls2.playSound("voSelectShip");
+        });
+
+        this.setupTypes();
+        this.setupStyles();
+
+        this.moveCursor(0);
     },
+
+    setupTypes: function() {
+        this.labelType = tm.app.Label("Type-A").setPosition(SC_W*0.25, 150);
+        this.labelType.addChildTo(this);
+
+        var typeDescription = [
+            "一点集中型\nスピード：最速\n\n絶大な威力を誇る\n正面火力と\nスピードで\n敵を蹂躙する",
+            "可変型\nスピード：中\n\n正面と両サイドに\n撃ち分けできる\n可変型ビットを持つ\nテクニカルな機体",
+            "広範囲型\nスピード：遅\n\n広範囲に攻撃可能な\nワイドショットを\n持つ機体\n強力な雑魚掃討能力",
+        ];
+
+        this.labelTypeDescription = tm.app.Label(typeDescription[0], 16).setPosition(SC_W*0.25, 500);
+        this.labelTypeDescription.update = function() {
+            this.labelTypeDescription.text = typeDescription[this.typeCursor];
+        }.bind(this);
+        this.labelTypeDescription.addChildTo(this);
+
+        this.labelStyle = tm.app.Label("Shot Style").setPosition(SC_W*0.75, 150);
+        this.labelStyle.addChildTo(this);
+
+        var left = tm.app.TriangleShape(20, 20, {
+            fillStyle: "rgba(255,255,255,0.7)",
+            strokeStyle: "transparent"
+        }).setPosition(SC_W*0.25-90, 150).setRotation(-90);
+        left.update = function(app) {
+            this.setScale(app.keyboard.getKey("left") ? 2 : 1);
+        };
+        left.addChildTo(this);
+        var right = tm.app.TriangleShape(20, 20, {
+            fillStyle: "rgba(255,255,255,0.7)",
+            strokeStyle: "transparent"
+        }).setPosition(SC_W*0.25+90, 150).setRotation(90);
+        right.update = function(app) {
+            this.setScale(app.keyboard.getKey("right") ? 2 : 1);
+        };
+        right.addChildTo(this);
+        var up = tm.app.TriangleShape(20, 20, {
+            fillStyle: "rgba(255,255,255,0.7)",
+            strokeStyle: "transparent"
+        }).setPosition(SC_W*0.75, 150-30).setRotation(0);
+        up.update = function(app) {
+            this.setScale(app.keyboard.getKey("up") ? 2 : 1);
+        };
+        up.addChildTo(this);
+        var down = tm.app.TriangleShape(20, 20, {
+            fillStyle: "rgba(255,255,255,0.7)",
+            strokeStyle: "transparent"
+        }).setPosition(SC_W*0.75, 150+30).setRotation(180);
+        down.update = function(app) {
+            this.setScale(app.keyboard.getKey("down") ? 2 : 1);
+        };
+        down.addChildTo(this);
+
+        var typeBSpriteSheet = tm.app.SpriteSheet({
+            image: "fighter",
+            frame: {
+                width: 64,
+                height: 64,
+            },
+            animations: {
+                "typeB": {
+                    frames: [10, 17, 24],
+                    next: "typeB",
+                    frequency: 2
+                },
+            },
+        });
+
+        this.typeA = tm.app.Sprite("fighter", 64, 64).setFrameIndex(3);
+        this.typeB = tm.app.AnimationSprite(typeBSpriteSheet, 64, 64).gotoAndPlay("typeB");
+        this.typeC = tm.app.Sprite("fighter", 64, 64).setFrameIndex(31);
+
+        this.typeA.pos = 0;
+        this.typeB.pos = 1;
+        this.typeC.pos = 2;
+
+        this.typeA.setScale(3).setPosition(0, SC_H*0.5).addChildTo(this);
+        this.typeB.setPosition(0, SC_H*0.5).addChildTo(this);
+        this.typeC.setPosition(0, SC_H*0.5).addChildTo(this);
+        this.typeA.update = function() {
+            this.x = SC_W*0.25 + Math.sin(this.pos/3 * Math.PI*2) * 60;
+        };
+        this.typeB.update = function() {
+            this.x = SC_W*0.25 + Math.sin(this.pos/3 * Math.PI*2) * 60;
+        };
+        this.typeC.update = function() {
+            this.x = SC_W*0.25 + Math.sin(this.pos/3 * Math.PI*2) * 60;
+        };
+    },
+
+    setupStyles: function() {
+        this.styleBase = tm.app.TriangleShape(40, 40, {
+            fillStyle: "hsla(180, 80%, 80%, 0.5)",
+            strokeStyle: "transparent"
+        }).setPosition(SC_W*0.75, SC_H*0.6).addChildTo(this);
+
+        this.styleBits = [];
+        this.styleBits[0] = tm.app.TriangleShape(20, 20, {
+            fillStyle: "hsla(180, 80%, 80%, 0.5)",
+            strokeStyle: "transparent"
+        }).setPosition(-30, 10).setRotation(-5);
+        this.styleBits[1] = tm.app.TriangleShape(20, 20, {
+            fillStyle: "hsla(180, 80%, 80%, 0.5)",
+            strokeStyle: "transparent"
+        }).setPosition(+30, 10).setRotation(+5);
+        this.styleBits[2] = tm.app.TriangleShape(20, 20, {
+            fillStyle: "hsla(180, 80%, 80%, 0.5)",
+            strokeStyle: "transparent"
+        }).setPosition(-50, 20).setRotation(-10);
+        this.styleBits[3] = tm.app.TriangleShape(20, 20, {
+            fillStyle: "hsla(180, 80%, 80%, 0.5)",
+            strokeStyle: "transparent"
+        }).setPosition(+50, 20).setRotation(+10);
+
+        this.styleBase.line = ShotLine(0, 0, 0, 130, 8);
+        this.styleBase.line.addChildTo(this.styleBase);
+        this.styleBits.each(function(b) {
+            b.line = ShotLine(0, 0, 0, 130, 5);
+            b.line.addChildTo(b);
+            b.addChildTo(this.styleBase);
+        }.bind(this));
+
+        var styleDescription = [
+            "ショット強化型\n\nビットを４つ装備した\nショット重視のスタイル",
+            "レーザー強化型\n\nレーザーの威力に優れ\n対大型機戦で\n有利なスタイル",
+            "エキスパート強化型\n\nショットとレーザーの\n両方が強化されたスタイル\n\nゲーム難易度が上昇する\n<<上級者向け>>",
+        ];
+
+        this.labelStyleDescription = tm.app.Label(styleDescription[0], 16).setPosition(SC_W*0.75, 500);
+        this.labelStyleDescription.update = function() {
+            this.labelStyleDescription.text = styleDescription[this.styleCursor];
+        }.bind(this);
+        this.labelStyleDescription.addChildTo(this);
+    },
+
+    moving: false,
+
+    update: function(app) {
+        if (!this.moving && app.keyboard.getKeyDown("left")) {
+            this.moveCursor(-1);
+            gls2.playSound("select");
+        } else if (!this.moving && app.keyboard.getKeyDown("right")) {
+            this.moveCursor(1);
+            gls2.playSound("select");
+        } else if (app.keyboard.getKeyDown("up")) {
+            this.styleCursor = (this.styleCursor - 1 + 3) % 3;
+        } else if (app.keyboard.getKeyDown("down")) {
+            this.styleCursor = (this.styleCursor + 1 + 3) % 3;
+        } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
+            this.startGame();
+        }
+        this.updateStyle(~~(app.frame/60) % 2 === 0);
+    },
+
+    moveCursor: function(incr) {
+        this.moving = true;
+
+        this.typeCursor = (this.typeCursor + incr + 3) % 3;
+
+        [this.typeA, this.typeB, this.typeC][this.typeCursor].remove().addChildTo(this);
+
+        this.typeA.tweener.clear().to({pos: this.typeA.pos-incr, scaleX:(this.typeCursor === 0 ? 3 : 1), scaleY:(this.typeCursor === 0 ? 3 : 1)}, 300);
+        this.typeB.tweener.clear().to({pos: this.typeB.pos-incr, scaleX:(this.typeCursor === 1 ? 3 : 1), scaleY:(this.typeCursor === 1 ? 3 : 1)}, 300);
+        this.typeC.tweener.clear().to({pos: this.typeC.pos-incr, scaleX:(this.typeCursor === 2 ? 3 : 1), scaleY:(this.typeCursor === 2 ? 3 : 1)}, 300);
+        this.tweener.clear().wait(400).call(function() {
+            this.moving = false;
+        }.bind(this));
+
+        // [ this.typeA, this.typeB, this.typeC ][this.typeCursor].tweener
+        //     .clear()
+        //     .scale(2, 300);
+
+        this.labelType.text = ["Type-A", "Type-B", "Type-C"][this.typeCursor];
+    },
+
+    startGame: function() {
+        gls2.core.gameScene.start(this.typeCursor);
+        gls2.core.replaceScene(gls2.core.gameScene);
+    },
+
+    updateStyle: function(shot) {
+        this.labelStyle.text = ["Shot", "Laser", "Expert"][this.styleCursor] + " Style";
+        if (shot) {
+            this.styleBits[0].visible = true;
+            this.styleBits[1].visible = true;
+            if (this.styleCursor === 1) {
+                this.styleBits[2].visible = false;
+                this.styleBits[3].visible = false;
+            } else {
+                this.styleBits[2].visible = true;
+                this.styleBits[3].visible = true;
+            }
+            this.styleBase.line.lineWidth = 5;
+        } else {
+            this.styleBits.each(function(b) { b.visible = false });
+            if (this.styleCursor === 0) {
+                this.styleBase.line.lineWidth = 10;
+            } else {
+                this.styleBase.line.lineWidth = 20;
+            }
+        }
+    },
+
+    draw: function(canvas) {
+        canvas.clearColor(
+            tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
+                .addColorStopList([
+                    { offset: 0.0, color: "hsl(220, 90%, 60%)" },
+                    { offset: 1.0, color: "hsl(220, 90%, 10%)" },
+                ])
+                .toStyle()
+        );
+
+        canvas.lineWidth = 1;
+        canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
+            .addColorStopList([
+                { offset: 0.0, color: "hsl(200, 90%, 10%)" },
+                { offset: 1.0, color: "hsl(200, 90%, 60%)" },
+            ])
+            .toStyle();
+        canvas.beginPath();
+        var yy = 0;
+        for (var x = 0-C*3; x < SC_W+C*3; x += C*1.5) {
+            yy = (yy === 0) ? L : 0;
+            for (var y = -L*2 + yy; y < SC_H+L*2; y += L*2) {
+                canvas.line(x, y, x + C, y);
+                canvas.line(x, y, x - C/2, y + L);
+                canvas.line(x, y, x - C/2, y - L);
+            }
+        }
+        canvas.stroke();
+
+        canvas.fillStyle = "hsla(220, 90%, 10%, 0.6)";
+        canvas.fillRect(10, 10, SC_W-10*2, SC_H-10*2);
+    }
+
 });
+
+var ShotLine = tm.createClass({
+    superClass: tm.app.CanvasElement,
+    init: function(x, y, angle, length, width) {
+        this.superInit();
+        this.angle = angle-Math.PI*0.5;
+        this.x = x + Math.cos(this.angle)*10;
+        this.y = y + Math.sin(this.angle)*10;
+        this.length = length;
+        this.fillStyle = this.strokeStyle = "hsla(180, 80%, 80%, 1.0)";
+        this.i = 0;
+        this.lineWidth = width;
+    },
+    update: function(app) {
+        this.i = (app.frame%20) / 20;
+    },
+    draw: function(canvas) {
+        canvas.lineWidth = this.lineWidth;
+        canvas.drawArrow(this.x, this.y,
+            Math.cos(this.angle)*this.length*this.i+this.x,
+            Math.sin(this.angle)*this.length*this.i+this.y, this.lineWidth*1.2);
+    },
+})
+
+/** @const */
+var C = 8 * 2;
+/** @const */
+var L = C/2*Math.sqrt(3);
+
+})();
