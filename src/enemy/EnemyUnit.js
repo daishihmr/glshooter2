@@ -8,7 +8,11 @@
 var $s = gls2.EnemySoft;
 var $h = gls2.EnemyHard;
 
-/** 敵の編隊 */
+/**
+ * 敵の編隊データ
+ *
+ * 
+ */
 gls2.EnemyUnit = {
 
 /** ヘリ5機。左側から */

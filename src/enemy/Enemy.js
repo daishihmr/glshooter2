@@ -13,33 +13,65 @@ gls2.Enemy = tm.createClass(
 {
     superClass: tm.app.CanvasElement,
 
-    frame: 0,
-    direction: 0,
-    speed: 0,
-
-    /** @type {gls2.Player} */
+    /** 
+     * 自機
+     * @type {gls2.Player}
+     */
     player: null,
-    /** @type {gls2.GameScene} */
+    /**
+     * GameScene
+     * @type {gls2.GameScene}
+     */
     gameScene: null,
-    /** @type {gls2.EnemyHard} */
+    /** 
+     * 敵のスペックと描画処理
+    　* @type {gls2.EnemyHard}
+     */
     hard: null,
-    /** @type {gls2.EnemySoft} */
+    /** 
+     * 行動パターン
+     * @type {gls2.EnemySoft}
+     */
     soft: null,
 
+    /**
+     * 耐久力
+     * 0以下になったら破壊される
+     */
     hp: 0,
+    /** 撃破時の素点 */
     score: 0,
+    /** 地上物か */
     isGround: false,
+
+    /** 破壊時に弾消しが発生するか */
     erase: false,
+    /** 破壊時の星アイテム出現数 */
     star: 1,
 
+    /** ステージボス */
     isBoss: false,
 
+    /** 弾発射可能フラグ */
     enableFire: true,
 
-    /** 出現してから一度でも可視範囲に入ったか */
+    /** 
+     * 出現してから一度でも可視範囲に入ったか
+     * 一度完全に画面に入りきるまではダメージを受けない（攻撃は命中する）
+     */
     entered: false,
+    /**
+     * 可視範囲に入った時点からの経過フレーム
+     */
+    frame: 0,
 
+    /**
+     * 速度
+     * 爆風の移動計算用
+     */
     velocity: null,
+    direction: 0,
+    speed: 0,
 
     /**
      * @constructs
@@ -82,16 +114,28 @@ gls2.Enemy = tm.createClass(
 
         this.velocity = {x:0, y:0};
     },
+
+    /**
+     * 出現時に呼び出される
+     */
     onLaunch: function() {
         this.soft.onLaunch.apply(this);
         this.hard.onLaunch.apply(this);
 
         return this;
     },
+
+    /**
+     * BulletMLによる攻撃が完了した時に呼び出される
+     */
     onCompleteAttack: function() {
         this.soft.onCompleteAttack.apply(this);
         this.hard.onCompleteAttack.apply(this);
     },
+
+    /**
+     * 毎フレーム呼び出される
+     */
     update: function() {
         if (this.entered === false
             && 0 <= this.x - this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
@@ -118,6 +162,11 @@ gls2.Enemy = tm.createClass(
         this.velocity.x = this.x - before.x;
         this.velocity.y = this.y - before.y;
     },
+
+    /**
+     * ダメージを受ける
+     * @return {boolean} このダメージによって破壊された場合はtrueを返す
+     */
     damage: function(damagePoint) {
         // 可視範囲に入ったことのない敵はダメージを受けない
         if (!this.entered) return false;
@@ -151,16 +200,27 @@ gls2.Enemy = tm.createClass(
         this.hard.draw.call(this, canvas);
     },
 
+    /**
+     * 現在画面内に入っているか
+     */
     isInScreen: function() {
         return 0 <= this.x + this.width/2 && this.x - this.width/2 < SC_W
             && 0 <= this.y + this.height/2 && this.y - this.height/2 < SC_H;
     },
 
+    /**
+     * 弾を発射する直前に呼び出される
+     * @return {boolean} falseを返すと弾の発射をキャンセルする
+     */
     onfire: function() {
         return this.enableFire;
     },
 
 });
+
+/**
+ * すべての敵を退場させる
+ */
 gls2.Enemy.clearAll = function() {
     var copied = [].concat(activeList);
     for (var i = 0, end = copied.length; i < end; i++) {
@@ -168,6 +228,10 @@ gls2.Enemy.clearAll = function() {
     }
 };
 
+/**
+ * GameScene上に出現しているすべての敵のリスト
+ * @type {Array.<gls2.Enemy>}
+ */
 var activeList = gls2.Enemy.activeList = [];
 
 })();

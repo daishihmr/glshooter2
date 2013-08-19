@@ -9,6 +9,7 @@
 /** @const */
 var DATA = {
     //name         hp     score   ground erase  star
+    //名前          耐久力  素点    地上物判定 破壊時の弾消し 破壊時の星アイテム排出数
     "kujo":      [     2,      300, false, false,  1 ],
     "kiryu":     [     3,      400, false, false,  1 ],
     "natsuki":   [     5,      900,  true, false,  1 ],
