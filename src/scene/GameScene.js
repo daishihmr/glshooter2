@@ -374,7 +374,7 @@ gls2.GameScene = tm.createClass(
                     if (e.isGround) continue;
                     if (gls2.Collision.isHit(e, this.player)) {
                         this.player.damage();
-                        if (this.bomb > 0) {
+                        if (this.bomb > 0 && this.autoBomb) {
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
                             bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);

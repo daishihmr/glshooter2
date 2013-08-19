@@ -52,6 +52,7 @@ gls2.Enemy = tm.createClass(
         });
         this.addEventListener("added", function() {
             this.frame = 0;
+            this.entered = false;
             activeList.push(this);
         });
         this.addEventListener("removed", function() {
@@ -61,7 +62,6 @@ gls2.Enemy = tm.createClass(
         });
 
         this.enableFire = true;
-        this.entered = false;
 
         this.gameScene = gameScene;
         this.player = gameScene.player;
@@ -112,7 +112,8 @@ gls2.Enemy = tm.createClass(
             this.x += this.gameScene.ground.dx;
             this.y += this.gameScene.ground.dy;
         }
-        this.frame += 1;
+
+        if (this.entered) this.frame += 1;
 
         this.velocity.x = this.x - before.x;
         this.velocity.y = this.y - before.y;

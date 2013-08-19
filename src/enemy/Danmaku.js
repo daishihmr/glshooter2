@@ -191,9 +191,9 @@ gls2.Danmaku["honoka-1"] = new bulletml.Root({
     "top0": $.action([
         $.wait(60),
         $.repeat(10, [
-            $nway(6, -40, 40, $spd3, $.bullet({ball:true,frame:4})),
+            $nway(6, -40, 40, $spd3, $.bullet({ball:true,frame:4}), $.offsetX(0), $.offsetY(30)),
             $interval(30),
-            $nway(7, -40, 40, $spd2, $.bullet({ball:true,frame:4})),
+            $nway(7, -40, 40, $spd2, $.bullet({ball:true,frame:4}), $.offsetX(0), $.offsetY(30)),
             $interval(30),
         ]),
     ]),
@@ -209,13 +209,13 @@ gls2.Danmaku["honoka-1"] = new bulletml.Root({
     ]),
     "top2": $.action([
         $.repeat(20, [
-            $absoluteNway(12, -10, -170, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(-80)),
+            $absoluteNway(12, -10, -170, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(-110), $.offsetY(-70)),
             $interval(30),
         ]),
     ]),
     "top3": $.action([
         $.repeat(20, [
-            $absoluteNway(12, +10, +170, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(+80)),
+            $absoluteNway(12, +10, +170, $spd1, $.bullet({ball:true,frame:0}), $.offsetX(+110), $.offsetY(-70)),
             $interval(30),
         ]),
     ]),

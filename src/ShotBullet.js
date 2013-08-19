@@ -16,6 +16,7 @@ gls2.ShotBullet = tm.createClass({
         var SZ = 64;
         this.superInit("shotbullet", SZ, SZ);
         this.blendMode = "lighter";
+        // this.alpha = 0.8;
 
         if (origParticle === null) {
             var size = 16;
@@ -53,11 +54,11 @@ gls2.ShotBullet = tm.createClass({
         if (col === 3) {
             this.speed = 45;
             this.boundingRadius = 48;
-            this.setScale(2.0, 2.0);
+            this.setScale(1.0, 1.0); // TODO ハイパーレベルに応じてでかくする
         } else {
             this.speed = 30;
             this.boundingRadius = 32;
-            this.setScale(1.5, 1.5);
+            this.setScale(1.0, 1.0);
         }
     },
 

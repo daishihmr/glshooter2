@@ -112,11 +112,11 @@ gls2.EnemyUnit = {
 
 /** 戦車5台。右から */
 "tankL-top": [
-    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*1, y:SC_H*-0.2 },
-    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*2, y:SC_H*-0.2 },
-    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*3, y:SC_H*-0.2 },
-    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*4, y:SC_H*-0.2 },
-    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*5, y:SC_H*-0.2 },
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*1, y:SC_H*0.1 },
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*2, y:SC_H*0.1 },
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*3, y:SC_H*0.1 },
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*4, y:SC_H*0.1 },
+    { soft:$s.TankL, hard:$h.Tank1, x:SC_W+70*5, y:SC_H*0.1 },
 ],
 
 "cannon-0": [

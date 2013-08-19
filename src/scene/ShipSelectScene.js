@@ -18,8 +18,8 @@ gls2.ShipSelectScene = tm.createClass(
     labelType: null,
     labelStyle: null,
 
-    typeCursor: 0,
-    styleCursor: 0,
+    type: 0,
+    style: 0,
     autoBomb: false,
 
     /** @constructs */
@@ -51,7 +51,7 @@ gls2.ShipSelectScene = tm.createClass(
 
         this.labelTypeDescription = tm.app.Label(typeDescription[0], 16).setPosition(SC_W*0.25, 500);
         this.labelTypeDescription.update = function() {
-            this.labelTypeDescription.text = typeDescription[this.typeCursor];
+            this.labelTypeDescription.text = typeDescription[this.type];
         }.bind(this);
         this.labelTypeDescription.addChildTo(this);
 
@@ -137,7 +137,7 @@ gls2.ShipSelectScene = tm.createClass(
         this.bitPivot = tm.app.Object2D();
         this.bitPivot.addChildTo(this.styleBase);
         this.bitPivot.update = function(app) {
-            if (this.typeCursor === 1) {
+            if (this.type === 1) {
                 this.bitPivot.rotation = Math.sin(app.frame * 0.1) * 45;
             } else {
                 this.bitPivot.rotation = 0;
@@ -151,11 +151,11 @@ gls2.ShipSelectScene = tm.createClass(
             strokeStyle: "transparent"
         });
         this.styleBits[0].update = function() {
-            if (this.typeCursor === 0) {
+            if (this.type === 0) {
                 this.styleBits[0].setPosition(-30, 20).setRotation(0);
-            } else if (this.typeCursor === 1) {
+            } else if (this.type === 1) {
                 this.styleBits[0].setPosition(-30, 20).setRotation(-5);
-            } else if (this.typeCursor === 2) {
+            } else if (this.type === 2) {
                 this.styleBits[0].setPosition(-30, 10).setRotation(-10);
             }
         }.bind(this);
@@ -165,11 +165,11 @@ gls2.ShipSelectScene = tm.createClass(
             strokeStyle: "transparent"
         });
         this.styleBits[1].update = function() {
-            if (this.typeCursor === 0) {
+            if (this.type === 0) {
                 this.styleBits[1].setPosition(+30, 20).setRotation(0);
-            } else if (this.typeCursor === 1) {
+            } else if (this.type === 1) {
                 this.styleBits[1].setPosition(+30, 20).setRotation(+5);
-            } else if (this.typeCursor === 2) {
+            } else if (this.type === 2) {
                 this.styleBits[1].setPosition(+30, 10).setRotation(+10);
             }
         }.bind(this);
@@ -179,11 +179,11 @@ gls2.ShipSelectScene = tm.createClass(
             strokeStyle: "transparent"
         });
         this.styleBits[2].update = function() {
-            if (this.typeCursor === 0) {
+            if (this.type === 0) {
                 this.styleBits[2].setPosition(-50, 10).setRotation(0);
-            } else if (this.typeCursor === 1) {
+            } else if (this.type === 1) {
                 this.styleBits[2].setPosition(-50, 10).setRotation(-10);
-            } else if (this.typeCursor === 2) {
+            } else if (this.type === 2) {
                 this.styleBits[2].setPosition(-50, 20).setRotation(-20);
             }
         }.bind(this);
@@ -193,11 +193,11 @@ gls2.ShipSelectScene = tm.createClass(
             strokeStyle: "transparent"
         });
         this.styleBits[3].update = function() {
-            if (this.typeCursor === 0) {
+            if (this.type === 0) {
                 this.styleBits[3].setPosition(+50, 10).setRotation(0);
-            } else if (this.typeCursor === 1) {
+            } else if (this.type === 1) {
                 this.styleBits[3].setPosition(+50, 10).setRotation(+10);
-            } else if (this.typeCursor === 2) {
+            } else if (this.type === 2) {
                 this.styleBits[3].setPosition(+50, 20).setRotation(+20);
             }
         }.bind(this);
@@ -218,7 +218,7 @@ gls2.ShipSelectScene = tm.createClass(
 
         this.labelStyleDescription = tm.app.Label(styleDescription[0], 16).setPosition(SC_W*0.75, 500);
         this.labelStyleDescription.update = function() {
-            this.labelStyleDescription.text = styleDescription[this.styleCursor];
+            this.labelStyleDescription.text = styleDescription[this.style];
         }.bind(this);
         this.labelStyleDescription.addChildTo(this);
     },
@@ -233,9 +233,9 @@ gls2.ShipSelectScene = tm.createClass(
             this.moveCursor(1);
             gls2.playSound("select");
         } else if (app.keyboard.getKeyDown("up")) {
-            this.styleCursor = (this.styleCursor - 1 + 3) % 3;
+            this.style = (this.style - 1 + 3) % 3;
         } else if (app.keyboard.getKeyDown("down")) {
-            this.styleCursor = (this.styleCursor + 1 + 3) % 3;
+            this.style = (this.style + 1 + 3) % 3;
         } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
             this.openAutoBombDialog();
         }
@@ -243,17 +243,17 @@ gls2.ShipSelectScene = tm.createClass(
     },
 
     openAutoBombDialog: function() {
-        this.openDialogMenu("AUTO BOMB", [ "off", "on" ], this.onResultAutoBombDialog, {
+        this.openDialogMenu("AUTO BOMB", [ "on", "off", ], this.onResultAutoBombDialog, {
             "defaultValue": 0,
             "menuDescriptions": [
-                "ボンバーの投下は手動でのみ行います。ミス時にボムスロットが増加します",
                 "被弾時に自動でボンバーを投下します",
+                "ボンバーの投下は手動でのみ行います。ミス時に最大ボム数が増加します",
             ],
             "showExit": false,
         });
     },
     onResultAutoBombDialog: function(result) {
-        this.autoBomb = result === 1;
+        this.autoBomb = result === 0;
         this.openConfirmDialog();
     },
 
@@ -267,43 +267,39 @@ gls2.ShipSelectScene = tm.createClass(
             "showExit": false,
         });
     },
-    onResultConfirmDialog: function() {
-        this.startGame();
+    onResultConfirmDialog: function(result) {
+        if (result === 0) this.startGame();
     },
 
     moveCursor: function(incr) {
         this.moving = true;
 
-        this.typeCursor = (this.typeCursor + incr + 3) % 3;
+        this.type = (this.type + incr + 3) % 3;
 
-        [this.typeA, this.typeB, this.typeC][this.typeCursor].remove().addChildTo(this);
+        [this.typeA, this.typeB, this.typeC][this.type].remove().addChildTo(this);
 
-        this.typeA.tweener.clear().to({pos: this.typeA.pos-incr, scaleX:(this.typeCursor === 0 ? 3 : 1), scaleY:(this.typeCursor === 0 ? 3 : 1)}, 300);
-        this.typeB.tweener.clear().to({pos: this.typeB.pos-incr, scaleX:(this.typeCursor === 1 ? 3 : 1), scaleY:(this.typeCursor === 1 ? 3 : 1)}, 300);
-        this.typeC.tweener.clear().to({pos: this.typeC.pos-incr, scaleX:(this.typeCursor === 2 ? 3 : 1), scaleY:(this.typeCursor === 2 ? 3 : 1)}, 300);
-        this.tweener.clear().wait(400).call(function() {
+        this.typeA.tweener.clear().to({pos: this.typeA.pos-incr, scaleX:(this.type === 0 ? 3 : 1), scaleY:(this.type === 0 ? 3 : 1)}, 300);
+        this.typeB.tweener.clear().to({pos: this.typeB.pos-incr, scaleX:(this.type === 1 ? 3 : 1), scaleY:(this.type === 1 ? 3 : 1)}, 300);
+        this.typeC.tweener.clear().to({pos: this.typeC.pos-incr, scaleX:(this.type === 2 ? 3 : 1), scaleY:(this.type === 2 ? 3 : 1)}, 300);
+        this.tweener.clear().wait(310).call(function() {
             this.moving = false;
         }.bind(this));
 
-        // [ this.typeA, this.typeB, this.typeC ][this.typeCursor].tweener
-        //     .clear()
-        //     .scale(2, 300);
-
-        this.labelType.text = ["Type-A", "Type-B", "Type-C"][this.typeCursor];
+        this.labelType.text = ["Type-A", "Type-B", "Type-C"][this.type];
     },
 
     startGame: function() {
         gls2.core.gameScene.autoBomb = this.autoBomb;
-        gls2.core.gameScene.start(this.typeCursor, this.styleCursor);
+        gls2.core.gameScene.start(this.type, this.style);
         gls2.core.replaceScene(gls2.core.gameScene);
     },
 
     updateStyle: function(shot) {
-        this.labelStyle.text = ["Shot", "Laser", "Expert"][this.styleCursor] + " Style";
+        this.labelStyle.text = ["Shot", "Laser", "Expert"][this.style] + " Style";
         if (shot) {
             this.styleBits[0].visible = true;
             this.styleBits[1].visible = true;
-            if (this.styleCursor === 1) {
+            if (this.style === 1) {
                 this.styleBits[2].visible = false;
                 this.styleBits[3].visible = false;
             } else {
@@ -313,7 +309,7 @@ gls2.ShipSelectScene = tm.createClass(
             this.styleBase.line.lineWidth = 5;
         } else {
             this.styleBits.each(function(b) { b.visible = false });
-            if (this.styleCursor === 0) {
+            if (this.style === 0) {
                 this.styleBase.line.lineWidth = 10;
             } else {
                 this.styleBase.line.lineWidth = 20;
