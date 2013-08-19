@@ -46,8 +46,6 @@ var fallDown = function() {
         .to({
             "altitude": 2,
             "y": this.y + 200,
-            "scaleX": 0.9,
-            "scaleY": 0.9,
             "rotation": Math.rand(-10, 10),
         }, 2000)
         .call(function() {
@@ -122,7 +120,7 @@ gls2.EnemyHard.Heri1 = tm.createClass(
     setup: function() {
         setData("kujo", this);
 
-        this._sprite = _Sprite("tex1", 64, 64);
+        this._sprite = _Sprite("tex_stage1", 64, 64);
         this.boundingRadius = 24;
     },
     update: function() {
@@ -134,9 +132,9 @@ gls2.EnemyHard.Heri1 = tm.createClass(
     },
     draw: function(canvas) {
         if (this.frame % 4 < 2) {
-            this._sprite.setFrameIndex(7);
+            this._sprite.setFrameIndex(0);
         } else {
-            this._sprite.setFrameIndex(8);
+            this._sprite.setFrameIndex(1);
         }
         this._sprite.draw(canvas);
     }
@@ -158,7 +156,7 @@ gls2.EnemyHard.Heri2 = tm.createClass(
     setup: function() {
         setData("kiryu", this);
 
-        this._sprite = _Sprite("tex1", 64, 64);
+        this._sprite = _Sprite("tex_stage1", 64, 64);
         this.boundingRadius = 24;
     },
     update: function() {
@@ -170,9 +168,9 @@ gls2.EnemyHard.Heri2 = tm.createClass(
     },
     draw: function(canvas) {
         if (this.frame % 4 < 2) {
-            this._sprite.setFrameIndex(9);
+            this._sprite.setFrameIndex(8);
         } else {
-            this._sprite.setFrameIndex(10);
+            this._sprite.setFrameIndex(9);
         }
         this._sprite.draw(canvas);
     }
@@ -189,40 +187,20 @@ gls2.EnemyHard.Tank1 = tm.createClass({
     },
     setup: function() {
         setData("natsuki", this);
+        this._sprite1 = _Sprite("tex_tank1", 64, 64);
+        this._sprite2 = _Sprite("tex_tank1", 64, 64);
+        this.baseDir = this.baseDir || 0;
+        this.cannonDir = this.cannonDir || 0;
 
-        this._sprite = _Sprite("tex1", 48, 48);
         this.boundingRadius = 24;
     },
     update: function() {
-        switch (~~(this.dir/(Math.PI*0.25))) {
-        case 0:
-            this._sprite.setFrameIndex(16, 64, 64);
-            break;
-        case 1:
-            this._sprite.setFrameIndex(24, 64, 64);
-            break;
-        case 2:
-            this._sprite.setFrameIndex(23, 64, 64);
-            break;
-        case 3:
-            this._sprite.setFrameIndex(11, 64, 64);
-            break;
-        case 4:
-            this._sprite.setFrameIndex(12, 64, 64);
-            break;
-        case 5:
-            this._sprite.setFrameIndex(13, 64, 64);
-            break;
-        case 6:
-            this._sprite.setFrameIndex(14, 64, 64);
-            break;
-        case 7:
-            this._sprite.setFrameIndex(15, 64, 64);
-            break;
-        }
+        this._sprite1.setFrameIndex(~~(this.baseDir*16/(Math.PI*2)), 64, 64);
+        this._sprite2.setFrameIndex(~~(this.cannonDir*16/(Math.PI*2)) + 16, 64, 64);
     },
     draw: function(canvas) {
-        this._sprite.draw(canvas);
+        this._sprite1.draw(canvas);
+        this._sprite2.draw(canvas);
     },
     destroy: function() {
         gls2.Effect.explodeGS(this.x, this.y, this.gameScene);
@@ -252,11 +230,8 @@ gls2.EnemyHard.FighterM = tm.createClass(
     setup: function() {
         setData("kurokawa", this);
 
-        this._sprite = _Sprite("tex1", 128, 128);
-        this._sprite.srcRect.x = 64*5;
-        this._sprite.srcRect.y = 64*2;
-        this._sprite.srcRect.width = 64*2;
-        this._sprite.srcRect.height = 64*2;
+        this._sprite = _Sprite("tex_stage1", 64*2, 64*2);
+        this._sprite.setFrameIndex(1);
         this.boundingWidth = 100;
         this.boundingHeight = 20;
     },
@@ -285,11 +260,8 @@ gls2.EnemyHard.Komachi = tm.createClass(
     setup: function() {
         setData("akimoto", this);
 
-        this._sprite = _Sprite("tex1", 64*4, 64*2);
-        this._sprite.srcRect.x = 64*1;
-        this._sprite.srcRect.y = 64*2;
-        this._sprite.srcRect.width = 64*4;
-        this._sprite.srcRect.height = 64*2;
+        this._sprite = _Sprite("tex_stage1", 64*4, 64*2);
+        this._sprite.setFrameIndex(1);
         this.boundingWidth = 200;
         this.boundingHeightBottom = 10;
         this.boundingHeightTop = 60;
@@ -316,11 +288,8 @@ gls2.EnemyHard.Cannon = tm.createClass({
     setup: function() {
         setData("kise", this);
 
-        this._sprite = _Sprite("tex1", 64*2, 64*2);
-        this._sprite.srcRect.x = 64*2;
-        this._sprite.srcRect.y = 64*4;
-        this._sprite.srcRect.width = 64*2;
-        this._sprite.srcRect.height = 64*2;
+        this._sprite = _Sprite("tex_stage1", 64*2, 64*2);
+        this._sprite.setFrameIndex(5);
         this.boundingWidth = 20;
         this.boundingHeight = 20;
     },
@@ -352,6 +321,9 @@ gls2.EnemyHard.Honoka = tm.createClass({
     },
     setup: function() {
         setData("yukishiro", this);
+        this._sprite = _Sprite("tex_stage1", 64*4, 64*2);
+        this._sprite.setFrameIndex(3);
+        this.setScale(1.5);
 
         this.boundingWidth = 200;
         this.boundingHeight = 80;
@@ -360,8 +332,7 @@ gls2.EnemyHard.Honoka = tm.createClass({
         fallDown.call(this);
     },
     draw: function(canvas) {
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-100, -40, 200, 80);
+        this._sprite.draw(canvas);
     },
 });
 gls2.EnemyHard.Honoka = gls2.EnemyHard.Honoka();
@@ -396,13 +367,15 @@ gls2.EnemyHard.Nagisa = tm.createClass(
     },
     setup: function() {
         setData("misumi", this);
+        this._sprite = _Sprite("tex_stage1", 64*4, 64*2);
+        this._sprite.setFrameIndex(4);
+        this.setScale(2);
 
         this.boundingWidth = 200;
         this.boundingHeight = 150;
     },
     draw: function(canvas) {
-        canvas.strokeStyle = "yellow";
-        canvas.strokeRect(-100, -75, 200, 150);
+        this._sprite.draw(canvas);
     },
     destroy: function() {
         bossExplode.call(this);

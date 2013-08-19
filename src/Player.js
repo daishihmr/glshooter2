@@ -34,7 +34,17 @@ gls2.Player = tm.createClass(
 {
     superClass: tm.app.Sprite,
 
+    /**
+     * 0:赤
+     * 1:緑
+     * 2:青
+     */
     type: 0,
+    /**
+     * 0:ショット
+     * 1:レーザー
+     * 2:エキスパート
+     */
     style: 0,
 
     roll: 0,
@@ -61,11 +71,12 @@ gls2.Player = tm.createClass(
     hyperCircle1: null,
 
     /** @constructs */
-    init: function(gameScene, type) {
+    init: function(gameScene, type, style) {
         this.superInit("fighter", 64, 64);
 
-        this.type = type;
         this.gameScene = gameScene;
+        this.type = type;
+        this.style = style;
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
@@ -91,6 +102,9 @@ gls2.Player = tm.createClass(
         this._createHitCircle();
 
         this.bits = this._createBits();
+        if (this.style === 1) {
+            this.bits = [this.bits[1], this.bits[2]];
+        }
 
         this.bitPivot = tm.app.CanvasElement().addChildTo(this);
         for (var i = 0, end = this.bits.length; i < end; i++) {

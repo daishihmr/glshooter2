@@ -1,0 +1,40 @@
+<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var assets = {};
+    for (var i = 0; i < 16; i++) {
+        assets["b" + i] = "b" + i + ".png";
+        assets["t" + i] = "t" + i + ".png";
+    }
+
+    var app = tm.app.CanvasApp();
+    app.replaceScene(tm.app.LoadingScene({
+        width: 200,
+        height: 200,
+        assets: assets,
+        nextScene: Main
+    }));
+    app.run();
+});
+var Main = tm.createClass({
+    superClass: tm.app.Scene,
+    init: function() {
+        this.superInit();
+    },
+    onenter: function() {
+        var canvas = tm.graphics.Canvas();
+        canvas.resize(64*16, 64*2);
+        for (var i = 0; i < 16; i++) {
+            canvas.drawTexture(tm.asset.AssetManager.get("b" + i), 64 * i, 64 * 0);
+            canvas.drawTexture(tm.asset.AssetManager.get("t" + i), 64 * i, 64 * 1);
+        }
+        canvas.saveAsImage();
+    },
+});
+</script>
+</head>
+<body>
+</body>
+</html>

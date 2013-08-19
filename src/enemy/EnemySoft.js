@@ -228,14 +228,15 @@ gls2.EnemySoft.Tank = tm.createClass(
     },
     setup: function() {
         this.speed = 0.8;
-        this.dir = 0;
+        this.baseDir = 0;
+        this.cannonDir = 0;
     },
     onenter: function() {
         attack(this, "basic2-0");
     },
     update: function() {
-        this.x += Math.cos(this.dir) * this.speed;
-        this.y += Math.sin(this.dir) * this.speed;
+        this.x += Math.cos(this.baseDir) * this.speed;
+        this.y += Math.sin(this.baseDir) * this.speed;
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
@@ -260,16 +261,24 @@ gls2.EnemySoft.TankRD = tm.createClass(
     },
     setup: function() {
         this.speed = 0.7;
-        this.dir = Math.PI*0.25;
+        this.baseDir = Math.PI*0.25;
     },
     onenter: function() {
         attack(this, "basic2-0");
     },
     update: function() {
-        this.x += Math.cos(this.dir) * this.speed;
-        this.y += Math.sin(this.dir) * this.speed;
+        this.x += Math.cos(this.baseDir) * this.speed;
+        this.y += Math.sin(this.baseDir) * this.speed;
         if (this.entered && !this.isInScreen()) {
             this.remove();
+        }
+
+        this.cannonDir = Math.atan2(this.player.y-this.y, this.player.x-this.x);
+        while(this.cannonDir < 0) {
+            this.cannonDir += Math.PI*2;
+        }
+        while(Math.PI*2 <= this.cannonDir) {
+            this.cannonDir -= Math.PI*2;
         }
 
         this.enableFire = this.y < this.player.y;
@@ -293,14 +302,14 @@ gls2.EnemySoft.TankL = tm.createClass(
     },
     setup: function() {
         this.speed = 1.0;
-        this.dir = Math.PI;
+        this.baseDir = Math.PI;
     },
     onenter: function() {
         attack(this, "basic2-0");
     },
     update: function() {
-        this.x += Math.cos(this.dir) * this.speed;
-        this.y += Math.sin(this.dir) * this.speed;
+        this.x += Math.cos(this.baseDir) * this.speed;
+        this.y += Math.sin(this.baseDir) * this.speed;
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }

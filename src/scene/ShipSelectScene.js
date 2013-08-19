@@ -20,6 +20,7 @@ gls2.ShipSelectScene = tm.createClass(
 
     typeCursor: 0,
     styleCursor: 0,
+    autoBomb: false,
 
     /** @constructs */
     init: function() {
@@ -133,30 +134,80 @@ gls2.ShipSelectScene = tm.createClass(
             strokeStyle: "transparent"
         }).setPosition(SC_W*0.75, SC_H*0.6).addChildTo(this);
 
+        this.bitPivot = tm.app.Object2D();
+        this.bitPivot.addChildTo(this.styleBase);
+        this.bitPivot.update = function(app) {
+            if (this.typeCursor === 1) {
+                this.bitPivot.rotation = Math.sin(app.frame * 0.1) * 45;
+            } else {
+                this.bitPivot.rotation = 0;
+            }
+        }.bind(this);
+
         this.styleBits = [];
+        
         this.styleBits[0] = tm.app.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
-        }).setPosition(-30, 10).setRotation(-5);
+        });
+        this.styleBits[0].update = function() {
+            if (this.typeCursor === 0) {
+                this.styleBits[0].setPosition(-30, 20).setRotation(0);
+            } else if (this.typeCursor === 1) {
+                this.styleBits[0].setPosition(-30, 20).setRotation(-5);
+            } else if (this.typeCursor === 2) {
+                this.styleBits[0].setPosition(-30, 10).setRotation(-10);
+            }
+        }.bind(this);
+
         this.styleBits[1] = tm.app.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
-        }).setPosition(+30, 10).setRotation(+5);
+        });
+        this.styleBits[1].update = function() {
+            if (this.typeCursor === 0) {
+                this.styleBits[1].setPosition(+30, 20).setRotation(0);
+            } else if (this.typeCursor === 1) {
+                this.styleBits[1].setPosition(+30, 20).setRotation(+5);
+            } else if (this.typeCursor === 2) {
+                this.styleBits[1].setPosition(+30, 10).setRotation(+10);
+            }
+        }.bind(this);
+
         this.styleBits[2] = tm.app.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
-        }).setPosition(-50, 20).setRotation(-10);
+        });
+        this.styleBits[2].update = function() {
+            if (this.typeCursor === 0) {
+                this.styleBits[2].setPosition(-50, 10).setRotation(0);
+            } else if (this.typeCursor === 1) {
+                this.styleBits[2].setPosition(-50, 10).setRotation(-10);
+            } else if (this.typeCursor === 2) {
+                this.styleBits[2].setPosition(-50, 20).setRotation(-20);
+            }
+        }.bind(this);
+
         this.styleBits[3] = tm.app.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
-        }).setPosition(+50, 20).setRotation(+10);
+        });
+        this.styleBits[3].update = function() {
+            if (this.typeCursor === 0) {
+                this.styleBits[3].setPosition(+50, 10).setRotation(0);
+            } else if (this.typeCursor === 1) {
+                this.styleBits[3].setPosition(+50, 10).setRotation(+10);
+            } else if (this.typeCursor === 2) {
+                this.styleBits[3].setPosition(+50, 20).setRotation(+20);
+            }
+        }.bind(this);
 
         this.styleBase.line = ShotLine(0, 0, 0, 130, 8);
         this.styleBase.line.addChildTo(this.styleBase);
         this.styleBits.each(function(b) {
             b.line = ShotLine(0, 0, 0, 130, 5);
             b.line.addChildTo(b);
-            b.addChildTo(this.styleBase);
+            b.addChildTo(this.bitPivot);
         }.bind(this));
 
         var styleDescription = [
@@ -186,9 +237,38 @@ gls2.ShipSelectScene = tm.createClass(
         } else if (app.keyboard.getKeyDown("down")) {
             this.styleCursor = (this.styleCursor + 1 + 3) % 3;
         } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
-            this.startGame();
+            this.openAutoBombDialog();
         }
         this.updateStyle(~~(app.frame/60) % 2 === 0);
+    },
+
+    openAutoBombDialog: function() {
+        this.openDialogMenu("AUTO BOMB", [ "off", "on" ], this.onResultAutoBombDialog, {
+            "defaultValue": 0,
+            "menuDescriptions": [
+                "ボンバーの投下は手動でのみ行います。ミス時にボムスロットが増加します",
+                "被弾時に自動でボンバーを投下します",
+            ],
+            "showExit": false,
+        });
+    },
+    onResultAutoBombDialog: function(result) {
+        this.autoBomb = result === 1;
+        this.openConfirmDialog();
+    },
+
+    openConfirmDialog: function() {
+        this.openDialogMenu("ARE YOU READY?", [ "ok", "no" ], this.onResultConfirmDialog, {
+            "defaultValue": 0,
+            "menuDescriptions": [
+                "出撃します",
+                "機体選択に戻ります",
+            ],
+            "showExit": false,
+        });
+    },
+    onResultConfirmDialog: function() {
+        this.startGame();
     },
 
     moveCursor: function(incr) {
@@ -213,7 +293,8 @@ gls2.ShipSelectScene = tm.createClass(
     },
 
     startGame: function() {
-        gls2.core.gameScene.start(this.typeCursor);
+        gls2.core.gameScene.autoBomb = this.autoBomb;
+        gls2.core.gameScene.start(this.typeCursor, this.styleCursor);
         gls2.core.replaceScene(gls2.core.gameScene);
     },
 

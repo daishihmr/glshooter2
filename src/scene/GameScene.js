@@ -50,6 +50,8 @@ gls2.GameScene = tm.createClass(
     /** トータルミス数 */
     missCountTotal: 0,
 
+    /** オートボム設定 */
+    autoBomb: false,
     /** 現在の保有ボム数 */
     bomb: 0,
     /** ボムスロット数 */
@@ -354,7 +356,7 @@ gls2.GameScene = tm.createClass(
                     var b = gls2.Bullet.activeList[i];
                     if (gls2.Collision.isHit(b, this.player)) {
                         this.player.damage();
-                        if (this.bomb > 0) {
+                        if (this.bomb > 0 && this.autoBomb) {
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
                             bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
@@ -479,7 +481,7 @@ gls2.GameScene = tm.createClass(
         }
     },
 
-    start: function(playerType) {
+    start: function(playerType, playerStyle) {
         this.scoreLabel.consoleWindow.clearBuf().clear();
 
         this.score = 0;
@@ -493,7 +495,7 @@ gls2.GameScene = tm.createClass(
         this.isBombActive = false;
         this.missCount = this.missCountTotal = 0;
 
-        this.player = gls2.Player(this, playerType);
+        this.player = gls2.Player(this, playerType, playerStyle);
 
         this.startStage(0);
 
@@ -554,6 +556,8 @@ gls2.GameScene = tm.createClass(
         this.player.laser.addChildTo(this);
         this.player.controllable = false;
         this.player.muteki = true;
+        this.player.fireShot = false;
+        this.player.fireLaser = false;
         this.player.tweener
             .clear()
             .moveBy(0, -180, 1000, "easeOutBack")
@@ -587,7 +591,9 @@ gls2.GameScene = tm.createClass(
 
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
-                this.bombMax = Math.min(this.bombMax + 1, this.bombMaxMax);
+                if (!this.autoBomb) {
+                    this.bombMax = Math.min(this.bombMax + 1, this.bombMaxMax);
+                }
                 this.bomb = this.bombMax;
                 this.launch();
             }.bind(this));

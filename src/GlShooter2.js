@@ -56,6 +56,8 @@ gls2.GlShooter2 = tm.createClass(
                 // image
                 "tex0": "assets/tex0.png",
                 "tex1": "assets/tex1.png",
+                "tex_stage1": "assets/tex_stage1.png",
+                "tex_tank1": "assets/tex_tank1.png",
                 "fighter": "assets/fighters.png",
                 "laserR": "assets/laser_r.png",
                 "laserG": "assets/laser_g.png",

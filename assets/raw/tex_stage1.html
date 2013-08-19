@@ -1,0 +1,56 @@
+﻿<html>
+<head>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var app = tm.app.CanvasApp();
+    app.replaceScene(tm.app.LoadingScene({
+        width: 200,
+        height: 200,
+        assets: {
+            "heri1_1": "heri1_1.png",
+            "heri1_2": "heri1_2.png",
+            "heri2_1": "heri2_1.png",
+            "heri2_2": "heri2_2.png",
+            "ga": "ga.png",
+            "bata": "bata.png",
+            "pink": "pink.png",
+            "pink2": "pink2.png",
+            "nagisa": "nagisa.png",
+            "honoka": "honoka.png",
+        },
+        nextScene: Main
+    }));
+    app.run();
+});
+var Main = tm.createClass({
+    superClass: tm.app.Scene,
+    init: function() {
+        this.superInit();
+    },
+    onenter: function() {
+        var canvas = tm.graphics.Canvas();
+        canvas.resize(512, 512);
+        var draw = function(texname, x, y) {
+            canvas.drawTexture(tm.asset.AssetManager.get(texname), x*64, y*64);
+        }
+
+        draw("heri1_1", 0, 0);
+        draw("heri1_2", 1, 0);
+        draw("heri2_1", 0, 1);
+        draw("heri2_2", 1, 1);
+        draw("bata",    2, 0);
+        draw("ga",      4, 0);
+        draw("pink",    0, 2);
+        draw("pink2",   2, 2);
+        draw("honoka",  4, 2);
+        draw("nagisa",  0, 4);
+
+        canvas.saveAsImage();
+    },
+});
+</script>
+</head>
+<body>
+</body>
+</html>
