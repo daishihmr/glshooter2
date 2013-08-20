@@ -72,32 +72,32 @@ gls2.GlShooter2 = tm.createClass(
                 "shotbullet": "assets/shotbullet.png",
                 "bomb": "assets/bomb.png",
 
-                // // bgm
-                // "bgm1": "assets2/nc54073.mp3",
-                // "bgmBoss": "assets2/nc29206.mp3",
-                // "bgmResult": "assets2/nc54077.mp3",
+                // bgm
+                "bgm1": "assets2/nc54073.mp3",
+                "bgmBoss": "assets2/nc29206.mp3",
+                "bgmResult": "assets2/nc54077.mp3",
 
-                // // sound
-                // "sound/explode": "assets2/sen_ge_taihou03.mp3",
-                // "sound/explode2": "assets2/sen_ge_bom13.mp3",
-                // "sound/explode3": "assets2/sen_ge_bom02.mp3",
-                // "sound/star": "assets2/se_maoudamashii_system24.mp3",
-                // "sound/bomb": "assets2/sen_ge_bom17.mp3",
-                // "sound/warning": "assets2/meka_ge_keihou06.mp3",
-                // "sound/select": "assets2/se_maoudamashii_system36.mp3",
+                // sound
+                "sound/explode": "assets2/sen_ge_taihou03.mp3",
+                "sound/explode2": "assets2/sen_ge_bom13.mp3",
+                "sound/explode3": "assets2/sen_ge_bom02.mp3",
+                "sound/star": "assets2/se_maoudamashii_system24.mp3",
+                "sound/bomb": "assets2/sen_ge_bom17.mp3",
+                "sound/warning": "assets2/meka_ge_keihou06.mp3",
+                "sound/select": "assets2/se_maoudamashii_system36.mp3",
 
-                // // voice
-                // "sound/voHyperStandBy": "assets/vo_hyper_standby.mp3",
-                // "sound/voHyperReady": "assets/vo_hyper_ready.mp3",
-                // "sound/voHyperStart0": "assets/vo_hyper_start.mp3",
-                // "sound/voHyperStart1": "assets/vo_hyper_start2.mp3",
-                // "sound/voBomb": "assets/vo_bomb.mp3",
-                // "sound/voExtend": "assets/vo_extend.mp3",
-                // "sound/voGetBomb": "assets/vo_getbomb.mp3",
-                // "sound/voJacms": "assets/vo_jacms.mp3",
-                // "sound/voLetsGo": "assets/vo_letsgo.mp3",
-                // "sound/voSelectShip": "assets/vo_select_your_battle_ship.mp3",
-                // "sound/voWarning": "assets/vo_warning.mp3",
+                // voice
+                "sound/voHyperStandBy": "assets/vo_hyper_standby.mp3",
+                "sound/voHyperReady": "assets/vo_hyper_ready.mp3",
+                "sound/voHyperStart0": "assets/vo_hyper_start.mp3",
+                "sound/voHyperStart1": "assets/vo_hyper_start2.mp3",
+                "sound/voBomb": "assets/vo_bomb.mp3",
+                "sound/voExtend": "assets/vo_extend.mp3",
+                "sound/voGetBomb": "assets/vo_getbomb.mp3",
+                "sound/voJacms": "assets/vo_jacms.mp3",
+                "sound/voLetsGo": "assets/vo_letsgo.mp3",
+                "sound/voSelectShip": "assets/vo_select_your_battle_ship.mp3",
+                "sound/voWarning": "assets/vo_warning.mp3",
 
                 // test
                 "star": "assets/star.png",

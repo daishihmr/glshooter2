@@ -36,11 +36,11 @@ var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, a
 };
 
 /** 絶対n-way弾 */
-var $absoluteNway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {
+var $absoluteNway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY) {
     return $.action([
-        $.fire($.direction(rangeFrom, "absolute"), speed, bullet, offsetX, offsetY, autonomy),
+        $.fire($.direction(rangeFrom, "absolute"), speed, bullet, offsetX, offsetY),
         $.repeat(way-1, [
-            $.fire($.direction((rangeTo-rangeFrom)/(way-1), "sequence"), speed, bullet, offsetX, offsetY, autonomy),
+            $.fire($.direction((rangeTo-rangeFrom)/(way-1), "sequence"), speed, bullet, offsetX, offsetY),
         ])
     ]);
 };
@@ -223,29 +223,142 @@ gls2.Danmaku["honoka-1"] = new bulletml.Root({
 
 gls2.Danmaku["nagisa-1-1"] = new bulletml.Root({
     "top0": $.action([
-        $nway(60, -60, 60, $spd2, $.bullet),
-        $.repeat(10, [
-            $nway(3, -60, 60, $spd2, $.bullet),
-            $interval(20),
-        ])
+        $interval(60),
+        $.repeat(7, [
+            $whip($spd3, 0.04, 10, function(spd) {
+                return $.action([
+                    $nway(5, -40, 40, spd, $.bullet, $.offsetX(-30)),
+                    $.wait(2),
+                ]);
+            }),
+            $interval(60),
+        ]),
+        $interval(60),
+    ]),
+    "top1": $.action([
+        $interval(60),
+        $.repeat(7, [
+            $whip($spd3, 0.04, 10, function(spd) {
+                return $.action([
+                    $nway(5, -40, 40, spd, $.bullet, $.offsetX(+30)),
+                    $.wait(2),
+                ]);
+            }),
+            $interval(60),
+        ]),
+        $interval(60),
     ]),
 });
 gls2.Danmaku["nagisa-1-2"] = new bulletml.Root({
     "top0": $.action([
-        $nway(60, -60, 60, $spd2, $.bullet),
-        $.repeat(10, [
-            $nway(6, -60, 60, $spd2, $.bullet),
-            $interval(20),
-        ])
+        $.repeat(12, [
+            $nway(15, -90, 90, $spd2, $.bullet),
+            $interval(40),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(3, [
+            $.repeat(3, [
+                $nway(5, -65, -55, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(-140)),
+                $nway(5, -35, -25, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(-140)),
+                $nway(5,  -5,   5, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(-140)),
+                $nway(5, +25, +35, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(-140)),
+                $nway(5, +55, +65, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(-140)),
+                $.wait(2),
+            ]),
+            $interval(60),
+            $.repeat(3, [
+                $nway(5, -65, -55, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(+140)),
+                $nway(5, -35, -25, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(+140)),
+                $nway(5,  -5,   5, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(+140)),
+                $nway(5, +25, +35, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(+140)),
+                $nway(5, +55, +65, $spd3, $.bullet({frame:0,ball:true}), $.offsetX(+140)),
+                $.wait(2),
+            ]),
+            $interval(60),
+        ]),
     ]),
 });
 gls2.Danmaku["nagisa-1-3"] = new bulletml.Root({
     "top0": $.action([
-        $nway(60, -60, 60, $spd2, $.bullet),
-        $.repeat(10, [
-            $nway(12, -60, 60, $spd2, $.bullet),
-            $interval(20),
-        ])
+        $interval(60),
+        $.repeat(3, [
+            $.fire($.direction(-60), $spd3, $.bullet({frame:2}), $.offsetX(-140)),
+            $.repeat(20, [
+                $interval(14),
+                $.fire($.direction(+4, "sequence"), $spd3, $.bullet({frame:2}), $.offsetX(-140)),
+            ]),
+        ]),
+    ]),
+    "top1": $.action([
+        $interval(80),
+        $.repeat(3, [
+            $.fire($.direction(+60), $spd3, $.bullet({frame:2}), $.offsetX(+140)),
+            $.repeat(20, [
+                $interval(14),
+                $.fire($.direction(-4, "sequence"), $spd3, $.bullet({frame:2}), $.offsetX(+140)),
+            ]),
+        ]),
+    ]),
+    "top2": $.action([
+        $interval(180),
+        $.repeat(2, [
+            $.fire($.direction(-60), $spd3, $.bullet({frame:2}), $.offsetX(-140)),
+            $.repeat(20, [
+                $interval(13),
+                $.fire($.direction(+4, "sequence"), $spd3, $.bullet({frame:2}), $.offsetX(-140)),
+            ]),
+        ]),
+    ]),
+    "top3": $.action([
+        $interval(240),
+        $.repeat(2, [
+            $.fire($.direction(+60), $spd3, $.bullet({frame:2}), $.offsetX(+140)),
+            $.repeat(20, [
+                $interval(13),
+                $.fire($.direction(-4, "sequence"), $spd3, $.bullet({frame:2}), $.offsetX(+140)),
+            ]),
+        ]),
+    ]),
+    "top4": $.action([
+        $interval(300),
+        $.repeat(1, [
+            $.fire($.direction(-60), $spd3, $.bullet({frame:2}), $.offsetX(-140)),
+            $.repeat(20, [
+                $interval(12),
+                $.fire($.direction(+4, "sequence"), $spd3, $.bullet({frame:2}), $.offsetX(-140)),
+            ]),
+        ]),
+    ]),
+    "top5": $.action([
+        $interval(300),
+        $.repeat(1, [
+            $.fire($.direction(+60), $spd3, $.bullet({frame:2}), $.offsetX(+140)),
+            $.repeat(20, [
+                $interval(12),
+                $.fire($.direction(-4, "sequence"), $spd3, $.bullet({frame:2}), $.offsetX(+140)),
+            ]),
+        ]),
+    ]),
+    "top6": $.action([
+        $.repeat(6, [
+            $.repeat(3, [
+                $nway(5, -60, -40, $spd2, $.bullet({frame:4,ball:true}), $.offsetX(-140)),
+                $nway(5, -20, -10, $spd2, $.bullet({frame:4,ball:true}), $.offsetX(-140)),
+                $nway(5, +10, +20, $spd2, $.bullet({frame:4,ball:true}), $.offsetX(-140)),
+                $nway(5, +40, +60, $spd2, $.bullet({frame:4,ball:true}), $.offsetX(-140)),
+                $.wait(4),
+            ]),
+            $interval(60),
+            $.repeat(3, [
+                $nway(5, -60, -40, $spd2, $.bullet({frame:4,ball:true}), $.offsetX(+140)),
+                $nway(5, -20, -10, $spd2, $.bullet({frame:4,ball:true}), $.offsetX(+140)),
+                $nway(5, +10, +20, $spd2, $.bullet({frame:4,ball:true}), $.offsetX(+140)),
+                $nway(5, +40, +60, $spd2, $.bullet({frame:4,ball:true}), $.offsetX(+140)),
+                $.wait(4),
+            ]),
+            $interval(60),
+        ]),
     ]),
 });
 

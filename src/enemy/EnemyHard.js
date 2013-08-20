@@ -469,7 +469,7 @@ gls2.EnemyHard.Nagisa = tm.createClass(
         this._sprite.setFrameIndex(4);
         this.setScale(2);
 
-        this.boundingWidth = 250;
+        this.boundingWidth = 300;
         this.boundingHeight = 150;
     },
     /**

@@ -29,14 +29,12 @@ gls2.ShipSelectScene = tm.createClass(
             .setPosition(SC_W*0.5,SC_H*0.1)
             .addChildTo(this);
 
-        this.addEventListener("enter", function() {
-            gls2.playSound("voSelectShip");
-        });
-
         this.setupTypes();
         this.setupStyles();
 
         this.moveCursor(0);
+
+        gls2.playSound("voSelectShip");
     },
 
     setupTypes: function() {

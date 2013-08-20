@@ -242,11 +242,16 @@ gls2.EnemySoft.Heri2 = gls2.EnemySoft.Heri2();
  * @class
  * @extends {gls2.EnemySoft}
  */
-gls2.EnemySoft.Tank = tm.createClass(
-/** @lends {gls2.EnemySoft.Tank.prototype} */
+var _Tank = tm.createClass(
+/** @lends {_Tank.prototype} */
 {
     superClass: gls2.EnemySoft,
-    /** @constructs */
+    /**
+     * @constructs
+     * @param {number} speed
+     * @param {number} dir
+     * @param {Object} changes 進行方向・速度の変更
+     */
     init: function(speed, dir, changes) {
         this.superInit();
         this.initialSpeed = speed;
@@ -304,17 +309,17 @@ gls2.EnemySoft.Tank = tm.createClass(
 /**
  * 右下へ直進する戦車
  */
-gls2.EnemySoft.TankRD = gls2.EnemySoft.Tank(1.0, Math.PI*0.25);
+gls2.EnemySoft.TankRD = _Tank(1.0, Math.PI*0.25);
 
 /**
  * 左上へ直進する戦車
  */
-gls2.EnemySoft.TankLU = gls2.EnemySoft.Tank(1.0, Math.PI*-1.75);
+gls2.EnemySoft.TankLU = _Tank(1.0, Math.PI*-1.75);
 
 /**
  * 右から現れる戦車
  */
-gls2.EnemySoft.TankL = gls2.EnemySoft.Tank(1.0, Math.PI, [
+gls2.EnemySoft.TankL = _Tank(1.0, Math.PI, [
     {
         frame: 200,
         dir: Math.PI * 1.5,
@@ -364,12 +369,29 @@ gls2.EnemySoft.Cannon = gls2.EnemySoft.Cannon();
 
 /**
  * 中型戦闘機
+ *
+ * 上から出現、画面上部まで降りてきた後、ゆっくり下へ移動していく
+ * 
+ * @class
+ * @extends {gls2.EnemySoft}
  */
-gls2.EnemySoft.MiddleFighter1 = tm.createClass(
+var _MiddleFighterCommon = tm.createClass(
+/** @lends {_MiddleFighterCommon.prototype} */
 {
     superClass: gls2.EnemySoft,
-    init: function() {
+
+    velocityY: 0,
+    attackPattern: null,
+
+    /**
+     * @constructs
+     * @param {number} velocityY
+     * @param {string} attackPattern
+     */
+    init: function(velocityY, attackPattern) {
         this.superInit();
+        this.velocityY = velocityY;
+        this.attackPattern = attackPattern;
     },
     /**
      * @this {gls2.Enemy}
@@ -379,14 +401,14 @@ gls2.EnemySoft.MiddleFighter1 = tm.createClass(
             .clear()
             .moveBy(0, SC_H*0.5, 800, "easeOutQuad")
             .call(function() {
-                attack(this, "kurokawa-1");
+                attack(this, this.attackPattern);
             }.bind(this));
     },
     /**
      * @this {gls2.Enemy}
      */
     update: function() {
-        this.y += 0.5;
+        this.y += this.velocityY;
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }
@@ -394,49 +416,27 @@ gls2.EnemySoft.MiddleFighter1 = tm.createClass(
         this.enableFire = this.y < this.player.y;
     },
 })
-gls2.EnemySoft.MiddleFighter1 = gls2.EnemySoft.MiddleFighter1();
+gls2.EnemySoft.MiddleFighter1 = _MiddleFighterCommon(0.5, "kurokawa-1");
 
 /**
  * 大型戦闘機
  */
-gls2.EnemySoft.LargeFighter1 = tm.createClass(
-{
-    superClass: gls2.EnemySoft,
-    init: function() {
-        this.superInit();
-    },
-    /**
-     * @this {gls2.Enemy}
-     */
-    setup: function() {
-        this.tweener
-            .clear()
-            .moveBy(0, SC_H*0.5, 1800, "easeOutQuad")
-            .call(function() {
-                attack(this, "komachi-1");
-            }.bind(this));
-    },
-    /**
-     * @this {gls2.Enemy}
-     */
-    update: function() {
-        this.y += 0.3;
-        if (this.entered && !this.isInScreen()) {
-            this.remove();
-        }
-
-        this.enableFire = this.y < this.player.y;
-    },
-})
-gls2.EnemySoft.LargeFighter1 = gls2.EnemySoft.LargeFighter1();
+gls2.EnemySoft.LargeFighter1 = _MiddleFighterCommon(0.3, "komachi-1");
 
 /**
  * 中ボス共通
+ *
+ * 上から出現。画面上部をふらふらとさまよう
  */
-gls2.EnemySoft.MBossCommon = tm.createClass(
+var _MBossCommon = tm.createClass(
 {
     superClass: gls2.EnemySoft,
     patterns: null,
+
+    /**
+     * @constructs
+     * @param {Array.<string>} patterns
+     */
     init: function(patterns) {
         this.superInit();
         this.patterns = patterns;
@@ -493,7 +493,7 @@ gls2.EnemySoft.MBossCommon = tm.createClass(
 /**
  * ステージ１中ボス「ユキシロ」
  */
-gls2.EnemySoft.Honoka = gls2.EnemySoft.MBossCommon([
+gls2.EnemySoft.Honoka = _MBossCommon([
     "honoka-1"
 ]);
 
@@ -506,7 +506,11 @@ gls2.EnemySoft.Nagisa = tm.createClass(
     patterns: null,
     init: function() {
         this.superInit();
-        this.patterns = [ "nagisa-1-1", "nagisa-1-2", "nagisa-1-3" ];
+        this.patterns = [
+            "nagisa-1-3",
+            "nagisa-1-1",
+            "nagisa-1-2",
+        ];
     },
     /**
      * @this {gls2.Enemy}

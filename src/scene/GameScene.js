@@ -234,7 +234,7 @@ gls2.GameScene = tm.createClass(
 
         // レーザーvs敵
         var laser = this.player.laser;
-        if (this.player.laser.visible) {
+        if (this.player.fireLaser) {
             // レーザー部分の当たり判定
             enemies = [].concat(gls2.Enemy.activeList);
             enemies.sort(function(l, r) {
@@ -254,7 +254,11 @@ gls2.GameScene = tm.createClass(
                         }
                         this.onEnemyDestroy(e);
                     } else {
-                        this.addCombo(0.01);
+                        if (this.isHyperMode) {
+                            this.addCombo(this.hyperLevel);
+                        } else {
+                            this.addCombo(0.01);
+                        }
                         this.comboGauge = Math.max(this.comboGauge, 0.05);
                         if (this.isHyperMode) {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT_IN_HYPER);
@@ -289,7 +293,11 @@ gls2.GameScene = tm.createClass(
                         }
                         this.onEnemyDestroy(e);
                     } else {
-                        this.addCombo(0.01);
+                        if (this.isHyperMode) {
+                            this.addCombo(this.hyperLevel);
+                        } else {
+                            this.addCombo(0.01);
+                        }
                         this.comboGauge = Math.max(this.comboGauge, 0.05);
                         if (this.isHyperMode) {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA_HIT_IN_HYPER);
@@ -435,18 +443,23 @@ gls2.GameScene = tm.createClass(
             enemy.star
         );
 
-        this.addCombo(1);
-        if (!this.isHyperMode || this.hyperLevel > 0) {
-            var base = this.baseScore;
-            for (var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1); bonus > 0; bonus--) {
-                base += enemy.score
-                this.addScore(base);
-            }
-            this.baseScore += enemy.score*bonus;
+        // ハイパー中はコンボ数が上昇
+        if (!this.isHyperMode) {
+            this.addCombo(1);
+        } else if (this.hyperLevel < 6) {
+            this.addCombo(10);
         } else {
-            this.addScore(this.baseScore + enemy.score);
-            this.baseScore += enemy.score;
+            this.addCombo(20);
         }
+
+        var base = this.baseScore;
+        // 倍率
+        var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+        for (var i = 0; i < bonus; i++) {
+            base += enemy.score
+            this.addScore(base);
+        }
+        this.baseScore += enemy.score * bonus;
     },
 
     generateStar: function(ground, large, x, y, count) {
