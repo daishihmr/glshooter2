@@ -444,6 +444,7 @@ var _MBossCommon = tm.createClass(
      * @this {gls2.Enemy}
      */
     setup: function() {
+        this.patterns = [].concat(this.soft.patterns);
         this.startAttack = false;
         this.endAttack = false;
         this.tweener
@@ -483,9 +484,9 @@ var _MBossCommon = tm.createClass(
      */
     onCompleteAttack: function() {
         if (this.endAttack) return;
-        var pattern = this.soft.patterns.shift();
+        var pattern = this.patterns.shift();
         this.soft.attack.call(this, pattern);
-        this.soft.patterns.push(pattern);
+        this.patterns.push(pattern);
     },
 });
 
@@ -506,15 +507,16 @@ gls2.EnemySoft.Nagisa = tm.createClass(
     init: function() {
         this.superInit();
         this.patterns = [
-            "nagisa-1-3",
             "nagisa-1-1",
             "nagisa-1-2",
+            "nagisa-1-3",
         ];
     },
     /**
      * @this {gls2.Enemy}
      */
     setup: function() {
+        this.patterns = [].concat(this.soft.patterns);
         this.startAttack = false;
         this.endAttack = false;
         this.tweener
@@ -527,7 +529,7 @@ gls2.EnemySoft.Nagisa = tm.createClass(
                     var a = gls2.FixedRandom.random() * Math.PI*2; // TODO 固定乱数化
                     var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3); // TODO 固定乱数化
                     this.tweener
-                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.1+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
                         .call(temp);
                 }.bind(this);
                 temp();
@@ -538,9 +540,9 @@ gls2.EnemySoft.Nagisa = tm.createClass(
      */
     onCompleteAttack: function() {
         if (this.endAttack) return;
-        var pattern = this.soft.patterns.shift();
+        var pattern = this.patterns.shift();
         this.soft.attack.call(this, pattern);
-        this.soft.patterns.push(pattern);
+        this.patterns.push(pattern);
     },
 });
 gls2.EnemySoft.Nagisa1 = gls2.EnemySoft.Nagisa();
@@ -553,15 +555,28 @@ gls2.EnemySoft.Nagisa2 = tm.createClass(
     patterns: null,
     init: function() {
         this.superInit();
-        this.patterns = [ "nagisa-2-1", "nagisa-2-2", "nagisa-2-3" ];
+        this.patterns = [
+            "nagisa-2-1",
+            "nagisa-2-2",
+            "nagisa-2-3",
+        ];
     },
     /**
      * @this {gls2.Enemy}
      */
     setup: function() {
+        this.patterns = [].concat(this.soft.patterns);
         this.tweener.clear()
             .wait(800)
             .call(function() {
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2; // TODO 固定乱数化
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3); // TODO 固定乱数化
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
                 this.onCompleteAttack();
             }.bind(this));
     },
@@ -574,9 +589,9 @@ gls2.EnemySoft.Nagisa2 = tm.createClass(
      * @this {gls2.Enemy}
      */
     onCompleteAttack: function() {
-        var pattern = this.soft.patterns.shift();
+        var pattern = this.patterns.shift();
         this.soft.attack.call(this, pattern);
-        this.soft.patterns.push(pattern);
+        this.patterns.push(pattern);
     },
 });
 gls2.EnemySoft.Nagisa2 = gls2.EnemySoft.Nagisa2();

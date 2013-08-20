@@ -17,7 +17,7 @@ var DATA = {
     "kurokawa":  [    35,     5000, false, false,  5 ],
     "akimoto":   [   250,   300000, false,  true, 10 ],
     "yukishiro": [   750,   800000, false,  true, 20 ],
-    "misumi":    [  3000,  2000000, false,  true,  0 ],
+    "misumi":    [  4000,  2000000, false,  true,  0 ],
 };
 
 /**
@@ -467,10 +467,10 @@ gls2.EnemyHard.Nagisa = tm.createClass(
         this.hard.setData.call(this, "misumi");
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2);
         this._sprite.setFrameIndex(4);
-        this.setScale(2);
+        this.setScale(1.5);
 
-        this.boundingWidth = 300;
-        this.boundingHeight = 150;
+        this.boundingWidth = 200;
+        this.boundingHeight = 80;
     },
     /**
      * @this {gls2.Enemy}
