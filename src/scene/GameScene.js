@@ -980,7 +980,7 @@ gls2.GameScene = tm.createClass(
                         else if (key === "z") return !!~~keylog[4];
                         else if (key === "x") return !!~~keylog[5];
                         else if (key === "c") return !!~~keylog[6];
-                        else false;
+                        else return false;
                     };
                     kb.getKeyDown = function(key) {
                         if (key === "up") return !!~~keylog[0];
@@ -990,7 +990,7 @@ gls2.GameScene = tm.createClass(
                         else if (key === "z") return !!~~keylog[4];
                         else if (key === "x") return !!~~keylog[5];
                         else if (key === "c") return !!~~keylog[6];
-                        else false;
+                        else return false;
                     };
                 }
             }

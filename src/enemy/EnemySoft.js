@@ -401,14 +401,14 @@ var _MiddleFighterCommon = tm.createClass(
             .clear()
             .moveBy(0, SC_H*0.5, 800, "easeOutQuad")
             .call(function() {
-                attack(this, this.attackPattern);
+                attack(this, this.soft.attackPattern);
             }.bind(this));
     },
     /**
      * @this {gls2.Enemy}
      */
     update: function() {
-        this.y += this.velocityY;
+        this.y += this.soft.velocityY;
         if (this.entered && !this.isInScreen()) {
             this.remove();
         }

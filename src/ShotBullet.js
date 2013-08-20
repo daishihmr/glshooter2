@@ -54,11 +54,9 @@ gls2.ShotBullet = tm.createClass({
         if (col === 3) {
             this.speed = 45;
             this.boundingRadius = 48;
-            this.setScale(1.0, 1.0); // TODO ハイパーレベルに応じてでかくする
         } else {
             this.speed = 30;
             this.boundingRadius = 32;
-            this.setScale(1.0, 1.0);
         }
     },
 
@@ -93,7 +91,9 @@ var activeList = gls2.ShotBullet.activeList = [];
 gls2.ShotBulletPool = tm.createClass({
     /** @type {Array.<gls2.ShotBullet>} */
     pool: null,
+    hyper: false,
     init: function(color, count) {
+        this.hyper = color === 3;
         this.pool = [];
         for (var i = 0; i < count; i++) {
             var sb = gls2.ShotBullet(color);
@@ -109,9 +109,9 @@ gls2.ShotBulletPool = tm.createClass({
                 self.pool.push(this);
             });
 
-            if (color === 3) {
+            if (this.hyper) {
                 sb.addEventListener("enterframe", function(e) {
-                    this.scaleX = e.app.frame % 2 === 0 ? 3.0 : 2.0;
+                    this.setScale(e.app.frame % 2 === 0 ? 2.0 : 1.0);
                 });
             }
 
