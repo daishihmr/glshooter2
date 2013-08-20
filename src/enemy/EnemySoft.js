@@ -6,24 +6,6 @@
 // すべてsingletonかつimmutableに実装する
 (function() {
 
-var attack = function(enemy, danmakuName) {
-    var ticker = gls2.Danmaku[danmakuName].createTicker();
-    enemy.addEventListener("enterframe", ticker);
-    enemy.addEventListener("completeattack", function() {
-        this.removeEventListener("enterframe", ticker);
-    });
-};
-var stopAttack = function(enemy) {
-    var listeners = [].concat(enemy._listeners["enterframe"]);
-    if (listeners) {
-        for (var i = 0, len = listeners.length; i < len; i++) {
-            if (listeners[i] && listeners[i].isDanmaku) {
-                enemy.removeEventListener("enterframe", listeners[i]);
-            }
-        }
-    }
-};
-
 /**
  * 敵の行動パターン
  * @class
@@ -42,7 +24,24 @@ gls2.EnemySoft = tm.createClass(
     onenter: function() {
     },
     destroy: function() {
-        stopAttack(this);
+        this.soft.stopAttack.call(this);
+    },
+    attack: function(danmakuName) {
+        var ticker = gls2.Danmaku[danmakuName].createTicker();
+        this.addEventListener("enterframe", ticker);
+        this.addEventListener("completeattack", function() {
+            this.removeEventListener("enterframe", ticker);
+        });
+    },
+    stopAttack: function() {
+        var listeners = [].concat(this._listeners["enterframe"]);
+        if (listeners) {
+            for (var i = 0, len = listeners.length; i < len; i++) {
+                if (listeners[i] && listeners[i].isDanmaku) {
+                    this.removeEventListener("enterframe", listeners[i]);
+                }
+            }
+        }
     },
 });
 
@@ -74,7 +73,7 @@ gls2.EnemySoft.Heri1a = tm.createClass(
             .wait(gls2.FixedRandom.rand(10, 500)) // TODO 固定乱数化
             .move(this.x, y, y*7, "easeOutQuad")
             .call(function() {
-                attack(this, "basic0-0");
+                this.soft.attack.call(this, "basic0-0");
             }.bind(this));
     },
     /**
@@ -120,7 +119,7 @@ gls2.EnemySoft.Heri1b = tm.createClass(
             .wait(gls2.FixedRandom.rand(10, 500)) // TODO 固定乱数化
             .move(this.x, y, y*7, "easeOutQuad")
             .call(function() {
-                attack(this, "basic0-0");
+                this.soft.attack.call(this, "basic0-0");
             }.bind(this));
     },
     /**
@@ -166,7 +165,7 @@ gls2.EnemySoft.Heri1c = tm.createClass(
             .wait(gls2.FixedRandom.rand(10, 500)) // TODO 固定乱数化
             .move(this.x, y, y*7, "easeOutQuad")
             .call(function() {
-                attack(this, "basic0-0");
+                this.soft.attack.call(this, "basic0-0");
             }.bind(this));
     },
     /**
@@ -217,7 +216,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         if (this.frame === this.startFrame) {
             this.speed = 8;
         } else if (this.frame === this.startFrame + 10) {
-            attack(this, "basic1-0");
+            this.soft.attack.call(this, "basic1-0");
         } else if (this.startFrame < this.frame && this.y < this.player.y) {
             var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
             this.angle += (a < this.angle) ? -0.02 : 0.02;
@@ -270,7 +269,7 @@ var _Tank = tm.createClass(
      * @this {gls2.Enemy}
      */
     onenter: function() {
-        attack(this, "basic2-0");
+        this.soft.attack.call(this, "basic2-0");
     },
     /**
      * @this {gls2.Enemy}
@@ -352,7 +351,7 @@ gls2.EnemySoft.Cannon = tm.createClass(
      * @this {gls2.Enemy}
      */
     onenter: function() {
-        attack(this, "basic3-0");
+        this.soft.attack.call(this, "basic3-0");
     },
     /**
      * @this {gls2.Enemy}
@@ -401,7 +400,7 @@ var _MiddleFighterCommon = tm.createClass(
             .clear()
             .moveBy(0, SC_H*0.5, 800, "easeOutQuad")
             .call(function() {
-                attack(this, this.soft.attackPattern);
+                this.soft.attack.call(this, this.soft.attackPattern);
             }.bind(this));
     },
     /**
@@ -470,7 +469,7 @@ var _MBossCommon = tm.createClass(
         if (this.startAttack === false || this.hp <= 0) return;
         if (1500 < this.frame && this.endAttack === false) {
             this.endAttack = true;
-            stopAttack(this);
+            this.soft.stopAttack.call(this);
             this.tweener
                 .clear()
                 .move(this.x, -100, 1200, "easeInQuad")
@@ -485,7 +484,7 @@ var _MBossCommon = tm.createClass(
     onCompleteAttack: function() {
         if (this.endAttack) return;
         var pattern = this.soft.patterns.shift();
-        attack(this, pattern);
+        this.soft.attack.call(this, pattern);
         this.soft.patterns.push(pattern);
     },
 });
@@ -540,7 +539,7 @@ gls2.EnemySoft.Nagisa = tm.createClass(
     onCompleteAttack: function() {
         if (this.endAttack) return;
         var pattern = this.soft.patterns.shift();
-        attack(this, pattern);
+        this.soft.attack.call(this, pattern);
         this.soft.patterns.push(pattern);
     },
 });
@@ -576,7 +575,7 @@ gls2.EnemySoft.Nagisa2 = tm.createClass(
      */
     onCompleteAttack: function() {
         var pattern = this.soft.patterns.shift();
-        attack(this, pattern);
+        this.soft.attack.call(this, pattern);
         this.soft.patterns.push(pattern);
     },
 });
@@ -609,7 +608,7 @@ gls2.EnemySoft.Nagisa3 = tm.createClass(
      * @this {gls2.Enemy}
      */
     onCompleteAttack: function() {
-        attack(this, "nagisa-3-1");
+        this.soft.attack.call(this, "nagisa-3-1");
     },
 });
 gls2.EnemySoft.Nagisa3 = gls2.EnemySoft.Nagisa3();

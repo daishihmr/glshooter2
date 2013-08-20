@@ -4,24 +4,6 @@
  */
 (function() {
 
-var attack = function(enemy, danmakuName) {
-    var ticker = gls2.Danmaku[danmakuName].createTicker();
-    enemy.addEventListener("enterframe", ticker);
-    enemy.addEventListener("completeattack", function() {
-        this.removeEventListener("enterframe", ticker);
-    });
-};
-var stopAttack = function(enemy) {
-    var listeners = [].concat(enemy._listeners["enterframe"]);
-    if (listeners) {
-        for (var i = 0, len = listeners.length; i < len; i++) {
-            if (listeners[i] && listeners[i].isDanmaku) {
-                enemy.removeEventListener("enterframe", listeners[i]);
-            }
-        }
-    }
-};
-
 /**
  * ボス
  * @class
@@ -80,7 +62,7 @@ gls2.Boss = tm.createClass(
 
         // 形態変化
         if (this.hp <= this.hpMax*0.6 && this.hpMax*0.6 < beforeHp) {
-            stopAttack(this);
+            this.soft.stopAttack.call(this);
             this.tweener.clear();
 
             // TODO 爆発エフェクト
@@ -92,7 +74,7 @@ gls2.Boss = tm.createClass(
             this.soft.setup.call(this);
 
         } else if (this.hp <= this.hpMax*0.2 && this.hpMax*0.2 < beforeHp) {
-            stopAttack(this);
+            this.soft.stopAttack.call(this);
             this.tweener.clear();
 
             // TODO 爆発エフェクト
