@@ -65,7 +65,7 @@ gls2.Stage = tm.createClass(
 
     launchEnemy: function(data) {
         this.gameScene.enemyCount += 1;
-        return gls2.Enemy(this.gameScene, data.soft, data.hard)
+        return data.hard(this.gameScene, data.soft)
             .setPosition(data.x, data.y)
             .addChildTo(this.gameScene)
             .onLaunch();

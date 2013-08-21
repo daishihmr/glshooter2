@@ -4,6 +4,20 @@
  */
 (function() {
 
+/** @const */
+var DATA = {
+    //name         hp     score   ground erase  star
+    //名前          耐久力  素点    地上物判定 破壊時の弾消し 破壊時の星アイテム排出数
+    "kujo":      [     2,      300, false, false,  1 ],
+    "kiryu":     [     3,      400, false, false,  1 ],
+    "natsuki":   [     5,      900,  true, false,  1 ],
+    "kise":      [    35,    15000,  true, false,  1 ],
+    "kurokawa":  [    35,     5000, false, false,  5 ],
+    "akimoto":   [   250,   300000, false,  true, 10 ],
+    "yukishiro": [   750,   800000, false,  true, 20 ],
+    "misumi":    [  4000,  2000000, false,  true,  0 ],
+};
+
 /**
  * 敵
  * @class
@@ -12,6 +26,11 @@ gls2.Enemy = tm.createClass(
 /** @lends {gls2.Enemy.prototype} */
 {
     superClass: tm.app.CanvasElement,
+
+    /**
+     * @type {string}
+     */
+    name: null,
 
     /** 
      * 自機
@@ -23,11 +42,6 @@ gls2.Enemy = tm.createClass(
      * @type {gls2.GameScene}
      */
     gameScene: null,
-    /** 
-     * 敵のスペックと描画処理
-    　* @type {gls2.EnemyHard}
-     */
-    hard: null,
     /** 
      * 行動パターン
      * @type {gls2.EnemySoft}
@@ -76,7 +90,7 @@ gls2.Enemy = tm.createClass(
     /**
      * @constructs
      */
-    init: function(gameScene, software, hardware) {
+    init: function(gameScene, software, name) {
         this.superInit();
 
         this.addEventListener("completeattack", function() {
@@ -98,13 +112,12 @@ gls2.Enemy = tm.createClass(
         this.gameScene = gameScene;
         this.player = gameScene.player;
         this.soft = software;
-        this.hard = hardware;
 
         this.score = 100;
         this.erase = false;
 
+        this._setData(name);
         this.soft.setup.apply(this);
-        this.hard.setup.apply(this);
 
         if (this.isGround) {
             this.altitude = 1;
@@ -120,8 +133,6 @@ gls2.Enemy = tm.createClass(
      */
     onLaunch: function() {
         this.soft.onLaunch.apply(this);
-        this.hard.onLaunch.apply(this);
-
         return this;
     },
 
@@ -130,7 +141,6 @@ gls2.Enemy = tm.createClass(
      */
     onCompleteAttack: function() {
         this.soft.onCompleteAttack.apply(this);
-        this.hard.onCompleteAttack.apply(this);
     },
 
     /**
@@ -142,7 +152,6 @@ gls2.Enemy = tm.createClass(
             && 0 <= this.y - this.boundingHeightTop && this.y + this.boundingHeightBottom < SC_H) {
             this.entered = true;
             this.soft.onenter.apply(this);
-            this.hard.onenter.apply(this);
         }
 
         var before = {
@@ -151,7 +160,6 @@ gls2.Enemy = tm.createClass(
         };
 
         this.soft.update.apply(this);
-        this.hard.update.apply(this);
         if (this.isGround) {
             this.x += this.gameScene.ground.dx;
             this.y += this.gameScene.ground.dy;
@@ -188,7 +196,7 @@ gls2.Enemy = tm.createClass(
             }
 
             this.soft.destroy.apply(this);
-            this.hard.destroy.apply(this);
+            this.destroy();
 
             return true;
         } else {
@@ -196,8 +204,9 @@ gls2.Enemy = tm.createClass(
         }
     },
 
-    draw: function(canvas) {
-        this.hard.draw.call(this, canvas);
+    destroy: function() {
+        gls2.Effect.explodeS(this.x, this.y, this.gameScene, this.velocity);
+        this.remove();
     },
 
     /**
@@ -216,10 +225,66 @@ gls2.Enemy = tm.createClass(
         return this.enableFire;
     },
 
+    _setData: function(name) {
+        this.name = name;
+        this.hp = DATA[name][0];
+        this.score = DATA[name][1];
+        this.isGround = DATA[name][2];
+        this.erase = DATA[name][3];
+        this.star = DATA[name][4];
+    },
+
+    fallDown: function() {
+        this.remove();
+        this.isGround = true;
+        this.gameScene.addChild(this);
+        this.addEventListener("enterframe", function() {
+            if (Math.random() < 0.2) {
+                gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {
+                    "x": 0,
+                    "y": -3,
+                });
+            }
+        });
+        this.tweener
+            .clear()
+            .to({
+                "altitude": 4,
+                "y": this.y + 200,
+            }, 2000)
+            .call(function() {
+                gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+                this.remove();
+            }.bind(this));
+    },
+
+    bossDestroy: function() {
+        // TODO ド派手にする
+        this.addEventListener("enterframe", function() {
+            if (Math.random() < 0.2) {
+                gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {
+                    "x": 0,
+                    "y": -3,
+                });
+            }
+        });
+        this.tweener
+            .clear()
+            .to({
+                "altitude": 4,
+                "y": this.y + 200,
+            }, 2000)
+            .call(function() {
+                gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+                this.remove();
+            }.bind(this));
+    },
+
 });
 
 /**
  * すべての敵を退場させる
+ * @static
  */
 gls2.Enemy.clearAll = function() {
     var copied = [].concat(activeList);
