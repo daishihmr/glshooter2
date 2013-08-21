@@ -33,13 +33,14 @@ http://daishihmr.github.io/glshooter2/ (Google Chrome専用)
 
 このゲームの開発を通じてtmlib.jsへの機能追加や不具合解消に貢献できたら幸いです。
 
-## copyright
+## ゲーム素材の再利用について
 
 本アプリケーションの利用条件は以下のとおりです。
 
 ### JavaScriptおよびHTMLファイル
 
 プロジェクトルートディレクトリ、srcディレクトリ、externディレクトリ内に配置されるすべてのファイルの著作権はdaishihmrに帰属します。
+
 これらはすべてMITライセンスのもとで再利用可能です。
 
 http://daishihmr.mit-license.org/
@@ -50,9 +51,15 @@ libsディレクトリ内のJavaScriptファイルの利用条件については
 
 ### 画像素材
 
-assetsディレクトリ内の画像ファイルは、daishihmrとProjectTeam DoGA様の共同著作物となります。
+assets/tex1.pngは、daishihmrとProjectTeam DoGA様の共同著作物となります。
 
-非営利目的での再利用が可能です。
+非営利目的での再利用が可能です。詳細は以下のURLを参照ください。
+
+http://doga.jp/2010/programs/dogal/dogal3/license.html
+
+その他のassetsディレクトリ内画像ファイルはdaishihmrの著作物です。
+
+MITライセンスのもとで再利用可能です。
 
 ### 音声素材
 

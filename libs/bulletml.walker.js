@@ -169,16 +169,16 @@
             return n;
         } else if (n = this._localScope[exp]) {
             return n;
-        } else if (n = bulletml.Bullet.globalScope[exp]) {
+        } else if (n = bulletml.Walker.globalScope[exp]) {
             return n;
         } else if (exp === "$rand") {
             return Math.random();
         }
 
         var scope = {};
-        for ( var prop in bulletml.Bullet.globalScope) {
-            if (bulletml.Bullet.globalScope.hasOwnProperty(prop)) {
-                scope[prop] = bulletml.Bullet.globalScope[prop];
+        for ( var prop in bulletml.Walker.globalScope) {
+            if (bulletml.Walker.globalScope.hasOwnProperty(prop)) {
+                scope[prop] = bulletml.Walker.globalScope[prop];
             }
         }
         for ( var prop in this._localScope) {
@@ -254,6 +254,6 @@
         return w;
     };
 
-    bulletml.Bullet.globalScope = {};
+    bulletml.Walker.globalScope = {};
 
 })();

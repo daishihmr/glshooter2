@@ -34,14 +34,25 @@ gls2.Player = tm.createClass(
 {
     superClass: tm.app.Sprite,
 
+    /**
+     * 0:赤
+     * 1:緑
+     * 2:青
+     */
     type: 0,
+    /**
+     * 0:ショット
+     * 1:レーザー
+     * 2:エキスパート
+     */
+    style: 0,
+
     roll: 0,
     controllable: true,
     muteki: false,
     gameScene : null,
 
-    /** @protected */
-    speed: 4.5,
+    speed: 0,
     bits: null,
 
     /** @type {gls2.ShotBulletPool0} */
@@ -60,13 +71,16 @@ gls2.Player = tm.createClass(
     hyperCircle1: null,
 
     /** @constructs */
-    init: function(gameScene, type) {
-        this.superInit("tex1", 64, 64);
+    init: function(gameScene, type, style) {
+        this.superInit("fighter", 64, 64);
 
-        this.type = type;
         this.gameScene = gameScene;
+        this.type = type;
+        this.style = style;
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
+
+        this.speed = [6.0, 5.0, 4.5][type];
 
         this.boundingRadius = 3;
         this.altitude = 10;
@@ -84,11 +98,13 @@ gls2.Player = tm.createClass(
             "aura": "aura",
         });
         this.laser.visible = false;
-        this.laser.addChildTo(gameScene);
 
         this._createHitCircle();
 
         this.bits = this._createBits();
+        if (this.style === 1) {
+            this.bits = [this.bits[1], this.bits[2]];
+        }
 
         this.bitPivot = tm.app.CanvasElement().addChildTo(this);
         for (var i = 0, end = this.bits.length; i < end; i++) {
@@ -120,7 +136,7 @@ gls2.Player = tm.createClass(
         this.hyperCircle0.blendMode = "lighter";
         this.hyperCircle0.update = function() {
             this.rotation += 2;
-            this.visible = gameScene.hyperGauge === 1 && !gameScene.isHyperMode;
+            this.visible = gameScene.hyperLevel > 0 && !gameScene.isHyperMode;
         };
 
         this.hyperCircle1 = tm.app.CircleShape(80, 80, {
@@ -137,7 +153,7 @@ gls2.Player = tm.createClass(
         this.hyperCircle1.blendMode = "lighter";
         this.hyperCircle1.update = function() {
             this.rotation -= 2;
-            this.visible = gameScene.hyperGauge === 1 && !gameScene.isHyperMode;
+            this.visible = gameScene.hyperLevel > 0 && !gameScene.isHyperMode;
         };
 
         this.hyperCircle2 = tm.app.CanvasElement(80, 80).addChildTo(this);
@@ -152,13 +168,13 @@ gls2.Player = tm.createClass(
             var value = gameScene.hyperTime / gls2.Setting.HYPERMODE_TIME;
 
             canvas.strokeStyle = "rgba(50,50,255,0.4)";
-            canvas.lineWidth = "10";
+            canvas.lineWidth = "12";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
             canvas.strokeStyle = "rgba(100,100,255,0.4)";
-            canvas.lineWidth = "6";
+            canvas.lineWidth = "8";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
             canvas.strokeStyle = "rgba(180,180,255,0.4)";
-            canvas.lineWidth = "2";
+            canvas.lineWidth = "4";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
         };
         this.hyperCircle3 = tm.app.CircleShape(80, 80, {
@@ -178,12 +194,28 @@ gls2.Player = tm.createClass(
 
     /** @protected */
     _createBits: function() {
-        return [
-            { x: -70, y: 20, d: 0.1, turn: false, dt: -0.7, v: true },
-            { x: -40, y: 40, d: 0.1, turn: false, dt: -0.5, v: true },
-            { x:  40, y: 40, d: 0.1, turn:  true, dt:  0.5, v: true },
-            { x:  70, y: 20, d: 0.1, turn:  true, dt:  0.7, v: true },
-        ];
+        if (this.type === 0) {
+            return [
+                { x: -50, y:  20, d: 0.0, turn: false, dt: -0.7, v: true },
+                { x: -20, y:  40, d: 0.0, turn: false, dt: -0.5, v: true },
+                { x:  20, y:  40, d: 0.0, turn:  true, dt:  0.5, v: true },
+                { x:  50, y:  20, d: 0.0, turn:  true, dt:  0.7, v: true },
+            ];
+        } else if (this.type === 1) {
+            return [
+                { x: -70, y: 20, d: 0.1, turn: false, dt: -0.7, v: true },
+                { x: -40, y: 40, d: 0.1, turn: false, dt: -0.5, v: true },
+                { x:  40, y: 40, d: 0.1, turn:  true, dt:  0.5, v: true },
+                { x:  70, y: 20, d: 0.1, turn:  true, dt:  0.7, v: true },
+            ];
+        } else if (this.type === 2) {
+            return [
+                { x: -60, y: 40, d: 0.6, turn: false, dt: -0.7, v: true },
+                { x: -30, y: 20, d: 0.3, turn: false, dt: -0.5, v: true },
+                { x:  30, y: 20, d: 0.3, turn:  true, dt:  0.5, v: true },
+                { x:  60, y: 40, d: 0.6, turn:  true, dt:  0.7, v: true },
+            ];
+        }
     },
 
     _createHitCircle: function() {
@@ -261,14 +293,14 @@ gls2.Player = tm.createClass(
             }
 
             if (kb.getKeyDown("x")) {
-                if (this.gameScene.hyperGauge === 1 && !this.gameScene.isHyperMode) {
+                if (this.gameScene.hyperLevel > 0 && !this.gameScene.isHyperMode) {
                     // ハイパー
                     this.gameScene.startHyperMode();
                     gls2.StartHyperEffect(this).addChildTo(this.gameScene);
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
                     // ボム
                     this.hyperRank = gls2.math.clamp(this.hyperRank - 2, 0, 1);
-                    bulletml.Bullet.globalScope["$rank"] = gls2.math.clamp(bulletml.Bullet.globalScope["$rank"]-0.02, 0, 1);
+                    bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.02, 0, 1);
                     gls2.Bomb(this, this.gameScene)
                         .setPosition(gls2.math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);
@@ -280,7 +312,7 @@ gls2.Player = tm.createClass(
         this.controlBit(kb);
 
         // ロール
-        this._calcRoll(kb);
+        this._calcRoll(kb, app.frame);
 
         // バックファイア
         if (app.frame % 2 === 0) {
@@ -298,25 +330,26 @@ gls2.Player = tm.createClass(
         this.gameScene.comboCount = 0;
     },
 
-    /** @protected */
     controlBit: function(kb) {
-        var p = this.bitPivot;
-        if (this.controllable && kb.getKey("left")) {
-            p.rotation = Math.max(p.rotation - 3, -40);
-        } else if (this.controllable && kb.getKey("right")) {
-            p.rotation = Math.min(p.rotation + 3,  40);
-        } else {
-            if (3 < p.rotation) {
-                p.rotation -= 3;
-            } else if (p.rotation < -3) {
-                p.rotation += 3;
+        if (this.type === 1) {
+            var p = this.bitPivot;
+            if (this.controllable && kb.getKey("left")) {
+                p.rotation = Math.max(p.rotation - 3, -50);
+            } else if (this.controllable && kb.getKey("right")) {
+                p.rotation = Math.min(p.rotation + 3,  50);
             } else {
-                p.rotation = 0;
+                if (3 < p.rotation) {
+                    p.rotation -= 3;
+                } else if (p.rotation < -3) {
+                    p.rotation += 3;
+                } else {
+                    p.rotation = 0;
+                }
             }
         }
     },
 
-    _calcRoll: function(kb) {
+    _calcRoll: function(kb, frame) {
         if (this.controllable && kb.getKey("left")) {
             this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3);
         } else if (this.controllable && kb.getKey("right")) {
@@ -328,8 +361,13 @@ gls2.Player = tm.createClass(
                 this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3);
             }
         }
-        var frame = 3 + ~~this.roll
-        this.setFrameIndex(frame);
+        if (this.type === 0) {
+            this.setFrameIndex(3 + ~~this.roll);
+        } else if (this.type === 1) {
+            this.setFrameIndex((10 + ~~(frame/2)%3 * 7) + ~~this.roll);
+        } else if (this.type === 2) {
+            this.setFrameIndex(31 + ~~this.roll);
+        }
         return frame;
     },
 

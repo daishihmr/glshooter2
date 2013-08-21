@@ -56,6 +56,9 @@ gls2.GlShooter2 = tm.createClass(
                 // image
                 "tex0": "assets/tex0.png",
                 "tex1": "assets/tex1.png",
+                "tex_stage1": "assets/tex_stage1.png",
+                "tex_tank1": "assets/tex_tank1.png",
+                "fighter": "assets/fighters.png",
                 "laserR": "assets/laser_r.png",
                 "laserG": "assets/laser_g.png",
                 "laserB": "assets/laser_b.png",
@@ -71,6 +74,8 @@ gls2.GlShooter2 = tm.createClass(
 
                 // bgm
                 "bgm1": "assets2/nc54073.mp3",
+                "bgmBoss": "assets2/nc29206.mp3",
+                "bgmResult": "assets2/nc54077.mp3",
 
                 // sound
                 "sound/explode": "assets2/sen_ge_taihou03.mp3",
@@ -78,12 +83,21 @@ gls2.GlShooter2 = tm.createClass(
                 "sound/explode3": "assets2/sen_ge_bom02.mp3",
                 "sound/star": "assets2/se_maoudamashii_system24.mp3",
                 "sound/bomb": "assets2/sen_ge_bom17.mp3",
+                "sound/warning": "assets2/meka_ge_keihou06.mp3",
+                "sound/select": "assets2/se_maoudamashii_system36.mp3",
 
                 // voice
+                "sound/voHyperStandBy": "assets/vo_hyper_standby.mp3",
                 "sound/voHyperReady": "assets/vo_hyper_ready.mp3",
                 "sound/voHyperStart0": "assets/vo_hyper_start.mp3",
                 "sound/voHyperStart1": "assets/vo_hyper_start2.mp3",
                 "sound/voBomb": "assets/vo_bomb.mp3",
+                "sound/voExtend": "assets/vo_extend.mp3",
+                "sound/voGetBomb": "assets/vo_getbomb.mp3",
+                "sound/voJacms": "assets/vo_jacms.mp3",
+                "sound/voLetsGo": "assets/vo_letsgo.mp3",
+                "sound/voSelectShip": "assets/vo_select_your_battle_ship.mp3",
+                "sound/voWarning": "assets/vo_warning.mp3",
 
                 // test
                 "star": "assets/star.png",
@@ -101,6 +115,7 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     _onLoadAssets: function() {
+        gls2.FixedRandom.setup(12345);
         gls2.Danmaku.setup();
         gls2.Effect.setup();
 
@@ -115,10 +130,8 @@ gls2.GlShooter2 = tm.createClass(
 });
 
 gls2.currentBgm = null;
-gls2.playBgm = function(bgmName) {
-    gls2.stopBgm();
-
-    if (gls2.core.bgmVolume === 0) return;
+gls2.playBgm = function(bgmName, continuePrevBgm) {
+    if (!continuePrevBgm) gls2.stopBgm();
 
     var bgm = tm.asset.AssetManager.get(bgmName);
     if (bgm) {
@@ -129,27 +142,42 @@ gls2.playBgm = function(bgmName) {
     }
 };
 gls2.stopBgm = function() {
-    if (gls2.currentBgm !== null) {
-        gls2.currentBgm.stop();
-    }
+    if (gls2.currentBgm !== null) gls2.currentBgm.stop();
 };
+gls2.fadeOutBgm = function() {
+    if (gls2.currentBgm !== null) {
+        var bgm = gls2.currentBgm;
+        bgm.loop = false;
+        gls2.GameScene.SINGLETON.addEventListener("enterframe", function() {
+            bgm.volume -= 0.002;
+            if (bgm.volume <= 0) {
+                bgm.stop();
+                this.removeEventListener("enterframe", arguments.callee);
+            }
+        });
+    }
+}
 
 gls2.playSound = function(soundName) {
     if (gls2.core.seVolume === 0) return;
-    if (gls2.playSound.played["sound/"+soundName] === gls2.core.frame) return;
+    if (gls2.playSound.played[soundName] === gls2.core.frame) return;
 
     var sound = tm.asset.AssetManager.get("sound/"+soundName);
     if (sound) {
+        sound = sound.clone().play();
         if (soundName.substring(0, 2) === "vo") {
             sound.volume = gls2.core.seVolume * 0.5;
+
+            if (gls2.playSound.voice !== null) gls2.playSound.voice.stop();
+            gls2.playSound.voice = sound;
         } else {
             sound.volume = gls2.core.seVolume * 0.1;
         }
-        sound = sound.clone().play();
     }
-    gls2.playSound.played["sound/"+soundName] = gls2.core.frame;
+    gls2.playSound.played[soundName] = gls2.core.frame;
 };
 gls2.playSound.played = {};
+gls2.playSound.voice = null;
 
 tm.app.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);

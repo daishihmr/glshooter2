@@ -17,9 +17,10 @@ gls2.Stage1 = tm.createClass(
         this.superInit(gameScene);
 
         this.seq.add(  0, function() {
-            gls2.playBgm("bgm1"),
+            gls2.playBgm("bgm1", true),
             this.gameScene.ground.direction = Math.PI*0.5;
-            this.gameScene.ground.speed = 1;
+            this.gameScene.ground.speed = 8;
+            this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
         });
 
         this.seq.add(200, "tankRD-center");
@@ -58,65 +59,81 @@ gls2.Stage1 = tm.createClass(
 
         this.seq.add(150, "yukishiro", true);
 
-        this.seq.add( 50, "heri2-left");
-        this.seq.add( 50, "heri2-center");
-        this.seq.add( 50, "heri2-right");
-        this.seq.add( 60, "heri1-center");
-        this.seq.add( 50, "heri2-left");
-        this.seq.add( 50, "heri2-center");
-        this.seq.add( 50, "heri2-right");
+        this.seq.add( 25, "heri2-left");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add( 25, "heri2-right");
+        this.seq.add( 25, "heri2-right");
+        this.seq.add( 25, "heri2-left");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add( 25, "heri2-right");
+        this.seq.add( 25, "heri2-left");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add( 25, "heri2-right");
+        this.seq.add( 25, "heri2-right");
+        this.seq.add( 25, "heri2-left");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add( 25, "heri2-right");
         this.seq.add( 50, "fighter-m-0");
         this.seq.add( 50, "fighter-m-2");
         this.seq.add( 50, "fighter-m-4");
-        this.seq.add( 50, "heri2-center");
-        this.seq.add( 50, "heri2-right");
-        this.seq.add( 50, "heri2-left");
+        this.seq.add( 50, "heri1-center");
+        this.seq.add( 50, "heri1-right");
+        this.seq.add( 50, "heri1-left");
         this.seq.add( 10, "cannon-6");
-        this.seq.add( 60, "heri1-center");
-        this.seq.add( 50, "heri2-center");
-        this.seq.add( 50, "heri2-right");
+        this.seq.add( 60, "heri1-left");
+        this.seq.add( 50, "heri1-right");
+        this.seq.add( 50, "heri1-center");
         this.seq.add( 50, "fighter-m-6");
         this.seq.add( 50, "fighter-m-4");
         this.seq.add( 50, "fighter-m-2");
-        this.seq.add( 50, "heri2-center");
-        this.seq.add( 50, "heri2-right");
-        this.seq.add( 50, "heri2-left");
-        this.seq.add( 60, "heri1-center");
-        this.seq.add( 50, "heri2-center");
-        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "heri1-center");
+        this.seq.add( 50, "heri1-right2");
+        this.seq.add( 50, "heri1-left2");
+        this.seq.add( 60, "heri1-center2");
+        this.seq.add( 50, "heri1-center");
+        this.seq.add( 50, "heri1-right");
         this.seq.add( 50, "fighter-m-0");
         this.seq.add( 50, "fighter-m-1");
         this.seq.add( 50, "fighter-m-2");
         this.seq.add( 50, "heri2-center");
         this.seq.add( 50, "heri2-right");
-        this.seq.add( 10, "cannon-1");
         this.seq.add( 50, "heri2-left");
+        this.seq.add( 10, "cannon-1");
         this.seq.add( 60, "heri1-center");
-        this.seq.add( 50, "heri2-center");
-        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "heri1-left");
+        this.seq.add( 50, "heri1-right");
         this.seq.add( 50, "fighter-m-6");
         this.seq.add( 50, "fighter-m-5");
         this.seq.add( 50, "fighter-m-4");
-        this.seq.add( 50, "heri2-center");
-        this.seq.add( 50, "heri2-right");
-        this.seq.add( 50, "heri2-left");
-        this.seq.add( 60, "heri1-center");
-        this.seq.add( 50, "heri2-center");
-        this.seq.add( 50, "heri2-right");
+        this.seq.add( 50, "heri1-center");
+        this.seq.add( 50, "heri1-right");
+        this.seq.add( 50, "heri1-left2");
+        this.seq.add( 60, "heri1-center2");
+        this.seq.add( 50, "heri1-center");
+        this.seq.add( 50, "heri1-right2");
         this.seq.add( 60, "heri1-center");
 
         this.seq.add(  1, function() {
-            this.gameScene.ground.tweener.clear().to({speed:1}, 2000, "easeInOutQuad");
+            this.gameScene.ground.tweener.clear().to({speed:10}, 5000, "easeInOutQuad");
         });
-        this.seq.add(100, "komachi-0");
-        this.seq.add(100, "komachi-1");
 
-        if (DEBUG) {
-            this.seq.add(600, function() {
-                this.gameScene.ground.speed = 1;
-                this.frame = 0;
+        this.seq.add(100, "komachi-0");
+        this.seq.add(160, "komachi-1");
+
+        this.seq.add(600, function() {
+            this.alartWarning(function() {
+                gls2.playBgm("bgmBoss", true);
             });
-        }
+        });
+
+        this.seq.add(600, "misumi");
+
+        // if (DEBUG) {
+        //     this.seq.add(600, function() {
+        //         this.gameScene.ground.speed = 1;
+        //         this.frame = 0;
+        //     });
+        // }
 
     },
 

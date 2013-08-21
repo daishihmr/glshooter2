@@ -60,7 +60,7 @@ gls2.DialogMenu = tm.createClass(
         var height = Math.max((1+menu.length)*50, 50) + 40;
         this.box = tm.app.RectangleShape(SC_W * 0.8, height, {
             strokeStyle: "rgba(0,0,0,0)",
-            fillStyle: "rgba(1,2,48,0.8)",
+            fillStyle: "hsla(220,50%,30%,0.8)",
         }).setPosition(SC_W*0.5, SC_H*0.5);
         this.box.width = 1;
         this.box.height = 1;
@@ -148,9 +148,11 @@ gls2.DialogMenu = tm.createClass(
         } else if (app.keyboard.getKeyDown("down")) {
             this._selected += 1;
             this._selected = gls2.math.clamp(this._selected, 0, this.selections.length-1);
+            gls2.playSound("select");
         } else if (app.keyboard.getKeyDown("up")) {
             this._selected -= 1;
             this._selected = gls2.math.clamp(this._selected, 0, this.selections.length-1);
+            gls2.playSound("select");
         }
     },
 
