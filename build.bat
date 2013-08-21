@@ -35,11 +35,11 @@ java -jar tools/compiler.jar ^
 --js src/scene/GameOverScene.js ^
 --js src/scene/EndingScene.js ^
 --js src/enemy/Enemy.js ^
+--js src/enemy/Boss.js ^
 --js src/enemy/EnemyHard.js ^
 --js src/enemy/EnemySoft.js ^
 --js src/enemy/EnemyUnit.js ^
 --js src/enemy/Danmaku.js ^
---js src/enemy/Boss.js ^
 --js libs/math.js ^
 --compilation_level ADVANCED_OPTIMIZATIONS ^
 --language_in ECMASCRIPT5 ^
