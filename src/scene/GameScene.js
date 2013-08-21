@@ -255,7 +255,7 @@ gls2.GameScene = tm.createClass(
                         this.onEnemyDestroy(e);
                     } else {
                         if (this.isHyperMode) {
-                            this.addCombo(this.hyperLevel);
+                            this.addCombo(this.hyperLevel * 0.01);
                         } else {
                             this.addCombo(0.01);
                         }
@@ -294,7 +294,7 @@ gls2.GameScene = tm.createClass(
                         this.onEnemyDestroy(e);
                     } else {
                         if (this.isHyperMode) {
-                            this.addCombo(this.hyperLevel);
+                            this.addCombo(this.hyperLevel * 0.01);
                         } else {
                             this.addCombo(0.01);
                         }

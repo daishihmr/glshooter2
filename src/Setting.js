@@ -15,7 +15,7 @@ gls2.Setting = {
      */
     INITIAL_ZANKI: 3,
 
-    /** 
+    /**
      * ボムスロット初期数
      * @const
      */
@@ -206,7 +206,7 @@ gls2.Setting = {
      * コンボボーナス。何点ごとに倍率が1上がるか
      * @const
      */
-    COMBO_BONUS: 200,
+    COMBO_BONUS: 1000,
 
     /**
      * 弾破壊時のスコア
