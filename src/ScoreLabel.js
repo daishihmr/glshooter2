@@ -43,8 +43,8 @@ gls2.ScoreLabel = tm.createClass(
         // ボスHP
         if (this.gameScene.boss !== null) {
             this.fillRect(5, this.scoreLabelElement.gpsOffsetY - 20, (SC_W-10) * this.gameScene.boss.hp/this.gameScene.boss.hpMax, 10);
-            this.clear(5 + (SC_W-10)*0.6, this.scoreLabelElement.gpsOffsetY - 20, 2, 10);
-            this.clear(5 + (SC_W-10)*0.2, this.scoreLabelElement.gpsOffsetY - 20, 2, 10);
+            this.clear(5 + (SC_W-10)*0.55, this.scoreLabelElement.gpsOffsetY - 20, 2, 10);
+            this.clear(5 + (SC_W-10)*0.1, this.scoreLabelElement.gpsOffsetY - 20, 2, 10);
         }
 
         // スコア

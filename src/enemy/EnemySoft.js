@@ -590,6 +590,10 @@ gls2.EnemySoft.Nagisa3 = tm.createClass(
             .wait(800)
             .call(function() {
                 this.dispatchEvent(tm.event.Event("completeattack"));
+                this.tweener
+                    .clear()
+                    .move(SC_W*0.5, SC_H*0.2,  3000, "easeInOutQuad")
+                    .move(SC_W*0.5, SC_H*0.7, 20000, "easeInOutQuad");
             }.bind(enemy));
 
         enemy.on("completeattack", function() {

@@ -61,7 +61,7 @@ gls2.Boss = tm.createClass(
         }
 
         // 形態変化
-        if (this.hp <= this.hpMax*0.65 && this.hpMax*0.65 < beforeHp) {
+        if (this.hp <= this.hpMax*0.55 && this.hpMax*0.55 < beforeHp) {
             gls2.EnemySoft.stopAttack(this);
             this.clearEventListener("completeattack");
             this.tweener.clear();
