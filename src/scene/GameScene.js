@@ -898,7 +898,7 @@ gls2.GameScene = tm.createClass(
                 gpsOffsetX: -SC_W,
             }, 1600, "easeInQuad")
             .to({
-                gpsOffsetY: 22,
+                gpsOffsetY: 30,
             }, 800, "easeInOutQuad")
         ;
     },

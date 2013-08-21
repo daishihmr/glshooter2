@@ -37,15 +37,24 @@ gls2.ScoreLabel = tm.createClass(
     update: function() {
         this.clear();
 
-        this.fillStyle = "rgba(255,255,255,0.4)";
-        this.strokeStyle = "rgba(255,255,255,0.4)";
-
         // ボスHP
         if (this.gameScene.boss !== null) {
-            this.fillRect(5, this.scoreLabelElement.gpsOffsetY - 20, (SC_W-10) * this.gameScene.boss.hp/this.gameScene.boss.hpMax, 10);
-            this.clear(5 + (SC_W-10)*0.55, this.scoreLabelElement.gpsOffsetY - 20, 2, 10);
-            this.clear(5 + (SC_W-10)*0.1, this.scoreLabelElement.gpsOffsetY - 20, 2, 10);
+            this.fillStyle = tm.graphics.LinearGradient(0, 0, SC_W, 0)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba(255,255,0,0.4)" },
+                    { offset: 1.0, color: "rgba(0,255,255,0.4)" },
+                ]).toStyle();
+            this.strokeStyle = "rgba(255,255,255,0.8)";
+            this.lineWidth = 2;
+            this.fillRect(5, this.scoreLabelElement.gpsOffsetY - 20, (SC_W-10) * this.gameScene.boss.hp/this.gameScene.boss.hpMax, 20);
+            this.strokeRect(5, this.scoreLabelElement.gpsOffsetY - 20, SC_W-10, 20);
+            this.clear(5 + (SC_W-10)*0.55, this.scoreLabelElement.gpsOffsetY - 20+2, 2, 20-4);
+            this.clear(5 + (SC_W-10)*0.1, this.scoreLabelElement.gpsOffsetY - 20+2, 2, 20-4);
         }
+
+        this.fillStyle = "rgba(255,255,255,0.4)";
+        this.strokeStyle = "rgba(255,255,255,0.4)";
+        this.lineWidth = 1;
 
         // スコア
         var text;

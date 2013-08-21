@@ -15,7 +15,7 @@ var DATA = {
     "kurokawa":  [    35,     5000, false, false,  5 ],
     "akimoto":   [   250,   300000, false,  true, 10 ],
     "yukishiro": [   750,   800000, false,  true, 20 ],
-    "misumi":    [  4000,  2000000, false,  true,  0 ],
+    "misumi":    [  6000,  2000000, false,  true,  0 ],
 };
 
 /**
