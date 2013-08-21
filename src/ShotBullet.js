@@ -16,6 +16,7 @@ gls2.ShotBullet = tm.createClass({
         var SZ = 64;
         this.superInit("shotbullet", SZ, SZ);
         this.blendMode = "lighter";
+        // this.alpha = 0.8;
 
         if (origParticle === null) {
             var size = 16;
@@ -36,7 +37,7 @@ gls2.ShotBullet = tm.createClass({
         if (color !== undefined) this.setColor(color);
     },
 
-    update: function() {
+    update: function(app) {
         this.x += this.vx;
         this.y += this.vy;
 
@@ -53,11 +54,9 @@ gls2.ShotBullet = tm.createClass({
         if (col === 3) {
             this.speed = 45;
             this.boundingRadius = 48;
-            this.setScale(2.0, 2.0);
         } else {
             this.speed = 30;
             this.boundingRadius = 32;
-            this.setScale(1.5, 1.5);
         }
     },
 
@@ -92,7 +91,9 @@ var activeList = gls2.ShotBullet.activeList = [];
 gls2.ShotBulletPool = tm.createClass({
     /** @type {Array.<gls2.ShotBullet>} */
     pool: null,
+    hyper: false,
     init: function(color, count) {
+        this.hyper = color === 3;
         this.pool = [];
         for (var i = 0; i < count; i++) {
             var sb = gls2.ShotBullet(color);
@@ -107,6 +108,12 @@ gls2.ShotBulletPool = tm.createClass({
                 if (idx !== -1) activeList.splice(idx, 1);
                 self.pool.push(this);
             });
+
+            if (this.hyper) {
+                sb.addEventListener("enterframe", function(e) {
+                    this.setScale(e.app.frame % 2 === 0 ? 2.0 : 1.0);
+                });
+            }
 
             this.pool.push(sb);
         }
@@ -126,6 +133,11 @@ gls2.ShotBulletPool = tm.createClass({
 
         return shotBullet;
     },
+
+    setLevel: function(hyperLevel) {
+        // TODO
+    },
+
 });
 
 })();

@@ -263,14 +263,14 @@ gls2.Effect.explodeM = function(x, y, scene) {
 gls2.Effect.explodeL = function(x, y, scene) {
     gls2.playSound("explode2");
     gls2.playSound("explode3");
-    var count = 40;
+    var count = 20;
     var offset = ~~(Math.random() * gls2.Noise.noise.length);
     for (var i = 0; i < count; i++) {
         var a = (Math.PI*2 * i/count)
         var idx = ~~(gls2.Noise.noise.length * i/count) + offset;
         var v = Math.pow(gls2.Noise.noise.at(idx), 2);
-        for (var j = 0; j < 4; j++) {
-            var ev = v * (j+1) * 5;
+        for (var j = 0; j < 3; j++) {
+            var ev = v * (j+1) * 4;
             var e = gls2.effectSprite["explodeL"]
                 .clone()
                 .addEventListener("animationend", function() {
@@ -284,13 +284,13 @@ gls2.Effect.explodeL = function(x, y, scene) {
                     if (this.age > 32) this.blendMode = "source-over";
                     this.age += 1;
                 })
-                .setScale(0.3 * (5-j))
+                .setScale(0.3 * (3-j))
                 .setBlendMode("lighter")
                 .setPosition(x, y)
                 .gotoAndPlay();
             e.rotation = Math.random() * Math.PI*2;
             e.isEffect = true;
-            e.alpha = 0.5;
+            e.alpha = 0.2;
             e.age = 0;
             e.a = a;
             e.v = ev;

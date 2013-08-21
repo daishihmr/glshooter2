@@ -38,7 +38,7 @@ gls2.StarItem = tm.createClass(
 
         this.addChildTo(this.gameScene);
 
-        var a = Math.random() * Math.PI*0.5 - Math.PI*0.75;
+        var a = gls2.FixedRandom.random() * Math.PI*0.5 - Math.PI*0.75;
         var s = 30;
         this.dx = Math.cos(a) * s;
         this.dy = Math.sin(a) * s;
@@ -111,8 +111,10 @@ gls2.StarItemGround = tm.createClass(
         this.superInit(large);
     },
     update: function() {
-        this.x += this.gameScene.ground.dx;
-        this.y += this.gameScene.ground.dy;
+        if (!this.grub) {
+            this.x += this.gameScene.ground.dx;
+            this.y += this.gameScene.ground.dy;
+        }
         this.superClass.prototype.update.call(this);
     },
 });

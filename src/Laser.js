@@ -4,8 +4,6 @@
  */
 (function() {
 
-var origParticle = null;
-
 /**
  * @class
  */
@@ -22,6 +20,9 @@ gls2.Laser = tm.createClass(
     textures: null,
     color: null,
 
+    baseAttackPower: 0,
+    baseWidth: 0,
+
     beforeFrameVisible: false,
 
     head: null,
@@ -30,15 +31,22 @@ gls2.Laser = tm.createClass(
 
     isEffect: true,
 
+    attackPower: gls2.Setting.LASER_ATTACK_POWER,
+
+    origParticle: null,
+
     init: function(player, textures) {
         this.player = player;
         this.gameScene = player.gameScene;
+
+        this.baseAttackPower = this.player.style === 0 ? 1 : 1.5;
+        this.baseWidth = this.player.style === 0 ? 50 : 75;
 
         var self = this;
 
         this.textures = textures;
 
-        this.superInit(textures["redBody"], 50, 100);
+        this.superInit(textures["redBody"], this.baseWidth, 100);
 
         this.boundingHeightBottom = 1;
 
@@ -151,8 +159,8 @@ gls2.Laser = tm.createClass(
         // f.blendMode = "lighter";
         // h.blendMode = "lighter";
 
-        // TODO
-        this.setColor("blue");
+        this.setColor(["red", "green", "blue"][this.player.type]);
+        this.setLevel(0);
     },
 
     setColor: function(color) {
@@ -167,37 +175,30 @@ gls2.Laser = tm.createClass(
         this.foot.gotoAndPlay(this.color);
         this.head.gotoAndPlay(this.color);
 
-        var size = 16;
-        origParticle = gls2.Particle(size, 1.0, 0.9, tm.graphics.Canvas()
-            .resize(size, size)
-            .setFillStyle(
-                tm.graphics.RadialGradient(size*0.5, size*0.5, 0, size*0.5, size*0.5, size*0.5)
-                    .addColorStopList([
-                        {offset:0.0, color: "rgba(255,255,255,1.0)"},
-                        {offset:1.0, color: "rgba(  0,  0,255,0.0)"},
-                    ]).toStyle()
-            )
-            .fillRect(0, 0, size, size)
-            .element
-        );
-
-        if (color === "hyper") {
-            this.width = 75;
-            this.boundingWidth = 75;
-            this.head.setScale(1.5, 1.5);
-        } else {
-            this.width = 50;
-            this.boundingWidth = 50;
-            this.head.setScale(1.0, 1.0);
-        }
+        this.origParticle = null;
 
         return this;
     },
 
+    setLevel: function(hyperLevel) {
+        this.width = this.baseWidth + 30 * hyperLevel / gls2.Setting.HYPER_LEVEL_MAX;
+        this.boundingWidth = this.width;
+        this.head.setScale(this.width*0.02, this.width*0.02);
+        this.attackPower = this.baseAttackPower * gls2.Setting.LASER_ATTACK_POWER + gls2.Setting.LASER_ATTACK_POWER_RATE * hyperLevel;
+
+        if (hyperLevel === 0) {
+            this.setColor(["red", "green", "blue"][this.player.type]);
+        } else {
+            this.setColor("hyper");
+        }
+    },
+
     genParticle: function(count, y) {
+        if (this.origParticle === null) this.createOrigParticle();
+
         var y = y || this._hitY;
         for (var i = 0; i < count; i++) {
-            var p = origParticle.clone().setPosition(this.x, y).addChildTo(this.gameScene);
+            var p = this.origParticle.clone().setPosition(this.x, y).addChildTo(this.gameScene);
             var speed = gls2.math.randf(8, 14);
             var dir = gls2.math.randf(0, Math.PI);
             p.dx = Math.cos(dir) * speed;
@@ -213,10 +214,10 @@ gls2.Laser = tm.createClass(
     },
 
     genAuraParticle: function(count, x, y) {
-        var x = x || this.x;
-        var y = y || this._hitY;
+        if (this.origParticle === null) this.createOrigParticle();
+
         for (var i = 0; i < count; i++) {
-            var p = origParticle.clone().setPosition(x, y).addChildTo(this.gameScene);
+            var p = this.origParticle.clone().setPosition(x, y).addChildTo(this.gameScene);
             var speed = gls2.math.randf(12, 20);
             var dir = gls2.math.randf(0, Math.PI);
             p.dx = Math.cos(dir) * speed;
@@ -228,6 +229,37 @@ gls2.Laser = tm.createClass(
                 this.dx *= 0.95;
                 this.dy *= 0.95;
             });
+        }
+    },
+
+    createOrigParticle: function() {
+        var size = 16;
+        if (this.color === "hyper") {
+            this.origParticle = gls2.Particle(size, 1.0, 0.9, tm.graphics.Canvas()
+                .resize(size, size)
+                .setFillStyle(
+                    tm.graphics.RadialGradient(size*0.5, size*0.5, 0, size*0.5, size*0.5, size*0.5)
+                        .addColorStopList([
+                            {offset:0.0, color: "rgba(255,255,255,1.0)"},
+                            {offset:1.0, color: "rgba(255,255,0,0.0)"},
+                        ]).toStyle()
+                )
+                .fillRect(0, 0, size, size)
+                .element
+            );
+        } else {
+            this.origParticle = gls2.Particle(size, 1.0, 0.9, tm.graphics.Canvas()
+                .resize(size, size)
+                .setFillStyle(
+                    tm.graphics.RadialGradient(size*0.5, size*0.5, 0, size*0.5, size*0.5, size*0.5)
+                        .addColorStopList([
+                            {offset:0.0, color: "rgba(255,255,255,1.0)"},
+                            {offset:1.0, color: ["rgba(255,0,0,0.0)","rgba(0,255,0,0.0)","rgba(0,0,255,0.0)"][this.player.type]},
+                        ]).toStyle()
+                )
+                .fillRect(0, 0, size, size)
+                .element
+            );
         }
     },
 

@@ -11,6 +11,8 @@ gls2.ConsoleWindow = tm.createClass(
     label: null,
     buf: null,
     age: 0,
+    posX: 0,
+    posY: 0,
     init: function(w) {
         this.width = w;
         this.label = tm.app.Label("_", 10)
@@ -19,6 +21,9 @@ gls2.ConsoleWindow = tm.createClass(
             .setPosition(-this.width/2+4, -this.height/2+4)
             .setFillStyle("rgba(255,255,255,0.5)");
         this.buf = [];
+
+        this.posX = SC_W - this.width - 5;
+        this.posY = 5;
     },
     addLine: function(string, intercept) {
         if (intercept === true) {
@@ -66,7 +71,7 @@ gls2.ConsoleWindow = tm.createClass(
 
         canvas.context.globalCompositeOperation = "source-over";
 
-        canvas.translate(SC_W-this.width-5, 5);
+        canvas.translate(this.posX, this.posY);
         canvas.fillStyle = "rgba(1,2,48,0.5)";
         canvas.fillRect(0, 0, this.width, 64);
 

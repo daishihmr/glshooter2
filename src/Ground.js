@@ -67,7 +67,7 @@ gls2.Ground = tm.createClass(
             this.clear();
         }
 
-        this.lineWidth = 0.2;
+        this.lineWidth = 0.3;
         this.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
             .addColorStopList([
                 { offset: 0.0, color: "rgba(255,255,255,1.0)" },
@@ -86,10 +86,11 @@ gls2.Ground = tm.createClass(
         }
         this.stroke();
 
+        this.lineWidth = 0.2;
         this.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
             .addColorStopList([
-                { offset: 0.0, color: "rgba(128,128,128,1.0)" },
-                { offset: 1.0, color: "rgba(128,128,128,0.5)" },
+                { offset: 0.0, color: "rgba(255,255,255,0.6)" },
+                { offset: 1.0, color: "rgba(255,255,255,0.3)" },
             ])
             .toStyle();
         this.beginPath();
