@@ -24,7 +24,7 @@ gls2.Enemy.Heri1 = tm.createClass(
         this.boundingRadius = 24;
     },
     update: function(app) {
-        this.superClass.prototype.update.call(this, app);
+        gls2.Enemy.prototype.update.call(this, app);
 
         if (this.x < this.player.x) {
             this.scaleX = -1;
@@ -56,7 +56,7 @@ gls2.Enemy.Heri2 = tm.createClass(
         this.boundingRadius = 24;
     },
     update: function(app) {
-        this.superClass.prototype.update.call(this, app);
+        gls2.Enemy.prototype.update.call(this, app);
 
         if (this.x < this.player.x) {
             this.scaleX = -1;
@@ -89,7 +89,7 @@ gls2.Enemy.Tank1 = tm.createClass({
         this.boundingRadius = 24;
     },
     update: function(app) {
-        this.superClass.prototype.update.call(this, app);
+        gls2.Enemy.prototype.update.call(this, app);
 
         this._sprite1.setFrameIndex(~~(this.baseDir*16/(Math.PI*2)), 64, 64);
         this._sprite2.setFrameIndex(~~(this.cannonDir*16/(Math.PI*2)) + 16, 64, 64);
@@ -204,9 +204,8 @@ gls2.Enemy.Honoka = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yukishiro");
 
-        this._sprite = _Sprite("tex_stage1", 64*4, 64*2)
-            .setFrameIndex(3)
-            .setScale(1.5);
+        this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(3);
+        this.setScale(1.5);
 
         this.boundingWidth = 200;
         this.boundingHeight = 80;
@@ -243,16 +242,15 @@ gls2.Enemy.Honoka = tm.createClass({
 gls2.Enemy.Nagisa = tm.createClass(
 /** @lends {gls2.Enemy.Nagisa.prototype} */
 {
-    superClass: gls2.Enemy,
+    superClass: gls2.Boss,
 
     _sprite1: null,
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "misumi");
 
-        this._sprite = _Sprite("tex_stage1", 64*4, 64*2)
-            .setFrameIndex(4)
-            .setScale(1.5);
+        this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(4);
+        this.setScale(1.5);
 
         this.boundingWidth = 200;
         this.boundingHeight = 80;

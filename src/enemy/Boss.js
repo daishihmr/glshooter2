@@ -22,9 +22,9 @@ gls2.Boss = tm.createClass(
     /**
      * @constructs
      */
-    init: function(gameScene, softwares, hardware) {
+    init: function(gameScene, softwares, name) {
         this.softwares = softwares;
-        this.superInit(gameScene, this.softwares[0], hardware);
+        this.superInit(gameScene, this.softwares[0], name);
 
         this.hpMax = this.hp;
 
@@ -54,15 +54,16 @@ gls2.Boss = tm.createClass(
 
     damage: function(damagePoint) {
         var beforeHp = this.hp;
-        if (this.superClass.prototype.damage.call(this, damagePoint)) {
+        if (gls2.Enemy.prototype.damage.call(this, damagePoint)) {
             this.gameScene.demoPlaying = true;
             gls2.fadeOutBgm();
             return true;
         }
 
         // 形態変化
-        if (this.hp <= this.hpMax*0.6 && this.hpMax*0.6 < beforeHp) {
-            this.soft.stopAttack.call(this);
+        if (this.hp <= this.hpMax*0.65 && this.hpMax*0.65 < beforeHp) {
+            gls2.EnemySoft.stopAttack(this);
+            this.clearEventListener("completeattack");
             this.tweener.clear();
 
             // TODO 爆発エフェクト
@@ -70,11 +71,11 @@ gls2.Boss = tm.createClass(
             gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
 
             // 第2形態へ
-            this.soft = this.softwares[1];
-            this.soft.setup.call(this);
+            this.softwares[1].setup(this);
 
-        } else if (this.hp <= this.hpMax*0.2 && this.hpMax*0.2 < beforeHp) {
-            this.soft.stopAttack.call(this);
+        } else if (this.hp <= this.hpMax*0.1 && this.hpMax*0.1 < beforeHp) {
+            gls2.EnemySoft.stopAttack(this);
+            this.clearEventListener("completeattack");
             this.tweener.clear();
 
             // TODO 爆発エフェクト
@@ -82,8 +83,7 @@ gls2.Boss = tm.createClass(
             gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
 
             // 発狂へ
-            this.soft = this.softwares[2];
-            this.soft.setup.call(this);
+            this.softwares[2].setup(this);
 
             gls2.playSound("voJacms");
         }

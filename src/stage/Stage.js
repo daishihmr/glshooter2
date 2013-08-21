@@ -48,7 +48,7 @@ gls2.Stage = tm.createClass(
             var unit = gls2.EnemyUnit[data.value];
             if (unit !== null) {
                 if (unit[0].boss === true) {
-                    this.launchBoss(unit[0]);
+                    this.launchEnemy(unit[0]);
                 } else {
                     for (var i = 0; i < unit.length; i++) {
                         var enemy = this.launchEnemy(unit[i]);
@@ -66,13 +66,6 @@ gls2.Stage = tm.createClass(
     launchEnemy: function(data) {
         this.gameScene.enemyCount += 1;
         return data.hard(this.gameScene, data.soft)
-            .setPosition(data.x, data.y)
-            .addChildTo(this.gameScene)
-            .onLaunch();
-    },
-    launchBoss: function(data) {
-        this.gameScene.enemyCount += 1;
-        return gls2.Boss(this.gameScene, data.soft, data.hard)
             .setPosition(data.x, data.y)
             .addChildTo(this.gameScene)
             .onLaunch();

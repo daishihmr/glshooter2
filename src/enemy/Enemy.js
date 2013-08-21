@@ -42,11 +42,6 @@ gls2.Enemy = tm.createClass(
      * @type {gls2.GameScene}
      */
     gameScene: null,
-    /** 
-     * 行動パターン
-     * @type {gls2.EnemySoft}
-     */
-    soft: null,
 
     /**
      * 耐久力
@@ -87,15 +82,15 @@ gls2.Enemy = tm.createClass(
     direction: 0,
     speed: 0,
 
+    /** @type {Array.<string>} */
+    patterns: null,
+
     /**
      * @constructs
      */
     init: function(gameScene, software, name) {
         this.superInit();
 
-        this.addEventListener("completeattack", function() {
-            this.onCompleteAttack();
-        });
         this.addEventListener("added", function() {
             this.frame = 0;
             this.entered = false;
@@ -111,13 +106,12 @@ gls2.Enemy = tm.createClass(
 
         this.gameScene = gameScene;
         this.player = gameScene.player;
-        this.soft = software;
 
         this.score = 100;
         this.erase = false;
 
         this._setData(name);
-        this.soft.setup.apply(this);
+        software.setup(this);
 
         if (this.isGround) {
             this.altitude = 1;
@@ -132,7 +126,7 @@ gls2.Enemy = tm.createClass(
      * 出現時に呼び出される
      */
     onLaunch: function() {
-        this.soft.onLaunch.apply(this);
+        this.dispatchEvent(tm.event.Event("launch"));
         return this;
     },
 
@@ -140,7 +134,7 @@ gls2.Enemy = tm.createClass(
      * BulletMLによる攻撃が完了した時に呼び出される
      */
     onCompleteAttack: function() {
-        this.soft.onCompleteAttack.apply(this);
+        this.dispatchEvent(tm.event.Event("completeattack"));
     },
 
     /**
@@ -151,7 +145,7 @@ gls2.Enemy = tm.createClass(
             && 0 <= this.x - this.boundingWidthLeft && this.x + this.boundingWidthRight < SC_W
             && 0 <= this.y - this.boundingHeightTop && this.y + this.boundingHeightBottom < SC_H) {
             this.entered = true;
-            this.soft.onenter.apply(this);
+            this.dispatchEvent(tm.event.Event("enter"));
         }
 
         var before = {
@@ -159,7 +153,6 @@ gls2.Enemy = tm.createClass(
             y: this.y,
         };
 
-        this.soft.update.apply(this);
         if (this.isGround) {
             this.x += this.gameScene.ground.dx;
             this.y += this.gameScene.ground.dy;
@@ -195,7 +188,7 @@ gls2.Enemy = tm.createClass(
                 gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
             }
 
-            this.soft.destroy.apply(this);
+            this.dispatchEvent(tm.event.Event("destroy"));
             this.destroy();
 
             return true;
