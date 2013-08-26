@@ -473,8 +473,7 @@ gls2.GameScene = tm.createClass(
         gls2.playSound("star");
         if (star.large) {
             this.starItemLarge += 1;
-            this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE);
-            this.addScore(this.baseScore * 0.2);
+            this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE + this.baseScore * 0.2);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE_LARGE;
             if (this.isHyperMode) {
                 this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_STAR_LARGE_IN_HYPER);
@@ -483,8 +482,7 @@ gls2.GameScene = tm.createClass(
             }
         } else {
             this.starItem += 1;
-            this.addScore(gls2.Setting.STAR_ITEM_SCORE);
-            this.addScore(this.baseScore * 0.1);
+            this.addScore(gls2.Setting.STAR_ITEM_SCORE + this.baseScore * 0.1);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE;
             if (this.isHyperMode) {
                 this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_STAR_IN_HYPER);

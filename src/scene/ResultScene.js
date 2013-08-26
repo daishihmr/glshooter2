@@ -42,6 +42,8 @@ gls2.ResultScene = tm.createClass(
 
     wait: 0,
 
+    frame: 0,
+
     /** @constructs */
     init: function(gameScene, screenShot) {
         this.superInit();
@@ -161,7 +163,6 @@ gls2.ResultScene = tm.createClass(
             }
             if (ok) {
                 this.lastElement.remove();
-                console.log("this.lastElement.remove");
                 this.wait = 60;
             } else {
                 this.wait = 100;
@@ -193,12 +194,13 @@ gls2.ResultScene = tm.createClass(
             this.labelTotal.text = Math.floor(this.gameScene.score);
         } else {
             this.promptEnter.visible = true;
-            if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
+            if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
                 this.gameScene.startStage(this.gameScene.stageNumber + 1);
                 app.popScene();
             }
         }
 
+        this.frame += 1;
     },
     draw: function(canvas) {
         canvas.clearColor(this.background);

@@ -179,7 +179,7 @@ gls2.Setting = {
     HYPERMODE_END_MUTEKI_TIME: 0.10,
 
     /**
-     * ハイパーモード中のコンボ数増加倍率
+     * ハイパーモード中のコンボ数増加倍率（この値×ハイパーレベル）
      * @const
      */
     COMBO_RATE_WHEN_HYPERMODE: 5,
@@ -188,7 +188,7 @@ gls2.Setting = {
      * 1フレームあたりのコンボゲージ減少値
      * @const
      */
-    COMBO_GAUGE_DECR: 0.01,
+    COMBO_GAUGE_DECR: 0.02,
 
     /**
      * ハイパーモード中のコンボゲージ減少倍率
@@ -230,13 +230,13 @@ gls2.Setting = {
      * 星アイテム（大）取得時の素点増分
      * @const
      */
-    STAR_ITEM_BASESCORE_LARGE: 100,
+    STAR_ITEM_BASESCORE_LARGE: 0,
 
     /**
      * 星アイテム（小）取得時の素点増分
      * @const
      */
-    STAR_ITEM_BASESCORE: 50,
+    STAR_ITEM_BASESCORE: 0,
 
     /**
      * ハイパーモード中の敵弾幕発射間隔

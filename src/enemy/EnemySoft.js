@@ -24,7 +24,6 @@ gls2.EnemySoft = tm.createClass(
  * @static
  */
 gls2.EnemySoft.attack = function(enemy, danmakuName) {
-    console.log("attack(" + enemy.name + ", " + danmakuName + ")");
     var ticker = gls2.Danmaku[danmakuName].createTicker();
     enemy.on("enterframe", ticker);
     enemy.on("completeattack", function() {
