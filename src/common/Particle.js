@@ -44,7 +44,7 @@ gls2.Particle = tm.createClass({
     },
     update: function(app) {
         this.alpha *= this.alphaDecayRate;
-        if (this.alpha < 0.001) {
+        if (this.alpha < 0.01) {
             this.remove();
         } else if (1.0 < this.alpha) {
             this.alpha = 1.0;

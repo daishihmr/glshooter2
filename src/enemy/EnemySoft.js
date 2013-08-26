@@ -166,7 +166,7 @@ gls2.EnemySoft.Heri1c = tm.createClass(
                     gls2.EnemySoft.attack(this, "basic0-0");
                 }.bind(this));
         });
-        
+
         enemy.on("completeattack", function() {
             this.tweener
                 .clear()
@@ -261,7 +261,7 @@ var _Tank = tm.createClass(
         enemy.on("enter", function() {
             gls2.EnemySoft.attack(this, "basic2-0");
         });
-        
+
         enemy.on("enterframe", function() {
             this.x += Math.cos(this.baseDir) * this.speed;
             this.y += Math.sin(this.baseDir) * this.speed;
@@ -277,7 +277,7 @@ var _Tank = tm.createClass(
                 this.cannonDir -= Math.PI*2;
             }
 
-            this.enableFire = this.y < this.player.y;
+            this.enableFire = this.y < this.player.y && gls2.distanceSq(this, this.player) > 200*200;
 
             if (this.changes) {
                 for (var i = 0; i < this.changes.length; i++) {
@@ -338,13 +338,13 @@ gls2.EnemySoft.Cannon = tm.createClass(
         enemy.on("enter", function() {
             gls2.EnemySoft.attack(this, "basic3-0");
         });
-        
+
         enemy.on("enterframe", function() {
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
 
-            this.enableFire = this.y < this.player.y;
+            this.enableFire = this.y < this.player.y && gls2.distanceSq(this, this.player) > 200*200;
         });
     },
 });
@@ -354,7 +354,7 @@ gls2.EnemySoft.Cannon = gls2.EnemySoft.Cannon();
  * 中型戦闘機
  *
  * 上から出現、画面上部まで降りてきた後、ゆっくり下へ移動していく
- * 
+ *
  * @class
  * @extends {gls2.EnemySoft}
  */

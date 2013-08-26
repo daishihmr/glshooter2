@@ -43,7 +43,7 @@ gls2.Setting = {
      * ハイパーレーザーの攻撃力
      * @const
      */
-    LASER_ATTACK_POWER_RATE: 0.1,
+    LASER_ATTACK_POWER_RATE: 0.25,
 
     /**
      * オーラの攻撃力
@@ -55,7 +55,7 @@ gls2.Setting = {
      * ハイパーオーラの攻撃力
      * @const
      */
-    HYPER_AURA_ATTACK_POWER: 2,
+    HYPER_AURA_ATTACK_POWER: 0.25,
 
     /**
      * ボムの攻撃力
@@ -188,7 +188,7 @@ gls2.Setting = {
      * 1フレームあたりのコンボゲージ減少値
      * @const
      */
-    COMBO_GAUGE_DECR: 0.03,
+    COMBO_GAUGE_DECR: 0.01,
 
     /**
      * ハイパーモード中のコンボゲージ減少倍率
