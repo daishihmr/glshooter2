@@ -1,0 +1,38 @@
+<html>
+<head>
+<style>
+@font-face {
+    font-family: Orbitron;
+    src: url(../../font/Orbitron-Regular.ttf) format("truetype");
+}
+</style>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    setTimeout(main, 200);
+});
+
+var main = function() {
+    var canvas = tm.graphics.Canvas("#c");
+    canvas.resize(20, 20);
+    canvas.globalCompositeOperation = "lighter";
+
+    canvas.fillStyle = "rgba(100,100,255,0.1)";
+    canvas.fillRect(2, 2, 16, 16);
+
+    canvas.strokeStyle = "white";
+    canvas.strokeRect(2, 2, 16, 16);
+
+    canvas.fillStyle = "rgba(200,200,255,1)";
+    canvas.setText("14px 'Orbitron'", "center", "middle")
+    canvas.fillText("B", 10, 10);
+
+    canvas.saveAsImage();
+};
+</script>
+</head>
+<body style="background:black">
+    <canvas id="c"></canvas>
+    <div style="font-family:Orbitron">test</div>
+</body>
+</html>

@@ -97,7 +97,8 @@ gls2.ScoreLabel = tm.createClass(
 
         // ボム数
         for (var i = 0; i < this.gameScene.bomb; i++) {
-            this.fillRect(SC_W-(i+1)*(20+5) - 20, SC_H-(20+5), 20, 20);
+            // this.fillRect(SC_W-(i+1)*(20+5) - 20, SC_H-(20+5), 20, 20);
+            this.drawTexture(tm.asset.AssetManager.get("bombIcon"), SC_W-(i+1)*(20+5) - 20, SC_H-(20+5), 20, 20);
         }
 
         this.consoleWindow.update();
