@@ -17,17 +17,19 @@ gls2.Stage2 = tm.createClass(
         this.superInit(gameScene);
 
         this.seq.add(  0, function() {
-            gls2.playBgm("bgm1"),
+            gls2.playBgm("bgm2"),
             this.gameScene.ground.direction = Math.PI*0.5;
             this.gameScene.ground.speed = 1;
         });
+
+        this.seq.add(200, "tankRD-center");
 
     },
 
     setupBackground: function() {
         this.gameScene.ground.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-            { offset:0, color:"hsl(130,50%,30%)" },
-            { offset:1, color:"hsl(130,50%,15%)" },
+            { offset:0, color:"hsl(130,50%,20%)" },
+            { offset:1, color:"hsl(130,50%,10%)" },
         ]).toStyle();
     },
 

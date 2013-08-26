@@ -207,7 +207,7 @@ gls2.Enemy.Honoka = tm.createClass({
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(3);
         this.setScale(1.5);
 
-        this.boundingWidth = 200;
+        this.boundingWidth = 240;
         this.boundingHeight = 80;
     },
     destroy: function() {
@@ -252,7 +252,7 @@ gls2.Enemy.Nagisa = tm.createClass(
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(4);
         this.setScale(1.5);
 
-        this.boundingWidth = 200;
+        this.boundingWidth = 240;
         this.boundingHeight = 80;
     },
     draw: function(canvas) {

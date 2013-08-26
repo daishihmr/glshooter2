@@ -259,7 +259,7 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addCombo(0.01);
                         }
-                        this.comboGauge = Math.max(this.comboGauge, 0.05);
+                        this.comboGauge = Math.max(this.comboGauge, 0.1);
                         if (this.isHyperMode) {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT_IN_HYPER);
                         } else {
@@ -298,7 +298,7 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addCombo(0.01);
                         }
-                        this.comboGauge = Math.max(this.comboGauge, 0.05);
+                        this.comboGauge = Math.max(this.comboGauge, 0.1);
                         if (this.isHyperMode) {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA_HIT_IN_HYPER);
                         } else {
