@@ -34,15 +34,25 @@ var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, a
         ])
     ]);
 };
+var $nwayVs = function(way, rangeFrom, rangeTo, bullet, offsetX, offsetY, autonomy) {
+    return function(spd) {
+        return $nway(way, rangeFrom, rangeTo, spd, bullet || $.bullet, offsetX, offsetY, autonomy);
+    };
+};
 
 /** 絶対n-way弾 */
 var $absoluteNway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY) {
     return $.action([
-        $.fire($.direction(rangeFrom, "absolute"), speed, bullet, offsetX, offsetY),
+        $.fire($.direction(rangeFrom, "absolute"), speed, bullet || $.bullet, offsetX, offsetY),
         $.repeat(way + "-1", [
             $.fire($.direction("((" + rangeTo + ")-(" + rangeFrom + "))/(" + way + "-1)", "sequence"), speed, bullet, offsetX, offsetY),
         ])
     ]);
+};
+var $absoluteNwayVs = function(way, rangeFrom, rangeTo, bullet, offsetX, offsetY) {
+    return function(spd) {
+        return $absoluteNway(way, rangeFrom, rangeTo, spd, bullet, offsetX, offsetY);
+    };
 };
 
 /**
@@ -55,30 +65,30 @@ var $absoluteNway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, of
 var $whip = function(baseSpeed, delta, count, actionFunc) {
     return $.action([
         actionFunc(baseSpeed),
-        $.repeat(count, [
+        $.repeat(count + "-1", [
             actionFunc($.speed(delta, "sequence")),
         ]),
     ]);
 };
 
+/**
+ * 自機狙い弾を1発発射.
+ */
 gls2.Danmaku["basic0-0"] = new bulletml.Root({
     "top": $.action([
         $fire0,
     ]),
 });
 
-gls2.Danmaku["basic0-4"] = new bulletml.Root({
+/**
+ * 3wayウィップを発射.
+ */
+gls2.Danmaku["basic0-1"] = new bulletml.Root({
     "top": $.action([
-        $.repeat(3, [
-            $.repeat(5, [
-                $.fire($.direction(-20), $.speed("$loop.count*0.06+0.75"), $.bullet),
-                $.fire($.direction(  0), $.speed("$loop.count*0.06+0.75"), $.bullet),
-                $.fire($.direction(+20), $.speed("$loop.count*0.06+0.75"), $.bullet),
-            ]),
-            $interval(40),
-        ]),
+        $whip($spd4, -0.01, 8, $nwayVs(3, -15, 15))
     ]),
 });
+gls2.Danmaku["basic0-0"] = gls2.Danmaku["basic0-1"]; // TODO あとで消す
 
 /**
  * 自機狙い弾を20フレーム間隔で連射.
@@ -113,9 +123,7 @@ gls2.Danmaku["basic3-0"] = new bulletml.Root({
         $.wait(20),
         $.repeat(999, [
             $interval(100),
-            $fire1($spd3(0)),
-            $fire1($spd3(1)),
-            $fire1($spd3(2)),
+            $whip($spd3, 0.1, 3, $fire1),
         ]),
     ]),
 });
@@ -364,11 +372,12 @@ gls2.Danmaku["nagisa-2-3"] = new bulletml.Root({
 
 gls2.Danmaku["nagisa-3-1"] = new bulletml.Root({
     "top0": $.action([
+        $interval(50),
         $.repeat(999, [
-            $whip($spd2, 0.001, 5, function(spd) {
+            $whip($spd3, 0.001, 5, function(spd) {
                 return $.action([
-                    $nway(17, "-180", "+180", spd, $.bullet({frame:2,ball:true}), $.offsetX(-190), $.offsetY(-20)),
-                    $nway(17, "-180", "+180", spd, $.bullet({frame:2,ball:true}), $.offsetX(+190), $.offsetY(-20)),
+                    $nway(41, "-180", "+180", spd, $.bullet({frame:2,ball:true}), $.offsetX(-190), $.offsetY(-20)),
+                    $nway(41, "-180", "+180", spd, $.bullet({frame:2,ball:true}), $.offsetX(+190), $.offsetY(-20)),
                 ]);
             }),
             $interval(50),
