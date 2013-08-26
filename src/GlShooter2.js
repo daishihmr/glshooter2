@@ -87,6 +87,7 @@ gls2.GlShooter2 = tm.createClass(
                 "sound/bomb": "assets2/sen_ge_bom17.mp3",
                 "sound/warning": "assets2/meka_ge_keihou06.mp3",
                 "sound/select": "assets2/se_maoudamashii_system36.mp3",
+                "sound/decision": "assets2/se_maoudamashii_system03.mp3",
 
                 // voice
                 "sound/voHyperStandBy": "assets/vo_hyper_standby.mp3",

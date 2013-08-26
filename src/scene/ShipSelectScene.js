@@ -143,7 +143,7 @@ gls2.ShipSelectScene = tm.createClass(
         }.bind(this);
 
         this.styleBits = [];
-        
+
         this.styleBits[0] = tm.app.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
@@ -232,10 +232,13 @@ gls2.ShipSelectScene = tm.createClass(
             gls2.playSound("select");
         } else if (app.keyboard.getKeyDown("up")) {
             this.style = (this.style - 1 + 3) % 3;
+            gls2.playSound("select");
         } else if (app.keyboard.getKeyDown("down")) {
             this.style = (this.style + 1 + 3) % 3;
+            gls2.playSound("select");
         } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
             this.openAutoBombDialog();
+            gls2.playSound("decision");
         }
         this.updateStyle(~~(app.frame/60) % 2 === 0);
     },

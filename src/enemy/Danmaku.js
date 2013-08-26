@@ -88,7 +88,6 @@ gls2.Danmaku["basic0-1"] = new bulletml.Root({
         $whip($spd4, -0.01, 8, $nwayVs(3, -15, 15))
     ]),
 });
-gls2.Danmaku["basic0-0"] = gls2.Danmaku["basic0-1"]; // TODO あとで消す
 
 /**
  * 自機狙い弾を20フレーム間隔で連射.

@@ -60,7 +60,7 @@ gls2.ResultScene = tm.createClass(
             return v * 0.01;
         });
 
-        tm.app.Label("RESULT", 40)        
+        tm.app.Label("RESULT", 40)
             .setPosition(SC_W*0.5, SC_H*0.1)
             .addChildTo(this);
 
@@ -195,6 +195,7 @@ gls2.ResultScene = tm.createClass(
         } else {
             this.promptEnter.visible = true;
             if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
+                gls2.playSound("decision");
                 this.gameScene.startStage(this.gameScene.stageNumber + 1);
                 app.popScene();
             }

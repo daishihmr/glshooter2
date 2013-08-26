@@ -15,7 +15,7 @@ var DATA = {
     "kurokawa":  [    35,     5000, false, false,  5 ],
     "akimoto":   [   250,   300000, false,  true, 10 ],
     "yukishiro": [   750,   800000, false,  true, 20 ],
-    "misumi":    [  6000,  2000000, false,  true,  0 ],
+    "misumi":    [  4000,  2000000, false,  true,  0 ],
 };
 
 /**
@@ -32,7 +32,7 @@ gls2.Enemy = tm.createClass(
      */
     name: null,
 
-    /** 
+    /**
      * 自機
      * @type {gls2.Player}
      */
@@ -64,7 +64,7 @@ gls2.Enemy = tm.createClass(
     /** 弾発射可能フラグ */
     enableFire: true,
 
-    /** 
+    /**
      * 出現してから一度でも可視範囲に入ったか
      * 一度完全に画面に入りきるまではダメージを受けない（攻撃は命中する）
      */

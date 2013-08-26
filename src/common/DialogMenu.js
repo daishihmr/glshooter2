@@ -144,6 +144,7 @@ gls2.DialogMenu = tm.createClass(
             return;
         } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
             this.closeDialog(this._selected);
+            gls2.playSound("decision");
             return;
         } else if (app.keyboard.getKeyDown("down")) {
             this._selected += 1;
