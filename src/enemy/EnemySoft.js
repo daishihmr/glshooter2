@@ -201,31 +201,29 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
         enemy.angle = Math.PI * 0.5;
-        enemy.startFrame = gls2.FixedRandom.rand(0, 60);
-        enemy.speed = 0;
+        
+        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+            this.speed = 8;
+            gls2.EnemySoft.attack(this, "basic1-0");
+            this.on("enterframe", function() {
+                if (this.y < this.player.y) {
+                    var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
+                    this.angle += (a < this.angle) ? -0.02 : 0.02;
+                    this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI-0.5);
+                }
 
-        enemy.on("enterframe", function() {
-            if (this.frame === this.startFrame) {
-                this.speed = 8;
-            } else if (this.frame === this.startFrame + 10) {
-                gls2.EnemySoft.attack(this, "basic1-0");
-            } else if (this.startFrame < this.frame && this.y < this.player.y) {
-                var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
-                this.angle += (a < this.angle) ? -0.02 : 0.02;
-                this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI-0.5);
-            }
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
 
-            this.x += Math.cos(this.angle) * this.speed;
-            this.y += Math.sin(this.angle) * this.speed;
+                if (!this.isInScreen() && this.entered) {
+                    this.remove();
+                }
 
-            if (!this.isInScreen() && this.entered) {
-                this.remove();
-            }
-
-            if (gls2.distanceSq(this, this.player) < 300*300 || this.y > this.player.y) {
-                this.enableFire = false;
-            }
-        });
+                if (gls2.distanceSq(this, this.player) < 300*300 || this.y > this.player.y) {
+                    this.enableFire = false;
+                }
+            });
+        }.bind(enemy));
     },
 });
 gls2.EnemySoft.Heri2 = gls2.EnemySoft.Heri2();
@@ -255,6 +253,9 @@ var _Tank = tm.createClass(
 
         enemy.speed = this.initialSpeed;
         enemy.baseDir = this.initialDir;
+        if (this.changes) {
+            enemy.changes = [].concat(this.changes);
+        }
         enemy.cannonDir = 0;
 
         enemy.on("enter", function() {
@@ -283,8 +284,8 @@ var _Tank = tm.createClass(
                     var c = this.changes[i];
                     if (c.frame === this.frame) {
                         this.tweener.to({
-                            baseDir: c.dir,
-                            speed: c.speed,
+                            baseDir: (c.dir !== undefined ? c.dir : this.baseDir),
+                            speed: (c.speed !== undefined ? c.speed : this.speed),
                         }, 500);
                     }
                 }
@@ -315,18 +316,33 @@ gls2.EnemySoft.TankL = _Tank(1.0, Math.PI, [
 ]);
 
 /**
- * 固定砲台1
+ * 下へ直進する戦車
+ */
+gls2.EnemySoft.TankD = _Tank(1.6, Math.PI*0.5);
+/**
+ * 上へ直進する戦車
+ */
+gls2.EnemySoft.TankU = _Tank(1.6, Math.PI*-0.5);
+
+/**
+ * 固定砲台
  *
  * @class
  * @extends {gls2.EnemySoft}
  */
-gls2.EnemySoft.Cannon = tm.createClass(
-/** @lends {gls2.EnemySoft.Cannon.prototype} */
+var _Cannon = tm.createClass(
+/** @lends {_Cannon.prototype} */
 {
     superClass: gls2.EnemySoft,
+
+    attackPattern: null,
+    crossRangeFire: false,
+
     /** @constructs */
-    init: function() {
+    init: function(attackPattern, crossRangeFire) {
         this.superInit();
+        this.attackPattern = attackPattern;
+        this.crossRangeFire = !!crossRangeFire;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -334,20 +350,31 @@ gls2.EnemySoft.Cannon = tm.createClass(
         enemy.speed = 1.0;
         enemy.dir = Math.PI;
 
+        enemy.attackPattern = this.attackPattern;
+
         enemy.on("enter", function() {
-            gls2.EnemySoft.attack(this, "basic3-0");
+            gls2.EnemySoft.attack(this, this.attackPattern);
         });
 
         enemy.on("enterframe", function() {
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
-
-            this.enableFire = this.y < this.player.y && gls2.distanceSq(this, this.player) > 200*200;
         });
+
+        if (!this.crossRangeFire) {
+            enemy.on("enterframe", function() {
+                this.enableFire = this.y < this.player.y && gls2.distanceSq(this, this.player) > 200*200;
+            });
+        }
     },
 });
-gls2.EnemySoft.Cannon = gls2.EnemySoft.Cannon();
+gls2.EnemySoft.Cannon1 = _Cannon("basic3-0", false);
+
+/**
+ * 固定砲台2
+ */
+gls2.EnemySoft.Cannon2 = _Cannon("basic4-0", true);
 
 /**
  * 中型戦闘機
@@ -399,6 +426,7 @@ var _MiddleFighterCommon = tm.createClass(
     },
 })
 gls2.EnemySoft.MiddleFighter1 = _MiddleFighterCommon(0.5, "kurokawa-1");
+gls2.EnemySoft.MiddleFighter2 = _MiddleFighterCommon(0.5, "kurokawa-2");
 
 /**
  * 大型戦闘機

@@ -12,7 +12,8 @@ gls2.Enemy.DATA = {
     "kujo":      [     2,      300, false, false,  1 ],
     "kiryu":     [     3,      400, false, false,  1 ],
     "natsuki":   [     5,      900,  true, false,  1 ],
-    "kise":      [    35,    15000,  true, false,  1 ],
+    "kise":      [    50,    15000,  true, false,  1 ],
+    "kenzaki":   [   200,   300000,  true,  true, 10 ],
     "kurokawa":  [    35,     5000, false, false,  5 ],
     "akimoto":   [   250,   300000, false,  true, 10 ],
     "yukishiro": [   750,   800000, false,  true, 20 ],
@@ -105,8 +106,15 @@ gls2.Enemy.Tank1 = tm.createClass({
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
 
-        this._sprite1.setFrameIndex(~~(this.baseDir*16/(Math.PI*2)), 64, 64);
-        this._sprite2.setFrameIndex(~~(this.cannonDir*16/(Math.PI*2)) + 16, 64, 64);
+        var b = this.baseDir;
+        while (b < 0) b += Math.PI*2;
+        while (Math.PI*2 <= b) b -= Math.PI*2;
+        var c = this.cannonDir;
+        while (c < 0) c += Math.PI*2;
+        while (Math.PI*2 <= c) c -= Math.PI*2;
+
+        this._sprite1.setFrameIndex(~~(b*16/(Math.PI*2)), 64, 64);
+        this._sprite2.setFrameIndex(~~(c*16/(Math.PI*2)) + 16, 64, 64);
     },
     draw: function(canvas) {
         this._sprite1.draw(canvas);
@@ -202,6 +210,26 @@ gls2.Enemy.Cannon = tm.createClass({
 /**
  * 大型固定砲台「ケンザキ」
  */
+gls2.Enemy.Cannon2 = tm.createClass({
+    superClass: gls2.Enemy,
+
+    _sprite1: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "kenzaki");
+
+        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(4);
+        this.boundingWidth = 100;
+        this.boundingHeight = 40;
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    },
+});
 
 /**
  * ボムキャリアー「クルミ」

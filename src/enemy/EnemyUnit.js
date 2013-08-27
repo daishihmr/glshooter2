@@ -123,32 +123,140 @@ gls2.EnemyUnit = {
     { hard:$e.Tank1, soft:$s.TankL, x:SC_W+70*5, y:SC_H*0.1 },
 ],
 
+/** 戦車5台。上左から */
+"tank5-left": [
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*5 },
+],
+
+/** 戦車5台。上中央から */
+"tank5-center": [
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*5 },
+],
+
+/** 戦車15台。上下から */
+"tank15-top": [
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*5 },
+],
+
+/** 戦車25台。上下から */
+"tank25-top": [
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*1 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*2 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*3 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*4 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*5 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*1 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*2 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*3 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*4 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*5 },
+],
+
 "cannon-0": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.1, y:-100 },
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.1, y:-100 },
 ],
 "cannon-1": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.2, y:-100 },
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.2, y:-100 },
 ],
 "cannon-2": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.3, y:-100 },
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.3, y:-100 },
 ],
 "cannon-3": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.4, y:-100 },
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.4, y:-100 },
 ],
 "cannon-4": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.5, y:-100 },
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.5, y:-100 },
 ],
 "cannon-5": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.6, y:-100 },
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.6, y:-100 },
 ],
 "cannon-6": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.7, y:-100 },
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.7, y:-100 },
 ],
 "cannon-7": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.8, y:-100 },
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.8, y:-100 },
 ],
 "cannon-8": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.9, y:-100 },
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.9, y:-100 },
+],
+
+"cannon-R0": [
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W+70, y:SC_H*0.2 },
+],
+"cannon-R1": [
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W+70, y:SC_H*0.3 },
+],
+"cannon-R2": [
+    { hard:$e.Cannon, soft:$s.Cannon1, x:SC_W+70, y:SC_H*0.4 },
+],
+
+"cannon2-0": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W*0.1, y:-100 },
+],
+"cannon2-1": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W*0.2, y:-100 },
+],
+"cannon2-2": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W*0.3, y:-100 },
+],
+"cannon2-3": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W*0.4, y:-100 },
+],
+"cannon2-4": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W*0.5, y:-100 },
+],
+"cannon2-5": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W*0.6, y:-100 },
+],
+"cannon2-6": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W*0.7, y:-100 },
+],
+"cannon2-7": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W*0.8, y:-100 },
+],
+"cannon2-8": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W*0.9, y:-100 },
+],
+
+"cannon2-R0": [
+    { hard:$e.Cannon2, soft:$s.Cannon2, x:SC_W+100, y:SC_H*0.2 },
 ],
 
 "fighter-m-0": [
@@ -178,6 +286,13 @@ gls2.EnemyUnit = {
 ],
 "komachi-1": [
     { hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.7, y:SC_H*-0.3 },
+],
+
+"komachi2-0": [
+    { hard:$e.Komachi, soft:$s.MiddleFighter2, x:SC_W*0.3, y:SC_H*-0.3 },
+],
+"komachi2-1": [
+    { hard:$e.Komachi, soft:$s.MiddleFighter2, x:SC_W*0.7, y:SC_H*-0.3 },
 ],
 
 /**
