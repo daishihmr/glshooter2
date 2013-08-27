@@ -4,20 +4,6 @@
  */
 (function() {
 
-/** @const */
-var DATA = {
-    //name         hp     score   ground erase  star
-    //名前          耐久力  素点    地上物判定 破壊時の弾消し 破壊時の星アイテム排出数
-    "kujo":      [     2,      300, false, false,  1 ],
-    "kiryu":     [     3,      400, false, false,  1 ],
-    "natsuki":   [     5,      900,  true, false,  1 ],
-    "kise":      [    35,    15000,  true, false,  1 ],
-    "kurokawa":  [    35,     5000, false, false,  5 ],
-    "akimoto":   [   250,   300000, false,  true, 10 ],
-    "yukishiro": [   750,   800000, false,  true, 20 ],
-    "misumi":    [  4000,  2000000, false,  true,  0 ],
-};
-
 /**
  * 敵
  * @class
@@ -220,11 +206,11 @@ gls2.Enemy = tm.createClass(
 
     _setData: function(name) {
         this.name = name;
-        this.hp = DATA[name][0];
-        this.score = DATA[name][1];
-        this.isGround = DATA[name][2];
-        this.erase = DATA[name][3];
-        this.star = DATA[name][4];
+        this.hp = gls2.Enemy.DATA[name][0];
+        this.score = gls2.Enemy.DATA[name][1];
+        this.isGround = gls2.Enemy.DATA[name][2];
+        this.erase = gls2.Enemy.DATA[name][3];
+        this.star = gls2.Enemy.DATA[name][4];
     },
 
     fallDown: function() {
