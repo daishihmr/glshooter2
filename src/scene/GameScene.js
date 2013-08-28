@@ -343,7 +343,7 @@ gls2.GameScene = tm.createClass(
                         if (bullet.hp < 0) {
                             bullet.destroy();
                             this.addScore(gls2.Setting.BULLET_SCORE);
-                            this.addCombo(1);
+                            this.addCombo(gls2.Setting.BULLET_COMBO);
 
                             this.generateStar(false, false, bullet.x, bullet.y, 1);
                         }
@@ -652,8 +652,8 @@ gls2.GameScene = tm.createClass(
     addScore: function(score) {
         var before = this.score;
         this.score += score;
-        for (var i = 0; i < gls2.core.extendScore.length; i++) {
-            var es = gls2.core.extendScore[i];
+        for (var i = 0; i < gls2.Setting.EXTEND_SCORE.length; i++) {
+            var es = gls2.Setting.EXTEND_SCORE[i];
             if (before < es && es <= this.score) {
                 this.extendZanki();
             }
@@ -920,7 +920,7 @@ gls2.GameScene = tm.createClass(
      * 0:何もしない 1:記録 2:再生
      * @const
      */
-    RECMODE: 0,
+    RECMODE: 2,
     startRec: function() {
         if (this.RECMODE === 1) {
             console.log("rec start");
@@ -1045,7 +1045,7 @@ gls2.GameScene.LabelLayer = tm.createClass({
         if (this.gameScene.hyperLevel > 0 && this.frame%2 === 0) {
             canvas.setText("bold 24px Orbitron", "left", "bottom");
             canvas.strokeStyle = "rgba(255,255,100,0.5)";
-            canvas.strokeText("hyper level " + this.gameScene.hyperLevel, 5, SC_H-3);
+            canvas.strokeText("HYPER LV " + this.gameScene.hyperLevel, 5, SC_H-3);
         }
     },
 });

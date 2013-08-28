@@ -33,12 +33,6 @@ gls2.GlShooter2 = tm.createClass(
     /** 難易度(0～4) */
     difficulty: 1,
 
-    /** エクステンドスコア */
-    extendScore: [
-         1000000000,
-        10000000000,
-    ],
-
     gameScene: null,
 
     init: function(id) {
@@ -49,13 +43,15 @@ gls2.GlShooter2 = tm.createClass(
         this.fps = 60;
         this.background = "rgba(0,0,0,0)";
 
+        this.timeoutTasks = [];
+
         this.keyboard = tm.input.Keyboard(window);
 
         this.replaceScene(tm.app.LoadingScene({
             assets: {
                 // image
                 "tex0": "assets/tex0.png",
-                "tex1": "assets/tex1.png",
+                "tex1": "assets/tex1.png", // TODO あとで消す
                 "tex_stage1": "assets/tex_stage1.png",
                 "tex_tank1": "assets/tex_tank1.png",
                 "fighter": "assets/fighters.png",
@@ -112,9 +108,19 @@ gls2.GlShooter2 = tm.createClass(
         }));
     },
 
+    update: function() {
+        var copied = [].concat(this.timeoutTasks);
+        for (var i = 0; i < copied.length; i++) {
+            if (copied[i].frame === this.frame) {
+                copied[i].fn();
+            } else {
+                this.timeoutTasks.erase(copied[i]);
+            }
+        }
+    },
+
     draw: function() {
         this.canvas.globalCompositeOperation = "copy";
-        // this.canvas.clearColor(this.background, 0, 0);
     },
 
     _onLoadAssets: function() {
@@ -128,6 +134,14 @@ gls2.GlShooter2 = tm.createClass(
     exitApp: function() {
         this.stop();
         tm.social.Nineleap.postRanking(this.highScore, "");
+    },
+
+    timeoutTasks: null,
+    setTimeoutF: function(fn, t) {
+        timeoutTasks.push({
+            frame: this.frame + t,
+            fn: fn,
+        });
     },
 
 });

@@ -10,6 +10,15 @@
 gls2.Setting = {
 
     /**
+     * エクステンドスコア
+     * @const
+     */
+    EXTEND_SCORE: [
+         1000000000,
+        10000000000,
+    ],
+
+    /**
      * 初期残機数
      * @const
      */
@@ -215,6 +224,12 @@ gls2.Setting = {
     BULLET_SCORE: 10,
 
     /**
+     * 弾破壊時のコンボカウント増加数
+     * @const
+     */
+    BULLET_COMBO: 0,
+
+    /**
      * 星アイテム（大）取得時のスコア
      * @const
      */
@@ -266,7 +281,7 @@ gls2.Setting = {
      * オートボム発動時に残ボム数をすべて消費するか
      * @const
      */
-    AUTO_BOMB_TO_ZERO: false,
+    AUTO_BOMB_TO_ZERO: true,
 
 };
 
