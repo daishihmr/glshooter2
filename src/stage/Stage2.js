@@ -75,6 +75,17 @@ gls2.Stage2 = tm.createClass(
         this.seq.add( 90, "heri2-left");
         this.seq.add(  1, "cannon-0");
         this.seq.add( 90, "heri2-left");
+        this.seq.add( 60, "tank5-left");
+
+        this.seq.add(  1, function() {
+            this.gameScene.ground.tweener
+                .clear()
+                .to({direction:Math.PI*0.5}, 5000, "easeInOutQuad");
+        });
+
+        this.seq.add( 60, "tank15-top");
+        this.seq.add( 60, "heri1-left2");
+
     },
 
     setupBackground: function() {
