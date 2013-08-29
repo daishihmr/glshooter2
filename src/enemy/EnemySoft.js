@@ -516,7 +516,7 @@ gls2.EnemySoft.Honoka = _MBossCommon(["honoka-1"]);
 /**
  * ステージ２中ボス「ミショウ」
  */
-gls2.EnemySoft.Honoka = _MBossCommon(["mai-1", "mai-2"]);
+gls2.EnemySoft.Mai = _MBossCommon(["mai-1", "mai-2"]);
 
 /**
  * ステージ１ボス「ミスミ」第1形態
