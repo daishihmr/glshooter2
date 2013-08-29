@@ -213,8 +213,8 @@ gls2.Player = tm.createClass(
         } else if (this.type === 2) {
             return [
                 { x: -60, y: 40, d: 0.6, turn: false, dt: -0.7, v: true },
-                { x: -30, y: 20, d: 0.3, turn: false, dt: -0.5, v: true },
-                { x:  30, y: 20, d: 0.3, turn:  true, dt:  0.5, v: true },
+                { x: -30, y: 20, d: 0.4, turn: false, dt: -0.5, v: true },
+                { x:  30, y: 20, d: 0.4, turn:  true, dt:  0.5, v: true },
                 { x:  60, y: 40, d: 0.6, turn:  true, dt:  0.7, v: true },
             ];
         }

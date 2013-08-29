@@ -51,22 +51,20 @@ gls2.Stage2 = tm.createClass(
         this.seq.add(  1, "heri2-center");
         this.seq.add(  1, "heri2-left");
         this.seq.add(  1, "heri2-right");
-        this.seq.add( 30, "tankL-top");
-        this.seq.add(  1, "makoto-R0");
+        // this.seq.add( 30, "tankL-top");
+        this.seq.add( 30, "makoto-R0");
 
         this.seq.add(  1, function() {
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:0.3}, 8000, "easeInOutQuad")
+                .to({speed:0.3}, 6000, "easeInOutQuad")
                 .to({
                     direction: Math.PI*0.25,
                     speed: 1,
                 }, 12000, "easeInOutQuad");
         });
 
-        this.seq.add(100, "tsubomi-R0");
-
-        this.seq.add(500, "tank5-center");
+        this.seq.add(600, "tank5-center");
         this.seq.add(  1, "yayoi-3");
         this.seq.add( 90, "heri2-left");
         this.seq.add(  1, "yayoi-2");
@@ -109,7 +107,7 @@ gls2.Stage2 = tm.createClass(
                 .clear()
                 .to({speed:0.5}, 3000, "easeInOutQuad");
         });
-        this.seq.add(240, function() {
+        this.seq.add(400, function() {
             this.gameScene.ground.tweener
                 .clear()
                 .to({
