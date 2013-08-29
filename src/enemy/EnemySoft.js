@@ -370,11 +370,19 @@ var _Cannon = tm.createClass(
     },
 });
 gls2.EnemySoft.Cannon1 = _Cannon("basic3-0", false);
+gls2.EnemySoft.Cannon1_2 = _Cannon("basic3-1", true);
 
 /**
  * 固定砲台2
+ * すごい砲台
  */
-gls2.EnemySoft.Cannon2 = _Cannon("basic4-0", true);
+gls2.EnemySoft.Cannon2_0 = _Cannon("cannon2-0", true);
+
+/**
+ * 固定砲台3
+ * そこそこの砲台
+ */
+gls2.EnemySoft.Cannon3_0 = _Cannon("cannon3-0", true);
 
 /**
  * 中型戦闘機

@@ -128,9 +128,22 @@ gls2.Danmaku["basic3-0"] = new bulletml.Root({
 });
 
 /**
- * 自機狙い弾*3を100間隔で連射.
+ * 自機狙い弾*3を50間隔で連射.
  */
-gls2.Danmaku["basic4-0"] = new bulletml.Root({
+gls2.Danmaku["basic3-1"] = new bulletml.Root({
+    "top": $.action([
+        $.wait(20),
+        $.repeat(999, [
+            $interval(50),
+            $whip($spd3, 0.1, 3, $fire1),
+        ]),
+    ]),
+});
+
+/**
+ * まこぴー1.
+ */
+gls2.Danmaku["cannon2-0"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
             $interval(20),
@@ -156,6 +169,20 @@ gls2.Danmaku["basic4-0"] = new bulletml.Root({
             $.fire($.direction("180-$loop.index*5", "absolute"), $spd1, $.bullet({frame:4,ball:true})),
             $.fire($.direction("270-$loop.index*5", "absolute"), $spd1, $.bullet({frame:4,ball:true})),
             $interval(5),
+        ]),
+    ]),
+});
+
+/**
+ * つぼみ1.
+ */
+gls2.Danmaku["cannon3-0"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $interval(80),
+            $whip($spd2, 0.1, 3, $nwayVs(3, -30, 30, $.bullet({frame:0}), $.offsetX(-60))),
+            $whip($spd2, 0.1, 3, $nwayVs(3, -30, 30, $.bullet({frame:0}))),
+            $whip($spd2, 0.1, 3, $nwayVs(3, -30, 30, $.bullet({frame:0}), $.offsetX(+60))),
         ]),
     ]),
 });

@@ -886,7 +886,6 @@ gls2.GameScene = tm.createClass(
 
     draw: function(canvas) {
         if (this.stage === null) return;
-        // canvas.clearColor(this.ground.background, 0, 0);
     },
 
     showBossLife: function() {
