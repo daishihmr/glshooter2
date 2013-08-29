@@ -57,9 +57,11 @@ gls2.GameScene = tm.createClass(
     /** ボムスロット数 */
     bombMax: 0,
     /** ボムスロット最大数 */
-    bombMaxMax: 6,
+    bombMaxMax: 0,
     /** ボム発動中 */
     isBombActive: false,
+    /** マキシマム中 */
+    isBombMaximum: false,
 
     /** ハイパーゲージ */
     hyperGauge: 0,
@@ -73,6 +75,11 @@ gls2.GameScene = tm.createClass(
     hyperTime: 0,
     /** ハイパーレベル */
     hyperLevel: 0,
+
+    /** ひよこアイテム累計 */
+    hiyokoTotal: 0,
+    /** 現在のステージ中に取得したひよこアイテムの数 */
+    hiyoko: 0,
 
     /** @type {gls2.GameScene.Layer} */
     groundLayer: null,
@@ -497,7 +504,8 @@ gls2.GameScene = tm.createClass(
 
         this.score = 0;
         this.zanki = gls2.Setting.INITIAL_ZANKI;
-        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
+        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX[playerStyle];
+        this.bombMaxMax = gls2.Setting.BOMB_MAX_MAX[playerStyle];
         this.hyperGauge = 0;
         this.hyperRank = 0;
         this.hyperLevel = 0;
@@ -555,6 +563,8 @@ gls2.GameScene = tm.createClass(
         this.tweener.clear().wait(1000).call(function() {
             this.launch();
         }.bind(this));
+
+        this.ground.tweener.clear();
     },
 
     launch: function() {

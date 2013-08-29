@@ -28,7 +28,13 @@ gls2.Setting = {
      * ボムスロット初期数
      * @const
      */
-    INITIAL_BOMB_MAX: 3,
+    INITIAL_BOMB_MAX: [3, 2, 1],
+
+    /**
+     * ボムスロット最大数
+     * @const
+     */
+    BOMB_MAX_MAX: [6, 4, 2],
 
     /**
      * ショットの攻撃力
@@ -70,7 +76,7 @@ gls2.Setting = {
      * ボムの攻撃力
      * @const
      */
-    BOMB_ATTACK_POWER: 8,
+    BOMB_ATTACK_POWER: 4,
 
     /**
      * ショットによる敵破壊でチャージされるハイパーゲージ値

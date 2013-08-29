@@ -206,11 +206,34 @@ gls2.Enemy = tm.createClass(
 
     _setData: function(name) {
         this.name = name;
-        this.hp = gls2.Enemy.DATA[name][0];
-        this.score = gls2.Enemy.DATA[name][1];
-        this.isGround = gls2.Enemy.DATA[name][2];
-        this.erase = gls2.Enemy.DATA[name][3];
-        this.star = gls2.Enemy.DATA[name][4];
+
+        var data = gls2.Enemy.DATA[name];
+        this.hp = data[0];
+        this.score = data[1];
+        this.isGround = data[2];
+        this.erase = data[3];
+        this.star = data[4];
+        if (data[5]["radius"] !== undefined) {
+            this.boundingRadius = data[5]["radius"];
+        }
+        if (data[5]["width"] !== undefined) {
+            this.boundingWidth = data[5]["width"];
+        }
+        if (data[5]["height"] !== undefined) {
+            this.boundingHeight = data[5]["height"];
+        }
+        if (data[5]["widthLeft"] !== undefined) {
+            this.boundingWidthLeft = data[5]["widthLeft"];
+        }
+        if (data[5]["widthRight"] !== undefined) {
+            this.boundingWidthRight = data[5]["widthRight"];
+        }
+        if (data[5]["heightTop"] !== undefined) {
+            this.boundingHeightTop = data[5]["heightTop"];
+        }
+        if (data[5]["heightBottom"] !== undefined) {
+            this.boundingHeightBottom = data[5]["heightBottom"];
+        }
     },
 
     fallDown: function() {

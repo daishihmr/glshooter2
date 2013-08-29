@@ -338,7 +338,11 @@ var _Cannon = tm.createClass(
     attackPattern: null,
     crossRangeFire: false,
 
-    /** @constructs */
+    /**
+     * @constructs
+     * @param {string} attackPattern 弾幕名の
+     * @param {boolean} crossRangeFire 近距離からも撃ってくるかどうか
+     */
     init: function(attackPattern, crossRangeFire) {
         this.superInit();
         this.attackPattern = attackPattern;
@@ -370,7 +374,7 @@ var _Cannon = tm.createClass(
     },
 });
 gls2.EnemySoft.Cannon1 = _Cannon("basic3-0", false);
-gls2.EnemySoft.Cannon1_2 = _Cannon("basic3-1", true);
+gls2.EnemySoft.Cannon1_2 = _Cannon("basic3-1", false);
 
 /**
  * 固定砲台2
@@ -434,12 +438,12 @@ var _MiddleFighterCommon = tm.createClass(
     },
 })
 gls2.EnemySoft.MiddleFighter1 = _MiddleFighterCommon(0.5, "kurokawa-1");
-gls2.EnemySoft.MiddleFighter2 = _MiddleFighterCommon(0.5, "kurokawa-2");
 
 /**
  * 大型戦闘機
  */
 gls2.EnemySoft.LargeFighter1 = _MiddleFighterCommon(0.3, "komachi-1");
+gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
 
 /**
  * 中ボス共通
@@ -507,9 +511,12 @@ var _MBossCommon = tm.createClass(
 /**
  * ステージ１中ボス「ユキシロ」
  */
-gls2.EnemySoft.Honoka = _MBossCommon([
-    "honoka-1"
-]);
+gls2.EnemySoft.Honoka = _MBossCommon(["honoka-1"]);
+
+/**
+ * ステージ２中ボス「ミショウ」
+ */
+gls2.EnemySoft.Honoka = _MBossCommon(["mai-1", "mai-2"]);
 
 /**
  * ステージ１ボス「ミスミ」第1形態

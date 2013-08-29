@@ -7,17 +7,18 @@
 
 /** @const */
 gls2.Enemy.DATA = {
-    //name         hp     score   ground erase  star
-    //名前          耐久力  素点    地上物判定 破壊時の弾消し 破壊時の星アイテム排出数
-    "kujo":      [     2,      300, false, false,  1 ],
-    "kiryu":     [     3,      400, false, false,  1 ],
-    "natsuki":   [     5,      900,  true, false,  1 ],
-    "kise":      [    50,    15000,  true, false,  1 ],
-    "kenzaki":   [   200,   300000,  true,  true, 10 ],
-    "kurokawa":  [    35,     5000, false, false,  5 ],
-    "akimoto":   [   250,   300000, false,  true, 10 ],
-    "yukishiro": [   750,   800000, false,  true, 20 ],
-    "misumi":    [  4000,  2000000, false,  true,  0 ],
+    //name         hp     score   ground erase  star  bounding
+    //名前          耐久力  素点    地上物判定 破壊時の弾消し 破壊時の星アイテム排出数 当たり判定の大きさ
+    "kujo":      [     2,      300, false, false,  1, {"radius": 24}, ],
+    "kiryu":     [     3,      400, false, false,  1, {"radius": 24}, ],
+    "natsuki":   [     5,      900,  true, false,  1, {"radius": 24}, ],
+    "kise":      [    50,    15000,  true, false,  1, {"radius": 24}, ],
+    "kenzaki":   [   200,   300000,  true,  true, 10, {"width":100, "height":40}, ],
+    "kurokawa":  [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
+    "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
+    "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
+    "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
+    "hanasaki":  [   150,   200000,  true, false, 10, {"radius": 24}, ],
 };
 
 /**
@@ -36,7 +37,6 @@ gls2.Enemy.Heri1 = tm.createClass(
         this.superInit(gameScene, software, "kujo");
 
         this._sprite = _Sprite("tex_stage1", 64, 64);
-        this.boundingRadius = 24;
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -68,7 +68,6 @@ gls2.Enemy.Heri2 = tm.createClass(
         this.superInit(gameScene, software, "kiryu");
 
         this._sprite = _Sprite("tex_stage1", 64, 64);
-        this.boundingRadius = 24;
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -100,8 +99,6 @@ gls2.Enemy.Tank1 = tm.createClass({
         this._sprite2 = _Sprite("tex_tank1", 64, 64);
         this.baseDir = this.baseDir || 0;
         this.cannonDir = this.cannonDir || 0;
-
-        this.boundingRadius = 24;
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -148,8 +145,6 @@ gls2.Enemy.FighterM = tm.createClass(
         this.superInit(gameScene, software, "kurokawa");
 
         this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(1);
-        this.boundingWidth = 100;
-        this.boundingHeight = 20;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -171,9 +166,6 @@ gls2.Enemy.Komachi = tm.createClass(
         this.superInit(gameScene, software, "akimoto");
 
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(1);
-        this.boundingWidth = 200;
-        this.boundingHeightBottom = 10;
-        this.boundingHeightTop = 60;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -199,8 +191,6 @@ gls2.Enemy.Cannon = tm.createClass({
         this.superInit(gameScene, software, "kise");
 
         this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
-        this.boundingWidth = 20;
-        this.boundingHeight = 20;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -214,6 +204,25 @@ gls2.Enemy.Cannon = tm.createClass({
 /**
  * 固定砲台「ハナサキ」
  */
+gls2.Enemy.Tsubomi = tm.createClass({
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "hanasaki");
+
+        // TODO
+        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    },
+})
 
 /**
  * 中型固定砲台「ミョウドウイン」
@@ -231,8 +240,6 @@ gls2.Enemy.Cannon2 = tm.createClass({
         this.superInit(gameScene, software, "kenzaki");
 
         this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(4);
-        this.boundingWidth = 100;
-        this.boundingHeight = 40;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -260,9 +267,6 @@ gls2.Enemy.Honoka = tm.createClass({
 
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(3);
         this.setScale(1.5);
-
-        this.boundingWidth = 240;
-        this.boundingHeight = 80;
     },
     destroy: function() {
         this.fallDown();
@@ -305,9 +309,6 @@ gls2.Enemy.Nagisa = tm.createClass(
 
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(4);
         this.setScale(1.5);
-
-        this.boundingWidth = 240;
-        this.boundingHeight = 80;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);

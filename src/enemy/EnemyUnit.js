@@ -219,6 +219,12 @@ gls2.EnemyUnit = {
 "yayoi-R1": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W+70, y:SC_H*0.3 }],
 "yayoi-R2": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W+70, y:SC_H*0.4 }],
 
+// 固定砲台「ハナサキ」2面用
+"tsubomi-0": [{ hard:$e.Cannon, soft:$s.Cannon3_0, x:SC_W*0.2, y:-100 }],
+"tsubomi-1": [{ hard:$e.Cannon, soft:$s.Cannon3_0, x:SC_W*0.5, y:-100 }],
+"tsubomi-2": [{ hard:$e.Cannon, soft:$s.Cannon3_0, x:SC_W*0.8, y:-100 }],
+"tsubomi-R0": [{ hard:$e.Cannon, soft:$s.Cannon3_0, x:SC_W+100, y:SC_H*0.2 }],
+
 // 大型固定砲台「ケンザキ」2面用
 "makoto-0": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.1, y:-100 }],
 "makoto-1": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.2, y:-100 }],
@@ -245,8 +251,8 @@ gls2.EnemyUnit = {
 "komachi-1": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 // 中型戦闘機「アキモト」2面用
-"komachi2-0": [{ hard:$e.Komachi, soft:$s.MiddleFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
-"komachi2-1": [{ hard:$e.Komachi, soft:$s.MiddleFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
+"komachi2-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
+"komachi2-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 /**
  * ステージ１中ボス「ユキシロ」

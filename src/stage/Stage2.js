@@ -57,16 +57,16 @@ gls2.Stage2 = tm.createClass(
         this.seq.add(  1, function() {
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:0.3}, 5000, "easeInOutQuad")
+                .to({speed:0.3}, 8000, "easeInOutQuad")
                 .to({
                     direction: Math.PI*0.25,
                     speed: 1,
                 }, 12000, "easeInOutQuad");
         });
 
-        this.seq.add(100, "makoto-R0");
+        this.seq.add(100, "tsubomi-R0");
 
-        this.seq.add(600, "tank5-center");
+        this.seq.add(500, "tank5-center");
         this.seq.add(  1, "yayoi-3");
         this.seq.add( 90, "heri2-left");
         this.seq.add(  1, "yayoi-2");
@@ -83,23 +83,39 @@ gls2.Stage2 = tm.createClass(
                 .to({direction:Math.PI*0.5}, 10000, "easeInOutQuad");
         });
 
-        this.seq.add( 60, "tank5-left");
-        this.seq.add( 60, "heri1-left2");
-        this.seq.add( 60, "tank5-left");
-        this.seq.add( 90, "heri2-right");
-        this.seq.add( 60, "tank5-left");
-        this.seq.add( 90, "heri2-right");
-        this.seq.add( 60, "tank5-left");
-        this.seq.add( 90, "heri2-right");
+        this.seq.add( 40, "tank5-left");
+        this.seq.add( 40, "heri1-left2");
+        this.seq.add( 40, "tank5-center");
+        this.seq.add( 40, "heri2-right");
+        this.seq.add( 40, "tank5-left");
+        this.seq.add( 40, "heri2-right");
+        this.seq.add( 40, "tank5-center");
+        this.seq.add( 40, "heri2-right");
+        this.seq.add( 40, "tank5-left");
+        this.seq.add( 40, "heri1-left2");
+        this.seq.add( 40, "tank5-left");
+        this.seq.add( 40, "heri2-right");
+        this.seq.add( 40, "tank5-center");
+        this.seq.add( 40, "heri2-right");
+        this.seq.add( 40, "tank5-left");
+        this.seq.add( 40, "heri2-right");
 
         this.seq.add( 90, "makoto-4");
-        this.seq.add(  1, "makoto-1");
-        this.seq.add(  1, "makoto-7");
+        this.seq.add(  1, "tsubomi-0");
+        this.seq.add(  1, "tsubomi-2");
 
         this.seq.add(  1, function() {
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:0.3}, 3000, "easeInOutQuad");
+                .to({speed:0.5}, 3000, "easeInOutQuad");
+        });
+        this.seq.add(240, function() {
+            this.gameScene.ground.tweener
+                .clear()
+                .to({
+                    direction: 0,
+                    speed:1
+                }, 5000, "easeInOutQuad");
         });
 
     },
