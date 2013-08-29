@@ -920,7 +920,7 @@ gls2.GameScene = tm.createClass(
      * 0:何もしない 1:記録 2:再生
      * @const
      */
-    RECMODE: 2,
+    RECMODE: 0,
     startRec: function() {
         if (this.RECMODE === 1) {
             console.log("rec start");
