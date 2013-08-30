@@ -262,7 +262,7 @@ gls2.Player = tm.createClass(
             }
             this.pressTimeC = gls2.math.clamp(this.pressTimeC, -1, LASER_FRAME);
 
-            // ショット
+            // 攻撃
             this.fireLaser = (pressZ && pressC) || this.pressTimeC === LASER_FRAME;
             var shotInterval = this.gameScene.isHyperMode ? 3 : 5;
             this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % shotInterval === 0;
@@ -270,30 +270,10 @@ gls2.Player = tm.createClass(
                 this.pressTimeC = 0;
             }
 
-            // レーザー
             this.laser.x = this.x;
             this.laser.y = this.y - 40;
-            if (this.fireLaser) {
-                for (var i = 0, len = this.bits.length; i < len; i++) {
-                    this.bits[i].v = false;
-                }
-                this.bitPivot.rotation = 0;
-            } else {
-                this.laser.visible = false;
-                for (var i = 0, len = this.bits.length; i < len; i++) {
-                    this.bits[i].v = true;
-                }
-            }
 
-            if (this.fireShot) {
-                var s = Math.sin(app.frame * 0.2);
-                var sb;
-                sb = this.currentShotPool.fire(this.x-7 - s*6, this.y-5, -90);
-                if (sb !== null) sb.addChildTo(this.gameScene);
-                sb = this.currentShotPool.fire(this.x+7 + s*6, this.y-5, -90);
-                if (sb !== null) sb.addChildTo(this.gameScene);
-            }
-
+            // スペシャルウェポン
             if (kb.getKeyDown("x")) {
                 if (this.gameScene.hyperLevel > 0 && !this.gameScene.isHyperMode) {
                     // ハイパー
@@ -307,6 +287,33 @@ gls2.Player = tm.createClass(
                         .setPosition(gls2.math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);
                 }
+            }
+
+        } else {
+            this.fireShot = false;
+            this.fireLaser = false;
+        }
+
+        // ショット発射
+        if (this.fireShot) {
+            var s = Math.sin(app.frame * 0.2);
+            var sb;
+            sb = this.currentShotPool.fire(this.x-7 - s*6, this.y-5, -90);
+            if (sb !== null) sb.addChildTo(this.gameScene);
+            sb = this.currentShotPool.fire(this.x+7 + s*6, this.y-5, -90);
+            if (sb !== null) sb.addChildTo(this.gameScene);
+        }
+
+        // レーザー発射
+        if (this.fireLaser) {
+            for (var i = 0, len = this.bits.length; i < len; i++) {
+                this.bits[i].v = false;
+            }
+            this.bitPivot.rotation = 0;
+        } else {
+            this.laser.visible = false;
+            for (var i = 0, len = this.bits.length; i < len; i++) {
+                this.bits[i].v = true;
             }
         }
 

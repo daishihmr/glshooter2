@@ -22,6 +22,8 @@ gls2.Stage2 = tm.createClass(
             this.gameScene.ground.speed = 0.3;
         });
 
+        this.seq.add(100, "itsuki-0");
+
         this.seq.add(200, "tank25-top");
         this.seq.add(160, "heri1-left");
         this.seq.add(100, "heri1-right");

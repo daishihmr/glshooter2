@@ -65,7 +65,7 @@ gls2.ShipSelectScene = tm.createClass(
         this.mode = 0;
         this.styles.visible = false;
 
-        this.moveCursor(0);
+        this.moveCursor(-1, true);
 
         gls2.playSound("voSelectShip");
     },
@@ -116,13 +116,13 @@ gls2.ShipSelectScene = tm.createClass(
         this.typeB.setPosition(0, SC_H*0.5).addChildTo(types);
         this.typeC.setPosition(0, SC_H*0.5).addChildTo(types);
         this.typeA.update = function() {
-            this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 60;
+            this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 90;
         };
         this.typeB.update = function() {
-            this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 60;
+            this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 90;
         };
         this.typeC.update = function() {
-            this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 60;
+            this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 90;
         };
 
         this.typeA.update();
@@ -241,10 +241,10 @@ gls2.ShipSelectScene = tm.createClass(
             this.styles.visible = false;
 
             if (!this.moving && app.keyboard.getKeyDown("left")) {
-                this.moveCursor(-1);
+                this.moveCursor(-1, false);
                 gls2.playSound("select");
             } else if (!this.moving && app.keyboard.getKeyDown("right")) {
-                this.moveCursor(1);
+                this.moveCursor(1, false);
                 gls2.playSound("select");
             } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
                 this.mode = 1;
@@ -300,19 +300,33 @@ gls2.ShipSelectScene = tm.createClass(
         if (result === 0) this.startGame();
     },
 
-    moveCursor: function(incr) {
-        this.moving = true;
-
+    moveCursor: function(incr, noanim) {
         this.type = (this.type + incr + 3) % 3;
 
         [this.typeA, this.typeB, this.typeC][this.type].remove().addChildTo(this.types);
 
-        this.typeA.tweener.clear().to({pos: this.typeA.pos-incr, scaleX:(this.type === 0 ? 3 : 1), scaleY:(this.type === 0 ? 3 : 1)}, 300);
-        this.typeB.tweener.clear().to({pos: this.typeB.pos-incr, scaleX:(this.type === 1 ? 3 : 1), scaleY:(this.type === 1 ? 3 : 1)}, 300);
-        this.typeC.tweener.clear().to({pos: this.typeC.pos-incr, scaleX:(this.type === 2 ? 3 : 1), scaleY:(this.type === 2 ? 3 : 1)}, 300);
-        this.tweener.clear().wait(310).call(function() {
-            this.moving = false;
-        }.bind(this));
+        if (noanim) {
+            this.typeA.pos = this.typeA.pos-incr;
+            this.typeA.scaleX = this.type === 0 ? 5 : 1;
+            this.typeA.scaleY = this.type === 0 ? 5 : 1;
+
+            this.typeB.pos = this.typeB.pos-incr;
+            this.typeB.scaleX = this.type === 1 ? 5 : 1;
+            this.typeB.scaleY = this.type === 1 ? 5 : 1;
+
+            this.typeC.pos = this.typeC.pos-incr;
+            this.typeC.scaleX = this.type === 2 ? 5 : 1;
+            this.typeC.scaleY = this.type === 2 ? 5 : 1;
+        } else {
+            this.moving = true;
+
+            this.typeA.tweener.clear().to({pos: this.typeA.pos-incr, scaleX:(this.type === 0 ? 5 : 1), scaleY:(this.type === 0 ? 5 : 1)}, 300);
+            this.typeB.tweener.clear().to({pos: this.typeB.pos-incr, scaleX:(this.type === 1 ? 5 : 1), scaleY:(this.type === 1 ? 5 : 1)}, 300);
+            this.typeC.tweener.clear().to({pos: this.typeC.pos-incr, scaleX:(this.type === 2 ? 5 : 1), scaleY:(this.type === 2 ? 5 : 1)}, 300);
+            this.tweener.clear().wait(310).call(function() {
+                this.moving = false;
+            }.bind(this));
+        }
 
         this.labelType.text = ["Type-A", "Type-B", "Type-C"][this.type];
     },

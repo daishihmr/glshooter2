@@ -13,12 +13,13 @@ gls2.Enemy.DATA = {
     "kiryu":     [     3,      400, false, false,  1, {"radius": 24}, ],
     "natsuki":   [     5,      900,  true, false,  1, {"radius": 24}, ],
     "kise":      [    50,    15000,  true, false,  1, {"radius": 24}, ],
+    "hanasaki":  [   150,   200000,  true, false, 10, {"radius": 24}, ],
+    "myodoin":   [    50,    15000,  true, false,  1, {"radius": 24}, ],
     "kenzaki":   [   200,   300000,  true,  true, 10, {"width":100, "height":40}, ],
     "kurokawa":  [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
-    "hanasaki":  [   150,   200000,  true, false, 10, {"radius": 24}, ],
 };
 
 /**

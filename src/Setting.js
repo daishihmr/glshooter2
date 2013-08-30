@@ -19,6 +19,12 @@ gls2.Setting = {
     ],
 
     /**
+     * 出撃時の無敵時間
+     * @const
+     */
+    LAUNCH_MUTEKI_TIME: 3000,
+
+    /**
      * 初期残機数
      * @const
      */
@@ -203,7 +209,7 @@ gls2.Setting = {
      * 1フレームあたりのコンボゲージ減少値
      * @const
      */
-    COMBO_GAUGE_DECR: 0.02,
+    COMBO_GAUGE_DECR: 0.03,
 
     /**
      * ハイパーモード中のコンボゲージ減少倍率
@@ -233,7 +239,7 @@ gls2.Setting = {
      * 弾破壊時のコンボカウント増加数
      * @const
      */
-    BULLET_COMBO: 0,
+    BULLET_COMBO: 1,
 
     /**
      * 星アイテム（大）取得時のスコア
@@ -281,7 +287,7 @@ gls2.Setting = {
      * 星アイテム（大）が出る距離
      * @const
      */
-    CROSS_RANGE: 100*100,
+    CROSS_RANGE: 150*150,
 
     /**
      * 敵弾のHP
@@ -301,6 +307,30 @@ gls2.Setting = {
      */
     AUTO_BOMB_TO_ZERO: true,
 
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_STAR: 1000,
+
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_STAR_LARGE: 2000,
+
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_KILL_RATIO: 4000,
+
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_MAX_COMBO: 10000,
+
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_NO_MISS: 20000000,
 };
 
 })();

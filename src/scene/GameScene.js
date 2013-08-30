@@ -595,14 +595,14 @@ gls2.GameScene = tm.createClass(
             .call(function() {
                 this.controllable = true;
             }.bind(this.player))
-            .wait(2000)
+            .wait(gls2.Setting.LAUNCH_MUTEKI_TIME)
             .call(function() {
                 this.muteki = false;
             }.bind(this.player));
     },
 
     miss: function() {
-        // ミスエフェクト
+        // TODO ミスエフェクト
         gls2.Effect.explodeS(this.player.x, this.player.y, this);
         this.println("I was shot down.");
 
@@ -641,7 +641,7 @@ gls2.GameScene = tm.createClass(
 
         this.score = 0;
         this.zanki = gls2.Setting.INITIAL_ZANKI;
-        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
+        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX[this.player.style];
         this.hyperRank = 0;
         bulletml.Walker.globalScope["$rank"] = 0;
 

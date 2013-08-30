@@ -226,9 +226,9 @@ gls2.EnemyUnit = {
 "tsubomi-R0": [{ hard:$e.Tsubomi, soft:$s.Cannon3_0, x:SC_W+100, y:SC_H*0.2 }],
 
 // 中型固定砲台「ミョウドウイン」2面用
-"tsubomi-0": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.2, y:-100 }],
-"tsubomi-1": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.5, y:-100 }],
-"tsubomi-2": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.8, y:-100 }],
+"itsuki-0": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.2, y:-100 }],
+"itsuki-1": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.5, y:-100 }],
+"itsuki-2": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.8, y:-100 }],
 
 // 大型固定砲台「ケンザキ」2面用
 "makoto-0": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.1, y:-100 }],

@@ -29,7 +29,11 @@ var RNL = $.bullet({frame:3});
 /** 赤イクラ弾 */
 var RI = $.bullet({frame:4,ball:true});
 
-// 発射間隔
+/**
+ * 発射間隔
+ * ランクによって短くなる
+ * ハイパー中も短くなる
+ */
 var $interval = function(v) { return $.wait(v + "*(1-$rank)*$hyperOff") };
 
 // 弾速
@@ -213,7 +217,18 @@ gls2.Danmaku["cannon3-0"] = new bulletml.Root({
  */
 gls2.Danmaku["cannon4-0"] = new bulletml.Root({
     "top0": $.action([
+        $interval(20),
         $.repeat(999, [
+            $.fire($spd2, BL),
+            $.repeat(6, [
+                $interval(5),
+                $.bindVar("way", "$loop.count+1"),
+                $.fire($.direction("-20/2 - 20*($way-2)", "sequence"), $spd2, BL),
+                $.repeat("$way-1", [
+                    $.fire($.direction(20, "sequence"), $spd2, BL),
+                ]),
+            ]),
+            $interval(120),
         ]),
     ]),
 });

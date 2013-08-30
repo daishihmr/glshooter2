@@ -27,10 +27,10 @@ gls2.ResultScene = tm.createClass(
     labels: null,
     incrs: null,
     rates: [
-        1000, // 星アイテム（小）
-        2000, // 星アイテム（大）
-        4000, // 撃墜率
-        1000, // 最大コンボ数
+        gls2.Setting.STAGE_CLEAR_BONUS_STAR, // 星アイテム（小）
+        gls2.Setting.STAGE_CLEAR_BONUS_STAR_LARGE, // 星アイテム（大）
+        gls2.Setting.STAGE_CLEAR_BONUS_KILL_RATIO, // 撃墜率
+        gls2.Setting.STAGE_CLEAR_BONUS_MAX_COMBO, // 最大コンボ数
         1,    // ノーミス
     ],
 
@@ -54,7 +54,7 @@ gls2.ResultScene = tm.createClass(
             this.gameScene.starItemLarge,
             ~~(this.gameScene.killCount / this.gameScene.enemyCount * 100),
             this.gameScene.maxComboCount,
-            this.gameScene.missCount === 0 ? 100000 : 0,
+            this.gameScene.missCount === 0 ? gls2.Setting.STAGE_CLEAR_BONUS_NO_MISS : 0,
         ];
         this.incrs = this.values.map(function(v) {
             return v * 0.01;
