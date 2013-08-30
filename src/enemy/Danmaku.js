@@ -571,7 +571,7 @@ gls2.Danmaku["nagisa-3-1"] = new bulletml.Root({
 });
 
 gls2.Danmaku.setup = function() {
-    for (var i = 0; i < 800; i++) {
+    for (var i = 0; i < 2000; i++) {
         bulletPool.push(gls2.Bullet());
     }
 
@@ -581,6 +581,7 @@ gls2.Danmaku.setup = function() {
     };
     config.bulletFactory = function(spec) {
         var b = bulletPool.shift(0);
+        // var b = gls2.Bullet();
         if (b) {
             b.hp = gls2.Setting.BULLET_HP;
 
