@@ -222,11 +222,30 @@ gls2.Enemy.Tsubomi = tm.createClass({
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.remove();
     },
-})
+});
 
 /**
  * 中型固定砲台「ミョウドウイン」
  */
+gls2.Enemy.Itsuki = tm.createClass({
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "myodoin");
+
+        // TODO
+        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    },
+});
 
 /**
  * 大型固定砲台「ケンザキ」

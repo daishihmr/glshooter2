@@ -220,10 +220,15 @@ gls2.EnemyUnit = {
 "yayoi-R2": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W+70, y:SC_H*0.4 }],
 
 // 固定砲台「ハナサキ」2面用
-"tsubomi-0": [{ hard:$e.Cannon, soft:$s.Cannon3_0, x:SC_W*0.2, y:-100 }],
-"tsubomi-1": [{ hard:$e.Cannon, soft:$s.Cannon3_0, x:SC_W*0.5, y:-100 }],
-"tsubomi-2": [{ hard:$e.Cannon, soft:$s.Cannon3_0, x:SC_W*0.8, y:-100 }],
-"tsubomi-R0": [{ hard:$e.Cannon, soft:$s.Cannon3_0, x:SC_W+100, y:SC_H*0.2 }],
+"tsubomi-0": [{ hard:$e.Tsubomi, soft:$s.Cannon3_0, x:SC_W*0.2, y:-100 }],
+"tsubomi-1": [{ hard:$e.Tsubomi, soft:$s.Cannon3_0, x:SC_W*0.5, y:-100 }],
+"tsubomi-2": [{ hard:$e.Tsubomi, soft:$s.Cannon3_0, x:SC_W*0.8, y:-100 }],
+"tsubomi-R0": [{ hard:$e.Tsubomi, soft:$s.Cannon3_0, x:SC_W+100, y:SC_H*0.2 }],
+
+// 中型固定砲台「ミョウドウイン」2面用
+"tsubomi-0": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.2, y:-100 }],
+"tsubomi-1": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.5, y:-100 }],
+"tsubomi-2": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.8, y:-100 }],
 
 // 大型固定砲台「ケンザキ」2面用
 "makoto-0": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.1, y:-100 }],

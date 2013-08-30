@@ -204,6 +204,7 @@ gls2.GameScene = tm.createClass(
     },
 
     /**
+     * 各種当たり判定
      * フレームの最後に実行される
      */
     onexitframe: function(app) {
@@ -232,7 +233,7 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_SHOT);
                         }
-                        this.onEnemyDestroy(e);
+                        this.onDestroyEnemy(e);
                         break;
                     }
                 }
@@ -259,7 +260,7 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER);
                         }
-                        this.onEnemyDestroy(e);
+                        this.onDestroyEnemy(e);
                     } else {
                         if (this.isHyperMode) {
                             this.addCombo(this.hyperLevel * 0.01);
@@ -298,7 +299,7 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA);
                         }
-                        this.onEnemyDestroy(e);
+                        this.onDestroyEnemy(e);
                     } else {
                         if (this.isHyperMode) {
                             this.addCombo(this.hyperLevel * 0.01);
@@ -441,7 +442,10 @@ gls2.GameScene = tm.createClass(
 
     },
 
-    onEnemyDestroy: function(enemy) {
+    /**
+     * ボム以外の攻撃で敵を破壊した時
+     */
+    onDestroyEnemy: function(enemy) {
         this.generateStar(
             enemy.isGround,
             this.isHyperMode || gls2.distanceSq(enemy,this.player) < gls2.Setting.CROSS_RANGE,
@@ -450,7 +454,7 @@ gls2.GameScene = tm.createClass(
             enemy.star
         );
 
-        // ハイパー中はコンボ数が上昇
+        // ハイパー中はコンボ数が急上昇
         if (!this.isHyperMode) {
             this.addCombo(1);
         } else if (this.hyperLevel < 6) {
@@ -460,12 +464,15 @@ gls2.GameScene = tm.createClass(
         }
 
         var base = this.baseScore;
-        // 倍率
+
+        // コンボ数に応じて倍率がかかる
         var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
         for (var i = 0; i < bonus; i++) {
-            base += enemy.score
+            base += enemy.score;
             this.addScore(base);
         }
+
+        // 素点が上昇
         this.baseScore += enemy.score * bonus;
     },
 
@@ -476,12 +483,15 @@ gls2.GameScene = tm.createClass(
         }
     },
 
+    /**
+     * 星アイテム取得時
+     */
     onGetStar: function(star) {
         gls2.playSound("star");
         if (star.large) {
             this.starItemLarge += 1;
-            this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE + this.baseScore * 0.2);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE_LARGE;
+            this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE + this.baseScore * gls2.Setting.STAR_ITEM_BONUS_LARGE);
             if (this.isHyperMode) {
                 this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_STAR_LARGE_IN_HYPER);
             } else {
@@ -489,8 +499,8 @@ gls2.GameScene = tm.createClass(
             }
         } else {
             this.starItem += 1;
-            this.addScore(gls2.Setting.STAR_ITEM_SCORE + this.baseScore * 0.1);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE;
+            this.addScore(gls2.Setting.STAR_ITEM_SCORE + this.baseScore * gls2.Setting.STAR_ITEM_BONUS);
             if (this.isHyperMode) {
                 this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_STAR_IN_HYPER);
             } else {
@@ -672,8 +682,6 @@ gls2.GameScene = tm.createClass(
     },
 
     addCombo: function(v) {
-        if (this.isHyperMode) v *= gls2.Setting.COMBO_RATE_WHEN_HYPERMODE * this.hyperRank;
-
         this.comboDown = 0;
         this.comboCount += v;
         this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);

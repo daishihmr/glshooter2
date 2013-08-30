@@ -325,7 +325,7 @@ gls2.EnemySoft.TankD = _Tank(1.6, Math.PI*0.5);
 gls2.EnemySoft.TankU = _Tank(1.6, Math.PI*-0.5);
 
 /**
- * 固定砲台
+ * 固定砲台共通
  *
  * @class
  * @extends {gls2.EnemySoft}
@@ -373,6 +373,11 @@ var _Cannon = tm.createClass(
         }
     },
 });
+
+/**
+ * 固定砲台1
+ * ヘボい砲台
+ */
 gls2.EnemySoft.Cannon1 = _Cannon("basic3-0", false);
 gls2.EnemySoft.Cannon1_2 = _Cannon("basic3-1", false);
 
@@ -387,6 +392,12 @@ gls2.EnemySoft.Cannon2_0 = _Cannon("cannon2-0", true);
  * そこそこの砲台
  */
 gls2.EnemySoft.Cannon3_0 = _Cannon("cannon3-0", true);
+
+/**
+ * 固定砲台4
+ * いやらしい砲台
+ */
+gls2.EnemySoft.Cannon4_0 = _Cannon("cannon4-0", true);
 
 /**
  * 中型戦闘機

@@ -55,7 +55,7 @@ gls2.Boss = tm.createClass(
     damage: function(damagePoint) {
         var beforeHp = this.hp;
         if (gls2.Enemy.prototype.damage.call(this, damagePoint)) {
-            this.gameScene.demoPlaying = true;
+            this.gameScene.player.controllable = false;
             gls2.fadeOutBgm();
             return true;
         }

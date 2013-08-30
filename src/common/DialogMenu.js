@@ -52,7 +52,7 @@ gls2.DialogMenu = tm.createClass(
         this.showExit = param["showExit"];
         this.descriptions = param["menuDescriptions"];
         if (this.showExit) {
-            menu.push("exit");
+            menu.push("back");
             this.descriptions.push("前の画面へ戻ります");
         }
         this.onCursorMove = param["onCursorMove"];

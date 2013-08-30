@@ -73,7 +73,8 @@ gls2.ScoreLabel = tm.createClass(
         for (var i = 0; i < score.length; i += 4) {
             text += score.substring(i, i+4) + " ";
         }
-        this.fillText(text, this.scoreLabelElement.gpsOffsetX + SC_W*0.4, 22);
+        var bonus = (~~(this.gameScene.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+        this.fillText(text + "x " + bonus, this.scoreLabelElement.gpsOffsetX + SC_W*0.4, 22);
 
         // 残機数
         var y = [0, 1, 4][this.gameScene.player.type];
@@ -91,7 +92,7 @@ gls2.ScoreLabel = tm.createClass(
 
         // コンボ数
         if (0 < ~~this.gameScene.comboCount || DEBUG) {
-            this.setText("bold 40px Orbitron", "left", "top");
+            this.setText("bold 45px Orbitron", "left", "top");
             this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, -this.scoreLabelElement.gpsOffsetY + 115);
         }
 
