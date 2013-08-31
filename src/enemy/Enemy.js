@@ -238,8 +238,7 @@ gls2.Enemy = tm.createClass(
 
     fallDown: function() {
         this.remove();
-        this.isGround = true;
-        this.gameScene.addChild(this);
+        this.gameScene.fallDownLayer.addChild(this);
         this.addEventListener("enterframe", function() {
             if (Math.random() < 0.2) {
                 gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {

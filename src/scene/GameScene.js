@@ -84,6 +84,8 @@ gls2.GameScene = tm.createClass(
     /** @type {gls2.GameScene.Layer} */
     groundLayer: null,
     /** @type {gls2.GameScene.Layer} */
+    fallDownLayer: null,
+    /** @type {gls2.GameScene.Layer} */
     playerLayer: null,
     /** @type {gls2.GameScene.Layer} */
     enemyLayer: null,
@@ -121,6 +123,7 @@ gls2.GameScene = tm.createClass(
         this.ground.addChildTo(this);
 
         this.groundLayer = gls2.GameScene.Layer().addChildTo(this);
+        this.fallDownLayer = gls2.GameScene.Layer().addChildTo(this);
         this.enemyLayer = gls2.GameScene.Layer().addChildTo(this);
         this.effectLayer0 = gls2.GameScene.Layer().addChildTo(this);
         this.playerLayer = gls2.GameScene.Layer().addChildTo(this);
@@ -267,7 +270,7 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addCombo(0.01);
                         }
-                        this.comboGauge = Math.max(this.comboGauge, 0.1);
+                        this.comboGauge = Math.min(this.comboGauge + 0.02, 1);
                         if (this.isHyperMode) {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT_IN_HYPER);
                         } else {
@@ -306,7 +309,7 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addCombo(0.01);
                         }
-                        this.comboGauge = Math.max(this.comboGauge, 0.1);
+                        this.comboGauge = Math.min(this.comboGauge + 0.02, 1);
                         if (this.isHyperMode) {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA_HIT_IN_HYPER);
                         } else {
@@ -370,6 +373,7 @@ gls2.GameScene = tm.createClass(
                 // 敵弾vs自機
                 for (var i = gls2.Bullet.activeList.length; gls2.Bullet.activeList[--i] !== undefined;) {
                     var b = gls2.Bullet.activeList[i];
+                    if (b.visible === false) continue;
                     if (gls2.Collision.isHit(b, this.player)) {
                         this.player.damage();
                         if (this.bomb > 0 && this.autoBomb) {

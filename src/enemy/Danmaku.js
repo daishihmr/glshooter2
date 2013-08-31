@@ -28,6 +28,8 @@ var RNS = $.bullet({frame:1});
 var RNL = $.bullet({frame:3});
 /** 赤イクラ弾 */
 var RI = $.bullet({frame:4,ball:true});
+/** 見えない弾 */
+var IVS = function(action) { return $.bullet(action, {visible:false}) };
 
 /**
  * 発射間隔
@@ -220,12 +222,12 @@ gls2.Danmaku["cannon4-0"] = new bulletml.Root({
         $interval(20),
         $.repeat(999, [
             $.fire($spd2, BL),
-            $.repeat(6, [
+            $.repeat(12, [
                 $interval(5),
                 $.bindVar("way", "$loop.count+1"),
-                $.fire($.direction("-20/2 - 20*($way-2)", "sequence"), $spd2, BL),
+                $.fire($.direction("-8/2 - 8*($way-2)", "sequence"), $spd2, BL),
                 $.repeat("$way-1", [
-                    $.fire($.direction(20, "sequence"), $spd2, BL),
+                    $.fire($.direction(8, "sequence"), $spd2, BL),
                 ]),
             ]),
             $interval(120),
@@ -381,10 +383,27 @@ gls2.Danmaku["honoka-1"] = new bulletml.Root({
 // 舞
 gls2.Danmaku["mai-1"] = new bulletml.Root({
     "top": $.action([
+        $.repeat(100, [
+            $.bindVar("from", "+Math.cos($loop.index*0.15)*40-170"),
+            $absoluteNway(4, "$from", "$from+40", $spd6, IVS($.action([
+                $.wait(8),
+                $.fire($.direction(0, "relative"), $spd1, BNS),
+                $.vanish,
+            ]))),
+            $.bindVar("from", "-Math.cos($loop.index*0.15)*40-10"),
+            $absoluteNway(4, "$from", "$from-40", $spd6, IVS($.action([
+                $.wait(8),
+                $.fire($.direction(0, "relative"), $spd1, BNS),
+                $.vanish,
+            ]))),
+            $interval(6),
+        ]),
     ]),
 });
 gls2.Danmaku["mai-2"] = new bulletml.Root({
     "top": $.action([
+        $nway(10, -100, 100),
+        $interval(60),
     ]),
 });
 
@@ -563,6 +582,8 @@ gls2.Danmaku.setup = function() {
     config.bulletFactory = function(spec) {
         var b = bulletPool.shift(0);
         if (b) {
+            b.hp = gls2.Setting.BULLET_HP;
+
             activeList.push(b);
             b.setFrameIndex((spec.frame === undefined) ? 1 : spec.frame);
 
@@ -577,6 +598,13 @@ gls2.Danmaku.setup = function() {
                 b.scaleX = 0.8;
                 b.scaleY = 1.5;
                 b.updateProperties = true;
+                b.update = function() {};
+            }
+
+            if (spec.visible === false) {
+                b.visible = false;
+            } else {
+                b.visible = true;
             }
 
             return b;
@@ -631,15 +659,11 @@ gls2.Bullet = tm.createClass(
 
         this.boundingRadius = 7;
 
-        this.addEventListener("added", function() {
-            this.hp = gls2.Setting.BULLET_HP;
-        });
         this.addEventListener("removed", function() {
+            this.clearEventListener("enterframe");
             bulletPool.push(this);
             var idx = activeList.indexOf(this);
             if (idx !== -1) activeList.splice(idx, 1);
-
-            this.clearEventListener("enterframe");
         });
     },
     destroy: function() {

@@ -181,7 +181,7 @@ gls2.ResultScene = tm.createClass(
         var c = this.cursor;
         if (c < this.values.length) {
             gls2.playSound("star");
-            if (this.values[c] <= this.incrs[c] || app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
+            if (this.values[c] <= this.incrs[c] || app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
                 this.gameScene.addScore(this.values[c] * this.rates[c]);
                 this.values[c] = 0;
                 this.cursor += 1;
@@ -194,7 +194,7 @@ gls2.ResultScene = tm.createClass(
             this.labelTotal.text = Math.floor(this.gameScene.score);
         } else {
             this.promptEnter.visible = true;
-            if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
+            if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
                 gls2.playSound("decision");
                 this.gameScene.startStage(this.gameScene.stageNumber + 1);
                 app.popScene();

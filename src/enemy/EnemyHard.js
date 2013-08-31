@@ -20,6 +20,7 @@ gls2.Enemy.DATA = {
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
+    "mishou":    [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
 };
 
 /**
@@ -280,7 +281,7 @@ gls2.Enemy.Cannon2 = tm.createClass({
 gls2.Enemy.Honoka = tm.createClass({
     superClass: gls2.Enemy,
 
-    _sprite1: null,
+    _sprite: null,
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yukishiro");
@@ -295,22 +296,6 @@ gls2.Enemy.Honoka = tm.createClass({
         this._sprite.draw(canvas);
     },
 });
-
-/**
- * ステージ２中ボス「ミショウ」
- */
-
-/**
- * ステージ３中ボス「ヒガシ」
- */
-
-/**
- * ステージ４中ボス「ミナミノ」
- */
-
-/**
- * ステージ５中ボス「ヒシカワ」
- */
 
 /**
  * ステージ１ボス「ミスミ」
@@ -339,7 +324,34 @@ gls2.Enemy.Nagisa = tm.createClass(
 });
 
 /**
+ * ステージ２中ボス「ミショウ」
+ */
+gls2.Enemy.Mai = tm.createClass(
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "mishou");
+
+        this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(3);
+        this.setScale(1.5);
+    },
+    destroy: function() {
+        this.fallDown();
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+});
+
+/**
  * ステージ２ボス「ヒュウガ」
+ */
+
+/**
+ * ステージ３中ボス「ヒガシ」
  */
 
 /**
@@ -347,7 +359,15 @@ gls2.Enemy.Nagisa = tm.createClass(
  */
 
 /**
+ * ステージ４中ボス「ミナミノ」
+ */
+
+/**
  * ステージ４ボス「ホウジョウ」
+ */
+
+/**
+ * ステージ５中ボス「ヒシカワ」
  */
 
 /**

@@ -11,7 +11,7 @@ var $s = gls2.EnemySoft;
 /**
  * 敵の編隊データ
  *
- * 
+ *
  */
 gls2.EnemyUnit = {
 
@@ -268,6 +268,11 @@ gls2.EnemyUnit = {
  * ステージ１ボス「ミスミ」
  */
 "misumi": [{ hard:$e.Nagisa, soft:[$s.Nagisa1, $s.Nagisa2, $s.Nagisa3], x:SC_W*0.5, y:-100, boss:true }],
+
+/**
+ * ステージ２中ボス「ミショウ」
+ */
+"mai": [{ hard:$e.Mai, soft:$s.Mai, x:SC_W+300, y:SC_H*0.2 }],
 
 };
 

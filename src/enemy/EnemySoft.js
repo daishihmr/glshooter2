@@ -201,7 +201,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
         enemy.angle = Math.PI * 0.5;
-        
+
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
             this.speed = 8;
             gls2.EnemySoft.attack(this, "basic1-0");
@@ -500,9 +500,9 @@ var _MBossCommon = tm.createClass(
             if (this.startAttack === false || this.hp <= 0) return;
             if (1500 < this.frame && this.endAttack === false) {
                 this.endAttack = true;
-                this.stopAttack.call(this);
                 this.tweener
                     .clear()
+                    .wait(500)
                     .move(this.x, -100, 1200, "easeInQuad")
                     .call(function() {
                         this.remove();
@@ -511,6 +511,7 @@ var _MBossCommon = tm.createClass(
         });
 
         enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
             if (this.endAttack) return;
             var pattern = this.patterns.shift();
             gls2.EnemySoft.attack(this, pattern);
@@ -523,11 +524,6 @@ var _MBossCommon = tm.createClass(
  * ステージ１中ボス「ユキシロ」
  */
 gls2.EnemySoft.Honoka = _MBossCommon(["honoka-1"]);
-
-/**
- * ステージ２中ボス「ミショウ」
- */
-gls2.EnemySoft.Mai = _MBossCommon(["mai-1", "mai-2"]);
 
 /**
  * ステージ１ボス「ミスミ」第1形態
@@ -571,6 +567,7 @@ gls2.EnemySoft.Nagisa = tm.createClass(
             }.bind(enemy));
 
         enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
             if (this.endAttack) return;
             var pattern = this.patterns.shift();
             gls2.EnemySoft.attack(this, pattern);
@@ -617,6 +614,7 @@ gls2.EnemySoft.Nagisa2 = tm.createClass(
             }.bind(enemy));
 
         enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
             var pattern = this.patterns.shift();
             gls2.EnemySoft.attack(this, pattern);
             this.patterns.push(pattern);
@@ -650,11 +648,17 @@ gls2.EnemySoft.Nagisa3 = tm.createClass(
             }.bind(enemy));
 
         enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
             gls2.EnemySoft.attack(this, "nagisa-3-1");
         });
     },
 });
 gls2.EnemySoft.Nagisa3 = gls2.EnemySoft.Nagisa3();
+
+/**
+ * ステージ２中ボス「ミショウ」
+ */
+gls2.EnemySoft.Mai = _MBossCommon(["mai-1", "mai-2"]);
 
 })();
 

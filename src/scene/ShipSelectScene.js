@@ -246,7 +246,7 @@ gls2.ShipSelectScene = tm.createClass(
             } else if (!this.moving && app.keyboard.getKeyDown("right")) {
                 this.moveCursor(1, false);
                 gls2.playSound("select");
-            } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
+            } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
                 this.mode = 1;
                 gls2.playSound("decision");
             }
@@ -261,7 +261,7 @@ gls2.ShipSelectScene = tm.createClass(
             } else if (app.keyboard.getKeyDown("right")) {
                 this.style = (this.style + 1 + 3) % 3;
                 gls2.playSound("select");
-            } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
+            } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
                 this.openAutoBombDialog();
                 gls2.playSound("decision");
             } else if (app.keyboard.getKeyDown("x")) {

@@ -209,7 +209,7 @@ gls2.Setting = {
      * 1フレームあたりのコンボゲージ減少値
      * @const
      */
-    COMBO_GAUGE_DECR: 0.03,
+    COMBO_GAUGE_DECR: 0.02,
 
     /**
      * ハイパーモード中のコンボゲージ減少倍率
