@@ -581,7 +581,6 @@ gls2.Danmaku.setup = function() {
     };
     config.bulletFactory = function(spec) {
         var b = bulletPool.shift(0);
-        // var b = gls2.Bullet();
         if (b) {
             b.hp = gls2.Setting.BULLET_HP;
 
@@ -596,7 +595,6 @@ gls2.Danmaku.setup = function() {
                 b.scaleX = 0.8;
                 b.scaleY = 1.5;
                 b.updateProperties = true;
-                b.update = function() {};
             }
 
             if (spec.visible === false) {

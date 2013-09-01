@@ -349,6 +349,7 @@ gls2.GameScene = tm.createClass(
                 var bullets = [].concat(gls2.Bullet.activeList);
                 for (var b = bullets.length; bullets[--b] !== undefined;) {
                     var bullet = bullets[b];
+                    if (bullet.visible === false) continue;
                     if (shot.hp > 0 && gls2.Collision.isHit(shot, bullet)) {
                         bullet.hp -= (6 - this.hyperRank);
                         if (bullet.hp < 0) {
