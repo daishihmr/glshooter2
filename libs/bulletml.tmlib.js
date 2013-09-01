@@ -325,7 +325,6 @@ tm.bulletml = tm.bulletml || {};
                 // test out of world
                 if (!ticker.config.isInsideOfWorld(this)) {
                     this.remove();
-                    this.dispatchEvent(tm.event.Event("removed"));
                     return;
                 }
             };
@@ -358,7 +357,7 @@ tm.bulletml = tm.bulletml || {};
             }
 
             // 等速直進弾?
-            var uniformLinearBullet = !!cmd.bullet.actions.length;
+            var uniformLinearBullet = cmd.bullet.actions.length === 0;
 
             var bt = uniformLinearBullet ? (
                 pattern._createSimpleTicker(config)

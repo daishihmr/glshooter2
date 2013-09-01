@@ -570,14 +570,12 @@ gls2.Danmaku.setup = function() {
                 b.scaleX = 1.0;
                 b.scaleY = 1.0;
                 b.updateProperties = false;
-                b.update = function() {
-                    this.rotation += 15;
-                };
             } else {
                 b.scaleX = 0.8;
                 b.scaleY = 1.5;
                 b.updateProperties = true;
             }
+            b.ball = !!spec.ball;
 
             return b;
         } else {
@@ -625,7 +623,10 @@ gls2.Bullet = tm.createClass(
 /** @lends gls2.Bullet.prototype */
 {
     superClass: tm.app.Sprite,
+
     hp: 0,
+    ball: false,
+
     init: function() {
         this.superInit("tex0", 20, 20);
 
@@ -641,6 +642,9 @@ gls2.Bullet = tm.createClass(
 
             this.clearEventListener("enterframe");
         });
+    },
+    update: function() {
+        if (this.ball) this.rotation += 15;
     },
     destroy: function() {
         var p = gls2.Particle(10, 1, 0.92, tm.graphics.Canvas()
