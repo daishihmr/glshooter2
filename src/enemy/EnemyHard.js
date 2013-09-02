@@ -20,7 +20,7 @@ gls2.Enemy.DATA = {
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
-    "mishou":    [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
+    "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
     "hyuga":     [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
 };
 

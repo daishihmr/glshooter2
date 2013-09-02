@@ -1072,11 +1072,12 @@ gls2.GameScene.LabelLayer = tm.createClass({
         }
 
         if (this.frame%2 === 0) {
-            canvas.setText("bold 24px Orbitron", "left", "bottom");
             canvas.strokeStyle = "rgba(255,255,100,0.5)";
-            if (!this.isHyperMode && this.hyperLevel > 0) {
+            if (!this.gameScene.isHyperMode && this.gameScene.hyperLevel > 0) {
+                canvas.setText("bold 24px Orbitron", "left", "bottom");
                 canvas.strokeText("HYPER LV " + this.gameScene.hyperLevel, 5, SC_H-3);
-            } else if (this.isHyperMode) {
+            } else if (this.gameScene.isHyperMode) {
+                canvas.setText("bold 28px Orbitron", "left", "bottom");
                 canvas.strokeText("HYPER LV " + this.gameScene.currentHyperLevel, 5, SC_H-3);
             }
         }
