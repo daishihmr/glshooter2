@@ -10,6 +10,18 @@
 gls2.Setting = {
 
     /**
+     * FPS
+     * @const
+     */
+    FPS: 60,
+
+    /**
+     * 初期ランク
+     * @const
+     */
+    INITIAL_RANK: 0.00,
+
+    /**
      * エクステンドスコア
      * @const
      */

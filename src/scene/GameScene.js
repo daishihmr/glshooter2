@@ -524,7 +524,7 @@ gls2.GameScene = tm.createClass(
         this.hyperGauge = 0;
         this.hyperRank = 0;
         this.hyperLevel = 0;
-        bulletml.Walker.globalScope["$rank"] = 0;
+        bulletml.Walker.globalScope["$rank"] = gls2.Setting.INITIAL_RANK;
         this.endHyperMode();
         this.isBombActive = false;
         this.missCount = this.missCountTotal = 0;

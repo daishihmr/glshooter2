@@ -396,7 +396,7 @@ gls2.Danmaku["mai-1"] = new bulletml.Root({
                 $.fire($.direction(0, "relative"), $spd1, BNS),
                 $.vanish,
             ]))),
-            $interval(6),
+            $interval(4),
         ]),
     ]),
 });

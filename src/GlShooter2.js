@@ -40,7 +40,7 @@ gls2.GlShooter2 = tm.createClass(
         this.superInit(id);
         gls2.core = this;
         this.resize(SC_W, SC_H).fitWindow();
-        this.fps = 60;
+        this.fps = gls2.Setting.FPS;
         this.background = "rgba(0,0,0,0)";
 
         this.timeoutTasks = [];
