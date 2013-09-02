@@ -37,15 +37,24 @@ gls2.ScoreLabel = tm.createClass(
     update: function() {
         this.clear();
 
-        this.fillStyle = "rgba(255,255,255,0.4)";
-        this.strokeStyle = "rgba(255,255,255,0.4)";
-
         // ボスHP
         if (this.gameScene.boss !== null) {
-            this.fillRect(5, this.scoreLabelElement.gpsOffsetY - 20, (SC_W-10) * this.gameScene.boss.hp/this.gameScene.boss.hpMax, 10);
-            this.clear(5 + (SC_W-10)*0.55, this.scoreLabelElement.gpsOffsetY - 20, 2, 10);
-            this.clear(5 + (SC_W-10)*0.1, this.scoreLabelElement.gpsOffsetY - 20, 2, 10);
+            this.fillStyle = tm.graphics.LinearGradient(0, 0, SC_W, 0)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba(255,255,0,0.4)" },
+                    { offset: 1.0, color: "rgba(0,255,255,0.4)" },
+                ]).toStyle();
+            this.strokeStyle = "rgba(255,255,255,0.8)";
+            this.lineWidth = 2;
+            this.fillRect(5, this.scoreLabelElement.gpsOffsetY - 20, (SC_W-10) * this.gameScene.boss.hp/this.gameScene.boss.hpMax, 20);
+            this.strokeRect(5, this.scoreLabelElement.gpsOffsetY - 20, SC_W-10, 20);
+            this.clear(5 + (SC_W-10)*0.55, this.scoreLabelElement.gpsOffsetY - 20+2, 2, 20-4);
+            this.clear(5 + (SC_W-10)*0.1, this.scoreLabelElement.gpsOffsetY - 20+2, 2, 20-4);
         }
+
+        this.fillStyle = "rgba(255,255,255,0.4)";
+        this.strokeStyle = "rgba(255,255,255,0.4)";
+        this.lineWidth = 1;
 
         // スコア
         var text;
@@ -64,7 +73,8 @@ gls2.ScoreLabel = tm.createClass(
         for (var i = 0; i < score.length; i += 4) {
             text += score.substring(i, i+4) + " ";
         }
-        this.fillText(text, this.scoreLabelElement.gpsOffsetX + SC_W*0.4, 22);
+        var bonus = (~~(this.gameScene.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+        this.fillText(text + "x " + bonus, this.scoreLabelElement.gpsOffsetX + SC_W*0.4, 22);
 
         // 残機数
         var y = [0, 1, 4][this.gameScene.player.type];
@@ -82,13 +92,13 @@ gls2.ScoreLabel = tm.createClass(
 
         // コンボ数
         if (0 < ~~this.gameScene.comboCount || DEBUG) {
-            this.setText("bold 40px Orbitron", "left", "top");
+            this.setText("bold 45px Orbitron", "left", "top");
             this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, -this.scoreLabelElement.gpsOffsetY + 115);
         }
 
         // ボム数
         for (var i = 0; i < this.gameScene.bomb; i++) {
-            this.fillRect(SC_W-(i+1)*(20+5) - 20, SC_H-(20+5), 20, 20);
+            this.drawTexture(tm.asset.AssetManager.get("bombIcon"), SC_W-(i+1)*(20+5) - 20, SC_H-(20+5), 20, 20);
         }
 
         this.consoleWindow.update();

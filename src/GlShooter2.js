@@ -33,12 +33,6 @@ gls2.GlShooter2 = tm.createClass(
     /** 難易度(0～4) */
     difficulty: 1,
 
-    /** エクステンドスコア */
-    extendScore: [
-         1000000000,
-        10000000000,
-    ],
-
     gameScene: null,
 
     init: function(id) {
@@ -46,8 +40,10 @@ gls2.GlShooter2 = tm.createClass(
         this.superInit(id);
         gls2.core = this;
         this.resize(SC_W, SC_H).fitWindow();
-        this.fps = 60;
+        this.fps = gls2.Setting.FPS;
         this.background = "rgba(0,0,0,0)";
+
+        this.timeoutTasks = [];
 
         this.keyboard = tm.input.Keyboard(window);
 
@@ -55,7 +51,7 @@ gls2.GlShooter2 = tm.createClass(
             assets: {
                 // image
                 "tex0": "assets/tex0.png",
-                "tex1": "assets/tex1.png",
+                "tex1": "assets/tex1.png", // TODO あとで消す
                 "tex_stage1": "assets/tex_stage1.png",
                 "tex_tank1": "assets/tex_tank1.png",
                 "fighter": "assets/fighters.png",
@@ -71,9 +67,11 @@ gls2.GlShooter2 = tm.createClass(
                 "explodeL": "assets/explode2.png",
                 "shotbullet": "assets/shotbullet.png",
                 "bomb": "assets/bomb.png",
+                "bombIcon": "assets/bomb_icon.png",
 
                 // bgm
                 "bgm1": "assets2/nc54073.mp3",
+                "bgm2": "assets2/nc28687.mp3",
                 "bgmBoss": "assets2/nc29206.mp3",
                 "bgmResult": "assets2/nc54077.mp3",
 
@@ -85,6 +83,7 @@ gls2.GlShooter2 = tm.createClass(
                 "sound/bomb": "assets2/sen_ge_bom17.mp3",
                 "sound/warning": "assets2/meka_ge_keihou06.mp3",
                 "sound/select": "assets2/se_maoudamashii_system36.mp3",
+                "sound/decision": "assets2/se_maoudamashii_system03.mp3",
 
                 // voice
                 "sound/voHyperStandBy": "assets/vo_hyper_standby.mp3",
@@ -109,9 +108,19 @@ gls2.GlShooter2 = tm.createClass(
         }));
     },
 
+    update: function() {
+        var copied = [].concat(this.timeoutTasks);
+        for (var i = 0; i < copied.length; i++) {
+            if (copied[i].frame === this.frame) {
+                copied[i].fn();
+            } else {
+                this.timeoutTasks.erase(copied[i]);
+            }
+        }
+    },
+
     draw: function() {
         this.canvas.globalCompositeOperation = "copy";
-        // this.canvas.clearColor(this.background, 0, 0);
     },
 
     _onLoadAssets: function() {
@@ -127,57 +136,15 @@ gls2.GlShooter2 = tm.createClass(
         tm.social.Nineleap.postRanking(this.highScore, "");
     },
 
-});
-
-gls2.currentBgm = null;
-gls2.playBgm = function(bgmName, continuePrevBgm) {
-    if (!continuePrevBgm) gls2.stopBgm();
-
-    var bgm = tm.asset.AssetManager.get(bgmName);
-    if (bgm) {
-        gls2.currentBgm = bgm.clone();
-        gls2.currentBgm.volume = gls2.core.bgmVolume * 0.1;
-        gls2.currentBgm.loop = true;
-        gls2.currentBgm.play();
-    }
-};
-gls2.stopBgm = function() {
-    if (gls2.currentBgm !== null) gls2.currentBgm.stop();
-};
-gls2.fadeOutBgm = function() {
-    if (gls2.currentBgm !== null) {
-        var bgm = gls2.currentBgm;
-        bgm.loop = false;
-        gls2.GameScene.SINGLETON.addEventListener("enterframe", function() {
-            bgm.volume -= 0.002;
-            if (bgm.volume <= 0) {
-                bgm.stop();
-                this.removeEventListener("enterframe", arguments.callee);
-            }
+    timeoutTasks: null,
+    setTimeoutF: function(fn, t) {
+        timeoutTasks.push({
+            frame: this.frame + t,
+            fn: fn,
         });
-    }
-}
+    },
 
-gls2.playSound = function(soundName) {
-    if (gls2.core.seVolume === 0) return;
-    if (gls2.playSound.played[soundName] === gls2.core.frame) return;
-
-    var sound = tm.asset.AssetManager.get("sound/"+soundName);
-    if (sound) {
-        sound = sound.clone().play();
-        if (soundName.substring(0, 2) === "vo") {
-            sound.volume = gls2.core.seVolume * 0.5;
-
-            if (gls2.playSound.voice !== null) gls2.playSound.voice.stop();
-            gls2.playSound.voice = sound;
-        } else {
-            sound.volume = gls2.core.seVolume * 0.1;
-        }
-    }
-    gls2.playSound.played[soundName] = gls2.core.frame;
-};
-gls2.playSound.played = {};
-gls2.playSound.voice = null;
+});
 
 tm.app.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);

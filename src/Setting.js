@@ -10,6 +10,33 @@
 gls2.Setting = {
 
     /**
+     * FPS
+     * @const
+     */
+    FPS: 60,
+
+    /**
+     * 初期ランク
+     * @const
+     */
+    INITIAL_RANK: 0.00,
+
+    /**
+     * エクステンドスコア
+     * @const
+     */
+    EXTEND_SCORE: [
+         1000000000,
+        10000000000,
+    ],
+
+    /**
+     * 出撃時の無敵時間
+     * @const
+     */
+    LAUNCH_MUTEKI_TIME: 3000,
+
+    /**
      * 初期残機数
      * @const
      */
@@ -19,7 +46,13 @@ gls2.Setting = {
      * ボムスロット初期数
      * @const
      */
-    INITIAL_BOMB_MAX: 3,
+    INITIAL_BOMB_MAX: [3, 2, 1],
+
+    /**
+     * ボムスロット最大数
+     * @const
+     */
+    BOMB_MAX_MAX: [6, 4, 2],
 
     /**
      * ショットの攻撃力
@@ -43,7 +76,7 @@ gls2.Setting = {
      * ハイパーレーザーの攻撃力
      * @const
      */
-    LASER_ATTACK_POWER_RATE: 0.1,
+    LASER_ATTACK_POWER_RATE: 0.25,
 
     /**
      * オーラの攻撃力
@@ -55,13 +88,13 @@ gls2.Setting = {
      * ハイパーオーラの攻撃力
      * @const
      */
-    HYPER_AURA_ATTACK_POWER: 2,
+    HYPER_AURA_ATTACK_POWER: 0.25,
 
     /**
      * ボムの攻撃力
      * @const
      */
-    BOMB_ATTACK_POWER: 8,
+    BOMB_ATTACK_POWER: 4,
 
     /**
      * ショットによる敵破壊でチャージされるハイパーゲージ値
@@ -179,7 +212,7 @@ gls2.Setting = {
     HYPERMODE_END_MUTEKI_TIME: 0.10,
 
     /**
-     * ハイパーモード中のコンボ数増加倍率
+     * ハイパーモード中のコンボ数増加倍率（この値×ハイパーレベル）
      * @const
      */
     COMBO_RATE_WHEN_HYPERMODE: 5,
@@ -188,7 +221,7 @@ gls2.Setting = {
      * 1フレームあたりのコンボゲージ減少値
      * @const
      */
-    COMBO_GAUGE_DECR: 0.03,
+    COMBO_GAUGE_DECR: 0.02,
 
     /**
      * ハイパーモード中のコンボゲージ減少倍率
@@ -215,28 +248,46 @@ gls2.Setting = {
     BULLET_SCORE: 10,
 
     /**
+     * 弾破壊時のコンボカウント増加数
+     * @const
+     */
+    BULLET_COMBO: 1,
+
+    /**
      * 星アイテム（大）取得時のスコア
      * @const
      */
-    STAR_ITEM_SCORE_LARGE: 500,
+    STAR_ITEM_SCORE_LARGE: 1000,
 
     /**
      * 星アイテム（小）取得時のスコア
      * @const
      */
-    STAR_ITEM_SCORE: 250,
+    STAR_ITEM_SCORE: 100,
+
+    /**
+     * 星アイテム（大）取得時のボーナス
+     * @const
+     */
+    STAR_ITEM_BONUS_LARGE: 0,
+
+    /**
+     * 星アイテム（小）取得時のボーナス
+     * @const
+     */
+    STAR_ITEM_BONUS: 0,
 
     /**
      * 星アイテム（大）取得時の素点増分
      * @const
      */
-    STAR_ITEM_BASESCORE_LARGE: 100,
+    STAR_ITEM_BASESCORE_LARGE: 1000,
 
     /**
      * 星アイテム（小）取得時の素点増分
      * @const
      */
-    STAR_ITEM_BASESCORE: 50,
+    STAR_ITEM_BASESCORE: 100,
 
     /**
      * ハイパーモード中の敵弾幕発射間隔
@@ -248,7 +299,7 @@ gls2.Setting = {
      * 星アイテム（大）が出る距離
      * @const
      */
-    CROSS_RANGE: 100*100,
+    CROSS_RANGE: 150*150,
 
     /**
      * 敵弾のHP
@@ -266,8 +317,32 @@ gls2.Setting = {
      * オートボム発動時に残ボム数をすべて消費するか
      * @const
      */
-    AUTO_BOMB_TO_ZERO: false,
+    AUTO_BOMB_TO_ZERO: true,
 
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_STAR: 1000,
+
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_STAR_LARGE: 2000,
+
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_KILL_RATIO: 4000,
+
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_MAX_COMBO: 10000,
+
+    /**
+     * @const
+     */
+    STAGE_CLEAR_BONUS_NO_MISS: 20000000,
 };
 
 })();

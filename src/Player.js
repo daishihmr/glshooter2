@@ -70,6 +70,8 @@ gls2.Player = tm.createClass(
     hyperCircle0: null,
     hyperCircle1: null,
 
+    frame: 0,
+
     /** @constructs */
     init: function(gameScene, type, style) {
         this.superInit("fighter", 64, 64);
@@ -196,10 +198,10 @@ gls2.Player = tm.createClass(
     _createBits: function() {
         if (this.type === 0) {
             return [
-                { x: -50, y:  20, d: 0.0, turn: false, dt: -0.7, v: true },
-                { x: -20, y:  40, d: 0.0, turn: false, dt: -0.5, v: true },
-                { x:  20, y:  40, d: 0.0, turn:  true, dt:  0.5, v: true },
-                { x:  50, y:  20, d: 0.0, turn:  true, dt:  0.7, v: true },
+                { x:  0, bx:   0, y:  40, d: 0.0, turn:  true, dt: -0.7, v: true },
+                { x:  0, bx:   0, y:  40, d: 0.0, turn:  true, dt:  0.5, v: true },
+                { x:  0, bx:   0, y:  40, d: 0.0, turn:  true, dt: -0.5, v: true },
+                { x:  0, bx:   0, y:  40, d: 0.0, turn:  true, dt:  0.7, v: true },
             ];
         } else if (this.type === 1) {
             return [
@@ -211,8 +213,8 @@ gls2.Player = tm.createClass(
         } else if (this.type === 2) {
             return [
                 { x: -60, y: 40, d: 0.6, turn: false, dt: -0.7, v: true },
-                { x: -30, y: 20, d: 0.3, turn: false, dt: -0.5, v: true },
-                { x:  30, y: 20, d: 0.3, turn:  true, dt:  0.5, v: true },
+                { x: -30, y: 20, d: 0.4, turn: false, dt: -0.5, v: true },
+                { x:  30, y: 20, d: 0.4, turn:  true, dt:  0.5, v: true },
                 { x:  60, y: 40, d: 0.6, turn:  true, dt:  0.7, v: true },
             ];
         }
@@ -221,9 +223,9 @@ gls2.Player = tm.createClass(
     _createHitCircle: function() {
         this.hitCircle = tm.app.Sprite("tex0", 20, 20).addChildTo(this);
         this.hitCircle.setFrameIndex(5);
-        this.hitCircle.blendMode = "lighter";
+        // this.hitCircle.blendMode = "lighter";
         this.hitCircle.update = function(app) {
-            var s = 0.75 + Math.sin(app.frame * 0.2) * 0.15;
+            var s = 1.2 + Math.sin(app.frame * 0.2) * 0.15;
             this.scale.set(s, s);
         };
     },
@@ -260,7 +262,7 @@ gls2.Player = tm.createClass(
             }
             this.pressTimeC = gls2.math.clamp(this.pressTimeC, -1, LASER_FRAME);
 
-            // ショット
+            // 攻撃
             this.fireLaser = (pressZ && pressC) || this.pressTimeC === LASER_FRAME;
             var shotInterval = this.gameScene.isHyperMode ? 3 : 5;
             this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % shotInterval === 0;
@@ -268,30 +270,10 @@ gls2.Player = tm.createClass(
                 this.pressTimeC = 0;
             }
 
-            // レーザー
             this.laser.x = this.x;
             this.laser.y = this.y - 40;
-            if (this.fireLaser) {
-                for (var i = 0, len = this.bits.length; i < len; i++) {
-                    this.bits[i].v = false;
-                }
-                this.bitPivot.rotation = 0;
-            } else {
-                this.laser.visible = false;
-                for (var i = 0, len = this.bits.length; i < len; i++) {
-                    this.bits[i].v = true;
-                }
-            }
 
-            if (this.fireShot) {
-                var s = Math.sin(app.frame * 0.2);
-                var sb;
-                sb = this.currentShotPool.fire(this.x-7 - s*6, this.y-5, -90);
-                if (sb !== null) sb.addChildTo(this.gameScene);
-                sb = this.currentShotPool.fire(this.x+7 + s*6, this.y-5, -90);
-                if (sb !== null) sb.addChildTo(this.gameScene);
-            }
-
+            // スペシャルウェポン
             if (kb.getKeyDown("x")) {
                 if (this.gameScene.hyperLevel > 0 && !this.gameScene.isHyperMode) {
                     // ハイパー
@@ -306,6 +288,33 @@ gls2.Player = tm.createClass(
                         .addChildTo(this.gameScene);
                 }
             }
+
+        } else {
+            this.fireShot = false;
+            this.fireLaser = false;
+        }
+
+        // ショット発射
+        if (this.fireShot) {
+            var s = Math.sin(app.frame * 0.2);
+            var sb;
+            sb = this.currentShotPool.fire(this.x-7 - s*6, this.y-5, -90);
+            if (sb !== null) sb.addChildTo(this.gameScene);
+            sb = this.currentShotPool.fire(this.x+7 + s*6, this.y-5, -90);
+            if (sb !== null) sb.addChildTo(this.gameScene);
+        }
+
+        // レーザー発射
+        if (this.fireLaser) {
+            for (var i = 0, len = this.bits.length; i < len; i++) {
+                this.bits[i].v = false;
+            }
+            this.bitPivot.rotation = 0;
+        } else {
+            this.laser.visible = false;
+            for (var i = 0, len = this.bits.length; i < len; i++) {
+                this.bits[i].v = true;
+            }
         }
 
         // ビット
@@ -319,6 +328,8 @@ gls2.Player = tm.createClass(
             backfireParticle.clone(20).setPosition(this.x - 5, this.y + 20).addChildTo(this.gameScene);
             backfireParticle.clone(20).setPosition(this.x + 5, this.y + 20).addChildTo(this.gameScene);
         }
+
+        this.frame = app.frame;
     },
 
     damage: function() {
@@ -331,7 +342,20 @@ gls2.Player = tm.createClass(
     },
 
     controlBit: function(kb) {
-        if (this.type === 1) {
+        if (this.type === 0) {
+            for (var i = this.bits.length; this.bits[--i] !== undefined; ) {
+                var bit = this.bits[i];
+                if (i === 0) {
+                    bit.x = bit.bx + Math.cos(this.frame * 0.1) *  60;
+                } else if (i === 1) {
+                    bit.x = bit.bx + Math.cos(this.frame * 0.1) * -60;
+                } else if (i === 2) {
+                    bit.x = bit.bx + Math.sin(this.frame * 0.1) *  60;
+                } else if (i === 3) {
+                    bit.x = bit.bx + Math.sin(this.frame * 0.1) * -60;
+                }
+            }
+        } else if (this.type === 1) {
             var p = this.bitPivot;
             if (this.controllable && kb.getKey("left")) {
                 p.rotation = Math.max(p.rotation - 3, -50);

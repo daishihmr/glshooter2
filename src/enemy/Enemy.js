@@ -4,20 +4,6 @@
  */
 (function() {
 
-/** @const */
-var DATA = {
-    //name         hp     score   ground erase  star
-    //名前          耐久力  素点    地上物判定 破壊時の弾消し 破壊時の星アイテム排出数
-    "kujo":      [     2,      300, false, false,  1 ],
-    "kiryu":     [     3,      400, false, false,  1 ],
-    "natsuki":   [     5,      900,  true, false,  1 ],
-    "kise":      [    35,    15000,  true, false,  1 ],
-    "kurokawa":  [    35,     5000, false, false,  5 ],
-    "akimoto":   [   250,   300000, false,  true, 10 ],
-    "yukishiro": [   750,   800000, false,  true, 20 ],
-    "misumi":    [  4000,  2000000, false,  true,  0 ],
-};
-
 /**
  * 敵
  * @class
@@ -32,7 +18,7 @@ gls2.Enemy = tm.createClass(
      */
     name: null,
 
-    /** 
+    /**
      * 自機
      * @type {gls2.Player}
      */
@@ -64,7 +50,7 @@ gls2.Enemy = tm.createClass(
     /** 弾発射可能フラグ */
     enableFire: true,
 
-    /** 
+    /**
      * 出現してから一度でも可視範囲に入ったか
      * 一度完全に画面に入りきるまではダメージを受けない（攻撃は命中する）
      */
@@ -220,17 +206,39 @@ gls2.Enemy = tm.createClass(
 
     _setData: function(name) {
         this.name = name;
-        this.hp = DATA[name][0];
-        this.score = DATA[name][1];
-        this.isGround = DATA[name][2];
-        this.erase = DATA[name][3];
-        this.star = DATA[name][4];
+
+        var data = gls2.Enemy.DATA[name];
+        this.hp = data[0];
+        this.score = data[1];
+        this.isGround = data[2];
+        this.erase = data[3];
+        this.star = data[4];
+        if (data[5]["radius"] !== undefined) {
+            this.boundingRadius = data[5]["radius"];
+        }
+        if (data[5]["width"] !== undefined) {
+            this.boundingWidth = data[5]["width"];
+        }
+        if (data[5]["height"] !== undefined) {
+            this.boundingHeight = data[5]["height"];
+        }
+        if (data[5]["widthLeft"] !== undefined) {
+            this.boundingWidthLeft = data[5]["widthLeft"];
+        }
+        if (data[5]["widthRight"] !== undefined) {
+            this.boundingWidthRight = data[5]["widthRight"];
+        }
+        if (data[5]["heightTop"] !== undefined) {
+            this.boundingHeightTop = data[5]["heightTop"];
+        }
+        if (data[5]["heightBottom"] !== undefined) {
+            this.boundingHeightBottom = data[5]["heightBottom"];
+        }
     },
 
     fallDown: function() {
         this.remove();
-        this.isGround = true;
-        this.gameScene.addChild(this);
+        this.gameScene.fallDownLayer.addChild(this);
         this.addEventListener("enterframe", function() {
             if (Math.random() < 0.2) {
                 gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {
