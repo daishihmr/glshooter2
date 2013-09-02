@@ -11,23 +11,23 @@ var $ = bulletml.dsl;
 
 // 弾種
 /** 青弾（小） */
-var BS = $.bullet({frame:0,ball:true});
+var BS = function(action) { return $.bullet(action, {frame:0,ball:true}); };
 /** 青弾（大） */
-var BL = $.bullet({frame:2,ball:true});
+var BL = function(action) { return $.bullet(action, {frame:2,ball:true}); };
 /** 赤弾（小） */
-var RS = $.bullet({frame:1,ball:true});
+var RS = function(action) { return $.bullet(action, {frame:1,ball:true}); };
 /** 赤弾（大） */
-var RL = $.bullet({frame:3,ball:true});
+var RL = function(action) { return $.bullet(action, {frame:3,ball:true}); };
 /** 青針弾（小） */
-var BNS = $.bullet({frame:0});
+var BNS = function(action) { return $.bullet(action, {frame:0}); };
 /** 青針弾（大） */
-var BNL = $.bullet({frame:2});
+var BNL = function(action) { return $.bullet(action, {frame:2}); };
 /** 赤針弾（小） */
-var RNS = $.bullet({frame:1});
+var RNS = function(action) { return $.bullet(action, {frame:1}); };
 /** 赤針弾（大） */
-var RNL = $.bullet({frame:3});
+var RNL = function(action) { return $.bullet(action, {frame:3}); };
 /** 赤イクラ弾 */
-var RI = $.bullet({frame:4,ball:true});
+var RI = function(action) { return $.bullet(action, {frame:4,ball:true}); };
 /** 見えない弾 */
 var IVS = function(action) { return $.bullet(action, {visible:false}) };
 
@@ -222,12 +222,12 @@ gls2.Danmaku["cannon4-0"] = new bulletml.Root({
         $interval(20),
         $.repeat(999, [
             $.fire($spd2, BL),
-            $.repeat(12, [
-                $interval(5),
+            $.repeat(8, [
+                $interval(10),
                 $.bindVar("way", "$loop.count+1"),
-                $.fire($.direction("-8/2 - 8*($way-2)", "sequence"), $spd2, BL),
+                $.fire($.direction("-12/2 - 12*($way-2)", "sequence"), $spd2, BL),
                 $.repeat("$way-1", [
-                    $.fire($.direction(8, "sequence"), $spd2, BL),
+                    $.fire($.direction(12, "sequence"), $spd2, BL),
                 ]),
             ]),
             $interval(120),
@@ -377,33 +377,6 @@ gls2.Danmaku["honoka-1"] = new bulletml.Root({
             $absoluteNway(12, +10, +170, $spd1, BS, $.offsetX(+110), $.offsetY(-70)),
             $interval(30),
         ]),
-    ]),
-});
-
-// 舞
-gls2.Danmaku["mai-1"] = new bulletml.Root({
-    "top": $.action([
-        $.repeat(100, [
-            $.bindVar("from", "+Math.cos($loop.index*0.15)*40-170"),
-            $absoluteNway(4, "$from", "$from+40", $spd6, IVS($.action([
-                $.wait(8),
-                $.fire($.direction(0, "relative"), $spd1, BNS),
-                $.vanish,
-            ]))),
-            $.bindVar("from", "-Math.cos($loop.index*0.15)*40-10"),
-            $absoluteNway(4, "$from", "$from-40", $spd6, IVS($.action([
-                $.wait(8),
-                $.fire($.direction(0, "relative"), $spd1, BNS),
-                $.vanish,
-            ]))),
-            $interval(4),
-        ]),
-    ]),
-});
-gls2.Danmaku["mai-2"] = new bulletml.Root({
-    "top": $.action([
-        $nway(10, -100, 100),
-        $interval(60),
     ]),
 });
 
@@ -567,6 +540,71 @@ gls2.Danmaku["nagisa-3-1"] = new bulletml.Root({
             $nway(2,  0, 2, $spd4, RNS),
             $interval(150),
         ]),
+    ]),
+});
+
+// 舞
+gls2.Danmaku["mai-1"] = new bulletml.Root({
+    "top0": $.action([
+        $interval(50),
+        $.repeat(50, [
+            $.bindVar("from", "+Math.cos($loop.index*0.15)*40-170"),
+            $absoluteNway(3, "$from", "$from+60", $spd6, IVS($.action([
+                $.wait(8),
+                $.fire($.direction(0, "relative"), $spd2, BNS),
+                $.vanish,
+            ]))),
+            $.bindVar("from", "-Math.cos($loop.index*0.15)*40-10"),
+            $absoluteNway(3, "$from", "$from-60", $spd6, IVS($.action([
+                $.wait(8),
+                $.fire($.direction(0, "relative"), $spd2, BNS),
+                $.vanish,
+            ]))),
+            $interval(8),
+        ]),
+    ]),
+    "top1": $.action([
+        $interval(50),
+        $.repeat(12, [
+            $absoluteNway(5, -90+40, 90-40, $spd6, IVS($.action([
+                $.wait(8),
+                $.fire($.direction(0, "relative"), $spd2, RL),
+                $.vanish,
+            ]))),
+            $absoluteNway(5, -270+40, -90-40, $spd6, IVS($.action([
+                $.wait(8),
+                $.fire($.direction(0, "relative"), $spd2, RL),
+                $.vanish,
+            ]))),
+            $interval(16),
+            $absoluteNway(6, -90+40, 90-40, $spd6, IVS($.action([
+                $.wait(8),
+                $.fire($.direction(0, "relative"), $spd2, RL),
+                $.vanish,
+            ]))),
+            $absoluteNway(6, -270+40, -90-40, $spd6, IVS($.action([
+                $.wait(8),
+                $.fire($.direction(0, "relative"), $spd2, RL),
+                $.vanish,
+            ]))),
+            $interval(16),
+        ]),
+    ]),
+});
+gls2.Danmaku["mai-2"] = new bulletml.Root({
+    "top": $.action([
+        $interval(50),
+        $.repeat(15, [
+            $.fire($.direction(-10), BL($.actionRef("fireChild", "$loop.index*10"))),
+            $interval(8),
+        ]),
+    ]),
+    "fireChild": $.action([
+        $interval("40+$1"),
+        $whip($spd2, 0.1, 5, function(spd) {
+            return $.fire($.direction(-90, "absolute"), spd, BNL);
+        }),
+        $.vanish,
     ]),
 });
 

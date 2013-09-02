@@ -75,6 +75,8 @@ gls2.GameScene = tm.createClass(
     hyperTime: 0,
     /** ハイパーレベル */
     hyperLevel: 0,
+    /** 発動中ハイパーモードのレベル */
+    currentHyperLevel: 0,
 
     /** ひよこアイテム累計 */
     hiyokoTotal: 0,
@@ -379,7 +381,7 @@ gls2.GameScene = tm.createClass(
                         this.player.damage();
                         if (this.bomb > 0 && this.autoBomb) {
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
-                            bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
+                            this.addRank(-0.01);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                         } else {
                             this.miss();
@@ -397,7 +399,7 @@ gls2.GameScene = tm.createClass(
                         this.player.damage();
                         if (this.bomb > 0 && this.autoBomb) {
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
-                            bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
+                            this.addRank(-0.01);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                         } else {
                             this.miss();
@@ -569,9 +571,7 @@ gls2.GameScene = tm.createClass(
         this.scoreLabel.scoreLabelElement.gpsOffsetX = 0;
         this.scoreLabel.scoreLabelElement.gpsOffsetY = 0;
 
-        // TODO ステージ開始時にランクリセット？
-        // this.hyperRank = 0;
-        // bulletml.Walker.globalScope["$rank"] = 0;
+        this.hyperRank = 0;
 
         this.stageNumber = stageNumber;
         this.stage = gls2.Stage.create(this, stageNumber);
@@ -623,7 +623,7 @@ gls2.GameScene = tm.createClass(
         this.missCountTotal += 1;
 
         this.hyperRank = gls2.math.clamp(this.hyperRank - 3, 0, 1);
-        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.03, 0, 1);
+        this.addRank(-0.03);
 
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
@@ -639,6 +639,10 @@ gls2.GameScene = tm.createClass(
                 this.openContinueMenu();
             }.bind(this));
         }
+    },
+
+    addRank: function(v) {
+        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"] + v, 0.00, 0.50);
     },
 
     gameContinue: function() {
@@ -737,7 +741,7 @@ gls2.GameScene = tm.createClass(
         }
 
         this.hyperRank = gls2.math.clamp(this.hyperRank + 1, 0, 5);
-        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]+this.hyperLevel*0.01, 0, 1);
+        this.addRank(this.hyperLevel * 0.01);
         bulletml.Walker.globalScope["$hyperOff"] = gls2.Setting.ENEMY_ATTACK_INTERVAL_RATE_HYPER;
 
         this.hyperTime = gls2.Setting.HYPERMODE_TIME;
@@ -751,6 +755,7 @@ gls2.GameScene = tm.createClass(
         gls2.Effect.genShockwaveL(this.player.x, this.player.y, this);
 
         this.isHyperMode = true;
+        this.currentHyperLevel = this.hyperLevel;
         this.hyperLevel = 0;
         this.hyperGauge = 0;
 
@@ -776,6 +781,7 @@ gls2.GameScene = tm.createClass(
 
         this.hyperMutekiTime = gls2.Setting.HYPERMODE_TIME * gls2.Setting.HYPERMODE_END_MUTEKI_TIME;
         this.hyperTime = 0;
+        this.currentHyperLevel = 0;
 
         // すべての弾を消す
         gls2.Danmaku.erase();
@@ -1064,10 +1070,15 @@ gls2.GameScene.LabelLayer = tm.createClass({
             var w = 200 * this.gameScene.hyperGauge;
             canvas.fillRect(5, SC_H-12, w, 9);
         }
-        if (this.gameScene.hyperLevel > 0 && this.frame%2 === 0) {
+
+        if (this.frame%2 === 0) {
             canvas.setText("bold 24px Orbitron", "left", "bottom");
             canvas.strokeStyle = "rgba(255,255,100,0.5)";
-            canvas.strokeText("HYPER LV " + this.gameScene.hyperLevel, 5, SC_H-3);
+            if (!this.isHyperMode && this.hyperLevel > 0) {
+                canvas.strokeText("HYPER LV " + this.gameScene.hyperLevel, 5, SC_H-3);
+            } else if (this.isHyperMode) {
+                canvas.strokeText("HYPER LV " + this.gameScene.currentHyperLevel, 5, SC_H-3);
+            }
         }
     },
 });

@@ -1,21 +1,63 @@
 <html>
 <head>
+<meta charset=UTF-8>
 <script src="../libs/tmlib.js"></script>
-<script src="../src/common/Bezier.js"></script>
 <script>
 tm.main(function() {
-    var c = tm.graphics.Canvas("#c");
-    c.resize(500, 500).fitWindow();
-    c.strokeStyle = "green";
-    c.strokeBezierCurve([
-        {x:250, y:0},
-        {x:500, y:750},
-        {x:250, y:250},
-    ], 100);
-})
+    var app = tm.app.CanvasApp("#app");
+    app.replaceScene(tm.app.LoadingScene({
+        assets: {
+            "tex": "../assets/tex_stage1.png",
+        },
+        nextScene: Main
+    }));
+    app.run();
+});
+Main = tm.createClass({
+    superClass: tm.app.Scene,
+    init: function() {
+        this.superInit();
+
+        var white = function(textureName) {    
+            var c = tm.graphics.Canvas();
+            c.resize(512, 512);
+            c.drawTexture(tm.asset.AssetManager.get(textureName), 0, 0);
+            var bmOrig = c.getBitmap();
+            var bmDest = tm.graphics.Bitmap(512, 512);
+            for (var x = 0; x < 512; x++) {
+                for (var y = 0; y < 512; y++) {
+                    var p = bmOrig.getPixelXY(x, y);
+                    if (p[3] > 0) {
+                        bmDest.setPixel32XY(x, y, 255, 255, 255, p[3]);
+                    }
+                }
+            }
+            var result = tm.graphics.Canvas().resize(512, 512);
+            result.drawBitmap(bmDest, 0, 0);
+
+            return result;
+        };
+
+        var sprite1 = tm.app.Sprite("tex", 64*2, 64*2).setFrameIndex(1);
+        sprite1.setPosition(100, 80);
+        sprite1.addChildTo(this);
+
+        var glow = white("tex");
+        for (var i = -60; i <= 60; i+=8) {
+            for (var j = -60; j <= 60; j+=8) {
+                var sprite0 = tm.app.Sprite(glow, 64*2, 64*2).setFrameIndex(1);
+                sprite0.setPosition(i, j);
+                sprite0.alpha = 0.002;
+                sprite0.blendMode = "lighter";
+                sprite0.addChildTo(sprite1);
+            }
+        }
+
+    },
+});
 </script>
 </head>
 <body>
-<canvas id="c"></canvas>
+<canvas id="app"></canvas>
 </body>
 </html>

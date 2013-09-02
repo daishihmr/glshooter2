@@ -21,6 +21,7 @@ gls2.Enemy.DATA = {
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
+    "hyuga":     [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
 };
 
 /**
@@ -213,16 +214,15 @@ gls2.Enemy.Tsubomi = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hanasaki");
-
-        // TODO
-        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
-    },
-    draw: function(canvas) {
-        this._sprite.draw(canvas);
     },
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.remove();
+    },
+    draw: function(canvas) {
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
     },
 });
 
@@ -232,20 +232,17 @@ gls2.Enemy.Tsubomi = tm.createClass({
 gls2.Enemy.Itsuki = tm.createClass({
     superClass: gls2.Enemy,
 
-    _sprite: null,
-
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "myodoin");
-
-        // TODO
-        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
-    },
-    draw: function(canvas) {
-        this._sprite.draw(canvas);
     },
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.remove();
+    },
+    draw: function(canvas) {
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
     },
 });
 
@@ -330,25 +327,38 @@ gls2.Enemy.Mai = tm.createClass(
 {
     superClass: gls2.Enemy,
 
-    _sprite: null,
-
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "mishou");
-
-        this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(3);
-        this.setScale(1.5);
     },
     destroy: function() {
         this.fallDown();
     },
     draw: function(canvas) {
-        this._sprite.draw(canvas);
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
     },
 });
 
 /**
  * ステージ２ボス「ヒュウガ」
  */
+gls2.Enemy.Saki = tm.createClass(
+{
+    superClass: gls2.Boss,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "hyuga");
+    },
+    destroy: function() {
+        this.bossDestroy();
+    },
+    draw: function(canvas) {
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+    },
+});
 
 /**
  * ステージ３中ボス「ヒガシ」
