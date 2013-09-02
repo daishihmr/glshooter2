@@ -11,7 +11,7 @@ var $s = gls2.EnemySoft;
 /**
  * 敵の編隊データ
  *
- * 
+ *
  */
 gls2.EnemyUnit = {
 
@@ -123,76 +123,156 @@ gls2.EnemyUnit = {
     { hard:$e.Tank1, soft:$s.TankL, x:SC_W+70*5, y:SC_H*0.1 },
 ],
 
-"cannon-0": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.1, y:-100 },
-],
-"cannon-1": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.2, y:-100 },
-],
-"cannon-2": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.3, y:-100 },
-],
-"cannon-3": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.4, y:-100 },
-],
-"cannon-4": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.5, y:-100 },
-],
-"cannon-5": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.6, y:-100 },
-],
-"cannon-6": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.7, y:-100 },
-],
-"cannon-7": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.8, y:-100 },
-],
-"cannon-8": [
-    { hard:$e.Cannon, soft:$s.Cannon, x:SC_W*0.9, y:-100 },
+/** 戦車5台。上左から */
+"tank5-left": [
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*5 },
 ],
 
-"fighter-m-0": [
-    { hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.2, y:SC_H*-0.3 },
-],
-"fighter-m-1": [
-    { hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.3, y:SC_H*-0.3 },
-],
-"fighter-m-2": [
-    { hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.4, y:SC_H*-0.3 },
-],
-"fighter-m-3": [
-    { hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.5, y:SC_H*-0.3 },
-],
-"fighter-m-4": [
-    { hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.6, y:SC_H*-0.3 },
-],
-"fighter-m-5": [
-    { hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.7, y:SC_H*-0.3 },
-],
-"fighter-m-6": [
-    { hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.8, y:SC_H*-0.3 },
+/** 戦車5台。上中央から */
+"tank5-center": [
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*5 },
 ],
 
-"komachi-0": [
-    { hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.3, y:SC_H*-0.3 },
+/** 戦車15台。上下から */
+"tank15-top": [
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*5 },
 ],
-"komachi-1": [
-    { hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.7, y:SC_H*-0.3 },
+
+/** 戦車25台。上下から */
+"tank25-top": [
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.1, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.5, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*1 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*2 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*3 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*4 },
+    { hard:$e.Tank1, soft:$s.TankD, x:SC_W*0.9, y:-70*5 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*1 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*2 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*3 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*4 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.3, y:SC_H+70*5 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*1 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*2 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*3 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*4 },
+    { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*5 },
 ],
+
+// 固定砲台「キセ」1面用
+"cannon-0": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.1, y:-100 }],
+"cannon-1": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.2, y:-100 }],
+"cannon-2": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.3, y:-100 }],
+"cannon-3": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.4, y:-100 }],
+"cannon-4": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.5, y:-100 }],
+"cannon-5": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.6, y:-100 }],
+"cannon-6": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.7, y:-100 }],
+"cannon-7": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.8, y:-100 }],
+"cannon-8": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.9, y:-100 }],
+
+"cannon-R0": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W+70, y:SC_H*0.2 }],
+"cannon-R1": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W+70, y:SC_H*0.3 }],
+"cannon-R2": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W+70, y:SC_H*0.4 }],
+
+// 固定砲台「キセ」2面用
+"yayoi-0": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W*0.1, y:-100 }],
+"yayoi-1": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W*0.2, y:-100 }],
+"yayoi-2": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W*0.3, y:-100 }],
+"yayoi-3": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W*0.4, y:-100 }],
+"yayoi-4": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W*0.5, y:-100 }],
+"yayoi-5": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W*0.6, y:-100 }],
+"yayoi-6": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W*0.7, y:-100 }],
+"yayoi-7": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W*0.8, y:-100 }],
+"yayoi-8": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W*0.9, y:-100 }],
+
+"yayoi-R0": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W+70, y:SC_H*0.2 }],
+"yayoi-R1": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W+70, y:SC_H*0.3 }],
+"yayoi-R2": [{ hard:$e.Cannon, soft:$s.Cannon1_2, x:SC_W+70, y:SC_H*0.4 }],
+
+// 固定砲台「ハナサキ」2面用
+"tsubomi-0": [{ hard:$e.Tsubomi, soft:$s.Cannon3_0, x:SC_W*0.2, y:-100 }],
+"tsubomi-1": [{ hard:$e.Tsubomi, soft:$s.Cannon3_0, x:SC_W*0.5, y:-100 }],
+"tsubomi-2": [{ hard:$e.Tsubomi, soft:$s.Cannon3_0, x:SC_W*0.8, y:-100 }],
+"tsubomi-R0": [{ hard:$e.Tsubomi, soft:$s.Cannon3_0, x:SC_W+100, y:SC_H*0.2 }],
+
+// 中型固定砲台「ミョウドウイン」2面用
+"itsuki-0": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.2, y:-100 }],
+"itsuki-1": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.5, y:-100 }],
+"itsuki-2": [{ hard:$e.Itsuki, soft:$s.Cannon4_0, x:SC_W*0.8, y:-100 }],
+
+// 大型固定砲台「ケンザキ」2面用
+"makoto-0": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.1, y:-100 }],
+"makoto-1": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.2, y:-100 }],
+"makoto-2": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.3, y:-100 }],
+"makoto-3": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.4, y:-100 }],
+"makoto-4": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.5, y:-100 }],
+"makoto-5": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.6, y:-100 }],
+"makoto-6": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.7, y:-100 }],
+"makoto-7": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.8, y:-100 }],
+"makoto-8": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.9, y:-100 }],
+"makoto-R0": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W+100, y:SC_H*0.2 }],
+
+// 中型戦闘機「クロカワ」1面用
+"fighter-m-0": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.2, y:SC_H*-0.3 }],
+"fighter-m-1": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.3, y:SC_H*-0.3 }],
+"fighter-m-2": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.4, y:SC_H*-0.3 }],
+"fighter-m-3": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.5, y:SC_H*-0.3 }],
+"fighter-m-4": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.6, y:SC_H*-0.3 }],
+"fighter-m-5": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],
+"fighter-m-6": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.8, y:SC_H*-0.3 }],
+
+// 中型戦闘機「アキモト」1面用
+"komachi-0": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.3, y:SC_H*-0.3 }],
+"komachi-1": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],
+
+// 中型戦闘機「アキモト」2面用
+"komachi2-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
+"komachi2-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 /**
  * ステージ１中ボス「ユキシロ」
  */
-"yukishiro": [
-    { hard:$e.Honoka, soft:$s.Honoka, x:SC_W*0.5, y:-100 },
-],
+"yukishiro": [{ hard:$e.Honoka, soft:$s.Honoka, x:SC_W*0.5, y:-100 }],
 
 /**
  * ステージ１ボス「ミスミ」
  */
-"misumi": [
-    { hard:$e.Nagisa, soft:[$s.Nagisa1, $s.Nagisa2, $s.Nagisa3], x:SC_W*0.5, y:-100, boss:true },
-],
+"misumi": [{ hard:$e.Nagisa, soft:[$s.Nagisa1, $s.Nagisa2, $s.Nagisa3], x:SC_W*0.5, y:-100, boss:true }],
+
+/**
+ * ステージ２中ボス「ミショウ」
+ */
+"mai": [{ hard:$e.Mai, soft:$s.Mai, x:SC_W+300, y:SC_H*0.2 }],
 
 };
 

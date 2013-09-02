@@ -11,6 +11,15 @@ gls2.ShipSelectScene = tm.createClass(
 {
     superClass: gls2.Scene,
 
+    /**
+     * 0:機体選択
+     * 1:スタイル選択
+     */
+    mode: 0,
+
+    types: null,
+    styles: null,
+
     typeA: null,
     typeB: null,
     typeC: null,
@@ -22,6 +31,8 @@ gls2.ShipSelectScene = tm.createClass(
     style: 0,
     autoBomb: false,
 
+    moving: false,
+
     /** @constructs */
     init: function() {
         this.superInit();
@@ -29,17 +40,42 @@ gls2.ShipSelectScene = tm.createClass(
             .setPosition(SC_W*0.5,SC_H*0.1)
             .addChildTo(this);
 
-        this.setupTypes();
-        this.setupStyles();
+        this.types = this.setupTypes();
+        this.styles = this.setupStyles();
 
-        this.moveCursor(0);
+        var left = tm.app.TriangleShape(20, 20, {
+            fillStyle: "rgba(255,255,255,0.7)",
+            strokeStyle: "transparent"
+        }).setPosition(SC_W*0.1, SC_H*0.5).setRotation(-90);
+        left.update = function(app) {
+            this.setScale(app.keyboard.getKey("left") ? 2 : 1);
+            this.alpha = 1 + Math.sin(app*0.1)*0.5;
+        };
+        left.addChildTo(this);
+        var right = tm.app.TriangleShape(20, 20, {
+            fillStyle: "rgba(255,255,255,0.7)",
+            strokeStyle: "transparent"
+        }).setPosition(SC_W*0.9, SC_H*0.5).setRotation(90);
+        right.update = function(app) {
+            this.setScale(app.keyboard.getKey("right") ? 2 : 1);
+            this.alpha = 1 + Math.sin(app*0.1)*0.5;
+        };
+        right.addChildTo(this);
+
+        this.mode = 0;
+        this.styles.visible = false;
+
+        this.moveCursor(-1, true);
 
         gls2.playSound("voSelectShip");
     },
 
     setupTypes: function() {
-        this.labelType = tm.app.Label("Type-A").setPosition(SC_W*0.25, 150);
-        this.labelType.addChildTo(this);
+        var types = tm.app.CanvasElement();
+        types.addChildTo(this);
+
+        this.labelType = tm.app.Label("Type-A").setPosition(SC_W*0.5, 150);
+        this.labelType.addChildTo(types);
 
         var typeDescription = [
             "一点集中型\nスピード：最速\n\n絶大な威力を誇る\n正面火力と\nスピードで\n敵を蹂躙する",
@@ -47,47 +83,11 @@ gls2.ShipSelectScene = tm.createClass(
             "広範囲型\nスピード：遅\n\n広範囲に攻撃可能な\nワイドショットを\n持つ機体\n強力な雑魚掃討能力",
         ];
 
-        this.labelTypeDescription = tm.app.Label(typeDescription[0], 16).setPosition(SC_W*0.25, 500);
+        this.labelTypeDescription = tm.app.Label(typeDescription[0], 16).setPosition(SC_W*0.5, 500);
         this.labelTypeDescription.update = function() {
             this.labelTypeDescription.text = typeDescription[this.type];
         }.bind(this);
-        this.labelTypeDescription.addChildTo(this);
-
-        this.labelStyle = tm.app.Label("Shot Style").setPosition(SC_W*0.75, 150);
-        this.labelStyle.addChildTo(this);
-
-        var left = tm.app.TriangleShape(20, 20, {
-            fillStyle: "rgba(255,255,255,0.7)",
-            strokeStyle: "transparent"
-        }).setPosition(SC_W*0.25-90, 150).setRotation(-90);
-        left.update = function(app) {
-            this.setScale(app.keyboard.getKey("left") ? 2 : 1);
-        };
-        left.addChildTo(this);
-        var right = tm.app.TriangleShape(20, 20, {
-            fillStyle: "rgba(255,255,255,0.7)",
-            strokeStyle: "transparent"
-        }).setPosition(SC_W*0.25+90, 150).setRotation(90);
-        right.update = function(app) {
-            this.setScale(app.keyboard.getKey("right") ? 2 : 1);
-        };
-        right.addChildTo(this);
-        var up = tm.app.TriangleShape(20, 20, {
-            fillStyle: "rgba(255,255,255,0.7)",
-            strokeStyle: "transparent"
-        }).setPosition(SC_W*0.75, 150-30).setRotation(0);
-        up.update = function(app) {
-            this.setScale(app.keyboard.getKey("up") ? 2 : 1);
-        };
-        up.addChildTo(this);
-        var down = tm.app.TriangleShape(20, 20, {
-            fillStyle: "rgba(255,255,255,0.7)",
-            strokeStyle: "transparent"
-        }).setPosition(SC_W*0.75, 150+30).setRotation(180);
-        down.update = function(app) {
-            this.setScale(app.keyboard.getKey("down") ? 2 : 1);
-        };
-        down.addChildTo(this);
+        this.labelTypeDescription.addChildTo(types);
 
         var typeBSpriteSheet = tm.app.SpriteSheet({
             image: "fighter",
@@ -112,25 +112,37 @@ gls2.ShipSelectScene = tm.createClass(
         this.typeB.pos = 1;
         this.typeC.pos = 2;
 
-        this.typeA.setScale(3).setPosition(0, SC_H*0.5).addChildTo(this);
-        this.typeB.setPosition(0, SC_H*0.5).addChildTo(this);
-        this.typeC.setPosition(0, SC_H*0.5).addChildTo(this);
+        this.typeA.setScale(3).setPosition(0, SC_H*0.5).addChildTo(types);
+        this.typeB.setPosition(0, SC_H*0.5).addChildTo(types);
+        this.typeC.setPosition(0, SC_H*0.5).addChildTo(types);
         this.typeA.update = function() {
-            this.x = SC_W*0.25 + Math.sin(this.pos/3 * Math.PI*2) * 60;
+            this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 90;
         };
         this.typeB.update = function() {
-            this.x = SC_W*0.25 + Math.sin(this.pos/3 * Math.PI*2) * 60;
+            this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 90;
         };
         this.typeC.update = function() {
-            this.x = SC_W*0.25 + Math.sin(this.pos/3 * Math.PI*2) * 60;
+            this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 90;
         };
+
+        this.typeA.update();
+        this.typeB.update();
+        this.typeC.update();
+
+        return types;
     },
 
     setupStyles: function() {
+        var styles = tm.app.CanvasElement();
+        styles.addChildTo(this);
+
+        this.labelStyle = tm.app.Label("Shot Style").setPosition(SC_W*0.5, 150);
+        this.labelStyle.addChildTo(styles);
+
         this.styleBase = tm.app.TriangleShape(40, 40, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
-        }).setPosition(SC_W*0.75, SC_H*0.6).addChildTo(this);
+        }).setPosition(SC_W*0.5, SC_H*0.6).addChildTo(styles);
 
         this.bitPivot = tm.app.Object2D();
         this.bitPivot.addChildTo(this.styleBase);
@@ -143,7 +155,7 @@ gls2.ShipSelectScene = tm.createClass(
         }.bind(this);
 
         this.styleBits = [];
-        
+
         this.styleBits[0] = tm.app.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
@@ -214,30 +226,49 @@ gls2.ShipSelectScene = tm.createClass(
             "エキスパート強化型\n\nショットとレーザーの\n両方が強化されたスタイル\n\nゲーム難易度が上昇する\n<<上級者向け>>",
         ];
 
-        this.labelStyleDescription = tm.app.Label(styleDescription[0], 16).setPosition(SC_W*0.75, 500);
+        this.labelStyleDescription = tm.app.Label(styleDescription[0], 16).setPosition(SC_W*0.5, 500);
         this.labelStyleDescription.update = function() {
             this.labelStyleDescription.text = styleDescription[this.style];
         }.bind(this);
-        this.labelStyleDescription.addChildTo(this);
+        this.labelStyleDescription.addChildTo(styles);
+
+        return styles;
     },
 
-    moving: false,
-
     update: function(app) {
-        if (!this.moving && app.keyboard.getKeyDown("left")) {
-            this.moveCursor(-1);
-            gls2.playSound("select");
-        } else if (!this.moving && app.keyboard.getKeyDown("right")) {
-            this.moveCursor(1);
-            gls2.playSound("select");
-        } else if (app.keyboard.getKeyDown("up")) {
-            this.style = (this.style - 1 + 3) % 3;
-        } else if (app.keyboard.getKeyDown("down")) {
-            this.style = (this.style + 1 + 3) % 3;
-        } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
-            this.openAutoBombDialog();
+        if (this.mode === 0) {
+            this.types.alpha = 1.0;
+            this.styles.visible = false;
+
+            if (!this.moving && app.keyboard.getKeyDown("left")) {
+                this.moveCursor(-1, false);
+                gls2.playSound("select");
+            } else if (!this.moving && app.keyboard.getKeyDown("right")) {
+                this.moveCursor(1, false);
+                gls2.playSound("select");
+            } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
+                this.mode = 1;
+                gls2.playSound("decision");
+            }
+
+        } else if (this.mode === 1) {
+            this.types.alpha = 0.1;
+            this.styles.visible = true;
+
+            if (app.keyboard.getKeyDown("left")) {
+                this.style = (this.style - 1 + 3) % 3;
+                gls2.playSound("select");
+            } else if (app.keyboard.getKeyDown("right")) {
+                this.style = (this.style + 1 + 3) % 3;
+                gls2.playSound("select");
+            } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
+                this.openAutoBombDialog();
+                gls2.playSound("decision");
+            } else if (app.keyboard.getKeyDown("x")) {
+                this.mode = 0;
+            }
+            this.updateStyle(~~(app.frame/60) % 2 === 0);
         }
-        this.updateStyle(~~(app.frame/60) % 2 === 0);
     },
 
     openAutoBombDialog: function() {
@@ -247,41 +278,55 @@ gls2.ShipSelectScene = tm.createClass(
                 "被弾時に自動でボンバーを投下します",
                 "ボンバーの投下は手動でのみ行います。ミス時に最大ボム数が増加します",
             ],
-            "showExit": false,
+            "showExit": true,
         });
     },
     onResultAutoBombDialog: function(result) {
+        if (result === 2) return;
         this.autoBomb = result === 0;
         this.openConfirmDialog();
     },
 
     openConfirmDialog: function() {
-        this.openDialogMenu("ARE YOU READY?", [ "ok", "no" ], this.onResultConfirmDialog, {
+        this.openDialogMenu("ARE YOU READY?", [ "ok" ], this.onResultConfirmDialog, {
             "defaultValue": 0,
             "menuDescriptions": [
                 "出撃します",
-                "機体選択に戻ります",
             ],
-            "showExit": false,
+            "showExit": true,
         });
     },
     onResultConfirmDialog: function(result) {
         if (result === 0) this.startGame();
     },
 
-    moveCursor: function(incr) {
-        this.moving = true;
-
+    moveCursor: function(incr, noanim) {
         this.type = (this.type + incr + 3) % 3;
 
-        [this.typeA, this.typeB, this.typeC][this.type].remove().addChildTo(this);
+        [this.typeA, this.typeB, this.typeC][this.type].remove().addChildTo(this.types);
 
-        this.typeA.tweener.clear().to({pos: this.typeA.pos-incr, scaleX:(this.type === 0 ? 3 : 1), scaleY:(this.type === 0 ? 3 : 1)}, 300);
-        this.typeB.tweener.clear().to({pos: this.typeB.pos-incr, scaleX:(this.type === 1 ? 3 : 1), scaleY:(this.type === 1 ? 3 : 1)}, 300);
-        this.typeC.tweener.clear().to({pos: this.typeC.pos-incr, scaleX:(this.type === 2 ? 3 : 1), scaleY:(this.type === 2 ? 3 : 1)}, 300);
-        this.tweener.clear().wait(310).call(function() {
-            this.moving = false;
-        }.bind(this));
+        if (noanim) {
+            this.typeA.pos = this.typeA.pos-incr;
+            this.typeA.scaleX = this.type === 0 ? 5 : 1;
+            this.typeA.scaleY = this.type === 0 ? 5 : 1;
+
+            this.typeB.pos = this.typeB.pos-incr;
+            this.typeB.scaleX = this.type === 1 ? 5 : 1;
+            this.typeB.scaleY = this.type === 1 ? 5 : 1;
+
+            this.typeC.pos = this.typeC.pos-incr;
+            this.typeC.scaleX = this.type === 2 ? 5 : 1;
+            this.typeC.scaleY = this.type === 2 ? 5 : 1;
+        } else {
+            this.moving = true;
+
+            this.typeA.tweener.clear().to({pos: this.typeA.pos-incr, scaleX:(this.type === 0 ? 5 : 1), scaleY:(this.type === 0 ? 5 : 1)}, 300);
+            this.typeB.tweener.clear().to({pos: this.typeB.pos-incr, scaleX:(this.type === 1 ? 5 : 1), scaleY:(this.type === 1 ? 5 : 1)}, 300);
+            this.typeC.tweener.clear().to({pos: this.typeC.pos-incr, scaleX:(this.type === 2 ? 5 : 1), scaleY:(this.type === 2 ? 5 : 1)}, 300);
+            this.tweener.clear().wait(310).call(function() {
+                this.moving = false;
+            }.bind(this));
+        }
 
         this.labelType.text = ["Type-A", "Type-B", "Type-C"][this.type];
     },

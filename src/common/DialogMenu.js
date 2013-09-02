@@ -52,7 +52,7 @@ gls2.DialogMenu = tm.createClass(
         this.showExit = param["showExit"];
         this.descriptions = param["menuDescriptions"];
         if (this.showExit) {
-            menu.push("exit");
+            menu.push("back");
             this.descriptions.push("前の画面へ戻ります");
         }
         this.onCursorMove = param["onCursorMove"];
@@ -142,8 +142,9 @@ gls2.DialogMenu = tm.createClass(
             this._selected = this.selections.length-1;
             this.closeDialog(this._selected);
             return;
-        } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
+        } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
             this.closeDialog(this._selected);
+            gls2.playSound("decision");
             return;
         } else if (app.keyboard.getKeyDown("down")) {
             this._selected += 1;

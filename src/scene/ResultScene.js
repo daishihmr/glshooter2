@@ -27,10 +27,10 @@ gls2.ResultScene = tm.createClass(
     labels: null,
     incrs: null,
     rates: [
-        1000, // 星アイテム（小）
-        2000, // 星アイテム（大）
-        4000, // 撃墜率
-        1000, // 最大コンボ数
+        gls2.Setting.STAGE_CLEAR_BONUS_STAR, // 星アイテム（小）
+        gls2.Setting.STAGE_CLEAR_BONUS_STAR_LARGE, // 星アイテム（大）
+        gls2.Setting.STAGE_CLEAR_BONUS_KILL_RATIO, // 撃墜率
+        gls2.Setting.STAGE_CLEAR_BONUS_MAX_COMBO, // 最大コンボ数
         1,    // ノーミス
     ],
 
@@ -42,6 +42,8 @@ gls2.ResultScene = tm.createClass(
 
     wait: 0,
 
+    frame: 0,
+
     /** @constructs */
     init: function(gameScene, screenShot) {
         this.superInit();
@@ -52,13 +54,13 @@ gls2.ResultScene = tm.createClass(
             this.gameScene.starItemLarge,
             ~~(this.gameScene.killCount / this.gameScene.enemyCount * 100),
             this.gameScene.maxComboCount,
-            this.gameScene.missCount === 0 ? 100000 : 0,
+            this.gameScene.missCount === 0 ? gls2.Setting.STAGE_CLEAR_BONUS_NO_MISS : 0,
         ];
         this.incrs = this.values.map(function(v) {
             return v * 0.01;
         });
 
-        tm.app.Label("RESULT", 40)        
+        tm.app.Label("RESULT", 40)
             .setPosition(SC_W*0.5, SC_H*0.1)
             .addChildTo(this);
 
@@ -161,7 +163,6 @@ gls2.ResultScene = tm.createClass(
             }
             if (ok) {
                 this.lastElement.remove();
-                console.log("this.lastElement.remove");
                 this.wait = 60;
             } else {
                 this.wait = 100;
@@ -180,7 +181,7 @@ gls2.ResultScene = tm.createClass(
         var c = this.cursor;
         if (c < this.values.length) {
             gls2.playSound("star");
-            if (this.values[c] <= this.incrs[c] || app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
+            if (this.values[c] <= this.incrs[c] || app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
                 this.gameScene.addScore(this.values[c] * this.rates[c]);
                 this.values[c] = 0;
                 this.cursor += 1;
@@ -193,12 +194,14 @@ gls2.ResultScene = tm.createClass(
             this.labelTotal.text = Math.floor(this.gameScene.score);
         } else {
             this.promptEnter.visible = true;
-            if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("space")) {
+            if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
+                gls2.playSound("decision");
                 this.gameScene.startStage(this.gameScene.stageNumber + 1);
                 app.popScene();
             }
         }
 
+        this.frame += 1;
     },
     draw: function(canvas) {
         canvas.clearColor(this.background);

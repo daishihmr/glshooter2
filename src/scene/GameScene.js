@@ -57,9 +57,11 @@ gls2.GameScene = tm.createClass(
     /** ボムスロット数 */
     bombMax: 0,
     /** ボムスロット最大数 */
-    bombMaxMax: 6,
+    bombMaxMax: 0,
     /** ボム発動中 */
     isBombActive: false,
+    /** マキシマム中 */
+    isBombMaximum: false,
 
     /** ハイパーゲージ */
     hyperGauge: 0,
@@ -73,9 +75,18 @@ gls2.GameScene = tm.createClass(
     hyperTime: 0,
     /** ハイパーレベル */
     hyperLevel: 0,
+    /** 発動中ハイパーモードのレベル */
+    currentHyperLevel: 0,
+
+    /** ひよこアイテム累計 */
+    hiyokoTotal: 0,
+    /** 現在のステージ中に取得したひよこアイテムの数 */
+    hiyoko: 0,
 
     /** @type {gls2.GameScene.Layer} */
     groundLayer: null,
+    /** @type {gls2.GameScene.Layer} */
+    fallDownLayer: null,
     /** @type {gls2.GameScene.Layer} */
     playerLayer: null,
     /** @type {gls2.GameScene.Layer} */
@@ -114,6 +125,7 @@ gls2.GameScene = tm.createClass(
         this.ground.addChildTo(this);
 
         this.groundLayer = gls2.GameScene.Layer().addChildTo(this);
+        this.fallDownLayer = gls2.GameScene.Layer().addChildTo(this);
         this.enemyLayer = gls2.GameScene.Layer().addChildTo(this);
         this.effectLayer0 = gls2.GameScene.Layer().addChildTo(this);
         this.playerLayer = gls2.GameScene.Layer().addChildTo(this);
@@ -197,6 +209,7 @@ gls2.GameScene = tm.createClass(
     },
 
     /**
+     * 各種当たり判定
      * フレームの最後に実行される
      */
     onexitframe: function(app) {
@@ -225,7 +238,7 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_SHOT);
                         }
-                        this.onEnemyDestroy(e);
+                        this.onDestroyEnemy(e);
                         break;
                     }
                 }
@@ -252,14 +265,14 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER);
                         }
-                        this.onEnemyDestroy(e);
+                        this.onDestroyEnemy(e);
                     } else {
                         if (this.isHyperMode) {
                             this.addCombo(this.hyperLevel * 0.01);
                         } else {
                             this.addCombo(0.01);
                         }
-                        this.comboGauge = Math.max(this.comboGauge, 0.05);
+                        this.comboGauge = Math.min(this.comboGauge + 0.02, 1);
                         if (this.isHyperMode) {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT_IN_HYPER);
                         } else {
@@ -291,14 +304,14 @@ gls2.GameScene = tm.createClass(
                         } else {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA);
                         }
-                        this.onEnemyDestroy(e);
+                        this.onDestroyEnemy(e);
                     } else {
                         if (this.isHyperMode) {
                             this.addCombo(this.hyperLevel * 0.01);
                         } else {
                             this.addCombo(0.01);
                         }
-                        this.comboGauge = Math.max(this.comboGauge, 0.05);
+                        this.comboGauge = Math.min(this.comboGauge + 0.02, 1);
                         if (this.isHyperMode) {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA_HIT_IN_HYPER);
                         } else {
@@ -338,12 +351,13 @@ gls2.GameScene = tm.createClass(
                 var bullets = [].concat(gls2.Bullet.activeList);
                 for (var b = bullets.length; bullets[--b] !== undefined;) {
                     var bullet = bullets[b];
+                    if (bullet.visible === false) continue;
                     if (shot.hp > 0 && gls2.Collision.isHit(shot, bullet)) {
                         bullet.hp -= (6 - this.hyperRank);
                         if (bullet.hp < 0) {
                             bullet.destroy();
                             this.addScore(gls2.Setting.BULLET_SCORE);
-                            this.addCombo(1);
+                            this.addCombo(gls2.Setting.BULLET_COMBO);
 
                             this.generateStar(false, false, bullet.x, bullet.y, 1);
                         }
@@ -362,11 +376,12 @@ gls2.GameScene = tm.createClass(
                 // 敵弾vs自機
                 for (var i = gls2.Bullet.activeList.length; gls2.Bullet.activeList[--i] !== undefined;) {
                     var b = gls2.Bullet.activeList[i];
+                    if (b.visible === false) continue;
                     if (gls2.Collision.isHit(b, this.player)) {
                         this.player.damage();
                         if (this.bomb > 0 && this.autoBomb) {
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
-                            bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
+                            this.addRank(-0.01);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                         } else {
                             this.miss();
@@ -384,7 +399,7 @@ gls2.GameScene = tm.createClass(
                         this.player.damage();
                         if (this.bomb > 0 && this.autoBomb) {
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
-                            bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.01, 0, 1);
+                            this.addRank(-0.01);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                         } else {
                             this.miss();
@@ -434,7 +449,10 @@ gls2.GameScene = tm.createClass(
 
     },
 
-    onEnemyDestroy: function(enemy) {
+    /**
+     * ボム以外の攻撃で敵を破壊した時
+     */
+    onDestroyEnemy: function(enemy) {
         this.generateStar(
             enemy.isGround,
             this.isHyperMode || gls2.distanceSq(enemy,this.player) < gls2.Setting.CROSS_RANGE,
@@ -443,7 +461,7 @@ gls2.GameScene = tm.createClass(
             enemy.star
         );
 
-        // ハイパー中はコンボ数が上昇
+        // ハイパー中はコンボ数が急上昇
         if (!this.isHyperMode) {
             this.addCombo(1);
         } else if (this.hyperLevel < 6) {
@@ -453,12 +471,15 @@ gls2.GameScene = tm.createClass(
         }
 
         var base = this.baseScore;
-        // 倍率
+
+        // コンボ数に応じて倍率がかかる
         var bonus =  (~~(this.comboCount / gls2.Setting.COMBO_BONUS) + 1);
         for (var i = 0; i < bonus; i++) {
-            base += enemy.score
+            base += enemy.score;
             this.addScore(base);
         }
+
+        // 素点が上昇
         this.baseScore += enemy.score * bonus;
     },
 
@@ -469,13 +490,15 @@ gls2.GameScene = tm.createClass(
         }
     },
 
+    /**
+     * 星アイテム取得時
+     */
     onGetStar: function(star) {
         gls2.playSound("star");
         if (star.large) {
             this.starItemLarge += 1;
-            this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE);
-            this.addScore(this.baseScore * 0.2);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE_LARGE;
+            this.addScore(gls2.Setting.STAR_ITEM_SCORE_LARGE + this.baseScore * gls2.Setting.STAR_ITEM_BONUS_LARGE);
             if (this.isHyperMode) {
                 this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_STAR_LARGE_IN_HYPER);
             } else {
@@ -483,9 +506,8 @@ gls2.GameScene = tm.createClass(
             }
         } else {
             this.starItem += 1;
-            this.addScore(gls2.Setting.STAR_ITEM_SCORE);
-            this.addScore(this.baseScore * 0.1);
             this.baseScore += gls2.Setting.STAR_ITEM_BASESCORE;
+            this.addScore(gls2.Setting.STAR_ITEM_SCORE + this.baseScore * gls2.Setting.STAR_ITEM_BONUS);
             if (this.isHyperMode) {
                 this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_STAR_IN_HYPER);
             } else {
@@ -499,11 +521,12 @@ gls2.GameScene = tm.createClass(
 
         this.score = 0;
         this.zanki = gls2.Setting.INITIAL_ZANKI;
-        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
+        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX[playerStyle];
+        this.bombMaxMax = gls2.Setting.BOMB_MAX_MAX[playerStyle];
         this.hyperGauge = 0;
         this.hyperRank = 0;
         this.hyperLevel = 0;
-        bulletml.Walker.globalScope["$rank"] = 0;
+        bulletml.Walker.globalScope["$rank"] = gls2.Setting.INITIAL_RANK;
         this.endHyperMode();
         this.isBombActive = false;
         this.missCount = this.missCountTotal = 0;
@@ -548,15 +571,15 @@ gls2.GameScene = tm.createClass(
         this.scoreLabel.scoreLabelElement.gpsOffsetX = 0;
         this.scoreLabel.scoreLabelElement.gpsOffsetY = 0;
 
-        // TODO ステージ開始時にランクリセット？
-        // this.hyperRank = 0;
-        // bulletml.Walker.globalScope["$rank"] = 0;
+        this.hyperRank = 0;
 
         this.stageNumber = stageNumber;
         this.stage = gls2.Stage.create(this, stageNumber);
         this.tweener.clear().wait(1000).call(function() {
             this.launch();
         }.bind(this));
+
+        this.ground.tweener.clear();
     },
 
     launch: function() {
@@ -577,14 +600,14 @@ gls2.GameScene = tm.createClass(
             .call(function() {
                 this.controllable = true;
             }.bind(this.player))
-            .wait(2000)
+            .wait(gls2.Setting.LAUNCH_MUTEKI_TIME)
             .call(function() {
                 this.muteki = false;
             }.bind(this.player));
     },
 
     miss: function() {
-        // ミスエフェクト
+        // TODO ミスエフェクト
         gls2.Effect.explodeS(this.player.x, this.player.y, this);
         this.println("I was shot down.");
 
@@ -600,7 +623,7 @@ gls2.GameScene = tm.createClass(
         this.missCountTotal += 1;
 
         this.hyperRank = gls2.math.clamp(this.hyperRank - 3, 0, 1);
-        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.03, 0, 1);
+        this.addRank(-0.03);
 
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
@@ -618,12 +641,16 @@ gls2.GameScene = tm.createClass(
         }
     },
 
+    addRank: function(v) {
+        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"] + v, 0.00, 0.50);
+    },
+
     gameContinue: function() {
         this.println("System rebooted.", true);
 
         this.score = 0;
         this.zanki = gls2.Setting.INITIAL_ZANKI;
-        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX;
+        this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX[this.player.style];
         this.hyperRank = 0;
         bulletml.Walker.globalScope["$rank"] = 0;
 
@@ -654,8 +681,8 @@ gls2.GameScene = tm.createClass(
     addScore: function(score) {
         var before = this.score;
         this.score += score;
-        for (var i = 0; i < gls2.core.extendScore.length; i++) {
-            var es = gls2.core.extendScore[i];
+        for (var i = 0; i < gls2.Setting.EXTEND_SCORE.length; i++) {
+            var es = gls2.Setting.EXTEND_SCORE[i];
             if (before < es && es <= this.score) {
                 this.extendZanki();
             }
@@ -664,8 +691,6 @@ gls2.GameScene = tm.createClass(
     },
 
     addCombo: function(v) {
-        if (this.isHyperMode) v *= gls2.Setting.COMBO_RATE_WHEN_HYPERMODE * this.hyperRank;
-
         this.comboDown = 0;
         this.comboCount += v;
         this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
@@ -716,7 +741,7 @@ gls2.GameScene = tm.createClass(
         }
 
         this.hyperRank = gls2.math.clamp(this.hyperRank + 1, 0, 5);
-        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]+this.hyperLevel*0.01, 0, 1);
+        this.addRank(this.hyperLevel * 0.01);
         bulletml.Walker.globalScope["$hyperOff"] = gls2.Setting.ENEMY_ATTACK_INTERVAL_RATE_HYPER;
 
         this.hyperTime = gls2.Setting.HYPERMODE_TIME;
@@ -730,6 +755,7 @@ gls2.GameScene = tm.createClass(
         gls2.Effect.genShockwaveL(this.player.x, this.player.y, this);
 
         this.isHyperMode = true;
+        this.currentHyperLevel = this.hyperLevel;
         this.hyperLevel = 0;
         this.hyperGauge = 0;
 
@@ -755,6 +781,7 @@ gls2.GameScene = tm.createClass(
 
         this.hyperMutekiTime = gls2.Setting.HYPERMODE_TIME * gls2.Setting.HYPERMODE_END_MUTEKI_TIME;
         this.hyperTime = 0;
+        this.currentHyperLevel = 0;
 
         // すべての弾を消す
         gls2.Danmaku.erase();
@@ -888,7 +915,6 @@ gls2.GameScene = tm.createClass(
 
     draw: function(canvas) {
         if (this.stage === null) return;
-        // canvas.clearColor(this.ground.background, 0, 0);
     },
 
     showBossLife: function() {
@@ -898,7 +924,7 @@ gls2.GameScene = tm.createClass(
                 gpsOffsetX: -SC_W,
             }, 1600, "easeInQuad")
             .to({
-                gpsOffsetY: 22,
+                gpsOffsetY: 30,
             }, 800, "easeInOutQuad")
         ;
     },
@@ -1044,10 +1070,16 @@ gls2.GameScene.LabelLayer = tm.createClass({
             var w = 200 * this.gameScene.hyperGauge;
             canvas.fillRect(5, SC_H-12, w, 9);
         }
-        if (this.gameScene.hyperLevel > 0 && this.frame%2 === 0) {
-            canvas.setText("bold 24px Orbitron", "left", "bottom");
+
+        if (this.frame%2 === 0) {
             canvas.strokeStyle = "rgba(255,255,100,0.5)";
-            canvas.strokeText("hyper level " + this.gameScene.hyperLevel, 5, SC_H-3);
+            if (!this.gameScene.isHyperMode && this.gameScene.hyperLevel > 0) {
+                canvas.setText("bold 24px Orbitron", "left", "bottom");
+                canvas.strokeText("HYPER LV " + this.gameScene.hyperLevel, 5, SC_H-3);
+            } else if (this.gameScene.isHyperMode) {
+                canvas.setText("bold 28px Orbitron", "left", "bottom");
+                canvas.strokeText("HYPER LV " + this.gameScene.currentHyperLevel, 5, SC_H-3);
+            }
         }
     },
 });

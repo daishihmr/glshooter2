@@ -29,7 +29,7 @@ gls2.GameOverScene = tm.createClass(
         });
     },
     update: function(app) {
-        if (app.keyboard.getKeyDown("z")) {
+        if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c")) {
             app.replaceScene(gls2.TitleScene());
             return;
         }
