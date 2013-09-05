@@ -160,8 +160,8 @@ gls2.Stage2 = tm.createClass(
         this.seq.add(300, "makoto-4");
         this.seq.add(  1, "komachi2-0");
 
-        this.seq.add(300, "makoto-1");
-        this.seq.add(  1, "makoto-7");
+        this.seq.add(300, "makoto-7");
+        this.seq.add( 90, "makoto-1");
     },
 
     setupBackground: function() {

@@ -397,7 +397,7 @@ gls2.EnemySoft.Cannon3_0 = _Cannon("cannon3-0", true);
  * 固定砲台4
  * いやらしい砲台
  */
-gls2.EnemySoft.Cannon4_0 = _Cannon("cannon4-0", true);
+gls2.EnemySoft.Cannon4_0 = _Cannon("cannon5-0", true);
 
 /**
  * 中型戦闘機

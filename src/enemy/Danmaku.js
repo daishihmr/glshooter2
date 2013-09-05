@@ -236,6 +236,30 @@ gls2.Danmaku["cannon4-0"] = new bulletml.Root({
 });
 
 /**
+ * いつき2.
+ */
+gls2.Danmaku["cannon5-0"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $.fire($.direction(-60), $spd6, IVS($.actionRef("b"))),
+            $.repeat(11, [
+                $interval(5),
+                $.fire($.direction(10, "sequence"), $spd6, IVS($.actionRef("b"))),
+            ]),
+            $interval(60),
+        ]),
+    ]),
+    "b": $.action([
+        $.wait(5),
+        $.changeSpeed($.speed(0), 0),
+        $whip($spd2, 0.1, 5, function(spd) {
+            return $.fire($.direction(0, "relative"), spd, RNS);
+        }),
+        $.vanish,
+    ]),
+});
+
+/**
  * エレン1面
  */
 gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
