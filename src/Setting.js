@@ -314,10 +314,16 @@ gls2.Setting = {
     SHOT_HP: 10,
 
     /**
+     * オートボム選択する？
+     * @const
+     */
+    AUTO_BOMB_SELECT: false,
+
+    /**
      * オートボム発動時に残ボム数をすべて消費するか
      * @const
      */
-    AUTO_BOMB_TO_ZERO: true,
+    AUTO_BOMB_TO_ZERO: false,
 
     /**
      * @const

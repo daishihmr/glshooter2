@@ -206,7 +206,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
             this.speed = 8;
             gls2.EnemySoft.attack(this, "basic1-0");
             this.on("enterframe", function() {
-                if (this.y < this.player.y) {
+                if (this.y < this.player.y && this.entered) {
                     var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
                     this.angle += (a < this.angle) ? -0.02 : 0.02;
                     this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI-0.5);
@@ -219,7 +219,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
                     this.remove();
                 }
 
-                if (gls2.distanceSq(this, this.player) < 300*300 || this.y > this.player.y) {
+                if (gls2.distanceSq(this, this.player) < 150*150 || this.y > this.player.y + 150) {
                     this.enableFire = false;
                 }
             });

@@ -627,7 +627,7 @@ gls2.GameScene = tm.createClass(
 
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
-                if (!this.autoBomb) {
+                if (!this.autoBomb || !gls2.Setting.AUTO_BOMB_SELECT) {
                     this.bombMax = Math.min(this.bombMax + 1, this.bombMaxMax);
                 }
                 this.bomb = this.bombMax;

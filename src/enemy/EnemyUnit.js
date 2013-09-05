@@ -42,7 +42,7 @@ gls2.EnemyUnit = {
     { hard:$e.Heri2, soft:$s.Heri1a, x:SC_W*0.9, y:-100 },
 ],
 
-/** ヘリ5機。左側から */
+/** ヘリ5機。左側から。下の方まで来る */
 "heri1-left2": [
     { hard:$e.Heri2, soft:$s.Heri1b, x:SC_W*0.1, y:-100 },
     { hard:$e.Heri2, soft:$s.Heri1c, x:SC_W*0.2, y:-100 },
@@ -51,7 +51,7 @@ gls2.EnemyUnit = {
     { hard:$e.Heri2, soft:$s.Heri1b, x:SC_W*0.5, y:-100 },
 ],
 
-/** ヘリ5機。中央から */
+/** ヘリ5機。中央から。下の方まで来る */
 "heri1-center2": [
     { hard:$e.Heri2, soft:$s.Heri1b, x:SC_W*0.3, y:-100 },
     { hard:$e.Heri2, soft:$s.Heri1c, x:SC_W*0.4, y:-100 },
@@ -60,7 +60,7 @@ gls2.EnemyUnit = {
     { hard:$e.Heri2, soft:$s.Heri1b, x:SC_W*0.7, y:-100 },
 ],
 
-/** ヘリ5機。右側から */
+/** ヘリ5機。右側から。下の方まで来る */
 "heri1-right2": [
     { hard:$e.Heri2, soft:$s.Heri1b, x:SC_W*0.5, y:-100 },
     { hard:$e.Heri2, soft:$s.Heri1c, x:SC_W*0.6, y:-100 },
