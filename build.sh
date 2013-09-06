@@ -15,12 +15,13 @@ java -jar tools/compiler.jar \
 --js src/ShotBullet.js \
 --js src/Laser.js \
 --js src/Bomb.js \
---js src/stage/Stage.js \
---js src/stage/Stage1.js \
 --js src/Effect.js \
 --js src/ScoreLabel.js \
 --js src/Ground.js \
 --js src/StarItem.js \
+--js src/stage/Stage.js \
+--js src/stage/Stage1.js \
+--js src/stage/Stage2.js \
 --js src/common/Collision.js \
 --js src/common/Scene.js \
 --js src/common/DialogMenu.js \
@@ -28,6 +29,7 @@ java -jar tools/compiler.jar \
 --js src/common/ConsoleWindow.js \
 --js src/common/Noise.js \
 --js src/common/FixedRandom.js \
+--js src/common/Sound.js \
 --js src/scene/TitleScene.js \
 --js src/scene/ShipSelectScene.js \
 --js src/scene/GameScene.js \

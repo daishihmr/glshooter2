@@ -468,7 +468,7 @@ gls2.GameScene = tm.createClass(
         );
 
         // ハイパー中はコンボ数が急上昇
-        this.addCombo(gls2.Setting.HYPER_COMBO[this.hyperLevel]);
+        this.addCombo(gls2.Setting.HYPER_COMBO[this.currentHyperLevel]);
 
         var base = this.baseScore;
 

@@ -71,7 +71,7 @@ gls2.EnemySoft.Heri1a = tm.createClass(
             this.tweener
                 .clear()
                 .wait(gls2.FixedRandom.rand(10, 500))
-                .move(this.x, y, y*7, "easeOutQuad")
+                .move(this.x, y, y*5, "easeOutQuad")
                 .call(function() {
                     gls2.EnemySoft.attack(this, "basic0-0");
                 }.bind(this));
@@ -116,7 +116,7 @@ gls2.EnemySoft.Heri1b = tm.createClass(
             this.tweener
                 .clear()
                 .wait(gls2.FixedRandom.rand(10, 500))
-                .move(this.x, y, y*7, "easeOutQuad")
+                .move(this.x, y, y*5, "easeOutQuad")
                 .call(function() {
                     gls2.EnemySoft.attack(this, "basic0-0");
                 }.bind(this));
@@ -160,7 +160,7 @@ gls2.EnemySoft.Heri1c = tm.createClass(
             this.tweener
                 .clear()
                 .wait(gls2.FixedRandom.rand(10, 500))
-                .move(this.x, y, y*7, "easeOutQuad")
+                .move(this.x, y, y*5, "easeOutQuad")
                 .call(function() {
                     gls2.EnemySoft.attack(this, "basic0-0");
                 }.bind(this));
@@ -203,7 +203,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         enemy.angle = Math.PI * 0.5;
 
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
-            this.speed = 8;
+            this.speed = 6;
             gls2.EnemySoft.attack(this, "basic1-0");
             this.on("enterframe", function() {
                 if (this.y < this.player.y && this.entered) {
