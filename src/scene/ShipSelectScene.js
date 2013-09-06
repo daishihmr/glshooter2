@@ -66,6 +66,9 @@ gls2.ShipSelectScene = tm.createClass(
         this.styles.visible = false;
 
         this.moveCursor(-1, true);
+        this.typeA.update();
+        this.typeB.update();
+        this.typeC.update();
 
         gls2.playSound("voSelectShip");
     },
@@ -124,10 +127,6 @@ gls2.ShipSelectScene = tm.createClass(
         this.typeC.update = function() {
             this.x = SC_W*0.5 + Math.sin(this.pos/3 * Math.PI*2) * 90;
         };
-
-        this.typeA.update();
-        this.typeB.update();
-        this.typeC.update();
 
         return types;
     },
@@ -262,7 +261,12 @@ gls2.ShipSelectScene = tm.createClass(
                 this.style = (this.style + 1 + 3) % 3;
                 gls2.playSound("select");
             } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
-                this.openAutoBombDialog();
+                if (gls2.Setting.AUTO_BOMB_SELECT) {
+                    this.openAutoBombDialog();
+                } else {
+                    this.autoBomb = true;
+                    this.openConfirmDialog();
+                }
                 gls2.playSound("decision");
             } else if (app.keyboard.getKeyDown("x")) {
                 this.mode = 0;

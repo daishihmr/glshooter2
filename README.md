@@ -35,27 +35,27 @@ http://daishihmr.github.io/glshooter2/ (Google Chrome専用)
 
 ## ゲーム素材の再利用について
 
-本アプリケーションの利用条件は以下のとおりです。
+本アプリケーション素材の再利用条件は以下のとおりです。
 
 ### JavaScriptおよびHTMLファイル
 
-プロジェクトルートディレクトリ、srcディレクトリ、externディレクトリ内に配置されるすべてのファイルの著作権はdaishihmrに帰属します。
+jsファイル、およびhtmlファイルはすべてMITライセンスのもとで再利用可能です。
 
-これらはすべてMITライセンスのもとで再利用可能です。
-
-http://daishihmr.mit-license.org/
-
-### JavaScriptライブラリ
-
-libsディレクトリ内のJavaScriptファイルの利用条件については、個々のファイル内のライセンス表記を参照し、利用条件に従ってください。
+詳細な著作権情報については、個々のファイル内のライセンス表記を参照ください。
 
 ### 画像素材
 
-assets/tex1.pngは、daishihmrとProjectTeam DoGA様の共同著作物となります。
-
+以下の画像ファイルはdaishihmrとProjectTeam DoGA様の共同著作物となります。
 非営利目的での再利用が可能です。詳細は以下のURLを参照ください。
 
 http://doga.jp/2010/programs/dogal/dogal3/license.html
+
+ * assets/fighters.png
+ * assets/tex1.png
+ * assets/tex_stage1.png
+ * assets/tex/tank1.png
+ * assets/rawディレクトリ内のpngファイル
+ * assets/raw/l3pディレクトリ以下の全ファイル
 
 その他のassetsディレクトリ内画像ファイルはdaishihmrの著作物です。
 

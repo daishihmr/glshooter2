@@ -195,6 +195,12 @@ gls2.GameScene = tm.createClass(
             this.shotScreen().saveAsImage();
             this.openPauseMenu(0);
         }
+
+        if (DEBUG) {
+            if (app.keyboard.getKeyDown("h")) {
+                this.addHyperGauge(1.2 / gls2.Setting.HYPER_CHARGE_RATE);
+            }
+        }
     },
 
     shotScreen: function() {
@@ -231,7 +237,7 @@ gls2.GameScene = tm.createClass(
                 if (gls2.Collision.isHit(e, shot)) {
                     shot.genParticle(1);
                     shot.remove();
-                    if (e.damage(this.isHyperMode ? gls2.Setting.HYPER_SHOT_ATTACK_POWER : gls2.Setting.SHOT_ATTACK_POWER)) {
+                    if (e.damage(shot.attackPower)) {
                         this.killCount += 1;
                         if (this.isHyperMode) {
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_SHOT_IN_HYPER);
@@ -462,13 +468,7 @@ gls2.GameScene = tm.createClass(
         );
 
         // ハイパー中はコンボ数が急上昇
-        if (!this.isHyperMode) {
-            this.addCombo(1);
-        } else if (this.hyperLevel < 6) {
-            this.addCombo(10);
-        } else {
-            this.addCombo(20);
-        }
+        this.addCombo(gls2.Setting.HYPER_COMBO[this.currentHyperLevel]);
 
         var base = this.baseScore;
 
@@ -627,7 +627,7 @@ gls2.GameScene = tm.createClass(
 
         if (this.zanki > 0) {
             this.tweener.clear().wait(1000).call(function() {
-                if (!this.autoBomb) {
+                if (!this.autoBomb || !gls2.Setting.AUTO_BOMB_SELECT) {
                     this.bombMax = Math.min(this.bombMax + 1, this.bombMaxMax);
                 }
                 this.bomb = this.bombMax;
@@ -771,8 +771,6 @@ gls2.GameScene = tm.createClass(
         gls2.ChargeEffect(this.player, true).addChildTo(this);
 
         this.player.currentShotPool = this.player.normalShotPool;
-        // TODO 自機タイプのよって変える
-        this.player.laser.setColor("blue");
 
         bulletml.Walker.globalScope["$hyperOff"] = 1.0;
 
