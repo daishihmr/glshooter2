@@ -122,7 +122,7 @@ gls2.Danmaku["basic1-0"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval(20),
-            $fire0($spd4),
+            $fire0($spd3),
         ]),
     ]),
 });
@@ -232,6 +232,30 @@ gls2.Danmaku["cannon4-0"] = new bulletml.Root({
             ]),
             $interval(120),
         ]),
+    ]),
+});
+
+/**
+ * いつき2.
+ */
+gls2.Danmaku["cannon5-0"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $.fire($.direction(-60), $spd6, IVS($.actionRef("b"))),
+            $.repeat(11, [
+                $interval(5),
+                $.fire($.direction(10, "sequence"), $spd6, IVS($.actionRef("b"))),
+            ]),
+            $interval(60),
+        ]),
+    ]),
+    "b": $.action([
+        $.wait(5),
+        $.changeSpeed($.speed(0), 0),
+        $whip($spd2, 0.1, 5, function(spd) {
+            return $.fire($.direction(0, "relative"), spd, RNS);
+        }),
+        $.vanish,
     ]),
 });
 
@@ -650,7 +674,7 @@ gls2.Danmaku.setup = function() {
     config.defaultIsInsideOfWorld = function(bullet) {
         return -80 <= bullet.x && bullet.x < SC_W+80 && -80 <= bullet.y && bullet.y < SC_H+80;
     };
-    config.speedRate = 4;
+    config.speedRate = 3.5;
 
     // ランク
     bulletml.Walker.globalScope["$rank"] = 0;

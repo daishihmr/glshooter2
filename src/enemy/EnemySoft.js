@@ -71,7 +71,7 @@ gls2.EnemySoft.Heri1a = tm.createClass(
             this.tweener
                 .clear()
                 .wait(gls2.FixedRandom.rand(10, 500))
-                .move(this.x, y, y*7, "easeOutQuad")
+                .move(this.x, y, y*5, "easeOutQuad")
                 .call(function() {
                     gls2.EnemySoft.attack(this, "basic0-0");
                 }.bind(this));
@@ -116,7 +116,7 @@ gls2.EnemySoft.Heri1b = tm.createClass(
             this.tweener
                 .clear()
                 .wait(gls2.FixedRandom.rand(10, 500))
-                .move(this.x, y, y*7, "easeOutQuad")
+                .move(this.x, y, y*5, "easeOutQuad")
                 .call(function() {
                     gls2.EnemySoft.attack(this, "basic0-0");
                 }.bind(this));
@@ -160,7 +160,7 @@ gls2.EnemySoft.Heri1c = tm.createClass(
             this.tweener
                 .clear()
                 .wait(gls2.FixedRandom.rand(10, 500))
-                .move(this.x, y, y*7, "easeOutQuad")
+                .move(this.x, y, y*5, "easeOutQuad")
                 .call(function() {
                     gls2.EnemySoft.attack(this, "basic0-0");
                 }.bind(this));
@@ -203,10 +203,10 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         enemy.angle = Math.PI * 0.5;
 
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
-            this.speed = 8;
+            this.speed = 6;
             gls2.EnemySoft.attack(this, "basic1-0");
             this.on("enterframe", function() {
-                if (this.y < this.player.y) {
+                if (this.y < this.player.y && this.entered) {
                     var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
                     this.angle += (a < this.angle) ? -0.02 : 0.02;
                     this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI-0.5);
@@ -219,7 +219,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
                     this.remove();
                 }
 
-                if (gls2.distanceSq(this, this.player) < 300*300 || this.y > this.player.y) {
+                if (gls2.distanceSq(this, this.player) < 150*150 || this.y > this.player.y + 150) {
                     this.enableFire = false;
                 }
             });
@@ -397,7 +397,7 @@ gls2.EnemySoft.Cannon3_0 = _Cannon("cannon3-0", true);
  * 固定砲台4
  * いやらしい砲台
  */
-gls2.EnemySoft.Cannon4_0 = _Cannon("cannon4-0", true);
+gls2.EnemySoft.Cannon4_0 = _Cannon("cannon5-0", true);
 
 /**
  * 中型戦闘機
