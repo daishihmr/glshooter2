@@ -94,7 +94,7 @@ gls2.Setting = {
      * ボムの攻撃力
      * @const
      */
-    BOMB_ATTACK_POWER: 4,
+    BOMB_ATTACK_POWER: 2,
 
     /**
      * ショットによる敵破壊でチャージされるハイパーゲージ値
@@ -185,7 +185,7 @@ gls2.Setting = {
      * ハイパーゲージチャージ基本係数
      * @const
      */
-    HYPER_CHARGE_RATE: 20,//0.75,
+    HYPER_CHARGE_RATE: 0.75,
 
     /**
      * ハイパーレベル最大値

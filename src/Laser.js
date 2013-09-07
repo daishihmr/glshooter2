@@ -39,7 +39,7 @@ gls2.Laser = tm.createClass(
         this.player = player;
         this.gameScene = player.gameScene;
 
-        this.baseAttackPower = this.player.style === 0 ? 1 : 1.5;
+        this.baseAttackPower = this.player.style === 0 ? 1 : 1.2;
         this.baseWidth = this.player.style === 0 ? 50 : 75;
 
         var self = this;

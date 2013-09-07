@@ -4,7 +4,9 @@ java -jar tools/compiler.jar ^
 --define DEBUG=false ^
 --define STATS=false ^
 --externs libs/tmlib.js ^
+--externs libs/mt.js ^
 --externs extern/extern.js ^
+--externs extern/tween.js ^
 --js libs/bulletml.js ^
 --js libs/bulletml.walker.js ^
 --js libs/bulletml.dsl.js ^
