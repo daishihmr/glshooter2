@@ -61,7 +61,7 @@ gls2.Setting = {
     SHOT_ATTACK_POWER: 1,
 
     /**
-     * ハイパーショットの攻撃力
+     * ハイパーショットの攻撃力上昇率
      * @const
      */
     HYPER_SHOT_ATTACK_POWER: 0.1,
@@ -185,7 +185,7 @@ gls2.Setting = {
      * ハイパーゲージチャージ基本係数
      * @const
      */
-    HYPER_CHARGE_RATE: 0.75,
+    HYPER_CHARGE_RATE: 20,//0.75,
 
     /**
      * ハイパーレベル最大値
@@ -212,10 +212,10 @@ gls2.Setting = {
     HYPERMODE_END_MUTEKI_TIME: 0.10,
 
     /**
-     * ハイパーモード中のコンボ数増加倍率（この値×ハイパーレベル）
+     * ハイパーモードレベルとコンボ数の関係
      * @const
      */
-    COMBO_RATE_WHEN_HYPERMODE: 5,
+    HYPER_COMBO: [1, 3, 5, 10, 18, 26, 42, 66, 90, 130, 200],
 
     /**
      * 1フレームあたりのコンボゲージ減少値
@@ -323,7 +323,7 @@ gls2.Setting = {
      * オートボム発動時に残ボム数をすべて消費するか
      * @const
      */
-    AUTO_BOMB_TO_ZERO: false,
+    AUTO_BOMB_TO_ZERO: true,
 
     /**
      * @const

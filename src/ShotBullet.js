@@ -10,6 +10,11 @@ gls2.ShotBullet = tm.createClass({
     superClass: tm.app.Sprite,
     speed: 0,
 
+    attackPower: 0,
+
+    baseScale: 1,
+    hyperScale: 0,
+
     isEffect: true,
 
     init: function(color) {
@@ -17,6 +22,8 @@ gls2.ShotBullet = tm.createClass({
         this.superInit("shotbullet", SZ, SZ);
         this.blendMode = "lighter";
         // this.alpha = 0.8;
+
+        this.attackPower = gls2.Setting.SHOT_ATTACK_POWER;
 
         if (origParticle === null) {
             var size = 16;
@@ -111,13 +118,14 @@ gls2.ShotBulletPool = tm.createClass({
 
             if (this.hyper) {
                 sb.addEventListener("enterframe", function(e) {
-                    this.setScale(e.app.frame % 2 === 0 ? 2.0 : 1.0);
+                    this.setScale((this.baseScale + this.hyperScale) * (e.app.frame % 2 === 0 ? 1.0: 1.2));
                 });
             }
 
             this.pool.push(sb);
         }
     },
+
     fire: function(x, y, dir) {
         var shotBullet = this.pool.pop();
         if (shotBullet === undefined) {
@@ -135,7 +143,10 @@ gls2.ShotBulletPool = tm.createClass({
     },
 
     setLevel: function(hyperLevel) {
-        // TODO
+        for (var i = this.pool.length; this.pool[--i] !== undefined; ) {
+            this.pool[i].attackPower = gls2.Setting.SHOT_ATTACK_POWER + gls2.Setting.HYPER_SHOT_ATTACK_POWER * hyperLevel;
+            this.pool[i].hyperScale = hyperLevel * 0.2;
+        }
     },
 
 });

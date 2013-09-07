@@ -122,7 +122,7 @@ gls2.Danmaku["basic1-0"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval(20),
-            $fire0($spd4),
+            $fire0($spd3),
         ]),
     ]),
 });
@@ -674,7 +674,7 @@ gls2.Danmaku.setup = function() {
     config.defaultIsInsideOfWorld = function(bullet) {
         return -80 <= bullet.x && bullet.x < SC_W+80 && -80 <= bullet.y && bullet.y < SC_H+80;
     };
-    config.speedRate = 4;
+    config.speedRate = 3.5;
 
     // ランク
     bulletml.Walker.globalScope["$rank"] = 0;
