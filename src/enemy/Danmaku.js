@@ -410,7 +410,7 @@ gls2.Danmaku["nagisa-1-1"] = new bulletml.Root({
         $interval(90),
         $.repeat(3, [
             $.bindVar("way", "5 + $loop.index*6"),
-            $whip($spd4, 0.01, "3 + $loop.index*4", function(spd) {
+            $whip($spd3, 0.01, "3 + $loop.index*4", function(spd) {
                 return $.action([
                     $nway("$way", -110, 110, spd, RNS, $.offsetX(-190), $.offsetY(-20)),
                     $nway("$way", -110, 110, spd, RNS, $.offsetX(+190), $.offsetY(-20)),

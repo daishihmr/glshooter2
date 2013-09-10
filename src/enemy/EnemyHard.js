@@ -22,6 +22,7 @@ gls2.Enemy.DATA = {
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
     "hyuga":     [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
+    "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 };
 
 /**
@@ -271,6 +272,25 @@ gls2.Enemy.Cannon2 = tm.createClass({
 /**
  * ボムキャリアー「クルミ」
  */
+gls2.Enemy.Erika = tm.createClass({
+    superClass: gls2.Enemy,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "erika");
+    },
+
+    draw: function(canvas) {
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+    },
+
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        gls2.BombItem(this.x, this.y, this.player).addChildTo(this.parent);
+        this.remove();
+    }
+});
 
 /**
  * ステージ１中ボス「ユキシロ」

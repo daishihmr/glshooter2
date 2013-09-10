@@ -259,6 +259,9 @@ gls2.EnemyUnit = {
 "komachi2-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi2-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
 
+// ボムキャリアー「クルミ」
+"erika": [{ hard:$e.Erika, soft:$s.Erika, x: SC_W*0.5, y:-100 }],
+
 /**
  * ステージ１中ボス「ユキシロ」
  */

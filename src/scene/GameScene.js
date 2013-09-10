@@ -200,6 +200,9 @@ gls2.GameScene = tm.createClass(
             if (app.keyboard.getKeyDown("h")) {
                 this.addHyperGauge(1.2 / gls2.Setting.HYPER_CHARGE_RATE);
             }
+            if (app.keyboard.getKey("v")) {
+                
+            }
         }
     },
 
@@ -783,6 +786,13 @@ gls2.GameScene = tm.createClass(
 
         // すべての弾を消す
         gls2.Danmaku.erase();
+    },
+
+    addBomb: function(n) {
+        gls2.playSound("decision");
+        gls2.playSound("voGetBomb");
+        this.bomb = Math.min(this.bomb + 1, this.bombMax);
+        this.isBombMaximum = this.bomb === this.bombMax;
     },
 
     extendZanki: function() {

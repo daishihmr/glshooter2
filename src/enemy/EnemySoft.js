@@ -457,6 +457,26 @@ gls2.EnemySoft.LargeFighter1 = _MiddleFighterCommon(0.3, "komachi-1");
 gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
 
 /**
+ * ボムキャリアー「クルミ」
+ */
+gls2.EnemySoft.Erika = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    init: function() {
+        this.superInit();
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.attack(enemy, "basic3-0");
+        enemy.on("enterframe", function() {
+            this.y += 0.7;
+            this.enableFire = this.entered;
+        });
+    },
+});
+gls2.EnemySoft.Erika = gls2.EnemySoft.Erika();
+
+/**
  * 中ボス共通
  *
  * 上から出現。画面上部をふらふらとさまよう

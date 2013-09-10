@@ -28,6 +28,10 @@ gls2.Enemy = tm.createClass(
      * @type {gls2.GameScene}
      */
     gameScene: null,
+    /**
+     * @type {gls2.Stage}
+     */
+    stage: null,
 
     /**
      * 耐久力
