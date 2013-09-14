@@ -17,7 +17,7 @@ gls2.BombItem = tm.createClass({
         this.setPosition(x, y);
         this.player = player;
 
-        this.vy = gls2.FixedRandom.random() < 0.5 ? -1 : 1;
+        this.vy = 1;
         this.vx = gls2.FixedRandom.random() < 0.5 ? -1 : 1;
         this.age = 0;
     },
@@ -40,7 +40,7 @@ gls2.BombItem = tm.createClass({
 
         this.age += 1;
     },
-    
+
 });
-    
+
 })();

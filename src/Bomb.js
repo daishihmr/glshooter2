@@ -65,6 +65,7 @@ gls2.Bomb = tm.createClass({
             this.gameScene.isBombActive = true;
             this.player.muteki = true;
             this.gameScene.bomb -= 1;
+            this.gameScene.isBombMaximum = false;
             this.gameScene.endHyperMode();
             this.gameScene.println("drop BOMBER!!", true);
             gls2.playSound("bomb");
