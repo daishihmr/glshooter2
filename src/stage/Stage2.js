@@ -151,19 +151,17 @@ gls2.Stage2 = tm.createClass(
         this.seq.add(120, "itsuki-2");
         this.seq.add(  1, "komachi2-0");
 
-        this.seq.add(300, "tsubomi-0");
+        this.seq.add(380, "tsubomi-0");
         this.seq.add(  1, "komachi2-1");
 
-        this.seq.add(300, "itsuki-0");
-        this.seq.add(  1, "itsuki-2");
+        this.seq.add(380, "itsuki-1");
 
-        this.seq.add(300, "makoto-4");
+        this.seq.add(380, "makoto-4");
         this.seq.add(  1, "komachi2-0");
 
-        this.seq.add(300, "makoto-7");
-        this.seq.add( 90, "makoto-1");
+        this.seq.add(380, "makoto-1");
 
-        this.seq.add(300, "erika");
+        this.seq.add(380, "erika");
     },
 
     setupBackground: function() {

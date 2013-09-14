@@ -143,12 +143,15 @@ gls2.Enemy.FighterM = tm.createClass(
 {
     superClass: gls2.Enemy,
 
-    _sprite1: null,
+    _sprite: null,
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kurokawa");
 
         this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(1);
+    },
+    ondying: function() {
+        this._sprite.toRed();
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -166,10 +169,16 @@ gls2.Enemy.Komachi = tm.createClass(
 /** @lends */
 {
     superClass: gls2.Enemy,
+
+    _sprite: null,
+
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "akimoto");
 
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(1);
+    },
+    ondying: function() {
+        this._sprite.toRed();
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -189,12 +198,15 @@ gls2.Enemy.Komachi = tm.createClass(
 gls2.Enemy.Cannon = tm.createClass({
     superClass: gls2.Enemy,
 
-    _sprite1: null,
+    _sprite: null,
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kise");
 
         this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
+    },
+    ondying: function() {
+        this._sprite.toRed();
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -216,6 +228,8 @@ gls2.Enemy.Tsubomi = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hanasaki");
     },
+    ondying: function() {
+    },
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.remove();
@@ -236,6 +250,8 @@ gls2.Enemy.Itsuki = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "myodoin");
     },
+    ondying: function() {
+    },
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.remove();
@@ -253,12 +269,15 @@ gls2.Enemy.Itsuki = tm.createClass({
 gls2.Enemy.Cannon2 = tm.createClass({
     superClass: gls2.Enemy,
 
-    _sprite1: null,
+    _sprite: null,
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kenzaki");
 
         this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(4);
+    },
+    ondying: function() {
+        this._sprite.toRed();
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -277,6 +296,9 @@ gls2.Enemy.Erika = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "erika");
+    },
+
+    ondying: function() {
     },
 
     draw: function(canvas) {
@@ -306,6 +328,9 @@ gls2.Enemy.Honoka = tm.createClass({
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(3);
         this.setScale(1.5);
     },
+    ondying: function() {
+        this._sprite.toRed();
+    },
     destroy: function() {
         this.fallDown();
     },
@@ -324,13 +349,16 @@ gls2.Enemy.Nagisa = tm.createClass(
 {
     superClass: gls2.Boss,
 
-    _sprite1: null,
+    _sprite: null,
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "misumi");
 
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(4);
         this.setScale(1.5);
+    },
+    ondying: function() {
+        this._sprite.toRed();
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -349,6 +377,8 @@ gls2.Enemy.Mai = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "mishou");
+    },
+    ondying: function() {
     },
     destroy: function() {
         this.fallDown();
@@ -369,6 +399,8 @@ gls2.Enemy.Saki = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hyuga");
+    },
+    ondying: function() {
     },
     destroy: function() {
         this.bossDestroy();
@@ -451,8 +483,15 @@ var _Sprite = tm.createClass(
 /** @lends {_Sprite.prototype} */
 {
     superClass: tm.app.Sprite,
+
+    texName: null,
+
     init: function(tex, w, h) {
         this.superInit(tex, w, h);
+
+        if (typeof(tex) === "string") {
+            this.texName = tex;
+        }
     },
     draw: function(canvas) {
         var srcRect = this.srcRect;
@@ -461,6 +500,20 @@ var _Sprite = tm.createClass(
         canvas.context.drawImage(element,
             srcRect.x, srcRect.y, srcRect.width, srcRect.height,
             -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
+    },
+
+    toRed: function() {
+        var bx = this.srcRect.x;
+        var by = this.srcRect.y;
+        var bw = this.srcRect.width;
+        var bh = this.srcRect.height;
+
+        this.image = this.texName + "Red";
+
+        this.srcRect.x = bx;
+        this.srcRect.y = by;
+        this.srcRect.width = bw;
+        this.srcRect.height = bh;
     },
 });
 

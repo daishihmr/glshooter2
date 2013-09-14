@@ -134,6 +134,29 @@ gls2.GlShooter2 = tm.createClass(
 
     _onLoadAssets: function() {
         gls2.FixedRandom.setup(12345);
+
+        ["tex_stage1", "tex_tank1"].forEach(function(name) {
+
+            var tex = tm.asset.AssetManager.get(name);
+            var canvas = tm.graphics.Canvas();
+            canvas.resize(tex.width, tex.height);
+            canvas.drawTexture(tex, 0, 0);
+
+            var bitmap = canvas.getBitmap();
+            bitmap.filter({
+                calc: function(pixel, index, x, y, bitmap) {
+                    bitmap.setPixelIndex(index, pixel[0], 0, 0);
+                }
+            });
+
+            var result = tm.graphics.Canvas();
+            result.resize(tex.width, tex.height);
+            result.drawBitmap(bitmap, 0, 0);
+
+            tm.asset.AssetManager.set(name + "Red", result);
+        });
+
+
         gls2.Danmaku.setup();
         gls2.Effect.setup();
 

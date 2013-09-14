@@ -13,7 +13,7 @@ gls2.BombItem = tm.createClass({
     age: 0,
 
     init: function(x, y, player) {
-        this.superInit("bombIcon", 32, 32);
+        this.superInit("bombIcon", 40, 40);
         this.setPosition(x, y);
         this.player = player;
 

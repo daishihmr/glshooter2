@@ -116,9 +116,21 @@ gls2.Danmaku["basic0-1"] = new bulletml.Root({
 });
 
 /**
- * 自機狙い弾を20フレーム間隔で連射.
+ * 自機狙い弾を連射.
  */
 gls2.Danmaku["basic1-0"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(40),
+            $fire0($spd3),
+        ]),
+    ]),
+});
+
+/**
+ * 自機狙い弾を連射.
+ */
+gls2.Danmaku["basic1-1"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval(20),
@@ -174,15 +186,48 @@ gls2.Danmaku["cannon2-0"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
             $interval(20),
+            $absoluteNway(4,   "0-10+$loop.index*15",   "0+10+$loop.index*15", $spd2),
+            $absoluteNway(4,  "90-10+$loop.index*15",  "90+10+$loop.index*15", $spd2),
+            $absoluteNway(4, "180-10+$loop.index*15", "180+10+$loop.index*15", $spd2),
+            $absoluteNway(4, "270-10+$loop.index*15", "270+10+$loop.index*15", $spd2),
+            $interval(20),
+            $absoluteNway(3,   "0-10+45+$loop.index*15",   "0+10+45+$loop.index*15", $spd3, BNS),
+            $absoluteNway(3,  "90-10+45+$loop.index*15",  "90+10+45+$loop.index*15", $spd3, BNS),
+            $absoluteNway(3, "180-10+45+$loop.index*15", "180+10+45+$loop.index*15", $spd3, BNS),
+            $absoluteNway(3, "270-10+45+$loop.index*15", "270+10+45+$loop.index*15", $spd3, BNS),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $.fire($.direction("  0+$loop.index*10", "absolute"), $spd1, RI),
+            $.fire($.direction(" 90+$loop.index*10", "absolute"), $spd1, RI),
+            $.fire($.direction("180+$loop.index*10", "absolute"), $spd1, RI),
+            $.fire($.direction("270+$loop.index*10", "absolute"), $spd1, RI),
+            $.fire($.direction("  0-$loop.index*10", "absolute"), $spd1, RI),
+            $.fire($.direction(" 90-$loop.index*10", "absolute"), $spd1, RI),
+            $.fire($.direction("180-$loop.index*10", "absolute"), $spd1, RI),
+            $.fire($.direction("270-$loop.index*10", "absolute"), $spd1, RI),
+            $interval(10),
+        ]),
+    ]),
+});
+
+/**
+ * まこぴー2.
+ */
+gls2.Danmaku["cannon2-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $interval(20),
             $absoluteNway(6,   "0-10+$loop.index*15",   "0+10+$loop.index*15", $spd2),
             $absoluteNway(6,  "90-10+$loop.index*15",  "90+10+$loop.index*15", $spd2),
             $absoluteNway(6, "180-10+$loop.index*15", "180+10+$loop.index*15", $spd2),
             $absoluteNway(6, "270-10+$loop.index*15", "270+10+$loop.index*15", $spd2),
             $interval(20),
-            $absoluteNway(6,   "0-10+45+$loop.index*15",   "0+10+45+$loop.index*15", $spd3, BNS),
-            $absoluteNway(6,  "90-10+45+$loop.index*15",  "90+10+45+$loop.index*15", $spd3, BNS),
-            $absoluteNway(6, "180-10+45+$loop.index*15", "180+10+45+$loop.index*15", $spd3, BNS),
-            $absoluteNway(6, "270-10+45+$loop.index*15", "270+10+45+$loop.index*15", $spd3, BNS),
+            $absoluteNway(7,   "0-10+45+$loop.index*15",   "0+10+45+$loop.index*15", $spd3, BNS),
+            $absoluteNway(7,  "90-10+45+$loop.index*15",  "90+10+45+$loop.index*15", $spd3, BNS),
+            $absoluteNway(7, "180-10+45+$loop.index*15", "180+10+45+$loop.index*15", $spd3, BNS),
+            $absoluteNway(7, "270-10+45+$loop.index*15", "270+10+45+$loop.index*15", $spd3, BNS),
         ]),
     ]),
     "top1": $.action([
