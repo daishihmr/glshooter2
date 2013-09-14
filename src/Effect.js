@@ -305,7 +305,7 @@ gls2.ChargeEffect = tm.createClass({
     target: null,
     rad: 0,
     angle: 0,
-    alpha : 1,
+    alpha : 2,
     isEffect: true,
 
     reverse: false,
@@ -320,17 +320,19 @@ gls2.ChargeEffect = tm.createClass({
         this.alpha = reverse ? 1 : 0;
     },
 
-    update: function() {
+    update: function(app) {
         if (this.target.parent === null) {
             this.remove();
             return;
         }
 
-        for (var i = 0; i < 9; i++) {
-            var a = this.angle + i/9 * Math.PI*2;
-            gls2.Particle(80, this.alpha, 0.9)
-                .setPosition(Math.cos(a)*this.rad+this.target.x, Math.sin(a)*this.rad+this.target.y)
-                .addChildTo(this.target.parent);
+        if (app.frame % 2 === 0) {
+            for (var i = 0; i < 9; i++) {
+                var a = this.angle + i/9 * Math.PI*2;
+                gls2.Particle(60, this.alpha, 0.9)
+                    .setPosition(Math.cos(a)*this.rad+this.target.x, Math.sin(a)*this.rad+this.target.y)
+                    .addChildTo(this.target.parent);
+            }
         }
         this.angle += 0.05;
         this.rad += this.reverse ? 4 : -4;
