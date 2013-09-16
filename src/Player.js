@@ -49,6 +49,7 @@ gls2.Player = tm.createClass(
 
     roll: 0,
     controllable: true,
+    attackable: true,
     muteki: false,
     gameScene : null,
 
@@ -252,8 +253,8 @@ gls2.Player = tm.createClass(
             this.x = gls2.math.clamp(this.x, 15, SC_W-15);
             this.y = gls2.math.clamp(this.y, 15, SC_H-15);
 
-            var pressC = kb.getKey("c");
-            var pressZ = kb.getKey("z");
+            var pressC = kb.getKey("c") && this.attackable;
+            var pressZ = kb.getKey("z") && this.attackable;
 
             if (pressC) {
                 this.pressTimeC += 1;
@@ -274,7 +275,7 @@ gls2.Player = tm.createClass(
             this.laser.y = this.y - 40;
 
             // スペシャルウェポン
-            if (kb.getKeyDown("x")) {
+            if (kb.getKeyDown("x") && this.attackable) {
                 if (this.gameScene.hyperLevel > 0 && !this.gameScene.isHyperMode) {
                     // ハイパー
                     this.gameScene.startHyperMode();

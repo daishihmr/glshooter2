@@ -142,18 +142,39 @@ gls2.GlShooter2 = tm.createClass(
             canvas.resize(tex.width, tex.height);
             canvas.drawTexture(tex, 0, 0);
 
-            var bitmap = canvas.getBitmap();
-            bitmap.filter({
+            var bmRed = canvas.getBitmap();
+            bmRed.filter({
                 calc: function(pixel, index, x, y, bitmap) {
                     bitmap.setPixelIndex(index, pixel[0], 0, 0);
                 }
             });
+            var cvRed = tm.graphics.Canvas();
+            cvRed.resize(tex.width, tex.height);
+            cvRed.drawBitmap(bmRed, 0, 0);
+            tm.asset.AssetManager.set(name + "Red", cvRed);
 
-            var result = tm.graphics.Canvas();
-            result.resize(tex.width, tex.height);
-            result.drawBitmap(bitmap, 0, 0);
-
-            tm.asset.AssetManager.set(name + "Red", result);
+            // var bmShadow = canvas.getBitmap();
+            // for (var i = 0; i < 6; i++) {
+            //     bmShadow.filter({
+            //         calc: function(pixel, index, x, y, bitmap) {
+            //             var a = 0;
+            //             a += bitmap.getPixel(x + -1, y + -1)[3] * 1/16;
+            //             a += bitmap.getPixel(x + -1, y +  0)[3] * 2/16;
+            //             a += bitmap.getPixel(x + -1, y + +1)[3] * 1/16;
+            //             a += bitmap.getPixel(x +  0, y + -1)[3] * 2/16;
+            //             a += bitmap.getPixel(x +  0, y +  0)[3] * 4/16;
+            //             a += bitmap.getPixel(x +  0, y + +1)[3] * 2/16;
+            //             a += bitmap.getPixel(x + +1, y + -1)[3] * 1/16;
+            //             a += bitmap.getPixel(x + +1, y +  0)[3] * 2/16;
+            //             a += bitmap.getPixel(x + +1, y + +1)[3] * 1/16;
+            //             bitmap.setPixel32Index(index, 255, 255, 255, a);
+            //         }
+            //     });
+            // }
+            // var cvShadow = tm.graphics.Canvas();
+            // cvShadow.resize(tex.width, tex.height);
+            // cvShadow.drawBitmap(bmShadow, 0, 0);
+            // tm.asset.AssetManager.set(name + "Shadow", cvShadow);
         });
 
 

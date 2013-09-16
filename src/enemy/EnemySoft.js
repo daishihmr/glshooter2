@@ -469,7 +469,7 @@ gls2.EnemySoft.Erika = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.attack(enemy, "basic3-0");
         enemy.on("enterframe", function() {
-            this.y += 0.7;
+            this.y += 0.8;
             this.enableFire = this.entered;
         });
     },
@@ -679,6 +679,144 @@ gls2.EnemySoft.Nagisa3 = gls2.EnemySoft.Nagisa3();
  * ステージ２中ボス「ミショウ」
  */
 gls2.EnemySoft.Mai = _MBossCommon(["mai-1", "mai-2"]);
+
+/**
+ * ステージ２ボス「ヒュウガ」
+ */
+gls2.EnemySoft.Saki1 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "saki-1-1",
+            "saki-1-2",
+            "saki-1-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.startAttack = false;
+        enemy.endAttack = false;
+        enemy.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.2, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            if (this.endAttack) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Saki1 = gls2.EnemySoft.Saki1();
+gls2.EnemySoft.Saki2 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "nagisa-2-1",
+            "nagisa-2-2",
+            "nagisa-2-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.tweener.clear()
+            .wait(800)
+            .call(function() {
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Saki2 = gls2.EnemySoft.Saki2();
+gls2.EnemySoft.Saki3 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "nagisa-2-1",
+            "nagisa-2-2",
+            "nagisa-2-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.tweener.clear()
+            .wait(800)
+            .call(function() {
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Saki3 = gls2.EnemySoft.Saki3();
 
 })();
 

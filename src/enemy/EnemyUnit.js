@@ -277,6 +277,11 @@ gls2.EnemyUnit = {
  */
 "mai": [{ hard:$e.Mai, soft:$s.Mai, x:SC_W+300, y:SC_H*0.2 }],
 
+/**
+ * ステージ２ボス「ヒュウガ」
+ */
+"hyuga": [{ hard:$e.Saki, soft:[$s.Saki1, $s.Saki2, $s.Saki3], x:SC_W*0.5, y:-100, boss:true }],
+
 };
 
 })();

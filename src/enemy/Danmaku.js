@@ -677,6 +677,34 @@ gls2.Danmaku["mai-2"] = new bulletml.Root({
     ]),
 });
 
+/**
+ * たぬたぬ第1形態-1
+ */
+gls2.Danmaku["saki-1-1"] = new bulletml.Root({
+    "top": $.action([
+        $interval(60),
+        $.repeat(10, [
+            $.actionRef("oneround", "($loop.index + 1) * 3"),
+        ]),
+    ]),
+    "oneround": $.action([
+        $.bindVar("spd", "$1"),
+        $.repeat("90/$spd", [
+            $absoluteNway(9, "$spd * $loop.index", "$spd * $loop.index + 360", $spd2, BNS),
+            $absoluteNway(9, "$spd * $loop.index * -1", "$spd * $loop.index * -1 + 360", $spd2, BNS),
+            $interval(15),
+        ]),
+    ]),
+});
+/**
+ * たぬたぬ第1形態-2
+ */
+gls2.Danmaku["saki-1-2"] = new bulletml.Root({
+    "top": $.action([
+    ]),
+});
+gls2.Danmaku["saki-1-3"] = gls2.Danmaku["saki-1-2"];
+
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 2000; i++) {
         bulletPool.push(gls2.Bullet());
@@ -729,12 +757,13 @@ gls2.Danmaku.setup = function() {
 /**
  * エフェクト付きの弾幕全消し
  */
-gls2.Danmaku.erase = function(star, large) {
+gls2.Danmaku.erase = function(star, large, grub) {
     var bullets = [].concat(activeList);
     for (var i = 0, len = bullets.length; i < len; i++) {
         if (star) {
-            gls2.StarItemSky(!!large)
-                .setPosition(bullets[i].x, bullets[i].y);
+            var s = gls2.StarItemSky(!!large);
+            s.setPosition(bullets[i].x, bullets[i].y);
+            if (grub) s.grub = true;
         }
         bullets[i].destroy();
     }

@@ -176,7 +176,7 @@ gls2.Enemy = tm.createClass(
             }
 
             if (this.erase) {
-                gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
+                gls2.Danmaku.erase(true, this.gameScene.isHyperMode, (this instanceof gls2.Boss));
             }
 
             this.dispatchEvent(tm.event.Event("destroy"));
@@ -184,7 +184,7 @@ gls2.Enemy = tm.createClass(
 
             return true;
         } else {
-            if (this.hp < this.hpMax * 0.2) {
+            if (this.hp < 30) {
                 this.ondying();
             }
             return false;

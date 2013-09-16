@@ -24,7 +24,7 @@ gls2.BombItem = tm.createClass({
 
     update: function() {
         this.x += this.vx;
-        this.y += this.vy;
+        this.y += this.vy * 2;
 
         if (gls2.distanceSq(this, this.player) < 45*45) {
             this.player.gameScene.addBomb(1);

@@ -380,7 +380,7 @@ gls2.GameScene = tm.createClass(
             gls2.Danmaku.erase();
         } else {
 
-            if (this.player.parent !== null && this.player.muteki === false && this.isBombActive === false && this.hyperMutekiTime <= 0) {
+            if (this.player.parent !== null && this.player.muteki === false && this.isBombActive === false && this.hyperMutekiTime <= 0 && !gls2.Setting.MUTEKI) {
 
                 // 敵弾vs自機
                 for (var i = gls2.Bullet.activeList.length; gls2.Bullet.activeList[--i] !== undefined;) {
@@ -467,7 +467,8 @@ gls2.GameScene = tm.createClass(
             this.isHyperMode || gls2.distanceSq(enemy,this.player) < gls2.Setting.CROSS_RANGE,
             enemy.x,
             enemy.y,
-            enemy.star
+            enemy.star,
+            (enemy instanceof gls2.Boss)
         );
 
         // ハイパー中はコンボ数が急上昇
@@ -486,10 +487,12 @@ gls2.GameScene = tm.createClass(
         this.baseScore += enemy.score * bonus;
     },
 
-    generateStar: function(ground, large, x, y, count) {
+    generateStar: function(ground, large, x, y, count, isBoss) {
         var s = ground ? gls2.StarItemGround : gls2.StarItemSky;
         for (var i = 0; i < count; i++) {
-            s(large).setPosition(x, y);
+            var star = s(large);
+            star.setPosition(x, y);
+            if (isBoss) star.grub = true;
         }
     },
 
@@ -602,6 +605,7 @@ gls2.GameScene = tm.createClass(
             .moveBy(0, -180, 1000, "easeOutBack")
             .call(function() {
                 this.controllable = true;
+                this.attackable = true;
             }.bind(this.player))
             .wait(gls2.Setting.LAUNCH_MUTEKI_TIME)
             .call(function() {

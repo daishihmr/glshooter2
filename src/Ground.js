@@ -5,7 +5,7 @@
 (function() {
 
 /** @const */
-var LS = 5;
+var LS = 3;
 /** @const */
 var C = [];
 /** @const */
