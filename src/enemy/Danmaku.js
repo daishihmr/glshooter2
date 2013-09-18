@@ -682,7 +682,7 @@ gls2.Danmaku["mai-2"] = new bulletml.Root({
  */
 gls2.Danmaku["saki-1-1"] = new bulletml.Root({
     "top": $.action([
-        $interval(60),
+        $interval(100),
         $.repeat(10, [
             $.actionRef("oneround", "($loop.index + 1) * 3"),
         ]),
@@ -690,9 +690,9 @@ gls2.Danmaku["saki-1-1"] = new bulletml.Root({
     "oneround": $.action([
         $.bindVar("spd", "$1"),
         $.repeat("90/$spd", [
-            $absoluteNway(9, "$spd * $loop.index", "$spd * $loop.index + 360", $spd2, BNS),
-            $absoluteNway(9, "$spd * $loop.index * -1", "$spd * $loop.index * -1 + 360", $spd2, BNS),
-            $interval(15),
+            $absoluteNway(9, "$spd * $loop.index*+1", "$spd * $loop.index*+1 + 360", $spd2, BNS),
+            $absoluteNway(9, "$spd * $loop.index*-1", "$spd * $loop.index*-1 + 360", $spd2, BNS),
+            $interval(12),
         ]),
     ]),
 });
@@ -703,6 +703,9 @@ gls2.Danmaku["saki-1-2"] = new bulletml.Root({
     "top": $.action([
     ]),
 });
+/**
+ * たぬたぬ第1形態-3
+ */
 gls2.Danmaku["saki-1-3"] = gls2.Danmaku["saki-1-2"];
 
 gls2.Danmaku.setup = function() {
