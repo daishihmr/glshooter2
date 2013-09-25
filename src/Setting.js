@@ -328,7 +328,7 @@ gls2.Setting = {
      * オートボム発動時に残ボム数をすべて消費するか
      * @const
      */
-    AUTO_BOMB_TO_ZERO: true,
+    AUTO_BOMB_TO_ZERO: false,
 
     /**
      * @const

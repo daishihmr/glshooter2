@@ -39,13 +39,13 @@ var IVS = function(action) { return $.bullet(action, {visible:false}) };
 var $interval = function(v) { return $.wait(v + "*(1-$rank)*$hyperOff") };
 
 // 弾速
-var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 0.20 + (" + v + "*0.1)" ); };
-var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 0.50 + (" + v + "*0.1)" ); };
-var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 0.80 + (" + v + "*0.1)" ); };
-var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 1.10 + (" + v + "*0.1)" ); };
-var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 1.40 + (" + v + "*0.1)" ); };
-var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 1.70 + (" + v + "*0.1)" ); };
-var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 2.00 + (" + v + "*0.1)" ); };
+var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 0.20 + ("+v+"*0.1)" ); };
+var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 0.50 + ("+v+"*0.1)" ); };
+var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 0.80 + ("+v+"*0.1)" ); };
+var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 1.10 + ("+v+"*0.1)" ); };
+var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 1.40 + ("+v+"*0.1)" ); };
+var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 1.70 + ("+v+"*0.1)" ); };
+var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 2.00 + ("+v+"*0.1)" ); };
 
 /** 自機狙い弾 */
 var $fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3, RNS) };
@@ -414,7 +414,9 @@ gls2.Danmaku["komachi-2"] = new bulletml.Root({
     ]),
 });
 
-// ほのか
+/**
+ * ほのか
+ */
 gls2.Danmaku["honoka-1"] = new bulletml.Root({
     "top0": $.action([
         $.wait(60),
@@ -449,7 +451,9 @@ gls2.Danmaku["honoka-1"] = new bulletml.Root({
     ]),
 });
 
-// なぎさ
+/**
+ * なぎさ第1形態-1
+ */
 gls2.Danmaku["nagisa-1-1"] = new bulletml.Root({
     "top0": $.action([
         $interval(90),
@@ -467,6 +471,9 @@ gls2.Danmaku["nagisa-1-1"] = new bulletml.Root({
         $interval(60),
     ]),
 });
+/**
+ * なぎさ第1形態-2
+ */
 gls2.Danmaku["nagisa-1-2"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(12, [
@@ -497,6 +504,9 @@ gls2.Danmaku["nagisa-1-2"] = new bulletml.Root({
         ]),
     ]),
 });
+/**
+ * なぎさ第1形態-3
+ */
 gls2.Danmaku["nagisa-1-3"] = new bulletml.Root({
     "top0": $.action([
         $interval(60),
@@ -539,6 +549,9 @@ gls2.Danmaku["nagisa-1-3"] = new bulletml.Root({
         ]),
     ]),
 });
+/**
+ * なぎさ第2形態-1
+ */
 gls2.Danmaku["nagisa-2-1"] = new bulletml.Root({
     "top0": $.action([
         $interval(120),
@@ -557,6 +570,9 @@ gls2.Danmaku["nagisa-2-1"] = new bulletml.Root({
         ]),
     ]),
 });
+/**
+ * なぎさ第2形態-2
+ */
 gls2.Danmaku["nagisa-2-2"] = new bulletml.Root({
     "top0": $.action([
         $interval(120),
@@ -578,6 +594,9 @@ gls2.Danmaku["nagisa-2-2"] = new bulletml.Root({
         ]),
     ]),
 });
+/**
+ * なぎさ第2形態-3
+ */
 gls2.Danmaku["nagisa-2-3"] = new bulletml.Root({
     "top": $.action([
         $interval(120),
@@ -589,6 +608,9 @@ gls2.Danmaku["nagisa-2-3"] = new bulletml.Root({
         ]),
     ]),
 });
+/**
+ * なぎさ第3形態-1
+ */
 gls2.Danmaku["nagisa-3-1"] = new bulletml.Root({
     "top0": $.action([
         $interval(50),
@@ -612,7 +634,9 @@ gls2.Danmaku["nagisa-3-1"] = new bulletml.Root({
     ]),
 });
 
-// 舞
+/**
+ * 舞-1
+ */
 gls2.Danmaku["mai-1"] = new bulletml.Root({
     "top0": $.action([
         $interval(50),
@@ -660,6 +684,9 @@ gls2.Danmaku["mai-1"] = new bulletml.Root({
         ]),
     ]),
 });
+/**
+ * 舞-2
+ */
 gls2.Danmaku["mai-2"] = new bulletml.Root({
     "top": $.action([
         $interval(50),
@@ -683,24 +710,40 @@ gls2.Danmaku["mai-2"] = new bulletml.Root({
 gls2.Danmaku["saki-1-1"] = new bulletml.Root({
     "top": $.action([
         $interval(100),
-        $.repeat(10, [
-            $.actionRef("oneround", "($loop.index + 1) * 3"),
+        $.repeat(3, [
+            $.actionRef("oneround", "9+$loop.index*4"),
         ]),
     ]),
     "oneround": $.action([
-        $.bindVar("spd", "$1"),
-        $.repeat("90/$spd", [
-            $absoluteNway(9, "$spd * $loop.index*+1", "$spd * $loop.index*+1 + 360", $spd2, BNS),
-            $absoluteNway(9, "$spd * $loop.index*-1", "$spd * $loop.index*-1 + 360", $spd2, BNS),
+        $.bindVar("way", "$1"),
+        $.repeat("30", [
+            $nway("$way", "3 * $loop.index*+1", "3 * $loop.index*+1 + 360", $spd3, BNS),
+            $nway("$way", "3 * $loop.index*-1", "3 * $loop.index*-1 + 360", $spd3, BNS),
             $interval(12),
         ]),
     ]),
 });
+
 /**
  * たぬたぬ第1形態-2
  */
 gls2.Danmaku["saki-1-2"] = new bulletml.Root({
     "top": $.action([
+        $interval(100),
+        $.repeat(5, [
+            $.bindVar("way", "5+$loop.index*2"),
+            $.repeat(6, [
+                $.bindVar("s", "$loop.index*0.6"),
+                $.action((function() {
+                    var a = [];
+                    for (var i = 0; i < 5; i++) {
+                        a.push($nway("$way", -30, 30, $spd3("$s"), RL, $.offsetX(-120+i*60)));
+                    }
+                    return a;
+                })()),
+            ]),
+            $interval(60),
+        ]),
     ]),
 });
 /**
