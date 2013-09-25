@@ -13,7 +13,7 @@ tm.main(function() {
         if (rad <= 0) return;
         canvas
             .setFillStyle(tm.graphics.RadialGradient(x,y,0,x,y,rad).addColorStopList([
-                {offset:0,color:"rgba(255,255,255,0.6)"},
+                {offset:0,color:"rgba(255,255,255,0.3)"},
                 {offset:1,color:"rgba(255,  0,  0,0.0)"},
             ]).toStyle())
             .fillRect(x-rad,y-rad,rad*2,rad*2);
@@ -40,8 +40,8 @@ tm.main(function() {
         if (rad <= 0) return;
         canvas
             .setFillStyle(tm.graphics.RadialGradient(x,y,0,x,y,rad*2).addColorStopList([
-                {offset:0.0,color:"rgba(255,255,255,0.1)"},
-                {offset:1.0,color:"rgba(255,255,  0,0.01)"},
+                {offset:0.0,color:"rgba(255,255,255,0.08)"},
+                {offset:1.0,color:"rgba(255,255,  0,0.0)"},
             ]).toStyle())
             .fillRect(x-rad,y-rad,rad*2,rad*2);
     };
@@ -52,7 +52,9 @@ tm.main(function() {
         var dir = Math.PI/2+dr;
         var r = 0;
         for (var i = 0; i < S; i++) {
+            df(x-15, y+4, r);
             df(x, y, r);
+            df(x+15, y+4, r);
             x += Math.cos(dir) * sr;
             y += Math.sin(dir) * sr;
             var j = i / S;
@@ -94,10 +96,10 @@ tm.main(function() {
 
     canvas.clear();
     d2(    0, 1.8, 16, dh);
-    d2(-0.10, 1.4, 20, dh);
-    d2( 0.10, 1.4, 20, dh);
-    d2(-0.20, 1.3, 20, dh);
-    d2( 0.20, 1.3, 20, dh);
+    d2(-0.10, 1.6, 20, dh);
+    d2( 0.10, 1.6, 20, dh);
+    d2(-0.20, 1.5, 20, dh);
+    d2( 0.20, 1.5, 20, dh);
     d2(-0.30, 1.2, 20, dh);
     d2( 0.30, 1.2, 20, dh);
     d2(-0.40, 1.1, 20, dh);
