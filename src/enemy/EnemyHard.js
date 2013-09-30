@@ -151,7 +151,13 @@ gls2.Enemy.FighterM = tm.createClass(
         this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(1);
     },
     ondying: function() {
-        this._sprite.toRed();
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -178,7 +184,13 @@ gls2.Enemy.Komachi = tm.createClass(
         this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(1);
     },
     ondying: function() {
-        this._sprite.toRed();
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -206,7 +218,13 @@ gls2.Enemy.Cannon = tm.createClass({
         this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
     },
     ondying: function() {
-        this._sprite.toRed();
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -277,7 +295,13 @@ gls2.Enemy.Cannon2 = tm.createClass({
         this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(4);
     },
     ondying: function() {
-        this._sprite.toRed();
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -329,7 +353,13 @@ gls2.Enemy.Honoka = tm.createClass({
         this.setScale(1.5);
     },
     ondying: function() {
-        this._sprite.toRed();
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     destroy: function() {
         this.fallDown();
@@ -358,7 +388,13 @@ gls2.Enemy.Nagisa = tm.createClass(
         this.setScale(1.5);
     },
     ondying: function() {
-        this._sprite.toRed();
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -509,6 +545,20 @@ var _Sprite = tm.createClass(
         var bh = this.srcRect.height;
 
         this.image = this.texName + "Red";
+
+        this.srcRect.x = bx;
+        this.srcRect.y = by;
+        this.srcRect.width = bw;
+        this.srcRect.height = bh;
+    },
+
+    toNormal: function() {
+        var bx = this.srcRect.x;
+        var by = this.srcRect.y;
+        var bw = this.srcRect.width;
+        var bh = this.srcRect.height;
+
+        this.image = this.texName;
 
         this.srcRect.x = bx;
         this.srcRect.y = by;
