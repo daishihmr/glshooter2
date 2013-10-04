@@ -754,8 +754,9 @@ gls2.Danmaku["saki-1-2"] = new bulletml.Root({
  */
 gls2.Danmaku["saki-1-3"] = new bulletml.Root({
     "top": $.action([
+        $.bindVar("dir", "Math.random() < 0.5 ? -1 : 1"),
         $.repeat(24, [
-            $.fire($.direction("-120 + $loop.index*10"), $.speed(2), RL($.actionRef("seed"))),
+            $.fire($.direction("120*$dir + $loop.index*10*-$dir"), $.speed(2), RL($.actionRef("seed"))),
             $interval(8),
         ]),
         $interval(60),
@@ -763,9 +764,58 @@ gls2.Danmaku["saki-1-3"] = new bulletml.Root({
     "seed": $.action([
         $.wait(10),
         $.changeSpeed($.speed(0), 50),
-        $.wait(60),
+        $.wait(90),
         $nway(13, 0, 360-360/13, $spd2, RNL),
         $.vanish,
+    ]),
+});
+
+/**
+ * たぬたぬ第2形態-1
+ */
+gls2.Danmaku["saki-2-1"] = new bulletml.Root({
+    "top0": $.action([
+        $interval(100),
+        $.repeat(4, [
+            $nway(60, "$loop.index*+5+0", "$loop.index*+5+360 - 360/60", $spd2, BNS, $.offsetX(-40)),
+            $nway(60, "$loop.index*-5+0", "$loop.index*-5+360 - 360/60", $spd2, BNS, $.offsetX(+40)),
+            $interval(60),
+            $nway(59, "$loop.index*+5+0", "$loop.index*+5+360 - 360/59", $spd2, BNS, $.offsetX(-40)),
+            $nway(59, "$loop.index*-5+0", "$loop.index*-5+360 - 360/59", $spd2, BNS, $.offsetX(+40)),
+            $interval(60),
+        ]),
+    ]),
+    "top1": $.action([
+        $interval(100),
+        $.repeat(4, [
+            $.repeat(7, [
+                $.bindVar("o", "$loop.index*20 - 60"),
+                $.fire($.direction("$o"), $spd5, RNL),
+                $.repeat(4, [
+                    $.bindVar("w", "$loop.count"),
+                    $nway("$w+1", "$w*-0.6 + $o", "$w*+0.6 + $o", $spd5("$w*-1.0"), RNL),
+                ]),
+            ]),
+            $interval(120),
+        ]),
+    ]),
+});
+
+/**
+ * たぬたぬ第2形態-2
+ */
+gls2.Danmaku["saki-2-2"] = gls2.Danmaku["saki-2-1"];
+
+/**
+ * たぬたぬ第2形態-3
+ */
+gls2.Danmaku["saki-2-3"] = gls2.Danmaku["saki-2-1"];
+
+/**
+ * たぬたぬ発狂
+ */
+gls2.Danmaku["saki-3-1"] = new bulletml.Root({
+    "top": $.action([
     ]),
 });
 

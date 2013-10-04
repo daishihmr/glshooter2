@@ -741,9 +741,9 @@ gls2.EnemySoft.Saki2 = tm.createClass(
     init: function() {
         this.superInit();
         this.patterns = [
-            "nagisa-2-1",
-            "nagisa-2-2",
-            "nagisa-2-3",
+            "saki-2-1",
+            "saki-2-2",
+            "saki-2-3",
         ];
     },
     setup: function(enemy) {
@@ -784,9 +784,7 @@ gls2.EnemySoft.Saki3 = tm.createClass(
     init: function() {
         this.superInit();
         this.patterns = [
-            "nagisa-2-1",
-            "nagisa-2-2",
-            "nagisa-2-3",
+            "saki-3-1",
         ];
     },
     setup: function(enemy) {
