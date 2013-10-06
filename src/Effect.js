@@ -7,7 +7,7 @@
 gls2.Effect = {};
 gls2.Effect.setup = function() {
 
-    noise = gls2.Noise.generate(256);
+    noise = gls2.Noise.generate(512);
 
     gls2.effectSprite = {};
 

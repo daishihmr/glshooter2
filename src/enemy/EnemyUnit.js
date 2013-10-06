@@ -251,6 +251,28 @@ gls2.EnemyUnit = {
 "fighter-m-5": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],
 "fighter-m-6": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.8, y:SC_H*-0.3 }],
 
+// 小型戦闘機「ツキカゲ」4面用右から
+"tsukikage-r": [
+    { hard:$e.FighterS, soft:$s.Kurokawa4r(700), x:SC_W*1.3, y:SC_H*0.4 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4r(600), x:SC_W*1.5, y:SC_H*0.4 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4r(500), x:SC_W*1.2, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4r(400), x:SC_W*1.4, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4r(300), x:SC_W*1.6, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4r(200), x:SC_W*1.3, y:SC_H*0.6 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4r(100), x:SC_W*1.5, y:SC_H*0.6 },
+],
+
+// 小型戦闘機「ツキカゲ」4面用左から
+"tsukikage-l": [
+    { hard:$e.FighterS, soft:$s.Kurokawa4l(700), x:SC_W*-0.3, y:SC_H*0.6 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4l(600), x:SC_W*-0.5, y:SC_H*0.6 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4l(500), x:SC_W*-0.2, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4l(400), x:SC_W*-0.4, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4l(300), x:SC_W*-0.6, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4l(200), x:SC_W*-0.3, y:SC_H*0.4 },
+    { hard:$e.FighterS, soft:$s.Kurokawa4l(100), x:SC_W*-0.5, y:SC_H*0.4 },
+],
+
 // 中型戦闘機「アキモト」1面用
 "komachi-0": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi-1": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],

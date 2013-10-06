@@ -6325,7 +6325,8 @@ tm.event = tm.event || {};
             var listeners = this._listeners[e.type];
             if (listeners) {
                 for (var i=0,len=listeners.length; i<len; ++i) {
-                    listeners[i].call(this, e);
+                    if (listeners[i])
+                        listeners[i].call(this, e);
                 }
             }
         },
@@ -13951,6 +13952,7 @@ tm.namespace("tm.app", function() {
             this.isPlay = true;
             this._tweens  = [];
             this._actions = [];
+            return this;
         }
 
     });

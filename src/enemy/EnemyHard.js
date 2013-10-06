@@ -16,6 +16,7 @@ gls2.Enemy.DATA = {
     "hanasaki":  [   150,   200000,  true,  true, 10, {"radius": 40}, ],
     "myodoin":   [    50,    15000,  true, false,  1, {"radius": 40}, ],
     "kenzaki":   [   200,   300000,  true,  true, 10, {"width":100, "height":40}, ],
+    "tsukikage": [     8,     1000, false, false,  5, {"width":100, "height":20}, ],
     "kurokawa":  [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
@@ -134,6 +135,35 @@ gls2.Enemy.Tank1 = tm.createClass({
 /**
  * 小型戦闘機「ツキカゲ」
  */
+gls2.Enemy.FighterS = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "tsukikage");
+
+        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(1);
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    },
+});
 
 /**
  * 中型戦闘機「クロカワ」

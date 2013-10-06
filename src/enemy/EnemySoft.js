@@ -451,6 +451,76 @@ var _MiddleFighterCommon = tm.createClass(
 gls2.EnemySoft.MiddleFighter1 = _MiddleFighterCommon(0.5, "kurokawa-1");
 
 /**
+ * ゆりさん4面右から
+ */
+gls2.EnemySoft.Kurokawa4r = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    delay: 0,
+
+    init: function(delay) {
+        this.superInit();
+
+        this.delay = delay;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.tweener
+            .wait(this.delay)
+            .call(function() {
+                gls2.EnemySoft.attack(this, "yuri-0");
+                this.timeline
+                    .clear()
+                    .by({x: -SC_W}, 2000, 0)
+                    .by({y: -SC_H*0.3}, 2000, 0, "easeInOutQuad");
+            }.bind(enemy))
+            .wait(2500)
+            .by({y: SC_H}, 4000, "easeInQuad")
+            .call(function() {
+                this.remove();
+            }.bind(enemy));
+    },
+
+});
+
+/**
+ * ゆりさん4面左から
+ */
+gls2.EnemySoft.Kurokawa4l = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    delay: 0,
+
+    init: function(delay) {
+        this.superInit();
+        this.delay = delay;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.tweener
+            .wait(this.delay)
+            .call(function() {
+                gls2.EnemySoft.attack(this, "yuri-0");
+                this.timeline
+                    .by({x: SC_W}, 2000, 0)
+                    .by({y: -SC_H*0.3}, 2000, 0, "easeInOutQuad");
+            }.bind(enemy))
+            .wait(2500)
+            .by({y: SC_H}, 4000, "easeInQuad")
+            .call(function() {
+                this.remove();
+            }.bind(enemy));
+    },
+
+});
+
+/**
  * 大型戦闘機
  */
 gls2.EnemySoft.LargeFighter1 = _MiddleFighterCommon(0.3, "komachi-1");

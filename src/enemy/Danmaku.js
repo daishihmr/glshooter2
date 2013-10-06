@@ -305,6 +305,21 @@ gls2.Danmaku["cannon5-0"] = new bulletml.Root({
 });
 
 /**
+ * ゆりさん4面
+ */
+gls2.Danmaku["yuri-0"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(5, [
+            $interval(60),
+            $.repeat(3, [
+                $nway(3, -30, 30, $spd1, BNS),
+                $interval(8),
+            ]),
+        ]),
+    ]),
+});
+
+/**
  * エレン1面
  */
 gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
