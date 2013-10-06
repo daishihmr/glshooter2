@@ -742,7 +742,7 @@ gls2.Danmaku["saki-1-2"] = new bulletml.Root({
                     return a;
                 })()),
             ]),
-            $interval(60),
+            $interval(90),
         ]),
     ]),
 });
