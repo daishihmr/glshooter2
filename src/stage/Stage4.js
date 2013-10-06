@@ -32,8 +32,8 @@ gls2.Stage4 = tm.createClass(
 
     setupBackground: function() {
         this.gameScene.ground.background = tm.graphics.LinearGradient(0, 0, 0, SC_H).addColorStopList([
-            { offset:0, color:"hsl(40,50%,20%)" },
-            { offset:1, color:"hsl(40,50%,10%)" },
+            { offset:0, color:"hsl(30,30%,15%)" },
+            { offset:1, color:"hsl(30,50%, 5%)" },
         ]).toStyle();
     },
 
