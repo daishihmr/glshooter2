@@ -184,7 +184,7 @@ gls2.Enemy = tm.createClass(
 
             return true;
         } else {
-            if (this.hp < 30) {
+            if (this.hp < 40) {
                 this.ondying();
             }
             return false;

@@ -298,7 +298,7 @@ gls2.Setting = {
      * ハイパーモード中の敵弾幕発射間隔
      * @const
      */
-    ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.5,
+    ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.8,
 
     /**
      * 星アイテム（大）が出る距離

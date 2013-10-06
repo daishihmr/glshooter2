@@ -21,7 +21,7 @@ gls2.ShotBullet = tm.createClass({
         var SZ = 64;
         this.superInit("shotbullet", SZ, SZ);
         this.blendMode = "lighter";
-        // this.alpha = 0.8;
+        this.alpha = 0.5;
 
         this.attackPower = gls2.Setting.SHOT_ATTACK_POWER;
 
