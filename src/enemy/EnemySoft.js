@@ -855,6 +855,7 @@ gls2.EnemySoft.Saki3 = tm.createClass(
         this.superInit();
         this.patterns = [
             "saki-3-1",
+            "saki-3-2",
         ];
     },
     setup: function(enemy) {
