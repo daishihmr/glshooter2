@@ -27,7 +27,7 @@ gls2.EnemySoft.attack = function(enemy, danmakuName) {
     var ticker = gls2.Danmaku[danmakuName].createTicker();
     enemy.on("enterframe", ticker);
     enemy.on("completeattack", function() {
-        this.removeEventListener("enterframe", ticker);
+        ticker.stop = true;
     });
 };
 
@@ -39,7 +39,7 @@ gls2.EnemySoft.stopAttack = function(enemy) {
     if (listeners) {
         for (var i = 0, len = listeners.length; i < len; i++) {
             if (listeners[i] && listeners[i].isDanmaku) {
-                enemy.removeEventListener("enterframe", listeners[i]);
+                listeners[i].stop = true;
             }
         }
     }
@@ -453,7 +453,7 @@ gls2.EnemySoft.MiddleFighter1 = _MiddleFighterCommon(0.5, "kurokawa-1");
 /**
  * ゆりさん4面右から
  */
-gls2.EnemySoft.Kurokawa4r = tm.createClass(
+gls2.EnemySoft.Tsukikage4r = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
@@ -473,7 +473,6 @@ gls2.EnemySoft.Kurokawa4r = tm.createClass(
             .call(function() {
                 gls2.EnemySoft.attack(this, "yuri-0");
                 this.timeline
-                    .clear()
                     .by({x: -SC_W}, 2000, 0)
                     .by({y: -SC_H*0.3}, 2000, 0, "easeInOutQuad");
             }.bind(enemy))
@@ -489,7 +488,7 @@ gls2.EnemySoft.Kurokawa4r = tm.createClass(
 /**
  * ゆりさん4面左から
  */
-gls2.EnemySoft.Kurokawa4l = tm.createClass(
+gls2.EnemySoft.Tsukikage4l = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 

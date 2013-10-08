@@ -96,4 +96,7 @@ tm.app.Label = tm.createClass(
     },
 });
 
+tm.app.SpriteSheet = tm.asset.SpriteSheet;
+
 })();
+
