@@ -11,7 +11,7 @@
 gls2.Enemy = tm.createClass(
 /** @lends {gls2.Enemy.prototype} */
 {
-    superClass: tm.app.CanvasElement,
+    superClass: tm.display.CanvasElement,
 
     /**
      * @type {string}

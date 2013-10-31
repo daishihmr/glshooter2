@@ -18,7 +18,7 @@ gls2.Bomb = tm.createClass({
 
         this.gameScene = gameScene;
 
-        this.shockwave = tm.app.CircleShape(300, 300, {
+        this.shockwave = tm.display.CircleShape(300, 300, {
             strokeStyle: "rgba(0,0,0,0)",
             fillStyle: tm.graphics.RadialGradient(150, 150, 0, 150, 150, 150)
                 .addColorStopList([
@@ -78,7 +78,7 @@ gls2.Bomb = tm.createClass({
     },
 
     _setupCore: function() {
-        this.core = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        this.core = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: "bomb",
             frame: {
                 width: 280,
@@ -146,7 +146,7 @@ gls2.MiniBomb = tm.createClass({
     },
 
     _setupCore: function() {
-        this.core = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        this.core = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: "bomb",
             frame: {
                 width: 280,

@@ -7,7 +7,7 @@
 var origParticle = null;
 
 gls2.ShotBullet = tm.createClass({
-    superClass: tm.app.Sprite,
+    superClass: tm.display.Sprite,
     speed: 0,
 
     attackPower: 0,

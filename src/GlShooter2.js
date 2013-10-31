@@ -21,7 +21,7 @@ var gls2 = {
 gls2.GlShooter2 = tm.createClass(
 /** @lends {gls2.GlShooter2.prototype} */
 {
-    superClass: tm.app.CanvasApp,
+    superClass: tm.display.CanvasApp,
     /** アプリ実行中のハイスコア */
     highScore: 0,
     /** ハイスコア取得時の最終到達ステージ */
@@ -204,7 +204,7 @@ gls2.GlShooter2 = tm.createClass(
 
 });
 
-tm.app.AnimationSprite.prototype.clone = function() {
+tm.display.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);
 };
 

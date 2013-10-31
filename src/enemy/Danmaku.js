@@ -1024,7 +1024,7 @@ gls2.Danmaku.clearAll = function() {
 gls2.Bullet = tm.createClass(
 /** @lends gls2.Bullet.prototype */
 {
-    superClass: tm.app.Sprite,
+    superClass: tm.display.Sprite,
 
     hp: 0,
     ball: false,

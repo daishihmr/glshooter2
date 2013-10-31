@@ -925,7 +925,7 @@ gls2.GameScene = tm.createClass(
         }
     },
 
-    draw: function(canvas) {
+    drawBackground: function(canvas) {
         if (this.stage === null) return;
     },
 
@@ -1045,7 +1045,7 @@ gls2.GameScene.Layer = tm.createClass({
 });
 
 gls2.GameScene.LabelLayer = tm.createClass({
-    superClass: tm.app.CanvasElement,
+    superClass: tm.display.CanvasElement,
 
     gameScene: null,
     frame: 0,

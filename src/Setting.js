@@ -12,7 +12,7 @@ gls2.Setting = {
     /**
      * @const
      */
-    MUTEKI: false,
+    MUTEKI: true,
 
     /**
      * FPS

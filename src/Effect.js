@@ -12,7 +12,7 @@ gls2.Effect.setup = function() {
     gls2.effectSprite = {};
 
     gls2.Effect["explosion"] = Array.range(0, 2).map(function(i) {
-        return tm.app.AnimationSprite(tm.app.SpriteSheet({
+        return tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: "explode" + i,
             frame: {
                 width: 100,
@@ -27,7 +27,7 @@ gls2.Effect.setup = function() {
         }, 100, 100));
     });
 
-    gls2.effectSprite["explodeL"] = tm.app.AnimationSprite(tm.app.SpriteSheet({
+    gls2.effectSprite["explodeL"] = tm.display.AnimationSprite(tm.asset.SpriteSheet({
         image: "explodeL",
         frame: {
             width: 100,
@@ -102,7 +102,7 @@ gls2.Effect.genParticle = function(x, y, scene) {
 
 gls2.Effect.genShockwave = function(x, y, scene) {
     var scale = 0.1;
-    var sw = tm.app.Sprite()
+    var sw = tm.display.Sprite()
         .setPosition(x, y)
         .setScale(scale)
         .setBlendMode("lighter")
@@ -121,7 +121,7 @@ gls2.Effect.genShockwave = function(x, y, scene) {
 };
 
 gls2.Effect.genShockwaveL = function(x, y, scene) {
-    var shockwave = tm.app.CircleShape(300, 300, {
+    var shockwave = tm.display.CircleShape(300, 300, {
         strokeStyle: "rgba(0,0,0,0)",
         fillStyle: tm.graphics.RadialGradient(150, 150, 0, 150, 150, 150)
             .addColorStopList([

@@ -5,7 +5,7 @@
 (function() {
 
 gls2.BombItem = tm.createClass({
-    superClass: tm.app.Sprite,
+    superClass: tm.display.Sprite,
 
     vx: 0,
     vy: 0,

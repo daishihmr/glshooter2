@@ -36,14 +36,14 @@ gls2.ShipSelectScene = tm.createClass(
     /** @constructs */
     init: function() {
         this.superInit();
-        tm.app.Label("PLAYER SELECT", 40)
+        tm.display.Label("PLAYER SELECT", 40)
             .setPosition(SC_W*0.5,SC_H*0.1)
             .addChildTo(this);
 
         this.types = this.setupTypes();
         this.styles = this.setupStyles();
 
-        var left = tm.app.TriangleShape(20, 20, {
+        var left = tm.display.TriangleShape(20, 20, {
             fillStyle: "rgba(255,255,255,0.7)",
             strokeStyle: "transparent"
         }).setPosition(SC_W*0.1, SC_H*0.5).setRotation(-90);
@@ -52,7 +52,7 @@ gls2.ShipSelectScene = tm.createClass(
             this.alpha = 1 + Math.sin(app*0.1)*0.5;
         };
         left.addChildTo(this);
-        var right = tm.app.TriangleShape(20, 20, {
+        var right = tm.display.TriangleShape(20, 20, {
             fillStyle: "rgba(255,255,255,0.7)",
             strokeStyle: "transparent"
         }).setPosition(SC_W*0.9, SC_H*0.5).setRotation(90);
@@ -74,10 +74,10 @@ gls2.ShipSelectScene = tm.createClass(
     },
 
     setupTypes: function() {
-        var types = tm.app.CanvasElement();
+        var types = tm.display.CanvasElement();
         types.addChildTo(this);
 
-        this.labelType = tm.app.Label("Type-A").setPosition(SC_W*0.5, 150);
+        this.labelType = tm.display.Label("Type-A").setPosition(SC_W*0.5, 150);
         this.labelType.addChildTo(types);
 
         var typeDescription = [
@@ -86,13 +86,13 @@ gls2.ShipSelectScene = tm.createClass(
             "広範囲型\nスピード：遅\n\n広範囲に攻撃可能な\nワイドショットを\n持つ機体\n強力な雑魚掃討能力",
         ];
 
-        this.labelTypeDescription = tm.app.Label(typeDescription[0], 16).setPosition(SC_W*0.5, 500);
+        this.labelTypeDescription = tm.display.Label(typeDescription[0], 16).setPosition(SC_W*0.5, 500);
         this.labelTypeDescription.update = function() {
             this.labelTypeDescription.text = typeDescription[this.type];
         }.bind(this);
         this.labelTypeDescription.addChildTo(types);
 
-        var typeBSpriteSheet = tm.app.SpriteSheet({
+        var typeBSpriteSheet = tm.asset.SpriteSheet({
             image: "fighter",
             frame: {
                 width: 64,
@@ -107,9 +107,9 @@ gls2.ShipSelectScene = tm.createClass(
             },
         });
 
-        this.typeA = tm.app.Sprite("fighter", 64, 64).setFrameIndex(3);
-        this.typeB = tm.app.AnimationSprite(typeBSpriteSheet, 64, 64).gotoAndPlay("typeB");
-        this.typeC = tm.app.Sprite("fighter", 64, 64).setFrameIndex(31);
+        this.typeA = tm.display.Sprite("fighter", 64, 64).setFrameIndex(3);
+        this.typeB = tm.display.AnimationSprite(typeBSpriteSheet, 64, 64).gotoAndPlay("typeB");
+        this.typeC = tm.display.Sprite("fighter", 64, 64).setFrameIndex(31);
 
         this.typeA.pos = 0;
         this.typeB.pos = 1;
@@ -132,13 +132,13 @@ gls2.ShipSelectScene = tm.createClass(
     },
 
     setupStyles: function() {
-        var styles = tm.app.CanvasElement();
+        var styles = tm.display.CanvasElement();
         styles.addChildTo(this);
 
-        this.labelStyle = tm.app.Label("Shot Style").setPosition(SC_W*0.5, 150);
+        this.labelStyle = tm.display.Label("Shot Style").setPosition(SC_W*0.5, 150);
         this.labelStyle.addChildTo(styles);
 
-        this.styleBase = tm.app.TriangleShape(40, 40, {
+        this.styleBase = tm.display.TriangleShape(40, 40, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         }).setPosition(SC_W*0.5, SC_H*0.6).addChildTo(styles);
@@ -155,7 +155,7 @@ gls2.ShipSelectScene = tm.createClass(
 
         this.styleBits = [];
 
-        this.styleBits[0] = tm.app.TriangleShape(20, 20, {
+        this.styleBits[0] = tm.display.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         });
@@ -169,7 +169,7 @@ gls2.ShipSelectScene = tm.createClass(
             }
         }.bind(this);
 
-        this.styleBits[1] = tm.app.TriangleShape(20, 20, {
+        this.styleBits[1] = tm.display.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         });
@@ -183,7 +183,7 @@ gls2.ShipSelectScene = tm.createClass(
             }
         }.bind(this);
 
-        this.styleBits[2] = tm.app.TriangleShape(20, 20, {
+        this.styleBits[2] = tm.display.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         });
@@ -197,7 +197,7 @@ gls2.ShipSelectScene = tm.createClass(
             }
         }.bind(this);
 
-        this.styleBits[3] = tm.app.TriangleShape(20, 20, {
+        this.styleBits[3] = tm.display.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         });
@@ -225,7 +225,7 @@ gls2.ShipSelectScene = tm.createClass(
             "エキスパート強化型\n\nショットとレーザーの\n両方が強化されたスタイル\n\nゲーム難易度が上昇する\n<<上級者向け>>",
         ];
 
-        this.labelStyleDescription = tm.app.Label(styleDescription[0], 16).setPosition(SC_W*0.5, 500);
+        this.labelStyleDescription = tm.display.Label(styleDescription[0], 16).setPosition(SC_W*0.5, 500);
         this.labelStyleDescription.update = function() {
             this.labelStyleDescription.text = styleDescription[this.style];
         }.bind(this);
@@ -364,7 +364,7 @@ gls2.ShipSelectScene = tm.createClass(
         }
     },
 
-    draw: function(canvas) {
+    drawBackground: function(canvas) {
         canvas.clearColor(
             tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
                 .addColorStopList([
@@ -400,7 +400,7 @@ gls2.ShipSelectScene = tm.createClass(
 });
 
 var ShotLine = tm.createClass({
-    superClass: tm.app.CanvasElement,
+    superClass: tm.display.CanvasElement,
     init: function(x, y, angle, length, width) {
         this.superInit();
         this.angle = angle-Math.PI*0.5;

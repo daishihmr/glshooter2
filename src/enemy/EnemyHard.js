@@ -543,12 +543,12 @@ gls2.Enemy.Saki = tm.createClass(
 /**
  * 初めからdrawメソッドが実装済みのSprite
  * @class
- * @extends {tm.app.Sprite}
+ * @extends {tm.display.Sprite}
  */
 var _Sprite = tm.createClass(
 /** @lends {_Sprite.prototype} */
 {
-    superClass: tm.app.Sprite,
+    superClass: tm.display.Sprite,
 
     texName: null,
 
