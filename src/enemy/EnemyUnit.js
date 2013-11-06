@@ -189,6 +189,12 @@ gls2.EnemyUnit = {
     { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*5 },
 ],
 
+/** ブッキー４面右から */
+"bukky-4-r": [{ hard:$e.Bukky, soft:$s.Bukky4, x:SC_W, y:-50 }],
+
+/** ブッキー４面右から */
+"bukky-4-l": [{ hard:$e.Bukky, soft:$s.Bukky4, x:0, y:-50 }],
+
 // 固定砲台「キセ」1面用
 "cannon-0": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.1, y:-100 }],
 "cannon-1": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.2, y:-100 }],

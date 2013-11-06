@@ -28,6 +28,8 @@ gls2.Stage4 = tm.createClass(
         this.seq.add(100, "tsukikage-r");
         this.seq.add(100, "tsukikage-l");
 
+        this.seq.add(100, "bukky-4-r");
+
     },
 
     setupBackground: function() {

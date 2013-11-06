@@ -13,6 +13,7 @@ gls2.Enemy.DATA = {
     "kiryu":     [     3,      400, false, false,  1, {"radius": 24}, ],
     "natsuki":   [     5,      900,  true, false,  1, {"radius": 24}, ],
     "kise":      [    50,    15000,  true, false,  1, {"radius": 24}, ],
+    "yamabuki":  [    50,    15000,  true, false,  1, {"width":70, "height":70}, ],
     "hanasaki":  [   150,   200000,  true,  true, 10, {"radius": 40}, ],
     "myodoin":   [    50,    15000,  true, false,  1, {"radius": 40}, ],
     "kenzaki":   [   200,   300000,  true,  true, 10, {"width":100, "height":40}, ],
@@ -131,6 +132,25 @@ gls2.Enemy.Tank1 = tm.createClass({
 /**
  * 大型戦車「ヤマブキ」
  */
+gls2.Enemy.Bukky = tm.createClass({
+    superClass: gls2.Enemy,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "yamabuki");
+    },
+    update: function(app) {
+    },
+    draw: function(canvas) {
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    }
+
+});
 
 /**
  * 小型戦闘機「ツキカゲ」

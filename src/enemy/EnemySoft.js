@@ -325,6 +325,35 @@ gls2.EnemySoft.TankD = _Tank(1.6, Math.PI*0.5);
 gls2.EnemySoft.TankU = _Tank(1.6, Math.PI*-0.5);
 
 /**
+ * 大型戦車ヤマブキ
+ *
+ * 左右から現れ中央で停止
+ */
+gls2.EnemySoft.BigTankR = tm.createClass({
+    superClass: gls2.EnemySoft,
+
+    attackPattern: null,
+
+    init: function(attackPattern) {
+        this.superInit();
+        this.attackPattern = attackPattern;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.attack(enemy, this.attackPattern);
+        enemy.tweener
+            .clear()
+            .to({
+                x: SC_W/2
+            }, 1000, "easeInOutQuad");
+    },
+});
+
+/**
+ * 大型戦車ヤマブキ4面
+ */
+gls2.EnemySoft.Bukky4 = gls2.EnemySoft.BigTankR("bukky-1-0");
+
+/**
  * 固定砲台共通
  *
  * @class

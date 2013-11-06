@@ -179,6 +179,29 @@ gls2.Danmaku["basic3-1"] = new bulletml.Root({
     ]),
 });
 
+gls2.Danmaku["bukky-1-0"] = new bulletml.Root({
+    "top0": $.action([
+        $interval(30),
+        $.repeat(999, [
+            $.repeat(5, [
+                $absoluteNway(18, 0, 360-360/18, $spd2, RL),
+                $interval(20),
+            ]),
+            $interval(70),
+        ]),
+    ]),
+    "top1": $.action([
+        $interval(30),
+        $.repeat(999, [
+            $.repeat(5, [
+                $nway(18, 0, 360-360/18, $spd2(1), BL),
+                $interval(30),
+            ]),
+            $interval(70),
+        ]),
+    ]),
+});
+
 /**
  * まこぴー1.
  */
