@@ -400,14 +400,14 @@ gls2.Danmaku["komachi-1"] = new bulletml.Root({
     "top2": $.action([
         $.repeat(70, [
             $.fire($.direction(0), $spd3(0), BS, $.offsetX(-110), $.autonomy(true)),
-            $.repeat(3, [
-                $.wait(3),
+            $.repeat(6, [
+                $.wait(1),
                 $.fire($.direction(0, "sequence"), $spd3(0), BS, $.offsetX(-110), $.autonomy(true)),
             ]),
             $interval(10),
             $.fire($.direction(0), $spd3(0), BS, $.offsetX(+110), $.autonomy(true)),
-            $.repeat(3, [
-                $.wait(3),
+            $.repeat(6, [
+                $.wait(1),
                 $.fire($.direction(0, "sequence"), $spd3(0), BS, $.offsetX(+110), $.autonomy(true)),
             ]),
             $interval(10),
@@ -1055,6 +1055,7 @@ gls2.Bullet = tm.createClass(
     init: function() {
         this.superInit("tex0", 20, 20);
 
+        this.blendMode = "lighter";
         this.boundingRadius = 7;
 
         this.addEventListener("removed", function() {
