@@ -22,7 +22,7 @@ gls2.TitleScene = tm.createClass({
     init: function() {
         this.superInit();
 
-        tm.display.Label("GL-Shooter 2", 50)
+        tm.display.Label("TM-Shooter", 50)
             .setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
         tm.display.Label("version 1.0-beta", 22)
             .setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
