@@ -27,7 +27,7 @@ gls2.EnemySoft.attack = function(enemy, danmakuName) {
     var ticker = gls2.Danmaku[danmakuName].createTicker();
     enemy.on("enterframe", ticker);
     enemy.on("completeattack", function() {
-        this.removeEventListener("enterframe", ticker);
+        ticker.stop = true;
     });
 };
 
@@ -39,7 +39,7 @@ gls2.EnemySoft.stopAttack = function(enemy) {
     if (listeners) {
         for (var i = 0, len = listeners.length; i < len; i++) {
             if (listeners[i] && listeners[i].isDanmaku) {
-                enemy.removeEventListener("enterframe", listeners[i]);
+                listeners[i].stop = true;
             }
         }
     }
@@ -325,6 +325,35 @@ gls2.EnemySoft.TankD = _Tank(1.6, Math.PI*0.5);
 gls2.EnemySoft.TankU = _Tank(1.6, Math.PI*-0.5);
 
 /**
+ * 大型戦車ヤマブキ
+ *
+ * 左右から現れ中央で停止
+ */
+gls2.EnemySoft.BigTankR = tm.createClass({
+    superClass: gls2.EnemySoft,
+
+    attackPattern: null,
+
+    init: function(attackPattern) {
+        this.superInit();
+        this.attackPattern = attackPattern;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.attack(enemy, this.attackPattern);
+        enemy.tweener
+            .clear()
+            .to({
+                x: SC_W/2
+            }, 1000, "easeInOutQuad");
+    },
+});
+
+/**
+ * 大型戦車ヤマブキ4面
+ */
+gls2.EnemySoft.Bukky4 = gls2.EnemySoft.BigTankR("bukky-1-0");
+
+/**
  * 固定砲台共通
  *
  * @class
@@ -451,10 +480,99 @@ var _MiddleFighterCommon = tm.createClass(
 gls2.EnemySoft.MiddleFighter1 = _MiddleFighterCommon(0.5, "kurokawa-1");
 
 /**
+ * ゆりさん4面右から
+ */
+gls2.EnemySoft.Tsukikage4r = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    delay: 0,
+
+    init: function(delay) {
+        this.superInit();
+
+        this.delay = delay;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.tweener
+            .wait(this.delay)
+            .call(function() {
+                gls2.EnemySoft.attack(this, "yuri-0");
+                this.timeline
+                    .by({x: -SC_W}, 2000, 0)
+                    .by({y: -SC_H*0.3}, 2000, 0, "easeInOutQuad");
+            }.bind(enemy))
+            .wait(2500)
+            .by({y: SC_H}, 4000, "easeInQuad")
+            .call(function() {
+                this.remove();
+            }.bind(enemy));
+    },
+
+});
+
+/**
+ * ゆりさん4面左から
+ */
+gls2.EnemySoft.Tsukikage4l = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    delay: 0,
+
+    init: function(delay) {
+        this.superInit();
+        this.delay = delay;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.tweener
+            .wait(this.delay)
+            .call(function() {
+                gls2.EnemySoft.attack(this, "yuri-0");
+                this.timeline
+                    .by({x: SC_W}, 2000, 0)
+                    .by({y: -SC_H*0.3}, 2000, 0, "easeInOutQuad");
+            }.bind(enemy))
+            .wait(2500)
+            .by({y: SC_H}, 4000, "easeInQuad")
+            .call(function() {
+                this.remove();
+            }.bind(enemy));
+    },
+
+});
+
+/**
  * 大型戦闘機
  */
 gls2.EnemySoft.LargeFighter1 = _MiddleFighterCommon(0.3, "komachi-1");
 gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
+
+/**
+ * ボムキャリアー「クルミ」
+ */
+gls2.EnemySoft.Erika = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    init: function() {
+        this.superInit();
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.attack(enemy, "basic3-0");
+        enemy.on("enterframe", function() {
+            this.y += 0.8;
+            this.enableFire = this.entered;
+        });
+    },
+});
+gls2.EnemySoft.Erika = gls2.EnemySoft.Erika();
 
 /**
  * 中ボス共通
@@ -659,6 +777,143 @@ gls2.EnemySoft.Nagisa3 = gls2.EnemySoft.Nagisa3();
  * ステージ２中ボス「ミショウ」
  */
 gls2.EnemySoft.Mai = _MBossCommon(["mai-1", "mai-2"]);
+
+/**
+ * ステージ２ボス「ヒュウガ」
+ */
+gls2.EnemySoft.Saki1 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "saki-1-1",
+            "saki-1-2",
+            "saki-1-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.startAttack = false;
+        enemy.endAttack = false;
+        enemy.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.2, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            if (this.endAttack) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Saki1 = gls2.EnemySoft.Saki1();
+gls2.EnemySoft.Saki2 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "saki-2-1",
+            "saki-2-2",
+            "saki-2-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.tweener.clear()
+            .wait(800)
+            .call(function() {
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Saki2 = gls2.EnemySoft.Saki2();
+gls2.EnemySoft.Saki3 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "saki-3-1",
+            "saki-3-2",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.tweener.clear()
+            .wait(800)
+            .call(function() {
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Saki3 = gls2.EnemySoft.Saki3();
 
 })();
 

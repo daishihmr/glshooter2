@@ -2,6 +2,7 @@ rm -f target/gls2.js
 
 java -jar tools/compiler.jar \
 --define DEBUG=false \
+--define STATS=false \
 --externs libs/tmlib.js \
 --externs libs/mt.js \
 --externs extern/extern.js \

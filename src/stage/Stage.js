@@ -65,10 +65,12 @@ gls2.Stage = tm.createClass(
 
     launchEnemy: function(data) {
         this.gameScene.enemyCount += 1;
-        return data.hard(this.gameScene, data.soft)
+        var enemy = data.hard(this.gameScene, data.soft)
             .setPosition(data.x, data.y)
             .addChildTo(this.gameScene)
             .onLaunch();
+        enemy.stage = this;
+        return enemy;
     },
 
     alartWarning: function(callback) {
@@ -79,7 +81,7 @@ gls2.Stage = tm.createClass(
         var warn = tm.app.Object2D().setPosition(SC_W*0.5, SC_H*0.5);
         for (var i = -4; i <= 4; i++) {
             for (var j = -4; j <= 4; j++) {
-                var label = tm.app.Label("WARNING!!", 75)
+                var label = tm.display.Label("WARNING!!", 75)
                     .setFillStyle(
                         tm.graphics.LinearGradient(0,0,0,20).addColorStopList([
                             { offset: 0.0, color: "hsla( 0, 100%, 50%, 0.07)" },
@@ -123,11 +125,14 @@ gls2.Stage = tm.createClass(
  * @static
  */
 gls2.Stage.create = function(gameScene, stageNumber) {
-    // return gls2.Stage2(gameScene); // TODO あとで消す
+    // return gls2.Stage4(gameScene); // TODO あとで消す
 
     switch (stageNumber) {
         case 0:  return gls2.Stage1(gameScene);
         case 1:  return gls2.Stage2(gameScene);
+        case 3:  return gls2.Stage4(gameScene);
+        default:
+            throw new Error("stageNumber = " + stageNumber);
     }
 };
 

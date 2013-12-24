@@ -59,7 +59,7 @@ tm.app.Object2D.prototype.boundingRadius = 0;
 /**
  * 空中物の高度
  */
-tm.app.CanvasElement.prototype.accessor("altitude", {
+tm.display.CanvasElement.prototype.accessor("altitude", {
     "get": function() {
         return this._altitude;
     },
@@ -77,7 +77,7 @@ tm.app.CanvasElement.prototype.accessor("altitude", {
 });
 
 /** @class */
-tm.app.Label = tm.createClass(
+tm.display.Label = tm.createClass(
 /** @lends {tm.app.Label.prototype} */
 {
     superClass: tm.app.Label,
@@ -96,4 +96,7 @@ tm.app.Label = tm.createClass(
     },
 });
 
+tm.display.SpriteSheet = tm.asset.SpriteSheet;
+
 })();
+

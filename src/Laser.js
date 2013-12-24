@@ -10,7 +10,7 @@
 gls2.Laser = tm.createClass(
 /** @lends {gls2.Laser.prototype} */
 {
-    superClass: tm.app.Sprite,
+    superClass: tm.display.Sprite,
     player: null,
     gameScene: null,
 
@@ -39,7 +39,7 @@ gls2.Laser = tm.createClass(
         this.player = player;
         this.gameScene = player.gameScene;
 
-        this.baseAttackPower = this.player.style === 0 ? 1 : 1.5;
+        this.baseAttackPower = this.player.style === 0 ? 1 : 1.2;
         this.baseWidth = this.player.style === 0 ? 50 : 75;
 
         var self = this;
@@ -53,7 +53,7 @@ gls2.Laser = tm.createClass(
         this.scrollOffset = 0;
         this.origin.y = 1.0;
 
-        var a = this.aura = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        var a = this.aura = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: textures["aura"],
             frame: {
                 width: 100,
@@ -85,7 +85,7 @@ gls2.Laser = tm.createClass(
         a.y = 60;
         a.addChildTo(this);
 
-        var f = this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        var f = this.foot = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: textures["foot"],
             frame: {
                 width: 120,
@@ -116,7 +116,7 @@ gls2.Laser = tm.createClass(
         }), 140, 80);
         f.addChildTo(this);
 
-        var h = this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        var h = this.head = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: textures["head"],
             frame: {
                 width: 80,

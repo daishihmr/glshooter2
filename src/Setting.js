@@ -10,6 +10,11 @@
 gls2.Setting = {
 
     /**
+     * @const
+     */
+    MUTEKI: true,
+
+    /**
      * FPS
      * @const
      */
@@ -19,7 +24,7 @@ gls2.Setting = {
      * 初期ランク
      * @const
      */
-    INITIAL_RANK: 0.00,
+    INITIAL_RANK: DEBUG ? 0.10 : 0.00,
 
     /**
      * エクステンドスコア
@@ -94,7 +99,7 @@ gls2.Setting = {
      * ボムの攻撃力
      * @const
      */
-    BOMB_ATTACK_POWER: 4,
+    BOMB_ATTACK_POWER: 2,
 
     /**
      * ショットによる敵破壊でチャージされるハイパーゲージ値
@@ -185,7 +190,7 @@ gls2.Setting = {
      * ハイパーゲージチャージ基本係数
      * @const
      */
-    HYPER_CHARGE_RATE: 20,//0.75,
+    HYPER_CHARGE_RATE: 0.75,
 
     /**
      * ハイパーレベル最大値
@@ -293,7 +298,7 @@ gls2.Setting = {
      * ハイパーモード中の敵弾幕発射間隔
      * @const
      */
-    ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.5,
+    ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.8,
 
     /**
      * 星アイテム（大）が出る距離
@@ -323,7 +328,7 @@ gls2.Setting = {
      * オートボム発動時に残ボム数をすべて消費するか
      * @const
      */
-    AUTO_BOMB_TO_ZERO: true,
+    AUTO_BOMB_TO_ZERO: false,
 
     /**
      * @const
