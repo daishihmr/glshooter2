@@ -1055,7 +1055,6 @@ gls2.Bullet = tm.createClass(
     init: function() {
         this.superInit("tex0", 20, 20);
 
-        this.blendMode = "lighter";
         this.boundingRadius = 7;
 
         this.addEventListener("removed", function() {
