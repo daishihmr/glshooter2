@@ -965,7 +965,7 @@ tm.display.AnimationSprite.prototype.clone = function() {
 function Ga(b, a) {
   return(b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y)
 }
-;u = {th:j, Vg:60, qh:0, Af:[1E9, 1E10], sh:3E3, Cf:3, Bf:[3, 2, 1], Jg:[6, 4, 2], Jf:1, ph:0.1, Df:1, rh:0.25, bj:1, dj:0.25, Ig:2, hh:0.005, dh:0.01, eh:0.001, Zg:0.015, $g:0.002, jh:0.001, lh:0.01, ih:0, gh:0, fh:0, bh:0.03, ah:0.004, kh:0, mh:0, nh:0.75, le:10, yd:800, Yg:0.25, Xg:0.1, oh:[1, 3, 5, 10, 18, 26, 42, 66, 90, 130, 200], Pg:0.02, Qg:0.5, Og:0.01, zf:1E3, Mg:10, Kg:1, Gh:1E3, Fh:100, Eh:0, Dh:0, Ch:1E3, Bh:100, Ug:0.8, Rg:22500, Lg:50, vh:10, vf:m, Hg:m, zh:1E3, Ah:2E3, wh:4E3, xh:1E4, 
+;u = {th:m, Vg:60, qh:0, Af:[1E9, 1E10], sh:3E3, Cf:3, Bf:[3, 2, 1], Jg:[6, 4, 2], Jf:1, ph:0.1, Df:1, rh:0.25, bj:1, dj:0.25, Ig:2, hh:0.005, dh:0.01, eh:0.001, Zg:0.015, $g:0.002, jh:0.001, lh:0.01, ih:0, gh:0, fh:0, bh:0.03, ah:0.004, kh:0, mh:0, nh:0.75, le:10, yd:800, Yg:0.25, Xg:0.1, oh:[1, 3, 5, 10, 18, 26, 42, 66, 90, 130, 200], Pg:0.02, Qg:0.5, Og:0.01, zf:1E3, Mg:10, Kg:1, Gh:1E3, Fh:100, Eh:0, Dh:0, Ch:1E3, Bh:100, Ug:0.8, Rg:22500, Lg:50, vh:10, vf:m, Hg:m, zh:1E3, Ah:2E3, wh:4E3, xh:1E4, 
 yh:2E7};
 (function() {
   var b = k, a = {"0":{x:1, y:0}, 45:{x:0.7, y:-0.7}, 90:{x:0, y:-1}, 135:{x:-0.7, y:-0.7}, 180:{x:-1, y:0}, 225:{x:-0.7, y:0.7}, 270:{x:0, y:1}, 315:{x:0.7, y:0.7}};
