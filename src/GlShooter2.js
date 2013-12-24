@@ -71,7 +71,7 @@ gls2.GlShooter2 = tm.createClass(
             // bgm
             "bgm1": "assets2/nc54073.mp3",
             "bgm2": "assets2/nc28687.mp3",
-            "bgm4": "assets2/nc31173",
+            "bgm4": "assets2/nc31173.mp3",
             "bgm5": "assets2/nc60627.mp3",
             "bgmBoss": "assets2/nc29206.mp3",
             "bgmResult": "assets2/nc54077.mp3",

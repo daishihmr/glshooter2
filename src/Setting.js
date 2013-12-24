@@ -12,7 +12,7 @@ gls2.Setting = {
     /**
      * @const
      */
-    MUTEKI: true,
+    MUTEKI: false,
 
     /**
      * FPS
@@ -298,7 +298,13 @@ gls2.Setting = {
      * ハイパーモード中の敵弾幕発射間隔
      * @const
      */
-    ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.8,
+    ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.6,
+
+    /**
+     * 基本弾速
+     * @const
+     */
+    BULLET_SPEED: 4.0,
 
     /**
      * 星アイテム（大）が出る距離
