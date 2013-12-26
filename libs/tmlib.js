@@ -11565,6 +11565,10 @@ tm.app = tm.app || {};
             e.app = this;
             scene.dispatchEvent(e);
             scene.app = null;
+            if (scene.parent) {
+                console.log("scene remove");
+                scene.remove();
+            }
             
             // 
             e = tm.event.Event("enter");

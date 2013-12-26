@@ -125,11 +125,12 @@ gls2.Stage = tm.createClass(
  * @static
  */
 gls2.Stage.create = function(gameScene, stageNumber) {
-    return gls2.Stage2(gameScene); // TODO あとで消す
+    // return gls2.Stage2(gameScene); // TODO あとで消す
 
     switch (stageNumber) {
         case 0:  return gls2.Stage1(gameScene);
         case 1:  return gls2.Stage2(gameScene);
+        case 2:  return gls2.Stage4(gameScene);
         case 3:  return gls2.Stage4(gameScene);
         default:
             throw new Error("stageNumber = " + stageNumber);

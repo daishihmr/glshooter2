@@ -340,11 +340,11 @@ gls2.EnemySoft.BigTankR = tm.createClass({
     },
     setup: function(enemy) {
         gls2.EnemySoft.attack(enemy, this.attackPattern);
-        enemy.tweener
-            .clear()
-            .to({
-                x: SC_W/2
-            }, 1000, "easeInOutQuad");
+        // enemy.tweener
+        //     .clear()
+        //     .to({
+        //         x: SC_W/2
+        //     }, 1000, "easeInOutQuad");
     },
 });
 

@@ -145,6 +145,10 @@ gls2.ResultScene = tm.createClass(
         }
         this.lastElement = tm.app.Object2D();
         this.lastElement.draw = function(canvas) {
+            var beginProcessTime = new Date().getTime();
+
+            canvas.save();
+
             var ok = true;
             for (var i = 0; i < parts.length; i++) {
                 for (var j = 0; j < parts[i].length; j++) {
@@ -160,14 +164,19 @@ gls2.ResultScene = tm.createClass(
                     }
                 }
             }
+
+            this.wait = 60;
             if (ok) {
                 this.lastElement.remove();
-                this.wait = 60;
-            } else {
-                this.wait = 100;
             }
+
+            canvas.restore();
+
+            console.log("lastElement " + (new Date().getTime() - beginProcessTime));
         }.bind(this);
         this.lastElement.addChildTo(this);
+
+        // this.wait = 60;
 
         this.addEventListener("exit", function() {
             gls2.fadeOutBgm();
@@ -205,27 +214,27 @@ gls2.ResultScene = tm.createClass(
     drawBackground: function(canvas) {
         canvas.clearColor(this.background);
 
-        canvas.lineWidth = 1;
-        canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
-            .addColorStopList([
-                { offset: 0.0, color: "hsl(200, 90%, 10%)" },
-                { offset: 1.0, color: "hsl(200, 90%, 60%)" },
-            ])
-            .toStyle();
-        canvas.beginPath();
-        var yy = 0;
-        for (var x = 0-C*3; x < SC_W+C*3; x += C*1.5) {
-            yy = (yy === 0) ? L : 0;
-            for (var y = -L*2 + yy; y < SC_H+L*2; y += L*2) {
-                canvas.line(x, y, x + C, y);
-                canvas.line(x, y, x - C/2, y + L);
-                canvas.line(x, y, x - C/2, y - L);
-            }
-        }
-        canvas.stroke();
+        // canvas.lineWidth = 1;
+        // canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
+        //     .addColorStopList([
+        //         { offset: 0.0, color: "hsl(200, 90%, 10%)" },
+        //         { offset: 1.0, color: "hsl(200, 90%, 60%)" },
+        //     ])
+        //     .toStyle();
+        // canvas.beginPath();
+        // var yy = 0;
+        // for (var x = 0-C*3; x < SC_W+C*3; x += C*1.5) {
+        //     yy = (yy === 0) ? L : 0;
+        //     for (var y = -L*2 + yy; y < SC_H+L*2; y += L*2) {
+        //         canvas.line(x, y, x + C, y);
+        //         canvas.line(x, y, x - C/2, y + L);
+        //         canvas.line(x, y, x - C/2, y - L);
+        //     }
+        // }
+        // canvas.stroke();
 
-        canvas.fillStyle = "hsla(220, 90%, 10%, 0.6)";
-        canvas.fillRect(20, 20, SC_W-20*2, SC_H-20*2);
+        // canvas.fillStyle = "hsla(220, 90%, 10%, 0.6)";
+        // canvas.fillRect(20, 20, SC_W-20*2, SC_H-20*2);
     }
 });
 

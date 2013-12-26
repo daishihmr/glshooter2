@@ -295,10 +295,10 @@ gls2.Setting = {
     STAR_ITEM_BASESCORE: 100,
 
     /**
-     * ハイパーモード中の敵弾幕発射間隔
+     * ハイパーモード時の弾幕激化係数（少ないほど激化）
      * @const
      */
-    ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.6,
+    ENEMY_ATTACK_INTERVAL_RATE_HYPER: 0.5,
 
     /**
      * 基本弾速
@@ -334,7 +334,7 @@ gls2.Setting = {
      * オートボム発動時に残ボム数をすべて消費するか
      * @const
      */
-    AUTO_BOMB_TO_ZERO: false,
+    AUTO_BOMB_TO_ZERO: true,
 
     /**
      * @const

@@ -175,6 +175,8 @@ gls2.GameScene = tm.createClass(
     },
 
     update: function(app) {
+        // var beginProcessTime = new Date().getTime();
+
         this.record(app.keyboard);
 
         if (app.frame % 500 === 0) {
@@ -204,6 +206,8 @@ gls2.GameScene = tm.createClass(
 
             }
         }
+
+        // console.log("update " + (new Date().getTime() - beginProcessTime));
     },
 
     shotScreen: function() {
@@ -222,6 +226,8 @@ gls2.GameScene = tm.createClass(
      * フレームの最後に実行される
      */
     onexitframe: function(app) {
+        // var beginProcessTime = new Date().getTime();
+
         if (this.player.controllable === false) {
             gls2.Danmaku.erase();
         }
@@ -456,6 +462,7 @@ gls2.GameScene = tm.createClass(
 
         }
 
+        // console.log("onexitframe " + (new Date().getTime() - beginProcessTime));
     },
 
     /**
@@ -673,6 +680,7 @@ gls2.GameScene = tm.createClass(
             this.app.pushScene(gls2.ResultScene(this, this.shotScreen()));
             tempTimer.remove();
         }.bind(this));
+        // this.startStage(this.stageNumber + 1);
     },
 
     gameOver: function() {
