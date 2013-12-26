@@ -145,7 +145,7 @@ gls2.ResultScene = tm.createClass(
         }
         this.lastElement = tm.app.Object2D();
         this.lastElement.draw = function(canvas) {
-            var beginProcessTime = new Date().getTime();
+            // var beginProcessTime = new Date().getTime();
 
             canvas.save();
 
@@ -172,7 +172,7 @@ gls2.ResultScene = tm.createClass(
 
             canvas.restore();
 
-            console.log("lastElement " + (new Date().getTime() - beginProcessTime));
+            // console.log("lastElement " + (new Date().getTime() - beginProcessTime));
         }.bind(this);
         this.lastElement.addChildTo(this);
 

@@ -71,29 +71,56 @@ gls2.EnemyUnit = {
 
 /** 突撃ヘリ5機。左側から */
 "heri2-left": [
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.1, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.2, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.3, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.4, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.1, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.2, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.5, y:-100 },
 ],
 
 /** 突撃ヘリ5機。中央から */
 "heri2-center": [
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.3, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.4, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.5, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.6, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.7, y:-100 },
 ],
 
 /** 突撃ヘリ5機。右側から */
 "heri2-right": [
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.5, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.6, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.7, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.8, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.9, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.8, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.9, y:-100 },
+],
+
+/** 突撃ヘリ5機4面。左側から */
+"heri2-4-left": [
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.1, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.2, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.5, y:-100 },
+],
+
+/** 突撃ヘリ5機4面。中央から */
+"heri2-4-center": [
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.7, y:-100 },
+],
+
+/** 突撃ヘリ5機4面。右側から */
+"heri2-4-right": [
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.8, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.9, y:-100 },
 ],
 
 /** 戦車5台。左上から */

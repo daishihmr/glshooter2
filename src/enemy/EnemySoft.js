@@ -191,20 +191,25 @@ gls2.EnemySoft.Heri2 = tm.createClass(
 /** @lends {gls2.EnemySoft.Heri2.prototype} */
 {
     superClass: gls2.EnemySoft,
+
+    patternName: null,
+
     /**
      * @constructs
      */
-    init: function() {
+    init: function(patternName) {
         this.superInit();
+        this.patternName = patternName;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
         enemy.angle = Math.PI * 0.5;
+        enemy.patternName = this.patternName;
 
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
             this.speed = 6;
-            gls2.EnemySoft.attack(this, "basic1-0");
+            gls2.EnemySoft.attack(this, this.patternName);
             this.on("enterframe", function() {
                 if (this.y < this.player.y && this.entered) {
                     var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
@@ -226,7 +231,8 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         }.bind(enemy));
     },
 });
-gls2.EnemySoft.Heri2 = gls2.EnemySoft.Heri2();
+gls2.EnemySoft.Heri21 = gls2.EnemySoft.Heri2("basic1-0");
+gls2.EnemySoft.Heri24 = gls2.EnemySoft.Heri2("basic1-2");
 
 /**
  * @class
@@ -340,18 +346,18 @@ gls2.EnemySoft.BigTankR = tm.createClass({
     },
     setup: function(enemy) {
         gls2.EnemySoft.attack(enemy, this.attackPattern);
-        // enemy.tweener
-        //     .clear()
-        //     .to({
-        //         x: SC_W/2
-        //     }, 1000, "easeInOutQuad");
+        enemy.tweener
+            .clear()
+            .to({
+                x: SC_W/2
+            }, 8000, "easeInOutQuad");
     },
 });
 
 /**
  * 大型戦車ヤマブキ4面
  */
-gls2.EnemySoft.Bukky4 = gls2.EnemySoft.BigTankR("bukky-1-0");
+gls2.EnemySoft.Bukky4 = gls2.EnemySoft.BigTankR("bukky-4-0");
 
 /**
  * 固定砲台共通
@@ -500,7 +506,7 @@ gls2.EnemySoft.Tsukikage4r = tm.createClass(
         enemy.tweener
             .wait(this.delay)
             .call(function() {
-                gls2.EnemySoft.attack(this, "yuri-0");
+                gls2.EnemySoft.attack(this, "yuri-4");
                 this.timeline
                     .by({x: -SC_W}, 2000, 0)
                     .by({y: -SC_H*0.3}, 2000, 0, "easeInOutQuad");
@@ -534,7 +540,7 @@ gls2.EnemySoft.Tsukikage4l = tm.createClass(
         enemy.tweener
             .wait(this.delay)
             .call(function() {
-                gls2.EnemySoft.attack(this, "yuri-0");
+                gls2.EnemySoft.attack(this, "yuri-4");
                 this.timeline
                     .by({x: SC_W}, 2000, 0)
                     .by({y: -SC_H*0.3}, 2000, 0, "easeInOutQuad");

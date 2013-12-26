@@ -13,7 +13,7 @@ gls2.Enemy.DATA = {
     "kiryu":     [     3,      400, false, false,  1, {"radius": 24}, ],
     "natsuki":   [     5,      900,  true, false,  1, {"radius": 24}, ],
     "kise":      [    50,    15000,  true, false,  1, {"radius": 24}, ],
-    "yamabuki":  [    50,    15000,  true, false,  1, {"width":70, "height":70}, ],
+    "yamabuki":  [   100,    15000,  true, false,  1, {"width":70, "height":70}, ],
     "hanasaki":  [   150,   200000,  true,  true, 10, {"radius": 40}, ],
     "myodoin":   [    50,    15000,  true, false,  1, {"radius": 40}, ],
     "kenzaki":   [   200,   300000,  true,  true, 10, {"width":100, "height":40}, ],
@@ -135,21 +135,29 @@ gls2.Enemy.Tank1 = tm.createClass({
 gls2.Enemy.Bukky = tm.createClass({
     superClass: gls2.Enemy,
 
+    _sprite: null,
+
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yamabuki");
+
+        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
     },
-    update: function(app) {
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     draw: function(canvas) {
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.remove();
-    }
-
+    },
 });
 
 /**
