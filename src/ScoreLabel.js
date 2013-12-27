@@ -37,6 +37,8 @@ gls2.ScoreLabel = tm.createClass(
     },
 
     update: function() {
+        // var beginProcessTime = new Date().getTime();
+
         this.clear();
 
         // ボスHP
@@ -138,6 +140,7 @@ gls2.ScoreLabel = tm.createClass(
             this.fillText("hyper rank " + this.gameScene.hyperRank, SC_W-30, SC_H-50);
         }
 
+        // console.log("ScoreLabel " + (new Date().getTime() - beginProcessTime));
     },
 
 });

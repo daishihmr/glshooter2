@@ -140,6 +140,16 @@ gls2.Danmaku["basic1-1"] = new bulletml.Root({
 });
 
 /**
+ * 自機狙い弾3wayを連射.
+ */
+gls2.Danmaku["basic1-2"] = new bulletml.Root({
+    "top": $.action([
+        $interval("10+$rand*20"),
+        $nway(3, -10, 10, $spd3)
+    ]),
+});
+
+/**
  * 自機狙い弾を50間隔で連射.
  */
 gls2.Danmaku["basic2-0"] = new bulletml.Root({
@@ -179,25 +189,28 @@ gls2.Danmaku["basic3-1"] = new bulletml.Root({
     ]),
 });
 
-gls2.Danmaku["bukky-1-0"] = new bulletml.Root({
+/**
+ * ブッキー4面
+ */
+gls2.Danmaku["bukky-4-0"] = new bulletml.Root({
     "top0": $.action([
         $interval(30),
         $.repeat(999, [
             $.repeat(5, [
-                $absoluteNway(18, 0, 360-360/18, $spd2, RL),
-                $interval(20),
+                $nway(7, -55, 55, $spd2, BS),
+                $interval(7),
             ]),
             $interval(70),
         ]),
     ]),
     "top1": $.action([
-        $interval(30),
+        $interval(50),
         $.repeat(999, [
             $.repeat(5, [
-                $nway(18, 0, 360-360/18, $spd2(1), BL),
-                $interval(30),
+                $nway(6, -55, 55, $spd2(2), BL),
+                $interval(5),
             ]),
-            $interval(70),
+            $interval(90),
         ]),
     ]),
 });
@@ -330,14 +343,12 @@ gls2.Danmaku["cannon5-0"] = new bulletml.Root({
 /**
  * ゆりさん4面
  */
-gls2.Danmaku["yuri-0"] = new bulletml.Root({
+gls2.Danmaku["yuri-4"] = new bulletml.Root({
     "top": $.action([
-        $.repeat(5, [
-            $interval(60),
-            $.repeat(3, [
-                $nway(3, -30, 30, $spd1, BNS),
-                $interval(8),
-            ]),
+        $interval(60),
+        $.repeat(7, [
+            $absoluteNway(7, 180+-60, 180+60, $spd1, BNS),
+            $interval(8),
         ]),
     ]),
 });
@@ -497,7 +508,7 @@ gls2.Danmaku["nagisa-1-1"] = new bulletml.Root({
         $interval(90),
         $.repeat(3, [
             $.bindVar("way", "5 + $loop.index*6"),
-            $whip($spd3, 0.01, "3 + $loop.index*4", function(spd) {
+            $whip($spd2, 0.01, "3 + $loop.index*4", function(spd) {
                 return $.action([
                     $nway("$way", -110, 110, spd, RNS, $.offsetX(-190), $.offsetY(-20)),
                     $nway("$way", -110, 110, spd, RNS, $.offsetX(+190), $.offsetY(-20)),
@@ -1009,7 +1020,7 @@ gls2.Danmaku.setup = function() {
     config.defaultIsInsideOfWorld = function(bullet) {
         return -80 <= bullet.x && bullet.x < SC_W+80 && -80 <= bullet.y && bullet.y < SC_H+80;
     };
-    config.speedRate = 3.5;
+    config.speedRate = gls2.Setting.BULLET_SPEED;
 
     // ランク
     bulletml.Walker.globalScope["$rank"] = 0;

@@ -83,7 +83,7 @@ gls2.ShipSelectScene = tm.createClass(
         var typeDescription = [
             "一点集中型\nスピード：最速\n\n絶大な威力を誇る\n正面火力と\nスピードで\n敵を蹂躙する",
             "可変型\nスピード：中\n\n正面と両サイドに\n撃ち分けできる\n可変型ビットを持つ\nテクニカルな機体",
-            "広範囲型\nスピード：遅\n\n広範囲に攻撃可能な\nワイドショットを\n持つ機体\n強力な雑魚掃討能力",
+            "広範囲型\nスピード：遅\n\n広範囲に攻撃可能な\nワイドショットを\n持つ機体\n高い掃討能力",
         ];
 
         this.labelTypeDescription = tm.display.Label(typeDescription[0], 16).setPosition(SC_W*0.5, 500);

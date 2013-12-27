@@ -358,18 +358,22 @@ gls2.Player = tm.createClass(
             }
         } else if (this.type === 1) {
             var p = this.bitPivot;
-            if (this.controllable && kb.getKey("left")) {
-                p.rotation = Math.max(p.rotation - 3, -50);
-            } else if (this.controllable && kb.getKey("right")) {
-                p.rotation = Math.min(p.rotation + 3,  50);
-            } else {
-                if (3 < p.rotation) {
-                    p.rotation -= 3;
-                } else if (p.rotation < -3) {
-                    p.rotation += 3;
+            if (!this.fireLaser) {
+                if (this.controllable && kb.getKey("left")) {
+                    p.rotation = Math.max(p.rotation - 3, -50);
+                } else if (this.controllable && kb.getKey("right")) {
+                    p.rotation = Math.min(p.rotation + 3,  50);
                 } else {
-                    p.rotation = 0;
+                    if (3 < p.rotation) {
+                        p.rotation -= 3;
+                    } else if (p.rotation < -3) {
+                        p.rotation += 3;
+                    } else {
+                        p.rotation = 0;
+                    }
                 }
+            } else {
+                p.rotation = 0;
             }
         }
     },

@@ -124,15 +124,11 @@ gls2.Stage2 = tm.createClass(
         this.seq.add(  1, "mai", true);
 
         this.seq.add(300, "heri2-left");
-        for (var i = 0; i < 6; i++) {
-            this.seq.add( 30, "heri2-center");
-            this.seq.add( 30, "heri2-right");
-            this.seq.add( 30, "heri2-center");
-            this.seq.add( 30, "heri2-left");
-            this.seq.add( 30, "heri1-center2");
-            this.seq.add( 30, "heri1-right2");
-            this.seq.add( 30, "heri1-center2");
-            this.seq.add( 30, "heri1-left2");
+        for (var i = 0; i < 24; i++) {
+            this.seq.add( 15, "heri2-center");
+            this.seq.add( 15, "heri2-right");
+            this.seq.add( 15, "heri2-center");
+            this.seq.add( 15, "heri2-left");
         }
 
         this.seq.add(  1, function() {
