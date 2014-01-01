@@ -15,7 +15,7 @@ gls2.GameOverScene = tm.createClass(
      */
     init: function() {
         this.superInit();
-        var label = tm.app.Label("GAME OVER");
+        var label = tm.display.Label("GAME OVER");
         label.fillStyle = "red";
         label.setPosition(SC_W*0.5, SC_H*0.5).addChildTo(this);
 
@@ -34,7 +34,7 @@ gls2.GameOverScene = tm.createClass(
             return;
         }
     },
-    draw: function(canvas) {
+    drawBackground: function(canvas) {
         canvas.clearColor("black");
     },
 });

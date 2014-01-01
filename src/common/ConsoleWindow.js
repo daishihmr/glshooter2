@@ -15,7 +15,7 @@ gls2.ConsoleWindow = tm.createClass(
     posY: 0,
     init: function(w) {
         this.width = w;
-        this.label = tm.app.Label("_", 10)
+        this.label = tm.display.Label("_", 10)
             .setAlign("left")
             .setBaseline("top")
             .setPosition(-this.width/2+4, -this.height/2+4)

@@ -21,15 +21,15 @@ gls2.DialogMenu = tm.createClass(
     /** @type {boolean} */
     showExit: false,
 
-    /** @type {tm.app.Label} */
+    /** @type {tm.display.Label} */
     title: null,
-    /** @type {Array.<tm.app.Label>} */
+    /** @type {Array.<tm.display.Label>} */
     selections: [],
-    /** @type {tm.app.Label} */
+    /** @type {tm.display.Label} */
     description: null,
-    /** @type {tm.app.RectangleShape} */
+    /** @type {tm.display.RectangleShape} */
     box: null,
-    /** @type {tm.app.RectangleShape} */
+    /** @type {tm.display.RectangleShape} */
     cursor: null,
 
     onCursorMove: null,
@@ -58,7 +58,7 @@ gls2.DialogMenu = tm.createClass(
         this.onCursorMove = param["onCursorMove"];
 
         var height = Math.max((1+menu.length)*50, 50) + 40;
-        this.box = tm.app.RectangleShape(SC_W * 0.8, height, {
+        this.box = tm.display.RectangleShape(SC_W * 0.8, height, {
             strokeStyle: "rgba(0,0,0,0)",
             fillStyle: "hsla(220,50%,30%,0.8)",
         }).setPosition(SC_W*0.5, SC_H*0.5);
@@ -69,18 +69,18 @@ gls2.DialogMenu = tm.createClass(
             .call(this._onOpen.bind(this));
         this.box.addChildTo(this);
 
-        this.description = tm.app.Label("", 14).setPosition(SC_W*0.5, SC_H-10).addChildTo(this);
+        this.description = tm.display.Label("", 14).setPosition(SC_W*0.5, SC_H-10).addChildTo(this);
     },
 
     _onOpen: function() {
         var y = SC_H*0.5 - this.menu.length * 25;
 
-        this.title = tm.app.Label(this.titleText, 30).setPosition(SC_W*0.5, y).addChildTo(this);
+        this.title = tm.display.Label(this.titleText, 30).setPosition(SC_W*0.5, y).addChildTo(this);
 
         this.selections = this.menu.map(function(m, i) {
             var self = this;
             y += 50;
-            var sel = tm.app.Label(m).setPosition(SC_W*0.5, y).addChildTo(this);
+            var sel = tm.display.Label(m).setPosition(SC_W*0.5, y).addChildTo(this);
             sel.interactive = true;
             sel.addEventListener("touchend", function() {
                 if (self._selected === i) {
@@ -99,7 +99,7 @@ gls2.DialogMenu = tm.createClass(
     },
 
     _createCursor: function() {
-        this.cursor = tm.app.RectangleShape(SC_W*0.7, 10, {
+        this.cursor = tm.display.RectangleShape(SC_W*0.7, 10, {
             strokeStyle: "rgba(0,0,0,0)",
             fillStyle: tm.graphics.LinearGradient(0,0,SC_W*0.7,0)
                 .addColorStopList([
@@ -177,7 +177,7 @@ gls2.DialogMenu = tm.createClass(
             }.bind(this));
     },
 
-    draw: function(canvas) {
+    drawBackground: function(canvas) {
         canvas.fillStyle = "rgba(0,0,0,0.8)";
         canvas.fillRect(0,0,SC_W,SC_H);
     },

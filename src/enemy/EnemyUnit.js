@@ -71,29 +71,56 @@ gls2.EnemyUnit = {
 
 /** 突撃ヘリ5機。左側から */
 "heri2-left": [
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.1, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.2, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.3, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.4, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.1, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.2, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.5, y:-100 },
 ],
 
 /** 突撃ヘリ5機。中央から */
 "heri2-center": [
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.3, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.4, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.5, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.6, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.7, y:-100 },
 ],
 
 /** 突撃ヘリ5機。右側から */
 "heri2-right": [
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.5, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.6, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.7, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.8, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri2, x:SC_W*0.9, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.8, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.9, y:-100 },
+],
+
+/** 突撃ヘリ5機4面。左側から */
+"heri2-4-left": [
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.1, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.2, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.5, y:-100 },
+],
+
+/** 突撃ヘリ5機4面。中央から */
+"heri2-4-center": [
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.7, y:-100 },
+],
+
+/** 突撃ヘリ5機4面。右側から */
+"heri2-4-right": [
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.8, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.9, y:-100 },
 ],
 
 /** 戦車5台。左上から */
@@ -189,6 +216,12 @@ gls2.EnemyUnit = {
     { hard:$e.Tank1, soft:$s.TankU, x:SC_W*0.7, y:SC_H+70*5 },
 ],
 
+/** ブッキー４面右から */
+"bukky-4-r": [{ hard:$e.Bukky, soft:$s.Bukky4, x:SC_W, y:-50 }],
+
+/** ブッキー４面右から */
+"bukky-4-l": [{ hard:$e.Bukky, soft:$s.Bukky4, x:0, y:-50 }],
+
 // 固定砲台「キセ」1面用
 "cannon-0": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.1, y:-100 }],
 "cannon-1": [{ hard:$e.Cannon, soft:$s.Cannon1, x:SC_W*0.2, y:-100 }],
@@ -251,6 +284,28 @@ gls2.EnemyUnit = {
 "fighter-m-5": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],
 "fighter-m-6": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.8, y:SC_H*-0.3 }],
 
+// 小型戦闘機「ツキカゲ」4面用右から
+"tsukikage-r": [
+    { hard:$e.FighterS, soft:$s.Tsukikage4r(700), x:SC_W*1.3, y:SC_H*0.4 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4r(600), x:SC_W*1.5, y:SC_H*0.4 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4r(500), x:SC_W*1.2, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4r(400), x:SC_W*1.4, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4r(300), x:SC_W*1.6, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4r(200), x:SC_W*1.3, y:SC_H*0.6 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4r(100), x:SC_W*1.5, y:SC_H*0.6 },
+],
+
+// 小型戦闘機「ツキカゲ」4面用左から
+"tsukikage-l": [
+    { hard:$e.FighterS, soft:$s.Tsukikage4l(700), x:SC_W*-0.3, y:SC_H*0.6 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4l(600), x:SC_W*-0.5, y:SC_H*0.6 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4l(500), x:SC_W*-0.2, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4l(400), x:SC_W*-0.4, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4l(300), x:SC_W*-0.6, y:SC_H*0.5 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4l(200), x:SC_W*-0.3, y:SC_H*0.4 },
+    { hard:$e.FighterS, soft:$s.Tsukikage4l(100), x:SC_W*-0.5, y:SC_H*0.4 },
+],
+
 // 中型戦闘機「アキモト」1面用
 "komachi-0": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi-1": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],
@@ -258,6 +313,9 @@ gls2.EnemyUnit = {
 // 中型戦闘機「アキモト」2面用
 "komachi2-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi2-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
+
+// ボムキャリアー「クルミ」
+"erika": [{ hard:$e.Erika, soft:$s.Erika, x: SC_W*0.5, y:-100 }],
 
 /**
  * ステージ１中ボス「ユキシロ」
@@ -273,6 +331,11 @@ gls2.EnemyUnit = {
  * ステージ２中ボス「ミショウ」
  */
 "mai": [{ hard:$e.Mai, soft:$s.Mai, x:SC_W+300, y:SC_H*0.2 }],
+
+/**
+ * ステージ２ボス「ヒュウガ」
+ */
+"hyuga": [{ hard:$e.Saki, soft:[$s.Saki1, $s.Saki2, $s.Saki3], x:SC_W*0.5, y:-100, boss:true }],
 
 };
 
