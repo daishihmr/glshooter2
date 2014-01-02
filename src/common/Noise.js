@@ -3,7 +3,13 @@
  * http://daishihmr.mit-license.org/
  */
 
+/**
+ * @class
+ */
 gls2.Noise = {
+    /** @static */
+    noise: null,
+    /** @static */
     generate: function(dataSize) {
         var interpolation = function(a, b, ratio) {
             var f = (1 - Math.cos(ratio*Math.PI)) * 0.5;

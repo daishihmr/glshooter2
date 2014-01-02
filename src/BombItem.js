@@ -4,7 +4,13 @@
  */
 (function() {
 
-gls2.BombItem = tm.createClass({
+/**
+ * @class
+ * @extends {tm.display.Sprite}
+ */
+gls2.BombItem = tm.createClass(
+/** @lends {gls2.BombItem.prototype} */
+{
     superClass: tm.display.Sprite,
 
     vx: 0,
@@ -39,7 +45,7 @@ gls2.BombItem = tm.createClass({
         }
 
         this.age += 1;
-    },
+    }
 
 });
 

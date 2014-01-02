@@ -247,8 +247,8 @@ gls2.Player = tm.createClass(
             var angle = kb.getKeyAngle();
             if (angle !== null) {
                 var m = KEYBOARD_MOVE[angle];
-                this.x += m.x * this.speed * (this.fireLaser ? 0.75 : 1);
-                this.y += m.y * this.speed * (this.fireLaser ? 0.75 : 1);
+                this.x += m.x * this.speed * (this.fireLaser ? 0.5 : 1);
+                this.y += m.y * this.speed * (this.fireLaser ? 0.5 : 1);
             }
             this.x = gls2.math.clamp(this.x, 15, SC_W-15);
             this.y = gls2.math.clamp(this.y, 15, SC_H-15);

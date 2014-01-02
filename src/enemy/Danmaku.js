@@ -196,21 +196,30 @@ gls2.Danmaku["bukky-4-0"] = new bulletml.Root({
     "top0": $.action([
         $interval(30),
         $.repeat(999, [
-            $.repeat(5, [
-                $nway(7, -55, 55, $spd2, BS),
-                $interval(7),
+            $.fire($.direction(-40), $spd3, BL),
+            $.repeat(3, [
+                $.fire($.direction( 20, "sequence"), $spd3, BL),
+                $.fire($.direction( 20, "sequence"), $spd3, BL),
+                $.fire($.direction( 20, "sequence"), $spd3, BL),
+                $.fire($.direction( 20, "sequence"), $spd3, BL),
+                $.fire($.direction(-80, "sequence"), $spd3, BL),
+                $interval(5),
             ]),
             $interval(70),
         ]),
     ]),
     "top1": $.action([
-        $interval(50),
+        $interval(20),
+        $.fire($.direction(180-30, "absolute"), $spd2, BS),
         $.repeat(999, [
-            $.repeat(5, [
-                $nway(6, -55, 55, $spd2(2), BL),
-                $interval(5),
-            ]),
-            $interval(90),
+            $.fire($.direction( 10, "sequence"), $spd2, BS),
+            $.fire($.direction( 10, "sequence"), $spd2, BS),
+            $.fire($.direction( 10, "sequence"), $spd2, BS),
+            $.fire($.direction( 10, "sequence"), $spd2, BS),
+            $.fire($.direction( 10, "sequence"), $spd2, BS),
+            $.fire($.direction( 10, "sequence"), $spd2, BS),
+            $.fire($.direction(-40, "sequence"), $spd2, BS),
+            $interval(5),
         ]),
     ]),
 });
