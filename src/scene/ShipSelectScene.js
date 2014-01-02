@@ -36,6 +36,12 @@ gls2.ShipSelectScene = tm.createClass(
     /** @constructs */
     init: function() {
         this.superInit();
+
+        // 背景
+        tm.display.Sprite("result_bg", SC_W*1.1, SC_H*1.1)
+            .setPosition(SC_W/2, SC_H/2)
+            .addChildTo(this);
+
         tm.display.Label("PLAYER SELECT", 40)
             .setPosition(SC_W*0.5,SC_H*0.1)
             .addChildTo(this);
@@ -222,7 +228,7 @@ gls2.ShipSelectScene = tm.createClass(
         var styleDescription = [
             "ショット強化型\n\nビットを４つ装備した\nショット重視のスタイル",
             "レーザー強化型\n\nレーザーの威力に優れ\n対大型機戦で\n有利なスタイル",
-            "エキスパート強化型\n\nショットとレーザーの\n両方が強化されたスタイル\n\nゲーム難易度が上昇する\n<<上級者向け>>",
+            "エキスパート強化型\n\nショットとレーザーの\n両方が強化されたスタイル\n\n<<ゲーム難易度が上昇します！>>\n<<上級者向け>>",
         ];
 
         this.labelStyleDescription = tm.display.Label(styleDescription[0], 16).setPosition(SC_W*0.5, 500);
@@ -343,6 +349,19 @@ gls2.ShipSelectScene = tm.createClass(
 
     updateStyle: function(shot) {
         this.labelStyle.text = ["Shot", "Laser", "Expert"][this.style] + " Style";
+        if (this.style === 1) {
+            this.styleBase.line.shotTwoWay = false;
+            this.styleBits[0].line.shotTwoWay = false;
+            this.styleBits[1].line.shotTwoWay = false;
+            this.styleBits[2].line.shotTwoWay = false;
+            this.styleBits[3].line.shotTwoWay = false;
+        } else {
+            this.styleBase.line.shotTwoWay = true;
+            this.styleBits[0].line.shotTwoWay = true;
+            this.styleBits[1].line.shotTwoWay = true;
+            this.styleBits[2].line.shotTwoWay = true;
+            this.styleBits[3].line.shotTwoWay = true;
+        }
         if (shot) {
             this.styleBits[0].visible = true;
             this.styleBits[1].visible = true;
@@ -359,48 +378,21 @@ gls2.ShipSelectScene = tm.createClass(
             if (this.style === 0) {
                 this.styleBase.line.lineWidth = 10;
             } else {
-                this.styleBase.line.lineWidth = 20;
+                this.styleBase.line.lineWidth = 25;
             }
         }
     },
 
     drawBackground: function(canvas) {
-        canvas.clearColor(
-            tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
-                .addColorStopList([
-                    { offset: 0.0, color: "hsl(220, 90%, 60%)" },
-                    { offset: 1.0, color: "hsl(220, 90%, 10%)" },
-                ])
-                .toStyle()
-        );
-
-        canvas.lineWidth = 1;
-        canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
-            .addColorStopList([
-                { offset: 0.0, color: "hsl(200, 90%, 10%)" },
-                { offset: 1.0, color: "hsl(200, 90%, 60%)" },
-            ])
-            .toStyle();
-        canvas.beginPath();
-        var yy = 0;
-        for (var x = 0-C*3; x < SC_W+C*3; x += C*1.5) {
-            yy = (yy === 0) ? L : 0;
-            for (var y = -L*2 + yy; y < SC_H+L*2; y += L*2) {
-                canvas.line(x, y, x + C, y);
-                canvas.line(x, y, x - C/2, y + L);
-                canvas.line(x, y, x - C/2, y - L);
-            }
-        }
-        canvas.stroke();
-
-        canvas.fillStyle = "hsla(220, 90%, 10%, 0.6)";
-        canvas.fillRect(10, 10, SC_W-10*2, SC_H-10*2);
     }
 
 });
 
 var ShotLine = tm.createClass({
     superClass: tm.display.CanvasElement,
+
+    shotTwoWay: true,
+
     init: function(x, y, angle, length, width) {
         this.superInit();
         this.angle = angle-Math.PI*0.5;
@@ -416,15 +408,22 @@ var ShotLine = tm.createClass({
     },
     draw: function(canvas) {
         canvas.lineWidth = this.lineWidth;
-        canvas.drawArrow(this.x, this.y,
-            Math.cos(this.angle)*this.length*this.i+this.x,
-            Math.sin(this.angle)*this.length*this.i+this.y, this.lineWidth*1.2);
+
+        if (this.shotTwoWay && this.lineWidth === 5) {
+            var dx = Math.cos(this.angle-Math.PI/2) * 5;
+            var dy = Math.sin(this.angle-Math.PI/2) * 5;
+            canvas.drawArrow(this.x - dx, this.y - dy,
+                Math.cos(this.angle)*this.length*this.i+this.x - dx,
+                Math.sin(this.angle)*this.length*this.i+this.y - dy, this.lineWidth*1.2);
+            canvas.drawArrow(this.x + dx, this.y + dy,
+                Math.cos(this.angle)*this.length*this.i+this.x + dx,
+                Math.sin(this.angle)*this.length*this.i+this.y + dy, this.lineWidth*1.2);
+        } else {
+            canvas.drawArrow(this.x, this.y,
+                Math.cos(this.angle)*this.length*this.i+this.x,
+                Math.sin(this.angle)*this.length*this.i+this.y, this.lineWidth*1.2);
+        }
     },
 })
-
-/** @const */
-var C = 8 * 2;
-/** @const */
-var L = C/2*Math.sqrt(3);
 
 })();
