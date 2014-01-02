@@ -97,7 +97,7 @@ gls2.ScoreLabel = tm.createClass(
         // コンボ数
         if (0 < ~~this.gameScene.comboCount || DEBUG) {
             this.setText("bold 45px Orbitron", "left", "top");
-            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, -this.scoreLabelElement.gpsOffsetY + 115);
+            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, -this.scoreLabelElement.gpsOffsetY*0.5 + 115);
         }
 
         // ハイパーレベル

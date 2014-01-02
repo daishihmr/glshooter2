@@ -18,6 +18,7 @@ java -jar tools/compiler.jar ^
 --js src/ShotBullet.js ^
 --js src/Laser.js ^
 --js src/Bomb.js ^
+--js src/BombItem.js ^
 --js src/Effect.js ^
 --js src/ScoreLabel.js ^
 --js src/Ground.js ^
@@ -25,6 +26,7 @@ java -jar tools/compiler.jar ^
 --js src/stage/Stage.js ^
 --js src/stage/Stage1.js ^
 --js src/stage/Stage2.js ^
+--js src/stage/Stage4.js ^
 --js src/common/Collision.js ^
 --js src/common/Scene.js ^
 --js src/common/DialogMenu.js ^

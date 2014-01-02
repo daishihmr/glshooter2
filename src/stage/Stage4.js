@@ -19,7 +19,7 @@ gls2.Stage4 = tm.createClass(
         this.seq.add(  0, function() {
             gls2.playBgm("bgm4", true),
             this.gameScene.ground.direction = Math.PI*0.5;
-            this.gameScene.ground.speed = 1;
+            this.gameScene.ground.speed = 0.3;
             this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
         });
 
