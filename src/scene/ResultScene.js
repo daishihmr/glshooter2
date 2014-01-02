@@ -49,6 +49,11 @@ gls2.ResultScene = tm.createClass(
         this.superInit();
         this.gameScene = gameScene;
 
+        // 背景
+        tm.display.Sprite("result_bg", SC_W*1.1, SC_H*1.1)
+            .setPosition(SC_W/2, SC_H/2)
+            .addChildTo(this);
+
         this.values = [
             this.gameScene.starItem,
             this.gameScene.starItemLarge,
@@ -120,14 +125,6 @@ gls2.ResultScene = tm.createClass(
             .setPosition(SC_W*0.5, SC_H*0.9)
             .addChildTo(this);
         this.promptEnter.visible = false;
-
-        // 背景
-        this.background = tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
-            .addColorStopList([
-                { offset: 0.0, color: "hsl(220, 90%, 60%)" },
-                { offset: 1.0, color: "hsl(220, 90%, 10%)" },
-            ])
-            .toStyle();
 
         // ゲーム画面がバラバラと落ちるエフェクト
         this.screenShot = screenShot;
@@ -212,29 +209,6 @@ gls2.ResultScene = tm.createClass(
         this.frame += 1;
     },
     drawBackground: function(canvas) {
-        canvas.clearColor(this.background);
-
-        // canvas.lineWidth = 1;
-        // canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
-        //     .addColorStopList([
-        //         { offset: 0.0, color: "hsl(200, 90%, 10%)" },
-        //         { offset: 1.0, color: "hsl(200, 90%, 60%)" },
-        //     ])
-        //     .toStyle();
-        // canvas.beginPath();
-        // var yy = 0;
-        // for (var x = 0-C*3; x < SC_W+C*3; x += C*1.5) {
-        //     yy = (yy === 0) ? L : 0;
-        //     for (var y = -L*2 + yy; y < SC_H+L*2; y += L*2) {
-        //         canvas.line(x, y, x + C, y);
-        //         canvas.line(x, y, x - C/2, y + L);
-        //         canvas.line(x, y, x - C/2, y - L);
-        //     }
-        // }
-        // canvas.stroke();
-
-        // canvas.fillStyle = "hsla(220, 90%, 10%, 0.6)";
-        // canvas.fillRect(20, 20, SC_W-20*2, SC_H-20*2);
     }
 });
 

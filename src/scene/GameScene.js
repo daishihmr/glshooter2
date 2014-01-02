@@ -179,10 +179,6 @@ gls2.GameScene = tm.createClass(
 
         this.record(app.keyboard);
 
-        if (app.frame % 500 === 0) {
-            gls2.Noise.noise = gls2.Noise.generate(512);
-        }
-
         this.stage.update(app.frame);
         if (app.frame % 2 === 0) this.scoreLabel.update();
 

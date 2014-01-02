@@ -7,8 +7,6 @@
 gls2.Effect = {};
 gls2.Effect.setup = function() {
 
-    noise = gls2.Noise.generate(512);
-
     gls2.effectSprite = {};
 
     gls2.Effect["explosion"] = Array.range(0, 2).map(function(i) {
@@ -228,8 +226,6 @@ gls2.Effect.explodeGS = function(x, y, scene) {
     e.isEffect = true;
     e.addChildTo(scene);
 };
-
-var noise;
 
 gls2.Effect.explodeM = function(x, y, scene) {
     gls2.playSound("explode2");

@@ -67,6 +67,7 @@ gls2.GlShooter2 = tm.createClass(
             "shotbullet": "assets/shotbullet.png",
             "bomb": "assets/bomb.png",
             "bombIcon": "assets/bomb_icon.png",
+            "result_bg": "assets/result_bg.png",
 
             // bgm
             "bgm1": "assets2/nc54073.mp3",

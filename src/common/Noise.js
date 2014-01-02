@@ -56,3 +56,5 @@ gls2.Noise = {
         return result;
     }
 };
+
+gls2.Noise.noise = gls2.Noise.generate(512);
