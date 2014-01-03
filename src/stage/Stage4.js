@@ -19,8 +19,7 @@ gls2.Stage4 = tm.createClass(
         this.seq.add(  0, function() {
             gls2.playBgm("bgm4", true),
             this.gameScene.ground.direction = Math.PI*0.5;
-            this.gameScene.ground.speed = 0.3;
-            this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
+            this.gameScene.ground.speed = 1;
         });
 
         this.seq.add(200, "tsukikage-r");
@@ -65,6 +64,12 @@ gls2.Stage4 = tm.createClass(
         this.seq.add( 50, "komachi4-1");
 
         this.seq.add(500, "heri2-left");
+        this.seq.add(  1, function() {
+            this.gameScene.ground.tweener.clear().to({
+                speed: 3,
+                direction: Math.PI*0.25
+            }, 2000);
+        });
         for (var i = 0; i < 3; i++) {
             this.seq.add( 15, "heri2-center");
             this.seq.add( 15, "heri2-right");
