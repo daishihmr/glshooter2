@@ -48,13 +48,18 @@ gls2.Stage4 = tm.createClass(
         this.seq.add( 10, "heri1-4-center");
         this.seq.add( 10, "heri1-4-right");
         this.seq.add( 10, "heri1-4-center");
-        this.seq.add( 50, "tankRD-left");
-        this.seq.add( 90, "tank5-left");
-        this.seq.add( 90, "tank5-center");
+        this.seq.add( 20, "tankRD-left");
+        this.seq.add( 20, "tank5-left");
+        this.seq.add( 20, "tank5-center");
+        this.seq.add( 20, "tankRD-left");
+        this.seq.add( 20, "tank5-left");
+        this.seq.add( 20, "tank5-center");
 
         this.seq.add(100, "tsukikage-r");
         this.seq.add( 10, "tankL-top");
         this.seq.add(100, "tankL-top");
+        this.seq.add( 50, "tankL-top");
+        this.seq.add( 50, "tankL-top");
 
         this.seq.add(150, "komachi4-0");
         this.seq.add( 50, "komachi4-1");
