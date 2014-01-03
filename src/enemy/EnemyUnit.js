@@ -284,6 +284,9 @@ gls2.EnemyUnit = {
 "fighter-m-5": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],
 "fighter-m-6": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.8, y:SC_H*-0.3 }],
 
+// 中型戦闘機「クロカワ」4面用
+"fighter-m4-0": [{ hard:$e.FighterM, soft:$s.MiddleFighter4, x:SC_W*0.2, y:SC_H*-0.3 }],
+
 // 小型戦闘機「ツキカゲ」4面用右から
 "tsukikage-r": [
     { hard:$e.FighterS, soft:$s.Tsukikage4r(700), x:SC_W*1.3, y:SC_H*0.4 },
@@ -317,6 +320,7 @@ gls2.EnemyUnit = {
 // 中型戦闘機「アキモト」4面用
 "komachi4-0": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi4-1": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.7, y:SC_H*-0.3 }],
+
 
 // ボムキャリアー「クルミ」
 "erika": [{ hard:$e.Erika, soft:$s.Erika, x: SC_W*0.5, y:-100 }],

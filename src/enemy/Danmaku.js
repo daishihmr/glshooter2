@@ -391,6 +391,31 @@ gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
 });
 
 /**
+ * エレン4面
+ */
+gls2.Danmaku["kurokawa-4"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $whip($spd3, -0.01, 4, function(spd) {
+                return $nway(4, -45, 45, spd, BNL, $.offsetX(-45), $.autonomy(true));
+            }),
+            $whip($spd3, -0.01, 4, function(spd) {
+                return $nway(4, -45, 45, spd, BNL, $.offsetX(+45), $.autonomy(true));
+            }),
+            $interval(90),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $.fire($.direction(0), $spd3, RL, $.offsetX(-45), $.autonomy(true)),
+            $interval(45),
+            $.fire($.direction(0), $spd3, RL, $.offsetX(+45), $.autonomy(true)),
+            $interval(45),
+        ]),
+    ]),
+});
+
+/**
  * こまち1面
  */
 gls2.Danmaku["komachi-1"] = new bulletml.Root({

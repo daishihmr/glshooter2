@@ -494,6 +494,7 @@ var _MiddleFighterCommon = tm.createClass(
     },
 })
 gls2.EnemySoft.MiddleFighter1 = _MiddleFighterCommon(0.5, "kurokawa-1");
+gls2.EnemySoft.MiddleFighter4 = _MiddleFighterCommon(0.5, "kurokawa-4");
 
 /**
  * ゆりさん4面右から

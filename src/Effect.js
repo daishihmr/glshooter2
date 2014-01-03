@@ -9,7 +9,7 @@ gls2.Effect.setup = function() {
 
     gls2.effectSprite = {};
 
-    gls2.Effect["explosion"] = Array.range(0, 2).map(function(i) {
+    gls2.Effect["explosion"] = Array.range(0, 3).map(function(i) {
         return tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: "explode" + i,
             frame: {
@@ -26,7 +26,7 @@ gls2.Effect.setup = function() {
     });
 
     gls2.effectSprite["explodeL"] = tm.display.AnimationSprite(tm.asset.SpriteSheet({
-        image: "explodeL",
+        image: "explode0",
         frame: {
             width: 100,
             height: 100,
@@ -82,7 +82,9 @@ gls2.Effect.setup = function() {
 };
 
 gls2.Effect.genParticle = function(x, y, scene) {
-    var p = gls2.Effect["particle16"].clone().setPosition(x, y).addChildTo(scene);
+    var p = gls2.Effect["particle16"].clone().setPosition(x, y);
+    p.isEffect = true;
+    p.addChildTo(scene);
     var speed = gls2.math.randf(5, 20);
     var dir = gls2.math.randf(Math.PI,Math.PI*2);
     p.dx = Math.cos(dir) * speed;
@@ -98,19 +100,21 @@ gls2.Effect.genParticle = function(x, y, scene) {
     });
 };
 
-gls2.Effect.genShockwave = function(x, y, scene) {
+gls2.Effect.genShockwave = function(x, y, scene, scaleTo) {
+    scaleTo = scaleTo || 1.8;
     var scale = 0.1;
     var sw = tm.display.Sprite()
         .setPosition(x, y)
         .setScale(scale)
-        .setBlendMode("lighter")
-        .addChildTo(scene);
+        .setBlendMode("lighter");
+    sw.isEffect = true;
+    sw.addChildTo(scene);
     sw.image = gls2.Effect["shockwaveImage"];
     sw.tweener
         .clear()
         .to({
-            scaleX: 1.4,
-            scaleY: 1.4,
+            scaleX: scaleTo,
+            scaleY: scaleTo,
             alpha: 0.0
         }, 800, "easeOutQuad")
         .call(function() {
@@ -166,6 +170,7 @@ gls2.Effect.explodeS = function(x, y, scene, vector) {
         });
     }
     e.addChildTo(scene);
+    gls2.Effect.genShockwave(x, y, scene);
 };
 
 gls2.Effect.explodeGS = function(x, y, scene) {
@@ -201,7 +206,6 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         .setScale(0.5)
         .setPosition(x+12, y)
         .setRotation(Math.random() * 360)
-        .setBlendMode("lighter")
         .gotoAndPlay();
     e.isEffect = true;
     e.addChildTo(scene);
@@ -221,7 +225,6 @@ gls2.Effect.explodeGS = function(x, y, scene) {
         .setScale(0.5)
         .setPosition(x-12, y)
         .setRotation(Math.random() * 360)
-        .setBlendMode("lighter")
         .gotoAndPlay();
     e.isEffect = true;
     e.addChildTo(scene);
@@ -245,7 +248,6 @@ gls2.Effect.explodeM = function(x, y, scene) {
                 this.scaleY += 0.01;
             })
             .setScale(0.7)
-            .setBlendMode(i%2===0?"lighter":"source-over")
             .setPosition(x, y)
             .gotoAndPlay();
         e.a = Math.PI*2 * Math.random();
@@ -254,6 +256,7 @@ gls2.Effect.explodeM = function(x, y, scene) {
         e.isEffect = true;
         e.addChildTo(scene);
     }
+    gls2.Effect.genShockwave(x, y, scene, 5.0);
 };
 
 gls2.Effect.explodeL = function(x, y, scene) {
@@ -281,7 +284,6 @@ gls2.Effect.explodeL = function(x, y, scene) {
                     this.age += 1;
                 })
                 .setScale(0.3 * (3-j))
-                .setBlendMode("lighter")
                 .setPosition(x, y)
                 .gotoAndPlay();
             e.rotation = Math.random() * Math.PI*2;

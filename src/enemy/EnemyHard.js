@@ -206,7 +206,7 @@ gls2.Enemy.FighterM = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kurokawa");
 
-        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(1);
+        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(1); // TODO 専用グラ
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -261,6 +261,34 @@ gls2.Enemy.Komachi = tm.createClass(
 /**
  * 大型戦闘機「アオノ」
  */
+gls2.Enemy.Mktn = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "aono");
+
+        this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(1);
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        this.fallDown();
+    },
+});
 
 /**
  * 固定砲台「キセ」
