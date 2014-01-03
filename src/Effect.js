@@ -359,12 +359,18 @@ gls2.StartHyperEffect = tm.createClass({
         }
 
         for (var i = 0; i < 5; i++) {
-            gls2.Particle(80, 1, 0.9)
+            var p = gls2.Particle(80, 1, 0.9)
                 .setPosition(
                     Math.cos(this.angle-Math.PI*0.5)*40+this.target.x + gls2.math.rand(-2, 2),
                     Math.sin(this.angle-Math.PI*0.5)*40+this.target.y + gls2.math.rand(-2, 2)
                 )
+                .on("enterframe", function() {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                })
                 .addChildTo(this.target.parent);
+            p.dx = Math.cos(this.angle) * 3;
+            p.dy = Math.sin(this.angle) * 3;
         }
 
         this.angle += 0.2;
