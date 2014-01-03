@@ -280,7 +280,6 @@ gls2.Effect.explodeL = function(x, y, scene) {
                     this.y += Math.sin(this.a) * this.v;
                     this.scaleX += 0.01;
                     this.scaleY += 0.01;
-                    if (this.age > 32) this.blendMode = "source-over";
                     this.age += 1;
                 })
                 .setScale(0.3 * (3-j))
@@ -288,7 +287,6 @@ gls2.Effect.explodeL = function(x, y, scene) {
                 .gotoAndPlay();
             e.rotation = Math.random() * Math.PI*2;
             e.isEffect = true;
-            e.alpha = 0.2;
             e.age = 0;
             e.a = a;
             e.v = ev;

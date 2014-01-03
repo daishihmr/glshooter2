@@ -22,6 +22,8 @@ gls2.Stage4 = tm.createClass(
             this.gameScene.ground.speed = 1;
         });
 
+        // 0%
+
         this.seq.add(200, "tsukikage-r");
         this.seq.add(100, "tsukikage-l");
 
@@ -82,6 +84,8 @@ gls2.Stage4 = tm.createClass(
             this.seq.add( 15, "heri2-left");
             this.seq.add(  1, "tank5-left");
         }
+
+        // 25%
     },
 
     setupBackground: function() {
