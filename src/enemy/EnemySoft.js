@@ -53,18 +53,24 @@ gls2.EnemySoft.stopAttack = function(enemy) {
  * @class
  * @extends {gls2.EnemySoft}
  */
-gls2.EnemySoft.Heri1a = tm.createClass(
+gls2.EnemySoft.Heri1 = tm.createClass(
 /** @lends {gls2.EnemySoft.Heri1a.prototype} */
 {
     superClass: gls2.EnemySoft,
+
+    pattern: null,
+
     /**
      * @constructs
      */
-    init: function() {
+    init: function(pattern) {
         this.superInit();
+        this.pattern = pattern;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        var pattern = this.pattern;
 
         enemy.on("launch", function() {
             var y = gls2.FixedRandom.randf(SC_H*0.1, SC_H*0.3);
@@ -73,7 +79,7 @@ gls2.EnemySoft.Heri1a = tm.createClass(
                 .wait(gls2.FixedRandom.rand(10, 500))
                 .move(this.x, y, y*5, "easeOutQuad")
                 .call(function() {
-                    gls2.EnemySoft.attack(this, "basic0-0");
+                    gls2.EnemySoft.attack(this, pattern);
                 }.bind(this));
         });
 
@@ -88,7 +94,9 @@ gls2.EnemySoft.Heri1a = tm.createClass(
         });
     },
 });
-gls2.EnemySoft.Heri1a = gls2.EnemySoft.Heri1a();
+gls2.EnemySoft.Heri1a = gls2.EnemySoft.Heri1("basic0-0");
+gls2.EnemySoft.Heri14a = gls2.EnemySoft.Heri1("basic1-2");
+
 
 /**
  * heri1b.
@@ -232,7 +240,6 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     },
 });
 gls2.EnemySoft.Heri21 = gls2.EnemySoft.Heri2("basic1-0");
-gls2.EnemySoft.Heri24 = gls2.EnemySoft.Heri2("basic1-2");
 
 /**
  * @class
@@ -475,6 +482,9 @@ var _MiddleFighterCommon = tm.createClass(
 
         enemy.on("enterframe", function() {
             this.y += this.velocityY;
+            if (this.y > SC_H*0.6) {
+                gls2.EnemySoft.stopAttack(this);
+            }
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
@@ -484,6 +494,7 @@ var _MiddleFighterCommon = tm.createClass(
     },
 })
 gls2.EnemySoft.MiddleFighter1 = _MiddleFighterCommon(0.5, "kurokawa-1");
+gls2.EnemySoft.MiddleFighter4 = _MiddleFighterCommon(0.5, "kurokawa-4");
 
 /**
  * ゆりさん4面右から
@@ -559,6 +570,7 @@ gls2.EnemySoft.Tsukikage4l = tm.createClass(
  */
 gls2.EnemySoft.LargeFighter1 = _MiddleFighterCommon(0.3, "komachi-1");
 gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
+gls2.EnemySoft.LargeFighter4 = _MiddleFighterCommon(0.5, "komachi-4");
 
 /**
  * ボムキャリアー「クルミ」

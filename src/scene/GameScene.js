@@ -938,10 +938,10 @@ gls2.GameScene = tm.createClass(
             .clear()
             .to({
                 gpsOffsetX: -SC_W,
-            }, 1600, "easeInQuad")
+            }, 1600, "easeInBack")
             .to({
                 gpsOffsetY: 30,
-            }, 800, "easeInOutQuad")
+            }, 800, "easeInOutBack")
         ;
     },
 
@@ -950,10 +950,10 @@ gls2.GameScene = tm.createClass(
             .clear()
             .to({
                 gpsOffsetY: 0,
-            }, 800, "easeInOutQuad")
+            }, 800, "easeInOutBack")
             .to({
                 gpsOffsetX: 0,
-            }, 1600, "easeOutQuad")
+            }, 1600, "easeOutBack")
         ;
     },
 

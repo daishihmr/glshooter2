@@ -77,6 +77,7 @@ gls2.ShipSelectScene = tm.createClass(
         this.typeC.update();
 
         gls2.playSound("voSelectShip");
+        gls2.playBgm("bgmShipSelect", true);
     },
 
     setupTypes: function() {
@@ -345,6 +346,7 @@ gls2.ShipSelectScene = tm.createClass(
         gls2.core.gameScene.autoBomb = this.autoBomb;
         gls2.core.gameScene.start(this.type, this.style);
         gls2.core.replaceScene(gls2.core.gameScene);
+        gls2.fadeOutBgm();
     },
 
     updateStyle: function(shot) {
