@@ -145,7 +145,7 @@ gls2.Danmaku["basic1-1"] = new bulletml.Root({
 gls2.Danmaku["basic1-2"] = new bulletml.Root({
     "top": $.action([
         $interval("10+$rand*20"),
-        $nway(3, -10, 10, $spd3)
+        $nway(3, -20, 20, $spd3)
     ]),
 });
 
@@ -210,15 +210,18 @@ gls2.Danmaku["bukky-4-0"] = new bulletml.Root({
     ]),
     "top1": $.action([
         $interval(20),
-        $.fire($.direction(180-30, "absolute"), $spd2, BS),
+        $.fire($.direction(180, "absolute"), $spd2, RS),
         $.repeat(999, [
-            $.fire($.direction( 10, "sequence"), $spd2, BS),
-            $.fire($.direction( 10, "sequence"), $spd2, BS),
-            $.fire($.direction( 10, "sequence"), $spd2, BS),
-            $.fire($.direction( 10, "sequence"), $spd2, BS),
-            $.fire($.direction( 10, "sequence"), $spd2, BS),
-            $.fire($.direction( 10, "sequence"), $spd2, BS),
-            $.fire($.direction(-40, "sequence"), $spd2, BS),
+            $.fire($.direction( 15, "sequence"), $spd2, RS),
+            $.fire($.direction( 15, "sequence"), $spd2, RS),
+            $.fire($.direction( 15, "sequence"), $spd2, RS),
+            $.fire($.direction( 15, "sequence"), $spd2, RS),
+            $.fire($.direction( 15, "sequence"), $spd2, RS),
+            $.fire($.direction( 15, "sequence"), $spd2, RS),
+            $.fire($.direction( 15, "sequence"), $spd2, RS),
+            $.fire($.direction( 15, "sequence"), $spd2, RS),
+            $.fire($.direction( 15, "sequence"), $spd2, RS),
+            $.fire($.direction(-90, "sequence"), $spd2, RS),
             $interval(5),
         ]),
     ]),
@@ -468,6 +471,40 @@ gls2.Danmaku["komachi-2"] = new bulletml.Root({
                 ]);
             }),
             $interval(180),
+        ]),
+    ]),
+});
+
+/**
+ * こまち4面
+ */
+gls2.Danmaku["komachi-4"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $.repeat(4, [
+                $.fire($.direction("220+-1+$rand*2", "absolute"), $spd3, RNL, $.offsetX(-45)),
+                $.fire($.direction("180+-1+$rand*2", "absolute"), $spd3, RNL, $.offsetX(-45)),
+                $.fire($.direction("180+-1+$rand*2", "absolute"), $spd3, RNL, $.offsetX(+45)),
+                $.fire($.direction("140+-1+$rand*2", "absolute"), $spd3, RNL, $.offsetX(+45)),
+                $interval(4),
+            ]),
+            $interval(60),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(70, [
+            $.fire($.direction(0), $spd3(5), BS, $.offsetX(-110), $.autonomy(true)),
+            $.repeat(12, [
+                $.wait(1),
+                $.fire($.direction(0, "sequence"), $spd3(5), BS, $.offsetX(-110), $.autonomy(true)),
+            ]),
+            $interval(30),
+            $.fire($.direction(0), $spd3(5), BS, $.offsetX(+110), $.autonomy(true)),
+            $.repeat(12, [
+                $.wait(1),
+                $.fire($.direction(0, "sequence"), $spd3(5), BS, $.offsetX(+110), $.autonomy(true)),
+            ]),
+            $interval(30),
         ]),
     ]),
 });

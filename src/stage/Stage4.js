@@ -23,20 +23,55 @@ gls2.Stage4 = tm.createClass(
             this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
         });
 
-        this.seq.add(400, "tsukikage-r");
+        this.seq.add(200, "tsukikage-r");
         this.seq.add(100, "tsukikage-l");
 
         this.seq.add(200, "bukky-4-r");
+
+        this.seq.add(150, "heri1-4-left");
+        this.seq.add( 10, "heri1-4-center");
+        this.seq.add( 10, "heri1-4-left");
+        this.seq.add( 10, "heri1-4-center");
+
+        this.seq.add(100, "komachi4-0");
+
+        this.seq.add(120, "heri1-4-right");
+        this.seq.add( 10, "heri1-4-center");
+        this.seq.add( 10, "heri1-4-right");
+        this.seq.add( 10, "heri1-4-center");
+
         this.seq.add(100, "bukky-4-l");
+        this.seq.add(200, "bukky-4-r");
 
-        this.seq.add(350, "heri2-4-left");
-        this.seq.add( 10, "heri2-4-right");
-        this.seq.add( 10, "heri2-4-left");
-        this.seq.add( 10, "heri2-4-right");
-        this.seq.add( 10, "heri2-4-left");
-        this.seq.add( 10, "heri2-4-right");
-        this.seq.add( 10, "heri2-4-left");
+        this.seq.add(200, "tankRD-center");
+        this.seq.add( 10, "heri1-4-right");
+        this.seq.add( 10, "heri1-4-center");
+        this.seq.add( 10, "heri1-4-right");
+        this.seq.add( 10, "heri1-4-center");
+        this.seq.add( 50, "tankRD-left");
+        this.seq.add( 90, "tank5-left");
+        this.seq.add( 90, "tank5-center");
 
+        this.seq.add(100, "tsukikage-r");
+        this.seq.add( 10, "tankL-top");
+        this.seq.add(100, "tankL-top");
+
+        this.seq.add(150, "komachi4-0");
+        this.seq.add( 50, "komachi4-1");
+
+        this.seq.add(500, "heri2-left");
+        for (var i = 0; i < 3; i++) {
+            this.seq.add( 15, "heri2-center");
+            this.seq.add( 15, "heri2-right");
+            this.seq.add( 15, "heri2-center");
+            this.seq.add( 15, "heri2-left");
+            this.seq.add(  1, "tank5-center");
+            this.seq.add( 15, "heri2-center");
+            this.seq.add( 15, "heri2-right");
+            this.seq.add( 15, "heri2-center");
+            this.seq.add( 15, "heri2-left");
+            this.seq.add(  1, "tank5-left");
+        }
     },
 
     setupBackground: function() {

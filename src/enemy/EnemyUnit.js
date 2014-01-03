@@ -96,31 +96,31 @@ gls2.EnemyUnit = {
     { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.9, y:-100 },
 ],
 
-/** 突撃ヘリ5機4面。左側から */
-"heri2-4-left": [
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.1, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.2, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.3, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.4, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.5, y:-100 },
+/** ヘリ5機4面。左側から */
+"heri1-4-left": [
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.1, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.2, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.5, y:-100 },
 ],
 
-/** 突撃ヘリ5機4面。中央から */
-"heri2-4-center": [
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.3, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.4, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.5, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.6, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.7, y:-100 },
+/** ヘリ5機4面。中央から */
+"heri1-4-center": [
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.7, y:-100 },
 ],
 
-/** 突撃ヘリ5機4面。右側から */
-"heri2-4-right": [
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.5, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.6, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.7, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.8, y:-100 },
-    { hard:$e.Heri1, soft:$s.Heri24, x:SC_W*0.9, y:-100 },
+/** ヘリ5機4面。右側から */
+"heri1-4-right": [
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.8, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.9, y:-100 },
 ],
 
 /** 戦車5台。左上から */
@@ -313,6 +313,10 @@ gls2.EnemyUnit = {
 // 中型戦闘機「アキモト」2面用
 "komachi2-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi2-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
+
+// 中型戦闘機「アキモト」4面用
+"komachi4-0": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.3, y:SC_H*-0.3 }],
+"komachi4-1": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 // ボムキャリアー「クルミ」
 "erika": [{ hard:$e.Erika, soft:$s.Erika, x: SC_W*0.5, y:-100 }],
