@@ -534,6 +534,46 @@ gls2.Danmaku["komachi-4"] = new bulletml.Root({
     ]),
 });
 
+//Stage3
+/**
+ *　サニキ用
+ */
+gls2.Danmaku["akane"] = new bulletml.Root({
+    "top": $.action([
+        $.wait("40"),
+        $.repeat(999, [
+            $interval(50),
+            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX(-16), $.offsetY(6), $.autonomy(true)),
+            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX( 16), $.offsetY(6), $.autonomy(true)),
+        ]),
+    ]),
+});
+
+/**
+ *　小学８年生用
+ */
+gls2.Danmaku["miyuki_y"] = new bulletml.Root({
+    "top": $.action([
+        $.wait("40"),
+        $.repeat(999, [
+            $interval(30),
+            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX(-16), $.offsetY(6), $.autonomy(true)),
+            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX( 16), $.offsetY(6), $.autonomy(true)),
+        ]),
+    ]),
+});
+gls2.Danmaku["miyuki_t"] = new bulletml.Root({
+    "top": $.action([
+        $.wait("40"),
+        $.repeat(999, [
+            $interval(30),
+            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX(-16), $.offsetY(6), $.autonomy(true)),
+            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX( 16), $.offsetY(6), $.autonomy(true)),
+        ]),
+    ]),
+});
+//stage3/
+
 /**
  * ほのか
  */

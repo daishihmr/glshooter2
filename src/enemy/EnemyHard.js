@@ -25,6 +25,13 @@ gls2.Enemy.DATA = {
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
+
+    //Stage3
+    "hino":      [    30,      500, false, false,  1, {"width":24, "height":48}, ],
+    "seikuu_y":  [   150,      500, false, true,  30, {"width":128, "height":64}, ],
+    "seikuu_t":  [   150,      500, false, true,  30, {"width":128, "height":64}, ],
+//  "midorikawa":[   150,      500, false, true,  30, {"width":128, "height":64}, ],
+//  "aoki":      [   150,      500, false, true,  30, {"width":128, "height":64}, ],
 };
 
 /**
@@ -397,6 +404,95 @@ gls2.Enemy.Cannon2 = tm.createClass({
         this.remove();
     },
 });
+
+//stage3
+/**
+ * 強襲戦闘艇「ヒノ」
+ */
+gls2.Enemy.akane = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "hino");
+
+        this._sprite = _Sprite("hino", 64, 32).setFrameIndex(0);
+        this.boundingWidth = 64;
+        this.boundingHeightBottom = 0;
+        this.boundingHeightTop = 32;
+
+        this._sprite.setScale(1, 3);
+
+        this.time = 0;
+    },
+/*
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+        this.time++;
+    },
+*/
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+});
+
+/**
+ * 戦艦「セイクウ」（ホシゾラ）横
+ */
+gls2.Enemy.miyuki_y = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "seikuu_y");
+
+        this._sprite = _Sprite("seikuu_y", 128, 64).setFrameIndex(0);
+        this.boundingWidth = 128;
+        this.boundingHeightBottom = 16;
+        this.boundingHeightTop = 32;
+
+        this.time = 0;
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+        this.time++;
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        this.fallDown();
+    },
+});
+/**
+ * 戦艦「セイクウ」（ホシゾラ）横
+ */
+gls2.Enemy.miyuki_t = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "seikuu_t");
+
+        this._sprite = _Sprite("seikuu_t", 64, 128).setFrameIndex(0);
+        this.boundingWidth = 128;
+        this.boundingHeightBottom = 16;
+        this.boundingHeightTop = 32;
+
+        this.time = 0;
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+        this.time++;
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        this.fallDown();
+    },
+});
+//stage3/
 
 /**
  * ボムキャリアー「クルミ」

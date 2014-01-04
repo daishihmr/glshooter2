@@ -317,9 +317,34 @@ gls2.EnemyUnit = {
 "komachi2-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi2-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
 
+// 中型戦闘機「アキモト」3面用
+"komachi3-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
+"komachi3-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
+
 // 中型戦闘機「アキモト」4面用
 "komachi4-0": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi4-1": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.7, y:SC_H*-0.3 }],
+
+//３面で使用
+/** テレポーター出現パターン */
+"akane-1": [
+    { hard:$e.akane, soft:$s.akane, x:100*0+90, y:60 },
+    { hard:$e.akane, soft:$s.akane, x:100*1+90, y:60 },
+    { hard:$e.akane, soft:$s.akane, x:100*2+90, y:60 },
+
+    { hard:$e.akane, soft:$s.akane, x:100*0+40, y:130 },
+    { hard:$e.akane, soft:$s.akane, x:100*1+40, y:130 },
+    { hard:$e.akane, soft:$s.akane, x:100*2+40, y:130 },
+    { hard:$e.akane, soft:$s.akane, x:100*3+40, y:130 },
+],
+
+/** 戦艦出現パターン */
+"seikuu-1": [
+    { hard:$e.miyuki_y, soft:$s.miyuki_y, x:-128, y:60 },
+],
+"seikuu-2": [
+    { hard:$e.miyuki_t, soft:$s.miyuki_t, x:SC_W+128, y:60 },
+],
 
 
 // ボムキャリアー「クルミ」
