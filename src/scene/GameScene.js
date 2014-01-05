@@ -17,6 +17,9 @@ gls2.GameScene = tm.createClass(
 
     /** スコア */
     score: 0,
+    /** コンティニュー回数 */
+    continueCount: 0,
+
     /** 素点 */
     baseScore: 0,
     /** コンボ数 */
@@ -45,7 +48,7 @@ gls2.GameScene = tm.createClass(
     killCount: 0,
     /** 出現敵数 */
     enemyCount: 0,
-    /** ミス数 */
+    /** ミス数（ステージ開始時リセット） */
     missCount: 0,
     /** トータルミス数 */
     missCountTotal: 0,
@@ -456,6 +459,11 @@ gls2.GameScene = tm.createClass(
                 }
             }
 
+            // マキシマムボーナス
+            if (this.isBombMaximum) {
+                this.score += gls2.Setting.MAXIMUM_BONUS;
+            }
+
         }
 
         // console.log("onexitframe " + (new Date().getTime() - beginProcessTime));
@@ -529,6 +537,7 @@ gls2.GameScene = tm.createClass(
         this.scoreLabel.consoleWindow.clearBuf().clear();
 
         this.score = 0;
+        this.continueCount = 0;
         this.zanki = gls2.Setting.INITIAL_ZANKI;
         this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX[playerStyle];
         this.bombMaxMax = gls2.Setting.BOMB_MAX_MAX[playerStyle];
@@ -659,6 +668,7 @@ gls2.GameScene = tm.createClass(
         this.println("System rebooted.", true);
 
         this.score = 0;
+        this.continueCount += 1;
         this.zanki = gls2.Setting.INITIAL_ZANKI;
         this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX[this.player.style];
         this.hyperRank = 0;

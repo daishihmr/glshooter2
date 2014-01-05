@@ -8,12 +8,18 @@
 /**
  * @define {boolean}
  */
-var STATS = false;
+var STATS = true;
 
 /**
  * @define {boolean}
+ *
+ * true時：
+ *   BGMオフ
+ *   右下に隠し情報表示
+ *   hキーでハイパーチャージ
+ *   pキーでスクリーンショットを撮る
  */
-var DEBUG = false;
+var DEBUG = true;
 
 tm.preload(function() {
     if (STATS) tm.util.ScriptManager.loadStats();

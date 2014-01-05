@@ -360,6 +360,11 @@ gls2.Setting = {
      * @const
      */
     STAGE_CLEAR_BONUS_NO_MISS: 20000000,
+
+    /**
+     * @const
+     */
+    MAXIMUM_BONUS: 100,
 };
 
 })();
