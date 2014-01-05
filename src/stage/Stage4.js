@@ -68,23 +68,21 @@ gls2.Stage4 = tm.createClass(
         this.seq.add(500, "heri2-left");
         this.seq.add(  1, function() {
             this.gameScene.ground.tweener.clear().to({
-                speed: 6,
+                speed: 5,
                 direction: -Math.PI*0.5
             }, 10000).to({
                 speed: 3,
                 direction: -Math.PI*1.5
             }, 10000);
         });
-        for (var i = 0; i < 7; i++) {
+        for (var i = 0; i < 6; i++) {
             this.seq.add( 20, "heri2-center");
             this.seq.add( 20, "heri2-right");
-            this.seq.add( 20, "heri2-center");
             this.seq.add( 20, "heri2-left");
             this.seq.add(  1, "tank5-center");
-            this.seq.add( 10, "heri1-4-center");
-            this.seq.add( 10, "heri1-4-right");
-            this.seq.add( 10, "heri1-4-center");
-            this.seq.add( 10, "heri1-4-left");
+            this.seq.add( 15, "heri1-4-center");
+            this.seq.add( 15, "heri1-4-right");
+            this.seq.add( 15, "heri1-4-left");
             this.seq.add(  1, "tank5-left");
             this.seq.add( 90, "tank25-top");
         }
