@@ -149,8 +149,7 @@ gls2.Effect.genShockwaveL = function(x, y, scene) {
 
 gls2.Effect.explodeS = function(x, y, scene, vector) {
     gls2.playSound("explode");
-    var e = gls2.Effect["explosion"].random()
-        .clone()
+    var e = gls2.Effect["explosion"].random().clone()
         .addEventListener("animationend", function() {
             this.remove();
         })
@@ -175,8 +174,7 @@ gls2.Effect.explodeS = function(x, y, scene, vector) {
 
 gls2.Effect.explodeGS = function(x, y, scene) {
     gls2.playSound("explode");
-    var e = gls2.Effect["explosion"].random()
-        .clone()
+    var e = gls2.Effect["explosion"].random().clone()
         .addEventListener("animationend", function() {
             this.remove();
         })
@@ -191,8 +189,7 @@ gls2.Effect.explodeGS = function(x, y, scene) {
     e.isEffect = true;
     e.addChildTo(scene);
 
-    e = gls2.Effect["explosion"].random()
-        .clone()
+    e = gls2.Effect["explosion"].random().clone()
         .addEventListener("animationend", function() {
             this.remove();
         })
@@ -210,8 +207,7 @@ gls2.Effect.explodeGS = function(x, y, scene) {
     e.isEffect = true;
     e.addChildTo(scene);
 
-    e = gls2.Effect["explosion"].random()
-        .clone()
+    e = gls2.Effect["explosion"].random().clone()
         .addEventListener("animationend", function() {
             this.remove();
         })
@@ -236,8 +232,7 @@ gls2.Effect.explodeM = function(x, y, scene) {
     var count = 20;
     var offset = ~~(Math.random() * gls2.Noise.noise.length);
     for (var i = 0; i < count; i++) {
-        var e = gls2.Effect["explosion"].random()
-            .clone()
+        var e = gls2.Effect["explosion"].random().clone()
             .addEventListener("animationend", function() {
                 this.remove();
             })
@@ -249,6 +244,7 @@ gls2.Effect.explodeM = function(x, y, scene) {
             })
             .setScale(0.7)
             .setPosition(x, y)
+            .setRotation(Math.random() * 360)
             .gotoAndPlay();
         e.a = Math.PI*2 * Math.random();
         var idx = ~~(gls2.Noise.noise.length * i/count) + offset;
@@ -270,8 +266,7 @@ gls2.Effect.explodeL = function(x, y, scene) {
         var v = Math.pow(gls2.Noise.noise.at(idx), 2);
         for (var j = 0; j < 3; j++) {
             var ev = v * (j+1) * 4;
-            var e = gls2.effectSprite["explodeL"]
-                .clone()
+            var e = gls2.Effect["explosion"].random().clone()
                 .addEventListener("animationend", function() {
                     this.remove();
                 })
@@ -284,6 +279,7 @@ gls2.Effect.explodeL = function(x, y, scene) {
                 })
                 .setScale(0.3 * (3-j))
                 .setPosition(x, y)
+                .setRotation(Math.random() * 360)
                 .gotoAndPlay();
             e.rotation = Math.random() * Math.PI*2;
             e.isEffect = true;
