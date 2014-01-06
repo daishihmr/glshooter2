@@ -340,7 +340,7 @@ gls2.EnemyUnit = {
 
 /** 戦艦出現パターン */
 "hoshizora_y-1": [
-    { hard:$e.miyuki_y, soft:$s.miyuki_y, x:-128, y:60 },
+    { hard:$e.miyuki_y, soft:$s.miyuki_y, x:-256, y:140 },
 ],
 "hoshizora_y-2": [
     { hard:$e.miyuki_y, soft:$s.miyuki_y, x:SC_W+128, y:60 },

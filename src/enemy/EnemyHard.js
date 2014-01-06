@@ -28,7 +28,7 @@ gls2.Enemy.DATA = {
 
     //Stage3
     "hino":      [    30,      500, false, false,  1, {"width":24, "height":48}, ],
-    "hoshizora_y":  [   150,      500, false, true,  30, {"width":128, "height":64}, ],
+    "hoshizora_y":  [   100,      500, false, true,  30, {"width":128, "height":64}, ],
     "hoshizora_t":  [   150,      500, false, true,  30, {"width":128, "height":64}, ],
 //  "midorikawa":[   150,      500, false, true,  30, {"width":128, "height":64}, ],
 //  "aoki":      [   150,      500, false, true,  30, {"width":128, "height":64}, ],
@@ -436,7 +436,7 @@ gls2.Enemy.akane = tm.createClass(
 });
 
 /**
- * 戦艦「ホシゾラ」横
+ * 大型戦艦「ホシゾラ」横
  */
 gls2.Enemy.miyuki_y = tm.createClass(
 /** @lends */
@@ -445,8 +445,9 @@ gls2.Enemy.miyuki_y = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hoshizora_y");
 
-        this._sprite = _Sprite("hoshizora_y", 128, 64).setFrameIndex(0);
-        this.boundingWidth = 128;
+        this._sprite = _Sprite("hoshizora_y", 256, 128).setFrameIndex(0);
+        this.boundingWidth = 256;
+        this.boundingHeight = 128;
         this.boundingHeightBottom = 16;
         this.boundingHeightTop = 32;
 
@@ -464,7 +465,7 @@ gls2.Enemy.miyuki_y = tm.createClass(
     },
 });
 /**
- * 戦艦「ホシゾラ」縦
+ * 大型戦艦「ホシゾラ」縦
  */
 gls2.Enemy.miyuki_t = tm.createClass(
 /** @lends */
