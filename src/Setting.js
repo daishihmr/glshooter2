@@ -365,6 +365,11 @@ gls2.Setting = {
      * @const
      */
     MAXIMUM_BONUS: 100,
+
+    /**
+     * @const
+     */
+    HASH_TAG: "tmshooter"
 };
 
 })();

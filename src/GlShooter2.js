@@ -25,7 +25,12 @@ gls2.GlShooter2 = tm.createClass(
     /** アプリ実行中のハイスコア */
     highScore: 0,
     /** ハイスコア取得時の最終到達ステージ */
-    highStage: 0,
+    highScoreStage: 0,
+    /** ハイスコア取得時の機体タイプ */
+    highScoreType: 0,
+    /** ハイスコア取得時の機体スタイル */
+    highScoreStyle: 0,
+
     /** BGM音量(0～5) */
     bgmVolume: 3,
     /** SE音量(0～5) */

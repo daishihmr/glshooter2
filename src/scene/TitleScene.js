@@ -103,14 +103,20 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        this.openDialogMenu("MAIN MENU", [ "start", "tutorial", "setting", "save score" ], this.onResultMainMenu, {
+        var menu = [ "start", "tutorial", "setting" ];
+        var labels = [
+            "ゲームを開始します",
+            "チュートリアルを開始します",
+            "設定を変更します",
+            "Twitterへハイスコアを投稿します",
+        ];
+        if (gls2.core.highScore > 0) {
+            menu.push("tweet high score");
+            labels.push("Twitterへハイスコアを投稿します");
+        }
+        this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
             "defaultValue": this.lastMainMenu,
-            "menuDescriptions": [
-                "ゲームを開始します",
-                "チュートリアルを開始します",
-                "設定を変更します",
-                "ゲームを終了し9leapにスコアを登録します",
-            ]
+            "menuDescriptions": labels
         });
     },
     onResultMainMenu: function(result) {
@@ -135,8 +141,22 @@ gls2.TitleScene = tm.createClass({
         case 2: // option
             this.openSetting();
             break;
-        case 3: // to 9leap
-            gls2.core.exitApp();
+        case 3: // to Twitter
+            if (gls2.core.highScore > 0) {
+                var text = "SCORE:{score} (stage:{stage} by {type}-{style}) TM-Shooter http://goo.gl/GvMQOJ ".format({
+                    score: gls2.core.highScore,
+                    stage: gls2.core.highScoreStage + 1,
+                    type: ["A", "B", "C"][gls2.core.highScoreType],
+                    style: ["S", "L", "EX"][gls2.core.highScoreStyle]
+                });
+                var twitterURL = tm.social.Twitter.createURL({
+                    type    : "tweet",
+                    text    : text,
+                    hashtags: gls2.Setting.HASH_TAG,
+                    url     : window.document.location.href
+                });
+                window.open(twitterURL);
+            }
             break;
         }
     },

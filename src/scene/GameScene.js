@@ -709,6 +709,11 @@ gls2.GameScene = tm.createClass(
             }
         }
         gls2.core.highScore = Math.max(gls2.core.highScore, this.score);
+        if (gls2.core.highScore === this.score) {
+            gls2.core.highScoreStage = this.stageNumber;
+            gls2.core.highScoreType = this.player.type;
+            gls2.core.highScoreStyle = this.player.style;
+        }
     },
 
     addCombo: function(v) {
