@@ -71,8 +71,8 @@ gls2.GlShooter2 = tm.createClass(
 
             // use stage3
             "hino": "assets/enemy_hino.png",
-            "seikuu_y": "assets/enemy_seikuu_yoko.png",
-            "seikuu_t": "assets/enemy_seikuu_tate.png",
+            "hoshizora_y": "assets/enemy_hoshizora_y.png",
+            "hoshizora_t": "assets/enemy_hoshizora_t.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",

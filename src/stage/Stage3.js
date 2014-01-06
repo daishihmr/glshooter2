@@ -24,7 +24,7 @@ gls2.Stage3 = tm.createClass(
         });
 
         this.seq.add(100, "akane-1");
-        this.seq.add(100, "seikuu-1");
+        this.seq.add(100, "hoshizora_y-1");
 
         this.seq.add(200, "tankRD-center");
         this.seq.add(200, "tankRD-left");

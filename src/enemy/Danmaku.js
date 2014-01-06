@@ -534,7 +534,6 @@ gls2.Danmaku["komachi-4"] = new bulletml.Root({
     ]),
 });
 
-//Stage3
 /**
  *　サニキ用
  */
@@ -572,7 +571,6 @@ gls2.Danmaku["miyuki_t"] = new bulletml.Root({
         ]),
     ]),
 });
-//stage3/
 
 /**
  * ほのか

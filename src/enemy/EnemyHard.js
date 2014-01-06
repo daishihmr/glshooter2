@@ -28,8 +28,8 @@ gls2.Enemy.DATA = {
 
     //Stage3
     "hino":      [    30,      500, false, false,  1, {"width":24, "height":48}, ],
-    "seikuu_y":  [   150,      500, false, true,  30, {"width":128, "height":64}, ],
-    "seikuu_t":  [   150,      500, false, true,  30, {"width":128, "height":64}, ],
+    "hoshizora_y":  [   150,      500, false, true,  30, {"width":128, "height":64}, ],
+    "hoshizora_t":  [   150,      500, false, true,  30, {"width":128, "height":64}, ],
 //  "midorikawa":[   150,      500, false, true,  30, {"width":128, "height":64}, ],
 //  "aoki":      [   150,      500, false, true,  30, {"width":128, "height":64}, ],
 };
@@ -405,7 +405,6 @@ gls2.Enemy.Cannon2 = tm.createClass({
     },
 });
 
-//stage3
 /**
  * 強襲戦闘艇「ヒノ」
  */
@@ -437,16 +436,16 @@ gls2.Enemy.akane = tm.createClass(
 });
 
 /**
- * 戦艦「セイクウ」（ホシゾラ）横
+ * 戦艦「ホシゾラ」横
  */
 gls2.Enemy.miyuki_y = tm.createClass(
 /** @lends */
 {
     superClass: gls2.Enemy,
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "seikuu_y");
+        this.superInit(gameScene, software, "hoshizora_y");
 
-        this._sprite = _Sprite("seikuu_y", 128, 64).setFrameIndex(0);
+        this._sprite = _Sprite("hoshizora_y", 128, 64).setFrameIndex(0);
         this.boundingWidth = 128;
         this.boundingHeightBottom = 16;
         this.boundingHeightTop = 32;
@@ -465,16 +464,16 @@ gls2.Enemy.miyuki_y = tm.createClass(
     },
 });
 /**
- * 戦艦「セイクウ」（ホシゾラ）横
+ * 戦艦「ホシゾラ」縦
  */
 gls2.Enemy.miyuki_t = tm.createClass(
 /** @lends */
 {
     superClass: gls2.Enemy,
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "seikuu_t");
+        this.superInit(gameScene, software, "hoshizora_t");
 
-        this._sprite = _Sprite("seikuu_t", 64, 128).setFrameIndex(0);
+        this._sprite = _Sprite("hoshizora_t", 64, 128).setFrameIndex(0);
         this.boundingWidth = 128;
         this.boundingHeightBottom = 16;
         this.boundingHeightTop = 32;
@@ -492,7 +491,6 @@ gls2.Enemy.miyuki_t = tm.createClass(
         this.fallDown();
     },
 });
-//stage3/
 
 /**
  * ボムキャリアー「クルミ」

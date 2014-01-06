@@ -339,10 +339,16 @@ gls2.EnemyUnit = {
 ],
 
 /** 戦艦出現パターン */
-"seikuu-1": [
+"hoshizora_y-1": [
     { hard:$e.miyuki_y, soft:$s.miyuki_y, x:-128, y:60 },
 ],
-"seikuu-2": [
+"hoshizora_y-2": [
+    { hard:$e.miyuki_y, soft:$s.miyuki_y, x:SC_W+128, y:60 },
+],
+"hoshizora_t-1": [
+    { hard:$e.miyuki_t, soft:$s.miyuki_t, x:-128, y:60 },
+],
+"hoshizora_t-2": [
     { hard:$e.miyuki_t, soft:$s.miyuki_t, x:SC_W+128, y:60 },
 ],
 
