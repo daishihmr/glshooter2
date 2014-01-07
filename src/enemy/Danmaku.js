@@ -55,8 +55,8 @@ var $fire1 = function(spd) { return $.fire($.direction(0), spd || $spd3, BNS) };
 var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {
     return $.action([
         $.fire($.direction(rangeFrom), speed, bullet || RNS, offsetX, offsetY, autonomy),
-        $.repeat(way + "-1", [
-            $.fire($.direction("((" + rangeTo + ")-(" + rangeFrom + "))/(" + way + "-1)", "sequence"), speed, bullet || RNS, offsetX, offsetY, autonomy),
+        $.repeat(way + "+($ex*2)-1", [
+            $.fire($.direction("((" + rangeTo + ")-(" + rangeFrom + "))/(" + way + "+($ex*2)-1)", "sequence"), speed, bullet || RNS, offsetX, offsetY, autonomy),
         ])
     ]);
 };

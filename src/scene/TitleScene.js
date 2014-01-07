@@ -108,7 +108,6 @@ gls2.TitleScene = tm.createClass({
             "ゲームを開始します",
             "チュートリアルを開始します",
             "設定を変更します",
-            "Twitterへハイスコアを投稿します",
         ];
         if (gls2.core.highScore > 0) {
             menu.push("tweet high score");
@@ -143,11 +142,12 @@ gls2.TitleScene = tm.createClass({
             break;
         case 3: // to Twitter
             if (gls2.core.highScore > 0) {
-                var text = "SCORE:{score} (stage:{stage} by {type}-{style}) TM-Shooter http://goo.gl/GvMQOJ ".format({
-                    score: gls2.core.highScore,
+                var text = "SCORE:{score} (ship:{type}-{style} stage:{stage} continue:{cont}) TM-Shooter http://goo.gl/GvMQOJ ".format({
+                    score: Math.floor(gls2.core.highScore),
                     stage: gls2.core.highScoreStage + 1,
+                    cont: gls2.core.highScoreContinueCount,
                     type: ["A", "B", "C"][gls2.core.highScoreType],
-                    style: ["S", "L", "EX"][gls2.core.highScoreStyle]
+                    style: ["S", "L", "EX"][gls2.core.highScoreStyle],
                 });
                 var twitterURL = tm.social.Twitter.createURL({
                     type    : "tweet",
@@ -162,12 +162,16 @@ gls2.TitleScene = tm.createClass({
     },
 
     openSetting: function() {
-        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume", "difficulty" ], this.onResultSetting, {
+        this.openDialogMenu("SETTING", [
+            "bgm volume",
+            "sound volume",
+            // "difficulty",
+        ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
                 "効果音ボリュームを設定します",
-                "難易度を設定します",
+                // "難易度を設定します",
             ],
         });
     },
@@ -180,9 +184,9 @@ gls2.TitleScene = tm.createClass({
         case 1:
             this.openSeSetting();
             break;
-        case 2:
-            this.openDifficultySetting();
-            break;
+        // case 2:
+        //     this.openDifficultySetting();
+        //     break;
         default:
             this.openMainMenu();
             break;
