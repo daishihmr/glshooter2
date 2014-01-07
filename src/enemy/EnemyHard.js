@@ -405,6 +405,7 @@ gls2.Enemy.Cannon2 = tm.createClass({
     },
 });
 
+
 /**
  * 強襲戦闘艇「ヒノ」
  */
@@ -421,15 +422,10 @@ gls2.Enemy.akane = tm.createClass(
         this.boundingHeightTop = 32;
 
         this._sprite.setScale(1, 3);
-
-        this.time = 0;
     },
-/*
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
-        this.time++;
     },
-*/
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
@@ -447,13 +443,16 @@ gls2.Enemy.miyuki_y = tm.createClass(
 
         this._sprite = _Sprite("hoshizora_y", 256, 128).setFrameIndex(0);
         this.boundingWidth = 256;
-        this.boundingHeight = 128;
         this.boundingHeightBottom = 16;
-        this.boundingHeightTop = 32;
+        this.boundingHeightTop = 64;
 
         this.time = 0;
     },
     update: function(app) {
+        if (!this.isInScreen()) {
+            if (this.x < 0)this._sprite.setFrameIndex(0);
+            if (this.x > SC_W)this._sprite.setFrameIndex(1);
+        }
         gls2.Enemy.prototype.update.call(this, app);
         this.time++;
     },
@@ -463,7 +462,13 @@ gls2.Enemy.miyuki_y = tm.createClass(
     destroy: function() {
         this.fallDown();
     },
+    isInScreen: function() {
+        //一部でも表示されたら画面内とする
+        return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
+            || 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
+    },
 });
+
 /**
  * 大型戦艦「ホシゾラ」縦
  */
@@ -490,6 +495,11 @@ gls2.Enemy.miyuki_t = tm.createClass(
     },
     destroy: function() {
         this.fallDown();
+    },
+    isInScreen: function() {
+        //一部でも表示されたら画面内とする
+        return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
+            || 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
     },
 });
 
@@ -667,10 +677,6 @@ gls2.Enemy.Saki = tm.createClass(
  * 「ミナヅキ」
  * 「ミミノ」
  * 「シラベ」
- * 「ホシゾラ」
- * 「ヒノ」
- * 「ミドリカワ」
- * 「アオキ」
  * 「ヨツバ」
  * 「マドカ」
  *

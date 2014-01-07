@@ -1,4 +1,5 @@
 **/Thumbs.db
 copy-dependencies.bat
-#glshooter2.sln
-#glshooter2.suo
+.DS-Store
+*.sln
+*.suo

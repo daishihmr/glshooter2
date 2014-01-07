@@ -325,20 +325,28 @@ gls2.EnemyUnit = {
 "komachi4-0": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi4-1": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.7, y:SC_H*-0.3 }],
 
-//３面で使用
-/** テレポーター出現パターン */
+//強襲戦闘機「ヒノ」
 "akane-1": [
-    { hard:$e.akane, soft:$s.akane, x:100*0+90, y:60 },
-    { hard:$e.akane, soft:$s.akane, x:100*1+90, y:60 },
-    { hard:$e.akane, soft:$s.akane, x:100*2+90, y:60 },
-
-    { hard:$e.akane, soft:$s.akane, x:100*0+40, y:130 },
-    { hard:$e.akane, soft:$s.akane, x:100*1+40, y:130 },
-    { hard:$e.akane, soft:$s.akane, x:100*2+40, y:130 },
-    { hard:$e.akane, soft:$s.akane, x:100*3+40, y:130 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y:130 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.4, y: 80 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.5, y: 60 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y: 80 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y:130 },
+],
+"akane-2": [
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y:120 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y: 80 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y:160 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y: 40 },
+],
+"akane-3": [
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y:120 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y: 80 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y:160 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y: 40 },
 ],
 
-/** 戦艦出現パターン */
+//大型戦艦「ホシゾラ」
 "hoshizora_y-1": [
     { hard:$e.miyuki_y, soft:$s.miyuki_y, x:-256, y:140 },
 ],
