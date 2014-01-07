@@ -663,7 +663,8 @@ var _miyuki_y = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.miyuki_y = _miyuki_y(0.5, "miyuki_y");
+gls2.EnemySoft.miyuki_y1 = _miyuki_y( 1.0, "miyuki_y");
+gls2.EnemySoft.miyuki_y2 = _miyuki_y(-1.0, "miyuki_y");
 
 /**
  * 戦艦

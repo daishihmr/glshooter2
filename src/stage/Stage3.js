@@ -33,10 +33,7 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(  1, "heri2-right");
 
         this.seq.add(100, "hoshizora_y-1");
-        this.seq.add(  1, "komachi3-0");
-        this.seq.add(  1, "komachi3-1");
-        this.seq.add(  1, "komachi3-0");
-        this.seq.add(  1, "komachi3-1");
+        this.seq.add(  1, "heri2-right");
 
         this.seq.add(200, "tankRD-center");
         this.seq.add(200, "tankRD-left");
@@ -44,10 +41,6 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(200, "tankRD-center");
 
         this.seq.add(300, "hoshizora_y-2");
-        this.seq.add(  1, "komachi3-0");
-        this.seq.add(  1, "komachi3-1");
-        this.seq.add(  1, "komachi3-0");
-        this.seq.add(  1, "komachi3-1");
 
         this.seq.add( 20, "yayoi-R0");
         this.seq.add(  1, "yayoi-R2");

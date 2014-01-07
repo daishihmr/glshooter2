@@ -348,10 +348,10 @@ gls2.EnemyUnit = {
 
 //大型戦艦「ホシゾラ」
 "hoshizora_y-1": [
-    { hard:$e.miyuki_y, soft:$s.miyuki_y, x:-256, y:140 },
+    { hard:$e.miyuki_y, soft:$s.miyuki_y1, x:-256, y:140 },
 ],
 "hoshizora_y-2": [
-    { hard:$e.miyuki_y, soft:$s.miyuki_y, x:SC_W+128, y:60 },
+    { hard:$e.miyuki_y, soft:$s.miyuki_y2, x:SC_W+128, y:60 },
 ],
 "hoshizora_t-1": [
     { hard:$e.miyuki_t, soft:$s.miyuki_t, x:-128, y:60 },
