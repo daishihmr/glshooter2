@@ -30,7 +30,7 @@ gls2.GlShooter2 = tm.createClass(
     highScoreType: 0,
     /** ハイスコア取得時の機体スタイル */
     highScoreStyle: 0,
-    /** TODO ハイスコア取得時のコンティニュー回数 */
+    /** ハイスコア取得時のコンティニュー回数 */
     highScoreContinueCount: 0,
 
     /** BGM音量(0～5) */

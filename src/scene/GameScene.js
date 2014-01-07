@@ -719,6 +719,7 @@ gls2.GameScene = tm.createClass(
             gls2.core.highScoreStage = this.stageNumber;
             gls2.core.highScoreType = this.player.type;
             gls2.core.highScoreStyle = this.player.style;
+            gls2.core.highScoreContinueCount = this.continueCount;
         }
     },
 
