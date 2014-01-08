@@ -109,10 +109,10 @@ gls2.TitleScene = tm.createClass({
             "チュートリアルを開始します",
             "設定を変更します",
         ];
-        if (gls2.core.highScore > 0) {
+        // if (gls2.core.highScore > 0) {
             menu.push("tweet high score");
             labels.push("Twitterへハイスコアを投稿します");
-        }
+        // }
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
             "defaultValue": this.lastMainMenu,
             "menuDescriptions": labels
@@ -143,17 +143,17 @@ gls2.TitleScene = tm.createClass({
         case 3: // to Twitter
             if (gls2.core.highScore > 0) {
                 var text = "SCORE:{score} (ship:{type}-{style} stage:{stage} continue:{cont}) TM-Shooter http://goo.gl/GvMQOJ ".format({
-                    score: Math.floor(gls2.core.highScore),
-                    stage: gls2.core.highScoreStage + 1,
-                    cont: gls2.core.highScoreContinueCount,
-                    type: ["A", "B", "C"][gls2.core.highScoreType],
-                    style: ["S", "L", "EX"][gls2.core.highScoreStyle],
+                    "score": Math.floor(gls2.core.highScore),
+                    "stage": gls2.core.highScoreStage + 1,
+                    "cont": gls2.core.highScoreContinueCount,
+                    "type": ["A", "B", "C"][gls2.core.highScoreType],
+                    "style": ["S", "L", "EX"][gls2.core.highScoreStyle],
                 });
                 var twitterURL = tm.social.Twitter.createURL({
-                    type    : "tweet",
-                    text    : text,
-                    hashtags: gls2.Setting.HASH_TAG,
-                    url     : window.document.location.href
+                    "type"    : "tweet",
+                    "text"    : text,
+                    "hashtags": gls2.Setting.HASH_TAG,
+                    "url"     : window.document.location.href
                 });
                 window.open(twitterURL);
             }
