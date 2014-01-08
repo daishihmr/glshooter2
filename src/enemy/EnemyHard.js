@@ -25,6 +25,15 @@ gls2.Enemy.DATA = {
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
+
+    //Stage3
+    "hino":      [    30,      500, false, false,  1, {"width":24, "height":48}, ],
+    "hoshizora_y":[  100,      500, false,  true, 30, {"width":128, "height":64}, ],
+    "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height":64}, ],
+    "yotsuba":   [   300,    30000, false,  true, 30, {"width":64, "height":64}, ],
+    "yotsubaLeaf":[  300,    10000, false, false, 10, {"width":32, "height":32}, ],
+//  "midorikawa":[   150,      500, false, true,  30, {"width":128, "height":64}, ],
+//  "aoki":      [   150,      500, false, true,  30, {"width":128, "height":64}, ],
 };
 
 /**
@@ -398,6 +407,169 @@ gls2.Enemy.Cannon2 = tm.createClass({
     },
 });
 
+
+/**
+ * 強襲戦闘艇「ヒノ」
+ */
+gls2.Enemy.akane = tm.createClass(
+{
+    superClass: gls2.Enemy,
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "hino");
+
+        this._sprite = _Sprite("hino", 64, 32).setFrameIndex(0);
+        this.boundingWidth = 64;
+        this.boundingHeightBottom = 0;
+        this.boundingHeightTop = 32;
+
+        this._sprite.setScale(1, 3);
+
+        this.phase = 0;
+    },
+    update: function(app) {
+        if (this.phase == 0) {
+            //出現パターン
+            this.phase++;
+        }
+        gls2.Enemy.prototype.update.call(this, app);
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    isInScreen: function() {
+        if (this.phase == 0)return false;
+        return gls2.Enemy.prototype.isInScreen.call(this);
+    },
+
+});
+
+/**
+ * 大型戦艦「ホシゾラ」横
+ */
+gls2.Enemy.miyuki_y = tm.createClass(
+{
+    superClass: gls2.Enemy,
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "hoshizora_y");
+
+        this._sprite = _Sprite("hoshizora_y", 256, 128).setFrameIndex(0);
+        this.boundingWidth = 256;
+        this.boundingHeightBottom = 16;
+        this.boundingHeightTop = 64;
+    },
+    update: function(app) {
+        if (!this.isInScreen()) {
+            if (this.x < 0)this._sprite.setFrameIndex(0);
+            if (this.x > SC_W)this._sprite.setFrameIndex(1);
+        }
+        gls2.Enemy.prototype.update.call(this, app);
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        this.fallDown();
+    },
+    isInScreen: function() {
+        //一部でも表示されたら画面内とする
+        return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
+            || 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
+    },
+});
+
+/**
+ * 大型戦艦「ホシゾラ」縦
+ */
+gls2.Enemy.miyuki_t = tm.createClass(
+{
+    superClass: gls2.Enemy,
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "hoshizora_t");
+
+        this._sprite = _Sprite("hoshizora_t", 64, 128).setFrameIndex(0);
+        this.boundingWidth = 128;
+        this.boundingHeightBottom = 16;
+        this.boundingHeightTop = 32;
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        this.fallDown();
+    },
+    isInScreen: function() {
+        //一部でも表示されたら画面内とする
+        return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
+            || 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
+    },
+});
+
+/**
+ * 浮遊要塞「ヨツバ」（エクステンドキャリア）
+ */
+gls2.Enemy.Alice = tm.createClass({
+    superClass: gls2.Enemy,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "yotsuba");
+    },
+    draw: function(canvas) {
+        //ダミー
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
+        this.remove();
+/*
+        for (var i = 0; i<4; i++) {
+            this.leaf[i].destroy();
+        }
+        delete this.leaf;
+*/
+    },
+    onLaunch: function() {
+        //出現時に端末を投入
+/*
+        this.leaf = [];
+        for (var i = 0; i<4; i++) {
+            this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.aliceLeaf, soft:gls2.EnemySoft.aliceLeaf, x:this.x, y:this.y});
+            this.leaf[i].startDir = Math.PI*0.5*i;
+            this.leaf[i].currentParts = this;
+            this.leaf[i].number = i;
+        }
+ */
+        gls2.Enemy.prototype.onLaunch.call(this);
+        return this;
+    },
+});
+
+/**
+ * 浮遊砲台「ヨツバ」端末
+ */
+gls2.Enemy.AliceLeaf = tm.createClass({
+    superClass: gls2.Enemy,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "yotsubaLeaf");
+    },
+    draw: function(canvas) {
+        //ダミー
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    },
+});
+
 /**
  * ボムキャリアー「クルミ」
  */
@@ -543,40 +715,36 @@ gls2.Enemy.Saki = tm.createClass(
  */
 
 /**
- * ステージ４中ボス「ミナミノ」
+ * ステージ４中ボス「ヒシカワ」
  */
 
 /**
- * ステージ４ボス「ホウジョウ」
+ * ステージ４ボス「アイダ」
  */
 
 /**
- * ステージ５中ボス「ヒシカワ」
+ * ステージ５中ボス「ミナミノ」
  */
 
 /**
- * ステージ５ボス「アイダ」
+ * ステージ５ボス「ホウジョウ」
  */
 
 /**
- * エクストラボス「ユメハラ」
+ * エクストラボス「ヒビカナ」
  */
 
 /**
- * エクストラボス2「|)|23@[v]」
+ * エクストラボス2「クレッシェンドヒビカナ」
  */
 
 /*
  * 使ってない名前
+ * 「ユメハラ」
  * 「カスガノ」
  * 「ミナヅキ」
  * 「ミミノ」
  * 「シラベ」
- * 「ホシゾラ」
- * 「ヒノ」
- * 「ミドリカワ」
- * 「アオキ」
- * 「ヨツバ」
  * 「マドカ」
  *
  *

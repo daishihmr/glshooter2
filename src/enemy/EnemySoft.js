@@ -566,6 +566,252 @@ gls2.EnemySoft.Tsukikage4l = tm.createClass(
 });
 
 /**
+ * 強襲戦闘艇
+ *
+ * 画面内上部にテレポートで出現後、ゆっくり下へ移動していく
+ * 
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+var _akane = tm.createClass(
+/** @lends {_MiddleFighterCommon.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    velocityY: 0,
+    attackPattern: null,
+
+    /**
+     * @constructs
+     * @param {number} velocityY
+     * @param {string} attackPattern
+     */
+    init: function(velocityY, attackPattern) {
+        this.superInit();
+        this.velocityY = velocityY;
+        this.attackPattern = attackPattern;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.velocityY = this.velocityY;
+        enemy.patterns = [this.attackPattern];
+
+        enemy.tweener
+            .clear()
+            .call(function() {
+                gls2.EnemySoft.attack(this, this.patterns[0]);
+            }.bind(enemy));
+
+        enemy.on("enterframe", function() {
+            this.y += this.velocityY;
+            if (this.entered && !this.isInScreen()) {
+                this.remove();
+            }
+
+            this.enableFire = this.y < this.player.y;
+        });
+    },
+})
+gls2.EnemySoft.akane = _akane(0.5, "akane");
+
+/**
+ * 戦艦
+ *
+ * 左右から出現、そのまま等速で横断する。
+ * 
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+var _miyuki_y = tm.createClass(
+/** @lends {_MiddleFighterCommon.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    velocityX: 0,
+    attackPattern: null,
+
+    /**
+     * @constructs
+     * @param {number} velocityY
+     * @param {string} attackPattern
+     */
+    init: function(velocityX, attackPattern) {
+        this.superInit();
+        this.velocityX = velocityX;
+        this.attackPattern = attackPattern;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.velocityX = this.velocityX;
+        enemy.patterns = [this.attackPattern];
+
+        enemy.tweener
+            .clear()
+            .call(function() {
+                gls2.EnemySoft.attack(this, this.patterns[0]);
+            }.bind(enemy));
+
+        enemy.on("enterframe", function() {
+            this.x += this.velocityX;
+            if (this.entered && !this.isInScreen()) {
+                this.remove();
+            }
+
+            this.enableFire = this.y < this.player.y;
+        });
+    },
+})
+gls2.EnemySoft.miyuki_y1 = _miyuki_y( 1.0, "miyuki_y");
+gls2.EnemySoft.miyuki_y2 = _miyuki_y(-1.0, "miyuki_y");
+
+/**
+ * 戦艦
+ *
+ * 上から出現、そのまま等速で画面中心まで降りて停止
+ * 一定時間後、左右近い方の画面端方向に移動してスクリーンアウト
+ * 
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+var _miyuki_t = tm.createClass(
+/** @lends {_MiddleFighterCommon.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    velocityX: 0,
+    attackPattern: null,
+
+    /**
+     * @constructs
+     * @param {number} velocityY
+     * @param {string} attackPattern
+     */
+    init: function(velocityX, attackPattern) {
+        this.superInit();
+        this.velocityX = velocityX;
+        this.attackPattern = attackPattern;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.velocityX = this.velocityX;
+        enemy.patterns = [this.attackPattern];
+
+        enemy.tweener
+            .clear()
+            .call(function() {
+                gls2.EnemySoft.attack(this, this.patterns[0]);
+            }.bind(enemy));
+
+        enemy.on("enterframe", function() {
+            this.x += this.velocityX;
+            if (this.entered && !this.isInScreen()) {
+                this.remove();
+            }
+
+            this.enableFire = this.y < this.player.y;
+        });
+    },
+})
+gls2.EnemySoft.miyuki_t1 = _miyuki_y( 0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t1 = _miyuki_y(-0.5, "miyuki_t");
+
+/**
+ * 浮遊砲台
+ *
+ * 上部から出現し、ゆっくりと下へ移動
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+var _alice = tm.createClass(
+/** @lends {_MiddleFighterCommon.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    velocityX: 0,
+    attackPattern: null,
+
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.attackPattern = "alice";
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.velocityY = 0.5;
+        enemy.patterns = [this.attackPattern];
+
+        enemy.tweener
+            .clear()
+            .call(function() {
+                gls2.EnemySoft.attack(this, this.patterns[0]);
+            }.bind(enemy));
+
+        enemy.on("enterframe", function() {
+            this.y += this.velocityY;
+            if (this.entered && !this.isInScreen()) {
+                this.remove();
+            }
+
+            this.enableFire = this.y < this.player.y;
+        });
+    },
+})
+gls2.EnemySoft.Alice = _alice();
+
+/**
+ * 浮遊砲台（端末）
+ *
+ * 円を描いて展開し、本体から一定距離を保って周回する。
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+var _aliceLeaf = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    attackPattern: null,
+
+    /**
+     * @constructs
+     * @param {number} centerX
+     * @param {number} centerY
+     * @param {number} initialDirection
+     * @param
+     */
+    init: function(centerX, centerY, initialDirection) {
+        this.superInit();
+        this.attackPattern = "aliceLeaf";
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [this.attackPattern];
+
+        enemy.tweener
+            .clear()
+            .call(function() {
+                gls2.EnemySoft.attack(this, this.patterns[0]);
+            }.bind(enemy));
+
+        enemy.on("enterframe", function() {
+            if (this.entered && !this.isInScreen()) {
+                this.remove();
+            }
+            this.enableFire = this.y < this.player.y;
+        });
+    },
+})
+gls2.EnemySoft.AliceLeaf = _alice();
+
+/**
  * 大型戦闘機
  */
 gls2.EnemySoft.LargeFighter1 = _MiddleFighterCommon(0.3, "komachi-1");

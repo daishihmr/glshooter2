@@ -24,7 +24,7 @@ gls2.Setting = {
      * 初期ランク
      * @const
      */
-    INITIAL_RANK: DEBUG ? 0.10 : 0.00,
+    INITIAL_RANK: 0.00,
 
     /**
      * エクステンドスコア
@@ -360,6 +360,16 @@ gls2.Setting = {
      * @const
      */
     STAGE_CLEAR_BONUS_NO_MISS: 20000000,
+
+    /**
+     * @const
+     */
+    MAXIMUM_BONUS: 100,
+
+    /**
+     * @const
+     */
+    HASH_TAG: "tmshooter"
 };
 
 })();

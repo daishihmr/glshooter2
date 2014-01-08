@@ -17,6 +17,9 @@ gls2.GameScene = tm.createClass(
 
     /** スコア */
     score: 0,
+    /** コンティニュー回数 */
+    continueCount: 0,
+
     /** 素点 */
     baseScore: 0,
     /** コンボ数 */
@@ -45,7 +48,7 @@ gls2.GameScene = tm.createClass(
     killCount: 0,
     /** 出現敵数 */
     enemyCount: 0,
-    /** ミス数 */
+    /** ミス数（ステージ開始時リセット） */
     missCount: 0,
     /** トータルミス数 */
     missCountTotal: 0,
@@ -456,6 +459,11 @@ gls2.GameScene = tm.createClass(
                 }
             }
 
+            // マキシマムボーナス
+            if (this.isBombMaximum) {
+                this.score += gls2.Setting.MAXIMUM_BONUS;
+            }
+
         }
 
         // console.log("onexitframe " + (new Date().getTime() - beginProcessTime));
@@ -529,18 +537,20 @@ gls2.GameScene = tm.createClass(
         this.scoreLabel.consoleWindow.clearBuf().clear();
 
         this.score = 0;
+        this.continueCount = 0;
         this.zanki = gls2.Setting.INITIAL_ZANKI;
         this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX[playerStyle];
         this.bombMaxMax = gls2.Setting.BOMB_MAX_MAX[playerStyle];
         this.hyperGauge = 0;
         this.hyperRank = 0;
         this.hyperLevel = 0;
-        bulletml.Walker.globalScope["$rank"] = gls2.Setting.INITIAL_RANK;
         this.endHyperMode();
         this.isBombActive = false;
         this.missCount = this.missCountTotal = 0;
 
         this.player = gls2.Player(this, playerType, playerStyle);
+        this.setRank(gls2.Setting.INITIAL_RANK);
+        bulletml.Walker.globalScope["$ex"] = playerStyle !== 2 ? 0 : 1;
 
         this.startStage(0);
 
@@ -651,18 +661,24 @@ gls2.GameScene = tm.createClass(
         }
     },
 
+    setRank: function(v) {
+        var min = Math.max(0, gls2.core.difficulty - 1) * 0.02 + (this.player.style !== 2 ? 0.00 : 0.10);
+        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(v, min, 0.50);
+    },
+
     addRank: function(v) {
-        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"] + v, 0.00, 0.50);
+        this.setRank(bulletml.Walker.globalScope["$rank"] + v);
     },
 
     gameContinue: function() {
         this.println("System rebooted.", true);
 
         this.score = 0;
+        this.continueCount += 1;
         this.zanki = gls2.Setting.INITIAL_ZANKI;
         this.bomb = this.bombMax = gls2.Setting.INITIAL_BOMB_MAX[this.player.style];
         this.hyperRank = 0;
-        bulletml.Walker.globalScope["$rank"] = 0;
+        this.setRank(0);
 
         this.launch();
     },
@@ -699,6 +715,12 @@ gls2.GameScene = tm.createClass(
             }
         }
         gls2.core.highScore = Math.max(gls2.core.highScore, this.score);
+        if (gls2.core.highScore === this.score) {
+            gls2.core.highScoreStage = this.stageNumber;
+            gls2.core.highScoreType = this.player.type;
+            gls2.core.highScoreStyle = this.player.style;
+            gls2.core.highScoreContinueCount = this.continueCount;
+        }
     },
 
     addCombo: function(v) {
@@ -753,7 +775,7 @@ gls2.GameScene = tm.createClass(
 
         this.hyperRank = gls2.math.clamp(this.hyperRank + 1, 0, 5);
         this.addRank(this.hyperLevel * 0.01);
-        bulletml.Walker.globalScope["$hyperOff"] = gls2.Setting.ENEMY_ATTACK_INTERVAL_RATE_HYPER;
+        bulletml.Walker.globalScope["$hyperOff"] = gls2.Setting.ENEMY_ATTACK_INTERVAL_RATE_HYPER * (this.player.style !== 2 ? 1 : 0.5);
 
         this.hyperTime = gls2.Setting.HYPERMODE_TIME;
         this.hyperMutekiTime = gls2.Setting.HYPERMODE_TIME * gls2.Setting.HYPERMODE_START_MUTEKI_TIME;
@@ -783,7 +805,7 @@ gls2.GameScene = tm.createClass(
 
         this.player.currentShotPool = this.player.normalShotPool;
 
-        bulletml.Walker.globalScope["$hyperOff"] = 1.0;
+        bulletml.Walker.globalScope["$hyperOff"] = 1.0 * (this.player.style !== 2 ? 1 : 0.5);
 
         this.player.hyperShotPool.setLevel(0);
         this.player.laser.setLevel(0);

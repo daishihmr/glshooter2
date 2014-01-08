@@ -102,8 +102,17 @@ gls2.GroundElement = tm.createClass(
 
     gx: 0,
     gy: 0,
+
+    /**
+     * スクロール方向
+     */
     direction: 0,
+
+    /**
+     * スクロール速度
+     */
     speed: 0,
+
     dx: 0,
     dy: 0,
 

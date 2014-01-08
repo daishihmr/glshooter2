@@ -25,7 +25,14 @@ gls2.GlShooter2 = tm.createClass(
     /** アプリ実行中のハイスコア */
     highScore: 0,
     /** ハイスコア取得時の最終到達ステージ */
-    highStage: 0,
+    highScoreStage: 0,
+    /** ハイスコア取得時の機体タイプ */
+    highScoreType: 0,
+    /** ハイスコア取得時の機体スタイル */
+    highScoreStyle: 0,
+    /** ハイスコア取得時のコンティニュー回数 */
+    highScoreContinueCount: 0,
+
     /** BGM音量(0～5) */
     bgmVolume: 3,
     /** SE音量(0～5) */
@@ -68,6 +75,12 @@ gls2.GlShooter2 = tm.createClass(
             "bomb": "assets/bomb.png",
             "bombIcon": "assets/bomb_icon.png",
             "result_bg": "assets/result_bg.png",
+
+            // use stage3
+            "hino": "assets/enemy_hino.png",
+            "hoshizora_y": "assets/enemy_hoshizora_y.png",
+            "hoshizora_t": "assets/enemy_hoshizora_t.png",
+            "extendItem": "assets/extendItem.png",  //仮運用
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",
