@@ -103,14 +103,19 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        this.openDialogMenu("MAIN MENU", [ "start", "tutorial", "setting", "save score" ], this.onResultMainMenu, {
+        var menu = [ "start", "tutorial", "setting" ];
+        var labels = [
+            "ゲームを開始します",
+            "チュートリアルを開始します",
+            "設定を変更します",
+        ];
+        if (gls2.core.highScore > 0) {
+            menu.push("tweet high score");
+            labels.push("Twitterへハイスコアを投稿します");
+        }
+        this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
             "defaultValue": this.lastMainMenu,
-            "menuDescriptions": [
-                "ゲームを開始します",
-                "チュートリアルを開始します",
-                "設定を変更します",
-                "ゲームを終了し9leapにスコアを登録します",
-            ]
+            "menuDescriptions": labels
         });
     },
     onResultMainMenu: function(result) {
@@ -135,19 +140,38 @@ gls2.TitleScene = tm.createClass({
         case 2: // option
             this.openSetting();
             break;
-        case 3: // to 9leap
-            gls2.core.exitApp();
+        case 3: // to Twitter
+            if (gls2.core.highScore > 0) {
+                var text = "SCORE:{score} (ship:{type}-{style} stage:{stage} continue:{cont}) TM-Shooter http://goo.gl/GvMQOJ ".format({
+                    score: Math.floor(gls2.core.highScore),
+                    stage: gls2.core.highScoreStage + 1,
+                    cont: gls2.core.highScoreContinueCount,
+                    type: ["A", "B", "C"][gls2.core.highScoreType],
+                    style: ["S", "L", "EX"][gls2.core.highScoreStyle],
+                });
+                var twitterURL = tm.social.Twitter.createURL({
+                    type    : "tweet",
+                    text    : text,
+                    hashtags: gls2.Setting.HASH_TAG,
+                    url     : window.document.location.href
+                });
+                window.open(twitterURL);
+            }
             break;
         }
     },
 
     openSetting: function() {
-        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume", "difficulty" ], this.onResultSetting, {
+        this.openDialogMenu("SETTING", [
+            "bgm volume",
+            "sound volume",
+            // "difficulty",
+        ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
                 "効果音ボリュームを設定します",
-                "難易度を設定します",
+                // "難易度を設定します",
             ],
         });
     },
@@ -160,9 +184,9 @@ gls2.TitleScene = tm.createClass({
         case 1:
             this.openSeSetting();
             break;
-        case 2:
-            this.openDifficultySetting();
-            break;
+        // case 2:
+        //     this.openDifficultySetting();
+        //     break;
         default:
             this.openMainMenu();
             break;

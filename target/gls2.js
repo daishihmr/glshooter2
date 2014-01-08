@@ -748,20 +748,20 @@ tm.$a = tm.$a || {};
     b.stop = l;
     b.Ye = j;
     return b
-  }, Wh:function(b, d, f, C) {
+  }, Wh:function(b, d, f, B) {
     if(this.Ui === i || this.gc) {
       var E = {label:b.wa.label}, s;
       for(s in b.wa.Ba) {
         E[s] = b.wa.Ba[s]
       }
       if(E = d.Yf(E)) {
-        C = (s = 0 === b.wa.Ka.length) ? C.Vh(d) : C.Od(d, b.wa);
-        var r = this, A = {x:this.x + b.Ba.offsetX, y:this.y + b.Ba.offsetY};
-        f.sg = C.direction = function(s) {
+        B = (s = 0 === b.wa.Ka.length) ? B.Vh(d) : B.Od(d, b.wa);
+        var r = this, C = {x:this.x + b.Ba.offsetX, y:this.y + b.Ba.offsetY};
+        f.sg = B.direction = function(s) {
           var p = eval(s.value) * Math.DEG_TO_RAD;
           switch(s.type) {
             case "aim":
-              return d.target ? b.Ba.va ? a(A, d.target) + p : a(r, d.target) + p : p - Math.PI / 2;
+              return d.target ? b.Ba.va ? a(C, d.target) + p : a(r, d.target) + p : p - Math.PI / 2;
             case "absolute":
               return p - Math.PI / 2;
             case "relative":
@@ -770,7 +770,7 @@ tm.$a = tm.$a || {};
               return f.sg + p
           }
         }(b.direction || b.wa.direction);
-        f.ug = C.speed = function(a) {
+        f.ug = B.speed = function(a) {
           var b = eval(a.value);
           switch(a.type) {
             case "relative":
@@ -781,38 +781,38 @@ tm.$a = tm.$a || {};
               return b
           }
         }(b.speed || b.wa.speed);
-        E.x = A.x;
-        E.y = A.y;
-        s && (C.dg = Math.cos(C.direction) * C.speed * d.Ec, C.eg = Math.sin(C.direction) * C.speed * d.Ec);
+        E.x = C.x;
+        E.y = C.y;
+        s && (B.dg = Math.cos(B.direction) * B.speed * d.Ec, B.eg = Math.sin(B.direction) * B.speed * d.Ec);
         E.mc = !!E.mc;
         if(d.mc || E.mc) {
-          E.rotation = (C.direction + 0.5 * Math.PI) * Math.RAD_TO_DEG, E.speed = C.speed
+          E.rotation = (B.direction + 0.5 * Math.PI) * Math.RAD_TO_DEG, E.speed = B.speed
         }
-        E.addEventListener("enterframe", C);
+        E.addEventListener("enterframe", B);
         d.Sf ? d.Sf.addChild(E) : this.parent && this.parent.addChild(E)
       }
     }
   }, Rh:function(d, f, t) {
-    var C = eval(d.direction.value) * Math.DEG_TO_RAD, E = eval(d.Wa);
+    var B = eval(d.direction.value) * Math.DEG_TO_RAD, E = eval(d.Wa);
     switch(d.direction.type) {
       case "aim":
         d = f.target;
         if(!d) {
           return
         }
-        t.fc = a(this, d) + C;
+        t.fc = a(this, d) + B;
         t.Nc = b(t.fc - t.direction) / E;
         break;
       case "absolute":
-        t.fc = C - Math.PI / 2;
+        t.fc = B - Math.PI / 2;
         t.Nc = b(t.fc - t.direction) / E;
         break;
       case "relative":
-        t.fc = t.direction + C;
+        t.fc = t.direction + B;
         t.Nc = b(t.fc - t.direction) / E;
         break;
       case "sequence":
-        t.Nc = C, t.fc = t.direction + t.Nc * (E - 1)
+        t.Nc = B, t.fc = t.direction + t.Nc * (E - 1)
     }
     t.Oe = t.ga + E
   }, Sh:function(a, b) {
@@ -913,7 +913,7 @@ tm.preload(n());
 tm.main(function() {
   ba("#canvas2d").run()
 });
-var u = k, v, ca, w, z, B, F, da, ea, ga, ha, ia, ja, ka, la, G, J, na, oa, pa, qa, ra, sa, ta, ua, va, wa, xa, ya, za, Ba, Ca, Da, Ea, Fa, K, L, Ga, Ha, M, P, Ia, Ja, S, ba = tm.createClass({superClass:tm.display.CanvasApp, Yd:0, vj:0, bd:3, Cc:3, fg:1, ca:k, init:function(b) {
+var u = k, v, ca, w, z, A, F, da, ea, ga, ha, ia, ja, ka, la, G, H, na, oa, pa, qa, ra, sa, ta, ua, va, wa, xa, ya, Aa, Ba, Ca, Da, Ea, I, J, Fa, Ga, M, P, Ha, Ia, S, ba = tm.createClass({superClass:tm.display.CanvasApp, Yd:0, vj:0, bd:3, Cc:3, fg:1, ca:k, init:function(b) {
   u !== k && h(Error("class 'gls2.GlShooter2' is singleton!!"));
   this.superInit(b);
   u = this;
@@ -951,7 +951,7 @@ var u = k, v, ca, w, z, B, F, da, ea, ga, ha, ia, ja, ka, la, G, J, na, oa, pa, 
     tm.asset.AssetManager.set(b + "Red", f)
   });
   z.setup();
-  B.setup();
+  A.setup();
   this.ca = F()
 }, ni:function() {
   this.stop();
@@ -962,7 +962,7 @@ var u = k, v, ca, w, z, B, F, da, ea, ga, ha, ia, ja, ka, la, G, J, na, oa, pa, 
 tm.display.AnimationSprite.prototype.clone = function() {
   return tm.app.AnimationSprite(this.ss, this.width, this.height)
 };
-function Ka(b, a) {
+function Ja(b, a) {
   return(b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y)
 }
 ;v = {zh:l, ah:60, wh:0, Cf:[1E9, 1E10], yh:3E3, Ef:3, Df:[3, 2, 1], Og:[6, 4, 2], Mf:1, vh:0.1, Ff:1, xh:0.25, jj:1, kj:0.25, Ng:2, nh:0.0050, jh:0.01, kh:0.0010, fh:0.015, gh:0.0020, ph:0.0010, rh:0.01, oh:0, mh:0, lh:0, ih:0.03, hh:0.0040, qh:0, sh:0, th:0.75, re:10, Ad:800, eh:0.25, dh:0.1, uh:[1, 3, 5, 10, 18, 26, 42, 66, 90, 130, 200], Vg:0.02, Wg:0.5, Ug:0.01, Bf:1E3, Rg:10, Pg:1, Nh:1E3, Mh:100, Lh:0, Kh:0, Jh:1E3, Ih:100, $g:0.5, Sg:4, Xg:22500, Qg:50, Ch:10, xf:l, Mg:j, Gh:1E3, Hh:2E3, Dh:4E3, 
@@ -1185,7 +1185,7 @@ Eh:1E4, Fh:2E7};
     if(m === i) {
       return k
     }
-    var t = La(g);
+    var t = Ka(g);
     m.nc = Math.cos(t) * m.speed;
     m.Mb = Math.sin(t) * m.speed;
     m.setPosition(a, b);
@@ -1307,8 +1307,8 @@ ga.prototype.getter("boundingHeightTop", function() {
       this.ca.Xe = l;
       this.ca.Qd();
       this.ca.Ua("drop BOMBER!!", j);
-      J("bomb");
-      J("voBomb")
+      H("bomb");
+      H("voBomb")
     });
     this.addEventListener("removed", function() {
       this.ca.Rc = l;
@@ -1371,7 +1371,7 @@ oa = tm.createClass({superClass:tm.display.Sprite, nc:0, Mb:0, da:k, ga:0, init:
 }, update:function() {
   this.x += this.nc;
   this.y += 2 * this.Mb;
-  if(2025 > Ka(this, this.da)) {
+  if(2025 > Ja(this, this.da)) {
     this.da.ca.bi(1), this.remove()
   }else {
     if(3E3 > this.ga) {
@@ -1387,17 +1387,16 @@ oa = tm.createClass({superClass:tm.display.Sprite, nc:0, Mb:0, da:k, ga:0, init:
   }
   this.ga += 1
 }});
-B = {setup:function() {
-  pa = {};
-  B.explosion = Array.range(0, 3).map(function(b) {
+A = {setup:function() {
+  A.explosion = Array.range(0, 3).map(function(b) {
     return tm.display.AnimationSprite(tm.asset.SpriteSheet({image:"explode" + b, frame:{width:100, height:100}, animations:{"default":{frame:Array.range(0, 64), next:k}}}, 100, 100))
   });
-  pa.explodeL = tm.display.AnimationSprite(tm.asset.SpriteSheet({image:"explode0", frame:{width:100, height:100}, animations:{"default":{frame:Array.range(0, 64), next:k, frequency:3}}}, 100, 100));
-  B.shockwaveImage = tm.graphics.Canvas().resize(100, 100).setStrokeStyle("rgba(0,0,0,0)").setFillStyle(tm.graphics.RadialGradient(50, 50, 0, 50, 50, 50).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.7, color:"rgba(255,255,255,0)"}, {offset:0.95, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()).fillCircle(50, 50, 50);
-  B.shockwaveImage = tm.graphics.Canvas().resize(100, 100).setStrokeStyle("rgba(0,0,0,0)").setFillStyle(tm.graphics.RadialGradient(50, 50, 0, 50, 50, 50).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.7, color:"rgba(255,255,255,0)"}, {offset:0.95, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()).fillCircle(50, 50, 50);
-  B.particle16 = G(16, 1, 0.9, tm.graphics.Canvas().resize(16, 16).setFillStyle(tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(255,128,  0,0.0)"}]).toStyle()).fillRect(0, 0, 16, 16).element)
+  tm.display.AnimationSprite(tm.asset.SpriteSheet({image:"explode0", frame:{width:100, height:100}, animations:{"default":{frame:Array.range(0, 64), next:k, frequency:3}}}, 100, 100));
+  A.shockwaveImage = tm.graphics.Canvas().resize(100, 100).setStrokeStyle("rgba(0,0,0,0)").setFillStyle(tm.graphics.RadialGradient(50, 50, 0, 50, 50, 50).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.7, color:"rgba(255,255,255,0)"}, {offset:0.95, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()).fillCircle(50, 50, 50);
+  A.shockwaveImage = tm.graphics.Canvas().resize(100, 100).setStrokeStyle("rgba(0,0,0,0)").setFillStyle(tm.graphics.RadialGradient(50, 50, 0, 50, 50, 50).addColorStopList([{offset:0, color:"rgba(255,255,255,0)"}, {offset:0.7, color:"rgba(255,255,255,0)"}, {offset:0.95, color:"rgba(255,255,255,1)"}, {offset:1, color:"rgba(255,255,255,0)"}]).toStyle()).fillCircle(50, 50, 50);
+  A.particle16 = G(16, 1, 0.9, tm.graphics.Canvas().resize(16, 16).setFillStyle(tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8).addColorStopList([{offset:0, color:"rgba(255,255,255,1.0)"}, {offset:1, color:"rgba(255,128,  0,0.0)"}]).toStyle()).fillRect(0, 0, 16, 16).element)
 }, Wd:function(b, a, d) {
-  b = B.particle16.clone().setPosition(b, a);
+  b = A.particle16.clone().setPosition(b, a);
   b.Sa = j;
   b.addChildTo(d);
   d = U(5, 20);
@@ -1416,7 +1415,7 @@ B = {setup:function() {
   var g = tm.display.Sprite().setPosition(b, a).setScale(0.1).setBlendMode("lighter");
   g.Sa = j;
   g.addChildTo(d);
-  g.image = B.shockwaveImage;
+  g.image = A.shockwaveImage;
   g.tweener.clear().to({scaleX:f, scaleY:f, alpha:0}, 800, "easeOutQuad").call(function() {
     g.remove()
   })
@@ -1428,8 +1427,8 @@ B = {setup:function() {
     this.remove()
   }.bind(b))
 }, Sd:function(b, a, d, f) {
-  J("explode");
-  var g = B.explosion.random().clone().addEventListener("animationend", function() {
+  H("explode");
+  var g = A.explosion.random().clone().addEventListener("animationend", function() {
     this.remove()
   }).setScale(0.75).setPosition(b, a).setRotation(360 * Math.random()).gotoAndPlay();
   g.Sa = j;
@@ -1443,10 +1442,10 @@ B = {setup:function() {
     })
   }
   g.addChildTo(d);
-  B.lg(b, a, d)
+  A.lg(b, a, d)
 }, oi:function(b, a, d) {
-  J("explode");
-  var f = B.explosion.random().clone().addEventListener("animationend", function() {
+  H("explode");
+  var f = A.explosion.random().clone().addEventListener("animationend", function() {
     this.remove()
   }).addEventListener("enterframe", function() {
     this.scaleX += 0.01;
@@ -1454,7 +1453,7 @@ B = {setup:function() {
   }).setScale(0.5).setPosition(b, a).setRotation(360 * Math.random()).gotoAndPlay();
   f.Sa = j;
   f.addChildTo(d);
-  f = B.explosion.random().clone().addEventListener("animationend", function() {
+  f = A.explosion.random().clone().addEventListener("animationend", function() {
     this.remove()
   }).addEventListener("enterframe", function() {
     this.rotation += 2;
@@ -1465,7 +1464,7 @@ B = {setup:function() {
   }).setScale(0.5).setPosition(b + 12, a).setRotation(360 * Math.random()).gotoAndPlay();
   f.Sa = j;
   f.addChildTo(d);
-  f = B.explosion.random().clone().addEventListener("animationend", function() {
+  f = A.explosion.random().clone().addEventListener("animationend", function() {
     this.remove()
   }).addEventListener("enterframe", function() {
     this.rotation -= 2;
@@ -1477,29 +1476,29 @@ B = {setup:function() {
   f.Sa = j;
   f.addChildTo(d)
 }, Gb:function(b, a, d) {
-  J("explode2");
-  J("explode3");
-  for(var f = ~~(Math.random() * Ma.length), g = 0;20 > g;g++) {
-    var m = B.explosion.random().clone().addEventListener("animationend", function() {
+  H("explode2");
+  H("explode3");
+  for(var f = ~~(Math.random() * La.length), g = 0;20 > g;g++) {
+    var m = A.explosion.random().clone().addEventListener("animationend", function() {
       this.remove()
     }).addEventListener("enterframe", function() {
       this.x += Math.cos(this.a) * this.v;
       this.y += Math.sin(this.a) * this.v;
       this.scaleX += 0.01;
       this.scaleY += 0.01
-    }).setScale(0.7).setPosition(b, a).gotoAndPlay();
+    }).setScale(0.7).setPosition(b, a).setRotation(360 * Math.random()).gotoAndPlay();
     m.a = 2 * Math.PI * Math.random();
-    m.v = 10 * Math.pow(Ma.at(~~(Ma.length * g / 20) + f), 2);
+    m.v = 10 * Math.pow(La.at(~~(La.length * g / 20) + f), 2);
     m.Sa = j;
     m.addChildTo(d)
   }
-  B.lg(b, a, d, 5)
+  A.lg(b, a, d, 5)
 }, hg:function(b, a, d) {
-  J("explode2");
-  J("explode3");
-  for(var f = ~~(Math.random() * Ma.length), g = 0;20 > g;g++) {
-    for(var m = 2 * Math.PI * g / 20, t = Math.pow(Ma.at(~~(Ma.length * g / 20) + f), 2), C = 0;3 > C;C++) {
-      var E = 4 * t * (C + 1), s = pa.explodeL.clone().addEventListener("animationend", function() {
+  H("explode2");
+  H("explode3");
+  for(var f = ~~(Math.random() * La.length), g = 0;20 > g;g++) {
+    for(var m = 2 * Math.PI * g / 20, t = Math.pow(La.at(~~(La.length * g / 20) + f), 2), B = 0;3 > B;B++) {
+      var E = 4 * t * (B + 1), s = A.explosion.random().clone().addEventListener("animationend", function() {
         this.remove()
       }).addEventListener("enterframe", function() {
         this.x += Math.cos(this.a) * this.v;
@@ -1507,7 +1506,7 @@ B = {setup:function() {
         this.scaleX += 0.01;
         this.scaleY += 0.01;
         this.ga += 1
-      }).setScale(0.3 * (3 - C)).setPosition(b, a).gotoAndPlay();
+      }).setScale(0.3 * (3 - B)).setPosition(b, a).setRotation(360 * Math.random()).gotoAndPlay();
       s.rotation = 2 * Math.random() * Math.PI;
       s.Sa = j;
       s.ga = 0;
@@ -1517,7 +1516,7 @@ B = {setup:function() {
     }
   }
 }};
-qa = tm.createClass({superClass:tm.app.Object2D, target:k, Bc:0, angle:0, alpha:2, Sa:j, reverse:l, init:function(b, a) {
+pa = tm.createClass({superClass:tm.app.Object2D, target:k, Bc:0, angle:0, alpha:2, Sa:j, reverse:l, init:function(b, a) {
   this.superInit();
   this.target = b;
   this.reverse = a;
@@ -1560,14 +1559,14 @@ ja = tm.createClass({superClass:tm.app.Object2D, target:k, angle:0, Sa:j, init:f
     2 * Math.PI < this.angle && this.remove()
   }
 }});
-ra = tm.createClass({superClass:tm.graphics.Canvas, ca:k, Lc:k, Va:k, frame:0, init:function(b) {
+qa = tm.createClass({superClass:tm.graphics.Canvas, ca:k, Lc:k, Va:k, frame:0, init:function(b) {
   this.superInit("#scoreLabel");
   this.ca = b;
   this.resize(480, 640).fitWindow();
   this.setText("20px Orbitron", "left", "top");
   this.fillStyle = "rgba(255,255,255,0.01)";
-  this.Lc = Na(200);
-  this.Va = sa(this)
+  this.Lc = Ma(200);
+  this.Va = ra(this)
 }, update:function() {
   this.clear();
   this.ca.Sb !== k && (this.fillStyle = tm.graphics.LinearGradient(0, 0, 480, 0).addColorStopList([{offset:0, color:"rgba(255,255,0,0.4)"}, {offset:1, color:"rgba(0,255,255,0.4)"}]).toStyle(), this.strokeStyle = "rgba(255,255,255,0.8)", this.lineWidth = 2, this.fillRect(5, this.Va.Hb - 20, 470 * this.ca.Sb.na / this.ca.Sb.hc, 20), this.strokeRect(5, this.Va.Hb - 20, 470, 20), this.clear(263.5, this.Va.Hb - 20 + 2, 2, 16), this.clear(52, this.Va.Hb - 20 + 2, 2, 16));
@@ -1607,7 +1606,7 @@ ra = tm.createClass({superClass:tm.graphics.Canvas, ca:k, Lc:k, Va:k, frame:0, i
   this.Lc.draw(this);
   this.frame += 1
 }});
-sa = tm.createClass({superClass:tm.app.Object2D, gb:k, gd:0, Hb:0, init:function(b) {
+ra = tm.createClass({superClass:tm.app.Object2D, gb:k, gd:0, Hb:0, init:function(b) {
   this.superInit();
   this.gb = b
 }});
@@ -1615,10 +1614,10 @@ sa = tm.createClass({superClass:tm.app.Object2D, gb:k, gd:0, Hb:0, init:function
   for(var b = [], a = [], d = 0;3 > d;d++) {
     b[d] = 40 * Math.pow(0.8, d), a[d] = b[d] / 2 * Math.sqrt(3)
   }
-  ta = tm.createClass({superClass:tm.graphics.Canvas, qa:k, init:function() {
+  sa = tm.createClass({superClass:tm.graphics.Canvas, qa:k, init:function() {
     this.superInit("#background");
     this.resize(480, 640).fitWindow();
-    this.qa = ua();
+    this.qa = ta();
     this.qa.ja = this;
     this.qa.update = function(a) {
       this.update(a.frame)
@@ -1656,7 +1655,7 @@ sa = tm.createClass({superClass:tm.app.Object2D, gb:k, gd:0, Hb:0, init:function
       this.stroke()
     }
   }});
-  ua = tm.createClass({superClass:tm.app.Object2D, vb:0, wb:0, direction:0, speed:0, ra:0, sa:0, background:k, init:function() {
+  ta = tm.createClass({superClass:tm.app.Object2D, vb:0, wb:0, direction:0, speed:0, ra:0, sa:0, background:k, init:function() {
     this.superInit();
     this.vb = [];
     this.wb = [];
@@ -1668,7 +1667,7 @@ sa = tm.createClass({superClass:tm.app.Object2D, gb:k, gd:0, Hb:0, init:function
     this.sa = this.ra = 0
   }})
 })();
-va = tm.createClass({superClass:tm.display.Sprite, rg:l, ca:k, da:k, Vb:l, Ac:l, sf:l, ra:0, sa:0, init:function(b) {
+ua = tm.createClass({superClass:tm.display.Sprite, rg:l, ca:k, da:k, Vb:l, Ac:l, sf:l, ra:0, sa:0, init:function(b) {
   this.superInit("star", 20, 20);
   (this.rg = b) && this.setScale(2, 2);
   this.ca = F.Ae;
@@ -1682,12 +1681,12 @@ va = tm.createClass({superClass:tm.display.Sprite, rg:l, ca:k, da:k, Vb:l, Ac:l,
   if(this.da.parent === k) {
     this.Ac = l
   }else {
-    if(100 > Ka(this, this.da)) {
+    if(100 > Ja(this, this.da)) {
       this.ca.Ki(this);
       this.remove();
       return
     }
-    1E4 > Ka(this, this.da) && (this.Ac = j);
+    1E4 > Ja(this, this.da) && (this.Ac = j);
     if(this.sf && this.Ac) {
       var b = Math.atan2(this.da.y - this.y, this.da.x - this.x);
       this.x += 10 * Math.cos(b);
@@ -1698,24 +1697,24 @@ va = tm.createClass({superClass:tm.display.Sprite, rg:l, ca:k, da:k, Vb:l, Ac:l,
   }
   (-200 > this.x || 680 < this.x || -200 > this.y || 690 < this.y) && this.remove()
 }});
-wa = tm.createClass({superClass:va, Vb:l, init:function(b) {
+va = tm.createClass({superClass:ua, Vb:l, init:function(b) {
   this.superInit(b)
 }, update:function() {
   this.y += 4;
   this.rotation += 10;
   this.superClass.prototype.update.call(this)
 }});
-xa = tm.createClass({superClass:va, Vb:j, init:function(b) {
+wa = tm.createClass({superClass:ua, Vb:j, init:function(b) {
   this.superInit(b)
 }, update:function() {
   this.Ac || (this.x += this.ca.ja.ra, this.y += this.ca.ja.sa);
   this.superClass.prototype.update.call(this)
 }});
-ya = tm.createClass({da:k, ca:k, $:k, frame:0, init:function(b) {
+xa = tm.createClass({da:k, ca:k, $:k, frame:0, init:function(b) {
   this.ca = b;
   this.da = b.da;
   this.ge();
-  this.$ = za();
+  this.$ = ya();
   this.frame = 0
 }, ge:n(), update:function() {
   this.mi(this.frame);
@@ -1726,8 +1725,8 @@ ya = tm.createClass({da:k, ca:k, $:k, frame:0, init:function(b) {
     if("function" === typeof b.value) {
       b.value.call(this)
     }else {
-      if(Ba[b.value] !== i) {
-        var a = Ba[b.value];
+      if(Aa[b.value] !== i) {
+        var a = Aa[b.value];
         if(a !== k) {
           if(a[0].Sb === j) {
             this.vg(a[0])
@@ -1749,7 +1748,7 @@ ya = tm.createClass({da:k, ca:k, $:k, frame:0, init:function(b) {
   b.ie = this;
   return b
 }, Tf:function(b) {
-  Ca();
+  Ba();
   this.ca.fd = j;
   for(var a = tm.app.Object2D().setPosition(240, 320), d = -4;4 >= d;d++) {
     for(var f = -4;4 >= f;f++) {
@@ -1771,24 +1770,24 @@ ya = tm.createClass({da:k, ca:k, $:k, frame:0, init:function(b) {
     this.remove()
   }.bind(a));
   a.addChildTo(this.ca.Se);
-  J("warning");
-  J("voWarning")
+  H("warning");
+  H("voWarning")
 }});
-ya.create = function(b, a) {
+xa.create = function(b, a) {
   switch(a) {
     case 0:
-      return Da(b);
+      return Ca(b);
     case 1:
-      return Ea(b);
+      return Da(b);
     case 2:
-      return Fa(b);
+      return Ea(b);
     case 3:
-      return Fa(b);
+      return Ea(b);
     default:
       h(Error("stageNumber = " + a))
   }
 };
-za = tm.createClass({index:0, data:k, tf:l, init:function() {
+ya = tm.createClass({index:0, data:k, tf:l, init:function() {
   this.data = {}
 }, add:function(b, a, d) {
   this.index += b;
@@ -1797,10 +1796,10 @@ za = tm.createClass({index:0, data:k, tf:l, init:function() {
   b = this.data[b];
   return b === i ? k : b.stop === j ? (this.tf = j, b) : this.tf ? k : b
 }});
-Da = tm.createClass({superClass:ya, init:function(b) {
+Ca = tm.createClass({superClass:xa, init:function(b) {
   this.superInit(b);
   this.$.add(0, function() {
-    K("bgm1", j);
+    I("bgm1", j);
     this.ca.ja.direction = 0.5 * Math.PI;
     this.ca.ja.speed = 8;
     this.ca.ja.tweener.clear().to({speed:1}, 4E3, "easeInOutQuad")
@@ -1908,17 +1907,17 @@ Da = tm.createClass({superClass:ya, init:function(b) {
   this.$.add(160, "komachi-1");
   this.$.add(600, function() {
     this.Tf(function() {
-      K("bgmBoss", j)
+      I("bgmBoss", j)
     })
   });
   this.$.add(600, "misumi")
 }, ge:function() {
   this.ca.ja.background = tm.graphics.LinearGradient(0, 0, 0, 640).addColorStopList([{offset:0, color:"hsl(230,50%,20%)"}, {offset:1, color:"hsl(230,50%,10%)"}]).toStyle()
 }});
-Ea = tm.createClass({superClass:ya, init:function(b) {
+Da = tm.createClass({superClass:xa, init:function(b) {
   this.superInit(b);
   this.$.add(0, function() {
-    K("bgm2", j);
+    I("bgm2", j);
     this.ca.ja.direction = 0.5 * Math.PI;
     this.ca.ja.speed = 0.3
   });
@@ -2012,7 +2011,7 @@ Ea = tm.createClass({superClass:ya, init:function(b) {
   this.$.add(580, "erika");
   this.$.add(520, function() {
     this.Tf(function() {
-      K("bgmBoss", j)
+      I("bgmBoss", j)
     })
   });
   this.$.add(300, function() {
@@ -2022,10 +2021,10 @@ Ea = tm.createClass({superClass:ya, init:function(b) {
 }, ge:function() {
   this.ca.ja.background = tm.graphics.LinearGradient(0, 0, 0, 640).addColorStopList([{offset:0, color:"hsl(130,30%,20%)"}, {offset:1, color:"hsl(130,30%, 5%)"}]).toStyle()
 }});
-Fa = tm.createClass({superClass:ya, init:function(b) {
+Ea = tm.createClass({superClass:xa, init:function(b) {
   this.superInit(b);
   this.$.add(0, function() {
-    K("bgm4", j);
+    I("bgm4", j);
     this.ca.ja.direction = 0.5 * Math.PI;
     this.ca.ja.speed = 1
   });
@@ -2063,22 +2062,22 @@ Fa = tm.createClass({superClass:ya, init:function(b) {
   this.$.add(50, "komachi4-1");
   this.$.add(500, "heri2-left");
   this.$.add(1, function() {
-    this.ca.ja.tweener.clear().to({speed:3, direction:0.25 * Math.PI}, 2E3)
+    this.ca.ja.tweener.clear().to({speed:5, direction:0.5 * -Math.PI}, 1E4).to({speed:3, direction:1.5 * -Math.PI}, 1E4)
   });
-  for(b = 0;3 > b;b++) {
-    this.$.add(15, "heri2-center"), this.$.add(15, "heri2-right"), this.$.add(15, "heri2-center"), this.$.add(15, "heri2-left"), this.$.add(1, "tank5-center"), this.$.add(15, "heri2-center"), this.$.add(15, "heri2-right"), this.$.add(15, "heri2-center"), this.$.add(15, "heri2-left"), this.$.add(1, "tank5-left")
+  for(b = 0;6 > b;b++) {
+    this.$.add(20, "heri2-center"), this.$.add(20, "heri2-right"), this.$.add(20, "heri2-left"), this.$.add(1, "tank5-center"), this.$.add(15, "heri1-4-center"), this.$.add(15, "heri1-4-right"), this.$.add(15, "heri1-4-left"), this.$.add(1, "tank5-left"), this.$.add(90, "tank25-top")
   }
 }, ge:function() {
   this.ca.ja.background = tm.graphics.LinearGradient(0, 0, 0, 640).addColorStopList([{offset:0, color:"hsl(30,30%,15%)"}, {offset:1, color:"hsl(30,50%, 5%)"}]).toStyle()
 }});
-function Oa(b, a) {
+function Na(b, a) {
   if(b.parent === k || a.parent === k) {
     return l
   }
-  var d = b.x + b.boundingWidthRight, f = b.y - b.boundingHeightTop, g = b.y + b.boundingHeightBottom, m = a.x - a.boundingWidthLeft, t = a.y - a.boundingHeightTop, C = a.y + a.boundingHeightBottom;
-  return b.x - b.boundingWidthLeft < a.x + a.boundingWidthRight && d > m && f < C && g > t
+  var d = b.x + b.boundingWidthRight, f = b.y - b.boundingHeightTop, g = b.y + b.boundingHeightBottom, m = a.x - a.boundingWidthLeft, t = a.y - a.boundingHeightTop, B = a.y + a.boundingHeightBottom;
+  return b.x - b.boundingWidthLeft < a.x + a.boundingWidthRight && d > m && f < B && g > t
 }
-;var Pa = tm.createClass({superClass:tm.app.Scene, _sceneResultCallback:k, init:function() {
+;var Oa = tm.createClass({superClass:tm.app.Scene, _sceneResultCallback:k, init:function() {
   this.superInit()
 }, gj:function(b, a) {
   "function" === typeof b ? this.app.pushScene(b()) : b instanceof tm.app.Scene && this.app.pushScene(b);
@@ -2091,7 +2090,7 @@ function Oa(b, a) {
   a.popScene();
   (a = a.currentScene) && a._sceneResultCallback && a._sceneResultCallback.bind(a)(b)
 }});
-var Qa = tm.createClass({superClass:Pa, titleText:k, menu:k, descriptions:k, showExit:l, title:k, selections:[], description:k, box:k, cursor:k, gf:k, _selected:0, _opened:l, _finished:l, init:function(b, a, d) {
+var Pa = tm.createClass({superClass:Oa, titleText:k, menu:k, descriptions:k, showExit:l, title:k, selections:[], description:k, box:k, cursor:k, gf:k, _selected:0, _opened:l, _finished:l, init:function(b, a, d) {
   this.superInit();
   this.titleText = b;
   this.menu = a;
@@ -2134,8 +2133,8 @@ var Qa = tm.createClass({superClass:Pa, titleText:k, menu:k, descriptions:k, sho
   }
 }, update:function(b) {
   this.description.text = this.descriptions[this._selected];
-  this._opened && (this._finished ? this.cursor.visible = 0 === ~~(b.frame / 2) % 2 : this.showExit && b.keyboard.getKeyDown("x") ? (this._selected = this.selections.length - 1, this.closeDialog(this._selected)) : b.keyboard.getKeyDown("z") || b.keyboard.getKeyDown("c") || b.keyboard.getKeyDown("space") ? (this.closeDialog(this._selected), J("decision")) : b.keyboard.getKeyDown("down") ? (this._selected += 1, this._selected = T(this._selected, 0, this.selections.length - 1), J("select")) : b.keyboard.getKeyDown("up") && 
-  (this._selected -= 1, this._selected = T(this._selected, 0, this.selections.length - 1), J("select")))
+  this._opened && (this._finished ? this.cursor.visible = 0 === ~~(b.frame / 2) % 2 : this.showExit && b.keyboard.getKeyDown("x") ? (this._selected = this.selections.length - 1, this.closeDialog(this._selected)) : b.keyboard.getKeyDown("z") || b.keyboard.getKeyDown("c") || b.keyboard.getKeyDown("space") ? (this.closeDialog(this._selected), H("decision")) : b.keyboard.getKeyDown("down") ? (this._selected += 1, this._selected = T(this._selected, 0, this.selections.length - 1), H("select")) : b.keyboard.getKeyDown("up") && 
+  (this._selected -= 1, this._selected = T(this._selected, 0, this.selections.length - 1), H("select")))
 }, closeDialog:function(b) {
   this._finished = j;
   this.tweener.clear().wait(200).call(function() {
@@ -2155,7 +2154,7 @@ var Qa = tm.createClass({superClass:Pa, titleText:k, menu:k, descriptions:k, sho
 }});
 function X(b, a, d, f, g) {
   g = {}.$extend({menuDescriptions:[].concat(d), showExit:j, defaultValue:0, onCursorMove:n()}, g);
-  b.gj(Qa(a, d, g), f)
+  b.gj(Pa(a, d, g), f)
 }
 ;G = tm.createClass({superClass:tm.display.CanvasElement, alpha:1, Le:0.85, size:0, image:k, Sa:j, init:function(b, a, d, f) {
   this.superInit();
@@ -2183,7 +2182,7 @@ ia = tm.createClass({superClass:G, ja:k, init:function(b, a) {
 }, clone:function(b) {
   return ia(this.ja, b)
 }});
-var Na = tm.createClass({width:0, label:k, Za:k, ga:0, Bg:0, pf:0, init:function(b) {
+var Ma = tm.createClass({width:0, label:k, Za:k, ga:0, Bg:0, pf:0, init:function(b) {
   this.width = b;
   this.label = tm.display.Label("_", 10).setAlign("left").setBaseline("top").setPosition(-this.width / 2 + 4, -this.height / 2 + 4).setFillStyle("rgba(255,255,255,0.5)");
   this.Za = [];
@@ -2227,7 +2226,7 @@ var Na = tm.createClass({width:0, label:k, Za:k, ga:0, Bg:0, pf:0, init:function
   }.bind(this));
   b.restore()
 }});
-var Ma = k, Ma = function(b) {
+var La = k, La = function(b) {
   function a(a) {
     if(1 > a) {
       return k
@@ -2261,8 +2260,8 @@ var Ma = k, Ma = function(b) {
   t = [].concat(f[0]);
   g = 1;
   for(m = 0.5;g < f.length;g++, m *= 0.5) {
-    for(var C = 0;C < b;C++) {
-      t[C] += f[g][C] * m
+    for(var B = 0;B < b;B++) {
+      t[B] += f[g][B] * m
     }
   }
   for(g = 0;g < t.length;g++) {
@@ -2285,18 +2284,18 @@ w = {index:-1, data:k, setup:function(b) {
 }, randf:function(b, a) {
   return this.random() * (a - b) + b
 }};
-L = k;
-K = function(b, a) {
-  a || Ga();
+J = k;
+I = function(b, a) {
+  a || Fa();
   var d = tm.asset.AssetManager.get(b);
-  d && (L = d.clone(), L.volume = 0.1 * u.bd, L.loop = j, L.play())
+  d && (J = d.clone(), J.volume = 0.1 * u.bd, J.loop = j, J.play())
 };
-Ga = function() {
-  L !== k && L.stop()
+Fa = function() {
+  J !== k && J.stop()
 };
-Ca = function() {
-  if(L !== k) {
-    var b = L;
+Ba = function() {
+  if(J !== k) {
+    var b = J;
     b.loop = l;
     var a = function() {
       b.volume -= 0.0010;
@@ -2305,18 +2304,18 @@ Ca = function() {
     setTimeout(a, 10)
   }
 };
-J = function(b) {
-  if(0 !== u.Cc && J.played[b] !== u.frame) {
+H = function(b) {
+  if(0 !== u.Cc && H.played[b] !== u.frame) {
     var a = tm.asset.AssetManager.get("sound/" + b);
-    a && (a = a.clone().play(), "vo" === b.substring(0, 2) ? (a.volume = 0.5 * u.Cc, J.wf !== k && J.wf.stop(), J.wf = a) : a.volume = 0.1 * u.Cc);
-    J.played[b] = u.frame
+    a && (a = a.clone().play(), "vo" === b.substring(0, 2) ? (a.volume = 0.5 * u.Cc, H.wf !== k && H.wf.stop(), H.wf = a) : a.volume = 0.1 * u.Cc);
+    H.played[b] = u.frame
   }
 };
-J.played = {};
-J.wf = k;
+H.played = {};
+H.wf = k;
 (function() {
   var b = k, a = k;
-  ca = tm.createClass({superClass:Pa, result:k, ga:0, od:[], Vd:l, ng:k, tg:0, ae:0, init:function() {
+  ca = tm.createClass({superClass:Oa, result:k, ga:0, od:[], Vd:l, ng:k, tg:0, ae:0, init:function() {
     this.superInit();
     tm.display.Label("TM-Shooter", 50).setPosition(240, 160).addChildTo(this);
     tm.display.Label("version 1.0-beta", 22).setPosition(432, 192).setAlign("right").addChildTo(this);
@@ -2345,14 +2344,14 @@ J.wf = k;
       g.speed = 0.6;
       var m = U(0, 2 * Math.PI), t = V(0, 20);
       g.setPosition(Math.cos(m) * t + d, Math.sin(m) * t + f);
-      var C = this;
+      var B = this;
       g.update = function() {
         this.x += Math.cos(m) * this.speed;
         this.y += Math.sin(m) * this.speed;
         if(-50 > this.x || 530 < this.x || -50 > this.y || 690 < this.y) {
           this.remove();
-          var a = C.od.indexOf(this);
-          -1 !== a && C.od.splice(a, 1)
+          var a = B.od.indexOf(this);
+          -1 !== a && B.od.splice(a, 1)
         }
       };
       this.od.push(g)
@@ -2369,7 +2368,7 @@ J.wf = k;
             this.od[a].speed = 8
           }
         }.bind(this)).wait(1E3).call(function() {
-          u.replaceScene(Ha())
+          u.replaceScene(Ga())
         }.bind(this));
         break;
       case 2:
@@ -2397,7 +2396,7 @@ J.wf = k;
     }
   }, mf:function() {
     X(this, "BGM VOLUME", "012345".split(""), this.jf, {defaultValue:u.bd, onCursorMove:function(a) {
-      L !== k && "exit" !== a && (L.volume = 0.1 * a)
+      J !== k && "exit" !== a && (J.volume = 0.1 * a)
     }, showExit:l})
   }, jf:function(a) {
     6 !== a && (u.bd = a);
@@ -2417,7 +2416,7 @@ J.wf = k;
   }})
 })();
 (function() {
-  Ha = tm.createClass({superClass:Pa, mode:0, types:k, me:k, qb:k, rb:k, sb:k, bf:k, $e:k, type:0, style:0, dc:l, be:l, init:function() {
+  Ga = tm.createClass({superClass:Oa, mode:0, types:k, me:k, qb:k, rb:k, sb:k, bf:k, $e:k, type:0, style:0, dc:l, be:l, init:function() {
     this.superInit();
     tm.display.Sprite("result_bg", 528, 704).setPosition(240, 320).addChildTo(this);
     tm.display.Label("PLAYER SELECT", 40).setPosition(240, 64).addChildTo(this);
@@ -2441,8 +2440,8 @@ J.wf = k;
     this.qb.update();
     this.rb.update();
     this.sb.update();
-    J("voSelectShip");
-    K("bgmShipSelect", j)
+    H("voSelectShip");
+    I("bgmShipSelect", j)
   }, bj:function() {
     var a = tm.display.CanvasElement();
     a.addChildTo(this);
@@ -2520,18 +2519,18 @@ J.wf = k;
   }, update:function(a) {
     if(0 === this.mode) {
       if(this.types.alpha = 1, this.me.visible = l, !this.be && a.keyboard.getKeyDown("left")) {
-        this.ff(-1, l), J("select")
+        this.ff(-1, l), H("select")
       }else {
         if(!this.be && a.keyboard.getKeyDown("right")) {
-          this.ff(1, l), J("select")
+          this.ff(1, l), H("select")
         }else {
           if(a.keyboard.getKeyDown("z") || a.keyboard.getKeyDown("c") || a.keyboard.getKeyDown("space")) {
-            this.mode = 1, J("decision")
+            this.mode = 1, H("decision")
           }
         }
       }
     }else {
-      1 === this.mode && (this.types.alpha = 0.1, this.me.visible = j, a.keyboard.getKeyDown("left") ? (this.style = (this.style - 1 + 3) % 3, J("select")) : a.keyboard.getKeyDown("right") ? (this.style = (this.style + 1 + 3) % 3, J("select")) : a.keyboard.getKeyDown("z") || a.keyboard.getKeyDown("c") || a.keyboard.getKeyDown("space") ? (v.xf ? this.Vi() : (this.dc = j, this.zg()), J("decision")) : a.keyboard.getKeyDown("x") && (this.mode = 0), this.hj(0 === ~~(a.frame / 60) % 2))
+      1 === this.mode && (this.types.alpha = 0.1, this.me.visible = j, a.keyboard.getKeyDown("left") ? (this.style = (this.style - 1 + 3) % 3, H("select")) : a.keyboard.getKeyDown("right") ? (this.style = (this.style + 1 + 3) % 3, H("select")) : a.keyboard.getKeyDown("z") || a.keyboard.getKeyDown("c") || a.keyboard.getKeyDown("space") ? (v.xf ? this.Vi() : (this.dc = j, this.zg()), H("decision")) : a.keyboard.getKeyDown("x") && (this.mode = 0), this.hj(0 === ~~(a.frame / 60) % 2))
     }
   }, Vi:function() {
     X(this, "AUTO BOMB", ["on", "off"], this.Mi, {defaultValue:0, menuDescriptions:["\u88ab\u5f3e\u6642\u306b\u81ea\u52d5\u3067\u30dc\u30f3\u30d0\u30fc\u3092\u6295\u4e0b\u3057\u307e\u3059", "\u30dc\u30f3\u30d0\u30fc\u306e\u6295\u4e0b\u306f\u624b\u52d5\u3067\u306e\u307f\u884c\u3044\u307e\u3059\u3002\u30df\u30b9\u6642\u306b\u6700\u5927\u30dc\u30e0\u6570\u304c\u5897\u52a0\u3057\u307e\u3059"], showExit:j})
@@ -2553,7 +2552,7 @@ J.wf = k;
     u.ca.dc = this.dc;
     u.ca.start(this.type, this.style);
     u.replaceScene(u.ca);
-    Ca()
+    Ba()
   }, hj:function(a) {
     this.$e.text = ["Shot", "Laser", "Expert"][this.style] + " Style";
     1 === this.style ? (this.lc.line.xb = l, this.la[0].line.xb = l, this.la[1].line.xb = l, this.la[2].line.xb = l, this.la[3].line.xb = l) : (this.lc.line.xb = j, this.la[0].line.xb = j, this.la[1].line.xb = j, this.la[2].line.xb = j, this.la[3].line.xb = j);
@@ -2583,13 +2582,13 @@ J.wf = k;
     }
   }})
 })();
-F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, Gg:0, ie:k, ja:k, oc:3, je:0, ke:0, Kb:0, Rd:0, nd:0, ef:0, dc:l, eb:0, xc:0, Wf:0, Rc:l, Xe:l, Jb:0, bb:0, ua:l, jd:0, Qc:0, za:0, Pd:0, xj:0, wj:0, Xd:k, ig:k, of:k, gg:k, Re:k, Se:k, Ne:k, Ii:k, nb:k, gb:k, Sb:k, fd:l, Hi:l, init:function() {
+F = tm.createClass({superClass:Oa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, Gg:0, ie:k, ja:k, oc:3, je:0, ke:0, Kb:0, Rd:0, nd:0, ef:0, dc:l, eb:0, xc:0, Wf:0, Rc:l, Xe:l, Jb:0, bb:0, ua:l, jd:0, Qc:0, za:0, Pd:0, xj:0, wj:0, Xd:k, ig:k, of:k, gg:k, Re:k, Se:k, Ne:k, Ii:k, nb:k, gb:k, Sb:k, fd:l, Hi:l, init:function() {
   F.Ae !== k && h(Error("class 'gls2.GameScene' is singleton!!"));
   this.superInit();
   F.Ae = this;
-  this.gb = ra(this);
+  this.gb = qa(this);
   this.gb.Va.addChildTo(this);
-  this.ja = ta().qa;
+  this.ja = sa().qa;
   this.ja.addChildTo(this);
   this.Xd = F.bc().addChildTo(this);
   this.ig = F.bc().addChildTo(this);
@@ -2609,12 +2608,12 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
     this.gb.clear()
   })
 }, addChild:function(b) {
-  b.Sa ? this.Re.addChild(b) : b instanceof M ? this.Ne.addChild(b) : b instanceof va ? this.Xd.addChild(b) : b instanceof P ? b.Vb ? this.Xd.addChild(b) : this.gg.addChild(b) : b instanceof da ? this.of.addChild(b) : b === this.nb || b === this.ja || b instanceof F.bc || b instanceof F.Gf || b instanceof sa ? this.superClass.prototype.addChild.apply(this, arguments) : (console.error("unknown type child."), h(Error(b)))
+  b.Sa ? this.Re.addChild(b) : b instanceof M ? this.Ne.addChild(b) : b instanceof ua ? this.Xd.addChild(b) : b instanceof P ? b.Vb ? this.Xd.addChild(b) : this.gg.addChild(b) : b instanceof da ? this.of.addChild(b) : b === this.nb || b === this.ja || b instanceof F.bc || b instanceof F.Gf || b instanceof ra ? this.superClass.prototype.addChild.apply(this, arguments) : (console.error("unknown type child."), h(Error(b)))
 }, update:function(b) {
   this.Zi(b.keyboard);
   this.ie.update(b.frame);
   0 === b.frame % 2 && this.gb.update();
-  b.keyboard.getKeyDown("escape") ? (this.app.replaceScene(ca()), Ga()) : b.keyboard.getKeyDown("space") ? this.ce(0) : b.keyboard.getKeyDown("p") && (this.Fg().saveAsImage(), this.ce(0))
+  b.keyboard.getKeyDown("escape") ? (this.app.replaceScene(ca()), Fa()) : b.keyboard.getKeyDown("space") ? this.ce(0) : b.keyboard.getKeyDown("p") && (this.Fg().saveAsImage(), this.ce(0))
 }, Fg:function() {
   var b = tm.graphics.Canvas();
   b.resize(480, 640);
@@ -2630,7 +2629,7 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
   for(var a = [].concat(la.Qa), d = a.length;a[--d] !== i;) {
     for(var f = b.length;b[--f] !== i;) {
       var g = b[f], m = a[d];
-      if(!(0 >= g.na) && Oa(g, m) && (m.Wd(1), m.remove(), g.Ub(m.uc))) {
+      if(!(0 >= g.na) && Na(g, m) && (m.Wd(1), m.remove(), g.Ub(m.uc))) {
         this.Kb += 1;
         this.ua ? this.Ya(v.oh) : this.Ya(v.nh);
         this.hf(g);
@@ -2645,7 +2644,7 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
       return a.y - b.y
     });
     for(f = b.length;b[--f] !== i;) {
-      if(g = b[f], !(0 >= g.na) && Oa(g, m)) {
+      if(g = b[f], !(0 >= g.na) && Na(g, m)) {
         m.$i(g.y + g.boundingHeightBottom);
         g.Ub(m.uc) ? (this.Kb += 1, this.ua ? this.Ya(v.mh) : this.Ya(v.jh), this.hf(g)) : (this.ua ? this.Jc(0.01 * this.za) : this.Jc(0.01), this.Ga = Math.min(this.Ga + 0.02, 1), this.ua ? this.Ya(v.lh) : this.Ya(v.kh));
         m.Wd(2);
@@ -2655,7 +2654,7 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
     a = {x:this.da.x, y:this.da.y, boundingWidthLeft:50, boundingWidthRight:50, boundingHeightTop:100, boundingHeightBottom:40};
     b = [].concat(P.Qa);
     for(f = b.length;b[--f] !== i;) {
-      g = b[f], !(0 >= g.na) && Oa(g, a) && (g.Ub(m.uc) ? (this.Kb += 1, this.ua ? this.Ya(v.ih) : this.Ya(v.fh), this.hf(g)) : (this.ua ? this.Jc(0.01 * this.za) : this.Jc(0.01), this.Ga = Math.min(this.Ga + 0.02, 1), this.ua ? this.Ya(v.hh) : this.Ya(v.gh)), m.zi(2, this.da.x, this.da.y - 30))
+      g = b[f], !(0 >= g.na) && Na(g, a) && (g.Ub(m.uc) ? (this.Kb += 1, this.ua ? this.Ya(v.ih) : this.Ya(v.fh), this.hf(g)) : (this.ua ? this.Jc(0.01 * this.za) : this.Jc(0.01), this.Ga = Math.min(this.Ga + 0.02, 1), this.ua ? this.Ya(v.hh) : this.Ya(v.gh)), m.zi(2, this.da.x, this.da.y - 30))
     }
   }
   if(this.Rc) {
@@ -2672,7 +2671,7 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
       if(m = f[g], !(0 >= m.na)) {
         a = [].concat(M.Qa);
         for(b = a.length;a[--b] !== i;) {
-          d = a[b], d.visible !== l && (0 < m.na && Oa(m, d)) && (d.na -= 6 - this.bb, 0 > d.na && (d.Ca(), this.tc(v.Rg), this.Jc(v.Pg), this.mg(l, l, d.x, d.y, 1)), m.na -= 1)
+          d = a[b], d.visible !== l && (0 < m.na && Na(m, d)) && (d.na -= 6 - this.bb, 0 > d.na && (d.Ca(), this.tc(v.Rg), this.Jc(v.Pg), this.mg(l, l, d.x, d.y, 1)), m.na -= 1)
         }
       }
     }
@@ -2682,14 +2681,14 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
   }else {
     if(this.da.parent !== k && this.da.Tc === l && this.Rc === l && 0 >= this.jd && !v.zh) {
       for(f = M.Qa.length;M.Qa[--f] !== i;) {
-        if(b = M.Qa[f], b.visible !== l && Oa(b, this.da)) {
+        if(b = M.Qa[f], b.visible !== l && Na(b, this.da)) {
           this.da.Ub();
           0 < this.eb && this.dc ? (this.bb = T(this.bb - 1, 0, 1), this.Kd(-0.01), na(this.da, this).setPosition(this.da.x, this.da.y).addChildTo(this)) : this.xg();
           break
         }
       }
       for(f = P.Qa.length;P.Qa[--f] !== i;) {
-        if(g = P.Qa[f], !(0 >= g.na) && !g.Vb && Oa(g, this.da)) {
+        if(g = P.Qa[f], !(0 >= g.na) && !g.Vb && Na(g, this.da)) {
           this.da.Ub();
           0 < this.eb && this.dc ? (this.bb = T(this.bb - 1, 0, 1), this.Kd(-0.01), na(this.da, this).setPosition(this.da.x, this.da.y).addChildTo(this)) : this.xg();
           break
@@ -2702,21 +2701,21 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
     0 >= this.Ga && (this.Ga = 0, this.ua || 0 < this.za ? this.ec = this.Aa = this.La = 0 : (0 < this.Aa && (0 >= this.ec && (this.ec = this.Aa * v.Ug), this.La = this.La * (this.Aa - this.ec) / this.Aa, this.Aa -= this.ec), 0 >= this.Aa && (this.ec = this.Aa = this.La = 0)))
   }
 }, hf:function(b) {
-  this.mg(b.Vb, this.ua || Ka(b, this.da) < v.Xg, b.x, b.y, b.star, b instanceof Ia);
+  this.mg(b.Vb, this.ua || Ja(b, this.da) < v.Xg, b.x, b.y, b.star, b instanceof Ha);
   this.Jc(v.uh[this.Pd]);
   for(var a = this.La, d = ~~(this.Aa / v.Bf) + 1, f = 0;f < d;f++) {
     a += b.score, this.tc(a)
   }
   this.La += b.score * d
 }, mg:function(b, a, d, f, g, m) {
-  b = b ? xa : wa;
+  b = b ? wa : va;
   for(var t = 0;t < g;t++) {
-    var C = b(a);
-    C.setPosition(d, f);
-    m && (C.Ac = j)
+    var B = b(a);
+    B.setPosition(d, f);
+    m && (B.Ac = j)
   }
 }, Ki:function(b) {
-  J("star");
+  H("star");
   b.rg ? (this.ke += 1, this.La += v.Jh, this.tc(v.Nh + this.La * v.Lh), this.ua ? this.Ya(v.sh) : this.Ya(v.rh)) : (this.je += 1, this.La += v.Ih, this.tc(v.Mh + this.La * v.Kh), this.ua ? this.Ya(v.qh) : this.Ya(v.ph))
 }, start:function(b, a) {
   this.gb.Lc.fi().clear();
@@ -2731,7 +2730,7 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
   this.nd = this.ef = 0;
   this.da = da(this, b, a);
   this.Hg(0);
-  J("voLetsGo");
+  H("voLetsGo");
   this.fj()
 }, Hg:function(b) {
   this.Ua("3...2...1...");
@@ -2752,7 +2751,7 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
   this.gb.Va.gd = 0;
   this.bb = this.gb.Va.Hb = 0;
   this.Gg = b;
-  this.ie = ya.create(this, b);
+  this.ie = xa.create(this, b);
   this.tweener.clear().wait(1E3).call(function() {
     this.df()
   }.bind(this));
@@ -2771,7 +2770,7 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
     this.Tc = l
   }.bind(this.da))
 }, xg:function() {
-  B.Sd(this.da.x, this.da.y, this);
+  A.Sd(this.da.x, this.da.y, this);
   this.Ua("I was shot down.");
   this.da.Tb = l;
   this.da.remove();
@@ -2801,16 +2800,16 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
   q.ya.Ra.$rank = 0;
   this.df()
 }, gi:function() {
-  K("bgmResult");
+  I("bgmResult");
   var b = tm.app.Object2D();
   b.addChildTo(this.nb);
   b.tweener.wait(1E3).call(function() {
-    this.app.pushScene(Ja(this, this.Fg()));
+    this.app.pushScene(Ia(this, this.Fg()));
     b.remove()
   }.bind(this))
 }, yi:function() {
-  Ga();
-  this.app.replaceScene(Ra())
+  Fa();
+  this.app.replaceScene(Qa())
 }, tj:n(), tc:function(b) {
   var a = this.score;
   this.score += b;
@@ -2827,13 +2826,13 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
 }, Ya:function(b) {
   if(this.za !== v.re) {
     for(b *= v.th;1 < b;) {
-      qa(this.da).addChildTo(this), b -= 1, this.Jb = 0, this.za += 1, 1 === this.za ? (this.Ua("HYPER SYSTEM, stand by.", j), J("voHyperStandBy")) : (this.Ua("HYPER SYSTEM, ready.", j), J("voHyperReady"))
+      pa(this.da).addChildTo(this), b -= 1, this.Jb = 0, this.za += 1, 1 === this.za ? (this.Ua("HYPER SYSTEM, stand by.", j), H("voHyperStandBy")) : (this.Ua("HYPER SYSTEM, ready.", j), H("voHyperReady"))
     }
     this.Jb = T(this.Jb + b, 0, 1);
-    1 <= this.Jb && (qa(this.da).addChildTo(this), this.za += 1, this.Jb -= 1, 1 === this.za ? (this.Ua("HYPER SYSTEM, stand by.", j), J("voHyperStandBy")) : (this.Ua("HYPER SYSTEM, ready.", j), J("voHyperReady")))
+    1 <= this.Jb && (pa(this.da).addChildTo(this), this.za += 1, this.Jb -= 1, 1 === this.za ? (this.Ua("HYPER SYSTEM, stand by.", j), H("voHyperStandBy")) : (this.Ua("HYPER SYSTEM, ready.", j), H("voHyperReady")))
   }
 }, ej:function() {
-  0.5 > Math.random() ? (this.Ua("HYPER SYSTEM start!!", j), J("voHyperStart0")) : (this.Ua("start counting to system limit.", j), J("voHyperStart1"));
+  0.5 > Math.random() ? (this.Ua("HYPER SYSTEM start!!", j), H("voHyperStart0")) : (this.Ua("start counting to system limit.", j), H("voHyperStart1"));
   this.bb = T(this.bb + 1, 0, 5);
   this.Kd(0.01 * this.za);
   q.ya.Ra.$hyperOff = v.$g;
@@ -2842,20 +2841,20 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
   this.da.Zd.Vc(this.za);
   this.da.Wb.Vc(this.za);
   this.da.Mc = this.da.Zd;
-  B.Ai(this.da.x, this.da.y, this);
+  A.Ai(this.da.x, this.da.y, this);
   this.ua = j;
   this.Pd = this.za;
   this.Jb = this.za = 0;
   z.erase(j, j)
 }, Qd:function() {
-  this.ua !== l && (this.ua = l, qa(this.da, j).addChildTo(this), this.da.Mc = this.da.yg, q.ya.Ra.$hyperOff = 1, this.da.Zd.Vc(0), this.da.Wb.Vc(0), this.jd = v.Ad * v.dh, this.Pd = this.Qc = 0, z.erase())
+  this.ua !== l && (this.ua = l, pa(this.da, j).addChildTo(this), this.da.Mc = this.da.yg, q.ya.Ra.$hyperOff = 1, this.da.Zd.Vc(0), this.da.Wb.Vc(0), this.jd = v.Ad * v.dh, this.Pd = this.Qc = 0, z.erase())
 }, bi:function() {
-  J("decision");
-  J("voGetBomb");
+  H("decision");
+  H("voGetBomb");
   this.eb = Math.min(this.eb + 1, this.xc);
   this.Xe = this.eb === this.xc
 }, qi:function() {
-  J("voExtend");
+  H("voExtend");
   this.Ua("extended.");
   this.oc += 1
 }, Ua:function(b, a) {
@@ -2887,10 +2886,10 @@ F = tm.createClass({superClass:Pa, da:k, score:0, La:0, Aa:0, md:0, Ga:0, ec:0, 
 }, Wi:function() {
   X(this, "REARY?", ["yes", "no"], this.Oi, {defaultValue:1, menuDescriptions:["\u30b2\u30fc\u30e0\u3092\u4e2d\u65ad\u3057\u3001\u30bf\u30a4\u30c8\u30eb\u753b\u9762\u306b\u623b\u308a\u307e\u3059", "\u524d\u306e\u753b\u9762\u3078\u623b\u308a\u307e\u3059"], showExit:l})
 }, Oi:function(b) {
-  0 === b ? (Ga(), this.app.replaceScene(ca())) : this.ce(1)
+  0 === b ? (Fa(), this.app.replaceScene(ca())) : this.ce(1)
 }, mf:function() {
   X(this, "BGM VOLUME", "012345".split(""), this.jf, {defaultValue:u.bd, onCursorMove:function(b) {
-    L !== k && 6 !== b && (L.volume = 0.1 * b)
+    J !== k && 6 !== b && (J.volume = 0.1 * b)
   }, showExit:l})
 }, jf:function(b) {
   6 !== b && (u.bd = b);
@@ -2975,7 +2974,7 @@ F.Gf = tm.createClass({superClass:tm.display.CanvasElement, ca:k, frame:0, init:
   this.za === v.re ? 1 === this.frame % 2 && (b.fillStyle = "rgba(255,255,255,0.3)", b.fillRect(5, 628, 200, 9)) : 0 < this.ca.Jb && (b.fillStyle = "rgba(255,255,100,0.3)", b.fillRect(5, 628, 200 * this.ca.Jb, 9))
 }});
 F.Ae = k;
-Ja = tm.createClass({superClass:Pa, ca:k, Dg:k, nb:k, values:k, labels:k, $d:k, Cg:[v.Gh, v.Hh, v.Dh, v.Eh, 1], qg:k, qf:k, cursor:0, wait:0, frame:0, init:function(b, a) {
+Ia = tm.createClass({superClass:Oa, ca:k, Dg:k, nb:k, values:k, labels:k, $d:k, Cg:[v.Gh, v.Hh, v.Dh, v.Eh, 1], qg:k, qf:k, cursor:0, wait:0, frame:0, init:function(b, a) {
   this.superInit();
   this.ca = b;
   tm.display.Sprite("result_bg", 528, 704).setPosition(240, 320).addChildTo(this);
@@ -3019,23 +3018,23 @@ Ja = tm.createClass({superClass:Pa, ca:k, Dg:k, nb:k, values:k, labels:k, $d:k, 
   }.bind(this);
   this.nb.addChildTo(this);
   this.addEventListener("exit", function() {
-    Ca()
+    Ba()
   })
 }, update:function(b) {
   this.wait -= 1;
   if(!(0 < this.wait)) {
     var a = this.cursor;
     if(a < this.values.length) {
-      J("star"), this.values[a] <= this.$d[a] || b.keyboard.getKeyDown("z") || b.keyboard.getKeyDown("c") || b.keyboard.getKeyDown("space") ? (this.ca.tc(this.values[a] * this.Cg[a]), this.values[a] = 0, this.cursor += 1, this.wait = 30) : (this.ca.tc(this.$d[a] * this.Cg[a]), this.values[a] -= this.$d[a]), this.labels[a].text = "" + Math.floor(this.values[a]) + (2 === a ? "%" : ""), this.qg.text = Math.floor(this.ca.score)
+      H("star"), this.values[a] <= this.$d[a] || b.keyboard.getKeyDown("z") || b.keyboard.getKeyDown("c") || b.keyboard.getKeyDown("space") ? (this.ca.tc(this.values[a] * this.Cg[a]), this.values[a] = 0, this.cursor += 1, this.wait = 30) : (this.ca.tc(this.$d[a] * this.Cg[a]), this.values[a] -= this.$d[a]), this.labels[a].text = "" + Math.floor(this.values[a]) + (2 === a ? "%" : ""), this.qg.text = Math.floor(this.ca.score)
     }else {
       if(this.qf.visible = j, b.keyboard.getKeyDown("z") || b.keyboard.getKeyDown("c") || b.keyboard.getKeyDown("space") || 1800 < this.frame) {
-        J("decision"), this.ca.Hg(this.ca.Gg + 1), b.popScene()
+        H("decision"), this.ca.Hg(this.ca.Gg + 1), b.popScene()
       }
     }
     this.frame += 1
   }
 }, Oc:n()});
-var Ra = tm.createClass({superClass:Pa, init:function() {
+var Qa = tm.createClass({superClass:Oa, init:function() {
   this.superInit();
   var b = tm.display.Label("GAME OVER");
   b.fillStyle = "red";
@@ -3051,7 +3050,7 @@ var Ra = tm.createClass({superClass:Pa, init:function() {
 }, Oc:function(b) {
   b.clearColor("black")
 }});
-tm.createClass({superClass:Pa, init:function() {
+tm.createClass({superClass:Oa, init:function() {
   this.superInit()
 }, update:n()});
 (function() {
@@ -3094,12 +3093,12 @@ tm.createClass({superClass:Pa, init:function() {
     }
     this.na -= a;
     if(0 >= this.na) {
-      return a = U(0, 5), 2 > a ? this.ca.Ua("enemy destroy.") : 4 > a ? this.ca.Ua(this.name + " destroy.") : this.ca.Ua("ETR reaction gone."), this.erase && z.erase(j, this.ca.ua, this instanceof Ia), this.dispatchEvent(tm.event.Event("destroy")), this.Ca(), j
+      return a = U(0, 5), 2 > a ? this.ca.Ua("enemy destroy.") : 4 > a ? this.ca.Ua(this.name + " destroy.") : this.ca.Ua("ETR reaction gone."), this.erase && z.erase(j, this.ca.ua, this instanceof Ha), this.dispatchEvent(tm.event.Event("destroy")), this.Ca(), j
     }
     40 > this.na && this.Ta();
     return l
   }, Ca:function() {
-    B.Sd(this.x, this.y, this.ca, this.ne);
+    A.Sd(this.x, this.y, this.ca, this.ne);
     this.remove()
   }, kd:function() {
     return 0 <= this.x + this.width / 2 && 480 > this.x - this.width / 2 && 0 <= this.y + this.height / 2 && 640 > this.y - this.height / 2
@@ -3124,18 +3123,18 @@ tm.createClass({superClass:Pa, init:function() {
     this.remove();
     this.ca.ig.addChild(this);
     this.addEventListener("enterframe", function() {
-      0.2 > Math.random() && B.Sd(this.x + V(-100, 100), this.y + V(-40, 40), this.ca, {x:0, y:-3})
+      0.2 > Math.random() && A.Sd(this.x + V(-100, 100), this.y + V(-40, 40), this.ca, {x:0, y:-3})
     });
     this.tweener.clear().to({altitude:4, y:this.y + 200}, 2E3).call(function() {
-      B.hg(this.x, this.y, this.ca);
+      A.hg(this.x, this.y, this.ca);
       this.remove()
     }.bind(this))
   }, Xf:function() {
     this.addEventListener("enterframe", function() {
-      0.2 > Math.random() && B.Sd(this.x + V(-100, 100), this.y + V(-40, 40), this.ca, {x:0, y:-3})
+      0.2 > Math.random() && A.Sd(this.x + V(-100, 100), this.y + V(-40, 40), this.ca, {x:0, y:-3})
     });
     this.tweener.clear().to({altitude:4, y:this.y + 200}, 2E3).call(function() {
-      B.hg(this.x, this.y, this.ca);
+      A.hg(this.x, this.y, this.ca);
       this.remove()
     }.bind(this))
   }});
@@ -3146,7 +3145,7 @@ tm.createClass({superClass:Pa, init:function() {
   };
   var b = P.Qa = []
 })();
-Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
+Ha = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
   this.he = a;
   this.superInit(b, this.he[0], d);
   this.hc = this.na;
@@ -3169,9 +3168,9 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
 }, Ub:function(b) {
   var a = this.na;
   if(P.prototype.Ub.call(this, b)) {
-    return this.ca.fd = j, this.ca.da.ad = l, Ca(), j
+    return this.ca.fd = j, this.ca.da.ad = l, Ba(), j
   }
-  this.na <= 0.55 * this.hc && 0.55 * this.hc < a ? (S.le(this), this.clearEventListener("completeattack"), this.tweener.clear(), B.Gb(this.x, this.y, this.ca), z.erase(j, this.ca.ua), this.he[1].setup(this)) : this.na <= 0.1 * this.hc && 0.1 * this.hc < a && (S.le(this), this.clearEventListener("completeattack"), this.tweener.clear(), B.Gb(this.x, this.y, this.ca), z.erase(j, this.ca.ua), this.he[2].setup(this), J("voJacms"))
+  this.na <= 0.55 * this.hc && 0.55 * this.hc < a ? (S.le(this), this.clearEventListener("completeattack"), this.tweener.clear(), A.Gb(this.x, this.y, this.ca), z.erase(j, this.ca.ua), this.he[1].setup(this)) : this.na <= 0.1 * this.hc && 0.1 * this.hc < a && (S.le(this), this.clearEventListener("completeattack"), this.tweener.clear(), A.Gb(this.x, this.y, this.ca), z.erase(j, this.ca.ua), this.he[2].setup(this), H("voJacms"))
 }});
 (function() {
   P.Yg = {kujo:[2, 300, l, l, 1, {radius:24}], kiryu:[3, 400, l, l, 1, {radius:24}], natsuki:[5, 900, j, l, 1, {radius:24}], kise:[50, 15E3, j, l, 1, {radius:24}], yamabuki:[100, 15E3, j, l, 1, {width:70, height:70}], hanasaki:[150, 2E5, j, j, 10, {radius:40}], myodoin:[50, 15E3, j, l, 1, {radius:40}], kenzaki:[200, 3E5, j, j, 10, {width:100, height:40}], tsukikage:[8, 1E3, l, l, 5, {width:100, height:20}], kurokawa:[35, 5E3, l, l, 5, {width:100, height:20}], akimoto:[250, 3E5, l, j, 10, {width:200, 
@@ -3220,7 +3219,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
     this.Ie.draw(a);
     this.Je.draw(a)
   }, Ca:function() {
-    B.oi(this.x, this.y, this.ca);
+    A.oi(this.x, this.y, this.ca);
     this.remove()
   }});
   P.zf = tm.createClass({superClass:P, fa:k, init:function(a, d) {
@@ -3233,7 +3232,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
   }, draw:function(a) {
     this.fa.draw(a)
   }, Ca:function() {
-    B.Gb(this.x, this.y, this.ca);
+    A.Gb(this.x, this.y, this.ca);
     this.remove()
   }});
   P.Xa = tm.createClass({superClass:P, fa:k, init:function(a, d) {
@@ -3246,7 +3245,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
   }, draw:function(a) {
     this.fa.draw(a)
   }, Ca:function() {
-    B.Gb(this.x, this.y, this.ca);
+    A.Gb(this.x, this.y, this.ca);
     this.remove()
   }});
   P.$b = tm.createClass({superClass:P, fa:k, init:function(a, d) {
@@ -3259,7 +3258,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
   }, draw:function(a) {
     this.fa.draw(a)
   }, Ca:function() {
-    B.Gb(this.x, this.y, this.ca);
+    A.Gb(this.x, this.y, this.ca);
     this.remove()
   }});
   P.Ic = tm.createClass({superClass:P, fa:k, init:function(a, d) {
@@ -3296,13 +3295,13 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
   }, draw:function(a) {
     this.fa.draw(a)
   }, Ca:function() {
-    B.Gb(this.x, this.y, this.ca);
+    A.Gb(this.x, this.y, this.ca);
     this.remove()
   }});
   P.Dd = tm.createClass({superClass:P, fa:k, init:function(a, b) {
     this.superInit(a, b, "hanasaki")
   }, Ta:n(), Ca:function() {
-    B.Gb(this.x, this.y, this.ca);
+    A.Gb(this.x, this.y, this.ca);
     this.remove()
   }, draw:function(a) {
     a.fillStyle = "yellow";
@@ -3311,7 +3310,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
   P.ue = tm.createClass({superClass:P, init:function(a, b) {
     this.superInit(a, b, "myodoin")
   }, Ta:n(), Ca:function() {
-    B.Gb(this.x, this.y, this.ca);
+    A.Gb(this.x, this.y, this.ca);
     this.remove()
   }, draw:function(a) {
     a.fillStyle = "yellow";
@@ -3327,7 +3326,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
   }, draw:function(a) {
     this.fa.draw(a)
   }, Ca:function() {
-    B.Gb(this.x, this.y, this.ca);
+    A.Gb(this.x, this.y, this.ca);
     this.remove()
   }});
   P.Yc = tm.createClass({superClass:P, init:function(a, b) {
@@ -3336,7 +3335,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
     a.fillStyle = "yellow";
     a.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop, this.boundingWidthLeft + this.boundingWidthRight, this.boundingHeightTop + this.boundingHeightBottom)
   }, Ca:function() {
-    B.Gb(this.x, this.y, this.ca);
+    A.Gb(this.x, this.y, this.ca);
     oa(this.x, this.y, this.da).addChildTo(this.parent);
     this.remove()
   }});
@@ -3353,7 +3352,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
   }, draw:function(a) {
     this.fa.draw(a)
   }});
-  P.we = tm.createClass({superClass:Ia, fa:k, init:function(a, d) {
+  P.we = tm.createClass({superClass:Ha, fa:k, init:function(a, d) {
     this.superInit(a, d, "misumi");
     this.fa = b("tex_stage1", 256, 128).setFrameIndex(4);
     this.setScale(1.5)
@@ -3374,7 +3373,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
     a.fillStyle = "yellow";
     a.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop, this.boundingWidthLeft + this.boundingWidthRight, this.boundingHeightTop + this.boundingHeightBottom)
   }});
-  P.Oh = tm.createClass({superClass:Ia, init:function(a, b) {
+  P.Oh = tm.createClass({superClass:Ha, init:function(a, b) {
     this.superInit(a, b, "hyuga")
   }, Ta:n(), Ca:function() {
     this.Xf()
@@ -3493,7 +3492,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
         this.x += Math.cos(this.angle) * this.speed;
         this.y += Math.sin(this.angle) * this.speed;
         !this.kd() && this.ub && this.remove();
-        if(22500 > Ka(this, this.da) || this.y > this.da.y + 150) {
+        if(22500 > Ja(this, this.da) || this.y > this.da.y + 150) {
           this.gc = l
         }
       })
@@ -3524,7 +3523,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
       for(;2 * Math.PI <= this.Fb;) {
         this.Fb -= 2 * Math.PI
       }
-      this.gc = this.y < this.da.y && 4E4 < Ka(this, this.da);
+      this.gc = this.y < this.da.y && 4E4 < Ja(this, this.da);
       if(this.Kc) {
         for(var a = 0;a < this.Kc.length;a++) {
           var b = this.Kc[a];
@@ -3563,7 +3562,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
     });
     if(!this.ag) {
       a.on("enterframe", function() {
-        this.gc = this.y < this.da.y && 4E4 < Ka(this, this.da)
+        this.gc = this.y < this.da.y && 4E4 < Ja(this, this.da)
       })
     }
   }});
@@ -3799,7 +3798,7 @@ Ia = tm.createClass({superClass:P, Gi:j, hc:0, he:k, init:function(b, a, d) {
   S.De = S.De()
 })();
 var Z = P, $ = S;
-Ba = {"heri1-left":[{aa:Z.oa, ba:$.Ob, x:48, y:-100}, {aa:Z.oa, ba:$.Ea, x:96, y:-100}, {aa:Z.oa, ba:$.Ob, x:144, y:-100}, {aa:Z.oa, ba:$.Ea, x:192, y:-100}, {aa:Z.oa, ba:$.Ob, x:240, y:-100}], "heri1-center":[{aa:Z.oa, ba:$.Ob, x:144, y:-100}, {aa:Z.oa, ba:$.Ea, x:192, y:-100}, {aa:Z.oa, ba:$.Ob, x:240, y:-100}, {aa:Z.oa, ba:$.Ea, x:288, y:-100}, {aa:Z.oa, ba:$.Ob, x:336, y:-100}], "heri1-right":[{aa:Z.oa, ba:$.Ob, x:240, y:-100}, {aa:Z.oa, ba:$.Ea, x:288, y:-100}, {aa:Z.oa, ba:$.Ob, x:336, y:-100}, 
+Aa = {"heri1-left":[{aa:Z.oa, ba:$.Ob, x:48, y:-100}, {aa:Z.oa, ba:$.Ea, x:96, y:-100}, {aa:Z.oa, ba:$.Ob, x:144, y:-100}, {aa:Z.oa, ba:$.Ea, x:192, y:-100}, {aa:Z.oa, ba:$.Ob, x:240, y:-100}], "heri1-center":[{aa:Z.oa, ba:$.Ob, x:144, y:-100}, {aa:Z.oa, ba:$.Ea, x:192, y:-100}, {aa:Z.oa, ba:$.Ob, x:240, y:-100}, {aa:Z.oa, ba:$.Ea, x:288, y:-100}, {aa:Z.oa, ba:$.Ob, x:336, y:-100}], "heri1-right":[{aa:Z.oa, ba:$.Ob, x:240, y:-100}, {aa:Z.oa, ba:$.Ea, x:288, y:-100}, {aa:Z.oa, ba:$.Ob, x:336, y:-100}, 
 {aa:Z.oa, ba:$.Ea, x:384, y:-100}, {aa:Z.oa, ba:$.Ob, x:432, y:-100}], "heri1-left2":[{aa:Z.oa, ba:$.Ea, x:48, y:-100}, {aa:Z.oa, ba:$.ac, x:96, y:-100}, {aa:Z.oa, ba:$.Ea, x:144, y:-100}, {aa:Z.oa, ba:$.ac, x:192, y:-100}, {aa:Z.oa, ba:$.Ea, x:240, y:-100}], "heri1-center2":[{aa:Z.oa, ba:$.Ea, x:144, y:-100}, {aa:Z.oa, ba:$.ac, x:192, y:-100}, {aa:Z.oa, ba:$.Ea, x:240, y:-100}, {aa:Z.oa, ba:$.ac, x:288, y:-100}, {aa:Z.oa, ba:$.Ea, x:336, y:-100}], "heri1-right2":[{aa:Z.oa, ba:$.Ea, x:240, y:-100}, 
 {aa:Z.oa, ba:$.ac, x:288, y:-100}, {aa:Z.oa, ba:$.Ea, x:336, y:-100}, {aa:Z.oa, ba:$.ac, x:384, y:-100}, {aa:Z.oa, ba:$.Ea, x:432, y:-100}], "heri2-left":[{aa:Z.ma, ba:$.Na, x:48, y:-100}, {aa:Z.ma, ba:$.Na, x:96, y:-100}, {aa:Z.ma, ba:$.Na, x:144, y:-100}, {aa:Z.ma, ba:$.Na, x:192, y:-100}, {aa:Z.ma, ba:$.Na, x:240, y:-100}], "heri2-center":[{aa:Z.ma, ba:$.Na, x:144, y:-100}, {aa:Z.ma, ba:$.Na, x:192, y:-100}, {aa:Z.ma, ba:$.Na, x:240, y:-100}, {aa:Z.ma, ba:$.Na, x:288, y:-100}, {aa:Z.ma, ba:$.Na, 
 x:336, y:-100}], "heri2-right":[{aa:Z.ma, ba:$.Na, x:240, y:-100}, {aa:Z.ma, ba:$.Na, x:288, y:-100}, {aa:Z.ma, ba:$.Na, x:336, y:-100}, {aa:Z.ma, ba:$.Na, x:384, y:-100}, {aa:Z.ma, ba:$.Na, x:432, y:-100}], "heri1-4-left":[{aa:Z.ma, ba:$.Ma, x:48, y:-100}, {aa:Z.ma, ba:$.Ma, x:96, y:-100}, {aa:Z.ma, ba:$.Ma, x:144, y:-100}, {aa:Z.ma, ba:$.Ma, x:192, y:-100}, {aa:Z.ma, ba:$.Ma, x:240, y:-100}], "heri1-4-center":[{aa:Z.ma, ba:$.Ma, x:144, y:-100}, {aa:Z.ma, ba:$.Ma, x:192, y:-100}, {aa:Z.ma, ba:$.Ma, 
@@ -3832,7 +3831,7 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
     return c.action([c.fire(c.direction(b), f, g || D, m, p, r), c.repeat(a + "-1", [c.fire(c.direction("((" + d + ")-(" + b + "))/(" + a + "-1)", "sequence"), f, g || D, m, p, r)])])
   }
   function g(a) {
-    return c.fire(c.direction(0), a || s, I)
+    return c.fire(c.direction(0), a || s, K)
   }
   function m(a) {
     return c.fire(c.direction(0), a || s, D)
@@ -3840,7 +3839,7 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
   function t(a) {
     return c.speed("$rank*2.0 + 2.00 + (" + (a === i ? 0 : a) + "*0.1)")
   }
-  function C(a) {
+  function B(a) {
     return c.speed("$rank*2.0 + 1.70 + (" + (a === i ? 0 : a) + "*0.1)")
   }
   function E(a) {
@@ -3852,7 +3851,7 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
   function r(a) {
     return c.speed("$rank*2.0 + 0.80 + (" + (a === i ? 0 : a) + "*0.1)")
   }
-  function A(a) {
+  function C(a) {
     return c.speed("$rank*2.0 + 0.50 + (" + (a === i ? 0 : a) + "*0.1)")
   }
   function fa(a) {
@@ -3864,7 +3863,7 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
   function aa(a) {
     return c.wa(a, {visible:l})
   }
-  function H(a) {
+  function L(a) {
     return c.wa(a, {frame:4, Qb:j})
   }
   function Y(a) {
@@ -3876,7 +3875,7 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
   function N(a) {
     return c.wa(a, {frame:2})
   }
-  function I(a) {
+  function K(a) {
     return c.wa(a, {frame:0})
   }
   function Q(a) {
@@ -3903,18 +3902,15 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
   z["basic3-1"] = new q.ha({top:c.action([c.wait(20), c.repeat(999, [p(40), b(s, 0.1, 3, g)])])});
   z["bukky-4-0"] = new q.ha({top0:c.action([p(30), c.repeat(999, [c.fire(c.direction(-40), s, R), c.repeat(3, [c.fire(c.direction(20, "sequence"), s, R), c.fire(c.direction(20, "sequence"), s, R), c.fire(c.direction(20, "sequence"), s, R), c.fire(c.direction(20, "sequence"), s, R), c.fire(c.direction(-80, "sequence"), s, R), p(5)]), p(70)])]), top1:c.action([p(20), c.fire(c.direction(180, "absolute"), r, W), c.repeat(999, [c.fire(c.direction(15, "sequence"), r, W), c.fire(c.direction(15, "sequence"), 
   r, W), c.fire(c.direction(15, "sequence"), r, W), c.fire(c.direction(15, "sequence"), r, W), c.fire(c.direction(15, "sequence"), r, W), c.fire(c.direction(15, "sequence"), r, W), c.fire(c.direction(15, "sequence"), r, W), c.fire(c.direction(15, "sequence"), r, W), c.fire(c.direction(15, "sequence"), r, W), c.fire(c.direction(-90, "sequence"), r, W), p(5)])])});
-  z["cannon2-0"] = new q.ha({top0:c.action([c.repeat(999, [p(20), a(4, "0-10+$loop.index*15", "0+10+$loop.index*15", r), a(4, "90-10+$loop.index*15", "90+10+$loop.index*15", r), a(4, "180-10+$loop.index*15", "180+10+$loop.index*15", r), a(4, "270-10+$loop.index*15", "270+10+$loop.index*15", r), p(20), a(3, "0-10+45+$loop.index*15", "0+10+45+$loop.index*15", s, I), a(3, "90-10+45+$loop.index*15", "90+10+45+$loop.index*15", s, I), a(3, "180-10+45+$loop.index*15", "180+10+45+$loop.index*15", s, I), 
-  a(3, "270-10+45+$loop.index*15", "270+10+45+$loop.index*15", s, I)])]), top1:c.action([c.repeat(999, [c.fire(c.direction("  0+$loop.index*10", "absolute"), A, H), c.fire(c.direction(" 90+$loop.index*10", "absolute"), A, H), c.fire(c.direction("180+$loop.index*10", "absolute"), A, H), c.fire(c.direction("270+$loop.index*10", "absolute"), A, H), c.fire(c.direction("  0-$loop.index*10", "absolute"), A, H), c.fire(c.direction(" 90-$loop.index*10", "absolute"), A, H), c.fire(c.direction("180-$loop.index*10", 
-  "absolute"), A, H), c.fire(c.direction("270-$loop.index*10", "absolute"), A, H), p(10)])])});
-  z["cannon2-1"] = new q.ha({top0:c.action([c.repeat(999, [p(20), a(6, "0-10+$loop.index*15", "0+10+$loop.index*15", r), a(6, "90-10+$loop.index*15", "90+10+$loop.index*15", r), a(6, "180-10+$loop.index*15", "180+10+$loop.index*15", r), a(6, "270-10+$loop.index*15", "270+10+$loop.index*15", r), p(20), a(7, "0-10+45+$loop.index*15", "0+10+45+$loop.index*15", s, I), a(7, "90-10+45+$loop.index*15", "90+10+45+$loop.index*15", s, I), a(7, "180-10+45+$loop.index*15", "180+10+45+$loop.index*15", s, I), 
-  a(7, "270-10+45+$loop.index*15", "270+10+45+$loop.index*15", s, I)])]), top1:c.action([c.repeat(999, [c.fire(c.direction("  0+$loop.index*5", "absolute"), A, H), c.fire(c.direction(" 90+$loop.index*5", "absolute"), A, H), c.fire(c.direction("180+$loop.index*5", "absolute"), A, H), c.fire(c.direction("270+$loop.index*5", "absolute"), A, H), c.fire(c.direction("  0-$loop.index*5", "absolute"), A, H), c.fire(c.direction(" 90-$loop.index*5", "absolute"), A, H), c.fire(c.direction("180-$loop.index*5", 
-  "absolute"), A, H), c.fire(c.direction("270-$loop.index*5", "absolute"), A, H), p(5)])])});
-  z["cannon3-0"] = new q.ha({top0:c.action([c.repeat(999, [p(80), b(r, 0.01, 5, d(5, -30, 30, I, c.offsetX(-60))), b(r, 0.01, 5, d(5, -30, 30, I)), b(r, 0.01, 5, d(5, -30, 30, I, c.offsetX(60)))])])});
+  z["cannon2-0"] = new q.ha({top0:c.action([c.repeat(999, [p(20), a(4, "0-10+$loop.index*15", "0+10+$loop.index*15", r), a(4, "90-10+$loop.index*15", "90+10+$loop.index*15", r), a(4, "180-10+$loop.index*15", "180+10+$loop.index*15", r), a(4, "270-10+$loop.index*15", "270+10+$loop.index*15", r), p(20), a(3, "0-10+45+$loop.index*15", "0+10+45+$loop.index*15", s), a(3, "90-10+45+$loop.index*15", "90+10+45+$loop.index*15", s), a(3, "180-10+45+$loop.index*15", "180+10+45+$loop.index*15", s), a(3, "270-10+45+$loop.index*15", 
+  "270+10+45+$loop.index*15", s)])]), top1:c.action([c.repeat(999, [c.fire(c.direction("  0+$loop.index*10", "absolute"), C, L), c.fire(c.direction(" 90+$loop.index*10", "absolute"), C, L), c.fire(c.direction("180+$loop.index*10", "absolute"), C, L), c.fire(c.direction("270+$loop.index*10", "absolute"), C, L), c.fire(c.direction("  0-$loop.index*10", "absolute"), C, L), c.fire(c.direction(" 90-$loop.index*10", "absolute"), C, L), c.fire(c.direction("180-$loop.index*10", "absolute"), C, L), c.fire(c.direction("270-$loop.index*10", 
+  "absolute"), C, L), p(10)])]), top2:c.action([c.repeat(999, [p(43), f(30, 0, 348, s, K)])])});
+  z["cannon3-0"] = new q.ha({top0:c.action([c.repeat(999, [p(80), b(r, 0.01, 5, d(5, -30, 30, K, c.offsetX(-60))), b(r, 0.01, 5, d(5, -30, 30, K)), b(r, 0.01, 5, d(5, -30, 30, K, c.offsetX(60)))])])});
   z["cannon4-0"] = new q.ha({top0:c.action([p(20), c.repeat(999, [c.fire(r, R), c.repeat(8, [p(10), c.kb("way", "$loop.count+1"), c.fire(c.direction("-12/2 - 12*($way-2)", "sequence"), r, R), c.repeat("$way-1", [c.fire(c.direction(12, "sequence"), r, R)])]), p(120)])])});
   z["cannon5-0"] = new q.ha({top0:c.action([c.repeat(999, [c.fire(c.direction(-60), t, aa(c.Pa("b"))), c.repeat(11, [p(5), c.fire(c.direction(10, "sequence"), t, aa(c.Pa("b")))]), p(60)])]), b:c.action([c.wait(5), c.Md(c.speed(0), 0), b(r, 0.1, 5, function(a) {
     return c.fire(c.direction(0, "relative"), a, D)
   }), c.yb])});
-  z["yuri-4"] = new q.ha({top:c.action([p(60), c.repeat(7, [a(7, 120, 240, A, I), p(8)])])});
+  z["yuri-4"] = new q.ha({top:c.action([p(60), c.repeat(7, [a(7, 120, 240, C, K), p(8)])])});
   z["kurokawa-1"] = new q.ha({top0:c.action([c.repeat(999, [b(s, -0.01, 4, function(a) {
     return f(4, -45, 45, a, N, c.offsetX(-45), c.va(j))
   }), b(s, -0.01, 4, function(a) {
@@ -3925,8 +3921,8 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
   }), b(s, -0.01, 4, function(a) {
     return f(4, -45, 45, a, N, c.offsetX(45), c.va(j))
   }), p(90)])]), top1:c.action([c.repeat(999, [c.fire(c.direction(0), s, Q, c.offsetX(-45), c.va(j)), p(45), c.fire(c.direction(0), s, Q, c.offsetX(45), c.va(j)), p(45)])])});
-  z["komachi-1"] = new q.ha({top0:c.action([c.repeat(20, [c.fire(c.direction(210, "absolute"), A(1), D, c.offsetX(-40)), c.fire(c.direction(120, "sequence"), A(1), D, c.offsetX(-40)), c.fire(c.direction(120, "sequence"), A(1), D, c.offsetX(-40)), c.repeat(57, [p(8), c.fire(c.direction(-720 / 57, "sequence"), A(1), D, c.offsetX(-40)), c.fire(c.direction(120, "sequence"), A(1), D, c.offsetX(-40)), c.fire(c.direction(120, "sequence"), A(1), D, c.offsetX(-40))])])]), top1:c.action([c.repeat(20, [c.fire(c.direction(-210, 
-  "absolute"), A(1), D, c.offsetX(40)), c.fire(c.direction(120, "sequence"), A(1), D, c.offsetX(40)), c.fire(c.direction(120, "sequence"), A(1), D, c.offsetX(40)), c.repeat(57, [p(8), c.fire(c.direction(720 / 57, "sequence"), A(1), D, c.offsetX(40)), c.fire(c.direction(120, "sequence"), A(1), D, c.offsetX(40)), c.fire(c.direction(120, "sequence"), A(1), D, c.offsetX(40))])])]), top2:c.action([c.repeat(70, [c.fire(c.direction(0), s(0), O, c.offsetX(-110), c.va(j)), c.repeat(6, [c.wait(1), c.fire(c.direction(0, 
+  z["komachi-1"] = new q.ha({top0:c.action([c.repeat(20, [c.fire(c.direction(210, "absolute"), C(1), D, c.offsetX(-40)), c.fire(c.direction(120, "sequence"), C(1), D, c.offsetX(-40)), c.fire(c.direction(120, "sequence"), C(1), D, c.offsetX(-40)), c.repeat(57, [p(8), c.fire(c.direction(-720 / 57, "sequence"), C(1), D, c.offsetX(-40)), c.fire(c.direction(120, "sequence"), C(1), D, c.offsetX(-40)), c.fire(c.direction(120, "sequence"), C(1), D, c.offsetX(-40))])])]), top1:c.action([c.repeat(20, [c.fire(c.direction(-210, 
+  "absolute"), C(1), D, c.offsetX(40)), c.fire(c.direction(120, "sequence"), C(1), D, c.offsetX(40)), c.fire(c.direction(120, "sequence"), C(1), D, c.offsetX(40)), c.repeat(57, [p(8), c.fire(c.direction(720 / 57, "sequence"), C(1), D, c.offsetX(40)), c.fire(c.direction(120, "sequence"), C(1), D, c.offsetX(40)), c.fire(c.direction(120, "sequence"), C(1), D, c.offsetX(40))])])]), top2:c.action([c.repeat(70, [c.fire(c.direction(0), s(0), O, c.offsetX(-110), c.va(j)), c.repeat(6, [c.wait(1), c.fire(c.direction(0, 
   "sequence"), s(0), O, c.offsetX(-110), c.va(j))]), p(10), c.fire(c.direction(0), s(0), O, c.offsetX(110), c.va(j)), c.repeat(6, [c.wait(1), c.fire(c.direction(0, "sequence"), s(0), O, c.offsetX(110), c.va(j))]), p(10)])])});
   z["komachi-2"] = new q.ha({top0:c.action([c.repeat(999, [b(s, -0.01, 4, function(a) {
     return c.action([f(4, -45, 45, a, N, c.offsetX(-45), c.va(j)), p(4)])
@@ -3937,27 +3933,27 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
   }), p(180)])])});
   z["komachi-4"] = new q.ha({top0:c.action([c.repeat(999, [c.repeat(4, [c.fire(c.direction("220+-1+$rand*2", "absolute"), s, Y, c.offsetX(-45)), c.fire(c.direction("180+-1+$rand*2", "absolute"), s, Y, c.offsetX(-45)), c.fire(c.direction("180+-1+$rand*2", "absolute"), s, Y, c.offsetX(45)), c.fire(c.direction("140+-1+$rand*2", "absolute"), s, Y, c.offsetX(45)), p(4)]), p(60)])]), top1:c.action([c.repeat(70, [c.fire(c.direction(0), s(5), O, c.offsetX(-110), c.va(j)), c.repeat(12, [c.wait(1), c.fire(c.direction(0, 
   "sequence"), s(5), O, c.offsetX(-110), c.va(j))]), p(30), c.fire(c.direction(0), s(5), O, c.offsetX(110), c.va(j)), c.repeat(12, [c.wait(1), c.fire(c.direction(0, "sequence"), s(5), O, c.offsetX(110), c.va(j))]), p(30)])])});
-  z["honoka-1"] = new q.ha({top0:c.action([c.wait(60), c.repeat(10, [f(4, -40, 40, r, H, c.offsetX(0), c.offsetY(30)), p(30), f(5, -40, 40, A, H, c.offsetX(0), c.offsetY(30)), p(30)])]), top1:c.action([c.wait(60), c.repeat(5, [f(2, -2, 2, r(0.6), D), f(3, -3, 3, r(1), D), f(4, -4, 4, r(1.4), D), f(5, -5, 5, r(1.8), D), p(110)])]), top2:c.action([c.repeat(20, [a(12, -10, -170, A, O, c.offsetX(-110), c.offsetY(-70)), p(30)])]), top3:c.action([c.repeat(20, [a(12, 10, 170, A, O, c.offsetX(110), c.offsetY(-70)), 
+  z["honoka-1"] = new q.ha({top0:c.action([c.wait(60), c.repeat(10, [f(4, -40, 40, r, L, c.offsetX(0), c.offsetY(30)), p(30), f(5, -40, 40, C, L, c.offsetX(0), c.offsetY(30)), p(30)])]), top1:c.action([c.wait(60), c.repeat(5, [f(2, -2, 2, r(0.6), D), f(3, -3, 3, r(1), D), f(4, -4, 4, r(1.4), D), f(5, -5, 5, r(1.8), D), p(110)])]), top2:c.action([c.repeat(20, [a(12, -10, -170, C, O, c.offsetX(-110), c.offsetY(-70)), p(30)])]), top3:c.action([c.repeat(20, [a(12, 10, 170, C, O, c.offsetX(110), c.offsetY(-70)), 
   p(30)])])});
   z["nagisa-1-1"] = new q.ha({top0:c.action([p(90), c.repeat(3, [c.kb("way", "5 + $loop.index*6"), b(r, 0.01, "3 + $loop.index*4", function(a) {
     return c.action([f("$way", -110, 110, a, D, c.offsetX(-190), c.offsetY(-20)), f("$way", -110, 110, a, D, c.offsetX(190), c.offsetY(-20)), c.wait(5)])
   }), p(60)]), p(60)])});
-  z["nagisa-1-2"] = new q.ha({top0:c.action([c.repeat(12, [f(15, -90, 90, A, D), p(40)])]), top1:c.action([c.repeat(3, [c.repeat(3, [f(5, -65, -55, r, O, c.offsetX(-190), c.offsetY(-20)), f(5, -35, -25, r, O, c.offsetX(-190), c.offsetY(-20)), f(5, -5, 5, r, O, c.offsetX(-190), c.offsetY(-20)), f(5, 25, 35, r, O, c.offsetX(-190), c.offsetY(-20)), f(5, 55, 65, r, O, c.offsetX(-190), c.offsetY(-20)), c.wait(2)]), p(60), c.repeat(3, [f(5, -65, -55, r, O, c.offsetX(190), c.offsetY(-20)), f(5, -35, -25, 
+  z["nagisa-1-2"] = new q.ha({top0:c.action([c.repeat(12, [f(15, -90, 90, C, D), p(40)])]), top1:c.action([c.repeat(3, [c.repeat(3, [f(5, -65, -55, r, O, c.offsetX(-190), c.offsetY(-20)), f(5, -35, -25, r, O, c.offsetX(-190), c.offsetY(-20)), f(5, -5, 5, r, O, c.offsetX(-190), c.offsetY(-20)), f(5, 25, 35, r, O, c.offsetX(-190), c.offsetY(-20)), f(5, 55, 65, r, O, c.offsetX(-190), c.offsetY(-20)), c.wait(2)]), p(60), c.repeat(3, [f(5, -65, -55, r, O, c.offsetX(190), c.offsetY(-20)), f(5, -35, -25, 
   r, O, c.offsetX(190), c.offsetY(-20)), f(5, -5, 5, r, O, c.offsetX(190), c.offsetY(-20)), f(5, 25, 35, r, O, c.offsetX(190), c.offsetY(-20)), f(5, 55, 65, r, O, c.offsetX(190), c.offsetY(-20)), c.wait(2)]), p(60)])])});
-  z["nagisa-1-3"] = new q.ha({top0:c.action([p(60), c.repeat(3, [c.fire(c.direction(-60), r, N, c.offsetX(-190), c.offsetY(-20)), c.repeat(20, [p(15), c.fire(c.direction(6, "sequence"), r, N, c.offsetX(-190), c.offsetY(-20))])])]), top1:c.action([p(80), c.repeat(3, [c.fire(c.direction(60), r, N, c.offsetX(190), c.offsetY(-20)), c.repeat(20, [p(15), c.fire(c.direction(-6, "sequence"), r, N, c.offsetX(190), c.offsetY(-20))])])]), top2:c.action([c.repeat(6, [c.repeat(3, [f(5, -60, -40, r, H, c.offsetX(-190), 
-  c.offsetY(-20)), f(5, -20, -10, r, H, c.offsetX(-190), c.offsetY(-20)), f(5, 10, 20, r, H, c.offsetX(-190), c.offsetY(-20)), f(5, 40, 60, r, H, c.offsetX(-190), c.offsetY(-20)), c.wait(4)]), p(60), c.repeat(3, [f(5, -60, -40, r, H, c.offsetX(190), c.offsetY(-20)), f(5, -20, -10, r, H, c.offsetX(190), c.offsetY(-20)), f(5, 10, 20, r, H, c.offsetX(190), c.offsetY(-20)), f(5, 40, 60, r, H, c.offsetX(190), c.offsetY(-20)), c.wait(4)]), p(60)])])});
-  z["nagisa-2-1"] = new q.ha({top0:c.action([p(120), c.repeat(36, [a(6, "+$loop.index*10", "+$loop.index*10 + 360", A, I, c.offsetX(-190), c.offsetY(-20)), a(6, "-$loop.index*10", "-$loop.index*10 + 360", A, I, c.offsetX(190), c.offsetY(-20)), p(10)])]), top1:c.action([p(120), c.repeat(30, [a(3, "+$loop.index*10", "+$loop.index * 10 + 360", r, Q), a(3, "-$loop.index*14", "-$loop.index * 14 + 360", r, Q), p(12)])])});
-  z["nagisa-2-2"] = new q.ha({top0:c.action([p(120), c.repeat(30, [a(4, "+$loop.index*5", "+$loop.index*5 + 270", s, Q), p(12)])]), top1:c.action([p(120), c.repeat(6, [a(9, 150, 130, A(0.8), D), a(9, 172, 188, A(0.8), D), a(9, 210, 230, A(0.8), D), p(30), a(9, 170, 150, A(0.8), D), a(9, 190, 210, A(0.8), D), p(30)])])});
-  z["nagisa-2-3"] = new q.ha({top:c.action([p(120), c.repeat(12, [a(23, 0, 360, A, H, c.offsetX(-190), c.offsetY(-20)), a(23, 0, 360, A, H), a(23, 0, 360, A, H, c.offsetX(190), c.offsetY(-20)), p(30)])])});
+  z["nagisa-1-3"] = new q.ha({top0:c.action([p(60), c.repeat(3, [c.fire(c.direction(-60), r, N, c.offsetX(-190), c.offsetY(-20)), c.repeat(20, [p(15), c.fire(c.direction(6, "sequence"), r, N, c.offsetX(-190), c.offsetY(-20))])])]), top1:c.action([p(80), c.repeat(3, [c.fire(c.direction(60), r, N, c.offsetX(190), c.offsetY(-20)), c.repeat(20, [p(15), c.fire(c.direction(-6, "sequence"), r, N, c.offsetX(190), c.offsetY(-20))])])]), top2:c.action([c.repeat(6, [c.repeat(3, [f(5, -60, -40, r, L, c.offsetX(-190), 
+  c.offsetY(-20)), f(5, -20, -10, r, L, c.offsetX(-190), c.offsetY(-20)), f(5, 10, 20, r, L, c.offsetX(-190), c.offsetY(-20)), f(5, 40, 60, r, L, c.offsetX(-190), c.offsetY(-20)), c.wait(4)]), p(60), c.repeat(3, [f(5, -60, -40, r, L, c.offsetX(190), c.offsetY(-20)), f(5, -20, -10, r, L, c.offsetX(190), c.offsetY(-20)), f(5, 10, 20, r, L, c.offsetX(190), c.offsetY(-20)), f(5, 40, 60, r, L, c.offsetX(190), c.offsetY(-20)), c.wait(4)]), p(60)])])});
+  z["nagisa-2-1"] = new q.ha({top0:c.action([p(120), c.repeat(36, [a(6, "+$loop.index*10", "+$loop.index*10 + 360", C, K, c.offsetX(-190), c.offsetY(-20)), a(6, "-$loop.index*10", "-$loop.index*10 + 360", C, K, c.offsetX(190), c.offsetY(-20)), p(10)])]), top1:c.action([p(120), c.repeat(30, [a(3, "+$loop.index*10", "+$loop.index * 10 + 360", r, Q), a(3, "-$loop.index*14", "-$loop.index * 14 + 360", r, Q), p(12)])])});
+  z["nagisa-2-2"] = new q.ha({top0:c.action([p(120), c.repeat(30, [a(4, "+$loop.index*5", "+$loop.index*5 + 270", s, Q), p(12)])]), top1:c.action([p(120), c.repeat(6, [a(9, 150, 130, C(0.8), D), a(9, 172, 188, C(0.8), D), a(9, 210, 230, C(0.8), D), p(30), a(9, 170, 150, C(0.8), D), a(9, 190, 210, C(0.8), D), p(30)])])});
+  z["nagisa-2-3"] = new q.ha({top:c.action([p(120), c.repeat(12, [a(23, 0, 360, C, L, c.offsetX(-190), c.offsetY(-20)), a(23, 0, 360, C, L), a(23, 0, 360, C, L, c.offsetX(190), c.offsetY(-20)), p(30)])])});
   z["nagisa-3-1"] = new q.ha({top0:c.action([p(50), c.repeat(999, [b(s, 0.0010, 5, function(a) {
     return c.action([f(41, "-180", "+180", a, R, c.offsetX(-190), c.offsetY(-20)), f(41, "-180", "+180", a, R, c.offsetX(190), c.offsetY(-20))])
   }), p(50)])]), top1:c.action([c.repeat(999, [f(2, -2, 0, E, D), p(10), f(2, 0, 2, E, D), p(150)])])});
-  z["mai-1"] = new q.ha({top0:c.action([p(50), c.repeat(50, [c.kb("from", "+Math.cos($loop.index*0.15)*40-170"), a(3, "$from", "$from+60", t, aa(c.action([c.wait(8), c.fire(c.direction(0, "relative"), r, I), c.yb]))), c.kb("from", "-Math.cos($loop.index*0.15)*40-10"), a(3, "$from", "$from-60", t, aa(c.action([c.wait(8), c.fire(c.direction(0, "relative"), r, I), c.yb]))), p(8)])]), top1:c.action([p(50), c.repeat(12, [a(5, -50, 50, t, aa(c.action([c.wait(8), c.fire(c.direction(0, "relative"), r, Q), 
+  z["mai-1"] = new q.ha({top0:c.action([p(50), c.repeat(50, [c.kb("from", "+Math.cos($loop.index*0.15)*40-170"), a(3, "$from", "$from+60", t, aa(c.action([c.wait(8), c.fire(c.direction(0, "relative"), r, K), c.yb]))), c.kb("from", "-Math.cos($loop.index*0.15)*40-10"), a(3, "$from", "$from-60", t, aa(c.action([c.wait(8), c.fire(c.direction(0, "relative"), r, K), c.yb]))), p(8)])]), top1:c.action([p(50), c.repeat(12, [a(5, -50, 50, t, aa(c.action([c.wait(8), c.fire(c.direction(0, "relative"), r, Q), 
   c.yb]))), a(5, -230, -130, t, aa(c.action([c.wait(8), c.fire(c.direction(0, "relative"), r, Q), c.yb]))), p(16), a(6, -50, 50, t, aa(c.action([c.wait(8), c.fire(c.direction(0, "relative"), r, Q), c.yb]))), a(6, -230, -130, t, aa(c.action([c.wait(8), c.fire(c.direction(0, "relative"), r, Q), c.yb]))), p(16)])])});
   z["mai-2"] = new q.ha({top:c.action([p(50), c.repeat(15, [c.fire(c.direction(-10), R(c.Pa("fireChild", "$loop.index*10"))), p(8)])]), fireChild:c.action([p("40+$1"), b(r, 0.1, 5, function(a) {
     return c.fire(c.direction(-90, "absolute"), a, N)
   }), c.yb])});
-  z["saki-1-1"] = new q.ha({top:c.action([p(100), c.repeat(3, [c.Pa("oneround", "9 + $loop.index * 4", "$loop.index > 0 ? 0 : 1")])]), oneround:c.action([c.kb("way", "$1"), c.repeat("30", [f("$way", "3 * $loop.index*+1", "3 * $loop.index*+1 + 360", s, I), f("$way", "3 * $loop.index*-1", "3 * $loop.index*-1 + 360", s, I), p(12)]), c.repeat("$2", [f(9, -20, 20, E, Y)])])});
+  z["saki-1-1"] = new q.ha({top:c.action([p(100), c.repeat(3, [c.Pa("oneround", "9 + $loop.index * 4", "$loop.index > 0 ? 0 : 1")])]), oneround:c.action([c.kb("way", "$1"), c.repeat("30", [f("$way", "3 * $loop.index*+1", "3 * $loop.index*+1 + 360", s, K), f("$way", "3 * $loop.index*-1", "3 * $loop.index*-1 + 360", s, K), p(12)]), c.repeat("$2", [f(9, -20, 20, E, Y)])])});
   z["saki-1-2"] = new q.ha({top:c.action([p(100), c.repeat(5, [c.kb("way", "5+$loop.index*2"), c.repeat(6, [c.kb("s", "$loop.index*0.6"), c.action(function() {
     for(var a = [], b = 0;5 > b;b++) {
       a.push(f("$way", -30, 30, s("$s"), Q, c.offsetX(-120 + 60 * b)))
@@ -3965,8 +3961,8 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
     return a
   }())]), p(90)])])});
   z["saki-1-3"] = new q.ha({top:c.action([c.kb("dir", "$rand < 0.5 ? -1 : 1"), c.repeat(24, [c.fire(c.direction("120*$dir + $loop.index*10*-$dir"), c.speed(2), Q(c.Pa("seed"))), p(8)]), p(60)]), seed:c.action([c.wait(10), c.Md(c.speed(0), 50), c.wait(90), f(13, 0, 360 - 360 / 13, r, Y), c.yb])});
-  z["saki-2-1"] = new q.ha({top0:c.action([p(100), c.repeat(4, [f(60, "$loop.index*+5+0", "$loop.index*+5+360 - 360/60", r, I, c.offsetX(-40)), f(60, "$loop.index*-5+0", "$loop.index*-5+360 - 360/60", r, I, c.offsetX(40)), p(60), f(59, "$loop.index*+5+0", "$loop.index*+5+360 - 360/59", r, I, c.offsetX(-40)), f(59, "$loop.index*-5+0", "$loop.index*-5+360 - 360/59", r, I, c.offsetX(40)), p(60)])]), top1:c.action([p(100), c.repeat(4, [c.repeat(7, [c.kb("o", "$loop.index*20 - 60"), c.fire(c.direction("$o"), 
-  C, Y), c.repeat(4, [c.kb("w", "$loop.count"), f("$w+1", "$w*-0.6 + $o", "$w*+0.6 + $o", C("$w*-1.0"), Y)])]), p(120)])])});
+  z["saki-2-1"] = new q.ha({top0:c.action([p(100), c.repeat(4, [f(60, "$loop.index*+5+0", "$loop.index*+5+360 - 360/60", r, K, c.offsetX(-40)), f(60, "$loop.index*-5+0", "$loop.index*-5+360 - 360/60", r, K, c.offsetX(40)), p(60), f(59, "$loop.index*+5+0", "$loop.index*+5+360 - 360/59", r, K, c.offsetX(-40)), f(59, "$loop.index*-5+0", "$loop.index*-5+360 - 360/59", r, K, c.offsetX(40)), p(60)])]), top1:c.action([p(100), c.repeat(4, [c.repeat(7, [c.kb("o", "$loop.index*20 - 60"), c.fire(c.direction("$o"), 
+  B, Y), c.repeat(4, [c.kb("w", "$loop.count"), f("$w+1", "$w*-0.6 + $o", "$w*+0.6 + $o", B("$w*-1.0"), Y)])]), p(120)])])});
   z["saki-2-2"] = new q.ha({top:c.action([p(60), c.kb("dir", "$rand < 0.5 ? -1 : 1"), c.repeat(12, [c.fire(c.direction("120*$dir + $loop.index*10*-$dir"), c.speed(2), R(c.Pa("seed"))), p(8), c.fire(c.direction("120*-$dir + $loop.index*10*$dir"), c.speed(2), R(c.Pa("seed"))), p(8)]), p(60)]), seed:c.action([c.wait(10), c.Md(c.speed(0), "10 + $rand*15"), c.wait(65), b(s, 0.14, 6, function(a) {
     return c.action([c.fire(c.direction(-48), a, N)])
   }), b(s, 0.14, 6, function(a) {
@@ -3989,20 +3985,20 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
   z["saki-2-3"] = new q.ha({top:c.action([p(60), c.kb("dir", "$rand < 0.5 ? -1 : 1"), c.repeat(24, [c.fire(c.direction("120*$dir + $loop.index*10*-$dir"), c.speed(2), Q(c.Pa("seed"))), p(8), c.fire(c.direction("120*-$dir + $loop.index*10*$dir"), c.speed(2), Q(c.Pa("seed"))), p(8)]), p(60)]), seed:c.action([c.wait(10), c.Md(c.speed(0), "10 + $rand*20"), c.wait(65), b(s, 0.18, 7, function(a) {
     return c.action([c.fire(c.direction(180, "absolute"), a, Y)])
   }), p(2), c.yb])});
-  z["saki-3-1"] = new q.ha({top:c.action([c.fire(c.direction(180, "absolute"), fa, R(c.Pa("seed"))), p(60), c.fire(c.direction(180, "absolute"), fa, R(c.Pa("seed")), c.offsetX(-80)), c.fire(c.direction(180, "absolute"), fa, R(c.Pa("seed")), c.offsetX(80)), p(60)]), seed:c.action([c.fire(c.direction(0, "absolute"), s, r, I), c.repeat(999, [c.fire(c.direction(90, "sequence"), r, I), c.fire(c.direction(90, "sequence"), r, I), c.fire(c.direction(90, "sequence"), r, I), p(10), c.fire(c.direction(100, 
-  "sequence"), r, I)])])});
+  z["saki-3-1"] = new q.ha({top:c.action([c.fire(c.direction(180, "absolute"), fa, R(c.Pa("seed"))), p(60), c.fire(c.direction(180, "absolute"), fa, R(c.Pa("seed")), c.offsetX(-80)), c.fire(c.direction(180, "absolute"), fa, R(c.Pa("seed")), c.offsetX(80)), p(60)]), seed:c.action([c.fire(c.direction(0, "absolute"), s, r, K), c.repeat(999, [c.fire(c.direction(90, "sequence"), r, K), c.fire(c.direction(90, "sequence"), r, K), c.fire(c.direction(90, "sequence"), r, K), p(10), c.fire(c.direction(100, 
+  "sequence"), r, K)])])});
   z["saki-3-2"] = new q.ha({top:c.action([c.fire(c.direction(180, "absolute"), fa, Q(c.Pa("seed"))), p(60), c.fire(c.direction(180, "absolute"), fa, Q(c.Pa("seed")), c.offsetX(-80)), c.fire(c.direction(180, "absolute"), fa, Q(c.Pa("seed")), c.offsetX(80)), p(60)]), seed:c.action([c.fire(c.direction(0, "absolute"), s, r, D), c.repeat(999, [c.fire(c.direction(90, "sequence"), r, D), c.fire(c.direction(90, "sequence"), r, D), c.fire(c.direction(90, "sequence"), r, D), p(10), c.fire(c.direction(80, "sequence"), 
   r, D)])])});
   z.setup = function() {
     for(var a = 0;2E3 > a;a++) {
-      Aa.push(M())
+      za.push(M())
     }
     a = z.Nd = tm.$a.pc.ed;
     a.Ze = function(a) {
       return!(a instanceof M) || !(-50 > a.x || 530 < a.x || -50 > a.y || 690 < a.y)
     };
     a.Yf = function(a) {
-      var b = Aa.shift(0);
+      var b = za.shift(0);
       if(b) {
         return b.na = v.Qg, ma.push(b), b.setFrameIndex(a.frame === i ? 1 : a.frame), a.Qb ? (b.scaleX = 1, b.scaleY = 1, b.mc = l) : (b.scaleX = 0.8, b.scaleY = 1.5, b.mc = j), b.visible = a.visible === l ? l : j, b.Qb = !!a.Qb, b
       }
@@ -4018,7 +4014,7 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
   z.erase = function(a, b, c) {
     for(var d = [].concat(ma), f = 0, g = d.length;f < g;f++) {
       if(a) {
-        var m = wa(!!b);
+        var m = va(!!b);
         m.setPosition(d[f].x, d[f].y);
         c && (m.Ac = j)
       }
@@ -4035,7 +4031,7 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
     this.boundingRadius = 7;
     this.addEventListener("removed", function() {
       this.clearEventListener("enterframe");
-      Aa.push(this);
+      za.push(this);
       var a = ma.indexOf(this);
       -1 !== a && ma.splice(a, 1)
     })
@@ -4050,15 +4046,15 @@ ba:[$.Bh, $.xe, $.ye], x:240, y:-100, Sb:j}], mai:[{aa:Z.ve, ba:$.ve, x:780, y:1
     a.addChildTo(this.parent);
     this.remove()
   }});
-  var Aa = [], ma = M.Qa = []
+  var za = [], ma = M.Qa = []
 })();
-var T, U, La, V, Sa;
+var T, U, Ka, V, Ra;
 T = function(b, a, d) {
   return b < a ? a : b > d ? d : b
 };
-Sa = Math.PI / 180;
-La = function(b) {
-  return b * Sa
+Ra = Math.PI / 180;
+Ka = function(b) {
+  return b * Ra
 };
 V = function(b, a) {
   return window.Math.floor(Math.random() * (a - b + 1)) + b

@@ -55,8 +55,8 @@ var $fire1 = function(spd) { return $.fire($.direction(0), spd || $spd3, BNS) };
 var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {
     return $.action([
         $.fire($.direction(rangeFrom), speed, bullet || RNS, offsetX, offsetY, autonomy),
-        $.repeat(way + "-1", [
-            $.fire($.direction("((" + rangeTo + ")-(" + rangeFrom + "))/(" + way + "-1)", "sequence"), speed, bullet || RNS, offsetX, offsetY, autonomy),
+        $.repeat(way + "+($ex*2)-1", [
+            $.fire($.direction("((" + rangeTo + ")-(" + rangeFrom + "))/(" + way + "+($ex*2)-1)", "sequence"), speed, bullet || RNS, offsetX, offsetY, autonomy),
         ])
     ]);
 };
@@ -239,10 +239,10 @@ gls2.Danmaku["cannon2-0"] = new bulletml.Root({
             $absoluteNway(4, "180-10+$loop.index*15", "180+10+$loop.index*15", $spd2),
             $absoluteNway(4, "270-10+$loop.index*15", "270+10+$loop.index*15", $spd2),
             $interval(20),
-            $absoluteNway(3,   "0-10+45+$loop.index*15",   "0+10+45+$loop.index*15", $spd3, BNS),
-            $absoluteNway(3,  "90-10+45+$loop.index*15",  "90+10+45+$loop.index*15", $spd3, BNS),
-            $absoluteNway(3, "180-10+45+$loop.index*15", "180+10+45+$loop.index*15", $spd3, BNS),
-            $absoluteNway(3, "270-10+45+$loop.index*15", "270+10+45+$loop.index*15", $spd3, BNS),
+            $absoluteNway(3,   "0-10+45+$loop.index*15",   "0+10+45+$loop.index*15", $spd3),
+            $absoluteNway(3,  "90-10+45+$loop.index*15",  "90+10+45+$loop.index*15", $spd3),
+            $absoluteNway(3, "180-10+45+$loop.index*15", "180+10+45+$loop.index*15", $spd3),
+            $absoluteNway(3, "270-10+45+$loop.index*15", "270+10+45+$loop.index*15", $spd3),
         ]),
     ]),
     "top1": $.action([
@@ -258,37 +258,10 @@ gls2.Danmaku["cannon2-0"] = new bulletml.Root({
             $interval(10),
         ]),
     ]),
-});
-
-/**
- * まこぴー2.
- */
-gls2.Danmaku["cannon2-1"] = new bulletml.Root({
-    "top0": $.action([
+    "top2": $.action([
         $.repeat(999, [
-            $interval(20),
-            $absoluteNway(6,   "0-10+$loop.index*15",   "0+10+$loop.index*15", $spd2),
-            $absoluteNway(6,  "90-10+$loop.index*15",  "90+10+$loop.index*15", $spd2),
-            $absoluteNway(6, "180-10+$loop.index*15", "180+10+$loop.index*15", $spd2),
-            $absoluteNway(6, "270-10+$loop.index*15", "270+10+$loop.index*15", $spd2),
-            $interval(20),
-            $absoluteNway(7,   "0-10+45+$loop.index*15",   "0+10+45+$loop.index*15", $spd3, BNS),
-            $absoluteNway(7,  "90-10+45+$loop.index*15",  "90+10+45+$loop.index*15", $spd3, BNS),
-            $absoluteNway(7, "180-10+45+$loop.index*15", "180+10+45+$loop.index*15", $spd3, BNS),
-            $absoluteNway(7, "270-10+45+$loop.index*15", "270+10+45+$loop.index*15", $spd3, BNS),
-        ]),
-    ]),
-    "top1": $.action([
-        $.repeat(999, [
-            $.fire($.direction("  0+$loop.index*5", "absolute"), $spd1, RI),
-            $.fire($.direction(" 90+$loop.index*5", "absolute"), $spd1, RI),
-            $.fire($.direction("180+$loop.index*5", "absolute"), $spd1, RI),
-            $.fire($.direction("270+$loop.index*5", "absolute"), $spd1, RI),
-            $.fire($.direction("  0-$loop.index*5", "absolute"), $spd1, RI),
-            $.fire($.direction(" 90-$loop.index*5", "absolute"), $spd1, RI),
-            $.fire($.direction("180-$loop.index*5", "absolute"), $spd1, RI),
-            $.fire($.direction("270-$loop.index*5", "absolute"), $spd1, RI),
-            $interval(5),
+            $interval(43),
+            $nway(30, 0, 360-360/30, $spd3, BNS),
         ]),
     ]),
 });

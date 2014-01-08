@@ -12,6 +12,12 @@ var STATS = true;
 
 /**
  * @define {boolean}
+ *
+ * true時：
+ *   BGMオフ
+ *   右下に隠し情報表示
+ *   hキーでハイパーチャージ
+ *   pキーでスクリーンショットを撮る
  */
 var DEBUG = false;
 
