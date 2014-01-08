@@ -763,12 +763,12 @@ var _alice = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.alice = _alice();
+gls2.EnemySoft.Alice = _alice();
 
 /**
  * 浮遊砲台（端末）
  *
- * 円を描いて展開し、一定距離を保って本体の周囲を周回する。
+ * 円を描いて展開し、本体から一定距離を保って周回する。
  *
  * @class
  * @extends {gls2.EnemySoft}
@@ -809,7 +809,7 @@ var _aliceLeaf = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.aliceLeaf = _alice();
+gls2.EnemySoft.AliceLeaf = _alice();
 
 /**
  * 大型戦闘機

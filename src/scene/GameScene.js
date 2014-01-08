@@ -1,5 +1,4 @@
-/
-*
+/*
  * License
  * http://daishihmr.mit-license.org/
  */

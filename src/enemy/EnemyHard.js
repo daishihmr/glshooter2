@@ -512,7 +512,7 @@ gls2.Enemy.Alice = tm.createClass({
     superClass: gls2.Enemy,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "alice");
+        this.superInit(gameScene, software, "Alice");
     },
     draw: function(canvas) {
         //ダミー
@@ -524,18 +524,24 @@ gls2.Enemy.Alice = tm.createClass({
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
         this.remove();
+/*
         for (var i = 0; i<4; i++) {
             this.leaf[i].destroy();
         }
         delete this.leaf;
+*/
     },
     onLaunch: function() {
-        //出現時端末を投入
+        //出現時に端末を投入
+/*
         this.leaf = [];
         for (var i = 0; i<4; i++) {
             this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.aliceLeaf, soft:gls2.EnemySoft.aliceLeaf, x:this.x, y:this.y});
             this.leaf[i].startDir = Math.PI*0.5*i;
+            this.leaf[i].currentParts = this;
+            this.leaf[i].number = i;
         }
+ */
         gls2.Enemy.prototype.onLaunch.call(this);
         return this;
     },
@@ -548,7 +554,7 @@ gls2.Enemy.AliceLeaf = tm.createClass({
     superClass: gls2.Enemy,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "aliceLeaf");
+        this.superInit(gameScene, software, "AliceLeaf");
     },
     draw: function(canvas) {
         //ダミー

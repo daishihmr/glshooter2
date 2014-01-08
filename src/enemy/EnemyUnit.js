@@ -362,7 +362,7 @@ gls2.EnemyUnit = {
 
 //浮遊砲台「ヨツバ」
 "yotsuba": [
-    { hard:$e.alice, soft:$s.alice, x:SC_W/2, y:-64 },
+    { hard:$e.Alice, soft:$s.Alice, x:SC_W/2, y:-64 },
 ],
 
 // ボムキャリアー「クルミ」

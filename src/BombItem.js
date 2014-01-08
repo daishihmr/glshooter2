@@ -68,16 +68,13 @@ gls2.ExtendItem = tm.createClass(
         this.setPosition(x, y);
         this.player = player;
     },
-
     update: function() {
         this.y += 0.5;
-
         if (gls2.distanceSq(this, this.player) < 45*45) {
             this.player.gameScene.extendZanki();
             this.remove();
         } else if (this.y > SC_H+64) {
                this.remove();
-            }
         }
     }
 });
