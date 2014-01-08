@@ -49,4 +49,37 @@ gls2.BombItem = tm.createClass(
 
 });
 
+/**
+ * @class
+ * @extends {tm.display.Sprite}
+ */
+gls2.ExtendItem = tm.createClass(
+/** @lends {gls2.ExtendItem.prototype} */
+{
+    superClass: tm.display.Sprite,
+
+    vx: 0,
+    vy: 0,
+    player: null,
+    age: 0,
+
+    init: function(x, y, player) {
+        this.superInit("extendItem", 32, 32);
+        this.setPosition(x, y);
+        this.player = player;
+    },
+
+    update: function() {
+        this.y += 0.5;
+
+        if (gls2.distanceSq(this, this.player) < 45*45) {
+            this.player.gameScene.extendZanki();
+            this.remove();
+        } else if (this.y > SC_H+64) {
+               this.remove();
+            }
+        }
+    }
+});
+
 })();

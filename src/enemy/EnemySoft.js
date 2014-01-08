@@ -726,7 +726,7 @@ gls2.EnemySoft.miyuki_t1 = _miyuki_y(-0.5, "miyuki_t");
  * @class
  * @extends {gls2.EnemySoft}
  */
-var _arice = tm.createClass(
+var _alice = tm.createClass(
 /** @lends {_MiddleFighterCommon.prototype} */
 {
     superClass: gls2.EnemySoft,
@@ -739,7 +739,7 @@ var _arice = tm.createClass(
      */
     init: function() {
         this.superInit();
-        this.attackPattern = "arice";
+        this.attackPattern = "alice";
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -763,17 +763,17 @@ var _arice = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.arice = _arice();
+gls2.EnemySoft.alice = _alice();
 
 /**
  * 浮遊砲台（端末）
  *
- * 本体の周囲を周回する。
+ * 円を描いて展開し、一定距離を保って本体の周囲を周回する。
  *
  * @class
  * @extends {gls2.EnemySoft}
  */
-var _ariceLeaf = tm.createClass(
+var _aliceLeaf = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
@@ -788,7 +788,7 @@ var _ariceLeaf = tm.createClass(
      */
     init: function(centerX, centerY, initialDirection) {
         this.superInit();
-        this.attackPattern = "ariceLeaf";
+        this.attackPattern = "aliceLeaf";
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -809,7 +809,7 @@ var _ariceLeaf = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.ariceLeaf = _arice();
+gls2.EnemySoft.aliceLeaf = _alice();
 
 /**
  * 大型戦闘機

@@ -508,11 +508,11 @@ gls2.Enemy.miyuki_t = tm.createClass(
 /**
  * 浮遊要塞「ヨツバ」（エクステンドキャリア）
  */
-gls2.Enemy.Arice = tm.createClass({
+gls2.Enemy.Alice = tm.createClass({
     superClass: gls2.Enemy,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "arice");
+        this.superInit(gameScene, software, "alice");
     },
     draw: function(canvas) {
         //ダミー
@@ -522,19 +522,33 @@ gls2.Enemy.Arice = tm.createClass({
     },
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
-        gls2.BombItem(this.x, this.y, this.player).addChildTo(this.parent);
+        gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
         this.remove();
-    }
+        for (var i = 0; i<4; i++) {
+            this.leaf[i].destroy();
+        }
+        delete this.leaf;
+    },
+    onLaunch: function() {
+        //出現時端末を投入
+        this.leaf = [];
+        for (var i = 0; i<4; i++) {
+            this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.aliceLeaf, soft:gls2.EnemySoft.aliceLeaf, x:this.x, y:this.y});
+            this.leaf[i].startDir = Math.PI*0.5*i;
+        }
+        gls2.Enemy.prototype.onLaunch.call(this);
+        return this;
+    },
 });
 
 /**
  * 浮遊砲台「ヨツバ」端末
  */
-gls2.Enemy.AriceLeaf = tm.createClass({
+gls2.Enemy.AliceLeaf = tm.createClass({
     superClass: gls2.Enemy,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "ariceLeaf");
+        this.superInit(gameScene, software, "aliceLeaf");
     },
     draw: function(canvas) {
         //ダミー
@@ -545,7 +559,7 @@ gls2.Enemy.AriceLeaf = tm.createClass({
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.remove();
-    }
+    },
 });
 
 /**

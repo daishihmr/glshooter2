@@ -362,13 +362,8 @@ gls2.EnemyUnit = {
 
 //浮遊砲台「ヨツバ」
 "yotsuba": [
-    { hard:$e.arice, soft:$s.arice, x:SC_W/2, y:-64 },
+    { hard:$e.alice, soft:$s.alice, x:SC_W/2, y:-64 },
 ],
-//浮遊砲台「ヨツバ」端末
-"yotsubaLeaf": [
-    { hard:$e.arice, soft:$s.arice, x:SC_W/2, y:-64 },
-],
-
 
 // ボムキャリアー「クルミ」
 "erika": [{ hard:$e.Erika, soft:$s.Erika, x: SC_W*0.5, y:-100 }],

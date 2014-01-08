@@ -41,6 +41,8 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(100, "hoshizora_y-1");
         this.seq.add(  1, "heri2-right");
 
+        this.seq.add(100, "yotsuba");
+
         //test
         this.seq.add(200, "tankRD-center");
         this.seq.add(200, "tankRD-left");
