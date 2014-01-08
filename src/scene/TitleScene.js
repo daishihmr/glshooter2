@@ -109,10 +109,10 @@ gls2.TitleScene = tm.createClass({
             "チュートリアルを開始します",
             "設定を変更します",
         ];
-        if (gls2.core.highScore > 0) {
+        // if (gls2.core.highScore > 0) {
             menu.push("tweet high score");
             labels.push("Twitterへハイスコアを投稿します");
-        }
+        // }
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
             "defaultValue": this.lastMainMenu,
             "menuDescriptions": labels
