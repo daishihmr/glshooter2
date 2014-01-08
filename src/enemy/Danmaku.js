@@ -501,6 +501,43 @@ gls2.Danmaku["komachi-2"] = new bulletml.Root({
 });
 
 /**
+ * こまち3面
+ */
+gls2.Danmaku["komachi-3"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $whip($spd3, -0.01, 4, function(spd) {
+                return $.action([
+                    $nway(6, -60, 60, spd, BNL, $.offsetX(-45), $.autonomy(true)),
+                    $interval(4),
+                ]);
+            }),
+            $whip($spd3, -0.01, 4, function(spd) {
+                return $.action([
+                    $interval(4),
+                    $nway(6, -60, 60, spd, BNL, $.offsetX(+45), $.autonomy(true)),
+                ]);
+            }),
+            $interval(90),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $interval(45),
+            $whip($spd2, 0.01, 22, function(spd) {
+                return $.action([
+                    $.repeat("1 + $rand*6", [
+                        $.fire($.direction("-5+$rand*10"), spd, RS),
+                    ]),
+                    $interval(1),
+                ]);
+            }),
+            $interval(180),
+        ]),
+    ]),
+});
+
+/**
  * こまち4面
  */
 gls2.Danmaku["komachi-4"] = new bulletml.Root({

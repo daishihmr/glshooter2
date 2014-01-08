@@ -410,7 +410,6 @@ gls2.Enemy.Cannon2 = tm.createClass({
  * 強襲戦闘艇「ヒノ」
  */
 gls2.Enemy.akane = tm.createClass(
-/** @lends */
 {
     superClass: gls2.Enemy,
     init: function(gameScene, software) {
@@ -422,20 +421,30 @@ gls2.Enemy.akane = tm.createClass(
         this.boundingHeightTop = 32;
 
         this._sprite.setScale(1, 3);
+
+        this.phase = 0;
     },
     update: function(app) {
+        if (this.phase == 0) {
+            //出現パターン
+            this.phase++;
+        }
         gls2.Enemy.prototype.update.call(this, app);
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
+    isInScreen: function() {
+        if (this.phase == 0)return false;
+        return gls2.Enemy.prototype.isInScreen.call(this);
+    },
+
 });
 
 /**
  * 大型戦艦「ホシゾラ」横
  */
 gls2.Enemy.miyuki_y = tm.createClass(
-/** @lends */
 {
     superClass: gls2.Enemy,
     init: function(gameScene, software) {
@@ -445,8 +454,6 @@ gls2.Enemy.miyuki_y = tm.createClass(
         this.boundingWidth = 256;
         this.boundingHeightBottom = 16;
         this.boundingHeightTop = 64;
-
-        this.time = 0;
     },
     update: function(app) {
         if (!this.isInScreen()) {
@@ -454,7 +461,6 @@ gls2.Enemy.miyuki_y = tm.createClass(
             if (this.x > SC_W)this._sprite.setFrameIndex(1);
         }
         gls2.Enemy.prototype.update.call(this, app);
-        this.time++;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -473,7 +479,6 @@ gls2.Enemy.miyuki_y = tm.createClass(
  * 大型戦艦「ホシゾラ」縦
  */
 gls2.Enemy.miyuki_t = tm.createClass(
-/** @lends */
 {
     superClass: gls2.Enemy,
     init: function(gameScene, software) {
@@ -483,12 +488,9 @@ gls2.Enemy.miyuki_t = tm.createClass(
         this.boundingWidth = 128;
         this.boundingHeightBottom = 16;
         this.boundingHeightTop = 32;
-
-        this.time = 0;
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
-        this.time++;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -501,6 +503,49 @@ gls2.Enemy.miyuki_t = tm.createClass(
         return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
             || 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
     },
+});
+
+/**
+ * 浮遊要塞「ヨツバ」（エクステンドキャリア）
+ */
+gls2.Enemy.Arice = tm.createClass({
+    superClass: gls2.Enemy,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "arice");
+    },
+    draw: function(canvas) {
+        //ダミー
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        gls2.BombItem(this.x, this.y, this.player).addChildTo(this.parent);
+        this.remove();
+    }
+});
+
+/**
+ * 浮遊砲台「ヨツバ」端末
+ */
+gls2.Enemy.AriceLeaf = tm.createClass({
+    superClass: gls2.Enemy,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "ariceLeaf");
+    },
+    draw: function(canvas) {
+        //ダミー
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    }
 });
 
 /**
@@ -677,7 +722,6 @@ gls2.Enemy.Saki = tm.createClass(
  * 「ミナヅキ」
  * 「ミミノ」
  * 「シラベ」
- * 「ヨツバ」
  * 「マドカ」
  *
  *

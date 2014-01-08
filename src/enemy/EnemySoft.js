@@ -715,7 +715,101 @@ var _miyuki_t = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.miyuki_t = _miyuki_y(0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t1 = _miyuki_y( 0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t1 = _miyuki_y(-0.5, "miyuki_t");
+
+/**
+ * 浮遊砲台
+ *
+ * 上部から出現し、ゆっくりと下へ移動
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+var _arice = tm.createClass(
+/** @lends {_MiddleFighterCommon.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    velocityX: 0,
+    attackPattern: null,
+
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.attackPattern = "arice";
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.velocityY = 0.5;
+        enemy.patterns = [this.attackPattern];
+
+        enemy.tweener
+            .clear()
+            .call(function() {
+                gls2.EnemySoft.attack(this, this.patterns[0]);
+            }.bind(enemy));
+
+        enemy.on("enterframe", function() {
+            this.y += this.velocityY;
+            if (this.entered && !this.isInScreen()) {
+                this.remove();
+            }
+
+            this.enableFire = this.y < this.player.y;
+        });
+    },
+})
+gls2.EnemySoft.arice = _arice();
+
+/**
+ * 浮遊砲台（端末）
+ *
+ * 本体の周囲を周回する。
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+var _ariceLeaf = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    attackPattern: null,
+
+    /**
+     * @constructs
+     * @param {number} centerX
+     * @param {number} centerY
+     * @param {number} initialDirection
+     * @param
+     */
+    init: function(centerX, centerY, initialDirection) {
+        this.superInit();
+        this.attackPattern = "ariceLeaf";
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [this.attackPattern];
+
+        enemy.tweener
+            .clear()
+            .call(function() {
+                gls2.EnemySoft.attack(this, this.patterns[0]);
+            }.bind(enemy));
+
+        enemy.on("enterframe", function() {
+            if (this.entered && !this.isInScreen()) {
+                this.remove();
+            }
+            this.enableFire = this.y < this.player.y;
+        });
+    },
+})
+gls2.EnemySoft.ariceLeaf = _arice();
 
 /**
  * 大型戦闘機
