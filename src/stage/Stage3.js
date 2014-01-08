@@ -32,7 +32,7 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(300, "akane-3");
         this.seq.add(  1, "heri2-right");
 
-        this.seq.add(  0, function() {
+        this.seq.add(360, function() {
             this.gameScene.ground.direction = ~~((Math.PI/180)*90);
             this.gameScene.ground.speed = 4;
             this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
