@@ -88,6 +88,9 @@ gls2.Stage4 = tm.createClass(
         }
 
         // 25%
+        this.seq.add(1000, function() {
+            alert("今日の実装はここまで！");
+        });
     },
 
     setupBackground: function() {
