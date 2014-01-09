@@ -802,6 +802,11 @@ var _aliceLeaf = tm.createClass(
             }.bind(enemy));
 
         enemy.on("enterframe", function() {
+            var cx = this.current.x;
+            var cy = this.current.y;
+            this.dir += 0.04;
+            this.x = cx+Math.sin(this.dir)*64;
+            this.y = cy+Math.cos(this.dir)*64;
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }

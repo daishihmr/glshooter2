@@ -67,9 +67,9 @@ gls2.Stage = tm.createClass(
         this.gameScene.enemyCount += 1;
         var enemy = data.hard(this.gameScene, data.soft)
             .setPosition(data.x, data.y)
-            .addChildTo(this.gameScene)
-            .onLaunch();
+            .addChildTo(this.gameScene);
         enemy.stage = this;
+        enemy.onLaunch();
         return enemy;
     },
 

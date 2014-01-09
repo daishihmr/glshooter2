@@ -31,7 +31,7 @@ gls2.Enemy.DATA = {
     "hoshizora_y":[  100,      500, false,  true, 30, {"width":128, "height":64}, ],
     "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height":64}, ],
     "yotsuba":   [   300,    30000, false,  true, 30, {"width":64, "height":64}, ],
-    "yotsubaLeaf":[  300,    10000, false, false, 10, {"width":32, "height":32}, ],
+    "yotsubaLeaf":[  200,    10000, false, false, 10, {"width":32, "height":32}, ],
 //  "midorikawa":[   150,      500, false, true,  30, {"width":128, "height":64}, ],
 //  "aoki":      [   150,      500, false, true,  30, {"width":128, "height":64}, ],
 };
@@ -526,24 +526,25 @@ gls2.Enemy.Alice = tm.createClass({
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
         this.remove();
-/*
+
+        //本体破壊時に端末も破壊
         for (var i = 0; i<4; i++) {
-            this.leaf[i].destroy();
+            if (this.leaf[i])this.leaf[i].destroy();
         }
         delete this.leaf;
-*/
     },
     onLaunch: function() {
         //出現時に端末を投入
-/*
         this.leaf = [];
         for (var i = 0; i<4; i++) {
-            this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.aliceLeaf, soft:gls2.EnemySoft.aliceLeaf, x:this.x, y:this.y});
-            this.leaf[i].startDir = Math.PI*0.5*i;
-            this.leaf[i].currentParts = this;
+            var dir = Math.PI*0.5*i;
+            var sx = this.x+Math.sin(dir)*64;
+            var sy = this.y+Math.cos(dir)*64;
+            this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.AliceLeaf, soft:gls2.EnemySoft.AliceLeaf, x:sx, y:sy});
+            this.leaf[i].dir = dir;
+            this.leaf[i].current = this;
             this.leaf[i].number = i;
         }
- */
         gls2.Enemy.prototype.onLaunch.call(this);
         return this;
     },
@@ -566,6 +567,7 @@ gls2.Enemy.AliceLeaf = tm.createClass({
     },
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.current.leaf[this.number] = null;  //破壊されたら本体のリストから切り離し
         this.remove();
     },
 });
