@@ -684,7 +684,6 @@ gls2.GameScene = tm.createClass(
     },
 
     clearStage: function() {
-        // TODO リザルト画面へ
         gls2.playBgm("bgmResult");
         var tempTimer = tm.app.Object2D();
         tempTimer.addChildTo(this.lastElement);
@@ -692,7 +691,6 @@ gls2.GameScene = tm.createClass(
             this.app.pushScene(gls2.ResultScene(this, this.shotScreen()));
             tempTimer.remove();
         }.bind(this));
-        // this.startStage(this.stageNumber + 1);
     },
 
     gameOver: function() {

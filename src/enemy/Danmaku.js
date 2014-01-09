@@ -39,13 +39,13 @@ var IVS = function(action) { return $.bullet(action, {visible:false}) };
 var $interval = function(v) { return $.wait(v + "*(1-$rank)*$hyperOff") };
 
 // 弾速
-var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 0.20 + ("+v+"*0.1)" ); };
-var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 0.50 + ("+v+"*0.1)" ); };
-var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 0.80 + ("+v+"*0.1)" ); };
-var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 1.10 + ("+v+"*0.1)" ); };
-var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 1.40 + ("+v+"*0.1)" ); };
-var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 1.70 + ("+v+"*0.1)" ); };
-var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("$rank*2.0 + 2.00 + ("+v+"*0.1)" ); };
+var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 0.20 + ("+v+"*0.1)" ); };
+var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 0.50 + ("+v+"*0.1)" ); };
+var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 0.80 + ("+v+"*0.1)" ); };
+var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 1.10 + ("+v+"*0.1)" ); };
+var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 1.40 + ("+v+"*0.1)" ); };
+var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 1.70 + ("+v+"*0.1)" ); };
+var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 2.00 + ("+v+"*0.1)" ); };
 
 /** 自機狙い弾 */
 var $fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3, RNS) };
@@ -272,32 +272,33 @@ gls2.Danmaku["cannon2-0"] = new bulletml.Root({
 gls2.Danmaku["cannon2-3"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
-            $.bindVar("d", "$loop.index*5"),
-            $.repeat(12 - 1, [
-                $.fire($.direction(360/12, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
+            $.bindVar("d", "$loop.index*-6"),
+            $.repeat(10 - 1, [
+                $.fire($.direction(360/10, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
             ]),
             $interval(10),
-            $.fire($.direction(360/12 - 2, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
+            $.fire($.direction(360/10 + 3, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
         ]),
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $.bindVar("d", "($loop.index)*-5"),
-            $.repeat(25 - 1, [
-                $.fire($.direction(360/25, "sequence"), $.speed(1), IVS($.actionRef("ivs1", "$d"))),
+            $.bindVar("d", "($loop.index)*+8"),
+            $.repeat(13 - 1, [
+                $.fire($.direction(360/13, "sequence"), $.speed(1), IVS($.actionRef("ivs1", "$d"))),
             ]),
             $interval(10),
-            $.fire($.direction(360/25 + 4, "sequence"), $.speed(1), IVS($.actionRef("ivs1", "$d"))),
+            $.fire($.direction(360/13 - 4, "sequence"), $.speed(1), IVS($.actionRef("ivs1", "$d"))),
         ]),
     ]),
     "ivs0": $.action([
-        $.wait(3),
+        $.wait(5),
         $.fire($.direction("$1", "relative"), $.spd1, BNS),
         $.vanish(),
     ]),
     "ivs1": $.action([
-        $.wait(6),
-        $.fire($.direction("$1", "relative"), $.spd1, RI),
+        $.wait(10),
+        $.fire($.direction("$1-3", "relative"), $.spd1, RI),
+        $.fire($.direction("$1+3", "relative"), $.spd1, RI),
         $.vanish(),
     ]),
 });
@@ -716,11 +717,11 @@ gls2.Danmaku["nagisa-1-1"] = new bulletml.Root({
         $interval(90),
         $.repeat(3, [
             $.bindVar("way", "5 + $loop.index*6"),
-            $whip($spd2, 0.01, "3 + $loop.index*4", function(spd) {
+            $whip($spd3, 0.01, "3 + $loop.index*2", function(spd) {
                 return $.action([
                     $nway("$way", -110, 110, spd, RNS, $.offsetX(-190), $.offsetY(-20)),
                     $nway("$way", -110, 110, spd, RNS, $.offsetX(+190), $.offsetY(-20)),
-                    $.wait(5),
+                    $.wait(10),
                 ]);
             }),
             $interval(60),
