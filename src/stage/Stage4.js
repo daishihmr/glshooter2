@@ -88,6 +88,86 @@ gls2.Stage4 = tm.createClass(
         }
 
         // 25%
+
+        this.seq.add(  1, function() {
+            this.gameScene.ground.speed = 3;
+            this.gameScene.ground.tweener.clear().to({
+                speed: 0.3,
+            }, 5000);
+        });
+
+        this.seq.add(200, "makoto-3-2");
+        this.seq.add(300, "makoto-3-8");
+        this.seq.add( 75, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-right");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-right");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-right");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-right");
+        this.seq.add(100, "makoto-3-2");
+        this.seq.add( 75, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-left");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-left");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-left");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-left");
+        this.seq.add(100, "makoto-3-8");
+        this.seq.add( 75, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-right");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-right");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-right");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-right");
+        this.seq.add(100, "makoto-3-2");
+        this.seq.add( 75, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-left");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-left");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-left");
+        this.seq.add( 25, "heri1-4-center");
+        this.seq.add( 25, "heri1-4-left");
+        this.seq.add(200, "makoto-3-2");
+        this.seq.add(  1, "makoto-3-8");
+        this.seq.add( 52, "heri1-4-left");
+        this.seq.add( 12, "heri1-4-right");
+        this.seq.add( 12, "heri1-4-left");
+        this.seq.add( 12, "heri1-4-right");
+        this.seq.add( 12, "heri1-4-left");
+        this.seq.add( 12, "heri1-4-right");
+        this.seq.add( 12, "heri1-4-left");
+        this.seq.add( 12, "heri1-4-right");
+        this.seq.add( 12, "heri1-4-left2");
+        this.seq.add( 12, "heri1-4-right2");
+        this.seq.add( 12, "heri1-4-left2");
+        this.seq.add( 12, "heri1-4-right2");
+        this.seq.add( 12, "heri1-4-left2");
+        this.seq.add( 12, "heri1-4-right2");
+        this.seq.add( 12, "heri1-4-left2");
+        this.seq.add( 12, "heri1-4-right2");
+        this.seq.add(102, "heri1-4-left2");
+        this.seq.add( 12, "heri1-4-right2");
+        this.seq.add( 12, "heri1-4-left2");
+        this.seq.add( 12, "heri1-4-right2");
+        this.seq.add( 12, "heri1-4-left2");
+        this.seq.add( 12, "heri1-4-right2");
+        this.seq.add( 12, "heri1-4-left2");
+        this.seq.add( 12, "heri1-4-right2");
+
+        this.seq.add(400, function() {
+            this.gameScene.ground.tweener.clear().to({
+                speed: 3,
+            }, 5000);
+        });
+
+        // 50%
+
         this.seq.add(1000, function() {
             alert("今日の実装はここまで！");
         });
