@@ -86,11 +86,11 @@ gls2.GlShooter2 = tm.createClass(
             "bgmShipSelect": "assets2/nc44200.mp3",
             "bgm1": "assets2/nc54073.mp3",
             "bgm2": "assets2/nc28687.mp3",
-            "bgm4": "assets2/nc80728.mp3",
+            "bgm3": "assets2/nc80728.mp3",
+            "bgm4": "assets2/nc67876.mp3",
             "bgm5": "assets2/nc60627.mp3",
             "bgmBoss": "assets2/nc29206.mp3",
             "bgmResult": "assets2/nc54077.mp3",
-            "bgmEnding": "assets2/nc44202.mp3",
 
             // sound
             "sound/explode": "assets2/sen_ge_taihou03.mp3",
@@ -123,11 +123,11 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgmShipSelect"];
             delete assets["bgm1"];
             delete assets["bgm2"];
+            delete assets["bgm3"];
             delete assets["bgm4"];
             delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
-            delete assets["bgmEnding"];
         }
 
         this.replaceScene(tm.app.LoadingScene({
