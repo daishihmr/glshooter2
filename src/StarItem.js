@@ -61,8 +61,8 @@ gls2.StarItem = tm.createClass(
 
             if (this.stability && this.grub) {
                 var a = Math.atan2(this.player.y - this.y, this.player.x - this.x);
-                this.x += Math.cos(a) * 10;
-                this.y += Math.sin(a) * 10;
+                this.x += Math.cos(a) * 8;
+                this.y += Math.sin(a) * 8;
             } else if (!this.stability) {
                 this.x += this.dx;
                 this.y += this.dy;

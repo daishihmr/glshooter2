@@ -1283,7 +1283,19 @@ gls2.Bullet = tm.createClass(
         if (this.ball) this.rotation += 15;
     },
     destroy: function() {
-        var p = gls2.Particle(10, 1, 0.92, tm.graphics.Canvas()
+        var p = gls2.Bullet.destroyEffect().setScale(0.1, 0.1).setPosition(this.x, this.y);
+        p.addEventListener("enterframe", function() {
+            this.scaleX += 0.1;
+            this.scaleY += 0.1;
+        });
+        p.addChildTo(this.parent);
+
+        this.remove();
+    },
+});
+gls2.Bullet.destroyEffect = function() {
+    if (gls2.Bullet.destroyEffect.cache === null) {
+        gls2.Bullet.destroyEffect.cache = gls2.Particle(10, 1, 0.92, tm.graphics.Canvas()
                 .resize(10, 10)
                 .setFillStyle(
                     tm.graphics.RadialGradient(10*0.5, 10*0.5, 0, 10*0.5, 10*0.5, 10*0.5)
@@ -1296,16 +1308,11 @@ gls2.Bullet = tm.createClass(
                 )
                 .fillRect(0, 0, 10, 10)
                 .element
-        ).setScale(0.1, 0.1).setPosition(this.x, this.y);
-        p.addEventListener("enterframe", function() {
-            this.scaleX += 0.1;
-            this.scaleY += 0.1;
-        });
-        p.addChildTo(this.parent);
-
-        this.remove();
-    },
-});
+        );
+    }
+    return gls2.Bullet.destroyEffect.cache.clone();
+};
+gls2.Bullet.destroyEffect.cache = null;
 
 var bulletPool = [];
 var activeList = gls2.Bullet.activeList = [];
