@@ -12,7 +12,7 @@ gls2.Setting = {
     /**
      * @const
      */
-    MUTEKI: true,
+    MUTEKI: false,
 
     /**
      * FPS
@@ -304,7 +304,7 @@ gls2.Setting = {
      * 基本弾速
      * @const
      */
-    BULLET_SPEED: 4.0,
+    BULLET_SPEED: 3.0,
 
     /**
      * 星アイテム（大）が出る距離

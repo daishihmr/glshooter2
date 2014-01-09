@@ -302,10 +302,10 @@ gls2.EnemyUnit = {
 "makoto-8": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.9, y:-100 }],
 "makoto-R0": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W+100, y:SC_H*0.2 }],
 
-// 大型固定砲台「ケンザキ」4面用
-"makoto-3-2": [{ hard:$e.Cannon2, soft:$s.Cannon2_3, x:SC_W*0.2, y:-100 }],
-"makoto-3-5": [{ hard:$e.Cannon2, soft:$s.Cannon2_3, x:SC_W*0.5, y:-100 }],
-"makoto-3-8": [{ hard:$e.Cannon2, soft:$s.Cannon2_3, x:SC_W*0.8, y:-100 }],
+// 大型固定砲台「ミナヅキ」4面用
+"karen-3-2": [{ hard:$e.Cannon3, soft:$s.Cannon2_3, x:SC_W*0.2, y:-100 }],
+"karen-3-5": [{ hard:$e.Cannon3, soft:$s.Cannon2_3, x:SC_W*0.5, y:-100 }],
+"karen-3-8": [{ hard:$e.Cannon3, soft:$s.Cannon2_3, x:SC_W*0.8, y:-100 }],
 
 // 中型戦闘機「クロカワ」1面用
 "fighter-m-0": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.2, y:SC_H*-0.3 }],

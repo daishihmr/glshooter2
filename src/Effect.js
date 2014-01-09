@@ -343,7 +343,7 @@ gls2.ChargeEffect = tm.createClass({
         if (app.frame % 2 === 0) {
             for (var i = 0; i < 9; i++) {
                 var a = this.angle + i/9 * Math.PI*2;
-                gls2.Particle(60, this.alpha, 0.9)
+                gls2.Particle(this.reverse ? 100 : 60, this.alpha, 0.9)
                     .setPosition(Math.cos(a)*this.rad+this.target.x, Math.sin(a)*this.rad+this.target.y)
                     .addChildTo(this.target.parent);
             }

@@ -96,8 +96,8 @@ gls2.Stage4 = tm.createClass(
             }, 5000);
         });
 
-        this.seq.add(200, "makoto-3-2");
-        this.seq.add(300, "makoto-3-8");
+        this.seq.add(200, "karen-3-2");
+        this.seq.add(300, "karen-3-8");
         this.seq.add( 75, "heri1-4-center");
         this.seq.add( 25, "heri1-4-right");
         this.seq.add( 25, "heri1-4-center");
@@ -106,7 +106,7 @@ gls2.Stage4 = tm.createClass(
         this.seq.add( 25, "heri1-4-right");
         this.seq.add( 25, "heri1-4-center");
         this.seq.add( 25, "heri1-4-right");
-        this.seq.add(100, "makoto-3-2");
+        this.seq.add(100, "karen-3-2");
         this.seq.add( 75, "heri1-4-center");
         this.seq.add( 25, "heri1-4-left");
         this.seq.add( 25, "heri1-4-center");
@@ -115,7 +115,7 @@ gls2.Stage4 = tm.createClass(
         this.seq.add( 25, "heri1-4-left");
         this.seq.add( 25, "heri1-4-center");
         this.seq.add( 25, "heri1-4-left");
-        this.seq.add(100, "makoto-3-8");
+        this.seq.add(100, "karen-3-8");
         this.seq.add( 75, "heri1-4-center");
         this.seq.add( 25, "heri1-4-right");
         this.seq.add( 25, "heri1-4-center");
@@ -124,7 +124,7 @@ gls2.Stage4 = tm.createClass(
         this.seq.add( 25, "heri1-4-right");
         this.seq.add( 25, "heri1-4-center");
         this.seq.add( 25, "heri1-4-right");
-        this.seq.add(100, "makoto-3-2");
+        this.seq.add(100, "karen-3-2");
         this.seq.add( 75, "heri1-4-center");
         this.seq.add( 25, "heri1-4-left");
         this.seq.add( 25, "heri1-4-center");
@@ -133,8 +133,8 @@ gls2.Stage4 = tm.createClass(
         this.seq.add( 25, "heri1-4-left");
         this.seq.add( 25, "heri1-4-center");
         this.seq.add( 25, "heri1-4-left");
-        this.seq.add(200, "makoto-3-2");
-        this.seq.add(  1, "makoto-3-8");
+        this.seq.add(200, "karen-3-2");
+        this.seq.add(  1, "karen-3-8");
         this.seq.add( 52, "heri1-4-left");
         this.seq.add( 12, "heri1-4-right");
         this.seq.add( 12, "heri1-4-left");

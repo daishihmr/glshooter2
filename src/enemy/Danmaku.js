@@ -39,13 +39,13 @@ var IVS = function(action) { return $.bullet(action, {visible:false}) };
 var $interval = function(v) { return $.wait(v + "*(1-$rank)*$hyperOff") };
 
 // 弾速
-var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 0.20 + ("+v+"*0.1)" ); };
-var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 0.50 + ("+v+"*0.1)" ); };
-var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 0.80 + ("+v+"*0.1)" ); };
-var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 1.10 + ("+v+"*0.1)" ); };
-var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 1.40 + ("+v+"*0.1)" ); };
-var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 1.70 + ("+v+"*0.1)" ); };
-var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("$rank*1.5 + 2.00 + ("+v+"*0.1)" ); };
+var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 0.20 + ("+v+"*0.1)" ); };
+var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 0.50 + ("+v+"*0.1)" ); };
+var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 0.80 + ("+v+"*0.1)" ); };
+var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 1.10 + ("+v+"*0.1)" ); };
+var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 1.40 + ("+v+"*0.1)" ); };
+var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 1.70 + ("+v+"*0.1)" ); };
+var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 2.00 + ("+v+"*0.1)" ); };
 
 /** 自機狙い弾 */
 var $fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3, RNS) };
@@ -276,7 +276,7 @@ gls2.Danmaku["cannon2-3"] = new bulletml.Root({
             $.repeat(10 - 1, [
                 $.fire($.direction(360/10, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
             ]),
-            $interval(10),
+            $interval(5),
             $.fire($.direction(360/10 + 3, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
         ]),
     ]),
@@ -292,13 +292,13 @@ gls2.Danmaku["cannon2-3"] = new bulletml.Root({
     ]),
     "ivs0": $.action([
         $.wait(5),
-        $.fire($.direction("$1", "relative"), $.spd1, BNS),
+        $.fire($.direction("$1", "relative"), $spd2, BNS),
         $.vanish(),
     ]),
     "ivs1": $.action([
         $.wait(10),
-        $.fire($.direction("$1-3", "relative"), $.spd1, RI),
-        $.fire($.direction("$1+3", "relative"), $.spd1, RI),
+        $.fire($.direction("$1-5", "relative"), $spd2, RI),
+        $.fire($.direction("$1+5", "relative"), $spd2, RI),
         $.vanish(),
     ]),
 });
