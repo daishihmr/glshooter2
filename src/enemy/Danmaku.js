@@ -622,6 +622,18 @@ gls2.Danmaku["alice"] = new bulletml.Root({
         ]),
     ]),
 });
+/*
+ * アリス端末
+*/
+gls2.Danmaku["aliceLeaf"] = new bulletml.Root({
+    "top": $.action([
+        $.wait(20),
+        $.repeat(999, [
+            $interval(40),
+            $.fire($.direction(0, "sequence"), $spd3(5), BS, $.offsetX(0), $.autonomy(true)),
+        ]),
+    ]),
+});
 
 /**
  * ほのか

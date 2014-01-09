@@ -423,12 +423,12 @@ gls2.Enemy.akane = tm.createClass(
         this.boundingHeightTop = 32;
 
         this._sprite.setScale(1, 3);
-
         this.phase = 0;
     },
     update: function(app) {
         if (this.phase == 0) {
             //出現パターン
+            gls2.Effect.genShockwaveRev(this.x, this.y, this.gameScene, 3);
             this.phase++;
         }
         gls2.Enemy.prototype.update.call(this, app);
@@ -508,7 +508,7 @@ gls2.Enemy.miyuki_t = tm.createClass(
 });
 
 /**
- * 浮遊要塞「ヨツバ」（エクステンドキャリア）
+ * 浮遊砲台「ヨツバ」（エクステンドキャリア）
  */
 gls2.Enemy.Alice = tm.createClass({
     superClass: gls2.Enemy,
@@ -523,7 +523,7 @@ gls2.Enemy.Alice = tm.createClass({
             this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
     },
     destroy: function() {
-        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
         this.remove();
 

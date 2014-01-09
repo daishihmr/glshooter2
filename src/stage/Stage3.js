@@ -23,9 +23,6 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
         });
 
-        this.seq.add(100, "yotsuba");
-
-/*
         this.seq.add(100, "akane-1");
         this.seq.add(  1, "heri2-center");
 
@@ -34,7 +31,7 @@ gls2.Stage3 = tm.createClass(
 
         this.seq.add(300, "akane-3");
         this.seq.add(  1, "heri2-right");
-*/
+
         this.seq.add(360, function() {
             this.gameScene.ground.direction = ~~((Math.PI/180)*90);
             this.gameScene.ground.speed = 4;
@@ -86,6 +83,7 @@ gls2.Stage3 = tm.createClass(
         });
 
         this.seq.add(  1, function() {
+            this.gameScene.ground.direction = Math.PI;
             this.gameScene.ground.tweener.clear().to({speed:-10}, 5000, "easeInOutQuad");
         });
 
@@ -98,7 +96,6 @@ gls2.Stage3 = tm.createClass(
         //         this.frame = 0;
         //     });
         // }
-
     },
 
     setupBackground: function() {
