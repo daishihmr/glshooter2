@@ -425,6 +425,7 @@ gls2.Enemy.akane = tm.createClass(
         this._sprite.setScale(1, 3);
         this.phase = 0;
     },
+/*
     update: function(app) {
         if (this.phase == 0) {
             //出現パターン
@@ -433,6 +434,7 @@ gls2.Enemy.akane = tm.createClass(
         }
         gls2.Enemy.prototype.update.call(this, app);
     },
+*/
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },

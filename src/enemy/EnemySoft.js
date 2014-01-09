@@ -601,6 +601,7 @@ var _akane = tm.createClass(
             .clear()
             .call(function() {
                 gls2.EnemySoft.attack(this, this.patterns[0]);
+                gls2.Effect.genShockwaveRev(this.x, this.y, this.gameScene, 3);
             }.bind(enemy));
 
         enemy.on("enterframe", function() {

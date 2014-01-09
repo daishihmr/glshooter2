@@ -32,6 +32,18 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(300, "akane-3");
         this.seq.add(  1, "heri2-right");
 
+        this.seq.add(300, "heri2-center");
+        this.seq.add(  0, "heri2-left");
+        this.seq.add(  0, "heri2-right");
+
+        this.seq.add(200, "akane-1");
+        this.seq.add(  0, "akane-2");
+        this.seq.add(  0, "akane-3");
+
+        this.seq.add(300, "heri2-center");
+        this.seq.add(  0, "heri2-left");
+        this.seq.add(  0, "heri2-right");
+
         this.seq.add(360, function() {
             this.gameScene.ground.direction = ~~((Math.PI/180)*90);
             this.gameScene.ground.speed = 4;
