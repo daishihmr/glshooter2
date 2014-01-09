@@ -267,6 +267,42 @@ gls2.Danmaku["cannon2-0"] = new bulletml.Root({
 });
 
 /**
+ * まこぴー4面.
+ */
+gls2.Danmaku["cannon2-3"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $.bindVar("d", "$loop.index*5"),
+            $.repeat(12 - 1, [
+                $.fire($.direction(360/12, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
+            ]),
+            $interval(10),
+            $.fire($.direction(360/12 - 2, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $.bindVar("d", "($loop.index)*-5"),
+            $.repeat(25 - 1, [
+                $.fire($.direction(360/25, "sequence"), $.speed(1), IVS($.actionRef("ivs1", "$d"))),
+            ]),
+            $interval(10),
+            $.fire($.direction(360/25 + 4, "sequence"), $.speed(1), IVS($.actionRef("ivs1", "$d"))),
+        ]),
+    ]),
+    "ivs0": $.action([
+        $.wait(3),
+        $.fire($.direction("$1", "relative"), $.spd1, BNS),
+        $.vanish(),
+    ]),
+    "ivs1": $.action([
+        $.wait(6),
+        $.fire($.direction("$1", "relative"), $.spd1, RI),
+        $.vanish(),
+    ]),
+});
+
+/**
  * つぼみ1.
  */
 gls2.Danmaku["cannon3-0"] = new bulletml.Root({
