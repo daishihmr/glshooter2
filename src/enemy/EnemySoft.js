@@ -518,6 +518,7 @@ var _akane = tm.createClass(
             .clear()
             .call(function() {
                 gls2.EnemySoft.attack(this, this.patterns[0]);
+                gls2.Effect.genShockwaveRev(this.x, this.y, this.gameScene, 3);
             }.bind(enemy));
 
         enemy.on("enterframe", function() {
@@ -703,7 +704,7 @@ var _aliceLeaf = tm.createClass(
      * @param {number} initialDirection
      * @param
      */
-    init: function(centerX, centerY, initialDirection) {
+    init: function() {
         this.superInit();
         this.attackPattern = "aliceLeaf";
     },
@@ -719,6 +720,11 @@ var _aliceLeaf = tm.createClass(
             }.bind(enemy));
 
         enemy.on("enterframe", function() {
+            var cx = this.current.x;
+            var cy = this.current.y;
+            this.dir += 0.01;
+            this.x = cx+Math.sin(this.dir)*64;
+            this.y = cy+Math.cos(this.dir)*64;
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
@@ -726,7 +732,7 @@ var _aliceLeaf = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.AliceLeaf = _alice();
+gls2.EnemySoft.AliceLeaf = _aliceLeaf();
 
 /**
  * 大型戦闘機

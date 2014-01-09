@@ -122,6 +122,28 @@ gls2.Effect.genShockwave = function(x, y, scene, scaleTo) {
         });
 };
 
+gls2.Effect.genShockwaveRev = function(x, y, scene, scaleFrom) {
+    scaleFrom = scaleFrom || 1.8;
+    var scaleTo = 0.1;
+    var sw = tm.display.Sprite()
+        .setPosition(x, y)
+        .setScale(scaleFrom)
+        .setBlendMode("lighter");
+    sw.isEffect = true;
+    sw.addChildTo(scene);
+    sw.image = gls2.Effect["shockwaveImage"];
+    sw.tweener
+        .clear()
+        .to({
+            scaleX: scaleTo,
+            scaleY: scaleTo,
+            alpha: 0.0
+        }, 800, "easeOutQuad")
+        .call(function() {
+            sw.remove();
+        });
+};
+
 gls2.Effect.genShockwaveL = function(x, y, scene) {
     var shockwave = tm.display.CircleShape(300, 300, {
         strokeStyle: "rgba(0,0,0,0)",
