@@ -81,6 +81,7 @@ gls2.GlShooter2 = tm.createClass(
             "hoshizora_y": "assets/enemy_hoshizora_y.png",
             "hoshizora_t": "assets/enemy_hoshizora_t.png",
             "extendItem": "assets/extendItem.png",  //仮運用
+            "yotsubaLeaf": "assets/enemy_yotsubaLeaf.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",

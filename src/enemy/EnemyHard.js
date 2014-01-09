@@ -421,28 +421,10 @@ gls2.Enemy.akane = tm.createClass(
         this.boundingWidth = 64;
         this.boundingHeightBottom = 0;
         this.boundingHeightTop = 32;
-
-        this._sprite.setScale(1, 3);
-        this.phase = 0;
     },
-/*
-    update: function(app) {
-        if (this.phase == 0) {
-            //出現パターン
-            gls2.Effect.genShockwaveRev(this.x, this.y, this.gameScene, 3);
-            this.phase++;
-        }
-        gls2.Enemy.prototype.update.call(this, app);
-    },
-*/
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
-    isInScreen: function() {
-        if (this.phase == 0)return false;
-        return gls2.Enemy.prototype.isInScreen.call(this);
-    },
-
 });
 
 /**
@@ -560,12 +542,22 @@ gls2.Enemy.AliceLeaf = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsubaLeaf");
+
+        this._sprite = _Sprite("yotsubaLeaf", 64, 64).setFrameIndex(0);
+        this.boundingWidth = 64;
+        this.boundingHeightBottom = 0;
+        this.boundingHeightTop = 0;
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+
+        var b = this.dir;
+        while (b < 0) b += Math.PI*2;
+        while (Math.PI*2 <= b) b -= Math.PI*2;
+        this._sprite.setFrameIndex(~~(b*16/(Math.PI*2)), 64, 64);
     },
     draw: function(canvas) {
-        //ダミー
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);

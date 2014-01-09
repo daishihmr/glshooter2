@@ -551,7 +551,7 @@ gls2.Danmaku["akane"] = new bulletml.Root({
     "top": $.action([
         $.wait("40"),
         $.repeat(999, [
-            $interval(50),
+            $interval(30),
             $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX(-16), $.offsetY(6), $.autonomy(true)),
             $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX( 16), $.offsetY(6), $.autonomy(true)),
         ]),

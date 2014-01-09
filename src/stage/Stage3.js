@@ -23,26 +23,36 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
         });
 
-        this.seq.add(100, "akane-1");
+        this.seq.add(100, "yotsuba");
+        this.seq.add(300, "tankRD-center");
+        this.seq.add( 60, "tankRD-left");
+        this.seq.add( 60, "tankRD-right");
+        this.seq.add( 60, "tankRD-center");
+
+        this.seq.add(300, "akane-1");
         this.seq.add(  1, "heri2-center");
 
-        this.seq.add(300, "akane-2");
+        this.seq.add(100, "akane-2");
         this.seq.add(  1, "heri2-left");
 
-        this.seq.add(300, "akane-3");
+        this.seq.add(100, "akane-3");
+        this.seq.add(  1, "heri2-right");
+
+        this.seq.add(100, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+
+        this.seq.add(200, "akane-1");
+        this.seq.add( 60, "akane-2");
+        this.seq.add( 30, "akane-3");
+
+        this.seq.add(  1, "heri2-center");
+        this.seq.add(  1, "heri2-left");
         this.seq.add(  1, "heri2-right");
 
         this.seq.add(300, "heri2-center");
-        this.seq.add(  0, "heri2-left");
-        this.seq.add(  0, "heri2-right");
-
-        this.seq.add(200, "akane-1");
-        this.seq.add(  0, "akane-2");
-        this.seq.add(  0, "akane-3");
-
-        this.seq.add(300, "heri2-center");
-        this.seq.add(  0, "heri2-left");
-        this.seq.add(  0, "heri2-right");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
 
         this.seq.add(360, function() {
             this.gameScene.ground.direction = ~~((Math.PI/180)*90);
@@ -54,12 +64,6 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(  1, "heri2-right");
 
         this.seq.add(100, "yotsuba");
-
-        //test
-        this.seq.add(200, "tankRD-center");
-        this.seq.add(200, "tankRD-left");
-        this.seq.add(200, "tankRD-right");
-        this.seq.add(200, "tankRD-center");
 
         this.seq.add(  0, function() {
             this.gameScene.ground.direction = ~~((Math.PI/180)*180);
