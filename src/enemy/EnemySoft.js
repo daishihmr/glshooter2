@@ -719,6 +719,7 @@ var _aliceLeaf = tm.createClass(
                 gls2.EnemySoft.attack(this, this.patterns[0]);
             }.bind(enemy));
 
+        var toDeg = 180/Math.PI;
         enemy.on("enterframe", function() {
             var cx = this.current.x;
             var cy = this.current.y;

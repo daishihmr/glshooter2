@@ -588,7 +588,7 @@ gls2.Danmaku["akane"] = new bulletml.Root({
     "top": $.action([
         $.wait("40"),
         $.repeat(999, [
-            $interval(50),
+            $interval(30),
             $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX(-16), $.offsetY(6), $.autonomy(true)),
             $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX( 16), $.offsetY(6), $.autonomy(true)),
         ]),
@@ -627,40 +627,28 @@ gls2.Danmaku["miyuki_t"] = new bulletml.Root({
 });
 
 /*
- * アリス用
+ * ありす本体
 */
 gls2.Danmaku["alice"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
-            $.repeat(4, [
-                $.fire($.direction("220+-1+$rand*2", "absolute"), $spd3, RNL, $.offsetX(-45)),
-                $.fire($.direction("180+-1+$rand*2", "absolute"), $spd3, RNL, $.offsetX(-45)),
-                $.fire($.direction("180+-1+$rand*2", "absolute"), $spd3, RNL, $.offsetX(+45)),
-                $.fire($.direction("140+-1+$rand*2", "absolute"), $spd3, RNL, $.offsetX(+45)),
-                $interval(4),
-            ]),
-            $interval(60),
+            $absoluteNway(8, 0,  180, $spd1, BL),
+            $absoluteNway(8, 0, -180, $spd1, BL),
+            $interval(30),
+            $absoluteNway(9, 0,  180, $spd1, RL),
+            $absoluteNway(9, 0, -180, $spd1, RL),
+            $interval(30),
         ]),
     ]),
     "top1": $.action([
-        $.repeat(70, [
-            $.fire($.direction(0), $spd3(5), BS, $.offsetX(-110), $.autonomy(true)),
-            $.repeat(12, [
-                $.wait(1),
-                $.fire($.direction(0, "sequence"), $spd3(5), BS, $.offsetX(-110), $.autonomy(true)),
-            ]),
-            $interval(30),
-            $.fire($.direction(0), $spd3(5), BS, $.offsetX(+110), $.autonomy(true)),
-            $.repeat(12, [
-                $.wait(1),
-                $.fire($.direction(0, "sequence"), $spd3(5), BS, $.offsetX(+110), $.autonomy(true)),
-            ]),
-            $interval(30),
+        $.repeat(999, [
+            $.fire($.direction(15, "sequence"), $spd1, BS, $.offsetX(0), $.autonomy(true)),
+            $interval(5),
         ]),
     ]),
 });
 /*
- * アリス端末
+ * ありす端末
 */
 gls2.Danmaku["aliceLeaf"] = new bulletml.Root({
     "top": $.action([

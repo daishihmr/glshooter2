@@ -64,14 +64,14 @@ gls2.ExtendItem = tm.createClass(
     age: 0,
 
     init: function(x, y, player) {
-        this.superInit("extendItem", 32, 32);
+        this.superInit("extendItem", 64, 64);
         this.setPosition(x, y);
         this.player = player;
     },
     update: function() {
         this.y += 0.5;
 /*
-        if (gls2.distanceSq(this, this.player) < 32*32) {
+        if (gls2.distanceSq(this, this.player) < 64*64) {
             this.player.gameScene.extendZanki();
             this.remove();
         }

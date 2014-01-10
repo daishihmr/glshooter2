@@ -359,23 +359,23 @@ gls2.EnemyUnit = {
 
 //強襲戦闘機「ヒノ」
 "akane-1": [
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y:130 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y:130 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.4, y: 80 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.5, y: 60 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.5, y:140 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y: 80 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y:130 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.7, y:130 },
 ],
 "akane-2": [
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y:160 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y:120 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y: 80 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y:160 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y: 40 },
 ],
 "akane-3": [
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y:120 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y: 80 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y:160 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y: 40 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y:160 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y:120 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y: 80 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y: 40 },
 ],
 
 //大型戦艦「ホシゾラ」
