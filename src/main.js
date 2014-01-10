@@ -19,7 +19,7 @@ var STATS = true;
  *   hキーでハイパーチャージ
  *   pキーでスクリーンショットを撮る
  */
-var DEBUG = false;
+var DEBUG = true;
 
 tm.preload(function() {
     if (STATS) tm.util.ScriptManager.loadStats();
