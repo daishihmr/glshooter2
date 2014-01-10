@@ -508,7 +508,10 @@ gls2.Enemy.Alice = tm.createClass({
     },
     destroy: function() {
         gls2.Effect.explodeL(this.x, this.y, this.gameScene);
-        gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
+
+        //ボム効果時間中はエクステンドアイテムを出さない
+        if (!this.gameScene.isBombActive) gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
+
         this.remove();
 
         //本体破壊時に端末も破壊
