@@ -77,10 +77,11 @@ gls2.GlShooter2 = tm.createClass(
             "result_bg": "assets/result_bg.png",
 
             // use stage3
-            "hino": "assets/enemy_hino.png",
-            "hoshizora_y": "assets/enemy_hoshizora_y.png",
-            "hoshizora_t": "assets/enemy_hoshizora_t.png",
+            "hino": "assets/tex_hino.png",
+            "hoshizora_y": "assets/tex_hoshizora_y.png",
+            "hoshizora_t": "assets/tex_hoshizora_t.png",
             "extendItem": "assets/extendItem.png",  //仮運用
+            "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",
