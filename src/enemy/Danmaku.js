@@ -30,6 +30,10 @@ var RNL = function(action) { return $.bullet(action, {frame:3}); };
 var RI = function(action) { return $.bullet(action, {frame:4,ball:true}); };
 /** 見えない弾 */
 var IVS = function(action) { return $.bullet(action, {visible:false}) };
+/** 赤リング弾（大） */
+var RR = function(action) { return $.bullet(action, {frame:7,ball:true}); };
+/** 青リング（大） */
+var BR = function(action) { return $.bullet(action, {frame:6,ball:true}); };
 
 /**
  * 発射間隔
@@ -276,13 +280,13 @@ gls2.Danmaku["cannon2-3"] = new bulletml.Root({
             $.repeat(10 - 1, [
                 $.fire($.direction(360/10, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
             ]),
-            $interval(5),
+            $interval(10),
             $.fire($.direction(360/10 + 3, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
         ]),
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $.bindVar("d", "($loop.index)*+8"),
+            $.bindVar("d", "($loop.index)*+12"),
             $.repeat(13 - 1, [
                 $.fire($.direction(360/13, "sequence"), $.speed(1), IVS($.actionRef("ivs1", "$d"))),
             ]),
@@ -297,8 +301,8 @@ gls2.Danmaku["cannon2-3"] = new bulletml.Root({
     ]),
     "ivs1": $.action([
         $.wait(10),
-        $.fire($.direction("$1-5", "relative"), $spd2, RI),
-        $.fire($.direction("$1+5", "relative"), $spd2, RI),
+        $.fire($.direction("$1-5", "relative"), $spd2, RR),
+        $.fire($.direction("$1+5", "relative"), $spd2, BR),
         $.vanish(),
     ]),
 });
