@@ -238,7 +238,7 @@ gls2.Setting = {
      * 1フレームあたりのコンボゲージゼロ時のコンボ数減少率
      * @const
      */
-    COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO: 0.01,
+    COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO: 0.005,
 
     /**
      * コンボボーナス。何点ごとに倍率が1上がるか

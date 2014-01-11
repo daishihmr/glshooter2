@@ -281,15 +281,12 @@ gls2.GameScene = tm.createClass(
                         }
                         this.onDestroyEnemy(e);
                     } else {
-                        if (this.isHyperMode) {
-                            this.addCombo(this.hyperLevel * 0.01);
-                        } else {
-                            this.addCombo(0.01);
-                        }
                         this.comboGauge = Math.min(this.comboGauge + 0.02, 1);
                         if (this.isHyperMode) {
+                            this.addCombo(gls2.Setting.HYPER_COMBO[this.currentHyperLevel] * 0.01);
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT_IN_HYPER);
                         } else {
+                            this.addCombo(0.01);
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT);
                         }
                     }
@@ -320,15 +317,12 @@ gls2.GameScene = tm.createClass(
                         }
                         this.onDestroyEnemy(e);
                     } else {
-                        if (this.isHyperMode) {
-                            this.addCombo(this.hyperLevel * 0.01);
-                        } else {
-                            this.addCombo(0.01);
-                        }
                         this.comboGauge = Math.min(this.comboGauge + 0.02, 1);
                         if (this.isHyperMode) {
+                            this.addCombo(gls2.Setting.HYPER_COMBO[this.currentHyperLevel] * 0.01);
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA_HIT_IN_HYPER);
                         } else {
+                            this.addCombo(0.01);
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA_HIT);
                         }
                     }
