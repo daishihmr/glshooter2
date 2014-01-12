@@ -1,0 +1,63 @@
+/*							Parts Assembler
+                                  Version 2.04.051226(:
+Parts: 
+	armor\armor14.suf
+	basic\ball\ball01.suf
+	robody\robody10.suf
+	rohand\rohand14.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000   0.000 )
+	DisplayScale: 0.250000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 100
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr "#01" { col ( 1.000 ) amb ( 1.000 ) dif ( 0.000 ) opt ( emittion 0.050 5.000 ) }
+	1: atr noname { col ( rgb ( 0.310 0.530 0.840 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -6 -70 )
+	{	mov ( 1793.46 -1420.27 1179.9 ) eye deg( 45 ) }
+	{	mov ( 53.5211 17.333 -563.768 ) target }
+	{	mov ( 0 -282.224 -892 ) rotz ( 90 ) roty ( 0 ) rotx ( -180 )
+		scal ( 2.13614 2.13614 1.5932 ) obj robody10 /* "robody\robody10.suf" atr "noname" */
+	}
+	{	mov ( 0 282.224 -892 ) rotz ( -90 ) roty ( 0 ) rotx ( 180 )
+		scal ( 2.13614 -2.13614 1.5932 ) obj robody10 /* "robody\robody10.suf" atr "noname" */
+	}
+	{	mov ( 318.79 235.916 -680.2 ) rotz ( 55 ) roty ( 30 ) rotx ( 0 )
+		scal ( 1.36 1.56 3.8 ) obj armor14 /* "armor\armor14.suf" atr "noname" */
+	}
+	{	mov ( 318.79 -235.916 -680.2 ) rotz ( -55 ) roty ( 30 ) rotx ( 0 )
+		scal ( 1.36 -1.56 3.8 ) obj armor14 /* "armor\armor14.suf" atr "noname" */
+	}
+	{	mov ( -318.79 235.916 -680.2 ) rotz ( -55 ) roty ( -30 ) rotx ( 0 )
+		scal ( -1.36 1.56 3.8 ) obj armor14 /* "armor\armor14.suf" atr "noname" */
+	}
+	{	mov ( -318.79 -235.916 -680.2 ) rotz ( 55 ) roty ( -30 ) rotx ( 0 )
+		scal ( -1.36 -1.56 3.8 ) obj armor14 /* "armor\armor14.suf" atr "noname" */
+	}
+	{	mov ( 242.426 -128.343 -612 ) rotz ( -53.0846 ) roty ( -32.7936 ) rotx ( 174.657 )
+		scal ( 2.17195 1.37926 2.94 ) obj rohand14 /* "rohand\rohand14.suf" atr "noname" */
+	}
+	{	mov ( 242.426 128.343 -612 ) rotz ( 53.0846 ) roty ( -32.7936 ) rotx ( -174.657 )
+		scal ( 2.17195 -1.37926 2.94 ) obj rohand14 /* "rohand\rohand14.suf" atr "noname" */
+	}
+	{	mov ( -242.426 -128.343 -612 ) rotz ( 53.0846 ) roty ( 32.7936 ) rotx ( 174.657 )
+		scal ( -2.17195 1.37926 2.94 ) obj rohand14 /* "rohand\rohand14.suf" atr "noname" */
+	}
+	{	mov ( -242.426 128.343 -612 ) rotz ( -53.0846 ) roty ( 32.7936 ) rotx ( -174.657 )
+		scal ( -2.17195 -1.37926 2.94 ) obj rohand14 /* "rohand\rohand14.suf" atr "noname" */
+	}
+	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.880811 0.880811 0.880811 ) obj ball01 /* "basic\ball\ball01.suf" atr "#01" */
+	}
+}
