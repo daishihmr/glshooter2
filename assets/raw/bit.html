@@ -1,0 +1,23 @@
+<html>
+<head>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+    var c = tm.graphics.Canvas("#c");
+    var t = tm.asset.Texture("../tex_temp.png");
+    t.onload = function() {
+        var x = 64*4;
+        var y = 64*4;
+        var w = 32*3;
+        var h = 32*2;
+        c.resize(w, h);
+        c.drawTexture(this, x, y, w, h, 0, 0, w, h);
+        c.saveAsImage();
+    };
+});
+</script>
+</body>
+</html>

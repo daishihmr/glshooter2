@@ -13,7 +13,7 @@ gls2.Enemy.DATA = {
     "kiryu":     [     3,      400, false, false,  1, {"radius": 24}, ],
     "natsuki":   [     5,      900,  true, false,  1, {"radius": 24}, ],
     "kise":      [    50,    15000,  true, false,  1, {"radius": 24}, ],
-    "yamabuki":  [   100,    15000,  true, false,  1, {"width":70, "height":70}, ],
+    "yamabuki":  [   100,    15000,  true, false,  1, {"width":140, "height":70}, ],
     "hanasaki":  [   150,   200000,  true,  true, 10, {"radius": 40}, ],
     "myodoin":   [    50,    15000,  true, false,  1, {"radius": 40}, ],
     "kenzaki":   [   200,   300000,  true,  true, 10, {"width":100, "height":40}, ],
@@ -25,6 +25,8 @@ gls2.Enemy.DATA = {
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
+    "hishikawa": [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
+    "aida":      [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
@@ -52,7 +54,7 @@ gls2.Enemy.Heri1 = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kujo");
 
-        this._sprite = _Sprite("tex_stage1", 64, 64);
+        this._sprite = _Sprite("tex1", 64, 64);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -83,7 +85,7 @@ gls2.Enemy.Heri2 = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kiryu");
 
-        this._sprite = _Sprite("tex_stage1", 64, 64);
+        this._sprite = _Sprite("tex1", 64, 64);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -150,7 +152,7 @@ gls2.Enemy.Bukky = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yamabuki");
 
-        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
+        this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(7);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -183,7 +185,7 @@ gls2.Enemy.FighterS = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "tsukikage");
 
-        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(1);
+        this._sprite = _Sprite("tex1", 64*1, 64*1).setFrameIndex(23);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -216,7 +218,7 @@ gls2.Enemy.FighterM = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kurokawa");
 
-        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(1); // TODO 専用グラ
+        this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(1);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -249,7 +251,7 @@ gls2.Enemy.Komachi = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "akimoto");
 
-        this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(1);
+        this._sprite = _Sprite("tex1", 64*4, 64*2).setFrameIndex(1);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -281,7 +283,11 @@ gls2.Enemy.Mktn = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "aono");
 
-        this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(1);
+        this._sprite = _Sprite("tex1", 64*4, 64*2);
+        this._sprite.srcRect.x = 128;
+        this._sprite.srcRect.y = 128;
+        this._sprite.srcRect.width = 64*4;
+        this._sprite.srcRect.height = 64*2;
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -311,7 +317,7 @@ gls2.Enemy.Cannon = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kise");
 
-        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(5);
+        this._sprite = _Sprite("tex1", 64*1, 64*2).setFrameIndex(14);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -341,6 +347,8 @@ gls2.Enemy.Tsubomi = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hanasaki");
+
+        this._sprite = _Sprite("tex1", 64*1, 64*2).setFrameIndex(14);
     },
     ondying: function() {
     },
@@ -349,9 +357,7 @@ gls2.Enemy.Tsubomi = tm.createClass({
         this.remove();
     },
     draw: function(canvas) {
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
 });
 
@@ -363,6 +369,8 @@ gls2.Enemy.Itsuki = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "myodoin");
+
+        this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(12);
     },
     ondying: function() {
     },
@@ -371,9 +379,7 @@ gls2.Enemy.Itsuki = tm.createClass({
         this.remove();
     },
     draw: function(canvas) {
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
 });
 
@@ -388,7 +394,11 @@ gls2.Enemy.Cannon2 = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kenzaki");
 
-        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(4);
+        this._sprite = _Sprite("tex1", 64*2, 64*4);
+        this._sprite.srcRect.x = 0;
+        this._sprite.srcRect.y = 128;
+        this._sprite.srcRect.width = 64*2;
+        this._sprite.srcRect.height = 64*4;
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -419,7 +429,12 @@ gls2.Enemy.Cannon3 = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "minazuki");
 
-        this._sprite = _Sprite("tex_stage1", 64*2, 64*2).setFrameIndex(4); // TODO 専用グラ
+        this._sprite = _Sprite("tex1", 64*2, 64*4);
+        this._sprite.srcRect.x = 0;
+        this._sprite.srcRect.y = 128;
+        this._sprite.srcRect.width = 64*2;
+        this._sprite.srcRect.height = 64*4;
+        this.setScale(1.2);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -637,7 +652,7 @@ gls2.Enemy.Honoka = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yukishiro");
 
-        this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(3);
+        this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(0);
         this.setScale(1.5);
     },
     ondying: function() {
@@ -672,7 +687,7 @@ gls2.Enemy.Nagisa = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "misumi");
 
-        this._sprite = _Sprite("tex_stage1", 64*4, 64*2).setFrameIndex(4);
+        this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(1);
         this.setScale(1.5);
     },
     ondying: function() {
@@ -701,6 +716,9 @@ gls2.Enemy.Mai = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "mishou");
+
+        this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(2);
+        this.setScale(1.5);
     },
     ondying: function() {
     },
@@ -708,9 +726,7 @@ gls2.Enemy.Mai = tm.createClass(
         this.fallDown();
     },
     draw: function(canvas) {
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
 });
 
@@ -723,6 +739,9 @@ gls2.Enemy.Saki = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hyuga");
+
+        this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(3);
+        this.setScale(1.5);
     },
     ondying: function() {
     },
@@ -730,9 +749,7 @@ gls2.Enemy.Saki = tm.createClass(
         this.bossDestroy();
     },
     draw: function(canvas) {
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
 });
 
@@ -747,10 +764,47 @@ gls2.Enemy.Saki = tm.createClass(
 /**
  * ステージ４中ボス「ヒシカワ」
  */
+gls2.Enemy.Rikka = tm.createClass(
+{
+    superClass: gls2.Enemy,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "hishikawa");
+
+        this._sprite = _Sprite("tex2", 64*4, 64*4).setFrameIndex(3);
+    },
+    ondying: function() {
+    },
+    destroy: function() {
+        this.fallDown();
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+});
 
 /**
  * ステージ４ボス「アイダ」
  */
+gls2.Enemy.Mana = tm.createClass(
+{
+    superClass: gls2.Enemy,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "aida");
+
+        this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(5);
+        this.setScale(2);
+    },
+    ondying: function() {
+    },
+    destroy: function() {
+        this.fallDown();
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+});
 
 /**
  * ステージ５中ボス「ミナミノ」

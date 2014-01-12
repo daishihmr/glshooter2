@@ -57,8 +57,9 @@ gls2.GlShooter2 = tm.createClass(
         var assets = {
             // image
             "tex0": "assets/tex0.png",
-            "tex1": "assets/tex1.png", // TODO あとで消す
-            "tex_stage1": "assets/tex_stage1.png",
+            "tex_bit": "assets/tex_bit.png",
+            "tex1": "assets/tex1.png",
+            "tex2": "assets/tex2.png",
             "tex_tank1": "assets/tex_tank1.png",
             "fighter": "assets/fighters.png",
             "laserR": "assets/laser_r.png",
@@ -158,7 +159,7 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.FixedRandom.setup(12345);
 
-        ["tex_stage1", "tex_tank1"].forEach(function(name) {
+        ["tex1", "tex2", "tex_tank1"].forEach(function(name) {
 
             var tex = tm.asset.AssetManager.get(name);
             var canvas = tm.graphics.Canvas();

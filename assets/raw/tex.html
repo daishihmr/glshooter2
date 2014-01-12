@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+
+<canvas id="app"></canvas><button id="ok">ok</button>
+
+<script src="../../libs/tmlib.js"></script>
+<script>
+var app;
+tm.main(function() {
+
+    app = tm.display.CanvasApp("#app");
+    app.background = "black";
+    app.resize(512, 512);
+    app.run();
+
+    app.focus = null;
+
+    var scene = app.currentScene;
+    scene.update = function(app) {
+        var kb = app.keyboard;
+        if (app.focus) {
+            if (kb.getKeyDown("up")) {
+                app.focus.y -= 32;
+            } else if (kb.getKeyDown("down")) {
+                app.focus.y += 32;
+            }
+            if (kb.getKeyDown("left")) {
+                app.focus.x -= 32;
+            } else if (kb.getKeyDown("right")) {
+                app.focus.x += 32;
+            }
+        }
+    };
+
+    tm.dom.Element("#app").event
+        .add("dragenter", function(e) { return false; })
+        .add("dragover", function(e) { return false; })
+        .add("drop", function(e) {
+            console.log(e.dataTransfer.files[0]);
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                console.dir(e);
+                var tex = tm.asset.Texture(e.target.result);
+                tex.onload = function() {
+                    var newTex = Tex(this).addChildTo(scene);
+                    app.focus = newTex;
+                };
+            };
+            reader.readAsDataURL(e.dataTransfer.files[0]);
+
+            return false;
+        });
+
+    tm.dom.Element("#ok").event.click(function() {
+        app.focus = null;
+        app.canvas.clear();
+        app.background = "transparent";
+        scene.tweener.clear().wait(200).call(function() {
+            app.canvas.saveAsImage();
+            app.background = "black";
+        });
+    });
+});
+
+tm.define("Tex", {
+    superClass: "tm.display.Sprite",
+
+    init: function(sprite) {
+        this.superInit(sprite);
+        this.origin.set(0, 0);
+
+        this.border = tm.display.RectangleShape(this.width, this.height, {
+            fillStyle: "transparent",
+            strokeStyle: "rgba(255, 255, 255, 0.5)",
+            lineWidth: 2
+        });
+        this.border.origin.set(0, 0);
+        this.border.addChildTo(this);
+
+        this.boundingType = "rect";
+
+        this.setInteractive(true);
+    },
+
+    update: function(app) {
+        this.border.visible = app.focus === this;
+    },
+
+    onpointingstart: function() {
+        app.focus = this;
+    }
+
+});
+
+</script>
+</body>
+</html>
