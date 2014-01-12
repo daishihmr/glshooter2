@@ -590,6 +590,47 @@ gls2.Danmaku["komachi-4"] = new bulletml.Root({
 });
 
 /**
+ * のぞみ4面
+ */
+gls2.Danmaku["nozomi-4"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.repeat(999, [
+            $.repeat(12, [
+                $.bindVar("c", "2+$loop.index"),
+                $nway("$c", "-4-($c-2)*4", "4+($c-2)*4", $spd0("(560-$c*40)*0.03"), RL, $.offsetY(-50)),
+            ]),
+            $interval(150),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(20),
+        $.repeat(999, [
+            $.fire($.direction(+40), IVS($.actionRef("noop"))),
+            $whip($spd3, 0.03, 16, function(spd) {
+                return $.action([
+                    $.fire($.direction(-5, "sequence"), spd, BNS, $.offsetX(-50)),
+                    $.wait(3),
+                ]);
+            }),
+            $interval(90),
+            $.fire($.direction(-40), IVS($.actionRef("noop"))),
+            $whip($spd3, 0.03, 16, function(spd) {
+                return $.action([
+                    $.fire($.direction(+5, "sequence"), spd, BNS, $.offsetX(+50)),
+                    $.wait(3),
+                ]);
+            }),
+            $interval(90),
+        ]),
+    ]),
+    "noop": $.action([
+        $.wait(1),
+        $.vanish,
+    ]),
+});
+
+/**
  *　サニキ用
  */
 gls2.Danmaku["akane"] = new bulletml.Root({

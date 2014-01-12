@@ -21,6 +21,7 @@ gls2.Enemy.DATA = {
     "tsukikage": [     8,     1000, false, false,  5, {"width":100, "height":20}, ],
     "kurokawa":  [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
+    "yumehara":  [   250,   500000, false,  true, 20, {"width":180, "heightBottom":40, "heightTop":60}, ],
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
@@ -288,6 +289,42 @@ gls2.Enemy.Mktn = tm.createClass(
         this._sprite.srcRect.y = 128;
         this._sprite.srcRect.width = 64*4;
         this._sprite.srcRect.height = 64*2;
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        this.fallDown();
+    },
+});
+
+/**
+ * 大型戦闘機「ユメハラ」
+ */
+gls2.Enemy.Nozomi = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "yumehara");
+
+        this._sprite = _Sprite("tex1", 64*4, 64*4);
+        this._sprite.srcRect.x = 128;
+        this._sprite.srcRect.y = 256;
+        this._sprite.srcRect.width = 64*4;
+        this._sprite.srcRect.height = 64*4;
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -745,6 +782,13 @@ gls2.Enemy.Mai = tm.createClass(
         }
     },
     ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     destroy: function() {
         this.fallDown();
@@ -814,6 +858,13 @@ gls2.Enemy.Rikka = tm.createClass(
         }
     },
     ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     destroy: function() {
         this.fallDown();
@@ -859,14 +910,12 @@ gls2.Enemy.Mana = tm.createClass(
  */
 
 /**
- * エクストラボス2「クレッシェンドヒビカナ」
+ * エクストラボス2「クレッシェンド」
  */
 
 /*
  * 使ってない名前
- * 「ユメハラ」
  * 「カスガノ」
- * 「ミナヅキ」
  * 「ミミノ」
  * 「シラベ」
  * 「マドカ」

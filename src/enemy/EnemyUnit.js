@@ -356,6 +356,12 @@ gls2.EnemyUnit = {
 // 中型戦闘機「アキモト」4面用
 "komachi4-0": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi4-1": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.7, y:SC_H*-0.3 }],
+"komachi4-2": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.5, y:SC_H*-0.3 }],
+
+// 大型戦闘機「ユメハラ」4面用
+"nozomi4-0": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.3, y:SC_H*-0.3 }],
+"nozomi4-1": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.5, y:SC_H*-0.3 }],
+"nozomi4-2": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 //強襲戦闘機「ヒノ」
 "akane-1": [

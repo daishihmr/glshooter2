@@ -389,15 +389,19 @@ var _MiddleFighterCommon = tm.createClass(
 
         enemy.velocityY = this.velocityY;
         enemy.patterns = [this.attackPattern];
+        enemy.ready = false;
 
         enemy.tweener
             .clear()
             .moveBy(0, SC_H*0.5, 800, "easeOutQuad")
             .call(function() {
                 gls2.EnemySoft.attack(this, this.patterns[0]);
+                this.ready = true;
             }.bind(enemy));
 
         enemy.on("enterframe", function() {
+            if (!this.ready) return;
+
             this.y += this.velocityY;
             if (this.y > SC_H*0.6) {
                 gls2.EnemySoft.stopAttack(this);
@@ -491,7 +495,7 @@ gls2.EnemySoft.Tsukikage4l = tm.createClass(
  * @extends {gls2.EnemySoft}
  */
 var _akane = tm.createClass(
-/** @lends {_MiddleFighterCommon.prototype} */
+/** @lends {_akane.prototype} */
 {
     superClass: gls2.EnemySoft,
 
@@ -542,7 +546,7 @@ gls2.EnemySoft.akane = _akane(0.5, "akane");
  * @extends {gls2.EnemySoft}
  */
 var _miyuki_y = tm.createClass(
-/** @lends {_MiddleFighterCommon.prototype} */
+/** @lends {_miyuki_y.prototype} */
 {
     superClass: gls2.EnemySoft,
 
@@ -594,7 +598,7 @@ gls2.EnemySoft.miyuki_y2 = _miyuki_y(-1.0, "miyuki_y");
  * @extends {gls2.EnemySoft}
  */
 var _miyuki_t = tm.createClass(
-/** @lends {_MiddleFighterCommon.prototype} */
+/** @lends {_miyuki_t.prototype} */
 {
     superClass: gls2.EnemySoft,
 
@@ -645,7 +649,7 @@ gls2.EnemySoft.miyuki_t1 = _miyuki_y(-0.5, "miyuki_t");
  * @extends {gls2.EnemySoft}
  */
 var _alice = tm.createClass(
-/** @lends {_MiddleFighterCommon.prototype} */
+/** @lends {_alice.prototype} */
 {
     superClass: gls2.EnemySoft,
 
@@ -743,6 +747,11 @@ gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
 gls2.EnemySoft.LargeFighter4 = _MiddleFighterCommon(0.5, "komachi-4");
 
 /**
+ * のぞみ4面
+ */
+gls2.EnemySoft.Nozomi4 = _MiddleFighterCommon(0.1, "nozomi-4");
+
+/**
  * ボムキャリアー「クルミ」
  */
 gls2.EnemySoft.Erika = tm.createClass(
@@ -787,6 +796,7 @@ var _MBossCommon = tm.createClass(
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
         enemy.patterns = [].concat(this.patterns);
+        enemy.limitAge = this.limitAge;
         enemy.startAttack = false;
         enemy.endAttack = false;
         enemy.tweener
