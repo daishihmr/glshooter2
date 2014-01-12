@@ -1134,6 +1134,43 @@ gls2.Danmaku["saki-3-2"] = new bulletml.Root({
     ]),
 });
 
+/**
+ * せつな
+ */
+gls2.Danmaku["setsuna-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.repeat(10, [
+            $nway(4, -40, 40, $spd2, RI, $.offsetX(0), $.offsetY(30)),
+            $interval(30),
+            $nway(5, -40, 40, $spd1, RI, $.offsetX(0), $.offsetY(30)),
+            $interval(30),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(60),
+        $.repeat(5, [
+            $nway(2, -2, 2, $spd2(0.6), RNS),
+            $nway(3, -3, 3, $spd2(1.0), RNS),
+            $nway(4, -4, 4, $spd2(1.4), RNS),
+            $nway(5, -5, 5, $spd2(1.8), RNS),
+            $interval(110),
+        ]),
+    ]),
+    "top2": $.action([
+        $.repeat(20, [
+            $absoluteNway(12, -10, -170, $spd1, BS, $.offsetX(-110), $.offsetY(-70)),
+            $interval(30),
+        ]),
+    ]),
+    "top3": $.action([
+        $.repeat(20, [
+            $absoluteNway(12, +10, +170, $spd1, BS, $.offsetX(+110), $.offsetY(-70)),
+            $interval(30),
+        ]),
+    ]),
+});
+
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 2000; i++) {
         bulletPool.push(gls2.Bullet());
