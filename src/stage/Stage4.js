@@ -27,7 +27,7 @@ gls2.Stage4 = tm.createClass(
         this.seq.add(200, "tsukikage-r");
         this.seq.add(100, "tsukikage-l");
 
-        this.seq.add(200, "bukky-4-r");
+        this.seq.add(170, "bukky-4-r");
 
         this.seq.add(150, "heri1-4-left");
         this.seq.add( 10, "heri1-4-center");
@@ -41,7 +41,7 @@ gls2.Stage4 = tm.createClass(
         this.seq.add( 10, "heri1-4-right");
         this.seq.add( 10, "heri1-4-center");
 
-        this.seq.add(100, "bukky-4-l");
+        this.seq.add( 80, "bukky-4-l");
         this.seq.add(200, "bukky-4-r");
 
         this.seq.add(200, "tankRD-center");
@@ -73,7 +73,7 @@ gls2.Stage4 = tm.createClass(
             }, 10000).to({
                 speed: 3,
                 direction: -Math.PI*1.5
-            }, 10000);
+            }, 9000);
         });
         for (var i = 0; i < 6; i++) {
             this.seq.add( 20, "heri2-center");
@@ -96,7 +96,7 @@ gls2.Stage4 = tm.createClass(
             }, 5000);
         });
 
-        this.seq.add(200, "karen-3-2");
+        this.seq.add(180, "karen-3-2");
         this.seq.add(300, "karen-3-8");
         this.seq.add( 75, "heri1-4-center");
         this.seq.add( 25, "heri1-4-right");
@@ -168,7 +168,7 @@ gls2.Stage4 = tm.createClass(
 
         // 50%
 
-        this.seq.add(100, function() {
+        this.seq.add(250, function() {
             this.gameScene.ground.direction = Math.PI * 0.5;
             this.gameScene.ground.tweener.clear().to({
                 speed: 9,

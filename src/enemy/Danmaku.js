@@ -1185,18 +1185,18 @@ gls2.Danmaku["saki-3-2"] = new bulletml.Root({
 gls2.Danmaku["rikka-1"] = new bulletml.Root({
     "top": $.action([
         $.repeat(5, [
-            $.bindVar("s", "$loop.index*1.4"),
+            $.bindVar("s", "$loop.index*1.5"),
             $interval(30),
-            $nway(41, -180+0, 180+0, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
-            $nway(41, -180+0, 180+0, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
+            $nway(41, (-180+180/41/2)+0, (180-180/41/2)+0, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
+            $nway(41, (-180+180/41/2)+0, (180-180/41/2)+0, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
             $interval(3),
-            $nway(41, -180-1, 180-1, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
-            $nway(41, -180+1, 180+1, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
-            $nway(41, -180-1, 180-1, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
-            $nway(41, -180+1, 180+1, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
+            $nway(41, (-180+180/41/2)-1, (180-180/41/2)-1, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
+            $nway(41, (-180+180/41/2)+1, (180-180/41/2)+1, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
+            $nway(41, (-180+180/41/2)-1, (180-180/41/2)-1, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
+            $nway(41, (-180+180/41/2)+1, (180-180/41/2)+1, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
             $interval(3),
-            $nway(41, -180+0, 180+0, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
-            $nway(41, -180+0, 180+0, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
+            $nway(41, (-180+180/41/2)+0, (180-180/41/2)+0, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
+            $nway(41, (-180+180/41/2)+0, (180-180/41/2)+0, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
         ]),
     ]),
 });
@@ -1211,7 +1211,7 @@ gls2.Danmaku["rikka-2"] = new bulletml.Root({
             $.fire(BL($.actionRef("snow")), $.offsetX(+90), $.offsetY(-20)),
             $interval(8),
         ]),
-        $.wait(10),
+        $interval(10),
     ]),
     "top1": $.action([
         $.repeat(35, [
