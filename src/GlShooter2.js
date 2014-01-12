@@ -83,6 +83,7 @@ gls2.GlShooter2 = tm.createClass(
             "extendItem": "assets/extendItem.png",  //仮運用
             "yotsuba": "assets/tex_yotsuba.png",
             "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
+            "higashi": "assets/tex_higashi.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",

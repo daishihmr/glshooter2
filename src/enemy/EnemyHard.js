@@ -720,7 +720,7 @@ gls2.Enemy.Setsuna = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "higashi");
 
-        this._sprite = _Sprite("tex_higashi", 64*4, 64*2).setFrameIndex(4);
+        this._sprite = _Sprite("higashi", 64*4, 64*2).setFrameIndex(0);
         this.setScale(1.5);
     },
     ondying: function() {

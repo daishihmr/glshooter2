@@ -391,7 +391,7 @@ gls2.EnemyUnit = {
 /**
  * ステージ３中ボス「ヒガシ」
  */
-"hyuga": [{ hard:$e.Setsuna, soft:$s.Setsuna, x:SC_W+300, y:SC_H*0.2}],
+"higashi": [{ hard:$e.Setsuna, soft:$s.Setsuna, x:SC_W+300, y:SC_H*0.2}],
 
 };
 
