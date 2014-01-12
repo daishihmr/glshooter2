@@ -1116,6 +1116,10 @@ gls2.EnemySoft.Saki3 = tm.createClass(
 });
 gls2.EnemySoft.Saki3 = gls2.EnemySoft.Saki3();
 
+/**
+ * ステージ３中ボス「ヒガシ」
+ */
+gls2.EnemySoft.Setsuna = _MBossCommon(["setsuna-1"]);
 
 /**
  * ステージ４中ボス「ヒシカワ」

@@ -22,6 +22,7 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.speed = 8;
             this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
         });
+        this.seq.add(150, "higashi", true);
 
         this.seq.add(100, "yotsuba");
         this.seq.add(300, "tankRD-center");
@@ -84,7 +85,7 @@ gls2.Stage3 = tm.createClass(
         });
 
         //中ボス
-        this.seq.add(150, "yukishiro", true);
+        this.seq.add(150, "higashi", true);
 
 
         this.seq.add(600, function() {
