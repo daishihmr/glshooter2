@@ -83,13 +83,8 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.tweener.clear().to({speed:4}, 4000, "easeInOutQuad");
         });
 
-        this.seq.add(300, "hoshizora_y-2");
-
-        this.seq.add( 20, "yayoi-R0");
-        this.seq.add(  1, "yayoi-R2");
-
         //中ボス
-//        this.seq.add(600, "higashi");
+        this.seq.add(150, "yukishiro", true);
 
 
         this.seq.add(600, function() {
@@ -99,7 +94,7 @@ gls2.Stage3 = tm.createClass(
         });
 
         this.seq.add(  1, function() {
-            this.gameScene.ground.direction = Math.PI;
+            this.gameScene.ground.direction = Math.PI/2;
             this.gameScene.ground.tweener.clear().to({speed:-10}, 5000, "easeInOutQuad");
         });
 

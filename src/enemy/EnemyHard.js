@@ -545,15 +545,17 @@ gls2.Enemy.Alice = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsuba");
+        this._sprite = _Sprite("yotsuba", 128, 128).setFrameIndex(0);
+        this.boundingWidth = 128;
+        this.boundingHeightBottom = 0;
+        this.boundingHeightTop = 0;
     },
     draw: function(canvas) {
-        //ダミー
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
     destroy: function() {
         gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+        this.fallDown();
 
         //ボム効果時間中はエクステンドアイテムを出さない
         if (!this.gameScene.isBombActive) gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
@@ -571,12 +573,14 @@ gls2.Enemy.Alice = tm.createClass({
         this.leaf = [];
         for (var i = 0; i<4; i++) {
             var dir = Math.PI*0.5*i;
-            var sx = this.x+Math.sin(dir)*64;
-            var sy = this.y+Math.cos(dir)*64;
+            var distance = 50;
+            var sx = this.x+Math.sin(dir)*distance;
+            var sy = this.y+Math.cos(dir)*distance;
             this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.AliceLeaf, soft:gls2.EnemySoft.AliceLeaf, x:sx, y:sy});
             this.leaf[i].dir = dir;
             this.leaf[i].current = this;
             this.leaf[i].number = i;
+            this.leaf[i].distance = distance;
         }
         gls2.Enemy.prototype.onLaunch.call(this);
         return this;
