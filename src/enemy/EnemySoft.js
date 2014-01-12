@@ -486,7 +486,7 @@ gls2.EnemySoft.Tsukikage4l = tm.createClass(
  * 強襲戦闘艇
  *
  * 画面内上部にテレポートで出現後、ゆっくり下へ移動していく
- * 
+ *
  * @class
  * @extends {gls2.EnemySoft}
  */
@@ -537,7 +537,7 @@ gls2.EnemySoft.akane = _akane(0.5, "akane");
  * 戦艦
  *
  * 左右から出現、そのまま等速で横断する。
- * 
+ *
  * @class
  * @extends {gls2.EnemySoft}
  */
@@ -589,7 +589,7 @@ gls2.EnemySoft.miyuki_y2 = _miyuki_y(-1.0, "miyuki_y");
  *
  * 上から出現、そのまま等速で画面中心まで降りて停止
  * 一定時間後、左右近い方の画面端方向に移動してスクリーンアウト
- * 
+ *
  * @class
  * @extends {gls2.EnemySoft}
  */
@@ -771,14 +771,17 @@ var _MBossCommon = tm.createClass(
 {
     superClass: gls2.EnemySoft,
     patterns: null,
+    limitAge: 0,
 
     /**
      * @constructs
      * @param {Array.<string>} patterns
+     * @param {Number=} limitAge 逃げるまでのフレーム.default=1500.
      */
-    init: function(patterns) {
+    init: function(patterns, limitAge) {
         this.superInit();
         this.patterns = patterns;
+        this.limitAge = limitAge || 1500;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -804,7 +807,7 @@ var _MBossCommon = tm.createClass(
 
         enemy.on("enterframe", function() {
             if (this.startAttack === false || this.hp <= 0) return;
-            if (1500 < this.frame && this.endAttack === false) {
+            if (this.limitAge < this.frame && this.endAttack === false) {
                 this.endAttack = true;
                 this.tweener
                     .clear()
@@ -1102,6 +1105,12 @@ gls2.EnemySoft.Saki3 = tm.createClass(
     },
 });
 gls2.EnemySoft.Saki3 = gls2.EnemySoft.Saki3();
+
+
+/**
+ * ステージ４中ボス「ヒシカワ」
+ */
+gls2.EnemySoft.Rikka = _MBossCommon(["rikka-1", "rikka-2"], 3000);
 
 })();
 

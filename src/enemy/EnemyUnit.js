@@ -420,6 +420,11 @@ gls2.EnemyUnit = {
  */
 "hyuga": [{ hard:$e.Saki, soft:[$s.Saki1, $s.Saki2, $s.Saki3], x:SC_W*0.5, y:-100, boss:true }],
 
+/**
+ * ステージ４中ボス「ヒシカワ」
+ */
+"rikka": [{ hard:$e.Rikka, soft:$s.Rikka, x:SC_W*0.5, y:-100 }],
+
 };
 
 })();

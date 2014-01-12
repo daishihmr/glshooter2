@@ -34,6 +34,10 @@ var IVS = function(action) { return $.bullet(action, {visible:false}) };
 var RR = function(action) { return $.bullet(action, {frame:7,ball:true}); };
 /** 青リング（大） */
 var BR = function(action) { return $.bullet(action, {frame:6,ball:true}); };
+/** 青針弾（細） */
+var BNSH = function(action) { return $.bullet(action, {frame:2,needle:true}); };
+/** 赤針弾（細） */
+var RNSH = function(action) { return $.bullet(action, {frame:3,needle:true}); };
 
 /**
  * 発射間隔
@@ -1175,6 +1179,83 @@ gls2.Danmaku["saki-3-2"] = new bulletml.Root({
     ]),
 });
 
+/**
+ * 六花-1
+ */
+gls2.Danmaku["rikka-1"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(5, [
+            $.bindVar("s", "$loop.index*1.4"),
+            $interval(30),
+            $nway(41, -180+0, 180+0, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
+            $nway(41, -180+0, 180+0, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
+            $interval(3),
+            $nway(41, -180-1, 180-1, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
+            $nway(41, -180+1, 180+1, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
+            $nway(41, -180-1, 180-1, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
+            $nway(41, -180+1, 180+1, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
+            $interval(3),
+            $nway(41, -180+0, 180+0, BNL, $spd3("$s"), $.offsetX(-90), $.offsetY(-20)),
+            $nway(41, -180+0, 180+0, BNL, $spd3("$s"), $.offsetX(+90), $.offsetY(-20)),
+        ]),
+    ]),
+});
+
+/**
+ * 六花-2
+ */
+gls2.Danmaku["rikka-2"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(10, [
+            $.fire(BL($.actionRef("snow")), $.offsetX(-90), $.offsetY(-20)),
+            $.fire(BL($.actionRef("snow")), $.offsetX(+90), $.offsetY(-20)),
+            $interval(8),
+        ]),
+        $.wait(10),
+    ]),
+    "top1": $.action([
+        $.repeat(35, [
+            $.bindVar("d", "$loop.index*-(20+$ex*10)"),
+            $.bindVar("s", "($loop.index+1)*0.2"),
+            $.repeat(6 - 1, [
+                $.fire($.direction(360/6, "sequence"), $.speed(1), IVS($.actionRef("ivs", "$d", "$s"))),
+            ]),
+            $interval(5),
+            $.fire($.direction("360/6 + (30+$ex*10)", "sequence"), $.speed(1), IVS($.actionRef("ivs", "$d", "$s"))),
+        ]),
+        $.repeat(35, [
+            $.bindVar("d", "$loop.index*+(20+$ex*10)"),
+            $.bindVar("s", "($loop.index+1)*0.2"),
+            $.repeat(6 - 1, [
+                $.fire($.direction(360/6, "sequence"), $.speed(1), IVS($.actionRef("ivs", "$d", "$s"))),
+            ]),
+            $interval(5),
+            $.fire($.direction("360/6 - (30+$ex*10)", "sequence"), $.speed(1), IVS($.actionRef("ivs", "$d", "$s"))),
+        ]),
+    ]),
+    "snow": $.action([
+        $.repeat("3+$ex*3", [
+            $.bindVar("s", "$loop.index+1"),
+            $.fire($.direction(0, "absolute"), $.speed("$s"), IVS($.actionRef("snowArm"))),
+            $.repeat(5, [
+                $.fire($.direction(60, "sequence"), $.speed("$s"), IVS($.actionRef("snowArm"))),
+            ]),
+        ]),
+        $.vanish
+    ]),
+    "snowArm": $.action([
+        $.wait(2),
+        $.fire($.direction(0), $spd4, BS),
+        $.vanish
+    ]),
+    "ivs": $.action([
+        $.wait(10),
+        $.fire($.direction("$1-1", "relative"), $spd3("$2"), BNSH),
+        $.fire($.direction("$1+1", "relative"), $spd3("$2"), BNSH),
+        $.vanish(),
+    ]),
+});
+
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 2000; i++) {
         bulletPool.push(gls2.Bullet());
@@ -1196,6 +1277,10 @@ gls2.Danmaku.setup = function() {
                 b.scaleX = 1.0;
                 b.scaleY = 1.0;
                 b.updateProperties = false;
+            } else if (spec.needle) {
+                b.scaleX = 0.4;
+                b.scaleY = 1.5;
+                b.updateProperties = true;
             } else {
                 b.scaleX = 0.8;
                 b.scaleY = 1.5;
@@ -1208,6 +1293,7 @@ gls2.Danmaku.setup = function() {
                 b.visible = true;
             }
             b.ball = !!spec.ball;
+            b.needle = !!spec.needle;
 
             return b;
         } else {
@@ -1259,6 +1345,7 @@ gls2.Bullet = tm.createClass(
 
     hp: 0,
     ball: false,
+    needle: false,
 
     init: function() {
         this.superInit("tex0", 20, 20);

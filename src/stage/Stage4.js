@@ -167,6 +167,15 @@ gls2.Stage4 = tm.createClass(
         });
 
         // 50%
+
+        this.seq.add(100, function() {
+            this.gameScene.ground.direction = Math.PI * 0.5;
+            this.gameScene.ground.tweener.clear().to({
+                speed: 9,
+            }, 2000);
+        });
+        this.seq.add(  1, "rikka", true);
+
     },
 
     setupBackground: function() {
