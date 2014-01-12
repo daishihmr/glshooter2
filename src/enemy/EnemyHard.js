@@ -718,7 +718,27 @@ gls2.Enemy.Mai = tm.createClass(
         this.superInit(gameScene, software, "mishou");
 
         this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(2);
-        this.setScale(1.5);
+        this.setScale(1.2);
+
+        this.backFire = gls2.Particle(80, 1.0, 0.9);
+        this.aura = gls2.Particle(256, 1.0, 0.9);
+    },
+    update: function() {
+        gls2.Enemy.prototype.update.apply(this, arguments);
+        if (gls2.core.frame % 2 === 0) {
+            this.backFire.clone().setPosition(this.x + 120, this.y - 30)
+                .on("enterframe", function() {
+                    this.x += 5;
+                }).addChildTo(this.gameScene);
+            this.backFire.clone().setPosition(this.x + 120, this.y + 25)
+                .on("enterframe", function() {
+                    this.x += 5;
+                }).addChildTo(this.gameScene);
+            this.aura.clone().setPosition(this.x - 30, this.y)
+                .on("enterframe", function() {
+                    this.x += 5;
+                }).addChildTo(this.gameScene);
+        }
     },
     ondying: function() {
     },
