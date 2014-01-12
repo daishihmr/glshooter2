@@ -1,10 +1,29 @@
 <!doctype html>
-<html>
+<html lang="ja">
 <head>
+<meta charset=UTF-8>
 </head>
 <body>
+<div>
+<ul>
+    <li>
+        キャンバスのサイズ
+        <input type="number" id="canvasSize" value="256">
+    </li>
+    <li>
+        移動グリッドサイズ
+        <input type="number" id="moveGridSize" value="32">
+    </li>
+</ul>
+</div>
 
-<canvas id="app"></canvas><button id="ok">ok</button>
+<div>↓画像ファイルをドラッグ&amp;ドロップしよう！ 画像はカーソルキーで移動できます</div>
+<canvas id="app"></canvas>
+<div>
+<button id="ok">save</button>
+<button id="del">delete</button>
+<button id="clear">clear</button>
+</div>
 
 <script src="../../libs/tmlib.js"></script>
 <script>
@@ -13,24 +32,27 @@ tm.main(function() {
 
     app = tm.display.CanvasApp("#app");
     app.background = "black";
-    app.resize(512, 512);
+    app.resize(256, 256);
     app.run();
 
     app.focus = null;
+
+    var moveGridSize = tm.dom.Element("#moveGridSize");
 
     var scene = app.currentScene;
     scene.update = function(app) {
         var kb = app.keyboard;
         if (app.focus) {
+            var g = ~~moveGridSize.value;
             if (kb.getKeyDown("up")) {
-                app.focus.y -= 32;
+                app.focus.y -= g;
             } else if (kb.getKeyDown("down")) {
-                app.focus.y += 32;
+                app.focus.y += g;
             }
             if (kb.getKeyDown("left")) {
-                app.focus.x -= 32;
+                app.focus.x -= g;
             } else if (kb.getKeyDown("right")) {
-                app.focus.x += 32;
+                app.focus.x += g;
             }
         }
     };
@@ -39,18 +61,26 @@ tm.main(function() {
         .add("dragenter", function(e) { return false; })
         .add("dragover", function(e) { return false; })
         .add("drop", function(e) {
-            console.log(e.dataTransfer.files[0]);
 
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                console.dir(e);
-                var tex = tm.asset.Texture(e.target.result);
-                tex.onload = function() {
-                    var newTex = Tex(this).addChildTo(scene);
-                    app.focus = newTex;
+            try {
+
+                for (var i = 0; i < e.dataTransfer.files.length; i++) {
+                    var file = e.dataTransfer.files[i];
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        console.dir(e);
+                        var tex = tm.asset.Texture(e.target.result);
+                        tex.onload = function() {
+                            var newTex = Tex(this).addChildTo(scene);
+                            app.focus = newTex;
+                        };
+                    };
+                    reader.readAsDataURL(file);
                 };
-            };
-            reader.readAsDataURL(e.dataTransfer.files[0]);
+
+            } catch(ex) {
+                console.error(ex);
+            }
 
             return false;
         });
@@ -63,6 +93,22 @@ tm.main(function() {
             app.canvas.saveAsImage();
             app.background = "black";
         });
+    });
+
+    tm.dom.Element("#del").event.click(function() {
+        if (app.focus) app.focus.remove();
+    });
+
+    tm.dom.Element("#clear").event.click(function() {
+        var c = scene.children.slice();
+        c.forEach(function(elm) {
+            elm.remove();
+        });
+    });
+
+    tm.dom.Element("#canvasSize").event.add("change", function() {
+        var s = ~~this.value;
+        app.resize(s, s);
     });
 });
 
