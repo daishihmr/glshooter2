@@ -807,8 +807,8 @@ var _aliceLeaf = tm.createClass(
             var cx = this.current.x;
             var cy = this.current.y;
             this.dir += 0.01;
-            this.x = cx+Math.sin(this.dir)*64;
-            this.y = cy+Math.cos(this.dir)*64;
+            this.x = cx+Math.sin(this.dir)*this.distance;
+            this.y = cy+Math.cos(this.dir)*this.distance;
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }

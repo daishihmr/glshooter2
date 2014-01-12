@@ -81,6 +81,7 @@ gls2.GlShooter2 = tm.createClass(
             "hoshizora_y": "assets/tex_hoshizora_y.png",
             "hoshizora_t": "assets/tex_hoshizora_t.png",
             "extendItem": "assets/extendItem.png",  //仮運用
+            "yotsuba": "assets/tex_yotsuba.png",
             "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
 
             // bgm
