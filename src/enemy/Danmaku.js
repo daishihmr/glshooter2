@@ -1387,11 +1387,11 @@ gls2.Danmaku["mana-1-1"] = new bulletml.Root({
 /**
  * マナ第１形態-2
  */
-gls2.Danmaku["mana-1-2"] = bulletml.Root([
+gls2.Danmaku["mana-1-2"] = new bulletml.Root({
     "top": $.action([
 
     ]),
-]);
+});
 
 /**
  * マナ第１形態-3
