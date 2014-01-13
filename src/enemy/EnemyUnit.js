@@ -393,6 +393,11 @@ gls2.EnemyUnit = {
  */
 "higashi": [{ hard:$e.Setsuna, soft:$s.Setsuna, x:SC_W+300, y:SC_H*0.2}],
 
+/**
+ * ステージ３ボス「モモゾノ」
+ */
+"momozono": [{ hard:$e.Love, soft:[$s.Love1, $s.Love2, $s.Love3], x:SC_W*0.5, y:-100, boss:true }],
+
 };
 
 })();

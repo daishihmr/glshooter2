@@ -100,7 +100,7 @@ gls2.Stage3 = tm.createClass(
         });
 
         //ステージボス
-        this.seq.add(600, "misumi");
+        this.seq.add(600, "momozono");
 
         // if (DEBUG) {
         //     this.seq.add(600, function() {

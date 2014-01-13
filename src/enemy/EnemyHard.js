@@ -35,6 +35,7 @@ gls2.Enemy.DATA = {
 //  "midorikawa":[   150,      500, false, true,  30, {"width":128, "height":64}, ],
 //  "aoki":      [   150,      500, false, true,  30, {"width":128, "height":64}, ],
     "higashi":   [  2000,   250000, false, true,  20, {"width":256, "height":128}, ],
+    "hyuga":     [  6000,  3000000, false,  true,  0, {"width":256, "height":128}, ],
 };
 
 /**
@@ -736,6 +737,22 @@ gls2.Enemy.Setsuna = tm.createClass(
 /**
  * ステージ３ボス「モモゾノ」
  */
+gls2.Enemy.Love = tm.createClass(
+{
+    superClass: gls2.Boss,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "momozono");
+    },
+    ondying: function() {
+    },
+    destroy: function() {
+        this.bossDestroy();
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+});
 
 /**
  * ステージ４中ボス「ヒシカワ」
