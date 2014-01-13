@@ -188,7 +188,7 @@ gls2.Stage4 = tm.createClass(
             this.seq.add( 35, "heri1-4-right");
         }
 
-        this.seq.add(  1, function() { this.gameScene.ground.speed = 9; });
+        // 75%
 
         this.seq.add( 80, "erika");
 
@@ -200,7 +200,7 @@ gls2.Stage4 = tm.createClass(
 
         this.seq.add(200, "nozomi4-0");
         this.seq.add( 20, "tankRD-center");
-
+        this.seq.add( 90, "tankRD-center");
         this.seq.add( 90, "tankRD-center");
         this.seq.add(200, "nozomi4-2");
         this.seq.add( 90, "tankRD-center");
@@ -233,9 +233,24 @@ gls2.Stage4 = tm.createClass(
         this.seq.add(100, "heri1-4-left2");
         this.seq.add( 30, "heri1-4-left1");
 
-        // 75%
+        this.seq.add( 80, "erika");
 
-        // 今回はここまで
+        // 100% boss
+
+        this.seq.add(200, function() {
+            this.alartWarning(function() {
+                gls2.playBgm("bgmBoss", true);
+            });
+        });
+
+        this.seq.add(  1, function() {
+            this.gameScene.ground.tweener.clear().to({
+                speed: 9,
+            }, 2000);
+        });
+
+        this.seq.add(600, "mana");
+
     },
 
     setupBackground: function() {

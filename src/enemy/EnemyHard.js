@@ -26,8 +26,8 @@ gls2.Enemy.DATA = {
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
-    "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":100}, ],
-    "aida":      [  8000,  4000000, false,  true,  0, {"width":240, "height":80}, ],
+    "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
+    "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
@@ -813,6 +813,13 @@ gls2.Enemy.Saki = tm.createClass(
         this.setScale(1.5);
     },
     ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     destroy: function() {
         this.bossDestroy();
@@ -899,18 +906,46 @@ gls2.Enemy.Rikka = tm.createClass(
  */
 gls2.Enemy.Mana = tm.createClass(
 {
-    superClass: gls2.Enemy,
+    superClass: gls2.Boss,
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "aida");
 
         this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(5);
-        this.setScale(2);
+        this.setScale(1.5);
+        this.backFire = gls2.Particle(60, 1.0, 0.95);
+        this.aura = gls2.Particle(500, 1.0, 0.8);
+    },
+    update: function() {
+        gls2.Enemy.prototype.update.apply(this, arguments);
+        if (gls2.core.frame%2 === 0 && this.hp > 0) {
+            this.backFire.clone().setPosition(this.x-60, this.y+30)
+                .on("enterframe", function() { this.y+=10; })
+                .addChildTo(this.gameScene);
+            this.backFire.clone().setPosition(this.x-35, this.y+40)
+                .on("enterframe", function() { this.y+=10; })
+                .addChildTo(this.gameScene);
+            this.backFire.clone().setPosition(this.x+35, this.y+40)
+                .on("enterframe", function() { this.y+=10; })
+                .addChildTo(this.gameScene);
+            this.backFire.clone().setPosition(this.x+60, this.y+30)
+                .on("enterframe", function() { this.y+=10; })
+                .addChildTo(this.gameScene);
+            this.aura.clone().setPosition(this.x, this.y)
+                .addChildTo(this.gameScene);
+        }
     },
     ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     destroy: function() {
-        this.fallDown();
+        this.bossDestroy();
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
