@@ -32,10 +32,10 @@ gls2.Enemy.DATA = {
     "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height":64}, ],
     "yotsuba":   [   300,    30000, false,  true, 30, {"width":64, "height":64}, ],
     "yotsubaLeaf":[  200,    10000, false, false, 10, {"width":32, "height":32}, ],
-//  "midorikawa":[   150,      500, false, true,  30, {"width":128, "height":64}, ],
-//  "aoki":      [   150,      500, false, true,  30, {"width":128, "height":64}, ],
-    "higashi":   [  2000,   250000, false, true,  20, {"width":256, "height":128}, ],
-    "hyuga":     [  6000,  3000000, false,  true,  0, {"width":256, "height":128}, ],
+//  "midorikawa":[   150,      500, false,  true, 30, {"width":128, "height":64}, ],
+//  "aoki":      [   150,      500, false,  true, 30, {"width":128, "height":64}, ],
+    "higashi":   [  2000,   250000, false,  true, 20, {"width":256, "height":128}, ],
+    "momozono":  [  6000,  3000000, false,  true,  0, {"width":256, "height":128}, ],
 };
 
 /**
@@ -720,9 +720,7 @@ gls2.Enemy.Setsuna = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "higashi");
-
         this._sprite = _Sprite("higashi", 64*4, 64*2).setFrameIndex(0);
-        this.setScale(1.5);
     },
     ondying: function() {
     },
@@ -743,6 +741,8 @@ gls2.Enemy.Love = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "momozono");
+        this._sprite = _Sprite("momozono", 64*4, 64*2).setFrameIndex(0);
+        this.setScale(1.5);
     },
     ondying: function() {
     },
