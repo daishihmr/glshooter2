@@ -1,4 +1,5 @@
-# 2D DANMAKU Shooter on tmlib.js
+# TM-Shooter
+## 2D DANMAKU Shooter on tmlib.js
 
 HTML5弾幕STG、GL-Shooterシリーズの２作目です。
 
@@ -38,6 +39,8 @@ http://daishihmr.github.io/glshooter2/ (Google Chrome専用)
 本アプリケーション素材の再利用条件は以下のとおりです。
 
 ### JavaScriptおよびHTMLファイル
+
+著作権はdaishihmr(daishi.hmr(at)gmail.com)に帰属します。
 
 jsファイル、およびhtmlファイルはすべてMITライセンスのもとで再利用可能です。
 

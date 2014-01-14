@@ -418,19 +418,19 @@ gls2.Bit = tm.createClass(
      */
     init: function(player, bit) {
         this.superInit(tm.asset.SpriteSheet({
-            image: "tex1",
+            image: "tex_bit",
             frame: {
                 width: 32,
                 height: 32
             },
             animations: {
                 "anim0": {
-                    frames: [ 8+16*8, 9+16*8, 10+16*8, 8+16*9, 9+16*9, 10+16*9, ],
+                    frames: [ 0, 1, 2, 3, 4, 5, ],
                     next: "anim0",
                     frequency: 3
                 },
                 "anim1": {
-                    frames: [ 9+16*8, 10+16*8, 8+16*9, 9+16*9, 10+16*9, 8+16*8, ].reverse(),
+                    frames: [ 1, 2, 3, 4, 5, 0, ].reverse(),
                     next: "anim1",
                     frequency: 3
                 }

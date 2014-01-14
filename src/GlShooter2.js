@@ -57,8 +57,9 @@ gls2.GlShooter2 = tm.createClass(
         var assets = {
             // image
             "tex0": "assets/tex0.png",
-            "tex1": "assets/tex1.png", // TODO あとで消す
-            "tex_stage1": "assets/tex_stage1.png",
+            "tex_bit": "assets/tex_bit.png",
+            "tex1": "assets/tex1.png",
+            "tex2": "assets/tex2.png",
             "tex_tank1": "assets/tex_tank1.png",
             "fighter": "assets/fighters.png",
             "laserR": "assets/laser_r.png",
@@ -90,12 +91,11 @@ gls2.GlShooter2 = tm.createClass(
             "bgmShipSelect": "assets2/nc44200.mp3",
             "bgm1": "assets2/nc54073.mp3",
             "bgm2": "assets2/nc28687.mp3",
-            "bgm3": "assets2/nc28687.mp3",
-            "bgm4": "assets2/nc80728.mp3",
+            "bgm3": "assets2/nc80728.mp3",
+            "bgm4": "assets2/nc67876.mp3",
             "bgm5": "assets2/nc60627.mp3",
             "bgmBoss": "assets2/nc29206.mp3",
             "bgmResult": "assets2/nc54077.mp3",
-            "bgmEnding": "assets2/nc44202.mp3",
 
             // sound
             "sound/explode": "assets2/sen_ge_taihou03.mp3",
@@ -128,11 +128,11 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgmShipSelect"];
             delete assets["bgm1"];
             delete assets["bgm2"];
+            delete assets["bgm3"];
             delete assets["bgm4"];
             delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
-            delete assets["bgmEnding"];
         }
 
         this.replaceScene(tm.app.LoadingScene({
@@ -162,7 +162,7 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.FixedRandom.setup(12345);
 
-        ["tex_stage1", "tex_tank1"].forEach(function(name) {
+        ["tex1", "tex2", "tex_tank1"].forEach(function(name) {
 
             var tex = tm.asset.AssetManager.get(name);
             var canvas = tm.graphics.Canvas();

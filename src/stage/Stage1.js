@@ -137,13 +137,6 @@ gls2.Stage1 = tm.createClass(
 
         this.seq.add(600, "misumi");
 
-        // if (DEBUG) {
-        //     this.seq.add(600, function() {
-        //         this.gameScene.ground.speed = 1;
-        //         this.frame = 0;
-        //     });
-        // }
-
     },
 
     setupBackground: function() {

@@ -2,6 +2,7 @@
                                   Version 2.04.080709(:
 Parts: 
 	G2\G207.suf
+	P1\P101.suf
 	SD\SD03.suf
 	SD\SD08.suf
 	TK\TK09.suf
@@ -24,25 +25,25 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -70  -1 -70 )
-	{	mov ( 792.232 -625.607 2856.34 ) eye deg( 45 ) }
-	{	mov ( 140.558 0.373059 45.181 ) target }
-	{	mov ( 9.24079 0 472.5 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 1.1 1.21 0.99 ) obj G207 /* "G2\G207.suf" atr "noname" */
+	light pal( rgb ( 1.00 1.00 1.00 ) -51 -48 -70 )
+	{	mov ( 2602.85 -4.9914 2653.39 ) eye deg( 45 ) }
+	{	mov ( 214.275 52.1286 542.241 ) target }
+	{	mov ( 50 0 500 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 1.1 0.9 ) obj G207 /* "G2\G207.suf" atr "noname" */
 	}
-	{	mov ( -29.4092 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 0.8 0.8 1 ) obj TK09 /* "TK\TK09.suf" atr "noname" */
+	{	mov ( 0 0 0 ) rotz ( 45 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 1 1 ) obj TK09 /* "TK\TK09.suf" atr "noname" */
 	}
-	{	mov ( 112.369 -76.8 650.4 ) rotz ( 0 ) roty ( -20 ) rotx ( -90 )
-		scal ( 0.792 1.32 0.84 ) obj SD08 /* "SD\SD08.suf" atr "noname" */
+	{	mov ( 306.437 0 850 ) rotz ( 0 ) roty ( -10 ) rotx ( -90 )
+		scal ( 1 1 1 ) obj SD08 /* "SD\SD08.suf" atr "noname" */
 	}
-	{	mov ( -47.6 -240 400.8 ) rotz ( 0 ) roty ( 0 ) rotx ( -90 )
-		scal ( 0.528 1.32 1.56 ) obj SD03 /* "SD\SD03.suf" atr "noname" */
+	{	mov ( 83.6637 -472.222 650 ) rotz ( 0 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.7 1 2 ) obj SD03 /* "SD\SD03.suf" atr "noname" */
 	}
-	{	mov ( 112.369 76.8 650.4 ) rotz ( 0 ) roty ( -20 ) rotx ( 90 )
-		scal ( 0.792 -1.32 0.84 ) obj SD08 /* "SD\SD08.suf" atr "noname" */
+	{	mov ( 83.6637 472.222 650 ) rotz ( 0 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.7 -1 2 ) obj SD03 /* "SD\SD03.suf" atr "noname" */
 	}
-	{	mov ( -47.6 240 400.8 ) rotz ( 0 ) roty ( 0 ) rotx ( 90 )
-		scal ( 0.528 -1.32 1.56 ) obj SD03 /* "SD\SD03.suf" atr "noname" */
+	{	mov ( -1200 0 750 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 1 1 ) obj P101 /* "P1\P101.suf" atr "#01" */
 	}
 }

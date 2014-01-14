@@ -123,6 +123,33 @@ gls2.EnemyUnit = {
     { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.9, y:-100 },
 ],
 
+/** ヘリ5機4面。左側から */
+"heri1-4-left2": [
+    { hard:$e.Heri1, soft:$s.Heri14b, x:SC_W*0.1, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14c, x:SC_W*0.2, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14b, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14c, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14b, x:SC_W*0.5, y:-100 },
+],
+
+/** ヘリ5機4面。中央から */
+"heri1-4-center2": [
+    { hard:$e.Heri1, soft:$s.Heri14b, x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14c, x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14b, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14c, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14b, x:SC_W*0.7, y:-100 },
+],
+
+/** ヘリ5機4面。右側から */
+"heri1-4-right2": [
+    { hard:$e.Heri1, soft:$s.Heri14b, x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14c, x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14b, x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14c, x:SC_W*0.8, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri14b, x:SC_W*0.9, y:-100 },
+],
+
 /** 戦車5台。左上から */
 "tankRD-left": [
     { hard:$e.Tank1, soft:$s.TankRD, x:SC_W*0.4-50*1-64, y:-50*1 },
@@ -275,6 +302,11 @@ gls2.EnemyUnit = {
 "makoto-8": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W*0.9, y:-100 }],
 "makoto-R0": [{ hard:$e.Cannon2, soft:$s.Cannon2_0, x:SC_W+100, y:SC_H*0.2 }],
 
+// 大型固定砲台「ミナヅキ」4面用
+"karen-3-2": [{ hard:$e.Cannon3, soft:$s.Cannon2_3, x:SC_W*0.2, y:-100 }],
+"karen-3-5": [{ hard:$e.Cannon3, soft:$s.Cannon2_3, x:SC_W*0.5, y:-100 }],
+"karen-3-8": [{ hard:$e.Cannon3, soft:$s.Cannon2_3, x:SC_W*0.8, y:-100 }],
+
 // 中型戦闘機「クロカワ」1面用
 "fighter-m-0": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.2, y:SC_H*-0.3 }],
 "fighter-m-1": [{ hard:$e.FighterM, soft:$s.MiddleFighter1, x:SC_W*0.3, y:SC_H*-0.3 }],
@@ -324,6 +356,12 @@ gls2.EnemyUnit = {
 // 中型戦闘機「アキモト」4面用
 "komachi4-0": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi4-1": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.7, y:SC_H*-0.3 }],
+"komachi4-2": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.5, y:SC_H*-0.3 }],
+
+// 大型戦闘機「ユメハラ」4面用
+"nozomi4-0": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.3, y:SC_H*-0.3 }],
+"nozomi4-1": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.5, y:SC_H*-0.3 }],
+"nozomi4-2": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 //強襲戦闘機「ヒノ」
 "akane-1": [
@@ -397,6 +435,16 @@ gls2.EnemyUnit = {
  * ステージ３ボス「モモゾノ」
  */
 "momozono": [{ hard:$e.Love, soft:[$s.Love1, $s.Love2, $s.Love3], x:SC_W*0.5, y:-100, boss:true }],
+
+/**
+ * ステージ４中ボス「ヒシカワ」
+ */
+"rikka": [{ hard:$e.Rikka, soft:$s.Rikka, x:SC_W*0.5, y:-100 }],
+
+/**
+ * ステージ４ボス「アイダ」
+ */
+"mana": [{ hard:$e.Mana, soft:[$s.Mana1, $s.Mana2, $s.Mana3], x:SC_W*0.5, y:-100, boss:true }],
 
 };
 

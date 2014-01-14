@@ -26,6 +26,7 @@ java -jar tools/compiler.jar ^
 --js src/stage/Stage.js ^
 --js src/stage/Stage1.js ^
 --js src/stage/Stage2.js ^
+--js src/stage/Stage3.js ^
 --js src/stage/Stage4.js ^
 --js src/common/Collision.js ^
 --js src/common/Scene.js ^

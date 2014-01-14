@@ -23,7 +23,9 @@ gls2.Particle = tm.createClass({
         this.superInit();
         this.width = this.height = this.size = size;
         if (initialAlpha !== undefined) this.alpha = initialAlpha;
+        else this.alpha = 1.0;
         if (alphaDecayRate !== undefined) this.alphaDecayRate = alphaDecayRate;
+        else this.alphaDecayRate = 0.85;
         this.blendMode = "lighter";
 
         if (image) {
