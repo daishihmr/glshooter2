@@ -54,6 +54,9 @@ gls2.Enemy = tm.createClass(
 
     /** 弾発射可能フラグ */
     enableFire: true,
+    
+    /** レーザー */
+    laser: null,
 
     /**
      * 出現してから一度でも可視範囲に入ったか

@@ -637,9 +637,12 @@ gls2.Danmaku["akane"] = new bulletml.Root({
     "top": $.action([
         $.wait("40"),
         $.repeat(999, [
-            $interval(30),
-            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX(-16), $.offsetY(6), $.autonomy(true)),
-            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX( 16), $.offsetY(6), $.autonomy(true)),
+            $.repeat(5, [
+                $interval(60),
+                $nway(1, 1, 1, $spd1, BNL, $.offsetX(-16), $.offsetY(6), $.autonomy(true)),
+                $nway(1, 1, 1, $spd1, BNL, $.offsetX( 16), $.offsetY(6), $.autonomy(true)),
+            ]),
+            $interval(120),
         ]),
     ]),
 });
@@ -652,10 +655,10 @@ gls2.Danmaku["miyuki_y"] = new bulletml.Root({
         $.wait("40"),
         $.repeat(999, [
             $interval(30),
-            $nway(3, -45, 45, $spd1, $.bullet({frame:2}), $.offsetX(-64), $.offsetY(16), $.autonomy(true)),
-            $nway(3, -45, 45, $spd1, $.bullet({frame:2}), $.offsetX(  0), $.offsetY(16), $.autonomy(true)),
-            $nway(3, -45, 45, $spd1, $.bullet({frame:2}), $.offsetX( 16), $.offsetY(16), $.autonomy(true)),
-            $nway(3, -45, 45, $spd1, $.bullet({frame:2}), $.offsetX( 32), $.offsetY(16), $.autonomy(true)),
+            $nway(3, -45, 45, $spd1, BNL, $.offsetX(-64), $.offsetY(16), $.autonomy(true)),
+            $nway(3, -45, 45, $spd1, BNL, $.offsetX(  0), $.offsetY(16), $.autonomy(true)),
+            $nway(3, -45, 45, $spd1, BNL, $.offsetX( 16), $.offsetY(16), $.autonomy(true)),
+            $nway(3, -45, 45, $spd1, BNL, $.offsetX( 32), $.offsetY(16), $.autonomy(true)),
             $whip($spd1, 0.001, 5, function(spd) {
                 return $.action([
                     $nway(3, "-45", "+45", spd, BL, $.offsetX(0), $.offsetY(0)),
@@ -668,9 +671,11 @@ gls2.Danmaku["miyuki_t"] = new bulletml.Root({
     "top": $.action([
         $.wait("40"),
         $.repeat(999, [
-            $interval(30),
-            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX(-16), $.offsetY(6), $.autonomy(true)),
-            $nway(1, 1, 1, $spd1, $.bullet({frame:2}), $.offsetX( 16), $.offsetY(6), $.autonomy(true)),
+            $.repeat(3, [
+                $absoluteNway(3, -20, 20, $spd2, $.bullet({frame:2}), 0, 0),
+                $interval(30),
+            ]),
+            $interval(60),
         ]),
     ]),
 });
@@ -1454,6 +1459,33 @@ gls2.Danmaku["setsuna-1"] = new bulletml.Root({
         ]),
     ]),
 });
+
+/**
+ * ラブやん第１形態-1
+ */
+gls2.Danmaku["love-1-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.repeat(10, [
+            $nway(4, -40, 40, $spd2, RI, $.offsetX(0), $.offsetY(30)),
+            $interval(30),
+            $nway(5, -40, 40, $spd1, RI, $.offsetX(0), $.offsetY(30)),
+            $interval(30),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(60),
+        $.repeat(5, [
+            $nway(2, -2, 2, $spd2(0.6), RNS),
+            $nway(3, -3, 3, $spd2(1.0), RNS),
+            $nway(4, -4, 4, $spd2(1.4), RNS),
+            $nway(5, -5, 5, $spd2(1.8), RNS),
+            $interval(110),
+        ]),
+    ]),
+});
+
+
 
 gls2.Danmaku.setup = function() {
     for (var i = 0; i < 2000; i++) {

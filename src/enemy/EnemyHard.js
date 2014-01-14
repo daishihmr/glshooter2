@@ -31,13 +31,13 @@ gls2.Enemy.DATA = {
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
-    "hino":      [    30,      500, false, false,  1, {"width":24, "height":48}, ],
-    "hoshizora_y":[  100,      500, false,  true, 30, {"width":128, "height":64}, ],
-    "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height":64}, ],
-    "yotsuba":   [   300,    30000, false,  true, 30, {"width":64, "height":64}, ],
-    "yotsubaLeaf":[  200,    10000, false, false, 10, {"width":32, "height":32}, ],
-//  "midorikawa":[   150,      500, false,  true, 30, {"width":128, "height":64}, ],
-//  "aoki":      [   150,      500, false,  true, 30, {"width":128, "height":64}, ],
+    "hino":      [    30,      500, false, false,  1, {"width": 24, "height": 48}, ],
+    "hoshizora_y":[  100,      500, false,  true, 30, {"width":128, "height": 64}, ],
+    "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height": 64}, ],
+    "yotsuba":    [  200,    30000, false,  true, 30, {"width": 64, "height": 64}, ],
+    "yotsubaLeaf":[  150,    10000, false, false, 10, {"width": 32, "height": 32}, ],
+//  "midorikawa":[   150,      500, false,  true, 30, {"width":128, "height": 64}, ],
+//  "aoki":      [   150,      500, false,  true, 30, {"width":128, "height": 64}, ],
     "higashi":   [  2000,   250000, false,  true, 20, {"width":256, "height":128}, ],
     "momozono":  [  6000,  3000000, false,  true,  0, {"width":256, "height":128}, ],
 };
@@ -597,7 +597,7 @@ gls2.Enemy.Alice = tm.createClass({
         this.fallDown();
 
         //ボム効果時間中はエクステンドアイテムを出さない
-        if (!this.gameScene.isBombActive) gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
+        if (!this.gameScene.isBombActive) gls2.ExtendItem(this.x, this.y, this.player).addChildTo(this.parent);
 
         this.remove();
 
@@ -861,7 +861,7 @@ gls2.Enemy.Love = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "momozono");
         this._sprite = _Sprite("momozono", 64*4, 64*2).setFrameIndex(0);
-        this.setScale(1.5);
+        this._sprite.setScale(2);
     },
     ondying: function() {
     },
