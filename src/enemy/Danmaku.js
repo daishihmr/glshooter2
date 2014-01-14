@@ -38,6 +38,10 @@ var BR = function(action) { return $.bullet(action, {frame:6,ball:true}); };
 var BNSH = function(action) { return $.bullet(action, {frame:2,needle:true}); };
 /** 赤針弾（細） */
 var RNSH = function(action) { return $.bullet(action, {frame:3,needle:true}); };
+/** 青レーザー */
+var BLSR = function(action) { return $.bullet(action, {frame:0,laser:true}); };
+/** 赤レーザー */
+var RLSR = function(action) { return $.bullet(action, {frame:1,laser:true}); };
 
 /**
  * 発射間隔
@@ -1344,38 +1348,44 @@ gls2.Danmaku["mana-1-1"] = new bulletml.Root({
     "winder": $.action([
         $.wait(60),
         $.repeat(8, [
-            $.fire($.direction("(-190+$loop.index*40)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
+            $.fire($.direction("(-190+$loop.index*30)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
         ]),
-        $.repeat(42, [
+        $.repeat(50, [
             $interval(15),
             $.bindVar("a", "$loop.index*3"),
             $.repeat(8, [
-                $.fire($.direction("(-190+$a+$loop.index*40)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
+                $.fire($.direction("(-190+$a+$loop.index*30)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
             ]),
         ]),
-        $.repeat(30, [
+        $.repeat(20, [
             $interval(15),
             $.repeat(8, [
-                $.fire($.direction("(-190+42*3+$loop.index*40)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
+                $.fire($.direction("(-190+50*3+$loop.index*30)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
             ]),
         ]),
     ]),
     "top2": $.action([
-        $.wait(700),
+        $.wait(60),
+        $interval(400),
         $.repeat(5, [
-            $whip($spd3(6), 0.03, "4+$loop.index*3", function(spd) {
+            $.bindVar("i", "$loop.index"),
+            $whip($spd3(6), 0.02, "4+$loop.index*3", function(spd) {
                 return $.action([
-                    $.fire($.direction(-20), spd, BNL, $.offsetX(-40), $.offsetY(-50)),
-                    $.fire($.direction(-10), spd, RNL, $.offsetX(-40), $.offsetY(-50)),
-                    $.fire($.direction( +0), spd, BNL, $.offsetX(-40), $.offsetY(-50)),
-                    $.fire($.direction(+10), spd, RNL, $.offsetX(-40), $.offsetY(-50)),
-                    $.fire($.direction(+20), spd, BNL, $.offsetX(-40), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*-3"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*-2"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*-1"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)* 0"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*+1"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*+2"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*+3"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
 
-                    $.fire($.direction(-20), spd, BNL, $.offsetX(-40), $.offsetY(-50)),
-                    $.fire($.direction(-10), spd, RNL, $.offsetX(+40), $.offsetY(-50)),
-                    $.fire($.direction( +0), spd, BNL, $.offsetX(+40), $.offsetY(-50)),
-                    $.fire($.direction(+10), spd, RNL, $.offsetX(+40), $.offsetY(-50)),
-                    $.fire($.direction(+20), spd, BNL, $.offsetX(-40), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*-3"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*-2"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*-1"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)* 0"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*+1"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*+2"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*+3"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
 
                     $interval(5),
                 ]);
@@ -1472,6 +1482,7 @@ gls2.Danmaku.setup = function() {
             activeList.push(b);
             b.setFrameIndex((spec.frame === undefined) ? 1 : spec.frame);
 
+            b.blendMode = "source-over";
             if (spec.ball) {
                 b.scaleX = 1.0;
                 b.scaleY = 1.0;
@@ -1479,6 +1490,11 @@ gls2.Danmaku.setup = function() {
             } else if (spec.needle) {
                 b.scaleX = 0.4;
                 b.scaleY = 1.5;
+                b.updateProperties = true;
+            } else if (spec.laser) {
+                b.scaleX = 1.0;
+                b.scaleY = 10.0;
+                b.blendMode = "lighter";
                 b.updateProperties = true;
             } else {
                 b.scaleX = 0.8;
@@ -1493,6 +1509,7 @@ gls2.Danmaku.setup = function() {
             }
             b.ball = !!spec.ball;
             b.needle = !!spec.needle;
+            b.laser = !!spec.laser;
 
             return b;
         } else {
