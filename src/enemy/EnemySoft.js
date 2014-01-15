@@ -530,7 +530,6 @@ var _akane = tm.createClass(
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
-
             this.enableFire = this.y < this.player.y;
         });
     },
@@ -1230,8 +1229,6 @@ gls2.EnemySoft.Love1 = tm.createClass(
     },
 });
 gls2.EnemySoft.Love1 = gls2.EnemySoft.Love1();
-gls2.EnemySoft.Love2 = gls2.EnemySoft.Love1();
-gls2.EnemySoft.Love3 = gls2.EnemySoft.Love1();
 
 /**
  * ステージ４中ボス「ヒシカワ」

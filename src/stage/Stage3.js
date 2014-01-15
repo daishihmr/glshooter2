@@ -23,7 +23,8 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
         });
 
-//        this.seq.add(100, "yotsuba");
+        this.seq.add(100, "yotsuba");
+
         this.seq.add(300, "akane-1");
         this.seq.add(  1, "heri2-center");
 

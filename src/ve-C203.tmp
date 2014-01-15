@@ -14,11 +14,10 @@ gls2.EnemyLaser = tm.createClass(
     enemy: null,
     gameScene: null,
     
+    direction:0,
+
     _hitY: 0,
     frame: 0,
-
-    direction:0,
-    length: 0,
 
     textures: null,
     color: null,
@@ -43,7 +42,7 @@ gls2.EnemyLaser = tm.createClass(
         this.gameScene = enemy.gameScene;
 
         this.baseAttackPower = 1;
-        this.baseWidth = 40;
+        this.baseWidth = this.baseAttackPower*150;
 
         var self = this;
 
@@ -63,39 +62,7 @@ gls2.EnemyLaser = tm.createClass(
         this.boundingHeightBottom = 1;
 
         this.scrollOffset = 0;
-        this.origin.y = 1.0;
-        this.rotation = 190;
-
-        var f = this.foot = tm.display.AnimationSprite(tm.asset.SpriteSheet({
-            image: textures["foot"],
-            frame: {
-                width: 120,
-                height: 80
-            },
-            animations: {
-                "red": {
-                    frames: [0, 1, 2, 3],
-                    next: "red",
-                    frequency: 2,
-                },
-                "green": {
-                    frames: [4, 5, 6, 7],
-                    next: "green",
-                    frequency: 2,
-                },
-                "blue": {
-                    frames: [8, 9, 10, 11],
-                    next: "blue",
-                    frequency: 2,
-                },
-                "hyper": {
-                    frames: [12, 13, 14, 15],
-                    next: "hyper",
-                    frequency: 2,
-                },
-            }
-        }), 140, 80);
-        f.addChildTo(this);
+        this.origin.y = 0.0;
 
         var h = this.head = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: textures["head"],
@@ -152,7 +119,6 @@ gls2.EnemyLaser = tm.createClass(
         this.srcRect.y = 0;
         this.srcRect.width = this.image.width / 16;
 
-        this.foot.gotoAndPlay(this.color);
         this.head.gotoAndPlay(this.color);
 
         this.origParticle = null;
@@ -161,10 +127,80 @@ gls2.EnemyLaser = tm.createClass(
     },
 
     setLevel: function(hyperLevel) {
-        this.width = this.baseWidth;
+        this.width = this.baseWidth + 30;
         this.boundingWidth = this.width;
         this.head.setScale(this.width*0.02, this.width*0.02);
         this.attackPower = this.baseAttackPower;
+    },
+
+    genParticle: function(count, y) {
+        if (this.origParticle === null) this.createOrigParticle();
+
+        var y = y || this._hitY;
+        for (var i = 0; i < count; i++) {
+            var p = this.origParticle.clone().setPosition(this.x, y).addChildTo(this.gameScene);
+            var speed = gls2.math.randf(8, 14);
+            var dir = gls2.math.randf(0, Math.PI);
+            p.dx = Math.cos(dir) * speed;
+            p.dy = Math.sin(dir) * speed;
+            p.scaleX = p.scaleY = (gls2.math.randf(0.5, 1.5) + gls2.math.randf(0.5, 1.5)) / 2;
+            p.addEventListener("enterframe", function() {
+                this.x += this.dx;
+                this.y += this.dy;
+                this.dx *= 0.95;
+                this.dy *= 0.95;
+            });
+        }
+    },
+
+    genAuraParticle: function(count, x, y) {
+        if (this.origParticle === null) this.createOrigParticle();
+
+        for (var i = 0; i < count; i++) {
+            var p = this.origParticle.clone().setPosition(x, y).addChildTo(this.gameScene);
+            var speed = gls2.math.randf(12, 20);
+            var dir = gls2.math.randf(0, Math.PI);
+            p.dx = Math.cos(dir) * speed;
+            p.dy = Math.sin(dir) * speed;
+            p.scaleX = p.scaleY = (gls2.math.randf(1.0, 3.0) + gls2.math.randf(1.0, 3.0)) / 2;
+            p.addEventListener("enterframe", function() {
+                this.x += this.dx;
+                this.y += this.dy;
+                this.dx *= 0.95;
+                this.dy *= 0.95;
+            });
+        }
+    },
+
+    createOrigParticle: function() {
+        var size = 16;
+        if (this.color === "hyper") {
+            this.origParticle = gls2.Particle(size, 1.0, 0.9, tm.graphics.Canvas()
+                .resize(size, size)
+                .setFillStyle(
+                    tm.graphics.RadialGradient(size*0.5, size*0.5, 0, size*0.5, size*0.5, size*0.5)
+                        .addColorStopList([
+                            {offset:0.0, color: "rgba(255,255,255,1.0)"},
+                            {offset:1.0, color: "rgba(255,255,0,0.0)"},
+                        ]).toStyle()
+                )
+                .fillRect(0, 0, size, size)
+                .element
+            );
+        } else {
+            this.origParticle = gls2.Particle(size, 1.0, 0.9, tm.graphics.Canvas()
+                .resize(size, size)
+                .setFillStyle(
+                    tm.graphics.RadialGradient(size*0.5, size*0.5, 0, size*0.5, size*0.5, size*0.5)
+                        .addColorStopList([
+                            {offset:0.0, color: "rgba(255,255,255,1.0)"},
+                            {offset:1.0, color: ["rgba(255,0,0,0.0)","rgba(0,255,0,0.0)","rgba(0,0,255,0.0)"][this.enemy.laserType]},
+                        ]).toStyle()
+                )
+                .fillRect(0, 0, size, size)
+                .element
+            );
+        }
     },
 
     update: function(app) {
