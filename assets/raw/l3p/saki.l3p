@@ -11,21 +11,21 @@ Parts:
 	weapon\weapon07.suf
 Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
-	DisplayOffset: ( -52.347   0.000 -208.844 )
-	DisplayScale: 0.500000000000
+	DisplayOffset: ( -18.507   0.000 -73.838 )
+	DisplayScale: 0.176776695297
 	MeshFlag: 1
 	MeshSpacing: 200
 	ShowStatus: 1
 	ShowAttr: 1
 	GridFlag: 1
-	GridSpacing: 10
+	GridSpacing: 100
 	RotSpacing: 5
 	SelectedOnly: 0
 	DispRelative: 0
 Palette:
 	0: atr black { col ( 0.000 ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
 	1: atr body { col ( rgb ( 0.750 0.130 0.460 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
-	2: atr light { col ( rgb ( 1.000 0.700 0.150 ) ) amb ( 1.000 ) dif ( 0.000 ) opt ( emittion 0.050 4.000 ) }
+	2: atr light { col ( rgb ( 1.000 0.700 0.150 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
 	3: atr purple { col ( rgb ( 0.620 0.100 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
 	4: atr red { col ( rgb ( 0.900 0.100 0.150 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) }
 	5: atr white { col ( 0.720 ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) }
@@ -34,9 +34,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -68 -18 -70 )
-	{	mov ( 1448.06 -831.045 889.078 ) eye deg( 45 ) }
-	{	mov ( 53.5433 -30.139 304.92 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
+	{	mov ( 1993.46 0 1386.17 ) eye deg( 45 ) }
+	{	mov ( 76.8132 0 330.177 ) target }
 	{	mov ( 0 0 440 ) rotz ( 0 ) roty ( 0 ) rotx ( 180 )
 		scal ( 0.65 1 0.6 ) obj ball15 /* "basic\ball\ball15.suf" atr "body" */
 	}
