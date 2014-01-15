@@ -31,13 +31,13 @@ gls2.Enemy.DATA = {
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
-    "hino":      [    30,      500, false, false,  1, {"width":24, "height":48}, ],
-    "hoshizora_y":[  100,      500, false,  true, 30, {"width":128, "height":64}, ],
-    "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height":64}, ],
-    "yotsuba":   [   300,    30000, false,  true, 30, {"width":64, "height":64}, ],
-    "yotsubaLeaf":[  200,    10000, false, false, 10, {"width":32, "height":32}, ],
-//  "midorikawa":[   150,      500, false,  true, 30, {"width":128, "height":64}, ],
-//  "aoki":      [   150,      500, false,  true, 30, {"width":128, "height":64}, ],
+    "hino":      [    30,      500, false, false,  1, {"width": 24, "height": 48}, ],
+    "hoshizora_y":[  100,      500, false,  true, 30, {"width":128, "height": 64}, ],
+    "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height": 64}, ],
+    "yotsuba":    [  200,    30000, false,  true, 30, {"width": 64, "height": 64}, ],
+    "yotsubaLeaf":[  150,    10000, false, false, 10, {"width": 32, "height": 32}, ],
+//  "midorikawa":[   150,      500, false,  true, 30, {"width":128, "height": 64}, ],
+//  "aoki":      [   150,      500, false,  true, 30, {"width":128, "height": 64}, ],
     "higashi":   [  2000,   250000, false,  true, 20, {"width":256, "height":128}, ],
     "momozono":  [  6000,  3000000, false,  true,  0, {"width":256, "height":128}, ],
 };
@@ -597,7 +597,7 @@ gls2.Enemy.Alice = tm.createClass({
         this.fallDown();
 
         //ボム効果時間中はエクステンドアイテムを出さない
-        if (!this.gameScene.isBombActive) gls2.ExtendItem(this.x, this.y).addChildTo(this.parent);
+        if (!this.gameScene.isBombActive) gls2.ExtendItem(this.x, this.y, this.player).addChildTo(this.parent);
 
         this.remove();
 
@@ -612,7 +612,7 @@ gls2.Enemy.Alice = tm.createClass({
         this.leaf = [];
         for (var i = 0; i<4; i++) {
             var dir = Math.PI*0.5*i;
-            var distance = 50;
+            var distance = 64;
             var sx = this.x+Math.sin(dir)*distance;
             var sy = this.y+Math.cos(dir)*distance;
             this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.AliceLeaf, soft:gls2.EnemySoft.AliceLeaf, x:sx, y:sy});
@@ -639,6 +639,11 @@ gls2.Enemy.AliceLeaf = tm.createClass({
         this.boundingWidth = 64;
         this.boundingHeightBottom = 0;
         this.boundingHeightTop = 0;
+
+        //レーザーテスト
+        this.laser = gls2.EnemyLaser(this);
+        this.laser.visible = false;
+        gameScene.addChild(this.laser);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -647,6 +652,10 @@ gls2.Enemy.AliceLeaf = tm.createClass({
         while (b < 0) b += Math.PI*2;
         while (Math.PI*2 <= b) b -= Math.PI*2;
         this._sprite.setFrameIndex(~~(b*16/(Math.PI*2)), 64, 64);
+
+        this.laser.x = this.x;
+        this.laser.y = this.y;
+        this.laser.rotation += 0.1;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -655,6 +664,7 @@ gls2.Enemy.AliceLeaf = tm.createClass({
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.current.leaf[this.number] = null;  //破壊されたら本体のリストから切り離し
         this.remove();
+        this.laser.remove();
     },
 });
 
@@ -861,7 +871,7 @@ gls2.Enemy.Love = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "momozono");
         this._sprite = _Sprite("momozono", 64*4, 64*2).setFrameIndex(0);
-        this.setScale(1.5);
+        this._sprite.setScale(2);
     },
     ondying: function() {
     },

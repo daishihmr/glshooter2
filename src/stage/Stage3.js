@@ -22,13 +22,8 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.speed = 8;
             this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
         });
-        this.seq.add(150, "higashi", true);
 
         this.seq.add(100, "yotsuba");
-        this.seq.add(300, "tankRD-center");
-        this.seq.add( 60, "tankRD-left");
-        this.seq.add( 60, "tankRD-right");
-        this.seq.add( 60, "tankRD-center");
 
         this.seq.add(300, "akane-1");
         this.seq.add(  1, "heri2-center");
@@ -64,29 +59,28 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(100, "hoshizora_y-1");
         this.seq.add(  1, "heri2-right");
 
+        this.seq.add(  1, function() {
+            this.gameScene.ground.direction = ~~((Math.PI/180)*180);
+            this.gameScene.ground.speed = 4;
+            this.gameScene.ground.tweener.clear().to({speed:4}, 4000, "easeInOutQuad");
+        });
+
         this.seq.add(100, "yotsuba");
 
-        this.seq.add(  0, function() {
-            this.gameScene.ground.direction = ~~((Math.PI/180)*180);
-            this.gameScene.ground.speed = 4;
-            this.gameScene.ground.tweener.clear().to({speed:4}, 4000, "easeInOutQuad");
-        });
-
-        //test
-        this.seq.add(200, "tankRD-center");
-        this.seq.add(200, "tankRD-left");
-        this.seq.add(200, "tankRD-right");
-        this.seq.add(200, "tankRD-center");
-
-        this.seq.add(  0, function() {
-            this.gameScene.ground.direction = ~~((Math.PI/180)*180);
-            this.gameScene.ground.speed = 4;
-            this.gameScene.ground.tweener.clear().to({speed:4}, 4000, "easeInOutQuad");
-        });
-
         //中ボス
-        this.seq.add(150, "higashi", true);
+        this.seq.add(600, "higashi", true);
 
+        this.seq.add(1200, "heri2-center");
+        this.seq.add(   1, "heri2-left");
+        this.seq.add(   1, "heri2-right");
+
+        this.seq.add(300, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+
+        this.seq.add(300, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
 
         this.seq.add(600, function() {
             this.alartWarning(function() {
