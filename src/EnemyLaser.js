@@ -14,11 +14,8 @@ gls2.EnemyLaser = tm.createClass(
     enemy: null,
     gameScene: null,
     
-    _hitY: 0,
-    frame: 0,
-
-    direction:0,
     length: 0,
+    frame: 0,
 
     textures: null,
     color: null,
@@ -64,7 +61,7 @@ gls2.EnemyLaser = tm.createClass(
 
         this.scrollOffset = 0;
         this.origin.y = 1.0;
-        this.rotation = 190;
+        this.rotation = 0;
 
         var f = this.foot = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: textures["foot"],
@@ -128,11 +125,8 @@ gls2.EnemyLaser = tm.createClass(
         }), 130, 130);
         h.addChildTo(this);
         h.update = function() {
-            this.y = self._hitY - self.y;
-            if (-10 < this.y) {
-                this.y = -10;
-            }
-            this.visible = self._hitY > 0;
+            this.y = -self.length;
+            this.visible = true;
         };
 
         // this.blendMode = "lighter";
@@ -171,7 +165,7 @@ gls2.EnemyLaser = tm.createClass(
         this.visible = this.enemy.enableFire;
 
         if (this.visible) {
-            this._hitY = Math.max(0, this._hitY - 40);
+            this._hitY -= 10;
             this.height = this.y - this._hitY;
             if (app.frame % 3 === 0) this.frame = (this.frame + 1) % 16;
         } else {
@@ -192,20 +186,6 @@ gls2.EnemyLaser = tm.createClass(
             srcRect.x, srcRect.height - this.height, srcRect.width, this.height,
             -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
     },
-
-    getHitY: function() {
-        return this._hitY;
-    },
-
-    setHitY: function(v) {
-        this._hitY = v;
-        this.head.update();
-    },
-
-});
-
-gls2.EnemyLaser.prototype.getter("boundingHeightTop", function() {
-    return this.position.y - this._hitY;
 });
 
 })();

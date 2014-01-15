@@ -688,16 +688,16 @@ gls2.Danmaku["alice"] = new bulletml.Root({
         $.repeat(999, [
             $absoluteNway(8, 0,  180, $spd1, BL),
             $absoluteNway(8, 0, -180, $spd1, BL),
-            $interval(30),
+            $interval(60),
             $absoluteNway(9, 0,  180, $spd1, RL),
             $absoluteNway(9, 0, -180, $spd1, RL),
-            $interval(30),
+            $interval(60),
         ]),
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $.fire($.direction(15, "sequence"), $spd1, BS, $.offsetX(0), $.autonomy(true)),
-            $interval(5),
+            $.fire($.direction(5, "sequence"), $spd1, BS, $.offsetX(0), $.autonomy(true)),
+            $interval(10),
         ]),
     ]),
 });
@@ -708,8 +708,8 @@ gls2.Danmaku["aliceLeaf"] = new bulletml.Root({
     "top": $.action([
         $.wait(20),
         $.repeat(999, [
-            $interval(40),
-            $.fire($.direction(15, "sequence"), $spd3(5), BS, $.offsetX(0), $.autonomy(true)),
+            $.fire($.direction(10, "sequence"), $spd3(5), RI, $.offsetX(0), $.autonomy(true)),
+            $interval(10),
         ]),
     ]),
 });

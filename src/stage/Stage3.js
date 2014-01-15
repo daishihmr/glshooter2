@@ -68,11 +68,11 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(100, "yotsuba");
 
         //中ボス
-        this.seq.add(150, "higashi", true);
+        this.seq.add(600, "higashi", true);
 
-        this.seq.add(300, "heri2-center");
-        this.seq.add(  1, "heri2-left");
-        this.seq.add(  1, "heri2-right");
+        this.seq.add(1200, "heri2-center");
+        this.seq.add(   1, "heri2-left");
+        this.seq.add(   1, "heri2-right");
 
         this.seq.add(300, "heri2-center");
         this.seq.add(  1, "heri2-left");

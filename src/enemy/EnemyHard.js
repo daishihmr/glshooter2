@@ -612,7 +612,7 @@ gls2.Enemy.Alice = tm.createClass({
         this.leaf = [];
         for (var i = 0; i<4; i++) {
             var dir = Math.PI*0.5*i;
-            var distance = 50;
+            var distance = 64;
             var sx = this.x+Math.sin(dir)*distance;
             var sy = this.y+Math.cos(dir)*distance;
             this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.AliceLeaf, soft:gls2.EnemySoft.AliceLeaf, x:sx, y:sy});
@@ -655,6 +655,7 @@ gls2.Enemy.AliceLeaf = tm.createClass({
 
         this.laser.x = this.x;
         this.laser.y = this.y;
+        this.laser.rotation += 0.1;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
