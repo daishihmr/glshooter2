@@ -26,7 +26,8 @@ gls2.StarItem = tm.createClass(
     dy: 0,
 
     init: function(large) {
-        this.superInit("star", 20, 20);
+        this.superInit("tex3", 20, 20);
+        this.setFrameIndex(0, 64, 64);
 
         this.large = large;
         if (large) {
