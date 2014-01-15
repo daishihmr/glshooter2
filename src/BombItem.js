@@ -68,12 +68,12 @@ gls2.ExtendItem = tm.createClass(
     init: function(x, y, player) {
         this.superInit("tex3", 64, 64);
         this.setFrameIndex(8, 64, 64);
-        tm.display.Label("1 up", 16)
+        tm.display.Label("1 up", 20)
             .setFillStyle("hsla(180, 70%, 100%, 1)")
             .addChildTo(this);
         for (var ix = -1; ix <= 1; ix++) {
             for (var iy = -1; iy <= 1; iy++) {
-                this.label = tm.display.Label("1 up", 16)
+                this.label = tm.display.Label("1 up", 20)
                     .setFillStyle("hsla(180, 50%, 50%, 0.2)")
                     .setPosition(ix, iy)
                     .addChildTo(this);
