@@ -36,7 +36,7 @@ gls2.Enemy.DATA = {
     "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height": 64}, ],
     "yotsuba":    [  200,    30000, false,  true, 30, {"width": 64, "height": 64}, ],
     "yotsubaLeaf":[  150,    10000, false, false, 10, {"width": 32, "height": 32}, ],
-//  "midorikawa":[   150,      500, false,  true, 30, {"width":128, "height": 64}, ],
+    "midorikawa":[     5,      500, false, false,  1, {"width": 32, "height": 32}, ],
 //  "aoki":      [   150,      500, false,  true, 30, {"width":128, "height": 64}, ],
     "higashi":   [  2000,   250000, false,  true, 20, {"width":256, "height":128}, ],
     "momozono":  [  6000,  3000000, false,  true,  0, {"width":256, "height":128}, ],
@@ -509,6 +509,41 @@ gls2.Enemy.akane = tm.createClass(
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
+    },
+});
+
+/**
+ * 小型戦闘機「ミドリカワ」
+ * @class
+ * @extends {gls2.Enemy}
+ */
+gls2.Enemy.nao = tm.createClass(
+/** @lends {gls2.Enemy.Heri1.prototype} */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "midorikawa");
+        this.boundingWidthLeft = 0
+        this.boundingWidthRight = 32;
+        this.boundingHeightTop = 0;
+        this.boundingHeightBottom = 32;
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+
+        if (this.x < this.player.x) {
+            this.scaleX = -1;
+        } else {
+            this.scaleX = 1;
+        }
+    },
+    draw: function(canvas) {
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
     },
 });
 
