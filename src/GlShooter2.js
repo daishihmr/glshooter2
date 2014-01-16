@@ -8,10 +8,10 @@ var SC_W = 480;
 /** @const */
 var SC_H = 640;
 
-/** @namespace */
-var gls2 = {
-    /** @type {gls2.GlShooter2} */
-    core: null,
+gls2["pause"] = function() {
+    if (gls2.core && gls2.core.currentScene === gls2.GameScene.SINGLETON) {
+        gls2.GameScene.SINGLETON.openPauseMenu(0);
+    }
 };
 
 /**
