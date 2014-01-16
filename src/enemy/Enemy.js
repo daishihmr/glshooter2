@@ -55,13 +55,6 @@ gls2.Enemy = tm.createClass(
     /** 弾発射可能フラグ */
     enableFire: true,
     
-    /** レーザー */
-    laser: null,
-    /** レーザータイプ */
-    laserType: 2,
-    /** レーザー角度 */
-    laserDirection: 0,
-
     /**
      * 出現してから一度でも可視範囲に入ったか
      * 一度完全に画面に入りきるまではダメージを受けない（攻撃は命中する）

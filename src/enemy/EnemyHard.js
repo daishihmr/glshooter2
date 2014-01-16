@@ -639,11 +639,6 @@ gls2.Enemy.AliceLeaf = tm.createClass({
         this.boundingWidth = 64;
         this.boundingHeightBottom = 0;
         this.boundingHeightTop = 0;
-
-        //レーザーテスト
-        this.laser = gls2.EnemyLaser(this);
-        this.laser.visible = false;
-        gameScene.addChild(this.laser);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -652,10 +647,6 @@ gls2.Enemy.AliceLeaf = tm.createClass({
         while (b < 0) b += Math.PI*2;
         while (Math.PI*2 <= b) b -= Math.PI*2;
         this._sprite.setFrameIndex(~~(b*16/(Math.PI*2)), 64, 64);
-
-        this.laser.x = this.x;
-        this.laser.y = this.y;
-        this.laser.rotation += 0.1;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -664,7 +655,6 @@ gls2.Enemy.AliceLeaf = tm.createClass({
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.current.leaf[this.number] = null;  //破壊されたら本体のリストから切り離し
         this.remove();
-        this.laser.remove();
     },
 });
 
