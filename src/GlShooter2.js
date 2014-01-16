@@ -32,6 +32,8 @@ gls2.GlShooter2 = tm.createClass(
     highScoreStyle: 0,
     /** ハイスコア取得時のコンティニュー回数 */
     highScoreContinueCount: 0,
+    /** ハイスコア取得時のスクリーンショット */
+    highScoreScreenShot: null,
 
     /** BGM音量(0～5) */
     bgmVolume: 3,
@@ -220,7 +222,6 @@ gls2.GlShooter2 = tm.createClass(
 
     exitApp: function() {
         this.stop();
-        tm.social.Nineleap.postRanking(this.highScore, "");
     },
 
     timeoutTasks: null,

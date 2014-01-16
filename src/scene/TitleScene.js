@@ -32,13 +32,17 @@ gls2.TitleScene = tm.createClass({
 
         this.addEventListener("enter", function() {
             this.gameStarted = false;
-            var score = ("" + Math.floor(gls2.core.highScore)).padding(16, " ");
-            var text = "";
-            for (var i = 0; i < score.length; i += 4) {
-                text += score.substring(i, i+4) + " ";
-            }
-            this.highScoreLabel.text = "HIGH SCORE: " + text.trim();
+            this.updateHighScoreLabel();
         });
+    },
+
+    updateHighScoreLabel: function() {
+        var score = ("" + Math.floor(gls2.core.highScore)).padding(16, " ");
+        var text = "";
+        for (var i = 0; i < score.length; i += 4) {
+            text += score.substring(i, i+4) + " ";
+        }
+        this.highScoreLabel.text = "HIGH SCORE: " + text.trim();
     },
 
     drawBackground: function(canvas) {
@@ -103,16 +107,13 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        var menu = [ "start", "tutorial", "setting" ];
+        var menu = [ "start", "tutorial", "setting", "save high score" ];
         var labels = [
             "ゲームを開始します",
             "チュートリアルを開始します",
             "設定を変更します",
+            "ランキングへハイスコアを登録します"
         ];
-        // if (gls2.core.highScore > 0) {
-            menu.push("tweet high score");
-            labels.push("Twitterへハイスコアを投稿します");
-        // }
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
             "defaultValue": this.lastMainMenu,
             "menuDescriptions": labels
@@ -140,25 +141,57 @@ gls2.TitleScene = tm.createClass({
         case 2: // option
             this.openSetting();
             break;
-        case 3: // to Twitter
+        case 3: // save score
             if (gls2.core.highScore > 0) {
-                var text = "SCORE:{score} (ship:{type}-{style} stage:{stage} continue:{cont}) TM-Shooter http://goo.gl/GvMQOJ ".format({
-                    "score": Math.floor(gls2.core.highScore),
-                    "stage": gls2.core.highScoreStage + 1,
-                    "cont": gls2.core.highScoreContinueCount,
-                    "type": ["A", "B", "C"][gls2.core.highScoreType],
-                    "style": ["S", "L", "EX"][gls2.core.highScoreStyle],
-                });
-                var twitterURL = tm.social.Twitter.createURL({
-                    "type"    : "tweet",
-                    "text"    : text,
-                    "hashtags": gls2.Setting.HASH_TAG,
-                    "url"     : window.document.location.href
-                });
-                window.open(twitterURL);
+                this.postScore();
+            } else {
+                alert("スコアが0です！＞＜");
             }
             break;
         }
+    },
+
+    postScore: function(userName) {
+        var data = {
+            "score": Math.floor(gls2.core.highScore),
+            "stage": gls2.core.highScoreStage + 1,
+            "continueCount": gls2.core.highScoreContinueCount,
+            "shipType": gls2.core.highScoreType,
+            "shipStyle": gls2.core.highScoreStyle,
+            "fps": 0,
+            "screenShot": gls2.core.highScoreScreenShot
+        };
+        if (userName) data["userName"] = userName;
+        tm.util.Ajax.load({
+            "url": "/ranking/post",
+            "data": data,
+            "type": "POST",
+            "dataType": "json",
+            "async": false,
+            "success": function(result) {
+                if (result["success"]) {
+                    alert("登録完了！");
+                    gls2.core.highScore = 0;
+                    this.updateHighScoreLabel();
+                    window.top.location.href = '/ranking/user/' + result.userName + '?id=' + result.id;
+                } else if (result["confirmLogin"]) {
+                    if (confirm("ログインしていません。ログインしますか？")) {
+                        window["onchildclose"] = function() {
+                            this.postScore();
+                            window["onchildclose"] = undefined;
+                        }.bind(this);
+                        var p = window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
+                    } else if (confirm("仮のユーザー名でスコア登録しますか？")) {
+                        var userName = "";
+                        while (userName === "") userName = window.prompt("仮のユーザー名:");
+                        if (userName === null) return;
+                        this.postScore(userName + "(仮)");
+                    }
+                } else {
+                    alert("登録に失敗しました！＞＜");
+                }
+            }.bind(this)
+        });
     },
 
     openSetting: function() {

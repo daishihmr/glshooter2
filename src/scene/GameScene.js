@@ -648,6 +648,12 @@ gls2.GameScene = tm.createClass(
                 this.launch();
             }.bind(this));
         } else {
+            // ハイスコアならスクリーンショットを撮る
+            if (gls2.core.highScore === this.score) {
+                var ss = this.shotScreen();
+                gls2.core.highScoreScreenShot = ss.canvas.toDataURL("image/png");
+            }
+
             // コンティニュー確認画面へ
             this.tweener.clear().wait(2000).call(function() {
                 this.openContinueMenu();
