@@ -1,0 +1,53 @@
+/*							Parts Assembler
+                                  Version 2.04.051226(:
+Parts: 
+	armor\armor07.suf
+	nozzle\nozzle14.suf
+	robody\robody16.suf
+	rohand\rohand09.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000   0.000 )
+	DisplayScale: 0.125000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 100
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -68 -17 -70 )
+	{	mov ( 2306.4 -1016.1 1165.12 ) eye deg( 45 ) }
+	{	mov ( 310.925 159.322 -423.896 ) target }
+	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.2 0.4 1 ) obj robody16 /* "robody\robody16.suf" atr "noname" */
+	}
+	{	mov ( 0 -100 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.9 0.4 1 ) obj robody16 /* "robody\robody16.suf" atr "noname" */
+	}
+	{	mov ( 0 100 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.9 -0.4 1 ) obj robody16 /* "robody\robody16.suf" atr "noname" */
+	}
+	{	mov ( 1212 0 -244 ) rotz ( 0 ) roty ( -77.0565 ) rotx ( 180 )
+		scal ( 1.2 1.9 3.5 ) obj rohand09 /* "rohand\rohand09.suf" atr "noname" */
+	}
+	{	mov ( -500 168 0 ) rotz ( 0 ) roty ( -55 ) rotx ( -12.7424 )
+		scal ( 1.5 1.4 1.8 ) obj nozzle14 /* "nozzle\nozzle14.suf" atr "noname" */
+	}
+	{	mov ( -500 -168 0 ) rotz ( 0 ) roty ( -55 ) rotx ( 12.7424 )
+		scal ( 1.5 -1.4 1.8 ) obj nozzle14 /* "nozzle\nozzle14.suf" atr "noname" */
+	}
+	{	mov ( -300 208 -224 ) rotz ( 83.9218 ) roty ( 21.0131 ) rotx ( -92.1867 )
+		scal ( 1 2.59579 2.67143 ) obj armor07 /* "armor\armor07.suf" atr "noname" */
+	}
+	{	mov ( -300 -208 -224 ) rotz ( -83.9218 ) roty ( 21.0131 ) rotx ( 92.1867 )
+		scal ( 1 -2.59579 2.67143 ) obj armor07 /* "armor\armor07.suf" atr "noname" */
+	}
+}

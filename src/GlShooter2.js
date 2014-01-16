@@ -60,6 +60,7 @@ gls2.GlShooter2 = tm.createClass(
             "tex_bit": "assets/tex_bit.png",
             "tex1": "assets/tex1.png",
             "tex2": "assets/tex2.png",
+            "tex3": "assets/tex3.png",
             "tex_tank1": "assets/tex_tank1.png",
             "fighter": "assets/fighters.png",
             "laserR": "assets/laser_r.png",
@@ -133,6 +134,16 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
+
+            // 遊び用
+            // assets["bgmShipSelect"] = "/gls2-bgm/select.mp3";
+            // assets["bgm1"] = "/gls2-bgm/1.mp3";
+            // assets["bgm2"] = "/gls2-bgm/2.mp3";
+            // assets["bgm3"] = "/gls2-bgm/3.mp3";
+            // assets["bgm4"] = "/gls2-bgm/4.mp3";
+            // assets["bgm5"] = "/gls2-bgm/5.mp3";
+            // assets["bgmBoss"] = "/gls2-bgm/boss.mp3";
+            // assets["bgmResult"] = "/gls2-bgm/clear.mp3";
         }
 
         this.replaceScene(tm.app.LoadingScene({
@@ -162,7 +173,7 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.FixedRandom.setup(12345);
 
-        ["tex1", "tex2", "tex_tank1"].forEach(function(name) {
+        ["tex1", "tex2", "tex3", "tex_tank1"].forEach(function(name) {
 
             var tex = tm.asset.AssetManager.get(name);
             var canvas = tm.graphics.Canvas();

@@ -666,15 +666,15 @@ gls2.Enemy.Erika = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "erika");
+        this._sprite = _Sprite("tex3", 64, 128);
+        this._sprite.setFrameIndex(8);
     },
 
     ondying: function() {
     },
 
     draw: function(canvas) {
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
 
     destroy: function() {

@@ -8,8 +8,8 @@ Parts:
 	rohead\rohead01.suf
 Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
-	DisplayOffset: ( -198.000   0.000   0.000 )
-	DisplayScale: 0.125000000000
+	DisplayOffset: ( -70.004   0.000   0.000 )
+	DisplayScale: 0.044194173824
 	MeshFlag: 1
 	MeshSpacing: 200
 	ShowStatus: 1
@@ -24,9 +24,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
-	{	mov ( 5298.64 -0.000000000001 3369.72 ) eye deg( 45 ) }
-	{	mov ( -248.584 0 108.764 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -4 -70 )
+	{	mov ( 3901.52 -3802.07 4274.39 ) eye deg( 45 ) }
+	{	mov ( -472.251 0 241.335 ) target }
 	{	mov ( 100 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 1.65 1 1.85 ) obj SL14 /* "SL\SL14.suf" atr "noname" */
 	}
