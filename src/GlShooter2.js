@@ -82,7 +82,6 @@ gls2.GlShooter2 = tm.createClass(
             "hino": "assets/tex_hino.png",
             "hoshizora_y": "assets/tex_hoshizora_y.png",
             "hoshizora_t": "assets/tex_hoshizora_t.png",
-            "extendItem": "assets/extendItem.png",  //仮運用
             "yotsuba": "assets/tex_yotsuba.png",
             "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
             "higashi": "assets/tex_higashi.png",
@@ -120,9 +119,6 @@ gls2.GlShooter2 = tm.createClass(
             "sound/voLetsGo": "assets/vo_letsgo.mp3",
             "sound/voSelectShip": "assets/vo_select_your_battle_ship.mp3",
             "sound/voWarning": "assets/vo_warning.mp3",
-
-            // test
-            "star": "assets/star.png",
         };
 
         if (DEBUG) {
