@@ -31,7 +31,7 @@ gls2.Enemy.DATA = {
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
-    "hino":      [    30,      500, false, false,  1, {"width": 24, "height": 48}, ],
+    "hino":      [    20,      500, false, false,  1, {"width": 24, "height": 48}, ],
     "hoshizora_y":[  100,      500, false,  true, 30, {"width":128, "height": 64}, ],
     "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height": 64}, ],
     "yotsuba":    [  200,    30000, false,  true, 30, {"width": 64, "height": 64}, ],

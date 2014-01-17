@@ -555,7 +555,7 @@ gls2.EnemySoft.nao = tm.createClass(
      */
     init: function(speed) {
         this.superInit();
-        this.patternName = "nao-1";
+        this.patternName = "nao-2";
         this.speed = speed;
     },
     setup: function(enemy) {
