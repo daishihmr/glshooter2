@@ -544,7 +544,7 @@ gls2.EnemySoft.akane = _akane(0.5, "akane");
  * @extends {gls2.EnemySoft}
  */
 gls2.EnemySoft.nao = tm.createClass(
-/** @lends {gls2.EnemySoft.Heri2.prototype} */
+/** @lends {gls2.EnemySoft.nao.prototype} */
 {
     superClass: gls2.EnemySoft,
 
@@ -593,13 +593,13 @@ gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6);
 gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12);
 
 /**
- * 小型砲台
+ * 小型浮揚戦車
  *
  * @class
  * @extends {gls2.EnemySoft}
  */
-gls2.EnemySoft.nao = tm.createClass(
-/** @lends {gls2.EnemySoft.Heri2.prototype} */
+gls2.EnemySoft.reika = tm.createClass(
+/** @lends {gls2.EnemySoft.reika.prototype} */
 {
     superClass: gls2.EnemySoft,
 
@@ -610,7 +610,7 @@ gls2.EnemySoft.nao = tm.createClass(
      */
     init: function(speed) {
         this.superInit();
-        this.patternName = "nao-1";
+        this.patternName = "reika";
         this.speed = speed;
     },
     setup: function(enemy) {
@@ -623,29 +623,12 @@ gls2.EnemySoft.nao = tm.createClass(
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
             gls2.EnemySoft.attack(this, this.patternName);
             this.on("enterframe", function() {
-                if (this.y < this.player.y && this.entered) {
-                    var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
-                    this.angle += (a < this.angle) ? -0.02 : 0.02;
-                    this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI-0.5);
-                }
-
-                this.x += Math.cos(this.angle) * this.speed;
-                this.y += Math.sin(this.angle) * this.speed;
-
-                if (!this.isInScreen() && this.entered) {
-                    this.remove();
-                }
-
-                if (gls2.distanceSq(this, this.player) < 150*150 || this.y > this.player.y + 150) {
-                    this.enableFire = false;
-                }
+                this.x += this.speed;
             });
         }.bind(enemy));
     },
 });
-gls2.EnemySoft.nao1 = gls2.EnemySoft.nao(3);
-gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6);
-gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12);
+gls2.EnemySoft.reika1 = gls2.EnemySoft.reika(3);
 
 /**
  * 戦艦
@@ -655,8 +638,7 @@ gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12);
  * @class
  * @extends {gls2.EnemySoft}
  */
-var _miyuki_y = tm.createClass(
-/** @lends {_miyuki_y.prototype} */
+gls2.EnemySoft.miyuki_y = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
@@ -695,8 +677,8 @@ var _miyuki_y = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.miyuki_y1 = _miyuki_y( 1.0, "miyuki_y");
-gls2.EnemySoft.miyuki_y2 = _miyuki_y(-1.0, "miyuki_y");
+gls2.EnemySoft.miyuki_y1 = gls2.EnemySoft.miyuki_y( 1.0, "miyuki_y");
+gls2.EnemySoft.miyuki_y2 = gls2.EnemySoft.miyuki_y(-1.0, "miyuki_y");
 
 /**
  * 戦艦
@@ -707,8 +689,7 @@ gls2.EnemySoft.miyuki_y2 = _miyuki_y(-1.0, "miyuki_y");
  * @class
  * @extends {gls2.EnemySoft}
  */
-var _miyuki_t = tm.createClass(
-/** @lends {_miyuki_t.prototype} */
+gls2.EnemySoft.miyuki_t = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
@@ -751,8 +732,8 @@ var _miyuki_t = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.miyuki_t1 = _miyuki_y(-0.5, "miyuki_t");
-gls2.EnemySoft.miyuki_t1 = _miyuki_y( 0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t1 = gls2.EnemySoft.miyuki_t(-0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t2 = gls2.EnemySoft.miyuki_t( 0.5, "miyuki_t");
 
 /**
  * 浮遊砲台

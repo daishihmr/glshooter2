@@ -672,6 +672,18 @@ gls2.Danmaku["nao-2"] = new bulletml.Root({
 });
 
 /**
+ * れいか様
+ */
+gls2.Danmaku["reika"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(20),
+            $.fire($.direction(0), $spd5, BL),
+        ]),
+    ]),
+});
+
+/**
  *　小学８年生用
  */
 gls2.Danmaku["miyuki_y"] = new bulletml.Root({
@@ -742,7 +754,13 @@ gls2.Danmaku["alice"] = new bulletml.Root({
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $.fire($.direction(5, "sequence"), $spd1, BS, $.offsetX(0), $.autonomy(true)),
+            $.fire($.direction( 5, "sequence"), $spd1, BS, $.offsetX(0), $.autonomy(true)),
+            $interval(10),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $.fire($.direction(10, "sequence"), $spd2, RS, $.offsetX(0), $.autonomy(true)),
             $interval(10),
         ]),
     ]),
