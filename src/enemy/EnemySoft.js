@@ -544,7 +544,7 @@ gls2.EnemySoft.akane = _akane(0.5, "akane");
  * @extends {gls2.EnemySoft}
  */
 gls2.EnemySoft.nao = tm.createClass(
-/** @lends {gls2.EnemySoft.Heri2.prototype} */
+/** @lends {gls2.EnemySoft.nao.prototype} */
 {
     superClass: gls2.EnemySoft,
 
@@ -593,6 +593,44 @@ gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6);
 gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12);
 
 /**
+ * 小型浮揚戦車
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+gls2.EnemySoft.reika = tm.createClass(
+/** @lends {gls2.EnemySoft.reika.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    patternName: null,
+
+    /**
+     * @constructs
+     */
+    init: function(speed) {
+        this.superInit();
+        this.patternName = "reika";
+        this.speed = speed;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.angle = Math.PI * 0.5;
+        enemy.patternName = this.patternName;
+        enemy.speed = this.speed;
+
+        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+            gls2.EnemySoft.attack(this, this.patternName);
+            this.on("enterframe", function() {
+                this.x += this.speed;
+            });
+        }.bind(enemy));
+    },
+});
+gls2.EnemySoft.reika1 = gls2.EnemySoft.reika(3);
+
+/**
  * 戦艦
  *
  * 左右から出現、そのまま等速で横断する。
@@ -600,8 +638,7 @@ gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12);
  * @class
  * @extends {gls2.EnemySoft}
  */
-var _miyuki_y = tm.createClass(
-/** @lends {_miyuki_y.prototype} */
+gls2.EnemySoft.miyuki_y = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
@@ -640,8 +677,8 @@ var _miyuki_y = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.miyuki_y1 = _miyuki_y( 1.0, "miyuki_y");
-gls2.EnemySoft.miyuki_y2 = _miyuki_y(-1.0, "miyuki_y");
+gls2.EnemySoft.miyuki_y1 = gls2.EnemySoft.miyuki_y( 1.0, "miyuki_y");
+gls2.EnemySoft.miyuki_y2 = gls2.EnemySoft.miyuki_y(-1.0, "miyuki_y");
 
 /**
  * 戦艦
@@ -652,8 +689,7 @@ gls2.EnemySoft.miyuki_y2 = _miyuki_y(-1.0, "miyuki_y");
  * @class
  * @extends {gls2.EnemySoft}
  */
-var _miyuki_t = tm.createClass(
-/** @lends {_miyuki_t.prototype} */
+gls2.EnemySoft.miyuki_t = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
@@ -675,6 +711,7 @@ var _miyuki_t = tm.createClass(
 
         enemy.velocityX = this.velocityX;
         enemy.patterns = [this.attackPattern];
+        enemy.phase = 0;
 
         enemy.tweener
             .clear()
@@ -683,17 +720,20 @@ var _miyuki_t = tm.createClass(
             }.bind(enemy));
 
         enemy.on("enterframe", function() {
-            this.x += this.velocityX;
+            if (this.phase == 0) {
+                this.y += 0.5;
+                if (this.y > SC_H*0.4)this.phase++;
+            } else {
+                this.x += this.velocityX;
+            }
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
-
-            this.enableFire = this.y < this.player.y;
         });
     },
 })
-gls2.EnemySoft.miyuki_t1 = _miyuki_y( 0.5, "miyuki_t");
-gls2.EnemySoft.miyuki_t1 = _miyuki_y(-0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t1 = gls2.EnemySoft.miyuki_t(-0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t2 = gls2.EnemySoft.miyuki_t( 0.5, "miyuki_t");
 
 /**
  * 浮遊砲台

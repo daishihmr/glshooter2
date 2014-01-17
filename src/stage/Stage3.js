@@ -24,6 +24,7 @@ gls2.Stage3 = tm.createClass(
         });
 
 //        this.seq.add(100, "yotsuba");
+        this.seq.add(100, "hoshizora_y-1");
 
         this.seq.add(300, "nao1-center");
         this.seq.add( 60, "nao1-left");
@@ -42,15 +43,6 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(  1, "nao2-left");
         this.seq.add(  1, "nao2-right");
 
-        this.seq.add(300, "nao2-center");
-        this.seq.add( 60, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
         this.seq.add(300, "nao2-center");
         this.seq.add( 60, "nao2-left");
         this.seq.add(  1, "nao2-right");
