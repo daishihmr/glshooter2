@@ -384,19 +384,76 @@ gls2.EnemyUnit = {
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y: 40 },
 ],
 
+//小型戦闘機「ミドリカワ」
+"nao1-left": [  //左側
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.1, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.2, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.3, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.4, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.5, y:-100 },
+],
+"nao1-right": [  //右側
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.5, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.6, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.7, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.8, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.9, y:-100 },
+],
+"nao1-center": [  //中央
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.3, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.4, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.5, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.6, y:-100 },
+    { hard:$e.nao, soft:$s.nao1, x:SC_W*0.7, y:-100 },
+],
+"nao2-left": [  //左側
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.1, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.2, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.3, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.4, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.5, y:-100 },
+],
+"nao2-right": [  //右側
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.5, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.6, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.7, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.8, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.9, y:-100 },
+],
+"nao2-center": [  //中央
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.3, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.4, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.5, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.6, y:-100 },
+    { hard:$e.nao, soft:$s.nao2, x:SC_W*0.7, y:-100 },
+],
+"nao3-left": [  //左側
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.1, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.2, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.3, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.4, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.5, y:-100 },
+],
+"nao3-right": [  //右側
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.5, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.6, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.7, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.8, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.9, y:-100 },
+],
+"nao3-center": [  //中央
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.3, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.4, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.5, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.6, y:-100 },
+    { hard:$e.nao, soft:$s.nao3, x:SC_W*0.7, y:-100 },
+],
+
 //大型戦艦「ホシゾラ」
-"hoshizora_y-1": [
-    { hard:$e.miyuki_y, soft:$s.miyuki_y1, x:-256, y:140 },
-],
-"hoshizora_y-2": [
-    { hard:$e.miyuki_y, soft:$s.miyuki_y2, x:SC_W+128, y:60 },
-],
-"hoshizora_t-1": [
-    { hard:$e.miyuki_t, soft:$s.miyuki_t, x:-128, y:60 },
-],
-"hoshizora_t-2": [
-    { hard:$e.miyuki_t, soft:$s.miyuki_t, x:SC_W+128, y:60 },
-],
+"hoshizora_y-1": [{ hard:$e.miyuki_y, soft:$s.miyuki_y1, x:-256    , y:140 },],
+"hoshizora_y-2": [{ hard:$e.miyuki_y, soft:$s.miyuki_y2, x:SC_W+128, y: 60 },],
+"hoshizora_t-1": [{ hard:$e.miyuki_t, soft:$s.miyuki_t1, x:SC_W*0.7, y:-128},],
+"hoshizora_t-2": [{ hard:$e.miyuki_t, soft:$s.miyuki_t2, x:SC_W*0.3, y:-128},],
 
 //浮遊砲台「ヨツバ」
 "yotsuba": [

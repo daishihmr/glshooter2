@@ -25,6 +25,8 @@ gls2.Enemy.DATA = {
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
+    "higashi":   [  1500,  1200000, false,  true, 20, {"width":256, "height":128}, ],
+    "momozono":  [  6000,  3500000, false,  true,  0, {"width":256, "height":128}, ],
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
     "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
     "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
@@ -32,14 +34,12 @@ gls2.Enemy.DATA = {
 
     //Stage3
     "hino":      [    30,      500, false, false,  1, {"width": 24, "height": 48}, ],
-    "hoshizora_y":[  100,      500, false,  true, 30, {"width":128, "height": 64}, ],
-    "hoshizora_t":[  150,      500, false,  true, 30, {"width":128, "height": 64}, ],
-    "yotsuba":    [  200,    30000, false,  true, 30, {"width": 64, "height": 64}, ],
-    "yotsubaLeaf":[  150,    10000, false, false, 10, {"width": 32, "height": 32}, ],
-//  "midorikawa":[   150,      500, false,  true, 30, {"width":128, "height": 64}, ],
-//  "aoki":      [   150,      500, false,  true, 30, {"width":128, "height": 64}, ],
-    "higashi":   [  2000,   250000, false,  true, 20, {"width":256, "height":128}, ],
-    "momozono":  [  6000,  3000000, false,  true,  0, {"width":256, "height":128}, ],
+    "hoshizora_y":[  100,    20000, false,  true, 30, {"width":128, "height": 64}, ],
+    "hoshizora_t":[  100,    20000, false,  true, 30, {"width":128, "height": 64}, ],
+    "yotsuba":    [  300,   100000, false,  true, 30, {"width": 64, "height": 64}, ],
+    "yotsubaLeaf":[  150,    30000, false, false, 10, {"width": 32, "height": 32}, ],
+    "midorikawa":[     5,     1000, false, false,  1, {"width": 32, "height": 32}, ],
+    "aoki":      [     5,     1200, false, false,  1, {"width": 32, "height": 32}, ],
 };
 
 /**
@@ -494,7 +494,7 @@ gls2.Enemy.Cannon3 = tm.createClass({
 });
 
 /**
- * 強襲戦闘艇「ヒノ」
+ * 転移型強襲戦闘艇「ヒノ」
  */
 gls2.Enemy.akane = tm.createClass(
 {
@@ -513,6 +513,74 @@ gls2.Enemy.akane = tm.createClass(
 });
 
 /**
+ * 小型戦闘機「ミドリカワ」
+ */
+gls2.Enemy.nao = tm.createClass(
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "midorikawa");
+        this.boundingWidthLeft = 0
+        this.boundingWidthRight = 32;
+        this.boundingHeightTop = 0;
+        this.boundingHeightBottom = 32;
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+
+        if (this.x < this.player.x) {
+            this.scaleX = -1;
+        } else {
+            this.scaleX = 1;
+        }
+    },
+    draw: function(canvas) {
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+    },
+});
+
+/**
+ * 小型浮揚戦車「アオキ」
+ */
+gls2.Enemy.reika = tm.createClass(
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "aoki");
+        this.boundingWidthLeft = 0
+        this.boundingWidthRight = 32;
+        this.boundingHeightTop = 0;
+        this.boundingHeightBottom = 32;
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+
+        if (this.x < this.player.x) {
+            this.scaleX = -1;
+        } else {
+            this.scaleX = 1;
+        }
+    },
+    draw: function(canvas) {
+        canvas.fillStyle = "yellow";
+        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
+            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+    },
+    onLaunch: function() {
+        //初期位置で向きを決定
+        if (this.x > SC_W)this.speed *= -1;
+    },
+});
+
+/**
  * 大型戦艦「ホシゾラ」横
  */
 gls2.Enemy.miyuki_y = tm.createClass(
@@ -527,11 +595,15 @@ gls2.Enemy.miyuki_y = tm.createClass(
         this.boundingHeightTop = 64;
     },
     update: function(app) {
-        if (!this.isInScreen()) {
-            if (this.x < 0)this._sprite.setFrameIndex(0);
-            if (this.x > SC_W)this._sprite.setFrameIndex(1);
-        }
         gls2.Enemy.prototype.update.call(this, app);
+        //一部でも表示されたら画面内とする
+        if (this.entered === false) {
+            if (0 <= this.x - this.boundingWidthLeft || this.x + this.boundingWidthRight < SC_W
+            || 0 <= this.y - this.boundingHeightTop || this.y + this.boundingHeightBottom < SC_H) {
+                this.entered = true;
+                this.dispatchEvent(tm.event.Event("enter"));
+            }
+        }
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -539,10 +611,9 @@ gls2.Enemy.miyuki_y = tm.createClass(
     destroy: function() {
         this.fallDown();
     },
-    isInScreen: function() {
-        //一部でも表示されたら画面内とする
-        return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
-            || 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
+    onLaunch: function() {
+        //初期位置で向きを決定
+        if (this.x > SC_W)this._sprite.scaleX = -1;
     },
 });
 
@@ -562,6 +633,14 @@ gls2.Enemy.miyuki_t = tm.createClass(
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
+        //一部でも表示されたら画面内とする
+        if (this.entered === false) {
+            if (0 <= this.x - this.boundingWidthLeft || this.x + this.boundingWidthRight < SC_W
+            || 0 <= this.y - this.boundingHeightTop || this.y + this.boundingHeightBottom < SC_H) {
+                this.entered = true;
+                this.dispatchEvent(tm.event.Event("enter"));
+            }
+        }
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -569,15 +648,10 @@ gls2.Enemy.miyuki_t = tm.createClass(
     destroy: function() {
         this.fallDown();
     },
-    isInScreen: function() {
-        //一部でも表示されたら画面内とする
-        return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
-            || 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
-    },
 });
 
 /**
- * 浮遊砲台「ヨツバ」（エクステンドキャリア）
+ * 局地防衛用浮揚連装砲台「ヨツバ」（エクステンドキャリア）
  */
 gls2.Enemy.Alice = tm.createClass({
     superClass: gls2.Enemy,
@@ -627,7 +701,7 @@ gls2.Enemy.Alice = tm.createClass({
 });
 
 /**
- * 浮遊砲台「ヨツバ」端末
+ * 局地防衛用浮揚連装砲台「ヨツバ」端末
  */
 gls2.Enemy.AliceLeaf = tm.createClass({
     superClass: gls2.Enemy,

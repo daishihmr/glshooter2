@@ -652,6 +652,38 @@ gls2.Danmaku["akane"] = new bulletml.Root({
 });
 
 /**
+ * 直球勝負！
+ */
+gls2.Danmaku["nao-1"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(20),
+             $nway(3, -5, 5, $spd4, RL, $.offsetX(0), $.offsetY(0), $.autonomy(true)),
+        ]),
+    ]),
+});
+gls2.Danmaku["nao-2"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(20),
+            $.fire($.direction(0), $spd4, RL),
+        ]),
+    ]),
+});
+
+/**
+ * れいか様
+ */
+gls2.Danmaku["reika"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(20),
+            $.fire($.direction(0), $spd5, BL),
+        ]),
+    ]),
+});
+
+/**
  *　小学８年生用
  */
 gls2.Danmaku["miyuki_y"] = new bulletml.Root({
@@ -672,14 +704,36 @@ gls2.Danmaku["miyuki_y"] = new bulletml.Root({
     ]),
 });
 gls2.Danmaku["miyuki_t"] = new bulletml.Root({
-    "top": $.action([
+    "top0": $.action([
         $.wait("40"),
         $.repeat(999, [
             $.repeat(3, [
-                $absoluteNway(3, -20, 20, $spd2, $.bullet({frame:2}), 0, 0),
+                $absoluteNway(3, -20, 20, $spd3, BL, $.offsetX(32), $.offsetY(32)),
                 $interval(30),
             ]),
-            $interval(60),
+            $.repeat(3, [
+                $absoluteNway(3, -10, 10, $spd3, BL, $.offsetX(-32), $.offsetY(-32)),
+                $interval(30),
+            ]),
+            $.repeat(3, [
+                $absoluteNway(3, -5, 5, $spd3, BL, $.offsetX(-16), $.offsetY(-16)),
+                $interval(30),
+            ]),
+            $interval(120),
+        ]),
+    ]),
+    "top0": $.action([
+        $.wait("40"),
+        $.repeat(999, [
+            $.repeat(5, [
+                $absoluteNway(5, -30, 30, $spd3, BL, $.offsetX(-32), $.offsetY(32)),
+                $interval(45),
+            ]),
+            $.repeat(5, [
+                $absoluteNway(5, -30, 30, $spd3, BL, $.offsetX( 32), $.offsetY(32)),
+                $interval(45),
+            ]),
+            $interval(120),
         ]),
     ]),
 });
@@ -700,7 +754,13 @@ gls2.Danmaku["alice"] = new bulletml.Root({
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $.fire($.direction(5, "sequence"), $spd1, BS, $.offsetX(0), $.autonomy(true)),
+            $.fire($.direction( 5, "sequence"), $spd1, BS, $.offsetX(0), $.autonomy(true)),
+            $interval(10),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $.fire($.direction(10, "sequence"), $spd2, RS, $.offsetX(0), $.autonomy(true)),
             $interval(10),
         ]),
     ]),

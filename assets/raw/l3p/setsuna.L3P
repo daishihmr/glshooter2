@@ -1,0 +1,118 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	BG\BG08.suf
+	G1\G110.suf
+	P3\P312.suf
+	S2\S209.suf
+	SL\SL07.suf
+	SL\SL14.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (  40.250 -53.625   0.000 )
+	DisplayScale: 0.062500000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr "#01" { col ( rgb ( 1.000 0.200 0.050 ) ) amb ( 0.200 ) dif ( 0.800 ) spc ( 0.700 1.000 0.000 ) }
+	1: atr "#02" { col ( rgb ( 0.600 0.900 1.000 ) ) amb ( 0.200 ) dif ( 0.800 ) spc ( 0.700 1.000 0.000 ) }
+	2: atr "#03" { col ( rgb ( 0.260 0.200 0.630 ) ) amb ( 0.200 ) dif ( 0.800 ) spc ( 0.700 1.000 0.000 ) }
+	3: atr noname { col ( 1.000 ) amb ( 0.200 ) dif ( 0.800 ) spc ( 0.700 1.000 0.000 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
+	{	mov ( 5595.72 -29.1534 6979.56 ) eye deg( 45 ) }
+	{	mov ( -399.402 9.5512 226.957 ) target }
+	{	mov ( -294.9 -897 -145.8 ) rotz ( -90 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.9 0.9 8.5 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -429.9 -627 -315 ) rotz ( -90 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.9 0.9 7.7 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 -897 -460.8 ) rotz ( -90 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.9 0.9 3.15 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 -896.1 147.6 ) rotz ( -90 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.9 -0.9 6.3 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -429.9 -611.2 282.6 ) rotz ( -90 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.9 -0.9 7.6 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 -896.1 462.6 ) rotz ( -90 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.9 -0.9 3.15 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 -1256.9 -157.4 ) rotz ( 90 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.9 0.9 4.7 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 -1256.9 157.6 ) rotz ( 90 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.9 0.9 1.5 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 897 -145.8 ) rotz ( 90 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.9 -0.9 8.5 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -429.9 627 -315 ) rotz ( 90 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.9 -0.9 7.7 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 897 -460.8 ) rotz ( 90 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.9 -0.9 3.15 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 896.1 147.6 ) rotz ( 90 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.9 0.9 6.3 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -429.9 611.2 282.6 ) rotz ( 90 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.9 0.9 7.6 ) obj P312 /* "P3\P312.suf" atr "#01" */
+	}
+	{	mov ( -294.9 896.1 462.6 ) rotz ( 90 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.9 0.9 3.15 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 1256.9 -157.4 ) rotz ( -90 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.9 -0.9 4.7 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -294.9 1256.9 157.6 ) rotz ( -90 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.9 -0.9 1.5 ) obj P312 /* "P3\P312.suf" atr "#03" */
+	}
+	{	mov ( -700 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 6.5 0.9 0.8 ) obj BG08 /* "BG\BG08.suf" atr "#01" */
+	}
+	{	mov ( -800 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 5.6 1.7 0.9 ) obj BG08 /* "BG\BG08.suf" atr "#01" */
+	}
+	{	mov ( -313 -2239 0 ) rotz ( -110 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1.4 -1 1.4 ) obj S209 /* "S2\S209.suf" atr "#01" */
+	}
+	{	mov ( -50 0 50 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.2 1.6 2.5 ) obj SL14 /* "SL\SL14.suf" atr "#01" */
+	}
+	{	mov ( -950 -1150 550 ) rotz ( 180 ) roty ( 0 ) rotx ( -130 )
+		scal ( 1 1 2.2 ) obj SL07 /* "SL\SL07.suf" atr "#02" */
+	}
+	{	mov ( -950 1150 550 ) rotz ( -180 ) roty ( 0 ) rotx ( 130 )
+		scal ( 1 -1 2.2 ) obj SL07 /* "SL\SL07.suf" atr "#02" */
+	}
+	{	mov ( -1000 0 850 ) rotz ( 180 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1 1 2.2 ) obj SL07 /* "SL\SL07.suf" atr "#02" */
+	}
+	{	mov ( -563 -1739 0 ) rotz ( 180 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1.4 -1 1.4 ) obj S209 /* "S2\S209.suf" atr "#01" */
+	}
+	{	mov ( -50 650 500 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 1 1 ) obj G110 /* "G1\G110.suf" atr "#03" */
+	}
+	{	mov ( -50 -650 500 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 -1 1 ) obj G110 /* "G1\G110.suf" atr "#03" */
+	}
+	{	mov ( -313 2239 0 ) rotz ( 110 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1.4 1 1.4 ) obj S209 /* "S2\S209.suf" atr "#01" */
+	}
+	{	mov ( -563 1739 0 ) rotz ( -180 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1.4 1 1.4 ) obj S209 /* "S2\S209.suf" atr "#01" */
+	}
+}
