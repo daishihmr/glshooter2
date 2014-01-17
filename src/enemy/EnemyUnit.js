@@ -450,18 +450,10 @@ gls2.EnemyUnit = {
 ],
 
 //大型戦艦「ホシゾラ」
-"hoshizora_y-1": [
-    { hard:$e.miyuki_y, soft:$s.miyuki_y1, x:-256, y:140 },
-],
-"hoshizora_y-2": [
-    { hard:$e.miyuki_y, soft:$s.miyuki_y2, x:SC_W+128, y:60 },
-],
-"hoshizora_t-1": [
-    { hard:$e.miyuki_t, soft:$s.miyuki_t, x:-128, y:60 },
-],
-"hoshizora_t-2": [
-    { hard:$e.miyuki_t, soft:$s.miyuki_t, x:SC_W+128, y:60 },
-],
+"hoshizora_y-1": [{ hard:$e.miyuki_y, soft:$s.miyuki_y1, x:-256    , y:140 },],
+"hoshizora_y-2": [{ hard:$e.miyuki_y, soft:$s.miyuki_y2, x:SC_W+128, y: 60 },],
+"hoshizora_t-1": [{ hard:$e.miyuki_t, soft:$s.miyuki_t1, x:SC_W*0.7, y:-128},],
+"hoshizora_t-2": [{ hard:$e.miyuki_t, soft:$s.miyuki_t2, x:SC_W*0.3, y:-128},],
 
 //浮遊砲台「ヨツバ」
 "yotsuba": [

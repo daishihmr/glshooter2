@@ -593,6 +593,61 @@ gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6);
 gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12);
 
 /**
+ * 小型砲台
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+gls2.EnemySoft.nao = tm.createClass(
+/** @lends {gls2.EnemySoft.Heri2.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    patternName: null,
+
+    /**
+     * @constructs
+     */
+    init: function(speed) {
+        this.superInit();
+        this.patternName = "nao-1";
+        this.speed = speed;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.angle = Math.PI * 0.5;
+        enemy.patternName = this.patternName;
+        enemy.speed = this.speed;
+
+        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+            gls2.EnemySoft.attack(this, this.patternName);
+            this.on("enterframe", function() {
+                if (this.y < this.player.y && this.entered) {
+                    var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
+                    this.angle += (a < this.angle) ? -0.02 : 0.02;
+                    this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI-0.5);
+                }
+
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+
+                if (!this.isInScreen() && this.entered) {
+                    this.remove();
+                }
+
+                if (gls2.distanceSq(this, this.player) < 150*150 || this.y > this.player.y + 150) {
+                    this.enableFire = false;
+                }
+            });
+        }.bind(enemy));
+    },
+});
+gls2.EnemySoft.nao1 = gls2.EnemySoft.nao(3);
+gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6);
+gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12);
+
+/**
  * 戦艦
  *
  * 左右から出現、そのまま等速で横断する。
@@ -675,6 +730,7 @@ var _miyuki_t = tm.createClass(
 
         enemy.velocityX = this.velocityX;
         enemy.patterns = [this.attackPattern];
+        enemy.phase = 0;
 
         enemy.tweener
             .clear()
@@ -683,17 +739,20 @@ var _miyuki_t = tm.createClass(
             }.bind(enemy));
 
         enemy.on("enterframe", function() {
-            this.x += this.velocityX;
+            if (this.phase == 0) {
+                this.y += 0.5;
+                if (this.y > SC_H*0.4)this.phase++;
+            } else {
+                this.x += this.velocityX;
+            }
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
-
-            this.enableFire = this.y < this.player.y;
         });
     },
 })
-gls2.EnemySoft.miyuki_t1 = _miyuki_y( 0.5, "miyuki_t");
 gls2.EnemySoft.miyuki_t1 = _miyuki_y(-0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t1 = _miyuki_y( 0.5, "miyuki_t");
 
 /**
  * 浮遊砲台

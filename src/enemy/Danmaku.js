@@ -692,14 +692,36 @@ gls2.Danmaku["miyuki_y"] = new bulletml.Root({
     ]),
 });
 gls2.Danmaku["miyuki_t"] = new bulletml.Root({
-    "top": $.action([
+    "top0": $.action([
         $.wait("40"),
         $.repeat(999, [
             $.repeat(3, [
-                $absoluteNway(3, -20, 20, $spd2, $.bullet({frame:2}), 0, 0),
+                $absoluteNway(3, -20, 20, $spd3, BL, $.offsetX(32), $.offsetY(32)),
                 $interval(30),
             ]),
-            $interval(60),
+            $.repeat(3, [
+                $absoluteNway(3, -10, 10, $spd3, BL, $.offsetX(-32), $.offsetY(-32)),
+                $interval(30),
+            ]),
+            $.repeat(3, [
+                $absoluteNway(3, -5, 5, $spd3, BL, $.offsetX(-16), $.offsetY(-16)),
+                $interval(30),
+            ]),
+            $interval(120),
+        ]),
+    ]),
+    "top0": $.action([
+        $.wait("40"),
+        $.repeat(999, [
+            $.repeat(5, [
+                $absoluteNway(5, -30, 30, $spd3, BL, $.offsetX(-32), $.offsetY(32)),
+                $interval(45),
+            ]),
+            $.repeat(5, [
+                $absoluteNway(5, -30, 30, $spd3, BL, $.offsetX( 32), $.offsetY(32)),
+                $interval(45),
+            ]),
+            $interval(120),
         ]),
     ]),
 });
