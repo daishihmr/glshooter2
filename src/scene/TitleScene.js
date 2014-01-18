@@ -163,7 +163,7 @@ gls2.TitleScene = tm.createClass({
         };
         if (userName) data["userName"] = userName;
         tm.util.Ajax.load({
-            "url": "/ranking/post",
+            "url": "/api/ranking/post",
             "data": data,
             "type": "POST",
             "dataType": "json",
