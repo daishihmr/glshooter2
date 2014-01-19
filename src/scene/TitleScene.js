@@ -185,6 +185,7 @@ gls2.TitleScene = tm.createClass({
                         var userName = "";
                         while (userName === "") userName = window.prompt("仮のユーザー名:");
                         if (userName === null) return;
+                        userName = userName.substring(0, 10);
                         this.postScore(userName + "(仮)");
                     }
                 } else {
