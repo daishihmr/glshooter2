@@ -364,20 +364,20 @@ gls2.EnemyUnit = {
 "nozomi4-2": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 //強襲戦闘機「ヒノ」
-"akane-1": [
+"akane-center": [
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y:130 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.4, y: 80 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.5, y:140 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y: 80 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.7, y:130 },
 ],
-"akane-2": [
+"akane-right": [
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y:160 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y:120 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y: 80 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y: 40 },
 ],
-"akane-3": [
+"akane-left": [
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y:160 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y:120 },
     { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y: 80 },

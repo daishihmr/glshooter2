@@ -555,7 +555,7 @@ gls2.EnemySoft.nao = tm.createClass(
      */
     init: function(speed, way) {
         this.superInit();
-        this.patternName = "nao-2";
+        this.patternName = "nao-"+way;
         this.speed = speed;
     },
     setup: function(enemy) {
@@ -590,7 +590,7 @@ gls2.EnemySoft.nao = tm.createClass(
 });
 gls2.EnemySoft.nao1 = gls2.EnemySoft.nao(3, 1);
 gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6, 1);
-gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(6, 2);
+gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12, 2);
 
 /**
  * 小型浮揚戦車

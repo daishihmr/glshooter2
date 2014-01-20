@@ -28,52 +28,56 @@ gls2.Stage3 = tm.createClass(
 
         this.seq.add(300, "nao1-center");
         this.seq.add( 60, "nao1-left");
-        this.seq.add(  1, "nao1-right");
+        this.seq.add( 60, "nao1-right");
         this.seq.add( 60, "nao1-center");
-        this.seq.add(  1, "nao1-left");
-        this.seq.add(  1, "nao1-right");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
+        this.seq.add( 60, "nao1-center");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
+        this.seq.add( 60, "nao1-center");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
+        this.seq.add( 60, "nao1-center");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
+        this.seq.add( 60, "nao1-center");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
 
-        this.seq.add(300, "nao2-center");
-        this.seq.add( 60, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-
-        this.seq.add(300, "nao2-center");
-        this.seq.add( 60, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add(300, "nao2-center");
-        this.seq.add( 60, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-
-        this.seq.add(300, "akane-1");
-        this.seq.add(  1, "heri2-center");
-
-        this.seq.add(100, "akane-2");
+        this.seq.add(600, "akane-center");
+        this.seq.add(120, "heri2-center");
         this.seq.add(  1, "heri2-left");
-
-        this.seq.add(100, "akane-3");
         this.seq.add(  1, "heri2-right");
 
+        this.seq.add(300, "akane-right");
+        this.seq.add(120, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+
+        this.seq.add(300, "akane-left");
         this.seq.add(100, "heri2-center");
+        this.seq.add(  1, "heri2-right");
+
+        this.seq.add(300, "akane-center");
+        this.seq.add(120, "heri2-center");
         this.seq.add(  1, "heri2-left");
         this.seq.add(  1, "heri2-right");
+
+
+        this.seq.add(300, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+
+        this.seq.add(300, "nao3-center");
+        this.seq.add( 60, "nao3-left");
+        this.seq.add( 60, "nao3-right");
+        this.seq.add( 60, "nao3-center");
+        this.seq.add( 60, "nao3-left");
+        this.seq.add( 60, "nao3-right");
+
 
         this.seq.add(200, "akane-1");
         this.seq.add( 60, "akane-2");
