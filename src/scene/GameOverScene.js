@@ -10,6 +10,10 @@ gls2.GameOverScene = tm.createClass(
 /** @lends {gls2.GameOverScene.prototype} */
 {
     superClass: gls2.Scene,
+
+    age: 0,
+    opened: false,
+
     /**
      * @constructs
      */
@@ -21,20 +25,45 @@ gls2.GameOverScene = tm.createClass(
 
         this.interactive = true;
         this.addEventListener("enter", function() {
-            this.tweener.clear()
-                .wait(5000)
-                .call(function() {
-                    this.app.replaceScene(gls2.TitleScene());
-                }.bind(this));
+            this.age = 0;
+            this.opened = false;
         });
     },
     update: function(app) {
-        if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c")) {
-            app.replaceScene(gls2.TitleScene());
-            return;
+        if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || (this.age == 300 && !this.opened)) {
+            this.openMenu();
         }
+
+        this.age += 1;
     },
+
     drawBackground: function(canvas) {
         canvas.clearColor("black");
     },
+
+    openMenu: function() {
+        this.opened = true;
+
+        var menu = [ "save score", "exit" ];
+        var labels = [
+            "スコアをランキングサーバーへ送信します",
+            "タイトルへ戻ります"
+        ];
+        this.openDialogMenu("GAME OVER", menu, this.onResultMenu, {
+            "defaultValue": 0,
+            "menuDescriptions": labels,
+            "showExit": false
+        });
+    },
+
+    onResultMenu: function(result) {
+        if (result === 0) {
+            this.app.postScore(null, function() {
+                this.app.replaceScene(gls2.TitleScene());
+            });
+        } else {
+            this.app.replaceScene(gls2.TitleScene());
+        }
+    }
+
 });

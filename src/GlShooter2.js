@@ -224,13 +224,81 @@ gls2.GlShooter2 = tm.createClass(
         this.stop();
     },
 
+    /**
+     * @param {?String} userName
+     * @param {function()} callback
+     */
+    postScore: function(userName, callback) {
+        var data = {
+            "score": Math.floor(this.highScore),
+            "stage": this.highScoreStage + 1,
+            "continueCount": this.highScoreContinueCount,
+            "shipType": this.highScoreType,
+            "shipStyle": this.highScoreStyle,
+            "fps": 0,
+            "screenShot": this.highScoreScreenShot
+        };
+        if (userName) data["userName"] = userName;
+        tm.util.Ajax.load({
+            "url": "/api/ranking/post",
+            "data": data,
+            "type": "POST",
+            "dataType": "json",
+            "success": function(result) {
+                if (!result) {
+                    alert("登録に失敗しました！＞＜");
+                    callback();
+                } else if (result["success"]) {
+                    alert("登録完了！");
+                    callback();
+                } else if (result["confirmLogin"]) {
+                    if (confirm("ログインしていません。ログインしますか？")) {
+                        window["onchildclose"] = function() {
+                            this.postScore(null, callback);
+                            window["onchildclose"] = undefined;
+                        }.bind(this);
+                        window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
+                    } else if (confirm("匿名でスコア登録しますか？")) {
+                        var userName = "";
+                        while (userName === "") userName = window.prompt("仮のユーザー名:", this.getAnonName());
+                        if (userName === null) return;
+                        userName = userName.substring(0, 10);
+                        this.postScore(userName + " (匿名)", callback);
+                    } else {
+                        callback();
+                    }
+                } else {
+                    alert("登録に失敗しました！＞＜");
+                    callback();
+                }
+            }.bind(this),
+            "error": function() {
+                alert("登録に失敗しました！＞＜");
+                callback();
+            }
+        });
+    },
+
+    getAnonName: function() {
+        return [
+            "名無しシューター",
+            "大佐",
+            "レイニャンにゃん",
+            "アイたそ",
+            "ぱふぇ☆",
+            "能登真璃亜",
+            "にゃんぱすー",
+            "相田マナ"
+        ].pickup();
+    },
+
     timeoutTasks: null,
     setTimeoutF: function(fn, t) {
         timeoutTasks.push({
             frame: this.frame + t,
             fn: fn,
         });
-    },
+    }
 
 });
 
