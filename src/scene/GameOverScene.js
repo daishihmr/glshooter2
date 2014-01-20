@@ -60,7 +60,7 @@ gls2.GameOverScene = tm.createClass(
         if (result === 0) {
             this.app.postScore(null, function() {
                 this.app.replaceScene(gls2.TitleScene());
-            });
+            }.bind(this));
         } else {
             this.app.replaceScene(gls2.TitleScene());
         }
