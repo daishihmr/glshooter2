@@ -21,6 +21,19 @@ gls2.Setting = {
     FPS: 60,
 
     /**
+     * 処理落ちが入り始める弾の数
+     * @const
+     */
+    FPS_DOWN_BULLET_COUNT: 500,
+
+    /**
+     * 処理落ちにより最大どこまでFPSが下がるか(0.0～1.0)
+     * @const
+     */
+    FPS_DOWN_MIN_RATE: 0.2,
+
+
+    /**
      * 初期ランク
      * @const
      */
@@ -32,7 +45,7 @@ gls2.Setting = {
      */
     EXTEND_SCORE: [
          1000000000,
-        10000000000,
+        10000000000
     ],
 
     /**
