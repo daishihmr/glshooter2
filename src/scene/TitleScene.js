@@ -180,19 +180,30 @@ gls2.TitleScene = tm.createClass({
                             this.postScore();
                             window["onchildclose"] = undefined;
                         }.bind(this);
-                        var p = window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
-                    } else if (confirm("仮のユーザー名でスコア登録しますか？")) {
+                        window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
+                    } else if (confirm("匿名でスコア登録しますか？")) {
                         var userName = "";
-                        while (userName === "") userName = window.prompt("仮のユーザー名:");
+                        while (userName === "") userName = window.prompt("仮のユーザー名:", this.getAnonName());
                         if (userName === null) return;
                         userName = userName.substring(0, 10);
-                        this.postScore(userName + "(仮)");
+                        this.postScore(userName + " (匿名)");
                     }
                 } else {
                     alert("登録に失敗しました！＞＜");
                 }
             }.bind(this)
         });
+    },
+
+    getAnonName: function() {
+        return [
+            "名無しシューター",
+            "大佐",
+            "ぱふぇ☆",
+            "アイたそ",
+            "にゃんぱすー",
+            "相田マナ"
+        ].pickup();
     },
 
     openSetting: function() {
