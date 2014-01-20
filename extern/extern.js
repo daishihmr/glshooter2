@@ -104,9 +104,9 @@ tm.input.Keyboard.prototype.getKey = function(key) {
     else if (key === "up")    return origGetKey.call(this, "up")    || origGetKey.call(this, "w");
     else if (key === "right") return origGetKey.call(this, "right") || origGetKey.call(this, "d");
     else if (key === "down")  return origGetKey.call(this, "down")  || origGetKey.call(this, "s");
-    else if (key === "z")     return origGetKey.call(this, "z")     || origGetKey.call(this, "numpad3");
-    else if (key === "x")     return origGetKey.call(this, "x")     || origGetKey.call(this, "numpad2");
-    else if (key === "c")     return origGetKey.call(this, "c")     || origGetKey.call(this, "numpad1");
+    else if (key === "z")     return origGetKey.call(this, "z")     || origGetKeyDown.call(this, "l") || origGetKey.call(this, "numpad3");
+    else if (key === "x")     return origGetKey.call(this, "x")     || origGetKeyDown.call(this, "k") || origGetKey.call(this, "numpad2");
+    else if (key === "c")     return origGetKey.call(this, "c")     || origGetKeyDown.call(this, "j") || origGetKey.call(this, "numpad1");
     else return origGetKey.call(this, key);
 };
 
@@ -116,9 +116,9 @@ tm.input.Keyboard.prototype.getKeyDown = function(key) {
     else if (key === "up")    return origGetKeyDown.call(this, "up")    || origGetKeyDown.call(this, "w");
     else if (key === "right") return origGetKeyDown.call(this, "right") || origGetKeyDown.call(this, "d");
     else if (key === "down")  return origGetKeyDown.call(this, "down")  || origGetKeyDown.call(this, "s");
-    else if (key === "z")     return origGetKeyDown.call(this, "z")     || origGetKeyDown.call(this, "numpad3");
-    else if (key === "x")     return origGetKeyDown.call(this, "x")     || origGetKeyDown.call(this, "numpad2");
-    else if (key === "c")     return origGetKeyDown.call(this, "c")     || origGetKeyDown.call(this, "numpad1");
+    else if (key === "z")     return origGetKeyDown.call(this, "z")     || origGetKeyDown.call(this, "l") || origGetKeyDown.call(this, "numpad3");
+    else if (key === "x")     return origGetKeyDown.call(this, "x")     || origGetKeyDown.call(this, "k") || origGetKeyDown.call(this, "numpad2");
+    else if (key === "c")     return origGetKeyDown.call(this, "c")     || origGetKeyDown.call(this, "j") || origGetKeyDown.call(this, "numpad1");
     else return origGetKeyDown.call(this, key);
 };
 

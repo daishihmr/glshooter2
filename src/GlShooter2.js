@@ -8,10 +8,10 @@ var SC_W = 480;
 /** @const */
 var SC_H = 640;
 
-/** @namespace */
-var gls2 = {
-    /** @type {gls2.GlShooter2} */
-    core: null,
+gls2["pause"] = function() {
+    if (gls2.core && gls2.core.currentScene === gls2.GameScene.SINGLETON) {
+        gls2.GameScene.SINGLETON.openPauseMenu(0);
+    }
 };
 
 /**
@@ -32,6 +32,8 @@ gls2.GlShooter2 = tm.createClass(
     highScoreStyle: 0,
     /** ハイスコア取得時のコンティニュー回数 */
     highScoreContinueCount: 0,
+    /** ハイスコア取得時のスクリーンショット */
+    highScoreScreenShot: null,
 
     /** BGM音量(0～5) */
     bgmVolume: 3,
@@ -119,9 +121,6 @@ gls2.GlShooter2 = tm.createClass(
             "sound/voLetsGo": "assets/vo_letsgo.mp3",
             "sound/voSelectShip": "assets/vo_select_your_battle_ship.mp3",
             "sound/voWarning": "assets/vo_warning.mp3",
-
-            // test
-            "star": "assets/star.png",
         };
 
         if (DEBUG) {
@@ -223,7 +222,6 @@ gls2.GlShooter2 = tm.createClass(
 
     exitApp: function() {
         this.stop();
-        tm.social.Nineleap.postRanking(this.highScore, "");
     },
 
     timeoutTasks: null,

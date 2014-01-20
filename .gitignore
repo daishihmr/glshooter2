@@ -3,3 +3,4 @@ copy-dependencies.bat
 .DS-Store
 *.sln
 *.suo
+package/
