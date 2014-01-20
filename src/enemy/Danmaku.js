@@ -658,7 +658,7 @@ gls2.Danmaku["nao-1"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval(20),
-             $nway(3, -5, 5, $spd4, RL, $.offsetX(0), $.offsetY(0), $.autonomy(true)),
+            $.fire($.direction(0), $spd4, RL),
         ]),
     ]),
 });
@@ -666,7 +666,15 @@ gls2.Danmaku["nao-2"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval(20),
-            $.fire($.direction(0), $spd4, RL),
+             $nway(2, -5, 5, $spd4, RL, $.offsetX(0), $.offsetY(0), $.autonomy(true)),
+        ]),
+    ]),
+});
+gls2.Danmaku["nao-3"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(20),
+             $nway(2, -1, 1, $spd4, RL, $.offsetX(0), $.offsetY(0), $.autonomy(true)),
         ]),
     ]),
 });

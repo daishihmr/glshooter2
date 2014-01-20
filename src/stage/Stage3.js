@@ -28,7 +28,22 @@ gls2.Stage3 = tm.createClass(
 
         this.seq.add(300, "nao1-center");
         this.seq.add( 60, "nao1-left");
-        this.seq.add(  1, "nao1-right");
+        this.seq.add( 60, "nao1-right");
+        this.seq.add( 60, "nao1-center");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
+        this.seq.add( 60, "nao1-center");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
+        this.seq.add( 60, "nao1-center");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
+        this.seq.add( 60, "nao1-center");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
+        this.seq.add( 60, "nao1-center");
+        this.seq.add( 60, "nao1-left");
+        this.seq.add( 60, "nao1-right");
 
         this.seq.add(300, "nao2-center");
         this.seq.add( 60, "nao2-left");
