@@ -15354,6 +15354,10 @@ tm.display = tm.display || {};
             
             obj.draw(this.canvas);
             
+            if (obj instanceof tm.display.Layer) {
+                return;
+            }
+
             // 子供達も実行
             if (obj.children.length > 0) {
                 var tempChildren = obj.children.slice();
