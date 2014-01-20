@@ -468,6 +468,11 @@ gls2.GameScene = tm.createClass(
                 this.score += gls2.Setting.MAXIMUM_BONUS;
             }
 
+            // 処理落ち
+            var bulletCount = gls2.Bullet.activeList.length;
+            app.fps = Math.floor(gls2.math.clamp(400 / bulletCount, 0.3, 1.0) * 60);
+            console.log(app.fps);
+
         }
 
         // console.log("onexitframe " + (new Date().getTime() - beginProcessTime));
