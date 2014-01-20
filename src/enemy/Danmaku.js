@@ -1421,49 +1421,41 @@ gls2.Danmaku["mana-1-1"] = new bulletml.Root({
     "winder": $.action([
         $.wait(60),
         $.repeat(8, [
-            $.fire($.direction("(-190+$loop.index*30)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
+            $.fire($.direction("(-190+$loop.index*30)*$1"), $spd3, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
         ]),
         $.repeat(50, [
-            $interval(15),
+            $interval(20),
             $.bindVar("a", "$loop.index*3"),
             $.repeat(8, [
-                $.fire($.direction("(-190+$a+$loop.index*30)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
-            ]),
-        ]),
-        $.repeat(20, [
-            $interval(15),
-            $.repeat(8, [
-                $.fire($.direction("(-190+50*3+$loop.index*30)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
+                $.fire($.direction("(-190+$a+$loop.index*30)*$1"), $spd3, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
             ]),
         ]),
     ]),
     "top2": $.action([
         $.wait(60),
-        $interval(400),
-        $.repeat(5, [
-            $.bindVar("i", "$loop.index"),
-            $whip($spd3(6), 0.02, "4+$loop.index*3", function(spd) {
-                return $.action([
-                    $.fire($.direction("(12-$i)*-3"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*-2"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*-1"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)* 0"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+1"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+2"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+3"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-
-                    $.fire($.direction("(12-$i)*-3"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*-2"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*-1"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)* 0"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+1"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+2"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+3"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-
-                    $interval(5),
-                ]);
-            }),
-            $interval(90),
+        $interval(300),
+        $.repeat(7, [
+            $.bindVar("s", "$loop.index"),
+            $.repeat(5, [
+                $.bindVar("ss", "($s-$loop.index)*0.5"),
+                $nway(41, -180+360/41/2, 180-360/41/2, $spd4("$ss"), RNL, $.offsetX(-30), $.offsetY(-30)),
+            ]),
+            $interval(5),
+            $.repeat(5, [
+                $.bindVar("ss", "($s-$loop.index)*0.5"),
+                $nway(41, -180+360/41/2, 180-360/41/2, $spd4("$ss"), RNL, $.offsetX(+30), $.offsetY(-30)),
+            ]),
+            $interval(20),
+            $.repeat(5, [
+                $.bindVar("ss", "($s-$loop.index)*0.5"),
+                $absoluteNway(42, -180+360/42/2, 180-360/42/2, $spd5("$ss"), BNL, $.offsetX(+30), $.offsetY(-30)),
+            ]),
+            $interval(5),
+            $.repeat(5, [
+                $.bindVar("ss", "($s-$loop.index)*0.5"),
+                $absoluteNway(42, -180+360/42/2, 180-360/42/2, $spd5("$ss"), BNL, $.offsetX(-30), $.offsetY(-30)),
+            ]),
+            $interval(80),
         ]),
     ]),
 });
@@ -1472,7 +1464,32 @@ gls2.Danmaku["mana-1-1"] = new bulletml.Root({
  */
 gls2.Danmaku["mana-1-2"] = new bulletml.Root({
     "top": $.action([
+        $.repeat(5, [
+            $.bindVar("i", "$loop.index"),
+            $.bindVar("j", "1/($i+1) * 4"),
+            $whip($spd3(6), 0.02, "4+$loop.index*3", function(spd) {
+                return $.action([
+                    $.fire($.direction("(12-$i)*(-3*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(-2*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(-1*$j)"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*( 0*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+1*$j)"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+2*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+3*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
 
+                    $.fire($.direction("(12-$i)*(-3*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(-2*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(-1*$j)"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*( 0*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+1*$j)"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+2*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+3*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+
+                    $interval(5),
+                ]);
+            }),
+            $interval(60),
+        ]),
     ]),
 });
 
