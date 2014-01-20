@@ -24,7 +24,7 @@ gls2.Stage3 = tm.createClass(
         });
 
 //        this.seq.add(100, "yotsuba");
-        this.seq.add(100, "hoshizora_y-1");
+        this.seq.add(100, "hoshizora_y1");
 
         this.seq.add(300, "nao1-center");
         this.seq.add( 60, "nao1-left");
@@ -35,65 +35,102 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao1-center");
         this.seq.add( 60, "nao1-left");
         this.seq.add( 60, "nao1-right");
-        this.seq.add( 60, "nao1-center");
-        this.seq.add( 60, "nao1-left");
-        this.seq.add( 60, "nao1-right");
-        this.seq.add( 60, "nao1-center");
-        this.seq.add( 60, "nao1-left");
-        this.seq.add( 60, "nao1-right");
-        this.seq.add( 60, "nao1-center");
-        this.seq.add( 60, "nao1-left");
-        this.seq.add( 60, "nao1-right");
 
-        this.seq.add(600, "akane-center");
         this.seq.add(120, "heri2-center");
         this.seq.add(  1, "heri2-left");
         this.seq.add(  1, "heri2-right");
-
-        this.seq.add(300, "akane-right");
-        this.seq.add(120, "heri2-center");
-        this.seq.add(  1, "heri2-left");
-
-        this.seq.add(300, "akane-left");
-        this.seq.add(100, "heri2-center");
-        this.seq.add(  1, "heri2-right");
-
-        this.seq.add(300, "akane-center");
-        this.seq.add(120, "heri2-center");
+        this.seq.add( 60, "heri2-center");
         this.seq.add(  1, "heri2-left");
         this.seq.add(  1, "heri2-right");
 
-
-        this.seq.add(300, "nao2-center");
+        this.seq.add(150, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
 
-        this.seq.add(300, "nao3-center");
-        this.seq.add( 60, "nao3-left");
-        this.seq.add( 60, "nao3-right");
-        this.seq.add( 60, "nao3-center");
-        this.seq.add( 60, "nao3-left");
-        this.seq.add( 60, "nao3-right");
-
-
-        this.seq.add(200, "akane-1");
-        this.seq.add( 60, "akane-2");
-        this.seq.add( 30, "akane-3");
-
-        this.seq.add(300, "heri2-center");
+        this.seq.add(150, "akane-center");
+        this.seq.add( 60, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+        this.seq.add( 60, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+        this.seq.add( 60, "heri2-center");
         this.seq.add(  1, "heri2-left");
         this.seq.add(  1, "heri2-right");
 
-        this.seq.add(360, function() {
-            this.gameScene.ground.direction = ~~((Math.PI/180)*90);
-            this.gameScene.ground.speed = 4;
-            this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
+        this.seq.add( 60, "akane-right");
+        this.seq.add( 60, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+        this.seq.add( 60, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+        this.seq.add( 60, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+
+        this.seq.add( 60, "akane-left");
+        this.seq.add( 60, "heri2-center");
+        this.seq.add(  1, "heri2-right");
+        this.seq.add( 60, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+        this.seq.add( 60, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+
+        this.seq.add(120, "akane-center");
+        this.seq.add( 30, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+        this.seq.add( 30, "akane-right");
+        this.seq.add( 30, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+        this.seq.add( 30, "akane-left");
+        this.seq.add( 30, "heri2-center");
+        this.seq.add(  1, "heri2-left");
+        this.seq.add(  1, "heri2-right");
+
+        this.seq.add(180, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+
+        this.seq.add(120, function() {
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:4}, 5000, "easeInOutQuad")
+                .to({direction:Math.PI/180*90}, 5000, "easeInOutQuad")
         });
 
-        this.seq.add(100, "hoshizora_y-1");
+        this.seq.add(100, "hoshizora_y1");
         this.seq.add(  1, "heri2-right");
 
         this.seq.add(  1, function() {

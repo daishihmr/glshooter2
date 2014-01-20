@@ -590,7 +590,7 @@ gls2.EnemySoft.nao = tm.createClass(
 });
 gls2.EnemySoft.nao1 = gls2.EnemySoft.nao(3, 1);
 gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6, 1);
-gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12, 2);
+gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12, 1);
 
 /**
  * 小型浮揚戦車
@@ -653,7 +653,7 @@ gls2.EnemySoft.miyuki_y = tm.createClass(
     init: function(velocityX, attackPattern) {
         this.superInit();
         this.velocityX = velocityX;
-        this.attackPattern = attackPattern;
+        this.attackPattern = "miyuki_y";
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -672,13 +672,12 @@ gls2.EnemySoft.miyuki_y = tm.createClass(
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
-
             this.enableFire = this.y < this.player.y;
         });
     },
 })
-gls2.EnemySoft.miyuki_y1 = gls2.EnemySoft.miyuki_y( 1.0, "miyuki_y");
-gls2.EnemySoft.miyuki_y2 = gls2.EnemySoft.miyuki_y(-1.0, "miyuki_y");
+gls2.EnemySoft.miyuki_y1 = gls2.EnemySoft.miyuki_y( 1.0);
+gls2.EnemySoft.miyuki_y2 = gls2.EnemySoft.miyuki_y(-1.0);
 
 /**
  * 戦艦
