@@ -389,15 +389,19 @@ var _MiddleFighterCommon = tm.createClass(
 
         enemy.velocityY = this.velocityY;
         enemy.patterns = [this.attackPattern];
+        enemy.ready = false;
 
         enemy.tweener
             .clear()
             .moveBy(0, SC_H*0.5, 800, "easeOutQuad")
             .call(function() {
                 gls2.EnemySoft.attack(this, this.patterns[0]);
+                this.ready = true;
             }.bind(enemy));
 
         enemy.on("enterframe", function() {
+            if (!this.ready) return;
+
             this.y += this.velocityY;
             if (this.y > SC_H*0.6) {
                 gls2.EnemySoft.stopAttack(this);
@@ -486,12 +490,12 @@ gls2.EnemySoft.Tsukikage4l = tm.createClass(
  * 強襲戦闘艇
  *
  * 画面内上部にテレポートで出現後、ゆっくり下へ移動していく
- * 
+ *
  * @class
  * @extends {gls2.EnemySoft}
  */
 var _akane = tm.createClass(
-/** @lends {_MiddleFighterCommon.prototype} */
+/** @lends {_akane.prototype} */
 {
     superClass: gls2.EnemySoft,
 
@@ -526,7 +530,6 @@ var _akane = tm.createClass(
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
-
             this.enableFire = this.y < this.player.y;
         });
     },
@@ -534,15 +537,108 @@ var _akane = tm.createClass(
 gls2.EnemySoft.akane = _akane(0.5, "akane");
 
 /**
- * 戦艦
+ * 小型戦闘機
+ * 自機に向かって突っ込んでくる.
  *
- * 左右から出現、そのまま等速で横断する。
- * 
  * @class
  * @extends {gls2.EnemySoft}
  */
-var _miyuki_y = tm.createClass(
-/** @lends {_MiddleFighterCommon.prototype} */
+gls2.EnemySoft.nao = tm.createClass(
+/** @lends {gls2.EnemySoft.nao.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    patternName: null,
+
+    /**
+     * @constructs
+     */
+    init: function(speed, way) {
+        this.superInit();
+        this.patternName = "nao-"+way;
+        this.speed = speed;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.angle = Math.PI * 0.5;
+        enemy.patternName = this.patternName;
+        enemy.speed = this.speed;
+
+        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+            gls2.EnemySoft.attack(this, this.patternName);
+            this.on("enterframe", function() {
+                if (this.y < this.player.y && this.entered) {
+                    var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
+                    this.angle += (a < this.angle) ? -0.02 : 0.02;
+                    this.angle = gls2.math.clamp(this.angle, 0.5, Math.PI-0.5);
+                }
+
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+
+                if (!this.isInScreen() && this.entered) {
+                    this.remove();
+                }
+
+                if (gls2.distanceSq(this, this.player) < 150*150 || this.y > this.player.y + 150) {
+                    this.enableFire = false;
+                }
+            });
+        }.bind(enemy));
+    },
+});
+gls2.EnemySoft.nao1 = gls2.EnemySoft.nao(3, 1);
+gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6, 1);
+gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12, 1);
+
+/**
+ * 小型浮揚戦車
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+gls2.EnemySoft.reika = tm.createClass(
+/** @lends {gls2.EnemySoft.reika.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    patternName: null,
+
+    /**
+     * @constructs
+     */
+    init: function(speed) {
+        this.superInit();
+        this.patternName = "reika";
+        this.speed = speed;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.angle = Math.PI * 0.5;
+        enemy.patternName = this.patternName;
+        enemy.speed = this.speed;
+
+        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+            gls2.EnemySoft.attack(this, this.patternName);
+            this.on("enterframe", function() {
+                this.x += this.speed;
+            });
+        }.bind(enemy));
+    },
+});
+gls2.EnemySoft.reika1 = gls2.EnemySoft.reika(3);
+
+/**
+ * 戦艦
+ *
+ * 左右から出現、そのまま等速で横断する。
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+gls2.EnemySoft.miyuki_y = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
@@ -557,7 +653,7 @@ var _miyuki_y = tm.createClass(
     init: function(velocityX, attackPattern) {
         this.superInit();
         this.velocityX = velocityX;
-        this.attackPattern = attackPattern;
+        this.attackPattern = "miyuki_y";
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -576,25 +672,23 @@ var _miyuki_y = tm.createClass(
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
-
             this.enableFire = this.y < this.player.y;
         });
     },
 })
-gls2.EnemySoft.miyuki_y1 = _miyuki_y( 1.0, "miyuki_y");
-gls2.EnemySoft.miyuki_y2 = _miyuki_y(-1.0, "miyuki_y");
+gls2.EnemySoft.miyuki_y1 = gls2.EnemySoft.miyuki_y( 1.0);
+gls2.EnemySoft.miyuki_y2 = gls2.EnemySoft.miyuki_y(-1.0);
 
 /**
  * 戦艦
  *
  * 上から出現、そのまま等速で画面中心まで降りて停止
  * 一定時間後、左右近い方の画面端方向に移動してスクリーンアウト
- * 
+ *
  * @class
  * @extends {gls2.EnemySoft}
  */
-var _miyuki_t = tm.createClass(
-/** @lends {_MiddleFighterCommon.prototype} */
+gls2.EnemySoft.miyuki_t = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
@@ -616,6 +710,7 @@ var _miyuki_t = tm.createClass(
 
         enemy.velocityX = this.velocityX;
         enemy.patterns = [this.attackPattern];
+        enemy.phase = 0;
 
         enemy.tweener
             .clear()
@@ -624,17 +719,20 @@ var _miyuki_t = tm.createClass(
             }.bind(enemy));
 
         enemy.on("enterframe", function() {
-            this.x += this.velocityX;
+            if (this.phase == 0) {
+                this.y += 0.5;
+                if (this.y > SC_H*0.4)this.phase++;
+            } else {
+                this.x += this.velocityX;
+            }
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
-
-            this.enableFire = this.y < this.player.y;
         });
     },
 })
-gls2.EnemySoft.miyuki_t1 = _miyuki_y( 0.5, "miyuki_t");
-gls2.EnemySoft.miyuki_t1 = _miyuki_y(-0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t1 = gls2.EnemySoft.miyuki_t(-0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t2 = gls2.EnemySoft.miyuki_t( 0.5, "miyuki_t");
 
 /**
  * 浮遊砲台
@@ -645,7 +743,7 @@ gls2.EnemySoft.miyuki_t1 = _miyuki_y(-0.5, "miyuki_t");
  * @extends {gls2.EnemySoft}
  */
 var _alice = tm.createClass(
-/** @lends {_MiddleFighterCommon.prototype} */
+/** @lends {_alice.prototype} */
 {
     superClass: gls2.EnemySoft,
 
@@ -719,12 +817,13 @@ var _aliceLeaf = tm.createClass(
                 gls2.EnemySoft.attack(this, this.patterns[0]);
             }.bind(enemy));
 
+        var toDeg = 180/Math.PI;
         enemy.on("enterframe", function() {
             var cx = this.current.x;
             var cy = this.current.y;
             this.dir += 0.01;
-            this.x = cx+Math.sin(this.dir)*64;
-            this.y = cy+Math.cos(this.dir)*64;
+            this.x = cx+Math.sin(this.dir)*this.distance;
+            this.y = cy+Math.cos(this.dir)*this.distance;
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
@@ -740,6 +839,11 @@ gls2.EnemySoft.AliceLeaf = _aliceLeaf();
 gls2.EnemySoft.LargeFighter1 = _MiddleFighterCommon(0.3, "komachi-1");
 gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
 gls2.EnemySoft.LargeFighter4 = _MiddleFighterCommon(0.5, "komachi-4");
+
+/**
+ * のぞみ4面
+ */
+gls2.EnemySoft.Nozomi4 = _MiddleFighterCommon(0.1, "nozomi-4");
 
 /**
  * ボムキャリアー「クルミ」
@@ -770,19 +874,23 @@ var _MBossCommon = tm.createClass(
 {
     superClass: gls2.EnemySoft,
     patterns: null,
+    limitAge: 0,
 
     /**
      * @constructs
      * @param {Array.<string>} patterns
+     * @param {Number=} limitAge 逃げるまでのフレーム.default=1500.
      */
-    init: function(patterns) {
+    init: function(patterns, limitAge) {
         this.superInit();
         this.patterns = patterns;
+        this.limitAge = limitAge || 1500;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
         enemy.patterns = [].concat(this.patterns);
+        enemy.limitAge = this.limitAge;
         enemy.startAttack = false;
         enemy.endAttack = false;
         enemy.tweener
@@ -803,7 +911,7 @@ var _MBossCommon = tm.createClass(
 
         enemy.on("enterframe", function() {
             if (this.startAttack === false || this.hp <= 0) return;
-            if (1500 < this.frame && this.endAttack === false) {
+            if (this.limitAge < this.frame && this.endAttack === false) {
                 this.endAttack = true;
                 this.tweener
                     .clear()
@@ -1101,6 +1209,362 @@ gls2.EnemySoft.Saki3 = tm.createClass(
     },
 });
 gls2.EnemySoft.Saki3 = gls2.EnemySoft.Saki3();
+
+/**
+ * ステージ３中ボス「ヒガシ」
+ */
+var _Setsuna = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+
+    /**
+     * @constructs
+     * @param {Array.<string>} patterns
+     */
+    init: function(patterns) {
+        this.superInit();
+        this.patterns = patterns;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.startAttack = false;
+        enemy.endAttack = false;
+        enemy.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.3, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.dispatchEvent(tm.event.Event("completeattack"));
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("enterframe", function() {
+            if (this.startAttack === false || this.hp <= 0) return;
+            if (1500 < this.frame && this.endAttack === false) {
+                this.endAttack = true;
+                this.tweener
+                    .clear()
+                    .wait(500)
+                    .move(this.x, -100, 1200, "easeInQuad")
+                    .call(function() {
+                        this.remove();
+                    }.bind(this));
+            }
+        });
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            if (this.endAttack) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Setsuna = _Setsuna(["setsuna-1"]);
+
+/**
+ * ステージ３ボス「モモゾノ」
+ */
+gls2.EnemySoft.Love1 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "saki-1-1",
+            "saki-1-2",
+            "saki-1-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.startAttack = false;
+        enemy.endAttack = false;
+        enemy.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.2, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            if (this.endAttack) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Love1 = gls2.EnemySoft.Love1();
+gls2.EnemySoft.Love2 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "saki-1-1",
+            "saki-1-2",
+            "saki-1-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.startAttack = false;
+        enemy.endAttack = false;
+        enemy.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.2, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            if (this.endAttack) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Love2 = gls2.EnemySoft.Love2();
+gls2.EnemySoft.Love3 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "saki-1-1",
+            "saki-1-2",
+            "saki-1-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.startAttack = false;
+        enemy.endAttack = false;
+        enemy.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.2, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            if (this.endAttack) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Love3 = gls2.EnemySoft.Love3();
+
+/**
+ * ステージ４中ボス「ヒシカワ」
+ */
+gls2.EnemySoft.Rikka = _MBossCommon(["rikka-1", "rikka-2", "rikka-3"], 3000);
+
+/**
+ * ステージ４ボス「アイダ」
+ */
+gls2.EnemySoft.Mana1 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "mana-1-1",
+            "mana-1-2",
+            "mana-1-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.startAttack = false;
+        enemy.endAttack = false;
+        enemy.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.3, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var d = gls2.FixedRandom.randf(SC_W*-0.1, SC_W*0.1);
+                    this.tweener
+                        .move(
+                            Math.clamp(this.player.x, SC_W*0.1, SC_W*0.9) + d*0.3,
+                            SC_H*0.2 + d*0.3,
+                            3000, "easeInOutQuad"
+                        )
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            if (this.endAttack) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Mana1 = gls2.EnemySoft.Mana1();
+gls2.EnemySoft.Mana2 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "mana-2-1",
+            "mana-2-2",
+            "mana-2-3",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.tweener.clear()
+            .wait(800)
+            .call(function() {
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.4, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Mana2 = gls2.EnemySoft.Mana2();
+gls2.EnemySoft.Mana3 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [
+            "mana-3-1",
+            "mana-3-2",
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.tweener.clear()
+            .wait(800)
+            .call(function() {
+                this.dispatchEvent(tm.event.Event("completeattack"));
+
+                var temp = function() {
+                    var a = gls2.FixedRandom.random() * Math.PI*2;
+                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    this.tweener
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
+                        .call(temp);
+                }.bind(this);
+                temp();
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Mana3 = gls2.EnemySoft.Mana3();
 
 })();
 

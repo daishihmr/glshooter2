@@ -19,7 +19,9 @@ gls2.BombItem = tm.createClass(
     age: 0,
 
     init: function(x, y, player) {
-        this.superInit("bombIcon", 40, 40);
+        this.superInit("tex3", 64, 64);
+        this.setFrameIndex(1, 64, 64);
+
         this.setPosition(x, y);
         this.player = player;
 
@@ -28,7 +30,7 @@ gls2.BombItem = tm.createClass(
         this.age = 0;
     },
 
-    update: function() {
+    update: function(app) {
         this.x += this.vx;
         this.y += this.vy * 2;
 
@@ -64,18 +66,29 @@ gls2.ExtendItem = tm.createClass(
     age: 0,
 
     init: function(x, y, player) {
-        this.superInit("extendItem", 32, 32);
+        this.superInit("tex3", 64, 64);
+        this.setFrameIndex(8, 64, 64);
+        tm.display.Label("1 up", 20)
+            .setFillStyle("hsla(180, 70%, 100%, 1)")
+            .addChildTo(this);
+        for (var ix = -1; ix <= 1; ix++) {
+            for (var iy = -1; iy <= 1; iy++) {
+                this.label = tm.display.Label("1 up", 20)
+                    .setFillStyle("hsla(180, 50%, 50%, 0.2)")
+                    .setPosition(ix, iy)
+                    .addChildTo(this);
+            }
+        }
+
         this.setPosition(x, y);
         this.player = player;
     },
     update: function() {
         this.y += 0.5;
-/*
-        if (gls2.distanceSq(this, this.player) < 32*32) {
+        if (gls2.distanceSq(this, this.player) < 64*64) {
             this.player.gameScene.extendZanki();
             this.remove();
         }
-*/
         if (this.y > SC_H+64) {
                this.remove();
         }

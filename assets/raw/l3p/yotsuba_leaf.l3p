@@ -1,0 +1,44 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	BL\BL11.suf
+	G2\G215.suf
+	JT\JT12.suf
+	SD\SD06.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (  23.000   0.000   0.000 )
+	DisplayScale: 0.125000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -49 -50 -70 )
+	{	mov ( 2443.19 0.675932 3513.95 ) eye deg( 45 ) }
+	{	mov ( 139.518 -4.5549 -28.4923 ) target }
+	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 1 1 ) obj G215 /* "G2\G215.suf" atr "noname" */
+	}
+	{	mov ( 250 -200 50 ) rotz ( 40 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.8 1 1 ) obj SD06 /* "SD\SD06.suf" atr "noname" */
+	}
+	{	mov ( 250 200 50 ) rotz ( -40 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.8 -1 1 ) obj SD06 /* "SD\SD06.suf" atr "noname" */
+	}
+	{	mov ( 0 0 400 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 0.9 -0.6 ) obj JT12 /* "JT\JT12.suf" atr "noname" */
+	}
+	{	mov ( 0 0 400 ) rotz ( 50 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.5 0.5 1 ) obj BL11 /* "BL\BL11.suf" atr "noname" */
+	}
+}

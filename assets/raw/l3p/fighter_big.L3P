@@ -1,0 +1,57 @@
+/*							Parts Assembler
+                                  Version 2.04.051226(:
+Parts: 
+	OT\OT09.suf
+	SL\SL14.suf
+	robody\robody13.suf
+	roetc\roetc11.suf
+	rohand\rohand10.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (  21.000  24.000   0.000 )
+	DisplayScale: 0.125000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 100
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -67 -21 -70 )
+	{	mov ( 3150.41 -2169.71 3746.07 ) eye deg( 45 ) }
+	{	mov ( -544.493 -287.059 -263.296 ) target }
+	{	mov ( 180 -640 0 ) rotz ( 15 ) roty ( 0 ) rotx ( 90 )
+		scal ( 2.85 1 1.9 ) obj robody13 /* "robody\robody13.suf" atr "noname" */
+	}
+	{	mov ( 184 0 208 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.45 1 2.30168 ) obj SL14 /* "SL\SL14.suf" atr "noname" */
+	}
+	{	mov ( -536.922 -823.98 264 ) rotz ( 28.1907 ) roty ( 5.81303 ) rotx ( -93.6095 )
+		scal ( 2.73189 1 1.57128 ) obj OT09 /* "OT\OT09.suf" atr "noname" */
+	}
+	{	mov ( -463.925 -856.712 -264 ) rotz ( 46.2099 ) roty ( -6.64087 ) rotx ( 91.6389 )
+		scal ( 2.73189 1 -1.57128 ) obj OT09 /* "OT\OT09.suf" atr "noname" */
+	}
+	{	mov ( -536.922 823.98 264 ) rotz ( -28.1907 ) roty ( 5.81303 ) rotx ( 93.6095 )
+		scal ( 2.73189 -1 1.57128 ) obj OT09 /* "OT\OT09.suf" atr "noname" */
+	}
+	{	mov ( -463.925 856.712 -264 ) rotz ( -46.2099 ) roty ( -6.64087 ) rotx ( -91.6389 )
+		scal ( 2.73189 -1 -1.57128 ) obj OT09 /* "OT\OT09.suf" atr "noname" */
+	}
+	{	mov ( -1069.63 10 294.156 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 3.1925 5.70127 2.94378 ) obj roetc11 /* "roetc\roetc11.suf" atr "noname" */
+	}
+	{	mov ( -217.48 -10 324.96 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 2.11607 0.45 ) obj rohand10 /* "rohand\rohand10.suf" atr "noname" */
+	}
+	{	mov ( 180 640 0 ) rotz ( -15 ) roty ( 0 ) rotx ( -90 )
+		scal ( 2.85 -1 1.9 ) obj robody13 /* "robody\robody13.suf" atr "noname" */
+	}
+}

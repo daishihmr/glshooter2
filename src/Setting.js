@@ -238,7 +238,7 @@ gls2.Setting = {
      * 1フレームあたりのコンボゲージゼロ時のコンボ数減少率
      * @const
      */
-    COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO: 0.01,
+    COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO: 0.005,
 
     /**
      * コンボボーナス。何点ごとに倍率が1上がるか
@@ -304,7 +304,7 @@ gls2.Setting = {
      * 基本弾速
      * @const
      */
-    BULLET_SPEED: 4.0,
+    BULLET_SPEED: 3.0,
 
     /**
      * 星アイテム（大）が出る距離

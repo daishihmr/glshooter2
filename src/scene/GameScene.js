@@ -281,15 +281,12 @@ gls2.GameScene = tm.createClass(
                         }
                         this.onDestroyEnemy(e);
                     } else {
-                        if (this.isHyperMode) {
-                            this.addCombo(this.hyperLevel * 0.01);
-                        } else {
-                            this.addCombo(0.01);
-                        }
                         this.comboGauge = Math.min(this.comboGauge + 0.02, 1);
                         if (this.isHyperMode) {
+                            this.addCombo(gls2.Setting.HYPER_COMBO[this.currentHyperLevel] * 0.01);
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT_IN_HYPER);
                         } else {
+                            this.addCombo(0.01);
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_LASER_HIT);
                         }
                     }
@@ -320,15 +317,12 @@ gls2.GameScene = tm.createClass(
                         }
                         this.onDestroyEnemy(e);
                     } else {
-                        if (this.isHyperMode) {
-                            this.addCombo(this.hyperLevel * 0.01);
-                        } else {
-                            this.addCombo(0.01);
-                        }
                         this.comboGauge = Math.min(this.comboGauge + 0.02, 1);
                         if (this.isHyperMode) {
+                            this.addCombo(gls2.Setting.HYPER_COMBO[this.currentHyperLevel] * 0.01);
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA_HIT_IN_HYPER);
                         } else {
+                            this.addCombo(0.01);
                             this.addHyperGauge(gls2.Setting.HYPER_CHARGE_BY_AURA_HIT);
                         }
                     }
@@ -654,6 +648,12 @@ gls2.GameScene = tm.createClass(
                 this.launch();
             }.bind(this));
         } else {
+            // ハイスコアならスクリーンショットを撮る
+            if (gls2.core.highScore === this.score) {
+                var ss = this.shotScreen();
+                gls2.core.highScoreScreenShot = ss.canvas.toDataURL("image/png");
+            }
+
             // コンティニュー確認画面へ
             this.tweener.clear().wait(2000).call(function() {
                 this.openContinueMenu();
@@ -662,7 +662,8 @@ gls2.GameScene = tm.createClass(
     },
 
     setRank: function(v) {
-        var min = Math.max(0, gls2.core.difficulty - 1) * 0.02 + (this.player.style !== 2 ? 0.00 : 0.10);
+        // var min = Math.max(0, gls2.core.difficulty - 1) * 0.02 + (this.player.style !== 2 ? 0.00 : 0.10);
+        var min = 0.00;
         bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(v, min, 0.50);
     },
 
@@ -684,7 +685,6 @@ gls2.GameScene = tm.createClass(
     },
 
     clearStage: function() {
-        // TODO リザルト画面へ
         gls2.playBgm("bgmResult");
         var tempTimer = tm.app.Object2D();
         tempTimer.addChildTo(this.lastElement);
@@ -692,7 +692,6 @@ gls2.GameScene = tm.createClass(
             this.app.pushScene(gls2.ResultScene(this, this.shotScreen()));
             tempTimer.remove();
         }.bind(this));
-        // this.startStage(this.stageNumber + 1);
     },
 
     gameOver: function() {

@@ -1,0 +1,57 @@
+/*							Parts Assembler
+                                  Version 2.04.051226(:
+Parts: 
+	SL\SL11.suf
+	SL\SL14.suf
+	roarm\roarm14.suf
+	roetc\roetc04.suf
+	rohead\rohead01.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: ( -70.004   0.000   0.000 )
+	DisplayScale: 0.044194173824
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 100
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -4 -70 )
+	{	mov ( 3901.52 -3802.07 4274.39 ) eye deg( 45 ) }
+	{	mov ( -472.251 0 241.335 ) target }
+	{	mov ( 100 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.65 1 1.85 ) obj SL14 /* "SL\SL14.suf" atr "noname" */
+	}
+	{	mov ( -580 684 96 ) rotz ( 4.87978 ) roty ( 2.54749 ) rotx ( -80.0145 )
+		scal ( 3.95 -1 2.7 ) obj rohead01 /* "rohead\rohead01.suf" atr "noname" */
+	}
+	{	mov ( -741.398 -775.28 -56 ) rotz ( -127.563 ) roty ( -8.60508 ) rotx ( -89.7494 )
+		scal ( 2.09301 -0.55 7.6 ) obj SL11 /* "SL\SL11.suf" atr "noname" */
+	}
+	{	mov ( -741.398 775.28 -56 ) rotz ( 127.563 ) roty ( -8.60508 ) rotx ( 89.7494 )
+		scal ( 2.09301 0.55 7.6 ) obj SL11 /* "SL\SL11.suf" atr "noname" */
+	}
+	{	mov ( -1336 -864 384 ) rotz ( 124.139 ) roty ( 29.5592 ) rotx ( -71.423 )
+		scal ( 2.08458 2.1 3.81882 ) obj roarm14 /* "roarm\roarm14.suf" atr "noname" */
+	}
+	{	mov ( -1336 864 384 ) rotz ( -124.139 ) roty ( 29.5592 ) rotx ( 71.423 )
+		scal ( 2.08458 -2.1 3.81882 ) obj roarm14 /* "roarm\roarm14.suf" atr "noname" */
+	}
+	{	mov ( -1224 -384 216 ) rotz ( 0 ) roty ( -67.6199 ) rotx ( 3.21884 )
+		scal ( 2.58337 1.8746 2.85 ) obj roetc04 /* "roetc\roetc04.suf" atr "noname" */
+	}
+	{	mov ( -1224 384 216 ) rotz ( 0 ) roty ( -67.6199 ) rotx ( -3.21884 )
+		scal ( 2.58337 -1.8746 2.85 ) obj roetc04 /* "roetc\roetc04.suf" atr "noname" */
+	}
+	{	mov ( -580 -684 96 ) rotz ( -4.87978 ) roty ( 2.54749 ) rotx ( 80.0145 )
+		scal ( 3.95 1 2.7 ) obj rohead01 /* "rohead\rohead01.suf" atr "noname" */
+	}
+}

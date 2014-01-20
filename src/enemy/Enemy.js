@@ -111,6 +111,17 @@ gls2.Enemy = tm.createClass(
         }
 
         this.velocity = {x:0, y:0};
+
+        // 残しときましょう
+        if (DEBUG) {
+            this.label = tm.display.Label("", 20)
+                .setFillStyle("hsla(180, 100%, 100%, 1)")
+                .addChildTo(this);
+            var that = this;
+            this.label.update = function() {
+                this.text = "[ " + ~~(that.hp) + " / " + that.hpMax + " ]";
+            };
+        }
     },
 
     /**

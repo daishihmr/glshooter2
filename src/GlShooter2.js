@@ -8,10 +8,10 @@ var SC_W = 480;
 /** @const */
 var SC_H = 640;
 
-/** @namespace */
-var gls2 = {
-    /** @type {gls2.GlShooter2} */
-    core: null,
+gls2["pause"] = function() {
+    if (gls2.core && gls2.core.currentScene === gls2.GameScene.SINGLETON) {
+        gls2.GameScene.SINGLETON.openPauseMenu(0);
+    }
 };
 
 /**
@@ -32,6 +32,8 @@ gls2.GlShooter2 = tm.createClass(
     highScoreStyle: 0,
     /** ハイスコア取得時のコンティニュー回数 */
     highScoreContinueCount: 0,
+    /** ハイスコア取得時のスクリーンショット */
+    highScoreScreenShot: null,
 
     /** BGM音量(0～5) */
     bgmVolume: 3,
@@ -57,8 +59,10 @@ gls2.GlShooter2 = tm.createClass(
         var assets = {
             // image
             "tex0": "assets/tex0.png",
-            "tex1": "assets/tex1.png", // TODO あとで消す
-            "tex_stage1": "assets/tex_stage1.png",
+            "tex_bit": "assets/tex_bit.png",
+            "tex1": "assets/tex1.png",
+            "tex2": "assets/tex2.png",
+            "tex3": "assets/tex3.png",
             "tex_tank1": "assets/tex_tank1.png",
             "fighter": "assets/fighters.png",
             "laserR": "assets/laser_r.png",
@@ -77,20 +81,23 @@ gls2.GlShooter2 = tm.createClass(
             "result_bg": "assets/result_bg.png",
 
             // use stage3
-            "hino": "assets/enemy_hino.png",
-            "hoshizora_y": "assets/enemy_hoshizora_y.png",
-            "hoshizora_t": "assets/enemy_hoshizora_t.png",
-            "extendItem": "assets/extendItem.png",  //仮運用
+            "hino": "assets/tex_hino.png",
+            "hoshizora_y": "assets/tex_hoshizora_y.png",
+            "hoshizora_t": "assets/tex_hoshizora_t.png",
+            "yotsuba": "assets/tex_yotsuba.png",
+            "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
+            "higashi": "assets/tex_higashi.png",
+            "momozono": "assets/tex_momozono.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",
             "bgm1": "assets2/nc54073.mp3",
             "bgm2": "assets2/nc28687.mp3",
-            "bgm4": "assets2/nc80728.mp3",
+            "bgm3": "assets2/nc80728.mp3",
+            "bgm4": "assets2/nc67876.mp3",
             "bgm5": "assets2/nc60627.mp3",
             "bgmBoss": "assets2/nc29206.mp3",
             "bgmResult": "assets2/nc54077.mp3",
-            "bgmEnding": "assets2/nc44202.mp3",
 
             // sound
             "sound/explode": "assets2/sen_ge_taihou03.mp3",
@@ -114,20 +121,27 @@ gls2.GlShooter2 = tm.createClass(
             "sound/voLetsGo": "assets/vo_letsgo.mp3",
             "sound/voSelectShip": "assets/vo_select_your_battle_ship.mp3",
             "sound/voWarning": "assets/vo_warning.mp3",
-
-            // test
-            "star": "assets/star.png",
         };
 
         if (DEBUG) {
             delete assets["bgmShipSelect"];
             delete assets["bgm1"];
             delete assets["bgm2"];
+            delete assets["bgm3"];
             delete assets["bgm4"];
             delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
-            delete assets["bgmEnding"];
+
+            // 遊び用
+            // assets["bgmShipSelect"] = "/gls2-bgm/select.mp3";
+            // assets["bgm1"] = "/gls2-bgm/1.mp3";
+            // assets["bgm2"] = "/gls2-bgm/2.mp3";
+            // assets["bgm3"] = "/gls2-bgm/3.mp3";
+            // assets["bgm4"] = "/gls2-bgm/4.mp3";
+            // assets["bgm5"] = "/gls2-bgm/5.mp3";
+            // assets["bgmBoss"] = "/gls2-bgm/boss.mp3";
+            // assets["bgmResult"] = "/gls2-bgm/clear.mp3";
         }
 
         this.replaceScene(tm.app.LoadingScene({
@@ -157,7 +171,7 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.FixedRandom.setup(12345);
 
-        ["tex_stage1", "tex_tank1"].forEach(function(name) {
+        ["tex1", "tex2", "tex3", "tex_tank1"].forEach(function(name) {
 
             var tex = tm.asset.AssetManager.get(name);
             var canvas = tm.graphics.Canvas();
@@ -208,7 +222,74 @@ gls2.GlShooter2 = tm.createClass(
 
     exitApp: function() {
         this.stop();
-        tm.social.Nineleap.postRanking(this.highScore, "");
+    },
+
+    /**
+     * @param {?String} userName
+     * @param {function()} callback
+     */
+    postScore: function(userName, callback) {
+        var data = {
+            "score": Math.floor(this.highScore),
+            "stage": this.highScoreStage + 1,
+            "continueCount": this.highScoreContinueCount,
+            "shipType": this.highScoreType,
+            "shipStyle": this.highScoreStyle,
+            "fps": 0,
+            "screenShot": this.highScoreScreenShot
+        };
+        if (userName) data["userName"] = userName;
+        tm.util.Ajax.load({
+            "url": "/api/ranking/post",
+            "data": data,
+            "type": "POST",
+            "dataType": "json",
+            "success": function(result) {
+                if (!result) {
+                    alert("登録に失敗しました！＞＜");
+                    callback();
+                } else if (result["success"]) {
+                    alert("登録完了！");
+                    callback();
+                } else if (result["confirmLogin"]) {
+                    if (confirm("ログインしていません。ログインしますか？")) {
+                        window["onchildclose"] = function() {
+                            this.postScore(null, callback);
+                            window["onchildclose"] = undefined;
+                        }.bind(this);
+                        window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
+                    } else if (confirm("匿名でスコア登録しますか？")) {
+                        var userName = "";
+                        while (userName === "") userName = window.prompt("仮のユーザー名:", this.getAnonName());
+                        if (userName === null) return;
+                        userName = userName.substring(0, 10);
+                        this.postScore(userName + " (匿名)", callback);
+                    } else {
+                        callback();
+                    }
+                } else {
+                    alert("登録に失敗しました！＞＜");
+                    callback();
+                }
+            }.bind(this),
+            "error": function() {
+                alert("登録に失敗しました！＞＜");
+                callback();
+            }
+        });
+    },
+
+    getAnonName: function() {
+        return [
+            "名無しシューター",
+            "大佐",
+            "レイニャンにゃん",
+            "アイたそ",
+            "ぱふぇ☆",
+            "能登真璃亜",
+            "にゃんぱすー",
+            "相田マナ"
+        ].pickup();
     },
 
     timeoutTasks: null,
@@ -217,7 +298,7 @@ gls2.GlShooter2 = tm.createClass(
             frame: this.frame + t,
             fn: fn,
         });
-    },
+    }
 
 });
 

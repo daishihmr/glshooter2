@@ -1,0 +1,33 @@
+/*							Parts Assembler
+                                  Version 2.04.051226(:
+Parts: 
+	robody\robody16.suf
+Light: (   71   71    0 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: ( -204.000   0.000   0.000 )
+	DisplayScale: 0.250000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 100
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr "#01" { col ( rgb ( 0.600 0.900 1.000 ) ) amb ( 1.000 ) dif ( 0.000 ) colormap ( "L3\effect\horizon.png" 1.000 0.300 ) mapsize ( 0 0 1 1 ) opt ( emittion 0.050 1.310 ) }
+	1: atr noname { col ( 1.000 ) amb ( 0.200 ) dif ( 0.800 ) spc ( 0.700 1.000 0.000 ) colormap ( "L3\effect\horizon.png" 0.500 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
+	{	mov ( 1811.73 1.35086 155.736 ) eye deg( 45 ) }
+	{	mov ( -0.816392 3.42804 10.2178 ) target }
+	{	mov ( 0 200 -100 ) rotz ( 90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 0.3 1 ) obj robody16 /* "robody\robody16.suf" atr "noname" */
+	}
+	{	mov ( 0 -200 100 ) rotz ( -90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 -0.3 -1 ) obj robody16 /* "robody\robody16.suf" atr "noname" */
+	}
+}
