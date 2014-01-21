@@ -583,24 +583,21 @@ gls2.Enemy.nao = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "midorikawa");
-        this.boundingWidthLeft = 0
-        this.boundingWidthRight = 32;
-        this.boundingHeightTop = 0;
-        this.boundingHeightBottom = 32;
+        this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(8);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
 
+/*
         if (this.x < this.player.x) {
             this.scaleX = -1;
         } else {
             this.scaleX = 1;
         }
+*/
     },
     draw: function(canvas) {
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
 });
 
