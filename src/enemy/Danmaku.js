@@ -156,8 +156,20 @@ gls2.Danmaku["basic1-1"] = new bulletml.Root({
  */
 gls2.Danmaku["basic1-2"] = new bulletml.Root({
     "top": $.action([
-        $interval("10+$rand*20"),
-        $nway(3, -20, 20, $spd3)
+        $interval("10+$rand*100"),
+        $nway(3, -20, 20, $spd3),
+    ]),
+});
+
+/**
+ * 自機狙い弾3wayを速射.
+ */
+gls2.Danmaku["basic1-3"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval("10+$rand*100"),
+            $nway(3, -20, 20, $spd3),
+        ]),
     ]),
 });
 
@@ -635,6 +647,48 @@ gls2.Danmaku["nozomi-4"] = new bulletml.Root({
 });
 
 /**
+ * のぞみ5面
+ */
+gls2.Danmaku["nozomi-5"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.repeat(999, [
+            $.repeat(6, [
+                $.bindVar("c", "2+$loop.index"),
+                $nway("$c", "-4-($c-2)*2-60", "4+($c-2)*2-60", $spd0("(560-$c*40)*0.02"), RL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2-20", "4+($c-2)*2-20", $spd0("(560-$c*40)*0.02"), RL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2+20", "4+($c-2)*2+20", $spd0("(560-$c*40)*0.02"), RL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2+60", "4+($c-2)*2+60", $spd0("(560-$c*40)*0.02"), RL, $.offsetY(-50)),
+            ]),
+            $interval(150),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(20),
+        $.repeat(999, [
+            $.fire($.direction(+40), IVS($.actionRef("noop"))),
+            $whip($spd3, 0.03, 16, function(spd) {
+                return $.action([
+                    $.fire($.direction(-5, "sequence"), spd, BNS, $.offsetX(-50)),
+                    $interval(3),
+                ]);
+            }),
+            $.fire($.direction(-40), IVS($.actionRef("noop"))),
+            $whip($spd3, 0.03, 16, function(spd) {
+                return $.action([
+                    $.fire($.direction(+5, "sequence"), spd, BNS, $.offsetX(+50)),
+                    $interval(3),
+                ]);
+            }),
+        ]),
+    ]),
+    "noop": $.action([
+        $.wait(1),
+        $.vanish,
+    ]),
+});
+
+/**
  *　サニキ用
  */
 gls2.Danmaku["akane"] = new bulletml.Root({
@@ -658,7 +712,7 @@ gls2.Danmaku["nao-1"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval(20),
-             $nway(3, -5, 5, $spd4, RL, $.offsetX(0), $.offsetY(0), $.autonomy(true)),
+            $.fire($.direction(0), $spd4, RL),
         ]),
     ]),
 });
@@ -666,7 +720,15 @@ gls2.Danmaku["nao-2"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval(20),
-            $.fire($.direction(0), $spd4, RL),
+             $nway(2, -5, 5, $spd4, RL, $.offsetX(0), $.offsetY(0), $.autonomy(true)),
+        ]),
+    ]),
+});
+gls2.Danmaku["nao-3"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(20),
+             $nway(2, -1, 1, $spd4, RL, $.offsetX(0), $.offsetY(0), $.autonomy(true)),
         ]),
     ]),
 });
@@ -1413,49 +1475,41 @@ gls2.Danmaku["mana-1-1"] = new bulletml.Root({
     "winder": $.action([
         $.wait(60),
         $.repeat(8, [
-            $.fire($.direction("(-190+$loop.index*30)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
+            $.fire($.direction("(-190+$loop.index*30)*$1"), $spd3, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
         ]),
         $.repeat(50, [
-            $interval(15),
+            $interval(20),
             $.bindVar("a", "$loop.index*3"),
             $.repeat(8, [
-                $.fire($.direction("(-190+$a+$loop.index*30)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
-            ]),
-        ]),
-        $.repeat(20, [
-            $interval(15),
-            $.repeat(8, [
-                $.fire($.direction("(-190+50*3+$loop.index*30)*$1"), $spd4, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
+                $.fire($.direction("(-190+$a+$loop.index*30)*$1"), $spd3, RNSH, $.offsetX("-145*$1"), $.offsetY(-5)),
             ]),
         ]),
     ]),
     "top2": $.action([
         $.wait(60),
-        $interval(400),
-        $.repeat(5, [
-            $.bindVar("i", "$loop.index"),
-            $whip($spd3(6), 0.02, "4+$loop.index*3", function(spd) {
-                return $.action([
-                    $.fire($.direction("(12-$i)*-3"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*-2"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*-1"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)* 0"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+1"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+2"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+3"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
-
-                    $.fire($.direction("(12-$i)*-3"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*-2"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*-1"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)* 0"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+1"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+2"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-                    $.fire($.direction("(12-$i)*+3"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
-
-                    $interval(5),
-                ]);
-            }),
-            $interval(90),
+        $interval(300),
+        $.repeat(7, [
+            $.bindVar("s", "$loop.index"),
+            $.repeat(5, [
+                $.bindVar("ss", "($s-$loop.index)*0.5"),
+                $nway(41, -180+360/41/2, 180-360/41/2, $spd4("$ss"), RNL, $.offsetX(-30), $.offsetY(-30)),
+            ]),
+            $interval(5),
+            $.repeat(5, [
+                $.bindVar("ss", "($s-$loop.index)*0.5"),
+                $nway(41, -180+360/41/2, 180-360/41/2, $spd4("$ss"), RNL, $.offsetX(+30), $.offsetY(-30)),
+            ]),
+            $interval(20),
+            $.repeat(5, [
+                $.bindVar("ss", "($s-$loop.index)*0.5"),
+                $absoluteNway(42, -180+360/42/2, 180-360/42/2, $spd5("$ss"), BNL, $.offsetX(+30), $.offsetY(-30)),
+            ]),
+            $interval(5),
+            $.repeat(5, [
+                $.bindVar("ss", "($s-$loop.index)*0.5"),
+                $absoluteNway(42, -180+360/42/2, 180-360/42/2, $spd5("$ss"), BNL, $.offsetX(-30), $.offsetY(-30)),
+            ]),
+            $interval(80),
         ]),
     ]),
 });
@@ -1464,7 +1518,32 @@ gls2.Danmaku["mana-1-1"] = new bulletml.Root({
  */
 gls2.Danmaku["mana-1-2"] = new bulletml.Root({
     "top": $.action([
+        $.repeat(5, [
+            $.bindVar("i", "$loop.index"),
+            $.bindVar("j", "1/($i+1) * 4"),
+            $whip($spd3(6), 0.02, "4+$loop.index*3", function(spd) {
+                return $.action([
+                    $.fire($.direction("(12-$i)*(-3*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(-2*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(-1*$j)"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*( 0*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+1*$j)"), spd, RNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+2*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+3*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
 
+                    $.fire($.direction("(12-$i)*(-3*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(-2*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(-1*$j)"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*( 0*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+1*$j)"), spd, RNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+2*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+                    $.fire($.direction("(12-$i)*(+3*$j)"), spd, BNL, $.offsetX(+145), $.offsetY(-50)),
+
+                    $interval(5),
+                ]);
+            }),
+            $interval(60),
+        ]),
     ]),
 });
 
@@ -1493,8 +1572,9 @@ gls2.Danmaku["mana-3-1"] = gls2.Danmaku["mana-1-1"];
  */
 gls2.Danmaku["mana-3-2"] = gls2.Danmaku["mana-1-1"];
 
+
 /**
- * せつな
+ * せつな-1
  */
 gls2.Danmaku["setsuna-1"] = new bulletml.Root({
     "top0": $.action([

@@ -19,83 +19,67 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(  0, function() {
             gls2.playBgm("bgm3", true),
             this.gameScene.ground.direction = Math.PI*0.5;
-            this.gameScene.ground.speed = 8;
-            this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
+            this.gameScene.ground.speed = 3;
+            this.gameScene.ground.tweener.clear().to({speed:10}, 4000, "easeInOutQuad");
         });
 
 //        this.seq.add(100, "yotsuba");
-        this.seq.add(100, "hoshizora_y-1");
+        this.seq.add(100, "hoshizora_y1");
+        this.seq.add( 60, "aoki-left");
+        this.seq.add( 60, "aoki-right");
 
-        this.seq.add(300, "nao1-center");
-        this.seq.add( 60, "nao1-left");
-        this.seq.add(  1, "nao1-right");
-        this.seq.add( 60, "nao1-center");
-        this.seq.add(  1, "nao1-left");
-        this.seq.add(  1, "nao1-right");
 
-        this.seq.add(300, "nao2-center");
+        this.seq.add(150, "nao2-center");
         this.seq.add( 60, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
+        this.seq.add( 60, "nao2-right");
+        for (var i = 0; i < 3; i++) {
+            this.seq.add( 60, "nao1-center");
+            this.seq.add( 60, "nao1-right");
+            this.seq.add( 60, "nao1-left");
+        }
 
-        this.seq.add(300, "nao2-center");
-        this.seq.add( 60, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add(300, "nao2-center");
-        this.seq.add( 60, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add(  1, "nao2-left");
-        this.seq.add(  1, "nao2-right");
-
-        this.seq.add(300, "akane-1");
-        this.seq.add(  1, "heri2-center");
-
-        this.seq.add(100, "akane-2");
-        this.seq.add(  1, "heri2-left");
-
-        this.seq.add(100, "akane-3");
-        this.seq.add(  1, "heri2-right");
-
-        this.seq.add(100, "heri2-center");
-        this.seq.add(  1, "heri2-left");
-        this.seq.add(  1, "heri2-right");
-
-        this.seq.add(200, "akane-1");
-        this.seq.add( 60, "akane-2");
-        this.seq.add( 30, "akane-3");
-
-        this.seq.add(300, "heri2-center");
-        this.seq.add(  1, "heri2-left");
-        this.seq.add(  1, "heri2-right");
-
-        this.seq.add(360, function() {
-            this.gameScene.ground.direction = ~~((Math.PI/180)*90);
-            this.gameScene.ground.speed = 4;
-            this.gameScene.ground.tweener.clear().to({speed:1}, 4000, "easeInOutQuad");
+        this.seq.add( 60, function() {
+            gls2.playBgm("bgm3", true),
+            this.gameScene.ground.tweener.clear().to({speed:3}, 1000, "easeInOutQuad");
         });
 
-        this.seq.add(100, "hoshizora_y-1");
+        this.seq.add(120, "akane-center");
+        this.seq.add( 60, "aoki-left");
+        this.seq.add( 60, "aoki-right");
+
+        this.seq.add( 60, "akane-right");
+        this.seq.add( 60, "aoki-left");
+        this.seq.add( 60, "aoki-right");
+
+        this.seq.add( 60, "akane-left");
+        this.seq.add( 60, "aoki-left");
+        this.seq.add( 60, "aoki-right");
+
+        this.seq.add(120, "akane-center");
+        this.seq.add( 60, "aoki-left");
+        this.seq.add( 60, "aoki-right");
+
+        this.seq.add(120, function() {
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:5}, 2000, "easeInOutQuad")
+                .to({direction:Math.PI/180*90}, 3000, "easeInOutQuad")
+        });
+
+        for (var i = 0; i < 3; i++) {
+            this.seq.add( 60, "nao2-center");
+            this.seq.add( 60, "nao2-left");
+            this.seq.add( 60, "nao2-right");
+        }
+
+        this.seq.add(100, "hoshizora_y1");
         this.seq.add(  1, "heri2-right");
 
         this.seq.add(  1, function() {
-            this.gameScene.ground.direction = ~~((Math.PI/180)*180);
-            this.gameScene.ground.speed = 4;
-            this.gameScene.ground.tweener.clear().to({speed:4}, 4000, "easeInOutQuad");
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:4}, 2000, "easeInOutQuad")
+                .to({direction:Math.PI*0.5}, 2000, "easeInOutQuad")
         });
 
         this.seq.add(100, "yotsuba");
@@ -103,17 +87,12 @@ gls2.Stage3 = tm.createClass(
         //中ボス
         this.seq.add(600, "higashi", true);
 
-        this.seq.add(1200, "heri2-center");
-        this.seq.add(   1, "heri2-left");
-        this.seq.add(   1, "heri2-right");
-
-        this.seq.add(300, "heri2-center");
-        this.seq.add(  1, "heri2-left");
-        this.seq.add(  1, "heri2-right");
-
-        this.seq.add(300, "heri2-center");
-        this.seq.add(  1, "heri2-left");
-        this.seq.add(  1, "heri2-right");
+        this.seq.add(300, "nao1-left");
+        for (var i = 0; i < 8; i++) {
+            this.seq.add( 60, "nao1-center");
+            this.seq.add( 60, "nao1-right");
+            this.seq.add( 60, "nao1-left");
+        }
 
         this.seq.add(600, function() {
             this.alartWarning(function() {

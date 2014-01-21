@@ -81,13 +81,8 @@ gls2.GlShooter2 = tm.createClass(
             "result_bg": "assets/result_bg.png",
 
             // use stage3
-            "hino": "assets/tex_hino.png",
-            "hoshizora_y": "assets/tex_hoshizora_y.png",
-            "hoshizora_t": "assets/tex_hoshizora_t.png",
-            "yotsuba": "assets/tex_yotsuba.png",
+            "tex_stage3": "assets/tex_stage3.png",
             "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
-            "higashi": "assets/tex_higashi.png",
-            "momozono": "assets/tex_momozono.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",
@@ -98,6 +93,7 @@ gls2.GlShooter2 = tm.createClass(
             "bgm5": "assets2/nc60627.mp3",
             "bgmBoss": "assets2/nc29206.mp3",
             "bgmResult": "assets2/nc54077.mp3",
+            "bgmLoopInfo": "assets2/loop.json",
 
             // sound
             "sound/explode": "assets2/sen_ge_taihou03.mp3",
@@ -129,7 +125,7 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgm2"];
             delete assets["bgm3"];
             delete assets["bgm4"];
-            delete assets["bgm5"];
+            // delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
 
@@ -144,7 +140,7 @@ gls2.GlShooter2 = tm.createClass(
             // assets["bgmResult"] = "/gls2-bgm/clear.mp3";
         }
 
-        this.replaceScene(tm.app.LoadingScene({
+        this.replaceScene(tm.ui["LoadingScene"]({
             assets: assets,
             nextScene: function() {
                 this._onLoadAssets();
@@ -188,29 +184,6 @@ gls2.GlShooter2 = tm.createClass(
             cvRed.resize(tex.width, tex.height);
             cvRed.drawBitmap(bmRed, 0, 0);
             tm.asset.AssetManager.set(name + "Red", cvRed);
-
-            // var bmShadow = canvas.getBitmap();
-            // for (var i = 0; i < 6; i++) {
-            //     bmShadow.filter({
-            //         calc: function(pixel, index, x, y, bitmap) {
-            //             var a = 0;
-            //             a += bitmap.getPixel(x + -1, y + -1)[3] * 1/16;
-            //             a += bitmap.getPixel(x + -1, y +  0)[3] * 2/16;
-            //             a += bitmap.getPixel(x + -1, y + +1)[3] * 1/16;
-            //             a += bitmap.getPixel(x +  0, y + -1)[3] * 2/16;
-            //             a += bitmap.getPixel(x +  0, y +  0)[3] * 4/16;
-            //             a += bitmap.getPixel(x +  0, y + +1)[3] * 2/16;
-            //             a += bitmap.getPixel(x + +1, y + -1)[3] * 1/16;
-            //             a += bitmap.getPixel(x + +1, y +  0)[3] * 2/16;
-            //             a += bitmap.getPixel(x + +1, y + +1)[3] * 1/16;
-            //             bitmap.setPixel32Index(index, 255, 255, 255, a);
-            //         }
-            //     });
-            // }
-            // var cvShadow = tm.graphics.Canvas();
-            // cvShadow.resize(tex.width, tex.height);
-            // cvShadow.drawBitmap(bmShadow, 0, 0);
-            // tm.asset.AssetManager.set(name + "Shadow", cvShadow);
         });
 
 
@@ -224,13 +197,85 @@ gls2.GlShooter2 = tm.createClass(
         this.stop();
     },
 
+    loggedIn: false,
+
+    /**
+     * @param {?String} userName
+     * @param {function()} callback
+     */
+    postScore: function(userName, callback) {
+        var data = {
+            "score": Math.floor(this.gameScene.score),
+            "stage": this.gameScene.stageNumber + 1,
+            "continueCount": this.gameScene.continueCount,
+            "shipType": this.gameScene.player.type,
+            "shipStyle": this.gameScene.player.style,
+            "fps": 0,
+            "screenShot": this.gameScene.screenShot
+        };
+        if (userName) {
+            data["userName"] = userName;
+            this.loggedIn = false;
+        } else {
+            this.loggedIn = true;
+        }
+
+        tm.util.Ajax.load({
+            "url": "/api/ranking/post",
+            "data": data,
+            "type": "POST",
+            "dataType": "json",
+            "success": function(result) {
+                if (!result) {
+                    callback("登録に失敗しました！＞＜");
+                } else if (result["success"]) {
+                    callback(null, true, result["scoreId"]);
+                } else if (result["confirmLogin"]) {
+                    if (confirm("ログインしていません。ログインしますか？")) {
+                        window["onchildclose"] = function() {
+                            this.postScore(null, callback);
+                            window["onchildclose"] = undefined;
+                        }.bind(this);
+                        window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
+                    } else if (confirm("匿名でスコア登録しますか？")) {
+                        var userName = "";
+                        while (userName === "") userName = window.prompt("仮のユーザー名:", this.getAnonName());
+                        if (userName === null) return;
+                        userName = userName.substring(0, 10);
+                        this.postScore(userName + " (匿名)", callback);
+                    } else {
+                        callback(null, false);
+                    }
+                } else {
+                    callback("登録に失敗しました！＞＜");
+                }
+            }.bind(this),
+            "error": function() {
+                callback("登録に失敗しました！＞＜");
+            }
+        });
+    },
+
+    getAnonName: function() {
+        return [
+            "名無しシューター",
+            "大佐",
+            "レイニャンにゃん",
+            "アイたそ",
+            "ぱふぇ☆",
+            "能登真璃亜",
+            "にゃんぱすー",
+            "相田マナ"
+        ]["pickup"]();
+    },
+
     timeoutTasks: null,
     setTimeoutF: function(fn, t) {
         timeoutTasks.push({
             frame: this.frame + t,
             fn: fn,
         });
-    },
+    }
 
 });
 

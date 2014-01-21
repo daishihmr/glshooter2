@@ -27,7 +27,7 @@ gls2.TitleScene = tm.createClass({
         tm.display.Label("version 1.0-beta", 22)
             .setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
         this.highScoreLabel = tm.display.Label()
-            .setPosition(SC_W * 0.5, SC_H * 0.40).addChildTo(this);
+            .setPosition(SC_W * 0.5, SC_H * 0.40); //.addChildTo(this);
         tm.display.Label("press space key").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.addEventListener("enter", function() {
@@ -107,12 +107,10 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        var menu = [ "start", "tutorial", "setting", "save high score" ];
+        var menu = [ "start", "setting" ];
         var labels = [
             "ゲームを開始します",
-            "チュートリアルを開始します",
-            "設定を変更します",
-            "ランキングへハイスコアを登録します"
+            "設定を変更します"
         ];
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
             "defaultValue": this.lastMainMenu,
@@ -120,7 +118,7 @@ gls2.TitleScene = tm.createClass({
         });
     },
     onResultMainMenu: function(result) {
-        if (result !== 4) this.lastMainMenu = result;
+        if (result !== 2) this.lastMainMenu = result;
         switch (result) {
         case 0: // start
             this.tweener
@@ -136,76 +134,21 @@ gls2.TitleScene = tm.createClass({
                     gls2.core.replaceScene(gls2.ShipSelectScene());
                 }.bind(this));
             break;
-        case 1: // tutorial
-            break;
-        case 2: // option
+        case 1: // option
             this.openSetting();
             break;
-        case 3: // save score
-            if (gls2.core.highScore > 0) {
-                this.postScore();
-            } else {
-                alert("スコアが0です！＞＜");
-            }
-            break;
         }
-    },
-
-    postScore: function(userName) {
-        var data = {
-            "score": Math.floor(gls2.core.highScore),
-            "stage": gls2.core.highScoreStage + 1,
-            "continueCount": gls2.core.highScoreContinueCount,
-            "shipType": gls2.core.highScoreType,
-            "shipStyle": gls2.core.highScoreStyle,
-            "fps": 0,
-            "screenShot": gls2.core.highScoreScreenShot
-        };
-        if (userName) data["userName"] = userName;
-        tm.util.Ajax.load({
-            "url": "/api/ranking/post",
-            "data": data,
-            "type": "POST",
-            "dataType": "json",
-            "async": false,
-            "success": function(result) {
-                if (result["success"]) {
-                    alert("登録完了！");
-                    gls2.core.highScore = 0;
-                    this.updateHighScoreLabel();
-                    window.top.location.href = '/ranking/user/' + result.userName + '?id=' + result.id;
-                } else if (result["confirmLogin"]) {
-                    if (confirm("ログインしていません。ログインしますか？")) {
-                        window["onchildclose"] = function() {
-                            this.postScore();
-                            window["onchildclose"] = undefined;
-                        }.bind(this);
-                        var p = window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
-                    } else if (confirm("仮のユーザー名でスコア登録しますか？")) {
-                        var userName = "";
-                        while (userName === "") userName = window.prompt("仮のユーザー名:");
-                        if (userName === null) return;
-                        userName = userName.substring(0, 10);
-                        this.postScore(userName + "(仮)");
-                    }
-                } else {
-                    alert("登録に失敗しました！＞＜");
-                }
-            }.bind(this)
-        });
     },
 
     openSetting: function() {
         this.openDialogMenu("SETTING", [
             "bgm volume",
-            "sound volume",
-            // "difficulty",
+            "sound volume"
         ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
-                "効果音ボリュームを設定します",
-                // "難易度を設定します",
+                "効果音ボリュームを設定します"
             ],
         });
     },
@@ -218,9 +161,6 @@ gls2.TitleScene = tm.createClass({
         case 1:
             this.openSeSetting();
             break;
-        // case 2:
-        //     this.openDifficultySetting();
-        //     break;
         default:
             this.openMainMenu();
             break;

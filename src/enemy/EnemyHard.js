@@ -19,9 +19,11 @@ gls2.Enemy.DATA = {
     "kenzaki":   [   200,   300000,  true,  true, 10, {"width":100, "height":40}, ],
     "minazuki":  [   300,   300000,  true,  true, 10, {"width":100, "height":40}, ],
     "tsukikage": [     8,     1000, false, false,  5, {"width":100, "height":20}, ],
+    "kasugano":  [     4,     1000, false, false,  1, {"radius": 24}, ],
     "kurokawa":  [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yumehara":  [   250,   500000, false,  true, 20, {"width":180, "heightBottom":40, "heightTop":60}, ],
+    "aono":      [   250,   300000, false,  true, 10, {"width":280, "heightBottom":30, "heightTop":60}, ],
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
@@ -33,11 +35,11 @@ gls2.Enemy.DATA = {
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
-    "hino":      [    30,      500, false, false,  1, {"width": 24, "height": 48}, ],
+    "hino":      [    20,      500, false, false,  1, {"width": 24, "height": 48}, ],
     "hoshizora_y":[  100,    20000, false,  true, 30, {"width":128, "height": 64}, ],
     "hoshizora_t":[  100,    20000, false,  true, 30, {"width":128, "height": 64}, ],
     "yotsuba":    [  300,   100000, false,  true, 30, {"width": 64, "height": 64}, ],
-    "yotsubaLeaf":[  150,    30000, false, false, 10, {"width": 32, "height": 32}, ],
+    "yotsubaLeaf":[  100,    30000, false, false, 10, {"width": 32, "height": 32}, ],
     "midorikawa":[     5,     1000, false, false,  1, {"width": 32, "height": 32}, ],
     "aoki":      [     5,     1200, false, false,  1, {"width": 32, "height": 32}, ],
 };
@@ -209,6 +211,48 @@ gls2.Enemy.FighterS = tm.createClass(
 });
 
 /**
+ * 小型戦闘機「カスガノ」
+ */
+gls2.Enemy.Urara = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "kasugano");
+
+        this._sprite = _Sprite("tex1", 64*1, 64*1).setFrameIndex(23);
+        this.aura = gls2.Particle(80, 1.0, 0.8);
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.apply(this, arguments);
+        if (app.frame%2 === 0 && this.hp > 0) {
+            this.aura.clone()
+                .setPosition(this.x, this.y)
+                .addChildTo(this.gameScene);
+        }
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    }
+});
+
+/**
  * 中型戦闘機「クロカワ」
  */
 gls2.Enemy.FighterM = tm.createClass(
@@ -291,6 +335,25 @@ gls2.Enemy.Mktn = tm.createClass(
         this._sprite.srcRect.y = 128;
         this._sprite.srcRect.width = 64*4;
         this._sprite.srcRect.height = 64*2;
+
+        this.setScale(1.2);
+
+        this.backFire = gls2.Particle(50, 1.0, 0.95);
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.apply(this, arguments);
+        if (app.frame%2 === 0 && this.hp > 0) {
+            this.backFire.clone()
+                .setScale(Math.randf(0.9, 1.5))
+                .setPosition(this.x-35, this.y+40)
+                .on("enterframe", function() { this.y += 2; })
+                .addChildTo(this.gameScene);
+            this.backFire.clone()
+                .setScale(Math.randf(0.9, 1.5))
+                .setPosition(this.x+35, this.y+40)
+                .on("enterframe", function() { this.y += 2; })
+                .addChildTo(this.gameScene);
+        }
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -502,10 +565,7 @@ gls2.Enemy.akane = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hino");
 
-        this._sprite = _Sprite("hino", 64, 32).setFrameIndex(0);
-        this.boundingWidth = 64;
-        this.boundingHeightBottom = 0;
-        this.boundingHeightTop = 32;
+        this._sprite = _Sprite("tex_stage3", 64, 32).setFrameIndex(0);
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -563,7 +623,7 @@ gls2.Enemy.reika = tm.createClass(
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
 
-        if (this.x < this.player.x) {
+        if (this.velocityX < 0) {
             this.scaleX = -1;
         } else {
             this.scaleX = 1;
@@ -589,10 +649,7 @@ gls2.Enemy.miyuki_y = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hoshizora_y");
 
-        this._sprite = _Sprite("hoshizora_y", 256, 128).setFrameIndex(0);
-        this.boundingWidth = 256;
-        this.boundingHeightBottom = 16;
-        this.boundingHeightTop = 64;
+        this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(1);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -613,7 +670,10 @@ gls2.Enemy.miyuki_y = tm.createClass(
     },
     onLaunch: function() {
         //初期位置で向きを決定
-        if (this.x > SC_W)this._sprite.scaleX = -1;
+        if (this.x > SC_W){ //画面左端から出現
+            this.velocityX *= -1;
+            this._sprite.scaleX = -1;
+        }
     },
 });
 
@@ -626,10 +686,7 @@ gls2.Enemy.miyuki_t = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hoshizora_t");
 
-        this._sprite = _Sprite("hoshizora_t", 64, 128).setFrameIndex(0);
-        this.boundingWidth = 128;
-        this.boundingHeightBottom = 16;
-        this.boundingHeightTop = 32;
+        this._sprite = _Sprite("tex_stage3", 64, 128).setFrameIndex(1);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -648,6 +705,11 @@ gls2.Enemy.miyuki_t = tm.createClass(
     destroy: function() {
         this.fallDown();
     },
+    onLaunch: function() {
+        if (this.x > SC_W/2){
+            this.velocityX *= -1;
+        }
+    },
 });
 
 /**
@@ -658,7 +720,7 @@ gls2.Enemy.Alice = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsuba");
-        this._sprite = _Sprite("yotsuba", 128, 128).setFrameIndex(0);
+        this._sprite = _Sprite("tex_stage3", 128, 128).setFrameIndex(1);
         this.boundingWidth = 128;
         this.boundingHeightBottom = 0;
         this.boundingHeightTop = 0;
@@ -840,9 +902,9 @@ gls2.Enemy.Mai = tm.createClass(
         this.backFire = gls2.Particle(80, 1.0, 0.9);
         this.aura = gls2.Particle(256, 1.0, 0.9);
     },
-    update: function() {
+    update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
-        if (gls2.core.frame % 2 === 0) {
+        if (app.frame % 2 === 0) {
             this.backFire.clone().setPosition(this.x + 120, this.y - 30)
                 .on("enterframe", function() {
                     this.x += 5;
@@ -913,7 +975,7 @@ gls2.Enemy.Setsuna = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "higashi");
-        this._sprite = _Sprite("higashi", 64*4, 64*2).setFrameIndex(0);
+        this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(2);
     },
     ondying: function() {
     },
@@ -934,7 +996,7 @@ gls2.Enemy.Love = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "momozono");
-        this._sprite = _Sprite("momozono", 64*4, 64*2).setFrameIndex(0);
+        this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(4);
         this._sprite.setScale(2);
     },
     ondying: function() {
@@ -962,9 +1024,9 @@ gls2.Enemy.Rikka = tm.createClass(
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
     },
-    update: function() {
+    update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
-        if (gls2.core.frame%2 === 0 && this.hp > 0) {
+        if (app.frame%2 === 0 && this.hp > 0) {
             this.backFire.clone().setPosition(this.x-45, this.y+40)
                 .on("enterframe", function() { this.y+=10; })
                 .addChildTo(this.gameScene);
@@ -1007,9 +1069,9 @@ gls2.Enemy.Mana = tm.createClass(
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
     },
-    update: function() {
+    update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
-        if (gls2.core.frame%2 === 0 && this.hp > 0) {
+        if (app.frame%2 === 0 && this.hp > 0) {
             this.backFire.clone().setPosition(this.x-60, this.y+30)
                 .on("enterframe", function() { this.y+=10; })
                 .addChildTo(this.gameScene);
