@@ -560,7 +560,7 @@ gls2.Enemy.reika = tm.createClass(
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
 
-        if (this.x < this.player.x) {
+        if (this.velocityX < 0) {
             this.scaleX = -1;
         } else {
             this.scaleX = 1;
@@ -607,7 +607,10 @@ gls2.Enemy.miyuki_y = tm.createClass(
     },
     onLaunch: function() {
         //初期位置で向きを決定
-        if (this.x > SC_W)this._sprite.scaleX = -1;
+        if (this.x > SC_W){ //画面左端から出現
+            this.velocityX *= -1;
+            this._sprite.scaleX = -1;
+        }
     },
 });
 
@@ -638,6 +641,11 @@ gls2.Enemy.miyuki_t = tm.createClass(
     },
     destroy: function() {
         this.fallDown();
+    },
+    onLaunch: function() {
+        if (this.x > SC_W/2){
+            this.velocityX *= -1;
+        }
     },
 });
 

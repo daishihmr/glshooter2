@@ -449,11 +449,32 @@ gls2.EnemyUnit = {
     { hard:$e.nao, soft:$s.nao3, x:SC_W*0.7, y:-100 },
 ],
 
+//小型浮揚戦車「アオキ」
+"reika-left": [  //左側
+    { hard:$e.reika, soft:$s.reika, x:SC_W/2, y:SC_H/2 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*-0.10, y:SC_H*0.1 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*-0.15, y:SC_H*0.2 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*-0.20, y:SC_H*0.1 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*-0.25, y:SC_H*0.2 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*-0.30, y:SC_H*0.1 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*-0.35, y:SC_H*0.2 },
+],
+"reika-right": [  //右側
+    { hard:$e.reika, soft:$s.reika, x:SC_W/2, y:SC_H/2 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*1.10, y:SC_H*0.1 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*1.15, y:SC_H*0.2 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*1.20, y:SC_H*0.1 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*1.25, y:SC_H*0.2 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*1.30, y:SC_H*0.1 },
+    { hard:$e.reika, soft:$s.reika, x:SC_W*1.35, y:SC_H*0.2 },
+],
+
+
 //大型戦艦「ホシゾラ」
-"hoshizora_y1": [{ hard:$e.miyuki_y, soft:$s.miyuki_y1, x:-256    , y: 140},],
-"hoshizora_y2": [{ hard:$e.miyuki_y, soft:$s.miyuki_y2, x:SC_W+128, y:  60},],
-"hoshizora_t1": [{ hard:$e.miyuki_t, soft:$s.miyuki_t1, x:SC_W*0.7, y:-128},],
-"hoshizora_t2": [{ hard:$e.miyuki_t, soft:$s.miyuki_t2, x:SC_W*0.3, y:-128},],
+"hoshizora_y1": [{ hard:$e.miyuki_y, soft:$s.miyuki_y, x:-256    , y: 140},],
+"hoshizora_y2": [{ hard:$e.miyuki_y, soft:$s.miyuki_y, x:SC_W+128, y:  60},],
+"hoshizora_t1": [{ hard:$e.miyuki_t, soft:$s.miyuki_t, x:SC_W*0.7, y:-128},],
+"hoshizora_t2": [{ hard:$e.miyuki_t, soft:$s.miyuki_t, x:SC_W*0.3, y:-128},],
 
 //浮遊砲台「ヨツバ」
 "yotsuba": [

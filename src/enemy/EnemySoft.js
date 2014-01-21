@@ -594,6 +594,7 @@ gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12, 1);
 
 /**
  * 小型浮揚戦車
+ * 画面をフラフラしながら横切る
  *
  * @class
  * @extends {gls2.EnemySoft}
@@ -622,13 +623,16 @@ gls2.EnemySoft.reika = tm.createClass(
 
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
             gls2.EnemySoft.attack(this, this.patternName);
+            var rad = 0;
             this.on("enterframe", function() {
                 this.x += this.speed;
+                this.y += Math.sin(rad)*8;
+                rad+=0.01;
             });
         }.bind(enemy));
     },
 });
-gls2.EnemySoft.reika1 = gls2.EnemySoft.reika(3);
+gls2.EnemySoft.reika = gls2.EnemySoft.reika(3.0);
 
 /**
  * 戦艦
@@ -676,8 +680,7 @@ gls2.EnemySoft.miyuki_y = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.miyuki_y1 = gls2.EnemySoft.miyuki_y( 1.0);
-gls2.EnemySoft.miyuki_y2 = gls2.EnemySoft.miyuki_y(-1.0);
+gls2.EnemySoft.miyuki_y = gls2.EnemySoft.miyuki_y(1.0);
 
 /**
  * 戦艦
@@ -700,10 +703,10 @@ gls2.EnemySoft.miyuki_t = tm.createClass(
      * @param {number} velocityY
      * @param {string} attackPattern
      */
-    init: function(velocityX, attackPattern) {
+    init: function(velocityX) {
         this.superInit();
         this.velocityX = velocityX;
-        this.attackPattern = attackPattern;
+        this.attackPattern = "miyuki_t";
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -731,8 +734,7 @@ gls2.EnemySoft.miyuki_t = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.miyuki_t1 = gls2.EnemySoft.miyuki_t(-0.5, "miyuki_t");
-gls2.EnemySoft.miyuki_t2 = gls2.EnemySoft.miyuki_t( 0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t = gls2.EnemySoft.miyuki_t(0.5);
 
 /**
  * 浮遊砲台
