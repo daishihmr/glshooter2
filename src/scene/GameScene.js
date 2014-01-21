@@ -114,6 +114,8 @@ gls2.GameScene = tm.createClass(
     demoPlaying: false,
     isBossBattle: false,
 
+    screenShot: null,
+
     init: function() {
         if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
 
@@ -648,10 +650,9 @@ gls2.GameScene = tm.createClass(
                 this.launch();
             }.bind(this));
         } else {
-            // ハイスコアならスクリーンショットを撮る
+            this.screenShot = this.shotScreen().canvas.toDataURL("image/png");
             if (gls2.core.highScore === this.score) {
-                var ss = this.shotScreen();
-                gls2.core.highScoreScreenShot = ss.canvas.toDataURL("image/png");
+                gls2.core.highScoreScreenShot = this.screenShot;
             }
 
             // コンティニュー確認画面へ

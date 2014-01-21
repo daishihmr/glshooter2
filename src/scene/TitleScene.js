@@ -107,11 +107,10 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        var menu = [ "start", "setting", "tweet high score" ];
+        var menu = [ "start", "setting" ];
         var labels = [
             "ゲームを開始します",
-            "設定を変更します",
-            "ハイスコアをTwitterに投稿します"
+            "設定を変更します"
         ];
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
             "defaultValue": this.lastMainMenu,
@@ -137,22 +136,6 @@ gls2.TitleScene = tm.createClass({
             break;
         case 1: // option
             this.openSetting();
-            break;
-        case 2: // tweet
-            var text = "TM-Shooter SCORE: {score}(stage{stage} {type}-{style} continue:{cont})".format({
-                "score": this.app.highScore,
-                "stage": this.app.highScoreStage,
-                "type": "ABC"[this.app.highScoreType],
-                "style": ["S", "L", "EX"][this.app.highScoreStyle],
-                "cont": this.app.highScoreContinueCount
-            });
-            var twitterURL = tm.social.Twitter.createURL({
-                "type"    : "tweet",
-                "text"    : text,
-                "hashtags": "tmshooter",
-                "url"     : "http://tmshooter.dev7.jp"
-            });
-            window.open(twitterURL);
             break;
         }
     },

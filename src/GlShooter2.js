@@ -202,21 +202,29 @@ gls2.GlShooter2 = tm.createClass(
         this.stop();
     },
 
+    loggedIn: false,
+
     /**
      * @param {?String} userName
      * @param {function()} callback
      */
     postScore: function(userName, callback) {
         var data = {
-            "score": Math.floor(this.highScore),
-            "stage": this.highScoreStage + 1,
-            "continueCount": this.highScoreContinueCount,
-            "shipType": this.highScoreType,
-            "shipStyle": this.highScoreStyle,
+            "score": Math.floor(this.gameScene.score),
+            "stage": this.gameScene.stageNumber + 1,
+            "continueCount": this.gameScene.continueCount,
+            "shipType": this.gameScene.player.type,
+            "shipStyle": this.gameScene.player.style,
             "fps": 0,
-            "screenShot": this.highScoreScreenShot
+            "screenShot": this.gameScene.screenShot
         };
-        if (userName) data["userName"] = userName;
+        if (userName) {
+            data["userName"] = userName;
+            this.loggedIn = false;
+        } else {
+            this.loggedIn = true;
+        }
+
         tm.util.Ajax.load({
             "url": "/api/ranking/post",
             "data": data,
@@ -224,11 +232,9 @@ gls2.GlShooter2 = tm.createClass(
             "dataType": "json",
             "success": function(result) {
                 if (!result) {
-                    alert("登録に失敗しました！＞＜");
-                    callback();
+                    callback("登録に失敗しました！＞＜");
                 } else if (result["success"]) {
-                    alert("登録完了！");
-                    callback();
+                    callback(null, true, result["scoreId"]);
                 } else if (result["confirmLogin"]) {
                     if (confirm("ログインしていません。ログインしますか？")) {
                         window["onchildclose"] = function() {
@@ -243,16 +249,14 @@ gls2.GlShooter2 = tm.createClass(
                         userName = userName.substring(0, 10);
                         this.postScore(userName + " (匿名)", callback);
                     } else {
-                        callback();
+                        callback(null, false);
                     }
                 } else {
-                    alert("登録に失敗しました！＞＜");
-                    callback();
+                    callback("登録に失敗しました！＞＜");
                 }
             }.bind(this),
             "error": function() {
-                alert("登録に失敗しました！＞＜");
-                callback();
+                callback("登録に失敗しました！＞＜");
             }
         });
     },
