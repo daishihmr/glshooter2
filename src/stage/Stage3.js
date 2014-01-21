@@ -39,7 +39,6 @@ gls2.Stage3 = tm.createClass(
         }
 
         this.seq.add( 60, function() {
-            gls2.playBgm("bgm3", true),
             this.gameScene.ground.tweener.clear().to({speed:3}, 1000, "easeInOutQuad");
         });
 
