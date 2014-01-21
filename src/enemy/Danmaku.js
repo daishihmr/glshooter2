@@ -156,8 +156,20 @@ gls2.Danmaku["basic1-1"] = new bulletml.Root({
  */
 gls2.Danmaku["basic1-2"] = new bulletml.Root({
     "top": $.action([
-        $interval("10+$rand*20"),
-        $nway(3, -20, 20, $spd3)
+        $interval("10+$rand*100"),
+        $nway(3, -20, 20, $spd3),
+    ]),
+});
+
+/**
+ * 自機狙い弾3wayを速射.
+ */
+gls2.Danmaku["basic1-3"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval("10+$rand*100"),
+            $nway(3, -20, 20, $spd3),
+        ]),
     ]),
 });
 
@@ -626,6 +638,48 @@ gls2.Danmaku["nozomi-4"] = new bulletml.Root({
                 ]);
             }),
             $interval(90),
+        ]),
+    ]),
+    "noop": $.action([
+        $.wait(1),
+        $.vanish,
+    ]),
+});
+
+/**
+ * のぞみ5面
+ */
+gls2.Danmaku["nozomi-5"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.repeat(999, [
+            $.repeat(6, [
+                $.bindVar("c", "2+$loop.index"),
+                $nway("$c", "-4-($c-2)*2-60", "4+($c-2)*2-60", $spd0("(560-$c*40)*0.02"), RL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2-20", "4+($c-2)*2-20", $spd0("(560-$c*40)*0.02"), RL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2+20", "4+($c-2)*2+20", $spd0("(560-$c*40)*0.02"), RL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2+60", "4+($c-2)*2+60", $spd0("(560-$c*40)*0.02"), RL, $.offsetY(-50)),
+            ]),
+            $interval(150),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(20),
+        $.repeat(999, [
+            $.fire($.direction(+40), IVS($.actionRef("noop"))),
+            $whip($spd3, 0.03, 16, function(spd) {
+                return $.action([
+                    $.fire($.direction(-5, "sequence"), spd, BNS, $.offsetX(-50)),
+                    $interval(3),
+                ]);
+            }),
+            $.fire($.direction(-40), IVS($.actionRef("noop"))),
+            $whip($spd3, 0.03, 16, function(spd) {
+                return $.action([
+                    $.fire($.direction(+5, "sequence"), spd, BNS, $.offsetX(+50)),
+                    $interval(3),
+                ]);
+            }),
         ]),
     ]),
     "noop": $.action([

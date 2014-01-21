@@ -98,6 +98,7 @@ gls2.GlShooter2 = tm.createClass(
             "bgm5": "assets2/nc60627.mp3",
             "bgmBoss": "assets2/nc29206.mp3",
             "bgmResult": "assets2/nc54077.mp3",
+            "bgmLoopInfo": "assets2/loop.json",
 
             // sound
             "sound/explode": "assets2/sen_ge_taihou03.mp3",
@@ -129,7 +130,7 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgm2"];
             delete assets["bgm3"];
             delete assets["bgm4"];
-            delete assets["bgm5"];
+            // delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
 
@@ -144,7 +145,7 @@ gls2.GlShooter2 = tm.createClass(
             // assets["bgmResult"] = "/gls2-bgm/clear.mp3";
         }
 
-        this.replaceScene(tm.app.LoadingScene({
+        this.replaceScene(tm.ui.LoadingScene({
             assets: assets,
             nextScene: function() {
                 this._onLoadAssets();
@@ -188,29 +189,6 @@ gls2.GlShooter2 = tm.createClass(
             cvRed.resize(tex.width, tex.height);
             cvRed.drawBitmap(bmRed, 0, 0);
             tm.asset.AssetManager.set(name + "Red", cvRed);
-
-            // var bmShadow = canvas.getBitmap();
-            // for (var i = 0; i < 6; i++) {
-            //     bmShadow.filter({
-            //         calc: function(pixel, index, x, y, bitmap) {
-            //             var a = 0;
-            //             a += bitmap.getPixel(x + -1, y + -1)[3] * 1/16;
-            //             a += bitmap.getPixel(x + -1, y +  0)[3] * 2/16;
-            //             a += bitmap.getPixel(x + -1, y + +1)[3] * 1/16;
-            //             a += bitmap.getPixel(x +  0, y + -1)[3] * 2/16;
-            //             a += bitmap.getPixel(x +  0, y +  0)[3] * 4/16;
-            //             a += bitmap.getPixel(x +  0, y + +1)[3] * 2/16;
-            //             a += bitmap.getPixel(x + +1, y + -1)[3] * 1/16;
-            //             a += bitmap.getPixel(x + +1, y +  0)[3] * 2/16;
-            //             a += bitmap.getPixel(x + +1, y + +1)[3] * 1/16;
-            //             bitmap.setPixel32Index(index, 255, 255, 255, a);
-            //         }
-            //     });
-            // }
-            // var cvShadow = tm.graphics.Canvas();
-            // cvShadow.resize(tex.width, tex.height);
-            // cvShadow.drawBitmap(bmShadow, 0, 0);
-            // tm.asset.AssetManager.set(name + "Shadow", cvShadow);
         });
 
 

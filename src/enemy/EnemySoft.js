@@ -487,6 +487,59 @@ gls2.EnemySoft.Tsukikage4l = tm.createClass(
 });
 
 /**
+ * うらら5面
+ */
+gls2.EnemySoft.Urara = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    direction: 1,
+    delay: 0,
+
+    init: function(direction, delay) {
+        this.superInit();
+        this.direction = direction;
+        this.delay = delay;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        tm.app.Tweener(enemy)
+            .wait(this.delay)
+            .call(function() {
+                gls2.EnemySoft.attack(this, "basic1-3");
+            }.bind(enemy));
+
+        tm.app.Tweener(enemy)
+            .wait(this.delay)
+            .to({
+                y: SC_H*0.1
+            }, 5000, "easeOutQuad")
+            .to({
+                y: SC_H*2
+            }, 3000, "easeInQuad");
+        tm.app.Tweener(enemy)
+            .wait(this.delay)
+            .to({
+                x: SC_W*(0.5+this.direction*+0.3)
+            }, 3000, "easeOutExpo")
+            .to({
+                x: SC_W*(0.5+this.direction*-0.3)
+            }, 2000, "easeInOutQuad")
+            .to({
+                x: SC_W*(0.5+this.direction*+0.3)
+            }, 2000, "easeOutExpo")
+            .to({
+                x: SC_W*(0.5+this.direction*-0.3)
+            }, 2000, "easeInOutQuad")
+            .to({
+                x: SC_W*(this.direction*+1.3)
+            }, 2000, "easeInQuad");
+    }
+});
+
+/**
  * 強襲戦闘艇
  *
  * 画面内上部にテレポートで出現後、ゆっくり下へ移動していく
@@ -841,9 +894,37 @@ gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
 gls2.EnemySoft.LargeFighter4 = _MiddleFighterCommon(0.5, "komachi-4");
 
 /**
+ * mktn5面
+ */
+gls2.EnemySoft.Mktn = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    side: 0,
+
+    init: function(side) {
+        this.superInit();
+        this.side = side;
+    },
+
+    setup: function(enemy) {
+        tm.app.Tweener(enemy)
+            .to({
+                x: SC_W*this.side
+            }, 4000, "easeOutQuad");
+        enemy.on("enterframe", function() {
+            this.y += 0.1;
+        });
+    }
+});
+
+/**
  * のぞみ4面
  */
 gls2.EnemySoft.Nozomi4 = _MiddleFighterCommon(0.1, "nozomi-4");
+/**
+ * のぞみ5面
+ */
+gls2.EnemySoft.Nozomi5 = _MiddleFighterCommon(0.3, "nozomi-5");
 
 /**
  * ボムキャリアー「クルミ」

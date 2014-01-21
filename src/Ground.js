@@ -4,16 +4,14 @@
  */
 (function() {
 
-/** @const */
-var LS = 3;
-/** @const */
-var C = [];
-/** @const */
-var L = [];
-for (var i = 0; i < LS; i++) {
-    C[i] = 40 * Math.pow(0.8, i);
-    L[i] = C[i]/2*Math.sqrt(3);
-}
+/**
+ * レイヤ数
+ * @const
+ */
+var layerCount = 5;
+var layerScale = Array.range(0, layerCount).map(function(n) {
+    return Math.pow(0.9, n+1);
+});
 
 /**
  * @class
@@ -26,6 +24,15 @@ gls2.Ground = tm.createClass(
     /** @type {gls2.GroundElement} */
     gElement: null,
 
+    /** 
+     * 長辺の長さ
+     */
+    lengthH: null,
+    /**
+     * 短辺の長さ
+     */
+    lengthV: null,
+
     init: function() {
         this.superInit("#background");
         this.resize(SC_W, SC_H).fitWindow();
@@ -37,6 +44,13 @@ gls2.Ground = tm.createClass(
         }.bind(this);
 
         this.blendMode = "lighter";
+
+        this.lengthH = [];
+        this.lengthV = [];
+        for (var i = 0; i < layerCount; i++) {
+            this.lengthH[i] = 40 * layerScale[i];
+            this.lengthV[i] = this.lengthH[i]/2*Math.sqrt(3);
+        }
     },
 
     update: function(frame) {
@@ -45,14 +59,14 @@ gls2.Ground = tm.createClass(
         this.gElement.dx = Math.cos(this.gElement.direction) * this.gElement.speed;
         this.gElement.dy = Math.sin(this.gElement.direction) * this.gElement.speed;
 
-        for (var i = 0; i < LS; i++) {
+        for (var i = 0; i < layerCount; i++) {
             this.gElement.gx[i] += this.gElement.dx * Math.pow(0.8, i);
-            while (C[i]*3 < this.gElement.gx[i]) this.gElement.gx[i] -= C[i]*3;
-            while (this.gElement.gx[i] < -C[i]*3) this.gElement.gx[i] += C[i]*3;
+            while (this.lengthH[i]*3 < this.gElement.gx[i]) this.gElement.gx[i] -= this.lengthH[i]*3;
+            while (this.gElement.gx[i] < -this.lengthH[i]*3) this.gElement.gx[i] += this.lengthH[i]*3;
 
             this.gElement.gy[i] += this.gElement.dy * Math.pow(0.8, i);
-            while (L[i]*2 < this.gElement.gy[i]) this.gElement.gy[i] -= L[i]*2;
-            while (this.gElement.gy[i] < -L[i]*2) this.gElement.gy[i] += L[i]*2;
+            while (this.lengthV[i]*2 < this.gElement.gy[i]) this.gElement.gy[i] -= this.lengthV[i]*2;
+            while (this.gElement.gy[i] < -this.lengthV[i]*2) this.gElement.gy[i] += this.lengthV[i]*2;
         }
 
         if (frame % 2 === 0) this.draw();
@@ -67,22 +81,22 @@ gls2.Ground = tm.createClass(
             this.clear();
         }
 
-        for (var i = 0; i < LS; i++) {
+        for (var i = 0; i < layerCount; i++) {
             this.lineWidth = 0.3 * Math.pow(0.8, i);
             this.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
                 .addColorStopList([
-                    { offset: 0.0, color: "rgba(255,255,255," + (0.6 * Math.pow(0.8, i)) + ")" },
-                    { offset: 1.0, color: "rgba(255,255,255," + (0.4 * Math.pow(0.8, i)) + ")" },
+                    { offset: 0.0, color: "rgba(255,255,255," + (0.8 * layerScale[i]) + ")" },
+                    { offset: 1.0, color: "rgba(255,255,255," + (0.6 * layerScale[i]) + ")" },
                 ])
                 .toStyle();
             this.beginPath();
             var yy = 0;
-            for (var x = this.gElement.gx[i]-C[i]*3; x < SC_W+C[i]*3; x += C[i]*1.5) {
-                yy = (yy === 0) ? L[i] : 0;
-                for (var y = this.gElement.gy[i]-L[i]*2 + yy; y < SC_H+L[i]*2; y += L[i]*2) {
-                    this.line(x, y, x + C[i], y);
-                    this.line(x, y, x - C[i]/2, y + L[i]);
-                    this.line(x, y, x - C[i]/2, y - L[i]);
+            for (var x = this.gElement.gx[i]-this.lengthH[i]*3; x < SC_W+this.lengthH[i]*3; x += this.lengthH[i]*1.5) {
+                yy = (yy === 0) ? this.lengthV[i] : 0;
+                for (var y = this.gElement.gy[i]-this.lengthV[i]*2 + yy; y < SC_H+this.lengthV[i]*2; y += this.lengthV[i]*2) {
+                    this.line(x, y, x + this.lengthH[i], y);
+                    this.line(x, y, x - this.lengthH[i]/2, y + this.lengthV[i]);
+                    this.line(x, y, x - this.lengthH[i]/2, y - this.lengthV[i]);
                 }
             }
             this.stroke();
@@ -123,7 +137,7 @@ gls2.GroundElement = tm.createClass(
 
         this.gx = [];
         this.gy = [];
-        for (var i = 0; i < LS; i++) {
+        for (var i = 0; i < layerCount; i++) {
             this.gx[i] = SC_W*0.5;
             this.gy[i] = SC_H*0.5;
         }

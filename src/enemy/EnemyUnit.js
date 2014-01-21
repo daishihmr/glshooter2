@@ -341,6 +341,44 @@ gls2.EnemyUnit = {
     { hard:$e.FighterS, soft:$s.Tsukikage4l(100), x:SC_W*-0.5, y:SC_H*0.4 },
 ],
 
+// 小型戦闘機「カスガノ」5面用 左下から
+"urara5-0": (function() {
+    var result = [];
+    for (var n = 0; n < 20; n++) {
+        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.50 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.55 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.60 });
+    }
+    return result;
+})(),
+"urara5-1": (function() {
+    var result = [];
+    for (var n = 0; n < 20; n++) {
+        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.50 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.55 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.60 });
+    }
+    return result;
+})(),
+"urara5-2": (function() {
+    var result = [];
+    for (var n = 0; n < 20; n++) {
+        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.20 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.25 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.30 });
+    }
+    return result;
+})(),
+"urara5-3": (function() {
+    var result = [];
+    for (var n = 0; n < 20; n++) {
+        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.20 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.25 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.30 });
+    }
+    return result;
+})(),
+
 // 中型戦闘機「アキモト」1面用
 "komachi-0": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi-1": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],
@@ -362,6 +400,14 @@ gls2.EnemyUnit = {
 "nozomi4-0": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.3, y:SC_H*-0.3 }],
 "nozomi4-1": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.5, y:SC_H*-0.3 }],
 "nozomi4-2": [{ hard:$e.Nozomi, soft:$s.Nozomi4, x:SC_W*0.7, y:SC_H*-0.3 }],
+
+// 大型戦闘機「ユメハラ」5面用
+"nozomi5-0": [{ hard:$e.Nozomi, soft:$s.Nozomi5, x:SC_W*0.3, y:SC_H*-0.5 }],
+"nozomi5-1": [{ hard:$e.Nozomi, soft:$s.Nozomi5, x:SC_W*0.5, y:SC_H*-0.3 }],
+"nozomi5-2": [{ hard:$e.Nozomi, soft:$s.Nozomi5, x:SC_W*0.7, y:SC_H*-0.5 }],
+
+// 大型戦闘機「アオノ」5面用
+"mktn5-0": [{ hard:$e.Mktn, soft:$s.Mktn(0.7), x:SC_W*1.3, y:SC_H*0.2 }],
 
 //強襲戦闘機「ヒノ」
 "akane-center": [
