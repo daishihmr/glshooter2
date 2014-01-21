@@ -114,6 +114,11 @@ gls2.GameScene = tm.createClass(
     demoPlaying: false,
     isBossBattle: false,
 
+    /**
+     * 平均FPS
+     */
+    avgFps: 0,
+
     init: function() {
         if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
 
@@ -541,6 +546,7 @@ gls2.GameScene = tm.createClass(
         this.endHyperMode();
         this.isBombActive = false;
         this.missCount = this.missCountTotal = 0;
+        this.avgFps = 0;
 
         this.player = gls2.Player(this, playerType, playerStyle);
         this.setRank(gls2.Setting.INITIAL_RANK);
