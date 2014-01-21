@@ -27,7 +27,7 @@ gls2.TitleScene = tm.createClass({
         tm.display.Label("version 1.0-beta", 22)
             .setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
         this.highScoreLabel = tm.display.Label()
-            .setPosition(SC_W * 0.5, SC_H * 0.40).addChildTo(this);
+            .setPosition(SC_W * 0.5, SC_H * 0.40); //.addChildTo(this);
         tm.display.Label("press space key").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.addEventListener("enter", function() {

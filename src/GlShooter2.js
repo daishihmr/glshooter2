@@ -271,7 +271,7 @@ gls2.GlShooter2 = tm.createClass(
             "能登真璃亜",
             "にゃんぱすー",
             "相田マナ"
-        ].pickup();
+        ]["pickup"]();
     },
 
     timeoutTasks: null,

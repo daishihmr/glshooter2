@@ -111,9 +111,9 @@ gls2.GameOverScene = tm.createClass(
                 "type"    : "tweet",
                 "text"    : text,
                 "hashtags": "tmshooter",
-                "url"     : "http://tmshooter.dev7.jp"
+                "url"     : "http://tmshooter.dev7.jp/ranking/" + scoreId
             });
-            window.open(twitterURL);
+            window.open(twitterURL, "tweet", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
             this.app.replaceScene(gls2.TitleScene());
         } else if (result == 1) {
             this.app.replaceScene(gls2.TitleScene());
