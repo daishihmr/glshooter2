@@ -101,17 +101,17 @@ gls2.GameOverScene = tm.createClass(
     onResultTweet: function(result, scoreId) {
         if (result == 0) {
             var text = "TM-Shooter SCORE: {score}(stage{stage} {type}-{style} continue:{cont})".format({
-                "score": this.app.highScore,
-                "stage": this.app.highScoreStage,
-                "type": "ABC"[this.app.highScoreType],
-                "style": ["S", "L", "EX"][this.app.highScoreStyle],
-                "cont": this.app.highScoreContinueCount
+                "score": Math.floor(this.app.gameScene.score),
+                "stage": this.app.gameScene.stageNumber + 1,
+                "type": "ABC"[this.app.gameScene.player.type],
+                "style": ["S", "L", "EX"][this.app.gameScene.player.style],
+                "cont": this.app.gameScene.continueCount
             });
             var twitterURL = tm.social.Twitter.createURL({
                 "type"    : "tweet",
                 "text"    : text,
                 "hashtags": "tmshooter",
-                "url"     : "http://tmshooter.dev7.jp/ranking/" + scoreId
+                "url"     : scoreId ? ("http://tmshooter.net/ranking/" + scoreId) : "http://tmshooter.net"
             });
             window.open(twitterURL, "tweet", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
             this.app.replaceScene(gls2.TitleScene());
