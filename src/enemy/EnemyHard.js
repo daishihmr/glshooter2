@@ -35,11 +35,11 @@ gls2.Enemy.DATA = {
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
-    "hino":      [    30,      500, false, false,  1, {"width": 24, "height": 48}, ],
+    "hino":      [    20,      500, false, false,  1, {"width": 24, "height": 48}, ],
     "hoshizora_y":[  100,    20000, false,  true, 30, {"width":128, "height": 64}, ],
     "hoshizora_t":[  100,    20000, false,  true, 30, {"width":128, "height": 64}, ],
     "yotsuba":    [  300,   100000, false,  true, 30, {"width": 64, "height": 64}, ],
-    "yotsubaLeaf":[  150,    30000, false, false, 10, {"width": 32, "height": 32}, ],
+    "yotsubaLeaf":[  100,    30000, false, false, 10, {"width": 32, "height": 32}, ],
     "midorikawa":[     5,     1000, false, false,  1, {"width": 32, "height": 32}, ],
     "aoki":      [     5,     1200, false, false,  1, {"width": 32, "height": 32}, ],
 };
@@ -565,10 +565,7 @@ gls2.Enemy.akane = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hino");
 
-        this._sprite = _Sprite("hino", 64, 32).setFrameIndex(0);
-        this.boundingWidth = 64;
-        this.boundingHeightBottom = 0;
-        this.boundingHeightTop = 32;
+        this._sprite = _Sprite("tex_stage3", 64, 32).setFrameIndex(0);
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -626,7 +623,7 @@ gls2.Enemy.reika = tm.createClass(
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
 
-        if (this.x < this.player.x) {
+        if (this.velocityX < 0) {
             this.scaleX = -1;
         } else {
             this.scaleX = 1;
@@ -652,10 +649,7 @@ gls2.Enemy.miyuki_y = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hoshizora_y");
 
-        this._sprite = _Sprite("hoshizora_y", 256, 128).setFrameIndex(0);
-        this.boundingWidth = 256;
-        this.boundingHeightBottom = 16;
-        this.boundingHeightTop = 64;
+        this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(1);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -676,7 +670,10 @@ gls2.Enemy.miyuki_y = tm.createClass(
     },
     onLaunch: function() {
         //初期位置で向きを決定
-        if (this.x > SC_W)this._sprite.scaleX = -1;
+        if (this.x > SC_W){ //画面左端から出現
+            this.velocityX *= -1;
+            this._sprite.scaleX = -1;
+        }
     },
 });
 
@@ -689,10 +686,7 @@ gls2.Enemy.miyuki_t = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hoshizora_t");
 
-        this._sprite = _Sprite("hoshizora_t", 64, 128).setFrameIndex(0);
-        this.boundingWidth = 128;
-        this.boundingHeightBottom = 16;
-        this.boundingHeightTop = 32;
+        this._sprite = _Sprite("tex_stage3", 64, 128).setFrameIndex(1);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -711,6 +705,11 @@ gls2.Enemy.miyuki_t = tm.createClass(
     destroy: function() {
         this.fallDown();
     },
+    onLaunch: function() {
+        if (this.x > SC_W/2){
+            this.velocityX *= -1;
+        }
+    },
 });
 
 /**
@@ -721,7 +720,7 @@ gls2.Enemy.Alice = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsuba");
-        this._sprite = _Sprite("yotsuba", 128, 128).setFrameIndex(0);
+        this._sprite = _Sprite("tex_stage3", 128, 128).setFrameIndex(1);
         this.boundingWidth = 128;
         this.boundingHeightBottom = 0;
         this.boundingHeightTop = 0;
@@ -976,7 +975,7 @@ gls2.Enemy.Setsuna = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "higashi");
-        this._sprite = _Sprite("higashi", 64*4, 64*2).setFrameIndex(0);
+        this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(2);
     },
     ondying: function() {
     },
@@ -997,7 +996,7 @@ gls2.Enemy.Love = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "momozono");
-        this._sprite = _Sprite("momozono", 64*4, 64*2).setFrameIndex(0);
+        this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(4);
         this._sprite.setScale(2);
     },
     ondying: function() {
