@@ -145,7 +145,7 @@ gls2.GlShooter2 = tm.createClass(
             // assets["bgmResult"] = "/gls2-bgm/clear.mp3";
         }
 
-        this.replaceScene(tm.ui.LoadingScene({
+        this.replaceScene(tm.ui["LoadingScene"]({
             assets: assets,
             nextScene: function() {
                 this._onLoadAssets();
