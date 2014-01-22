@@ -8,12 +8,6 @@ var SC_W = 480;
 /** @const */
 var SC_H = 640;
 
-gls2["pause"] = function() {
-    if (gls2.core && gls2.core.currentScene === gls2.GameScene.SINGLETON) {
-        gls2.GameScene.SINGLETON.openPauseMenu(0);
-    }
-};
-
 /**
  * GL-Shooter2アプリケーション
  * @class
@@ -43,6 +37,8 @@ gls2.GlShooter2 = tm.createClass(
     difficulty: 1,
 
     gameScene: null,
+
+    continueCountMax: 3,
 
     init: function(id) {
         if (gls2.core !== null) throw new Error("class 'gls2.GlShooter2' is singleton!!");
@@ -104,6 +100,10 @@ gls2.GlShooter2 = tm.createClass(
             "sound/warning": "assets2/meka_ge_keihou06.mp3",
             "sound/select": "assets2/se_maoudamashii_system36.mp3",
             "sound/decision": "assets2/se_maoudamashii_system03.mp3",
+            "sound/achevement": "assets2/se_maoudamashii_system46.mp3",
+            // TODO
+            // "sound/extend": "",
+            // "sound/hyper": "",
 
             // voice
             "sound/voHyperStandBy": "assets/vo_hyper_standby.mp3",
@@ -147,6 +147,10 @@ gls2.GlShooter2 = tm.createClass(
                 return gls2.TitleScene();
             }.bind(this),
         }));
+
+        if (window["achevements"]) {
+            this.continueCountMax = window["achevements"].length;
+        }
     },
 
     update: function() {
@@ -264,8 +268,8 @@ gls2.GlShooter2 = tm.createClass(
             "アイたそ",
             "ぱふぇ☆",
             "能登真璃亜",
-            "にゃんぱすー",
-            "相田マナ"
+            "にゃんぱすー(30)",
+            "相田総理"
         ]["pickup"]();
     },
 
@@ -275,6 +279,38 @@ gls2.GlShooter2 = tm.createClass(
             frame: this.frame + t,
             fn: fn,
         });
+    },
+
+    putAchevement: function(key) {
+        if (!window["achevements"]) {
+            return;
+        }
+
+        var achevements = window["achevements"];
+        if (achevements.indexOf(key) == -1) {
+            this.continueCountMax += 1;
+            achevements.push(key);
+            tm.util.Ajax.load({
+                url: "/api/achevement/" + key,
+                type: "POST",
+                dataType: "json",
+                success: function(json) {
+                    console.dir(json);
+                    if (gls2.Achevement[key]) {
+                        gls2.playSound("achevement");
+                        this.gameScene.labelLayer.addChild(gls2.GetTrophyEffect(gls2.Achevement[key].title));
+                    }
+                }.bind(this),
+                error: function() {
+                    console.warn("error!");
+                },
+            });
+
+            if (DEBUG && gls2.Achevement[key]) {
+                gls2.playSound("achevement");
+                this.currentScene.addChild(gls2.GetTrophyEffect(gls2.Achevement[key].title));
+            }
+        }
     }
 
 });
@@ -290,3 +326,15 @@ tm.display.AnimationSprite.prototype.clone = function() {
 gls2.distanceSq = function(a, b) {
     return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
 };
+
+gls2["pause"] = function() {
+    if (gls2.core && gls2.core.currentScene === gls2.GameScene.SINGLETON) {
+        gls2.GameScene.SINGLETON.openPauseMenu(0);
+    }
+};
+
+gls2["continueCountMax"] = function(v) {
+    if (gls2.core) {
+        gls2.core.continueCountMax = v;
+    }
+}

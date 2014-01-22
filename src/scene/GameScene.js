@@ -176,7 +176,8 @@ gls2.GameScene = tm.createClass(
             || child === this.ground
             || child instanceof gls2.GameScene.Layer
             || child instanceof gls2.GameScene.LabelLayer
-            || child instanceof gls2.ScoreLabelElement) {
+            || child instanceof gls2.ScoreLabelElement
+            || child instanceof gls2.GetTrophyEffect) {
             this.superClass.prototype.addChild.apply(this, arguments);
         } else {
             console.error("unknown type child.");
@@ -497,6 +498,19 @@ gls2.GameScene = tm.createClass(
 
         // 素点が上昇
         this.baseScore += enemy.score * bonus;
+
+        if (enemy.name === "misumi") this.app.putAchevement("boss1");
+        if (enemy.name === "hyuga") this.app.putAchevement("boss2");
+        if (enemy.name === "momozono") this.app.putAchevement("boss3");
+        if (enemy.name === "aida") this.app.putAchevement("boss4");
+        if (enemy.name === "hojo") this.app.putAchevement("boss5");
+        if (this.missCountTotal === 0 && this.continueCount === 0) {
+            if (enemy.name === "misumi") this.app.putAchevement("nomiss1");
+            if (enemy.name === "hyuga") this.app.putAchevement("nomiss2");
+            if (enemy.name === "momozono") this.app.putAchevement("nomiss3");
+            if (enemy.name === "aida") this.app.putAchevement("nomiss4");
+            if (enemy.name === "hojo") this.app.putAchevement("nomiss5");
+        }
     },
 
     generateStar: function(ground, large, x, y, count, isBoss) {
@@ -656,15 +670,21 @@ gls2.GameScene = tm.createClass(
                 this.launch();
             }.bind(this));
         } else {
-            this.screenShot = this.shotScreen().canvas.toDataURL("image/png");
-            if (gls2.core.highScore === this.score) {
-                gls2.core.highScoreScreenShot = this.screenShot;
-            }
-
             // コンティニュー確認画面へ
-            this.tweener.clear().wait(2000).call(function() {
-                this.openContinueMenu();
-            }.bind(this));
+            this.tweener.clear()
+                .wait(20).call(function() {
+                    this.screenShot = this.shotScreen().canvas.toDataURL("image/png");
+                    if (gls2.core.highScore === this.score) {
+                        gls2.core.highScoreScreenShot = this.screenShot;
+                    }
+                }.bind(this))
+                .wait(2000).call(function() {
+                    if (this.continueCount < gls2.core.continueCountMax) {
+                        this.openContinueMenu();
+                    } else {
+                        this.gameOver();
+                    }
+                }.bind(this));
         }
     },
 
@@ -718,6 +738,8 @@ gls2.GameScene = tm.createClass(
             var es = gls2.Setting.EXTEND_SCORE[i];
             if (before < es && es <= this.score) {
                 this.extendZanki();
+                if (i == 0) this.app.putAchevement("extend1");
+                if (i == 1) this.app.putAchevement("extend2");
             }
         }
         gls2.core.highScore = Math.max(gls2.core.highScore, this.score);
@@ -727,6 +749,13 @@ gls2.GameScene = tm.createClass(
             gls2.core.highScoreStyle = this.player.style;
             gls2.core.highScoreContinueCount = this.continueCount;
         }
+
+        if (this.score >= 100000000) this.app.putAchevement("score100M");
+        if (this.score >= 2000000000) this.app.putAchevement("score2G");
+        if (this.score >= 20000000000) this.app.putAchevement("score20G");
+        if (this.score >= 50000000000) this.app.putAchevement("score50G");
+        if (this.score >= 100000000000) this.app.putAchevement("score100G");
+        if (this.score >= 1000000000000) this.app.putAchevement("score1T");
     },
 
     addCombo: function(v) {
@@ -734,6 +763,11 @@ gls2.GameScene = tm.createClass(
         this.comboCount += v;
         this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
         if (1 <= v) this.comboGauge = 1;
+
+        if (this.comboCount >= 100) this.app.putAchevement("combo100");
+        if (this.comboCount >= 1000) this.app.putAchevement("combo1000");
+        if (this.comboCount >= 10000) this.app.putAchevement("combo10000");
+        if (this.comboCount >= 100000) this.app.putAchevement("combo100000");
     },
 
     addHyperGauge: function(v) {
@@ -800,6 +834,11 @@ gls2.GameScene = tm.createClass(
 
         // すべての弾を消す
         gls2.Danmaku.erase(true, true);
+
+        this.app.putAchevement("hyper1");
+        if (this.currentHyperLevel == 10) {
+            this.app.putAchevement("hyper10");
+        }
     },
 
     endHyperMode: function() {
@@ -937,7 +976,7 @@ gls2.GameScene = tm.createClass(
     },
 
     openContinueMenu: function() {
-        this.openDialogMenu("CONTINUE?", [ "yes", "no" ], this.onResultContinue, {
+        this.openDialogMenu("CONTINUE? (" + this.continueCount + "/" + gls2.core.continueCountMax + ")", [ "yes", "no" ], this.onResultContinue, {
             "defaultValue": 0,
             "menuDescriptions": [
                 "システムを再起動して出撃します",

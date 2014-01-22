@@ -1922,8 +1922,8 @@ tm.event = tm.event || {};
             var oldEventName = 'on' + e.type;
             if (this[oldEventName]) this[oldEventName](e);
             
-            var listeners = this._listeners[e.type];
-            if (listeners) {
+            var listeners = [].concat(this._listeners[e.type]);
+            if (this._listeners[e.type]) {
                 for (var i=0,len=listeners.length; i<len; ++i) {
                     listeners[i].call(this, e);
                 }
@@ -1947,7 +1947,7 @@ tm.event = tm.event || {};
         },
         
         /**
-         * 登録されたイベントがあるかをチェック
+         * type に登録されたイベントがあるかをチェック
          */
         hasEventListener: function(type) {
             if (this._listeners[type] === undefined && !this["on" + type]) return false;
@@ -1955,7 +1955,7 @@ tm.event = tm.event || {};
         },
         
         /**
-         * リスナーを全てクリア
+         * type に登録されているリスナーを全てクリア
          */
         clearEventListener: function(type) {
             var oldEventName = 'on' + type;
