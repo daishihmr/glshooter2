@@ -49,15 +49,15 @@ gls2.Achevement = {
     },
     "combo1000": {
         title: "1000HIT達成！",
-        description: "コンボを1000HIT以上つなげる"
+        description: "コンボを1,000HIT以上つなげる"
     },
     "combo10000": {
         title: "10000HIT達成！",
-        description: "コンボを10000HIT以上つなげる"
+        description: "コンボを10,000HIT以上つなげる"
     },
     "combo100000": {
         title: "100000HIT達成！",
-        description: "コンボを100000HIT以上つなげる"
+        description: "コンボを100,000HIT以上つなげる"
     },
     "extend1": {
         title: "ファーストエクステンド！",

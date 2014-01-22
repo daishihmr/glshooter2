@@ -19,7 +19,7 @@ gls2.Enemy.DATA = {
     "kenzaki":   [   200,   300000,  true,  true, 10, {"width":100, "height":40}, ],
     "minazuki":  [   300,   300000,  true,  true, 10, {"width":100, "height":40}, ],
     "tsukikage": [     8,     1000, false, false,  5, {"width":100, "height":20}, ],
-    "kasugano":  [     4,     1000, false, false,  1, {"radius": 24}, ],
+    "kasugano":  [     6,     1000, false, false,  1, {"radius": 24}, ],
     "kurokawa":  [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yumehara":  [   250,   500000, false,  true, 20, {"width":180, "heightBottom":40, "heightTop":60}, ],
@@ -219,12 +219,15 @@ gls2.Enemy.Urara = tm.createClass(
     superClass: gls2.Enemy,
 
     _sprite: null,
+    beforePos: null,
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kasugano");
 
         this._sprite = _Sprite("tex1", 64*1, 64*1).setFrameIndex(23);
         this.aura = gls2.Particle(80, 1.0, 0.8);
+
+        this.beforePos = tm.geom.Vector2();
     },
     update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
@@ -233,6 +236,9 @@ gls2.Enemy.Urara = tm.createClass(
                 .setPosition(this.x, this.y)
                 .addChildTo(this.gameScene);
         }
+
+        this.rotation = tm.geom.Vector2.sub(this.position, this.beforePos).toAngle() * gls2.math.RAD_TO_DEG - 90;
+        this.beforePos.set(this.x, this.y);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -338,11 +344,11 @@ gls2.Enemy.Mktn = tm.createClass(
 
         this.setScale(1.2);
 
-        this.backFire = gls2.Particle(50, 1.0, 0.95);
+        this.backFire = gls2.Particle(70, 1.0, 0.97);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
-        if (app.frame%2 === 0 && this.hp > 0) {
+        if (app.frame%2 === 0) {
             this.backFire.clone()
                 .setScale(Math.randf(0.9, 1.5))
                 .setPosition(this.x-35, this.y+40)

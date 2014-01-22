@@ -493,11 +493,13 @@ gls2.EnemySoft.Urara = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
+    motionType: 0,
     direction: 1,
     delay: 0,
 
-    init: function(direction, delay) {
+    init: function(motionType, direction, delay) {
         this.superInit();
+        this.motionType = motionType;
         this.direction = direction;
         this.delay = delay;
     },
@@ -511,31 +513,60 @@ gls2.EnemySoft.Urara = tm.createClass(
                 gls2.EnemySoft.attack(this, "basic1-3");
             }.bind(enemy));
 
-        tm.app.Tweener(enemy)
-            .wait(this.delay)
-            .to({
-                y: SC_H*0.1
-            }, 5000, "easeOutQuad")
-            .to({
-                y: SC_H*2
-            }, 3000, "easeInQuad");
-        tm.app.Tweener(enemy)
-            .wait(this.delay)
-            .to({
-                x: SC_W*(0.5+this.direction*+0.3)
-            }, 3000, "easeOutExpo")
-            .to({
-                x: SC_W*(0.5+this.direction*-0.3)
-            }, 2000, "easeInOutQuad")
-            .to({
-                x: SC_W*(0.5+this.direction*+0.3)
-            }, 2000, "easeOutExpo")
-            .to({
-                x: SC_W*(0.5+this.direction*-0.3)
-            }, 2000, "easeInOutQuad")
-            .to({
-                x: SC_W*(this.direction*+1.3)
-            }, 2000, "easeInQuad");
+        var xplus = this.direction == 1;
+        var d = function(x) {
+            return xplus ? x : (1-x);
+        };
+        switch (this.motionType) {
+        case 0:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.8)
+                }, 2000, "easeOutQuart");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*1.3
+                }, 2500, "easeInQuad");
+            break;
+        case 1:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.3)
+                }, 2000, "easeOutQuad");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*0.3
+                }, 2500, "easeOutQuad")
+                .to({
+                    y: SC_H*1.3
+                }, 3000, "easeInBack");
+            break;
+        case 2:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.8)
+                }, 2000, "easeOutQuad")
+                .to({
+                    x: SC_W*d(0.4)
+                }, 1000, "easeInOutQuad")
+                .to({
+                    x: SC_W*d(0.6)
+                }, 1000, "easeInOutQuad");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*0.3
+                }, 2500, "easeOutQuad")
+                .to({
+                    y: SC_H*1.3
+                }, 3000, "easeInBack");
+            break;
+        }
     }
 });
 
@@ -909,10 +940,14 @@ gls2.EnemySoft.Mktn = tm.createClass(
     },
 
     setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
         tm.app.Tweener(enemy)
             .to({
                 x: SC_W*this.side
-            }, 4000, "easeOutQuad");
+            }, 2800, "easeOutQuad")
+            .call(function() {
+                gls2.EnemySoft.attack(this, "mktn-5");
+            }.bind(enemy));
         enemy.on("enterframe", function() {
             this.y += 0.1;
         });

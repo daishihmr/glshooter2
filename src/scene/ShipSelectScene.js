@@ -344,8 +344,8 @@ gls2.ShipSelectScene = tm.createClass(
 
     startGame: function() {
         gls2.core.gameScene.autoBomb = this.autoBomb;
-        gls2.core.gameScene.start(this.type, this.style);
         gls2.core.replaceScene(gls2.core.gameScene);
+        gls2.core.gameScene.start(this.type, this.style);
         gls2.fadeOutBgm();
     },
 

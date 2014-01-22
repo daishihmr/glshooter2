@@ -336,45 +336,49 @@ gls2.EnemyUnit = {
     { hard:$e.FighterS, soft:$s.Tsukikage4l(600), x:SC_W*-0.5, y:SC_H*0.6 },
     { hard:$e.FighterS, soft:$s.Tsukikage4l(500), x:SC_W*-0.2, y:SC_H*0.5 },
     { hard:$e.FighterS, soft:$s.Tsukikage4l(400), x:SC_W*-0.4, y:SC_H*0.5 },
-    { hard:$e.FighterS, soft:$s.Tsukikage4l(300), x:SC_W*-0.6, y:SC_H*0.5 },
     { hard:$e.FighterS, soft:$s.Tsukikage4l(200), x:SC_W*-0.3, y:SC_H*0.4 },
-    { hard:$e.FighterS, soft:$s.Tsukikage4l(100), x:SC_W*-0.5, y:SC_H*0.4 },
 ],
 
 // 小型戦闘機「カスガノ」5面用 左下から
 "urara5-0": (function() {
     var result = [];
     for (var n = 0; n < 20; n++) {
-        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.50 });
-        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.55 });
-        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.60 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(0, 1, n*200), x:SC_W*-0.3, y:SC_H*0.2 });
     }
     return result;
 })(),
 "urara5-1": (function() {
     var result = [];
     for (var n = 0; n < 20; n++) {
-        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.50 });
-        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.55 });
-        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.60 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(0, -1, n*200), x:SC_W*1.3, y:SC_H*0.2 });
     }
     return result;
 })(),
 "urara5-2": (function() {
     var result = [];
     for (var n = 0; n < 20; n++) {
-        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.20 });
-        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.25 });
-        result.push({ hard:$e.Urara, soft:$s.Urara(1, n*200), x:SC_W*-0.3, y:SC_H*0.30 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(1, 1, n*200), x:SC_W*-0.3, y:SC_H*0.8 });
     }
     return result;
 })(),
 "urara5-3": (function() {
     var result = [];
     for (var n = 0; n < 20; n++) {
-        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.20 });
-        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.25 });
-        result.push({ hard:$e.Urara, soft:$s.Urara(-1, n*200), x:SC_W*1.3, y:SC_H*0.30 });
+        result.push({ hard:$e.Urara, soft:$s.Urara(1, -1, n*200), x:SC_W*1.3, y:SC_H*0.8 });
+    }
+    return result;
+})(),
+"urara5-4": (function() {
+    var result = [];
+    for (var n = 0; n < 20; n++) {
+        result.push({ hard:$e.Urara, soft:$s.Urara(2, 1, n*200), x:SC_W*-0.3, y:SC_H*0.8 });
+    }
+    return result;
+})(),
+"urara5-5": (function() {
+    var result = [];
+    for (var n = 0; n < 20; n++) {
+        result.push({ hard:$e.Urara, soft:$s.Urara(2, -1, n*200), x:SC_W*1.3, y:SC_H*0.8 });
     }
     return result;
 })(),
@@ -407,7 +411,8 @@ gls2.EnemyUnit = {
 "nozomi5-2": [{ hard:$e.Nozomi, soft:$s.Nozomi5, x:SC_W*0.7, y:SC_H*-0.5 }],
 
 // 大型戦闘機「アオノ」5面用
-"mktn5-0": [{ hard:$e.Mktn, soft:$s.Mktn(0.7), x:SC_W*1.3, y:SC_H*0.2 }],
+"mktn5-0": [{ hard:$e.Mktn, soft:$s.Mktn(0.6), x:SC_W*1.3, y:SC_H*0.2 }],
+"mktn5-1": [{ hard:$e.Mktn, soft:$s.Mktn(0.4), x:SC_W*-0.3, y:SC_H*0.5 }],
 
 //強襲戦闘機「ヒノ」
 "akane-center": [

@@ -574,9 +574,9 @@ gls2.GameScene = tm.createClass(
 
         this.startRec();
 
-        if (playerType === 0) this.app.putAchevement("launchA");
-        if (playerType === 1) this.app.putAchevement("launchB");
-        if (playerType === 2) this.app.putAchevement("launchC");
+        if (playerType === 0) gls2.core.putAchevement("launchA");
+        else if (playerType === 1) gls2.core.putAchevement("launchB");
+        else if (playerType === 2) gls2.core.putAchevement("launchC");
     },
 
     startStage: function(stageNumber) {

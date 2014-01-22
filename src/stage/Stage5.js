@@ -25,11 +25,54 @@ gls2.Stage5 = tm.createClass(
 
         // 0%
 
-        this.seq.add(200, "urara5-2");
-        this.seq.add(460, "nozomi5-1");
+        this.seq.add(150, "urara5-0");
+        this.seq.add(260, "urara5-2");
+        this.seq.add(260, "urara5-1");
+
+        this.seq.add(380, "nozomi5-1");
         this.seq.add(100, "nozomi5-0");
         this.seq.add(200, "nozomi5-2");
-        this.seq.add(400, "mktn5-0");
+
+        this.seq.add(200, "tankRD-left");
+        this.seq.add( 50, "tank5-left");
+        this.seq.add( 50, "tank5-center");
+        this.seq.add( 50, "tankRD-left");
+        this.seq.add( 50, "tank5-left");
+        this.seq.add( 50, "tank5-center");
+
+        this.seq.add(300, "mktn5-0");
+        this.seq.add(120, "heri1-4-left");
+        this.seq.add( 10, "tankL-top");
+        this.seq.add( 20, "heri1-4-center");
+        this.seq.add( 10, "tankL-top");
+        this.seq.add( 35, "heri1-4-left2");
+        this.seq.add( 35, "heri1-4-center2");
+        this.seq.add( 10, "tankRD-left");
+        this.seq.add( 20, "heri1-4-left");
+        this.seq.add( 10, "tankL-top");
+        this.seq.add( 20, "heri1-4-left");
+        this.seq.add( 10, "tankL-top");
+        this.seq.add( 20, "heri1-4-center");
+        this.seq.add( 10, "tankL-top");
+
+        this.seq.add(220, "mktn5-1");
+        this.seq.add( 20, "heri1-4-right");
+        this.seq.add( 10, "tankRD-left");
+        this.seq.add( 20, "heri1-4-center");
+        this.seq.add( 10, "tank5-center");
+        this.seq.add( 35, "heri1-4-right2");
+        this.seq.add( 35, "heri1-4-center2");
+        this.seq.add( 10, "tankRD-left");
+        this.seq.add( 20, "heri1-4-right");
+        this.seq.add( 10, "tankL-top");
+
+        this.seq.add(260, "urara5-2");
+        this.seq.add(260, "urara5-3");
+        this.seq.add(260, "urara5-2");
+        this.seq.add(260, "urara5-1");
+
+        // 10%
+
     },
 
     setupBackground: function() {

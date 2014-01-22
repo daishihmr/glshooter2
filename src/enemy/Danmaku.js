@@ -152,7 +152,7 @@ gls2.Danmaku["basic1-1"] = new bulletml.Root({
 });
 
 /**
- * 自機狙い弾3wayを連射.
+ * 自機狙い弾3wayを発射.
  */
 gls2.Danmaku["basic1-2"] = new bulletml.Root({
     "top": $.action([
@@ -167,7 +167,7 @@ gls2.Danmaku["basic1-2"] = new bulletml.Root({
 gls2.Danmaku["basic1-3"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
-            $interval("10+$rand*100"),
+            $interval("20+$rand*80"),
             $nway(3, -20, 20, $spd3),
         ]),
     ]),
@@ -661,25 +661,90 @@ gls2.Danmaku["nozomi-5"] = new bulletml.Root({
                 $nway("$c", "-4-($c-2)*2+60", "4+($c-2)*2+60", $spd0("(560-$c*40)*0.02"), RL, $.offsetY(-50)),
             ]),
             $interval(150),
+            $.repeat(6, [
+                $.bindVar("c", "2+$loop.index"),
+                $nway("$c", "-4-($c-2)*2-80", "4+($c-2)*2-80", $spd0("(560-$c*40)*0.02"), BL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2-40", "4+($c-2)*2-40", $spd0("(560-$c*40)*0.02"), BL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2+ 0", "4+($c-2)*2+ 0", $spd0("(560-$c*40)*0.02"), BL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2+40", "4+($c-2)*2+40", $spd0("(560-$c*40)*0.02"), BL, $.offsetY(-50)),
+                $nway("$c", "-4-($c-2)*2+80", "4+($c-2)*2+80", $spd0("(560-$c*40)*0.02"), BL, $.offsetY(-50)),
+            ]),
+            $interval(150),
         ]),
     ]),
     "top1": $.action([
         $.wait(20),
         $.repeat(999, [
-            $.fire($.direction(+40), IVS($.actionRef("noop"))),
-            $whip($spd3, 0.03, 16, function(spd) {
+            $.fire($.direction(+5), IVS($.actionRef("noop"))),
+            $whip($spd3, 0.06, 15, function(spd) {
                 return $.action([
-                    $.fire($.direction(-5, "sequence"), spd, BNS, $.offsetX(-50)),
+                    $.fire($.direction(-1, "sequence"), spd, BNS, $.offsetX(-50)),
                     $interval(3),
                 ]);
             }),
-            $.fire($.direction(-40), IVS($.actionRef("noop"))),
-            $whip($spd3, 0.03, 16, function(spd) {
+            $.fire($.direction(-5), IVS($.actionRef("noop"))),
+            $whip($spd3, 0.06, 15, function(spd) {
                 return $.action([
-                    $.fire($.direction(+5, "sequence"), spd, BNS, $.offsetX(+50)),
+                    $.fire($.direction(+1, "sequence"), spd, BNS, $.offsetX(+50)),
                     $interval(3),
                 ]);
             }),
+        ]),
+    ]),
+    "noop": $.action([
+        $.wait(1),
+        $.vanish,
+    ]),
+});
+
+/**
+ * mktn5面
+ */
+gls2.Danmaku["mktn-5"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $.fire($.direction(0), $spd1, IVS($.actionRef("noop"))),
+            $.repeat(20, [
+                $.fire($.direction(+0.5, "sequence"), $.speed(0.08, "sequence"), BNL),
+                $.repeat(360/30, [
+                    $.fire($.direction(30, "sequence"), $.speed(0, "sequence"), BNL),
+                ]),
+                $interval(6),
+            ]),
+
+            $.fire($.direction(0), $spd1, IVS($.actionRef("noop"))),
+            $.repeat(20, [
+                $.fire($.direction(-0.5, "sequence"), $.speed(0.08, "sequence"), BNL),
+                $.repeat(360/30, [
+                    $.fire($.direction(30, "sequence"), $.speed(0, "sequence"), BNL),
+                ]),
+                $interval(6),
+            ]),
+
+            $interval(90),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $.fire($.direction(0, "absolute"), $spd3, IVS($.actionRef("noop"))),
+            $.repeat(5, [
+                $.fire($.direction(-10, "sequence"), $.speed(0.05, "sequence"), RI),
+                $.repeat(360/30, [
+                    $.fire($.direction(30, "sequence"), $.speed(0, "sequence"), RI),
+                ]),
+                $interval(5),
+            ]),
+
+            $.fire($.direction(0, "absolute"), $spd3, IVS($.actionRef("noop"))),
+            $.repeat(5, [
+                $.fire($.direction(+10, "sequence"), $.speed(0.05, "sequence"), RI),
+                $.repeat(360/30, [
+                    $.fire($.direction(30, "sequence"), $.speed(0, "sequence"), RI),
+                ]),
+                $interval(5),
+            ]),
+
+            $interval(40),
         ]),
     ]),
     "noop": $.action([
