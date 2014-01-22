@@ -117,6 +117,7 @@ gls2.Enemy = tm.createClass(
             this.label = tm.display.Label("", 20).addChildTo(this);
             var that = this;
             this.label.update = function() {
+                this.rotation = -that.rotation;
                 this.text = "[ " + ~~(that.hp) + " / " + that.hpMax + " ]";
                 if (!that.entered) {
                     this.fillStyle = "red";
