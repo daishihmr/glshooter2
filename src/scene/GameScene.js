@@ -573,6 +573,10 @@ gls2.GameScene = tm.createClass(
         gls2.playSound("voLetsGo");
 
         this.startRec();
+
+        if (playerType === 0) this.app.putAchevement("launchA");
+        if (playerType === 1) this.app.putAchevement("launchB");
+        if (playerType === 2) this.app.putAchevement("launchC");
     },
 
     startStage: function(stageNumber) {

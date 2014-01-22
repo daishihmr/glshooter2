@@ -1,4 +1,16 @@
 gls2.Achevement = {
+    "launchA": {
+        title: "タイプA発進！",
+        description: "機体タイプAで出撃する"
+    },
+    "launchB": {
+        title: "タイプB発進！",
+        description: "機体タイプBで出撃する"
+    },
+    "launchC": {
+        title: "タイプC発進！",
+        description: "機体タイプCで出撃する"
+    },
     "hyper1": {
         title: "ハイパーシステム起動！",
         description: "ハイパーシステムを初めて発動する"

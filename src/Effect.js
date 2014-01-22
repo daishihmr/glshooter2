@@ -402,7 +402,7 @@ gls2.GetTrophyEffect = tm.createClass({
     label: null,
     init: function(text) {
         this.superInit(SC_W, 40, {
-            fillStyle: "rgba(0, 0, 0, 0.8)",
+            fillStyle: "rgba(0, 0, 0, 0.5)",
             strokeStyle: "transparent"
         });
         this.setPosition(this.width*0.5, SC_H - this.height*0.5);
