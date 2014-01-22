@@ -24,6 +24,10 @@ gls2.GameOverScene = tm.createClass(
         label.setPosition(SC_W*0.5, SC_H*0.5).addChildTo(this);
 
         this.interactive = true;
+
+        this.on("enter", function() {
+            gls2.playBgm("gameover");
+        });
     },
     update: function(app) {
         if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || (this.age == 300 && !this.opened)) {
