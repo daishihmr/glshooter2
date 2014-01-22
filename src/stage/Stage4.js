@@ -263,7 +263,7 @@ gls2.Stage4 = tm.createClass(
             { offset:0, color:"hsl(30,30%,15%)" },
             { offset:1, color:"hsl(30,50%, 5%)" },
         ]).toStyle();
-    },
+    }
 
 });
 

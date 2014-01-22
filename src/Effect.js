@@ -397,4 +397,44 @@ gls2.StartHyperEffect = tm.createClass({
 
 });
 
+gls2.GetTrophyEffect = tm.createClass({
+    superClass: tm.display.RectangleShape,
+    label: null,
+    init: function(text) {
+        this.superInit(SC_W, 40, {
+            fillStyle: "rgba(0, 0, 0, 0.3)",
+            strokeStyle: "transparent"
+        });
+        this.setPosition(this.width*0.5, SC_H - this.height*0.5);
+
+        this.label = tm.display.Label("トロフィー「" + text + "」を獲得！", 20)
+            .setFontWeight("bold")
+            .setAlign("left")
+            .setBaseline("middle")
+            .setPosition(SC_W, 0)
+            .addChildTo(this);
+        this.star = tm.display.Sprite("tex3", 64, 64)
+            .setScale(0.3)
+            .setFrameIndex(0)
+            .setPosition(-20, 0)
+            .addChildTo(this.label);
+    },
+    onadded: function() {
+        if (this.parent instanceof tm.app.Scene) {
+            this.parent.one("exit", function() {
+                if (this.parent) this.remove();
+            }.bind(this));
+        }
+    },
+    update: function() {
+        this.label.x -= 2;
+        if (this.label.x < -SC_W) {
+            this.alpha *= 0.9;
+            if (this.alpha < 0.001) {
+                this.remove();
+            }
+        }
+    }
+});
+
 })();

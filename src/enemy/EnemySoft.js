@@ -487,6 +487,90 @@ gls2.EnemySoft.Tsukikage4l = tm.createClass(
 });
 
 /**
+ * うらら5面
+ */
+gls2.EnemySoft.Urara = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    motionType: 0,
+    direction: 1,
+    delay: 0,
+
+    init: function(motionType, direction, delay) {
+        this.superInit();
+        this.motionType = motionType;
+        this.direction = direction;
+        this.delay = delay;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        tm.app.Tweener(enemy)
+            .wait(this.delay)
+            .call(function() {
+                gls2.EnemySoft.attack(this, "basic1-3");
+            }.bind(enemy));
+
+        var xplus = this.direction == 1;
+        var d = function(x) {
+            return xplus ? x : (1-x);
+        };
+        switch (this.motionType) {
+        case 0:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.8)
+                }, 2000, "easeOutQuart");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*1.3
+                }, 2500, "easeInQuad");
+            break;
+        case 1:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.3)
+                }, 2000, "easeOutQuad");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*0.3
+                }, 2500, "easeOutQuad")
+                .to({
+                    y: SC_H*1.3
+                }, 3000, "easeInBack");
+            break;
+        case 2:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.8)
+                }, 2000, "easeOutQuad")
+                .to({
+                    x: SC_W*d(0.4)
+                }, 1000, "easeInOutQuad")
+                .to({
+                    x: SC_W*d(0.6)
+                }, 1000, "easeInOutQuad");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*0.3
+                }, 2500, "easeOutQuad")
+                .to({
+                    y: SC_H*1.3
+                }, 3000, "easeInBack");
+            break;
+        }
+    }
+});
+
+/**
  * 強襲戦闘艇
  *
  * 画面内上部にテレポートで出現後、ゆっくり下へ移動していく
@@ -567,6 +651,7 @@ gls2.EnemySoft.nao = tm.createClass(
 
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
             gls2.EnemySoft.attack(this, this.patternName);
+            var toDeg = 180/Math.PI;
             this.on("enterframe", function() {
                 if (this.y < this.player.y && this.entered) {
                     var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
@@ -576,6 +661,7 @@ gls2.EnemySoft.nao = tm.createClass(
 
                 this.x += Math.cos(this.angle) * this.speed;
                 this.y += Math.sin(this.angle) * this.speed;
+                this.rotation = this.angle*toDeg-90;
 
                 if (!this.isInScreen() && this.entered) {
                     this.remove();
@@ -588,12 +674,13 @@ gls2.EnemySoft.nao = tm.createClass(
         }.bind(enemy));
     },
 });
-gls2.EnemySoft.nao1 = gls2.EnemySoft.nao(3, 1);
-gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6, 1);
+gls2.EnemySoft.nao1 = gls2.EnemySoft.nao( 3, 1);
+gls2.EnemySoft.nao2 = gls2.EnemySoft.nao( 6, 1);
 gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12, 1);
 
 /**
  * 小型浮揚戦車
+ * 画面をフラフラしながら横切る
  *
  * @class
  * @extends {gls2.EnemySoft}
@@ -622,13 +709,17 @@ gls2.EnemySoft.reika = tm.createClass(
 
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
             gls2.EnemySoft.attack(this, this.patternName);
+            this.rad = 0;
             this.on("enterframe", function() {
                 this.x += this.speed;
+                this.y = this.py+Math.sin(this.rad)*16;
+                this.rad+=0.05;
             });
         }.bind(enemy));
     },
 });
-gls2.EnemySoft.reika1 = gls2.EnemySoft.reika(3);
+gls2.EnemySoft.reika1 = gls2.EnemySoft.reika(1.0);
+gls2.EnemySoft.reika2 = gls2.EnemySoft.reika(2.0);
 
 /**
  * 戦艦
@@ -676,8 +767,7 @@ gls2.EnemySoft.miyuki_y = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.miyuki_y1 = gls2.EnemySoft.miyuki_y( 1.0);
-gls2.EnemySoft.miyuki_y2 = gls2.EnemySoft.miyuki_y(-1.0);
+gls2.EnemySoft.miyuki_y = gls2.EnemySoft.miyuki_y(1.0);
 
 /**
  * 戦艦
@@ -700,10 +790,10 @@ gls2.EnemySoft.miyuki_t = tm.createClass(
      * @param {number} velocityY
      * @param {string} attackPattern
      */
-    init: function(velocityX, attackPattern) {
+    init: function(velocityX) {
         this.superInit();
         this.velocityX = velocityX;
-        this.attackPattern = attackPattern;
+        this.attackPattern = "miyuki_t";
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -731,8 +821,7 @@ gls2.EnemySoft.miyuki_t = tm.createClass(
         });
     },
 })
-gls2.EnemySoft.miyuki_t1 = gls2.EnemySoft.miyuki_t(-0.5, "miyuki_t");
-gls2.EnemySoft.miyuki_t2 = gls2.EnemySoft.miyuki_t( 0.5, "miyuki_t");
+gls2.EnemySoft.miyuki_t = gls2.EnemySoft.miyuki_t(0.5);
 
 /**
  * 浮遊砲台
@@ -819,11 +908,18 @@ var _aliceLeaf = tm.createClass(
 
         var toDeg = 180/Math.PI;
         enemy.on("enterframe", function() {
+            //本体を周回
             var cx = this.current.x;
             var cy = this.current.y;
             this.dir += 0.01;
             this.x = cx+Math.sin(this.dir)*this.distance;
             this.y = cy+Math.cos(this.dir)*this.distance;
+
+            //砲台の向き
+            var rad = Math.atan2(cy-this.y, cx-this.x);
+    		var deg = ~~( rad * 180 / 3.14159);
+            this._sprite.setFrameIndex(~~(deg/360*11.25), 64, 64);
+
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
@@ -841,9 +937,41 @@ gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
 gls2.EnemySoft.LargeFighter4 = _MiddleFighterCommon(0.5, "komachi-4");
 
 /**
+ * mktn5面
+ */
+gls2.EnemySoft.Mktn = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    side: 0,
+
+    init: function(side) {
+        this.superInit();
+        this.side = side;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        tm.app.Tweener(enemy)
+            .to({
+                x: SC_W*this.side
+            }, 2800, "easeOutQuad")
+            .call(function() {
+                gls2.EnemySoft.attack(this, "mktn-5");
+            }.bind(enemy));
+        enemy.on("enterframe", function() {
+            this.y += 0.1;
+        });
+    }
+});
+
+/**
  * のぞみ4面
  */
 gls2.EnemySoft.Nozomi4 = _MiddleFighterCommon(0.1, "nozomi-4");
+/**
+ * のぞみ5面
+ */
+gls2.EnemySoft.Nozomi5 = _MiddleFighterCommon(0.3, "nozomi-5");
 
 /**
  * ボムキャリアー「クルミ」
