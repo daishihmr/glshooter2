@@ -9,7 +9,7 @@
  * @extends {gls2.Stage}
  */
 gls2.Stage3 = tm.createClass(
-/** @lends {gls2.Stage1.prototype} */
+/** @lends {gls2.Stage3.prototype} */
 {
     superClass: gls2.Stage,
 
@@ -23,13 +23,16 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.tweener.clear().to({speed:10}, 4000, "easeInOutQuad");
         });
 
-//        this.seq.add(100, "yotsuba");
-        this.seq.add(100, "hoshizora_y1");
-        this.seq.add( 60, "aoki-left");
-        this.seq.add( 60, "aoki-right");
+//        this.seq.add(100, "alice");
+//        this.seq.add(100, "miyuki_y1");
+        this.seq.add(100, "alice");
 
+        this.seq.add(1000, "reika1-left");
 
         this.seq.add(150, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
         for (var i = 0; i < 3; i++) {
@@ -39,25 +42,21 @@ gls2.Stage3 = tm.createClass(
         }
 
         this.seq.add( 60, function() {
-            gls2.playBgm("bgm3", true),
             this.gameScene.ground.tweener.clear().to({speed:3}, 1000, "easeInOutQuad");
         });
 
         this.seq.add(120, "akane-center");
-        this.seq.add( 60, "aoki-left");
-        this.seq.add( 60, "aoki-right");
+        this.seq.add( 60, "reika1-left");
+        this.seq.add( 60, "reika1-right");
 
-        this.seq.add( 60, "akane-right");
-        this.seq.add( 60, "aoki-left");
-        this.seq.add( 60, "aoki-right");
-
-        this.seq.add( 60, "akane-left");
-        this.seq.add( 60, "aoki-left");
-        this.seq.add( 60, "aoki-right");
+        this.seq.add(120, "akane-right");
+        this.seq.add(120, "akane-left");
+        this.seq.add(120, "reika1-left");
+        this.seq.add(180, "reika1-left");
 
         this.seq.add(120, "akane-center");
-        this.seq.add( 60, "aoki-left");
-        this.seq.add( 60, "aoki-right");
+        this.seq.add(120, "reika1-right");
+        this.seq.add(180, "reika1-right");
 
         this.seq.add(120, function() {
             this.gameScene.ground.tweener
@@ -72,8 +71,7 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 60, "nao2-right");
         }
 
-        this.seq.add(100, "hoshizora_y1");
-        this.seq.add(  1, "heri2-right");
+        this.seq.add(100, "miyuki_y1");
 
         this.seq.add(  1, function() {
             this.gameScene.ground.tweener
@@ -81,8 +79,6 @@ gls2.Stage3 = tm.createClass(
                 .to({speed:4}, 2000, "easeInOutQuad")
                 .to({direction:Math.PI*0.5}, 2000, "easeInOutQuad")
         });
-
-        this.seq.add(100, "yotsuba");
 
         //中ボス
         this.seq.add(600, "higashi", true);
@@ -92,6 +88,12 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 60, "nao1-center");
             this.seq.add( 60, "nao1-right");
             this.seq.add( 60, "nao1-left");
+        }
+
+        this.seq.add(100, "alice");
+        for (var i = 0; i < 8; i++) {
+            this.seq.add( 60, "reika1-left");
+            this.seq.add( 60, "reika1-right");
         }
 
         this.seq.add(600, function() {
@@ -107,13 +109,6 @@ gls2.Stage3 = tm.createClass(
 
         //ステージボス
         this.seq.add(600, "momozono");
-
-        // if (DEBUG) {
-        //     this.seq.add(600, function() {
-        //         this.gameScene.ground.speed = 1;
-        //         this.frame = 0;
-        //     });
-        // }
     },
 
     setupBackground: function() {

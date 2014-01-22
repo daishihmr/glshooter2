@@ -540,6 +540,7 @@ gls2.Enemy.reika = tm.createClass(
     _sprite: null,
 
     init: function(gameScene, software) {
+        this.superInit(gameScene, software, "aoki");
         this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(8);
     },
     update: function(app) {
@@ -556,9 +557,10 @@ gls2.Enemy.reika = tm.createClass(
     onLaunch: function() {
         //初期位置で向きを決定
         if (this.x > SC_W){
-//            this.speed *= -1;
-//            this.scaleX = -1;
+            this.speed *= -1;
+            this.scaleX = -1;
         }
+        this.py = this.y;
     },
 });
 
@@ -700,11 +702,6 @@ gls2.Enemy.AliceLeaf = tm.createClass({
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
-
-        var b = this.dir;
-        while (b < 0) b += Math.PI*2;
-        while (Math.PI*2 <= b) b -= Math.PI*2;
-        this._sprite.setFrameIndex(~~(b*16/(Math.PI*2)), 64, 64);
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);

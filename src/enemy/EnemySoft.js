@@ -590,8 +590,8 @@ gls2.EnemySoft.nao = tm.createClass(
         }.bind(enemy));
     },
 });
-gls2.EnemySoft.nao1 = gls2.EnemySoft.nao(3, 1);
-gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(6, 1);
+gls2.EnemySoft.nao1 = gls2.EnemySoft.nao( 3, 1);
+gls2.EnemySoft.nao2 = gls2.EnemySoft.nao( 6, 1);
 gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12, 1);
 
 /**
@@ -625,16 +625,17 @@ gls2.EnemySoft.reika = tm.createClass(
 
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
             gls2.EnemySoft.attack(this, this.patternName);
-            var rad = 0;
+            this.rad = 0;
             this.on("enterframe", function() {
                 this.x += this.speed;
-                this.y += Math.sin(rad)*8;
-                rad+=0.01;
+                this.y = this.py+Math.sin(this.rad)*16;
+                this.rad+=0.05;
             });
         }.bind(enemy));
     },
 });
-gls2.EnemySoft.reika = gls2.EnemySoft.reika(3.0);
+gls2.EnemySoft.reika1 = gls2.EnemySoft.reika(1.0);
+gls2.EnemySoft.reika2 = gls2.EnemySoft.reika(2.0);
 
 /**
  * 戦艦
@@ -823,11 +824,18 @@ var _aliceLeaf = tm.createClass(
 
         var toDeg = 180/Math.PI;
         enemy.on("enterframe", function() {
+            //本体を周回
             var cx = this.current.x;
             var cy = this.current.y;
             this.dir += 0.01;
             this.x = cx+Math.sin(this.dir)*this.distance;
             this.y = cy+Math.cos(this.dir)*this.distance;
+
+            //砲台の向き
+            var rad = Math.atan2(cy-this.y, cx-this.x);
+    		var deg = ~~( rad * 180 / 3.14159);
+            this._sprite.setFrameIndex(~~(deg/360*11.25), 64, 64);
+
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
