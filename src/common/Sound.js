@@ -13,13 +13,13 @@ gls2.playBgm = function(bgmName, continuePrevBgm) {
         gls2.currentBgm.play();
 
         if (loop.data[bgmName]) {
-            gls2.currentBgm.source.loopStart = loop.data[bgmName].start;
-            gls2.currentBgm.source.loopEnd = loop.data[bgmName].end;
+            gls2.currentBgm.source["loopStart"] = loop.data[bgmName].start;
+            gls2.currentBgm.source["loopEnd"] = loop.data[bgmName].end;
         }
     }
 };
 gls2.stopBgm = function() {
-    if (gls2.currentBgm !== null && gls2.currentBgm.source.playbackState === AudioBufferSourceNode.PLAYING_STATE) gls2.currentBgm.stop();
+    if (gls2.currentBgm !== null && gls2.currentBgm.source["playbackState"] === AudioBufferSourceNode.PLAYING_STATE) gls2.currentBgm.stop();
 };
 gls2.fadeOutBgm = function() {
     if (gls2.currentBgm !== null) {
