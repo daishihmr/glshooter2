@@ -19,7 +19,7 @@ gls2.playBgm = function(bgmName, continuePrevBgm) {
     }
 };
 gls2.stopBgm = function() {
-    if (gls2.currentBgm !== null && gls2.currentBgm.source["playbackState"] === AudioBufferSourceNode.PLAYING_STATE) gls2.currentBgm.stop();
+    if (gls2.currentBgm !== null && gls2.currentBgm.source["playbackState"] === AudioBufferSourceNode["PLAYING_STATE"]) gls2.currentBgm.stop();
 };
 gls2.fadeOutBgm = function() {
     if (gls2.currentBgm !== null) {
@@ -29,7 +29,7 @@ gls2.fadeOutBgm = function() {
         var downVol = function() {
             bgm.volume -= 0.001;
             if (bgm.volume <= 0) {
-                if(bgm.playbackState === AudioBufferSourceNode.PLAYING_STATE) bgm.stop();
+                if(bgm.playbackState === AudioBufferSourceNode["PLAYING_STATE"]) bgm.stop();
             } else {
                 setTimeout(downVol, 10);
             }
