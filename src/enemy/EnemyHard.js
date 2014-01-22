@@ -524,14 +524,6 @@ gls2.Enemy.nao = tm.createClass(
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
-
-/*
-        if (this.x < this.player.x) {
-            this.scaleX = -1;
-        } else {
-            this.scaleX = 1;
-        }
-*/
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -548,29 +540,25 @@ gls2.Enemy.reika = tm.createClass(
     _sprite: null,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "aoki");
-        this.boundingWidthLeft = 0
-        this.boundingWidthRight = 32;
-        this.boundingHeightTop = 0;
-        this.boundingHeightBottom = 32;
+        this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(8);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
-
-        if (this.velocityX < 0) {
-            this.scaleX = -1;
-        } else {
-            this.scaleX = 1;
-        }
     },
     draw: function(canvas) {
+        this._sprite.draw(canvas);
+/*
         canvas.fillStyle = "yellow";
         canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
             this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+*/
     },
     onLaunch: function() {
         //初期位置で向きを決定
-        if (this.x > SC_W)this.speed *= -1;
+        if (this.x > SC_W){
+//            this.speed *= -1;
+//            this.scaleX = -1;
+        }
     },
 });
 

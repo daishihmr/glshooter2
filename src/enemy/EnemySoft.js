@@ -567,6 +567,7 @@ gls2.EnemySoft.nao = tm.createClass(
 
         enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
             gls2.EnemySoft.attack(this, this.patternName);
+            var toDeg = 180/Math.PI;
             this.on("enterframe", function() {
                 if (this.y < this.player.y && this.entered) {
                     var a = Math.atan2(this.player.y-this.y, this.player.x-this.x);
@@ -576,6 +577,7 @@ gls2.EnemySoft.nao = tm.createClass(
 
                 this.x += Math.cos(this.angle) * this.speed;
                 this.y += Math.sin(this.angle) * this.speed;
+                this.rotation = this.angle*toDeg-90;
 
                 if (!this.isInScreen() && this.entered) {
                     this.remove();
