@@ -20,6 +20,7 @@ java -jar tools/compiler.jar \
 --js src/Laser.js \
 --js src/Bomb.js \
 --js src/BombItem.js \
+--js src/Achevement.js \
 --js src/Effect.js \
 --js src/ScoreLabel.js \
 --js src/Ground.js \
@@ -29,6 +30,7 @@ java -jar tools/compiler.jar \
 --js src/stage/Stage2.js \
 --js src/stage/Stage3.js \
 --js src/stage/Stage4.js \
+--js src/stage/Stage5.js \
 --js src/common/Collision.js \
 --js src/common/Scene.js \
 --js src/common/DialogMenu.js \

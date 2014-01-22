@@ -487,6 +487,90 @@ gls2.EnemySoft.Tsukikage4l = tm.createClass(
 });
 
 /**
+ * うらら5面
+ */
+gls2.EnemySoft.Urara = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    motionType: 0,
+    direction: 1,
+    delay: 0,
+
+    init: function(motionType, direction, delay) {
+        this.superInit();
+        this.motionType = motionType;
+        this.direction = direction;
+        this.delay = delay;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        tm.app.Tweener(enemy)
+            .wait(this.delay)
+            .call(function() {
+                gls2.EnemySoft.attack(this, "basic1-3");
+            }.bind(enemy));
+
+        var xplus = this.direction == 1;
+        var d = function(x) {
+            return xplus ? x : (1-x);
+        };
+        switch (this.motionType) {
+        case 0:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.8)
+                }, 2000, "easeOutQuart");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*1.3
+                }, 2500, "easeInQuad");
+            break;
+        case 1:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.3)
+                }, 2000, "easeOutQuad");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*0.3
+                }, 2500, "easeOutQuad")
+                .to({
+                    y: SC_H*1.3
+                }, 3000, "easeInBack");
+            break;
+        case 2:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.8)
+                }, 2000, "easeOutQuad")
+                .to({
+                    x: SC_W*d(0.4)
+                }, 1000, "easeInOutQuad")
+                .to({
+                    x: SC_W*d(0.6)
+                }, 1000, "easeInOutQuad");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*0.3
+                }, 2500, "easeOutQuad")
+                .to({
+                    y: SC_H*1.3
+                }, 3000, "easeInBack");
+            break;
+        }
+    }
+});
+
+/**
  * 強襲戦闘艇
  *
  * 画面内上部にテレポートで出現後、ゆっくり下へ移動していく
@@ -854,9 +938,41 @@ gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
 gls2.EnemySoft.LargeFighter4 = _MiddleFighterCommon(0.5, "komachi-4");
 
 /**
+ * mktn5面
+ */
+gls2.EnemySoft.Mktn = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    side: 0,
+
+    init: function(side) {
+        this.superInit();
+        this.side = side;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        tm.app.Tweener(enemy)
+            .to({
+                x: SC_W*this.side
+            }, 2800, "easeOutQuad")
+            .call(function() {
+                gls2.EnemySoft.attack(this, "mktn-5");
+            }.bind(enemy));
+        enemy.on("enterframe", function() {
+            this.y += 0.1;
+        });
+    }
+});
+
+/**
  * のぞみ4面
  */
 gls2.EnemySoft.Nozomi4 = _MiddleFighterCommon(0.1, "nozomi-4");
+/**
+ * のぞみ5面
+ */
+gls2.EnemySoft.Nozomi5 = _MiddleFighterCommon(0.3, "nozomi-5");
 
 /**
  * ボムキャリアー「クルミ」

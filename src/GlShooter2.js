@@ -8,12 +8,6 @@ var SC_W = 480;
 /** @const */
 var SC_H = 640;
 
-gls2["pause"] = function() {
-    if (gls2.core && gls2.core.currentScene === gls2.GameScene.SINGLETON) {
-        gls2.GameScene.SINGLETON.openPauseMenu(0);
-    }
-};
-
 /**
  * GL-Shooter2アプリケーション
  * @class
@@ -43,6 +37,8 @@ gls2.GlShooter2 = tm.createClass(
     difficulty: 1,
 
     gameScene: null,
+
+    continueCountMax: 3,
 
     init: function(id) {
         if (gls2.core !== null) throw new Error("class 'gls2.GlShooter2' is singleton!!");
@@ -93,6 +89,7 @@ gls2.GlShooter2 = tm.createClass(
             "bgm5": "assets2/nc60627.mp3",
             "bgmBoss": "assets2/nc29206.mp3",
             "bgmResult": "assets2/nc54077.mp3",
+            "bgmLoopInfo": "assets2/loop.json",
 
             // sound
             "sound/explode": "assets2/sen_ge_taihou03.mp3",
@@ -103,6 +100,10 @@ gls2.GlShooter2 = tm.createClass(
             "sound/warning": "assets2/meka_ge_keihou06.mp3",
             "sound/select": "assets2/se_maoudamashii_system36.mp3",
             "sound/decision": "assets2/se_maoudamashii_system03.mp3",
+            "sound/achevement": "assets2/se_maoudamashii_system46.mp3",
+            // TODO
+            // "sound/extend": "",
+            // "sound/hyper": "",
 
             // voice
             "sound/voHyperStandBy": "assets/vo_hyper_standby.mp3",
@@ -124,7 +125,7 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgm2"];
             delete assets["bgm3"];
             delete assets["bgm4"];
-            delete assets["bgm5"];
+            // delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
 
@@ -139,13 +140,17 @@ gls2.GlShooter2 = tm.createClass(
             // assets["bgmResult"] = "/gls2-bgm/clear.mp3";
         }
 
-        this.replaceScene(tm.app.LoadingScene({
+        this.replaceScene(tm.ui["LoadingScene"]({
             assets: assets,
             nextScene: function() {
                 this._onLoadAssets();
                 return gls2.TitleScene();
             }.bind(this),
         }));
+
+        if (window["achevements"]) {
+            this.continueCountMax = window["achevements"].length;
+        }
     },
 
     update: function() {
@@ -183,29 +188,6 @@ gls2.GlShooter2 = tm.createClass(
             cvRed.resize(tex.width, tex.height);
             cvRed.drawBitmap(bmRed, 0, 0);
             tm.asset.AssetManager.set(name + "Red", cvRed);
-
-            // var bmShadow = canvas.getBitmap();
-            // for (var i = 0; i < 6; i++) {
-            //     bmShadow.filter({
-            //         calc: function(pixel, index, x, y, bitmap) {
-            //             var a = 0;
-            //             a += bitmap.getPixel(x + -1, y + -1)[3] * 1/16;
-            //             a += bitmap.getPixel(x + -1, y +  0)[3] * 2/16;
-            //             a += bitmap.getPixel(x + -1, y + +1)[3] * 1/16;
-            //             a += bitmap.getPixel(x +  0, y + -1)[3] * 2/16;
-            //             a += bitmap.getPixel(x +  0, y +  0)[3] * 4/16;
-            //             a += bitmap.getPixel(x +  0, y + +1)[3] * 2/16;
-            //             a += bitmap.getPixel(x + +1, y + -1)[3] * 1/16;
-            //             a += bitmap.getPixel(x + +1, y +  0)[3] * 2/16;
-            //             a += bitmap.getPixel(x + +1, y + +1)[3] * 1/16;
-            //             bitmap.setPixel32Index(index, 255, 255, 255, a);
-            //         }
-            //     });
-            // }
-            // var cvShadow = tm.graphics.Canvas();
-            // cvShadow.resize(tex.width, tex.height);
-            // cvShadow.drawBitmap(bmShadow, 0, 0);
-            // tm.asset.AssetManager.set(name + "Shadow", cvShadow);
         });
 
 
@@ -219,21 +201,29 @@ gls2.GlShooter2 = tm.createClass(
         this.stop();
     },
 
+    loggedIn: false,
+
     /**
      * @param {?String} userName
      * @param {function()} callback
      */
     postScore: function(userName, callback) {
         var data = {
-            "score": Math.floor(this.highScore),
-            "stage": this.highScoreStage + 1,
-            "continueCount": this.highScoreContinueCount,
-            "shipType": this.highScoreType,
-            "shipStyle": this.highScoreStyle,
+            "score": Math.floor(this.gameScene.score),
+            "stage": this.gameScene.stageNumber + 1,
+            "continueCount": this.gameScene.continueCount,
+            "shipType": this.gameScene.player.type,
+            "shipStyle": this.gameScene.player.style,
             "fps": 0,
-            "screenShot": this.highScoreScreenShot
+            "screenShot": this.gameScene.screenShot
         };
-        if (userName) data["userName"] = userName;
+        if (userName) {
+            data["userName"] = userName;
+            this.loggedIn = false;
+        } else {
+            this.loggedIn = true;
+        }
+
         tm.util.Ajax.load({
             "url": "/api/ranking/post",
             "data": data,
@@ -241,11 +231,9 @@ gls2.GlShooter2 = tm.createClass(
             "dataType": "json",
             "success": function(result) {
                 if (!result) {
-                    alert("登録に失敗しました！＞＜");
-                    callback();
+                    callback("登録に失敗しました！＞＜");
                 } else if (result["success"]) {
-                    alert("登録完了！");
-                    callback();
+                    callback(null, true, result["scoreId"]);
                 } else if (result["confirmLogin"]) {
                     if (confirm("ログインしていません。ログインしますか？")) {
                         window["onchildclose"] = function() {
@@ -260,16 +248,14 @@ gls2.GlShooter2 = tm.createClass(
                         userName = userName.substring(0, 10);
                         this.postScore(userName + " (匿名)", callback);
                     } else {
-                        callback();
+                        callback(null, false);
                     }
                 } else {
-                    alert("登録に失敗しました！＞＜");
-                    callback();
+                    callback("登録に失敗しました！＞＜");
                 }
             }.bind(this),
             "error": function() {
-                alert("登録に失敗しました！＞＜");
-                callback();
+                callback("登録に失敗しました！＞＜");
             }
         });
     },
@@ -282,9 +268,9 @@ gls2.GlShooter2 = tm.createClass(
             "アイたそ",
             "ぱふぇ☆",
             "能登真璃亜",
-            "にゃんぱすー",
-            "相田マナ"
-        ].pickup();
+            "にゃんぱすー(30)",
+            "相田総理"
+        ]["pickup"]();
     },
 
     timeoutTasks: null,
@@ -293,6 +279,38 @@ gls2.GlShooter2 = tm.createClass(
             frame: this.frame + t,
             fn: fn,
         });
+    },
+
+    putAchevement: function(key) {
+        if (!window["achevements"]) {
+            return;
+        }
+
+        var achevements = window["achevements"];
+        if (achevements.indexOf(key) == -1) {
+            this.continueCountMax += 1;
+            achevements.push(key);
+            tm.util.Ajax.load({
+                url: "/api/achevement/" + key,
+                type: "POST",
+                dataType: "json",
+                success: function(json) {
+                    console.dir(json);
+                    if (gls2.Achevement[key]) {
+                        gls2.playSound("achevement");
+                        this.gameScene.labelLayer.addChild(gls2.GetTrophyEffect(gls2.Achevement[key].title));
+                    }
+                }.bind(this),
+                error: function() {
+                    console.warn("error!");
+                },
+            });
+
+            if (DEBUG && gls2.Achevement[key]) {
+                gls2.playSound("achevement");
+                this.currentScene.addChild(gls2.GetTrophyEffect(gls2.Achevement[key].title));
+            }
+        }
     }
 
 });
@@ -308,3 +326,15 @@ tm.display.AnimationSprite.prototype.clone = function() {
 gls2.distanceSq = function(a, b) {
     return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
 };
+
+gls2["pause"] = function() {
+    if (gls2.core && gls2.core.currentScene === gls2.GameScene.SINGLETON) {
+        gls2.GameScene.SINGLETON.openPauseMenu(0);
+    }
+};
+
+gls2["continueCountMax"] = function(v) {
+    if (gls2.core) {
+        gls2.core.continueCountMax = v;
+    }
+}

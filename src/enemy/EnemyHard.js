@@ -19,9 +19,11 @@ gls2.Enemy.DATA = {
     "kenzaki":   [   200,   300000,  true,  true, 10, {"width":100, "height":40}, ],
     "minazuki":  [   300,   300000,  true,  true, 10, {"width":100, "height":40}, ],
     "tsukikage": [     8,     1000, false, false,  5, {"width":100, "height":20}, ],
+    "kasugano":  [     6,     1000, false, false,  1, {"radius": 24}, ],
     "kurokawa":  [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yumehara":  [   250,   500000, false,  true, 20, {"width":180, "heightBottom":40, "heightTop":60}, ],
+    "aono":      [   250,   300000, false,  true, 10, {"width":280, "heightBottom":30, "heightTop":60}, ],
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
@@ -209,6 +211,54 @@ gls2.Enemy.FighterS = tm.createClass(
 });
 
 /**
+ * 小型戦闘機「カスガノ」
+ */
+gls2.Enemy.Urara = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+    beforePos: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "kasugano");
+
+        this._sprite = _Sprite("tex1", 64*1, 64*1).setFrameIndex(23);
+        this.aura = gls2.Particle(80, 1.0, 0.8);
+
+        this.beforePos = tm.geom.Vector2();
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.apply(this, arguments);
+        if (app.frame%2 === 0 && this.hp > 0) {
+            this.aura.clone()
+                .setPosition(this.x, this.y)
+                .addChildTo(this.gameScene);
+        }
+
+        this.rotation = tm.geom.Vector2.sub(this.position, this.beforePos).toAngle() * gls2.math.RAD_TO_DEG - 90;
+        this.beforePos.set(this.x, this.y);
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    }
+});
+
+/**
  * 中型戦闘機「クロカワ」
  */
 gls2.Enemy.FighterM = tm.createClass(
@@ -291,6 +341,25 @@ gls2.Enemy.Mktn = tm.createClass(
         this._sprite.srcRect.y = 128;
         this._sprite.srcRect.width = 64*4;
         this._sprite.srcRect.height = 64*2;
+
+        this.setScale(1.2);
+
+        this.backFire = gls2.Particle(70, 1.0, 0.97);
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.apply(this, arguments);
+        if (app.frame%2 === 0) {
+            this.backFire.clone()
+                .setScale(Math.randf(0.9, 1.5))
+                .setPosition(this.x-35, this.y+40)
+                .on("enterframe", function() { this.y += 2; })
+                .addChildTo(this.gameScene);
+            this.backFire.clone()
+                .setScale(Math.randf(0.9, 1.5))
+                .setPosition(this.x+35, this.y+40)
+                .on("enterframe", function() { this.y += 2; })
+                .addChildTo(this.gameScene);
+        }
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -821,9 +890,9 @@ gls2.Enemy.Mai = tm.createClass(
         this.backFire = gls2.Particle(80, 1.0, 0.9);
         this.aura = gls2.Particle(256, 1.0, 0.9);
     },
-    update: function() {
+    update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
-        if (gls2.core.frame % 2 === 0) {
+        if (app.frame % 2 === 0) {
             this.backFire.clone().setPosition(this.x + 120, this.y - 30)
                 .on("enterframe", function() {
                     this.x += 5;
@@ -943,9 +1012,9 @@ gls2.Enemy.Rikka = tm.createClass(
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
     },
-    update: function() {
+    update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
-        if (gls2.core.frame%2 === 0 && this.hp > 0) {
+        if (app.frame%2 === 0 && this.hp > 0) {
             this.backFire.clone().setPosition(this.x-45, this.y+40)
                 .on("enterframe", function() { this.y+=10; })
                 .addChildTo(this.gameScene);
@@ -988,9 +1057,9 @@ gls2.Enemy.Mana = tm.createClass(
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
     },
-    update: function() {
+    update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
-        if (gls2.core.frame%2 === 0 && this.hp > 0) {
+        if (app.frame%2 === 0 && this.hp > 0) {
             this.backFire.clone().setPosition(this.x-60, this.y+30)
                 .on("enterframe", function() { this.y+=10; })
                 .addChildTo(this.gameScene);
@@ -1042,7 +1111,6 @@ gls2.Enemy.Mana = tm.createClass(
 
 /*
  * 使ってない名前
- * 「カスガノ」
  * 「ミミノ」
  * 「シラベ」
  * 「マドカ」

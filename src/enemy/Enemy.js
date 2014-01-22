@@ -114,13 +114,16 @@ gls2.Enemy = tm.createClass(
 
         // 残しときましょう
         if (DEBUG) {
-            this.label = tm.display.Label("", 20)
-                .setFillStyle("hsla(180, 100%, 100%, 1)")
-                .addChildTo(this);
+            this.label = tm.display.Label("", 20).addChildTo(this);
             var that = this;
             this.label.update = function() {
                 this.rotation = -that.rotation;
                 this.text = "[ " + ~~(that.hp) + " / " + that.hpMax + " ]";
+                if (!that.entered) {
+                    this.fillStyle = "red";
+                } else {
+                    this.fillStyle = "white";
+                }
             };
         }
     },
