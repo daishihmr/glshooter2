@@ -104,7 +104,7 @@ gls2.Stage3 = tm.createClass(
 
         this.seq.add(  1, function() {
             this.gameScene.ground.direction = Math.PI/2;
-            this.gameScene.ground.tweener.clear().to({speed:-10}, 5000, "easeInOutQuad");
+            this.gameScene.ground.tweener.clear().to({speed:-7}, 8000, "easeInOutQuad");
         });
 
         //ステージボス

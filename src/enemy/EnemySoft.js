@@ -834,6 +834,7 @@ var _aliceLeaf = tm.createClass(
             //砲台の向き
             var rad = Math.atan2(cy-this.y, cx-this.x);
     		var deg = ~~( rad * 180 / 3.14159);
+            deg = deg < 0 ? deg+360 : deg;
             this._sprite.setFrameIndex(~~(deg/360*11.25), 64, 64);
 
             if (this.entered && !this.isInScreen()) {
