@@ -21,8 +21,8 @@ var texts = [
     "蒼い月 (ending)  by  delf",
     "",
     "SOUND",
-    "kouichi_axis",
-    "on_jin",
+    "kouichi_axis (魔王魂)",
+    "on_jin (音人)",
     "",
     "GAME ENGINE (tmlib.js)",
     "phi_jp",
@@ -91,10 +91,13 @@ gls2.EndingScene = tm.createClass(
             beforePos = player.x;
         });
         var next = function() {
+            var s = gls2.math.randf(0.8, 1.2);
             player.tweener.clear()
                 .to({
-                    x: gls2.math.randf(SC_W*0.1, SC_W*0.9),
-                    y: gls2.math.randf(SC_H*0.3, SC_H*0.8),
+                    "x": gls2.math.randf(SC_W*0.1, SC_W*0.9),
+                    "y": gls2.math.randf(SC_H*0.3, SC_H*0.8),
+                    "scaleX": s,
+                    "scaleY": s
                 }, 6000, "easeInOutQuad")
                 .call(next);
         }.bind(this);
@@ -115,7 +118,7 @@ gls2.EndingScene = tm.createClass(
                 });
         });
         var circleLogo = tm.display.Label("dev7.jp", 24)
-            .setPosition(SC_W*0.5, SC_H*1.5+(texts.length+5)*SC_H*0.1)
+            .setPosition(SC_W*0.5, SC_H*1.5+(texts.length+3)*SC_H*0.1)
             .addChildTo(this)
             .on("enterframe", function() {
                 if (this.y > SC_H*0.5) {
@@ -141,7 +144,7 @@ gls2.EndingScene = tm.createClass(
         if (app.keyboard.getKey("z")
             || app.keyboard.getKey("x")
             || app.keyboard.getKey("c")
-            || (this.startBgm && gls2.currentBgm.source["playbackState"] !== AudioBufferSourceNode["PLAYING_STATE"])) {
+            || (this.startBgm && gls2.currentBgm && gls2.currentBgm.source["playbackState"] !== AudioBufferSourceNode["PLAYING_STATE"])) {
             if (!this.labels.some(function(l) { return !!l.parent; })) {
                 this.startFadeOut();
             } else {
@@ -164,7 +167,7 @@ gls2.EndingScene = tm.createClass(
         .addChildTo(this)
         .tweener
             .set({ alpha: 0 })
-            .to({ alpha: 1 }, 3000)
+            .to({ alpha: 1 }, 5000)
             .call(function() {
                 gls2.stopBgm();
                 this.app.replaceScene(gls2.GameOverScene());
@@ -174,7 +177,7 @@ gls2.EndingScene = tm.createClass(
             speed: 9
         }, 2000);
         this.player.tweener.clear()
-            .wait(1000)
+            .wait(2000)
             .to({
                 y: SC_H * -0.3
             }, 2000, "easeInQuad");
