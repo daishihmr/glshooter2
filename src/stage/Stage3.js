@@ -23,11 +23,10 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.tweener.clear().to({speed:10}, 4000, "easeInOutQuad");
         });
 
-//        this.seq.add(100, "alice");
-//        this.seq.add(100, "miyuki_y1");
+        //test
         this.seq.add(100, "alice");
+        this.seq.add(5000, "reika1-left");
 
-        this.seq.add(1000, "reika1-left");
 
         this.seq.add(150, "nao2-center");
         this.seq.add( 60, "nao2-left");
@@ -108,7 +107,7 @@ gls2.Stage3 = tm.createClass(
         });
 
         //ステージボス
-        this.seq.add(600, "momozono");
+        this.seq.add(480, "momozono");
     },
 
     setupBackground: function() {
