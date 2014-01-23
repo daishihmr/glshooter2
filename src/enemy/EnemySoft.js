@@ -722,6 +722,47 @@ gls2.EnemySoft.reika1 = gls2.EnemySoft.reika(1.0);
 gls2.EnemySoft.reika2 = gls2.EnemySoft.reika(2.0);
 
 /**
+ * 大型戦闘機
+ *
+ * @class
+ * @extends {gls2.EnemySoft}
+ */
+gls2.EnemySoft.aguri = tm.createClass(
+/** @lends {gls2.EnemySoft.reika.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    patternName: null,
+
+    /**
+     * @constructs
+     */
+    init: function(speed) {
+        this.superInit();
+        this.patternName = "aguri";
+        this.speed = speed;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.angle = Math.PI * 0.5;
+        enemy.patternName = this.patternName;
+        enemy.speed = this.speed;
+
+        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+            gls2.EnemySoft.attack(this, this.patternName);
+            this.rad = 0;
+            this.on("enterframe", function() {
+                this.x += this.speed;
+                this.y = this.py+Math.sin(this.rad)*8;
+                this.rad+=0.03;
+            });
+        }.bind(enemy));
+    },
+});
+gls2.EnemySoft.aguri1 = gls2.EnemySoft.aguri(1.0);
+
+/**
  * 戦艦
  *
  * 左右から出現、そのまま等速で横断する。

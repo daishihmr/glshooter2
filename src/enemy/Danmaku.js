@@ -811,6 +811,18 @@ gls2.Danmaku["reika"] = new bulletml.Root({
 });
 
 /**
+ * 
+ */
+gls2.Danmaku["aguri"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(30),
+            $.fire($.direction(0), $spd3, BL),
+        ]),
+    ]),
+});
+
+/**
  *　小学８年生用
  */
 gls2.Danmaku["miyuki_y"] = new bulletml.Root({
