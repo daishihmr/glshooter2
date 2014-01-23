@@ -374,7 +374,17 @@ gls2.Setting = {
     /**
      * @const
      */
-    CONTINUE_COUNT_BY_ACHEVEMENT_GRADE: [ 0.1, 0.2, 1.0 ],
+    INITIAL_CONTINUE_COUNT: 0,
+
+    /**
+     * @const
+     */
+    CONTINUE_COUNT_BY_ACHEVEMENT_GRADE: [ 0.1, 0.4, 1.0 ],
+
+    /**
+     * @const
+     */
+    INITIAL_STAGE: 0,
 
     /**
      * @const
