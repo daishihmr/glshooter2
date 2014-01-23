@@ -31,11 +31,9 @@ var texts = [
     "minimo",
     "daishi_hmr",
     "",
-    "GEMERAL MANAGER",
-    "daishi_hmr",
-    "",
     "special respect to...",
     "DODONPACHI series by CAVE",
+    "PRECURE series by TOEI",
     "",
     "",
     "",
@@ -58,7 +56,7 @@ gls2.EndingScene = tm.createClass(
     player: null,
     labels: null,
     startBgm: false,
-    speed : 0.5,
+    speed : 0,
     fadeOutStarted: false,
     layer: null,
 
@@ -96,7 +94,7 @@ gls2.EndingScene = tm.createClass(
             player.tweener.clear()
                 .to({
                     x: gls2.math.randf(SC_W*0.1, SC_W*0.9),
-                    y: gls2.math.randf(SC_H*0.2, SC_H*0.8),
+                    y: gls2.math.randf(SC_H*0.3, SC_H*0.8),
                 }, 6000, "easeInOutQuad")
                 .call(next);
         }.bind(this);
@@ -107,7 +105,7 @@ gls2.EndingScene = tm.createClass(
         var that = this;
         this.labels = texts.map(function(text, i) {
             return tm.display.Label(text, 16)
-                .setPosition(SC_W*0.5, SC_H+i*SC_H*0.1)
+                .setPosition(SC_W*0.5, SC_H*1.5+i*SC_H*0.1)
                 .addChildTo(that)
                 .on("enterframe", function() {
                     this.y -= that.speed;
@@ -116,6 +114,14 @@ gls2.EndingScene = tm.createClass(
                     }
                 });
         });
+        var circleLogo = tm.display.Label("dev7.jp", 24)
+            .setPosition(SC_W*0.5, SC_H*1.5+(texts.length+5)*SC_H*0.1)
+            .addChildTo(this)
+            .on("enterframe", function() {
+                if (this.y > SC_H*0.5) {
+                    this.y -= that.speed;
+                }
+            });
 
         this.tweener.wait(2000).call(function() {
             gls2.playBgm("bgmEnding", true, true);
@@ -132,9 +138,9 @@ gls2.EndingScene = tm.createClass(
         this.ground.addChildTo(gls2.core.gameScene);
     },
     update: function(app) {
-        if (app.keyboard.getKey("z") 
-            || app.keyboard.getKey("x") 
-            || app.keyboard.getKey("c") 
+        if (app.keyboard.getKey("z")
+            || app.keyboard.getKey("x")
+            || app.keyboard.getKey("c")
             || (this.startBgm && gls2.currentBgm.source["playbackState"] !== AudioBufferSourceNode["PLAYING_STATE"])) {
             if (!this.labels.some(function(l) { return !!l.parent; })) {
                 this.startFadeOut();
