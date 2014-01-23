@@ -112,7 +112,7 @@ gls2.GameOverScene = tm.createClass(
     tweetScore: function() {
         var text = "TM-Shooter SCORE: {score} {stage} {type}-{style} continue:{cont}".format({
             "score": Math.floor(this.app.gameScene.score),
-            "stage": this.app.gameScene.stageNumber < gls2.Setting.STAGE_NUMBER ? ("Stage" + this.app.gameScene.stageNumber + 1) : "ALL",
+            "stage": this.app.gameScene.stageNumber < gls2.Setting.STAGE_NUMBER ? ("Stage" + (this.app.gameScene.stageNumber + 1)) : "ALL",
             "type": "ABC"[this.app.gameScene.player.type],
             "style": ["S", "L", "EX"][this.app.gameScene.player.style],
             "cont": this.app.gameScene.continueCount
@@ -121,7 +121,7 @@ gls2.GameOverScene = tm.createClass(
             "type"    : "tweet",
             "text"    : text,
             "hashtags": gls2.Setting.HASH_TAG,
-            "url"     : this.scoreId ? (location.origin + "/ranking/" + this.scoreId) : location.origin
+            "url"     : this.scoreId ? (window.location.origin + "/ranking/" + this.scoreId) : window.location.origin
         });
         window.open(twitterURL, "tweet", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
     }

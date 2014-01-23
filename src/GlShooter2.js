@@ -90,7 +90,7 @@ gls2.GlShooter2 = tm.createClass(
             "bgm5": "assets2/nc60627.mp3",
             "bgmBoss": "assets2/nc29206.mp3",
             "bgmResult": "assets2/nc54077.mp3",
-            "bgmEnding": "assets2/nc69311.mp3",
+            "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
             "bgmLoopInfo": "assets2/loop.json",
 
             // sound
@@ -155,10 +155,10 @@ gls2.GlShooter2 = tm.createClass(
     calcContinueCountMax: function() {
         var achevements = window["achevements"];
         var data = tm.asset.AssetManager.get("achevements").data;
-        if (!achevements) return 0;
+        if (!achevements) return gls2.Setting.INITIAL_CONTINUE_COUNT;
         return achevements.reduce(function(a, b) {
             return data[b] ? a + gls2.Setting.CONTINUE_COUNT_BY_ACHEVEMENT_GRADE[data[b].grade] : a;
-        }, 0);
+        }, gls2.Setting.INITIAL_CONTINUE_COUNT);
     },
 
     update: function() {
