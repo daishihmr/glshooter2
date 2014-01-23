@@ -392,8 +392,8 @@ gls2.EnemyUnit = {
 "komachi2-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 // 中型戦闘機「アキモト」3面用
-"komachi3-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
-"komachi3-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
+"komachi3-0": [{ hard:$e.Komachi, soft:$s.LargeFighter3, x:SC_W*0.3, y:SC_H*-0.3 }],
+"komachi3-1": [{ hard:$e.Komachi, soft:$s.LargeFighter3, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 // 中型戦闘機「アキモト」4面用
 "komachi4-0": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.3, y:SC_H*-0.3 }],

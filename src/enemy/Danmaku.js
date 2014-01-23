@@ -542,14 +542,14 @@ gls2.Danmaku["komachi-3"] = new bulletml.Root({
         $.repeat(999, [
             $whip($spd3, -0.01, 4, function(spd) {
                 return $.action([
-                    $nway(6, -60, 60, spd, BNL, $.offsetX(-45), $.autonomy(true)),
+                    $nway(8, -60, 60, spd, BNL, $.offsetX(-45), $.autonomy(true)),
                     $interval(4),
                 ]);
             }),
             $whip($spd3, -0.01, 4, function(spd) {
                 return $.action([
                     $interval(4),
-                    $nway(6, -60, 60, spd, BNL, $.offsetX(+45), $.autonomy(true)),
+                    $nway(8, -60, 60, spd, BNL, $.offsetX(+45), $.autonomy(true)),
                 ]);
             }),
             $interval(90),

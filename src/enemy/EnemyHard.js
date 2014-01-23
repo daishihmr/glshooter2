@@ -714,9 +714,6 @@ gls2.Enemy.Alice = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsuba");
         this._sprite = _Sprite("tex_stage3", 128, 128).setFrameIndex(1);
-        this.boundingWidth = 128;
-        this.boundingHeightBottom = 0;
-        this.boundingHeightTop = 0;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -728,13 +725,12 @@ gls2.Enemy.Alice = tm.createClass({
         //ボム効果時間中はエクステンドアイテムを出さない
         if (!this.gameScene.isBombActive) gls2.ExtendItem(this.x, this.y, this.player).addChildTo(this.parent);
 
-        this.remove();
-
         //本体破壊時に端末も破壊
         for (var i = 0; i<4; i++) {
             if (this.leaf[i])this.leaf[i].destroy();
         }
         delete this.leaf;
+        this.remove();
     },
     onLaunch: function() {
         //出現時に端末を投入
@@ -763,11 +759,7 @@ gls2.Enemy.AliceLeaf = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsubaLeaf");
-
         this._sprite = _Sprite("yotsubaLeaf", 64, 64).setFrameIndex(0);
-        this.boundingWidth = 64;
-        this.boundingHeightBottom = 0;
-        this.boundingHeightTop = 0;
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);

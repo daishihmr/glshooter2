@@ -20,12 +20,8 @@ gls2.Stage3 = tm.createClass(
             gls2.playBgm("bgm3", true),
             this.gameScene.ground.direction = Math.PI*0.5;
             this.gameScene.ground.speed = 3;
-            this.gameScene.ground.tweener.clear().to({speed:10}, 4000, "easeInOutQuad");
+            this.gameScene.ground.tweener.clear().to({speed:5}, 4000, "easeInOutQuad");
         });
-
-        //test
-        this.seq.add(100, "alice");
-        this.seq.add(5000, "reika1-left");
 
 
         this.seq.add(150, "nao2-center");
@@ -45,17 +41,24 @@ gls2.Stage3 = tm.createClass(
         });
 
         this.seq.add(120, "akane-center");
-        this.seq.add( 60, "reika1-left");
-        this.seq.add( 60, "reika1-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-center");
 
         this.seq.add(120, "akane-right");
-        this.seq.add(120, "akane-left");
+        this.seq.add(180, "akane-left");
         this.seq.add(120, "reika1-left");
         this.seq.add(180, "reika1-left");
 
         this.seq.add(120, "akane-center");
+        this.seq.add(180, "akane-left");
+        this.seq.add(120, "reika1-left");
+        this.seq.add(180, "reika1-left");
+
+        this.seq.add(120, "akane-center");
+        this.seq.add(120, "akane-right");
         this.seq.add(120, "reika1-right");
         this.seq.add(180, "reika1-right");
+
 
         this.seq.add(120, function() {
             this.gameScene.ground.tweener
@@ -69,6 +72,7 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 60, "nao2-left");
             this.seq.add( 60, "nao2-right");
         }
+        this.seq.add( 60, "komachi2-0");
 
         this.seq.add(100, "miyuki_y1");
 

@@ -712,8 +712,8 @@ gls2.EnemySoft.reika = tm.createClass(
             this.rad = 0;
             this.on("enterframe", function() {
                 this.x += this.speed;
-                this.y = this.py+Math.sin(this.rad)*16;
-                this.rad+=0.05;
+                this.y = this.py+Math.sin(this.rad)*8;
+                this.rad+=0.03;
             });
         }.bind(enemy));
     },
@@ -844,7 +844,7 @@ var _alice = tm.createClass(
      */
     init: function() {
         this.superInit();
-        this.attackPattern = "alice1";
+        this.attackPattern = "alice";
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -907,8 +907,6 @@ var _aliceLeaf = tm.createClass(
             }.bind(enemy));
 
         var toDeg = 180/Math.PI;
-        enemy.frame = 0;
-        enemy.age = 0;
         enemy.on("enterframe", function() {
             //本体を周回
             var cx = this.current.x;
@@ -921,9 +919,8 @@ var _aliceLeaf = tm.createClass(
             var rad = Math.atan2(cy-this.y, cx-this.x);
     		var deg = ~~( rad * 180 / 3.14159);
             deg = deg < 0 ? deg+360 : deg;
-            var frame = ~~(deg/360*22.5);
+            var frame = ~~(deg/360*22.5)%16;
             this._sprite.setFrameIndex(frame, 64, 64);
-
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }
@@ -939,6 +936,7 @@ gls2.EnemySoft.AliceLeaf = _aliceLeaf();
  */
 gls2.EnemySoft.LargeFighter1 = _MiddleFighterCommon(0.3, "komachi-1");
 gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
+gls2.EnemySoft.LargeFighter3 = _MiddleFighterCommon(0.5, "komachi-3");
 gls2.EnemySoft.LargeFighter4 = _MiddleFighterCommon(0.5, "komachi-4");
 
 /**
