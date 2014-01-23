@@ -49,24 +49,28 @@ gls2.GameOverScene = tm.createClass(
         if (this.wait) return;
         this.opened = true;
 
-        if (!this.posted) {
-            var menu = [ "save score", "tweet result", "back to title" ];
-            var labels = [
-                "スコアをランキングサーバーへ送信します",
-                "スコアをTwitterへ投稿します",
-                "タイトルへ戻ります"
-            ];
-            this.openDialogMenu("GAME OVER", menu, this.onResultMenu, {
-                "defaultValue": this.posted ? 1 : 0,
-                "menuDescriptions": labels,
-                "showExit": false
-            });
-        } else {
-            openConfirmTweetDialog();
+        var menu = [ "save score", "tweet result", "back to title" ];
+        var labels = [
+            "スコアをランキングサーバーへ送信します",
+            "スコアをTwitterへ投稿します",
+            "タイトルへ戻ります"
+        ];
+        if (this.posted) {
+            menu.shift();
+            labels.shift();
         }
+
+        this.openDialogMenu("GAME OVER", menu, this.onResultMenu, {
+            "defaultValue": this.posted ? 1 : 0,
+            "menuDescriptions": labels,
+            "showExit": false
+        });
     },
 
     onResultMenu: function(result) {
+        if (this.posted) {
+            result += 1;
+        }
         if (result === 0) {
             if (this.posted) {
                 return;
