@@ -369,7 +369,17 @@ gls2.Setting = {
     /**
      * @const
      */
-    HASH_TAG: "tmshooter"
+    HASH_TAG: "tmshooter",
+
+    /**
+     * @const
+     */
+    CONTINUE_COUNT_BY_ACHEVEMENT_GRADE: [ 0.1, 0.2, 1.0 ],
+
+    /**
+     * @const
+     */
+    STAGE_NUMBER: 5
 };
 
 })();

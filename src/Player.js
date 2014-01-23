@@ -287,6 +287,7 @@ gls2.Player = tm.createClass(
                     gls2.Bomb(this, this.gameScene)
                         .setPosition(gls2.math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);
+                    gls2.core.putAchevement("bomb1");
                 }
             }
 
@@ -461,7 +462,7 @@ gls2.Bit = tm.createClass(
             var g = this.parent.localToGlobal(this);
 
             // バックファイア
-            if (this.bit.v && core.frame%2 === 0) backfireParticle.clone(40).setPosition(g.x, g.y).addChildTo(core.gameScene);
+            if (this.bit.v && core.frame%2 === 0) backfireParticle.clone(40).setPosition(g.x, g.y).addChildTo(this.player.gameScene);
 
             // ショット
             if (this.player.fireShot) {
