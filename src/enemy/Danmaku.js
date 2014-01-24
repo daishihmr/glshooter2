@@ -650,6 +650,54 @@ gls2.Danmaku["komachi-4"] = new bulletml.Root({
 });
 
 /**
+ * こまち5面
+ */
+gls2.Danmaku["komachi-5"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $.fire($.direction(210, "absolute"), $spd1(1), RNS, $.offsetX(-40)),
+            $.fire($.direction(120, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
+            $.fire($.direction(120, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
+            $.repeat(77, [
+                $interval(4),
+                $.fire($.direction(-360/77, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
+                $.fire($.direction(    120, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
+                $.fire($.direction(    120, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
+            ]),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $.fire($.direction(-210, "absolute"), $spd1(1), RNS, $.offsetX(40)),
+            $.fire($.direction( 120, "sequence"), $spd1(1), RNS, $.offsetX(40)),
+            $.fire($.direction( 120, "sequence"), $spd1(1), RNS, $.offsetX(40)),
+            $.repeat(77, [
+                $interval(4),
+                $.fire($.direction(+360/77, "sequence"), $spd1(1), RNS, $.offsetX(40)),
+                $.fire($.direction(    120, "sequence"), $spd1(1), RNS, $.offsetX(40)),
+                $.fire($.direction(    120, "sequence"), $spd1(1), RNS, $.offsetX(40)),
+            ]),
+        ]),
+    ]),
+    "top2": $.action([
+        $.repeat(999, [
+            $.fire($.direction(0), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
+            $.repeat(30, [
+                $.wait(1),
+                $.fire($.direction(0, "sequence"), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
+            ]),
+            $interval(5),
+            $.fire($.direction(0), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
+            $.repeat(30, [
+                $.wait(1),
+                $.fire($.direction(0, "sequence"), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
+            ]),
+            $interval(5),
+        ]),
+    ]),
+});
+
+/**
  * のぞみ4面
  */
 gls2.Danmaku["nozomi-4"] = new bulletml.Root({
@@ -862,7 +910,7 @@ gls2.Danmaku["reika"] = new bulletml.Root({
 });
 
 /**
- * 
+ *
  */
 gls2.Danmaku["aguri"] = new bulletml.Root({
     "top": $.action([

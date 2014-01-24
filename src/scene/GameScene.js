@@ -668,7 +668,6 @@ gls2.GameScene = tm.createClass(
             if (gls2.core.highScore === this.score) {
                 gls2.core.highScoreScreenShot = this.screenShot;
             }
-            window.open(this.screenShot);
             this.tweener.clear()
                 .wait(2000).call(function() {
                     if (this.continueCount < gls2.core.calcContinueCountMax()) {

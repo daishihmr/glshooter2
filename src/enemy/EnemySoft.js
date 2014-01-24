@@ -1079,6 +1079,8 @@ gls2.EnemySoft.LargeFighter2 = _MiddleFighterCommon(0.5, "komachi-2");
 gls2.EnemySoft.LargeFighter3 = _MiddleFighterCommon(0.5, "komachi-3");
 gls2.EnemySoft.LargeFighter4 = _MiddleFighterCommon(0.5, "komachi-4");
 
+gls2.EnemySoft.Komachi5 = _MiddleFighterCommon(0.5, "komachi-5");
+
 /**
  * mktn5面
  */
