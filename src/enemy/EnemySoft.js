@@ -806,12 +806,10 @@ gls2.EnemySoft.reika = tm.createClass(
             this.rad = 0;
             this.on("enterframe", function() {
                 if (this.y < this.sy) {
-                    this.y += 0.5;
-                    this.py = this.y;
-                } else {
-                    this.x += this.speed;
-                    this.y = this.py+Math.sin(this.rad)*8;
+                    this.py += 1;
                 }
+                this.x += this.speed;
+                this.y = this.py+Math.sin(this.rad)*8;
                 this.rad+=0.03;
             });
         }.bind(enemy));
@@ -1513,14 +1511,16 @@ var _Setsuna = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
                 var temp = function() {
                     var r = gls2.FixedRandom.rand(0,100);
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
-                    if (r > 20 && this.frame > 300) {
+                    if (r > 50 && this.frame > 300 || this.x-32 < this.player.x && this.player.x < this.x+32) {
                         //アカルンワープ！（テスト中）
                         this.teleport(true);
-                        this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad").call(this.teleport()).call(temp);
+                        var x = gls2.FixedRandom.rand(SC_W*0.1, SC_W*0.9);
+                        var y = gls2.FixedRandom.rand(SC_H*0.2, SC_W*0.4);
+                        this.tweener.move(x, y, 10, "easeInOutQuad").call(this.teleport()).call(temp);
                     } else {
-                        this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad").call(temp);
+                        var a = gls2.FixedRandom.random() * Math.PI*2;
+                        var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                        this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 2000, "easeInOutQuad").call(temp);
                     }
                 }.bind(this);
                 temp();

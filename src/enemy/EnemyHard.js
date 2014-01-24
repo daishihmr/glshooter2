@@ -29,7 +29,7 @@ gls2.Enemy.DATA = {
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
-    "higashi":   [  1500,  1200000, false,  true, 20, {"width":256, "height":128}, ],
+    "higashi":   [  1300,  1200000, false,  true, 20, {"width":256, "height":128}, ],
     "momozono":  [  6000,  3500000, false,  true,  0, {"width":256, "height":128}, ],
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
     "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
@@ -693,7 +693,7 @@ gls2.Enemy.reika = tm.createClass(
             this.speed *= -1;
             this.scaleX = -1;
         }
-        this.sy = this.y+SC_H*0.2;
+        this.sy = this.y+SC_H*0.3;
         this.py = this.y;
     },
 });
@@ -1076,14 +1076,14 @@ gls2.Enemy.Setsuna = tm.createClass(
     teleport: function(b) {
         if (b) {
             //テレポートイン
-            for (var i = 0; i < 10; i++) {
-                gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-128,128), this.y+gls2.FixedRandom.rand(-64,64), this.gameScene, gls2.FixedRandom.rand(4,10) );
+            for (var i = 0; i < 3; i++) {
+                gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-100,100), this.y+gls2.FixedRandom.rand(-50,50), this.gameScene, 2);
             }
-            this.alpha = 0.2;
+            this.alpha = 0.0;
         } else {
             //テレポートアウト
-            for (var i = 0; i < 10; i++) {
-                gls2.Effect.genShockwaveRev(this.x+gls2.FixedRandom.rand(-128,128), this.y+gls2.FixedRandom.rand(-64,64), this.gameScene, gls2.FixedRandom.rand(4,10) );
+            for (var i = 0; i < 3; i++) {
+                gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-100,100), this.y+gls2.FixedRandom.rand(-50,50), this.gameScene, 2);
             }
             this.alpha = 1.0;
         }
