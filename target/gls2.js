@@ -933,9 +933,9 @@ gls2.lj = tm.createClass({superClass:tm.display.CanvasApp, le:0, dl:0, fl:0, el:
   }.bind(this)}))
 }, Oh:function() {
   var b = window.achevements, a = tm.asset.AssetManager.get("achevements").data;
-  return!b ? gls2.ja.nh : b.reduce(function(b, d) {
+  return!b ? gls2.ja.nh : Math.floor(b.reduce(function(b, d) {
     return a[d] ? b + gls2.ja.aj[a[d].grade] : b
-  }, gls2.ja.nh)
+  }, gls2.ja.nh))
 }, update:function() {
   for(var b = [].concat(this.Zg), a = 0;a < b.length;a++) {
     b[a].frame === this.frame ? b[a].fn() : this.Zg.erase(b[a])
