@@ -157,7 +157,7 @@ gls2.GlShooter2 = tm.createClass(
         var data = tm.asset.AssetManager.get("achevements").data;
         if (!achevements) return gls2.Setting.INITIAL_CONTINUE_COUNT;
         return achevements.reduce(function(a, b) {
-            return data[b] ? a + gls2.Setting.CONTINUE_COUNT_BY_ACHEVEMENT_GRADE[data[b].grade] : a;
+            return data[b] ? a + gls2.Setting.CONTINUE_COUNT_BY_ACHEVEMENT_GRADE[data[b]["grade"]] : a;
         }, gls2.Setting.INITIAL_CONTINUE_COUNT);
     },
 
