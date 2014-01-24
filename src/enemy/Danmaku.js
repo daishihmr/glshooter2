@@ -542,14 +542,14 @@ gls2.Danmaku["komachi-3"] = new bulletml.Root({
         $.repeat(999, [
             $whip($spd3, -0.01, 4, function(spd) {
                 return $.action([
-                    $nway(6, -60, 60, spd, BNL, $.offsetX(-45), $.autonomy(true)),
+                    $nway(8, -60, 60, spd, BNL, $.offsetX(-45), $.autonomy(true)),
                     $interval(4),
                 ]);
             }),
             $whip($spd3, -0.01, 4, function(spd) {
                 return $.action([
                     $interval(4),
-                    $nway(6, -60, 60, spd, BNL, $.offsetX(+45), $.autonomy(true)),
+                    $nway(8, -60, 60, spd, BNL, $.offsetX(+45), $.autonomy(true)),
                 ]);
             }),
             $interval(90),
@@ -802,6 +802,18 @@ gls2.Danmaku["nao-3"] = new bulletml.Root({
  * れいか様
  */
 gls2.Danmaku["reika"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(30),
+            $.fire($.direction(0), $spd3, BL),
+        ]),
+    ]),
+});
+
+/**
+ * 
+ */
+gls2.Danmaku["aguri"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval(30),

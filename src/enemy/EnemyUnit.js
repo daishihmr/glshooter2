@@ -392,8 +392,8 @@ gls2.EnemyUnit = {
 "komachi2-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 // 中型戦闘機「アキモト」3面用
-"komachi3-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
-"komachi3-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
+"komachi3-0": [{ hard:$e.Komachi, soft:$s.LargeFighter3, x:SC_W*0.3, y:SC_H*-0.3 }],
+"komachi3-1": [{ hard:$e.Komachi, soft:$s.LargeFighter3, x:SC_W*0.7, y:SC_H*-0.3 }],
 
 // 中型戦闘機「アキモト」4面用
 "komachi4-0": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.3, y:SC_H*-0.3 }],
@@ -502,24 +502,24 @@ gls2.EnemyUnit = {
 
 //小型浮揚戦車「アオキ」
 "reika1-left": [  //左側
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.10, y:SC_H*0.1 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.15, y:SC_H*0.2 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.20, y:SC_H*0.1 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.25, y:SC_H*0.2 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.30, y:SC_H*0.1 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.35, y:SC_H*0.2 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.10, y:SC_H*-0.1 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.15, y:SC_H*-0.2 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.20, y:SC_H*-0.1 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.25, y:SC_H*-0.2 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.30, y:SC_H*-0.1 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.35, y:SC_H*-0.2 },
 ],
 "reika1-right": [  //右側
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.10, y:SC_H*0.1 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.15, y:SC_H*0.2 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.20, y:SC_H*0.1 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.25, y:SC_H*0.2 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.30, y:SC_H*0.1 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.35, y:SC_H*0.2 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.10, y:SC_H*-0.1 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.15, y:SC_H*-0.2 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.20, y:SC_H*-0.1 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.25, y:SC_H*-0.2 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.30, y:SC_H*-0.1 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*1.35, y:SC_H*-0.2 },
 ],
 
 //大型戦艦「ホシゾラ」
-"miyuki_y1": [{ hard:$e.miyuki_y, soft:$s.miyuki_y, x:-256    , y: 140},],
+"miyuki_y1": [{ hard:$e.miyuki_y, soft:$s.miyuki_y, x:-128    , y: 140},],
 "miyuki_y2": [{ hard:$e.miyuki_y, soft:$s.miyuki_y, x:SC_W+128, y:  60},],
 "miyuki_t1": [{ hard:$e.miyuki_t, soft:$s.miyuki_t, x:SC_W*0.7, y:-128},],
 "miyuki_t2": [{ hard:$e.miyuki_t, soft:$s.miyuki_t, x:SC_W*0.3, y:-128},],
