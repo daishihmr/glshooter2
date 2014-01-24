@@ -175,7 +175,16 @@ gls2.ResultScene = tm.createClass(
 
         // this.wait = 60;
 
-        this.addEventListener("exit", function() {
+        this.on("enter", function() {
+            if (this.gameScene.missCountTotal === 0 && this.gameScene.continueCount === 0) {
+                if (this.gameScene.stageNumber === 0) gls2.core.putAchevement("nomiss1");
+                else if (this.gameScene.stageNumber === 1) gls2.core.putAchevement("nomiss2");
+                else if (this.gameScene.stageNumber === 2) gls2.core.putAchevement("nomiss3");
+                else if (this.gameScene.stageNumber === 3) gls2.core.putAchevement("nomiss4");
+                else if (this.gameScene.stageNumber === 4) gls2.core.putAchevement("nomiss5");
+            }
+        });
+        this.on("exit", function() {
             gls2.fadeOutBgm();
         });
     },
@@ -201,8 +210,13 @@ gls2.ResultScene = tm.createClass(
             this.promptEnter.visible = true;
             if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
                 gls2.playSound("decision");
-                this.gameScene.startStage(this.gameScene.stageNumber + 1);
-                app.popScene();
+                if (this.gameScene.stageNumber + 1 == gls2.Setting.STAGE_NUMBER) {
+                    // goto ending
+                    app.replaceScene(gls2.EndingScene());
+                } else {
+                    this.gameScene.startStage(this.gameScene.stageNumber + 1);
+                    app.replaceScene(this.gameScene);
+                }
             }
         }
 

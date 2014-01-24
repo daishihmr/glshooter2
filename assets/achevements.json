@@ -1,0 +1,192 @@
+{
+    "launch0": {
+        "title": "タイプA出撃！",
+        "description": "機体タイプAで出撃する",
+        "grade": 2
+    },
+    "launch1": {
+        "title": "タイプB出撃！",
+        "description": "機体タイプBで出撃する",
+        "grade": 2
+    },
+    "launch2": {
+        "title": "タイプC出撃！",
+        "description": "機体タイプCで出撃する",
+        "grade": 2
+    },
+    "bomb1": {
+        "title": "ボム！",
+        "description": "初めてボムを投下する",
+        "grade": 0
+    },
+    "bomb2": {
+        "title": "オートボム！",
+        "description": "初めてオートボムを投下する",
+        "grade": 0
+    },
+    "hyper1": {
+        "title": "ハイパーシステム起動！",
+        "description": "ハイパーシステムを初めて発動する",
+        "grade": 0
+    },
+    "hyper10": {
+        "title": "MAXハイパー！！",
+        "description": "ハイパーシステムをLv10まで溜めて発動する",
+        "grade": 2
+    },
+    "score100M": {
+        "title": "スコア1億！",
+        "description": "スコアを1億点以上獲得する",
+        "grade": 0
+    },
+    "score2G": {
+        "title": "スコア20億！",
+        "description": "スコアを20億点以上獲得する",
+        "grade": 0
+    },
+    "score20G": {
+        "title": "スコア200億！",
+        "description": "スコアを200億点以上獲得する",
+        "grade": 1
+    },
+    "score50G": {
+        "title": "スコア500億！",
+        "description": "スコアを500億点以上獲得する",
+        "grade": 1
+    },
+    "score100G": {
+        "title": "スコア1000億！",
+        "description": "スコアを1000億点以上獲得する",
+        "grade": 1
+    },
+    "score1T": {
+        "title": "スコア1兆！",
+        "description": "スコアを1兆点以上獲得する",
+        "grade": 2
+    },
+    "combo100": {
+        "title": "100HIT達成！",
+        "description": "コンボを100HIT以上つなげる",
+        "grade": 0
+    },
+    "combo1000": {
+        "title": "1000HIT達成！",
+        "description": "コンボを1,000HIT以上つなげる",
+        "grade": 0
+    },
+    "combo10000": {
+        "title": "10000HIT達成！",
+        "description": "コンボを10,000HIT以上つなげる",
+        "grade": 1
+    },
+    "combo100000": {
+        "title": "100000HIT達成！",
+        "description": "コンボを100,000HIT以上つなげる",
+        "grade": 1
+    },
+    "extend1": {
+        "title": "ファーストエクステンド！",
+        "description": "初めてファーストエクステンド(100,000点)を達成する",
+        "grade": 0
+    },
+    "extend2": {
+        "title": "セカンドエクステンド！",
+        "description": "初めてセカンドエクステンド(1,000,000点)を達成する",
+        "grade": 1
+    },
+    "extend3": {
+        "title": "財閥からのプレゼント",
+        "description": "初めてエクステンドアイテムを取得する",
+        "grade": 1
+    },
+    "nomiss1": {
+        "title": "ステージ1ノーミスクリア！",
+        "description": "ステージ1をノーミスノーコンティニューでクリアする",
+        "grade": 1
+    },
+    "nomiss2": {
+        "title": "ステージ2ノーミスクリア！",
+        "description": "ステージ2をノーミスノーコンティニューでクリアする",
+        "grade": 1
+    },
+    "nomiss3": {
+        "title": "ステージ3ノーミスクリア！",
+        "description": "ステージ3をノーミスノーコンティニューでクリアする",
+        "grade": 1
+    },
+    "nomiss4": {
+        "title": "ステージ4ノーミスクリア！",
+        "description": "ステージ4をノーミスノーコンティニューでクリアする",
+        "grade": 1
+    },
+    "nomiss5": {
+        "title": "ステージ5ノーミスクリア！",
+        "description": "ステージ5をノーミスノーコンティニューでクリアする",
+        "grade": 1
+    },
+    "mboss1": {
+        "title": "ユキシロ撃破！",
+        "description": "ステージ1中ボス「ユキシロ」を撃破する",
+        "grade": 0
+    },
+    "mboss2": {
+        "title": "ミショウ撃破！",
+        "description": "ステージ2中ボス「ミショウ」を撃破する",
+        "grade": 0
+    },
+    "mboss3": {
+        "title": "ヒガシ撃破！",
+        "description": "ステージ3中ボス「ヒガシ」を撃破する",
+        "grade": 0
+    },
+    "mboss4": {
+        "title": "ヒシカワ撃破！",
+        "description": "ステージ4中ボス「ヒシカワ」を撃破する",
+        "grade": 0
+    },
+    "mboss5": {
+        "title": "ミナミノ撃破！",
+        "description": "ステージ5中ボス「ミナミノ」を撃破する",
+        "grade": 0
+    },
+    "boss1": {
+        "title": "ミスミ撃破！",
+        "description": "ステージ1ボス「ミスミ」を撃破する",
+        "grade": 0
+    },
+    "boss2": {
+        "title": "ヒュウガ撃破！",
+        "description": "ステージ2ボス「ヒュウガ」を撃破する",
+        "grade": 0
+    },
+    "boss3": {
+        "title": "モモゾノ撃破！",
+        "description": "ステージ3ボス「モモゾノ」を撃破する",
+        "grade": 0
+    },
+    "boss4": {
+        "title": "アイダ撃破！",
+        "description": "ステージ4ボス「アイダ」を撃破する",
+        "grade": 0
+    },
+    "boss5": {
+        "title": "ホウジョウ撃破！",
+        "description": "ステージ5ボス「ホウジョウ」を撃破する",
+        "grade": 0
+    },
+    "allclear0": {
+        "title": "タイプA完！",
+        "description": "自機タイプAですべてのステージをクリアする",
+        "grade": 1
+    },
+    "allclear1": {
+        "title": "タイプB完！",
+        "description": "自機タイプBですべてのステージをクリアする",
+        "grade": 1
+    },
+    "allclear2": {
+        "title": "タイプC完！",
+        "description": "自機タイプCですべてのステージをクリアする",
+        "grade": 1
+    }
+}

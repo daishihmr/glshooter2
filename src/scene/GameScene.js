@@ -399,6 +399,7 @@ gls2.GameScene = tm.createClass(
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
                             this.addRank(-0.01);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
+                            gls2.core.putAchevement("bomb2");
                         } else {
                             this.miss();
                         }
@@ -417,6 +418,7 @@ gls2.GameScene = tm.createClass(
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
                             this.addRank(-0.01);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
+                            gls2.core.putAchevement("bomb2");
                         } else {
                             this.miss();
                         }
@@ -498,19 +500,6 @@ gls2.GameScene = tm.createClass(
 
         // 素点が上昇
         this.baseScore += enemy.score * bonus;
-
-        if (enemy.name === "misumi") this.app.putAchevement("boss1");
-        if (enemy.name === "hyuga") this.app.putAchevement("boss2");
-        if (enemy.name === "momozono") this.app.putAchevement("boss3");
-        if (enemy.name === "aida") this.app.putAchevement("boss4");
-        if (enemy.name === "hojo") this.app.putAchevement("boss5");
-        if (this.missCountTotal === 0 && this.continueCount === 0) {
-            if (enemy.name === "misumi") this.app.putAchevement("nomiss1");
-            if (enemy.name === "hyuga") this.app.putAchevement("nomiss2");
-            if (enemy.name === "momozono") this.app.putAchevement("nomiss3");
-            if (enemy.name === "aida") this.app.putAchevement("nomiss4");
-            if (enemy.name === "hojo") this.app.putAchevement("nomiss5");
-        }
     },
 
     generateStar: function(ground, large, x, y, count, isBoss) {
@@ -568,15 +557,15 @@ gls2.GameScene = tm.createClass(
         this.setRank(gls2.Setting.INITIAL_RANK);
         bulletml.Walker.globalScope["$ex"] = playerStyle !== 2 ? 0 : 1;
 
-        this.startStage(0);
+        this.startStage(gls2.Setting.INITIAL_STAGE);
 
         gls2.playSound("voLetsGo");
 
         this.startRec();
 
-        if (playerType === 0) gls2.core.putAchevement("launchA");
-        else if (playerType === 1) gls2.core.putAchevement("launchB");
-        else if (playerType === 2) gls2.core.putAchevement("launchC");
+        if (playerType === 0) gls2.core.putAchevement("launch0");
+        else if (playerType === 1) gls2.core.putAchevement("launch1");
+        else if (playerType === 2) gls2.core.putAchevement("launch2");
     },
 
     startStage: function(stageNumber) {
@@ -683,7 +672,7 @@ gls2.GameScene = tm.createClass(
                     }
                 }.bind(this))
                 .wait(2000).call(function() {
-                    if (this.continueCount < gls2.core.continueCountMax) {
+                    if (this.continueCount < gls2.core.calcContinueCountMax()) {
                         this.openContinueMenu();
                     } else {
                         this.gameOver();
@@ -720,7 +709,7 @@ gls2.GameScene = tm.createClass(
         var tempTimer = tm.app.Object2D();
         tempTimer.addChildTo(this.lastElement);
         tempTimer.tweener.wait(1000).call(function() {
-            this.app.pushScene(gls2.ResultScene(this, this.shotScreen()));
+            this.app.replaceScene(gls2.ResultScene(this, this.shotScreen()));
             tempTimer.remove();
         }.bind(this));
     },
@@ -754,12 +743,12 @@ gls2.GameScene = tm.createClass(
             gls2.core.highScoreContinueCount = this.continueCount;
         }
 
-        if (this.score >= 100000000) this.app.putAchevement("score100M");
-        if (this.score >= 2000000000) this.app.putAchevement("score2G");
-        if (this.score >= 20000000000) this.app.putAchevement("score20G");
-        if (this.score >= 50000000000) this.app.putAchevement("score50G");
-        if (this.score >= 100000000000) this.app.putAchevement("score100G");
-        if (this.score >= 1000000000000) this.app.putAchevement("score1T");
+        if (this.score >= 100000000) gls2.core.putAchevement("score100M");
+        if (this.score >= 2000000000) gls2.core.putAchevement("score2G");
+        if (this.score >= 20000000000) gls2.core.putAchevement("score20G");
+        if (this.score >= 50000000000) gls2.core.putAchevement("score50G");
+        if (this.score >= 100000000000) gls2.core.putAchevement("score100G");
+        if (this.score >= 1000000000000) gls2.core.putAchevement("score1T");
     },
 
     addCombo: function(v) {
@@ -980,7 +969,7 @@ gls2.GameScene = tm.createClass(
     },
 
     openContinueMenu: function() {
-        this.openDialogMenu("CONTINUE? (" + this.continueCount + "/" + gls2.core.continueCountMax + ")", [ "yes", "no" ], this.onResultContinue, {
+        this.openDialogMenu("CONTINUE? (" + this.continueCount + "/" + gls2.core.calcContinueCountMax() + ")", [ "yes", "no" ], this.onResultContinue, {
             "defaultValue": 0,
             "menuDescriptions": [
                 "システムを再起動して出撃します",

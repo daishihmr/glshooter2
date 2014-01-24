@@ -20,7 +20,6 @@ java -jar tools/compiler.jar \
 --js src/Laser.js \
 --js src/Bomb.js \
 --js src/BombItem.js \
---js src/Achevement.js \
 --js src/Effect.js \
 --js src/ScoreLabel.js \
 --js src/Ground.js \

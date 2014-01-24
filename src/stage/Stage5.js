@@ -73,6 +73,19 @@ gls2.Stage5 = tm.createClass(
 
         // 10%
 
+        this.seq.add(200, function() {
+            this.alartWarning(function() {
+                gls2.playBgm("bgmBoss", true);
+            });
+        });
+
+        this.seq.add(  1, function() {
+            this.gameScene.ground.tweener.clear().to({
+                speed: 9,
+            }, 2000);
+        });
+
+        this.seq.add(600, "mana");
     },
 
     setupBackground: function() {

@@ -425,6 +425,50 @@ gls2.Danmaku["kurokawa-1"] = new bulletml.Root({
 });
 
 /**
+ * くるみ5面
+ */
+gls2.Danmaku["milk-5"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $nway(5, -90, 90, $spd3, RNL, $.offsetX(-45)),
+            $.wait(27),
+            $nway(5, -90, 90, $spd3, RNL, $.offsetX(+45)),
+            $interval(120),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $interval(30),
+            $nway(6, -90, 90, $spd4, BL, $.offsetX(-45)),
+            $.wait(21),
+            $nway(6, -90, 90, $spd4, BL, $.offsetX(+45)),
+            $interval(90),
+        ]),
+    ]),
+    "top2": $.action([
+        $.repeat(999, [
+            $interval(55),
+            $nway(13, -90, 90, $spd1, RI, $.offsetX(-45)),
+            $.wait(20),
+            $nway(13, -90, 90, $spd1, RI, $.offsetX(+45)),
+            $interval(21),
+        ]),
+    ]),
+});
+
+/**
+ * アコちゃん5面
+ */
+gls2.Danmaku["ako-5"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(8, [
+            $nway(3, -20, 20, $spd4, RNS),
+            $interval(2)
+        ]),
+    ]),
+});
+
+/**
  * エレン4面
  */
 gls2.Danmaku["kurokawa-4"] = new bulletml.Root({
@@ -542,14 +586,14 @@ gls2.Danmaku["komachi-3"] = new bulletml.Root({
         $.repeat(999, [
             $whip($spd3, -0.01, 4, function(spd) {
                 return $.action([
-                    $nway(6, -60, 60, spd, BNL, $.offsetX(-45), $.autonomy(true)),
+                    $nway(8, -60, 60, spd, BNL, $.offsetX(-45), $.autonomy(true)),
                     $interval(4),
                 ]);
             }),
             $whip($spd3, -0.01, 4, function(spd) {
                 return $.action([
                     $interval(4),
-                    $nway(6, -60, 60, spd, BNL, $.offsetX(+45), $.autonomy(true)),
+                    $nway(8, -60, 60, spd, BNL, $.offsetX(+45), $.autonomy(true)),
                 ]);
             }),
             $interval(90),
@@ -721,7 +765,7 @@ gls2.Danmaku["mktn-5"] = new bulletml.Root({
                 $interval(6),
             ]),
 
-            $interval(90),
+            $interval(60),
         ]),
     ]),
     "top1": $.action([
@@ -745,6 +789,13 @@ gls2.Danmaku["mktn-5"] = new bulletml.Root({
             ]),
 
             $interval(40),
+        ]),
+    ]),
+    "top2": $.action([
+        $.repeat(999, [
+            $.bindVar("gun", "[-120, -40, 120, 0, -80, 40, 80][$loop.index%7]"),
+            $nway(5, -30, 30, $spd3(7), BNSH, $.offsetX("$gun"), $.offsetY(20)),
+            $interval(21),
         ]),
     ]),
     "noop": $.action([
@@ -802,6 +853,18 @@ gls2.Danmaku["nao-3"] = new bulletml.Root({
  * れいか様
  */
 gls2.Danmaku["reika"] = new bulletml.Root({
+    "top": $.action([
+        $.repeat(999, [
+            $interval(30),
+            $.fire($.direction(0), $spd3, BL),
+        ]),
+    ]),
+});
+
+/**
+ * 
+ */
+gls2.Danmaku["aguri"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval(30),
