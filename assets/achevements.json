@@ -1,16 +1,16 @@
 {
     "launch0": {
-        "title": "タイプA発進！",
+        "title": "タイプA出撃！",
         "description": "機体タイプAで出撃する",
         "grade": 2
     },
     "launch1": {
-        "title": "タイプB発進！",
+        "title": "タイプB出撃！",
         "description": "機体タイプBで出撃する",
         "grade": 2
     },
     "launch2": {
-        "title": "タイプC発進！",
+        "title": "タイプC出撃！",
         "description": "機体タイプCで出撃する",
         "grade": 2
     },

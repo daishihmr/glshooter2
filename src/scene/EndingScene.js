@@ -28,8 +28,8 @@ var texts = [
     "phi_jp",
     "",
     "PROGRAM AND GRAPHICS",
+    "minimo(stage3)", // (｀皿´）)
     "daishi_hmr",
-    "minimo(stage3)",
     "",
     "special respect to...",
     "DODONPACHI series by CAVE",
