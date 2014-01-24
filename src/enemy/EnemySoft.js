@@ -712,12 +712,10 @@ gls2.EnemySoft.reika = tm.createClass(
             this.rad = 0;
             this.on("enterframe", function() {
                 if (this.y < this.sy) {
-                    this.y += 0.5;
-                    this.py = this.y;
-                } else {
-                    this.x += this.speed;
-                    this.y = this.py+Math.sin(this.rad)*8;
+                    this.py += 1;
                 }
+                this.x += this.speed;
+                this.y = this.py+Math.sin(this.rad)*8;
                 this.rad+=0.03;
             });
         }.bind(enemy));
@@ -1417,7 +1415,7 @@ var _Setsuna = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
                 var temp = function() {
                     var r = gls2.FixedRandom.rand(0,100);
-                    if (r > 10 && this.frame > 300) {
+                    if (r > 50 && this.frame > 300 || this.x-32 < this.player.x && this.player.x < this.x+32) {
                         //アカルンワープ！（テスト中）
                         this.teleport(true);
                         var x = gls2.FixedRandom.rand(SC_W*0.1, SC_W*0.9);
