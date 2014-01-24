@@ -5,7 +5,9 @@
 
 (function() {
 
+/** @const */
 var $e = gls2.Enemy;
+/** @const */
 var $s = gls2.EnemySoft;
 
 /**

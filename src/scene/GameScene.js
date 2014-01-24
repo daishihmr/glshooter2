@@ -470,7 +470,11 @@ gls2.GameScene = tm.createClass(
 
             // 処理落ち
             var bulletCount = gls2.Bullet.activeList.length;
-            app.fps = Math.floor(gls2.math.clamp(FPS_DOWN_BULLET_COUNT / bulletCount, FPS_DOWN_MIN_RATE, 1.0) * 60);
+            if (bulletCount > FPS_DOWN_BULLET_COUNT) {
+                app.fps = Math.floor(gls2.math.clamp(FPS_DOWN_BULLET_COUNT / bulletCount, FPS_DOWN_MIN_RATE, 1.0) * FPS);
+            } else {
+                app.fps = FPS;
+            }
 
         }
 
