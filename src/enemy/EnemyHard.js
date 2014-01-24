@@ -1013,14 +1013,14 @@ gls2.Enemy.Setsuna = tm.createClass(
     teleport: function(b) {
         if (b) {
             //テレポートイン
-            for (var i = 0; i < 10; i++) {
-                gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-128,128), this.y+gls2.FixedRandom.rand(-64,64), this.gameScene, gls2.FixedRandom.rand(4,10) );
+            for (var i = 0; i < 3; i++) {
+                gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-100,100), this.y+gls2.FixedRandom.rand(-50,50), this.gameScene, 2);
             }
-            this.alpha = 0.2;
+            this.alpha = 0.0;
         } else {
             //テレポートアウト
-            for (var i = 0; i < 10; i++) {
-                gls2.Effect.genShockwaveRev(this.x+gls2.FixedRandom.rand(-128,128), this.y+gls2.FixedRandom.rand(-64,64), this.gameScene, gls2.FixedRandom.rand(4,10) );
+            for (var i = 0; i < 3; i++) {
+                gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-100,100), this.y+gls2.FixedRandom.rand(-50,50), this.gameScene, 2);
             }
             this.alpha = 1.0;
         }

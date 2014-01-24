@@ -1417,14 +1417,16 @@ var _Setsuna = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
                 var temp = function() {
                     var r = gls2.FixedRandom.rand(0,100);
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
-                    if (r > 20 && this.frame > 300) {
+                    if (r > 10 && this.frame > 300) {
                         //アカルンワープ！（テスト中）
                         this.teleport(true);
-                        this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad").call(this.teleport()).call(temp);
+                        var x = gls2.FixedRandom.rand(SC_W*0.1, SC_W*0.9);
+                        var y = gls2.FixedRandom.rand(SC_H*0.2, SC_W*0.4);
+                        this.tweener.move(x, y, 10, "easeInOutQuad").call(this.teleport()).call(temp);
                     } else {
-                        this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad").call(temp);
+                        var a = gls2.FixedRandom.random() * Math.PI*2;
+                        var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                        this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 2000, "easeInOutQuad").call(temp);
                     }
                 }.bind(this);
                 temp();
