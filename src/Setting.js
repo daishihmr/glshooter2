@@ -337,56 +337,67 @@ gls2.Setting = {
     AUTO_BOMB_TO_ZERO: true,
 
     /**
+     * ステージクリア時ボーナス：小星
      * @const
      */
     STAGE_CLEAR_BONUS_STAR: 1000,
 
     /**
+     * ステージクリア時ボーナス：大星
      * @const
      */
     STAGE_CLEAR_BONUS_STAR_LARGE: 2000,
 
     /**
+     * ステージクリア時ボーナス：キルレシオ
      * @const
      */
     STAGE_CLEAR_BONUS_KILL_RATIO: 4000,
 
     /**
+     * ステージクリア時ボーナス：MAXコンボ
      * @const
      */
     STAGE_CLEAR_BONUS_MAX_COMBO: 10000,
 
     /**
+     * ステージノーミスクリア時のボーナススコア
      * @const
      */
     STAGE_CLEAR_BONUS_NO_MISS: 20000000,
 
     /**
+     * ボムMAXIMUM時にフレーム毎に増加するスコア
      * @const
      */
     MAXIMUM_BONUS: 100,
 
     /**
+     * Twitter投稿用ハッシュタグ
      * @const
      */
     HASH_TAG: "tmshooter",
 
     /**
+     * コンティニュー可能回数初期値
      * @const
      */
     INITIAL_CONTINUE_COUNT: 0,
 
     /**
+     * 実績グレード別コンティニュー可能回数増加量
      * @const
      */
     CONTINUE_COUNT_BY_ACHEVEMENT_GRADE: [ 0.1, 0.4, 1.0 ],
 
     /**
+    　* 開始ステージ(0～)
      * @const
      */
     INITIAL_STAGE: 0,
 
     /**
+     * 総ステージ数
      * @const
      */
     STAGE_NUMBER: 5

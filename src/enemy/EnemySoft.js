@@ -373,16 +373,18 @@ var _MiddleFighterCommon = tm.createClass(
 
     velocityY: 0,
     attackPattern: null,
+    delay: 0,
 
     /**
      * @constructs
      * @param {number} velocityY
      * @param {string} attackPattern
      */
-    init: function(velocityY, attackPattern) {
+    init: function(velocityY, attackPattern, delay) {
         this.superInit();
         this.velocityY = velocityY;
         this.attackPattern = attackPattern;
+        this.delay = delay || 0;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -393,6 +395,7 @@ var _MiddleFighterCommon = tm.createClass(
 
         enemy.tweener
             .clear()
+            .wait(this.delay)
             .moveBy(0, SC_H*0.5, 800, "easeOutQuad")
             .call(function() {
                 gls2.EnemySoft.attack(this, this.patterns[0]);
@@ -416,6 +419,66 @@ var _MiddleFighterCommon = tm.createClass(
 })
 gls2.EnemySoft.MiddleFighter1 = _MiddleFighterCommon(0.5, "kurokawa-1");
 gls2.EnemySoft.MiddleFighter4 = _MiddleFighterCommon(0.5, "kurokawa-4");
+
+/**
+ * ミルク5面
+ */
+gls2.EnemySoft.Milk5 = function(delay) { return _MiddleFighterCommon(0.5, "milk-5", delay); };
+
+/**
+ * アコ5面
+ */
+gls2.EnemySoft.Ako5 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    tx0: 0,
+    ty0: 0,
+    tx1: 0,
+    ty1: 0,
+
+    init: function(tx0, ty0, tx1, ty1) {
+        this.superInit();
+        this.tx0 = tx0;
+        this.ty0 = ty0;
+        this.tx1 = tx1;
+        this.ty1 = ty1;
+    },
+
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.on("enterframe", function() {
+            this.rotation = tm.geom.Vector2.sub(this.gameScene.player.position, this.position).toAngle() * gls2.math.RAD_TO_DEG - 90;
+        });
+
+        var that = this;
+        enemy.tweener
+            .clear()
+            .to({
+                x: that.tx0,
+                y: that.ty0
+            }, 1400, "easeInOutQuad")
+            .call(function() {
+                gls2.EnemySoft.attack(this, "ako-5");
+            }.bind(enemy));
+        enemy.one("completeattack", function() {
+            this.tweener.clear().to({
+                x: that.tx1,
+                y: that.ty1
+            }, 900, "easeInOutQuad")
+            .call(function() {
+                gls2.EnemySoft.attack(this, "ako-5");
+            }.bind(this));
+
+            this.one("completeattack", function() {
+                this.tweener.clear().to({
+                    y: SC_H*1.3
+                }, 1900, "easeInQuad");
+            });
+        });
+    }
+});
 
 /**
  * ゆりさん4面右から
@@ -517,54 +580,85 @@ gls2.EnemySoft.Urara = tm.createClass(
         var d = function(x) {
             return xplus ? x : (1-x);
         };
+
+        /** @const */
+        var V = 0.8;
+
         switch (this.motionType) {
         case 0:
             tm.app.Tweener(enemy)
                 .wait(this.delay)
                 .to({
                     x: SC_W*d(0.8)
-                }, 2000, "easeOutQuart");
+                }, 2000*V, "easeOutQuart");
             tm.app.Tweener(enemy)
                 .wait(this.delay)
                 .to({
                     y: SC_H*1.3
-                }, 2500, "easeInQuad");
+                }, 2500*V, "easeInQuad");
             break;
         case 1:
             tm.app.Tweener(enemy)
                 .wait(this.delay)
                 .to({
-                    x: SC_W*d(0.3)
-                }, 5000, "easeOutQuad");
+                    x: SC_W*d(0.2)
+                }, 1300*V, "easeInOutQuad")
+                .wait(700)
+                .to({
+                    x: SC_W*d(0.4)
+                }, 1000*V, "easeInOutQuad");
             tm.app.Tweener(enemy)
                 .wait(this.delay)
                 .to({
                     y: SC_H*0.3
-                }, 2500, "easeOutQuad")
+                }, 2300*V, "easeInOutQuad")
                 .to({
                     y: SC_H*1.3
-                }, 3000, "easeInBack");
+                }, 2300*V, "easeInQuad");
             break;
         case 2:
             tm.app.Tweener(enemy)
                 .wait(this.delay)
                 .to({
-                    x: SC_W*d(0.8)
-                }, 2000, "easeOutQuad")
+                    x: SC_W*d(0.2)
+                }, 1300*V, "easeInOutQuad")
+                .wait(700*V)
                 .to({
                     x: SC_W*d(0.4)
-                }, 1000, "easeInOutQuad")
+                }, 1700*V, "easeInOutQuad")
                 .to({
-                    x: SC_W*d(0.6)
-                }, 1000, "easeInOutQuad");
+                    x: SC_W*d(1.4)
+                }, 2000*V, "easeInOutQuad");
             tm.app.Tweener(enemy)
                 .wait(this.delay)
                 .to({
                     y: SC_H*0.3
-                }, 2500, "easeOutQuad")
+                }, 2300*V, "easeInOutQuad")
                 .to({
-                    y: SC_H*1.3
-                }, 3000, "easeInBack");
+                    y: SC_H*0.8
+                }, 2200*V, "easeInOutQuad");
+            break;
+        case 3:
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    x: SC_W*d(0.2)
+                }, 1300*V, "easeInOutQuad")
+                .wait(700*V)
+                .to({
+                    x: SC_W*d(0.4)
+                }, 1700*V, "easeInOutQuad")
+                .to({
+                    x: SC_W*d(1.4)
+                }, 2000*V, "easeInOutQuad");
+            tm.app.Tweener(enemy)
+                .wait(this.delay)
+                .to({
+                    y: SC_H*0.7
+                }, 2300*V, "easeInOutQuad")
+                .to({
+                    y: SC_H*0.2
+                }, 2200*V, "easeInOutQuad");
             break;
         }
     }

@@ -21,6 +21,8 @@ gls2.Enemy.DATA = {
     "tsukikage": [     8,     1000, false, false,  5, {"width":100, "height":20}, ],
     "kasugano":  [     6,     1000, false, false,  1, {"radius": 24}, ],
     "kurokawa":  [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
+    "mimino":    [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
+    "shirabe":   [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yumehara":  [   250,   500000, false,  true, 20, {"width":180, "heightBottom":40, "heightTop":60}, ],
     "aono":      [   250,   300000, false,  true, 10, {"width":280, "heightBottom":30, "heightTop":60}, ],
@@ -294,7 +296,67 @@ gls2.Enemy.FighterM = tm.createClass(
 });
 
 /**
- * 中型戦闘機「アキモト」
+ * 中型戦闘機「ミミノ」
+ */
+gls2.Enemy.Milk = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+    _sprite: null,
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "mimino");
+        this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(1);
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    }
+});
+
+/**
+ * 中型戦闘機「シラベ」
+ */
+gls2.Enemy.Ako = tm.createClass(
+/** @lends */
+{
+    superClass: gls2.Enemy,
+    _sprite: null,
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "shirabe");
+        this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(1);
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    }
+});
+
+/**
+ * 大型戦闘機「アキモト」
  */
 gls2.Enemy.Komachi = tm.createClass(
 /** @lends */
@@ -322,7 +384,7 @@ gls2.Enemy.Komachi = tm.createClass(
     },
     destroy: function() {
         this.fallDown();
-    },
+    }
 });
 
 /**
@@ -1158,15 +1220,8 @@ gls2.Enemy.Mana = tm.createClass(
  * エクストラボス「ヒビカナ」
  */
 
-/**
- * エクストラボス2「クレッシェンド」
- */
-
 /*
  * 使ってない名前
- * 「ミミノ」
- * 「シラベ」
- * 「マドカ」
  *
  *
  * 足りなくなったら

@@ -382,20 +382,73 @@ gls2.EnemyUnit = {
     }
     return result;
 })(),
+"urara5-6": (function() {
+    var result = [];
+    for (var n = 0; n < 20; n++) {
+        result.push({ hard:$e.Urara, soft:$s.Urara(3, 1, n*200), x:SC_W*-0.3, y:SC_H*0.2 });
+    }
+    return result;
+})(),
+"urara5-7": (function() {
+    var result = [];
+    for (var n = 0; n < 20; n++) {
+        result.push({ hard:$e.Urara, soft:$s.Urara(3, -1, n*200), x:SC_W*1.3, y:SC_H*0.2 });
+    }
+    return result;
+})(),
 
-// 中型戦闘機「アキモト」1面用
+// 中型戦闘機「ミミノ」5面用
+"milk5-0": [
+    { hard:$e.Milk, soft:$s.Milk5(2000), x:SC_W*0.80, y:SC_H*-0.40 },
+    { hard:$e.Milk, soft:$s.Milk5(1500), x:SC_W*0.65, y:SC_H*-0.35 },
+    { hard:$e.Milk, soft:$s.Milk5(1000), x:SC_W*0.50, y:SC_H*-0.30 },
+    { hard:$e.Milk, soft:$s.Milk5( 500), x:SC_W*0.35, y:SC_H*-0.25 },
+    { hard:$e.Milk, soft:$s.Milk5(   0), x:SC_W*0.20, y:SC_H*-0.20 }
+],
+"milk5-1": [
+    { hard:$e.Milk, soft:$s.Milk5(2000), x:SC_W*0.20, y:SC_H*-0.40 },
+    { hard:$e.Milk, soft:$s.Milk5(1500), x:SC_W*0.35, y:SC_H*-0.35 },
+    { hard:$e.Milk, soft:$s.Milk5(1000), x:SC_W*0.50, y:SC_H*-0.30 },
+    { hard:$e.Milk, soft:$s.Milk5( 500), x:SC_W*0.65, y:SC_H*-0.25 },
+    { hard:$e.Milk, soft:$s.Milk5(   0), x:SC_W*0.80, y:SC_H*-0.20 }
+],
+
+// 中型戦闘機「シラベ」5面用
+"ako5-0": [
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.50, SC_H*0.2, SC_W*0.20, SC_H*0.4), x:SC_W*0.50, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.80, SC_H*0.4, SC_W*0.50, SC_H*0.2), x:SC_W*0.80, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.75, SC_H*0.8, SC_W*0.80, SC_H*0.4), x:SC_W*0.75, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.25, SC_H*0.8, SC_W*0.75, SC_H*0.8), x:SC_W*0.25, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.20, SC_H*0.4, SC_W*0.25, SC_H*0.8), x:SC_W*0.20, y:SC_H*-0.3 },
+],
+"ako5-1": [
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.50, SC_H*0.2, SC_W*0.80, SC_H*0.4), x:SC_W*0.50, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.80, SC_H*0.4, SC_W*0.75, SC_H*0.8), x:SC_W*0.80, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.75, SC_H*0.8, SC_W*0.25, SC_H*0.8), x:SC_W*0.75, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.25, SC_H*0.8, SC_W*0.20, SC_H*0.4), x:SC_W*0.25, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.20, SC_H*0.4, SC_W*0.50, SC_H*0.2), x:SC_W*0.20, y:SC_H*-0.3 },
+],
+"ako5-2": [
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.50, SC_H*0.2, SC_W*0.25, SC_H*0.8), x:SC_W*0.50, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.80, SC_H*0.4, SC_W*0.20, SC_H*0.4), x:SC_W*0.80, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.75, SC_H*0.8, SC_W*0.50, SC_H*0.2), x:SC_W*0.75, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.25, SC_H*0.8, SC_W*0.80, SC_H*0.4), x:SC_W*0.25, y:SC_H*-0.3 },
+    { hard:$e.Ako, soft:$s.Ako5(SC_W*0.20, SC_H*0.4, SC_W*0.75, SC_H*0.8), x:SC_W*0.20, y:SC_H*-0.3 },
+],
+
+// 大型戦闘機「アキモト」1面用
 "komachi-0": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi-1": [{ hard:$e.Komachi, soft:$s.LargeFighter1, x:SC_W*0.7, y:SC_H*-0.3 }],
 
-// 中型戦闘機「アキモト」2面用
+// 大型戦闘機「アキモト」2面用
 "komachi2-0": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi2-1": [{ hard:$e.Komachi, soft:$s.LargeFighter2, x:SC_W*0.7, y:SC_H*-0.3 }],
 
-// 中型戦闘機「アキモト」3面用
+// 大型戦闘機「アキモト」3面用
 "komachi3-0": [{ hard:$e.Komachi, soft:$s.LargeFighter3, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi3-1": [{ hard:$e.Komachi, soft:$s.LargeFighter3, x:SC_W*0.7, y:SC_H*-0.3 }],
 
-// 中型戦闘機「アキモト」4面用
+// 大型戦闘機「アキモト」4面用
 "komachi4-0": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.3, y:SC_H*-0.3 }],
 "komachi4-1": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.7, y:SC_H*-0.3 }],
 "komachi4-2": [{ hard:$e.Komachi, soft:$s.LargeFighter4, x:SC_W*0.5, y:SC_H*-0.3 }],
