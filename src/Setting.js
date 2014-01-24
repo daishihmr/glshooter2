@@ -400,7 +400,7 @@ gls2.Setting = {
      * 総ステージ数
      * @const
      */
-    STAGE_NUMBER: 5
+    STAGE_NUMBER: 2
 };
 
 })();
