@@ -27,10 +27,10 @@ gls2.ResultScene = tm.createClass(
     labels: null,
     incrs: null,
     rates: [
-        gls2.Setting.STAGE_CLEAR_BONUS_STAR, // 星アイテム（小）
-        gls2.Setting.STAGE_CLEAR_BONUS_STAR_LARGE, // 星アイテム（大）
-        gls2.Setting.STAGE_CLEAR_BONUS_KILL_RATIO, // 撃墜率
-        gls2.Setting.STAGE_CLEAR_BONUS_MAX_COMBO, // 最大コンボ数
+        STAGE_CLEAR_BONUS_STAR, // 星アイテム（小）
+        STAGE_CLEAR_BONUS_STAR_LARGE, // 星アイテム（大）
+        STAGE_CLEAR_BONUS_KILL_RATIO, // 撃墜率
+        STAGE_CLEAR_BONUS_MAX_COMBO, // 最大コンボ数
         1,    // ノーミス
     ],
 
@@ -59,7 +59,7 @@ gls2.ResultScene = tm.createClass(
             this.gameScene.starItemLarge,
             ~~(this.gameScene.killCount / this.gameScene.enemyCount * 100),
             this.gameScene.maxComboCount,
-            this.gameScene.missCount === 0 ? gls2.Setting.STAGE_CLEAR_BONUS_NO_MISS : 0,
+            this.gameScene.missCount === 0 ? STAGE_CLEAR_BONUS_NO_MISS : 0,
         ];
         this.incrs = this.values.map(function(v) {
             return v * 0.01;
@@ -210,7 +210,7 @@ gls2.ResultScene = tm.createClass(
             this.promptEnter.visible = true;
             if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
                 gls2.playSound("decision");
-                if (this.gameScene.stageNumber + 1 == gls2.Setting.STAGE_NUMBER) {
+                if (this.gameScene.stageNumber + 1 == STAGE_NUMBER) {
                     // goto ending
                     app.replaceScene(gls2.EndingScene());
                 } else {

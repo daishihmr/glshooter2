@@ -43,7 +43,7 @@ gls2.GlShooter2 = tm.createClass(
         this.superInit(id);
         gls2.core = this;
         this.resize(SC_W, SC_H).fitWindow();
-        this.fps = gls2.Setting.FPS;
+        this.fps = FPS;
         this.background = "rgba(0,0,0,0)";
 
         this.timeoutTasks = [];
@@ -155,10 +155,10 @@ gls2.GlShooter2 = tm.createClass(
     calcContinueCountMax: function() {
         var achevements = window["achevements"];
         var data = tm.asset.AssetManager.get("achevements").data;
-        if (!achevements) return gls2.Setting.INITIAL_CONTINUE_COUNT;
+        if (!achevements) return INITIAL_CONTINUE_COUNT;
         return Math.floor(achevements.reduce(function(a, b) {
-            return data[b] ? a + gls2.Setting.CONTINUE_COUNT_BY_ACHEVEMENT_GRADE[data[b]["grade"]] : a;
-        }, gls2.Setting.INITIAL_CONTINUE_COUNT));
+            return data[b] ? a + CONTINUE_COUNT_BY_ACHEVEMENT_GRADE[data[b]["grade"]] : a;
+        }, INITIAL_CONTINUE_COUNT));
     },
 
     update: function() {

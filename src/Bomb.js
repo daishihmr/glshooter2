@@ -138,7 +138,7 @@ gls2.MiniBomb = tm.createClass({
     init: function(player, gameScene) {
         this.superInit(player, gameScene);
 
-        if (gls2.Setting.AUTO_BOMB_TO_ZERO) {
+        if (AUTO_BOMB_TO_ZERO) {
             this.addEventListener("added", function() {
                 this.gameScene.bomb = 0;
             });

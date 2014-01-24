@@ -1825,7 +1825,7 @@ gls2.Danmaku.setup = function() {
     config.bulletFactory = function(spec) {
         var b = bulletPool.shift(0);
         if (b) {
-            b.hp = gls2.Setting.BULLET_HP;
+            b.hp = BULLET_HP;
 
             activeList.push(b);
             b.setFrameIndex((spec.frame === undefined) ? 1 : spec.frame);
@@ -1867,7 +1867,7 @@ gls2.Danmaku.setup = function() {
     config.defaultIsInsideOfWorld = function(bullet) {
         return -80 <= bullet.x && bullet.x < SC_W+80 && -80 <= bullet.y && bullet.y < SC_H+80;
     };
-    config.speedRate = gls2.Setting.BULLET_SPEED;
+    config.speedRate = BULLET_SPEED;
 
     // ランク
     bulletml.Walker.globalScope["$rank"] = 0;

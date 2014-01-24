@@ -31,7 +31,7 @@ gls2.Laser = tm.createClass(
 
     isEffect: true,
 
-    attackPower: gls2.Setting.LASER_ATTACK_POWER,
+    attackPower: LASER_ATTACK_POWER,
 
     origParticle: null,
 
@@ -181,10 +181,10 @@ gls2.Laser = tm.createClass(
     },
 
     setLevel: function(hyperLevel) {
-        this.width = this.baseWidth + 30 * hyperLevel / gls2.Setting.HYPER_LEVEL_MAX;
+        this.width = this.baseWidth + 30 * hyperLevel / HYPER_LEVEL_MAX;
         this.boundingWidth = this.width;
         this.head.setScale(this.width*0.02, this.width*0.02);
-        this.attackPower = this.baseAttackPower * gls2.Setting.LASER_ATTACK_POWER + gls2.Setting.LASER_ATTACK_POWER_RATE * hyperLevel;
+        this.attackPower = this.baseAttackPower * LASER_ATTACK_POWER + LASER_ATTACK_POWER_RATE * hyperLevel;
 
         if (hyperLevel === 0) {
             this.setColor(["red", "green", "blue"][this.player.type]);

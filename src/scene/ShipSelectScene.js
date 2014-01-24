@@ -268,7 +268,7 @@ gls2.ShipSelectScene = tm.createClass(
                 this.style = (this.style + 1 + 3) % 3;
                 gls2.playSound("select");
             } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
-                if (gls2.Setting.AUTO_BOMB_SELECT) {
+                if (AUTO_BOMB_SELECT) {
                     this.openAutoBombDialog();
                 } else {
                     this.autoBomb = true;
