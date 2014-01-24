@@ -125,9 +125,7 @@ gls2.Stage5 = tm.createClass(
         this.seq.add( 30, "heri1-4-center1");
 
         this.seq.add(450, "ako5-0");
-        this.seq.add( 25, "heri2-center");
         this.seq.add(250, "ako5-1");
-        this.seq.add( 25, "heri2-center");
 
         this.seq.add(3000, function() {
             this.alartWarning(function() {
