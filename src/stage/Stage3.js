@@ -25,19 +25,21 @@ gls2.Stage3 = tm.createClass(
         });
         
         //test
-        this.seq.add(100, "miyuki_y1");
+        this.seq.add(600, "higashi", true); //中ボス
+//        this.seq.add( 60, "reika1-left");
+//        this.seq.add(100, "miyuki_y2");
 
         //0%
         this.seq.add(150, "nao2-center");
-        this.seq.add( 60, "nao2-left");
-        this.seq.add( 60, "nao2-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add( 60, "nao2-left");
-        this.seq.add( 60, "nao2-right");
-        for (var i = 0; i < 3; i++) {
-            this.seq.add( 60, "nao1-center");
-            this.seq.add( 60, "nao1-right");
-            this.seq.add( 60, "nao1-left");
+        this.seq.add( 30, "nao2-left");
+        this.seq.add( 30, "nao2-right");
+        this.seq.add( 30, "nao2-center");
+        this.seq.add( 30, "nao2-left");
+        this.seq.add( 30, "nao2-right");
+        for (var i = 0; i < 6; i++) {
+            this.seq.add( 30, "nao1-center");
+            this.seq.add( 30, "nao1-right");
+            this.seq.add( 30, "nao1-left");
         }
 
         this.seq.add( 60, function() {
@@ -56,19 +58,19 @@ gls2.Stage3 = tm.createClass(
 
         this.seq.add(120, "akane-center");
         this.seq.add(180, "akane-left");
-        this.seq.add(120, "reika1-left");
-        this.seq.add(180, "reika1-left");
+        this.seq.add( 60, "reika1-left");
+        this.seq.add( 60, "reika1-left");
 
         this.seq.add(120, "akane-center");
         this.seq.add(120, "akane-right");
-        this.seq.add(120, "reika1-right");
-        this.seq.add(180, "reika1-right");
+        this.seq.add( 60, "reika1-right");
+        this.seq.add( 60, "reika1-right");
 
         //20%
         this.seq.add(120, function() {
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:6,direction:-Math.PI/180*90}, 3000, "easeInOutQuad")
+                .to({speed:3, direction:-Math.PI/180*90}, 3000, "easeInOutQuad")
 //                .to({direction:-Math.PI/180*90}, 3000, "easeInOutQuad")
         });
   
@@ -77,9 +79,7 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 60, "nao2-left");
             this.seq.add( 60, "nao2-right");
         }
-        this.seq.add( 60, "komachi2-0");
-
-        this.seq.add(100, "miyuki_y1");
+        this.seq.add( 60, "miyuki_y1");
 
         this.seq.add(  1, function() {
             this.gameScene.ground.tweener
@@ -89,6 +89,7 @@ gls2.Stage3 = tm.createClass(
         });
         
         //30%
+        this.seq.add( 60, "komachi3-0");
         //40%
         //50%
 
@@ -119,7 +120,7 @@ gls2.Stage3 = tm.createClass(
 
         this.seq.add(  1, function() {
             this.gameScene.ground.direction = Math.PI/2;
-            this.gameScene.ground.tweener.clear().to({speed:-7}, 8000, "easeInOutQuad");
+            this.gameScene.ground.tweener.clear().to({speed:7}, 8000, "easeInOutQuad");
         });
 
         //ステージボス
@@ -136,3 +137,13 @@ gls2.Stage3 = tm.createClass(
 });
 
 })();
+
+//Stage3 使用敵機
+//hino
+//aoki
+//midorikawa
+//hoshizora
+//yotsuba
+//komachi
+//higashi
+//momozono

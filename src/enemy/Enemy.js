@@ -112,7 +112,6 @@ gls2.Enemy = tm.createClass(
 
         this.velocity = {x:0, y:0};
 
-        // 残しときましょう
         if (DEBUG) {
             this.label = tm.display.Label("", 20).addChildTo(this);
             var that = this;

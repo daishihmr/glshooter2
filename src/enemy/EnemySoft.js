@@ -606,7 +606,7 @@ var _akane = tm.createClass(
             .clear()
             .call(function() {
                 gls2.EnemySoft.attack(this, this.patterns[0]);
-                gls2.Effect.genShockwaveRev(this.x, this.y, this.gameScene, 3);
+                gls2.Effect.genShockwaveRev(this.x, this.y, this.gameScene, 3); //テレポートの演出
             }.bind(enemy));
 
         enemy.on("enterframe", function() {
@@ -680,7 +680,7 @@ gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12, 1);
 
 /**
  * 小型浮揚戦車
- * 画面をフラフラしながら横切る
+ * 画面上部から出現しフラフラしながら横切る
  *
  * @class
  * @extends {gls2.EnemySoft}
@@ -711,8 +711,13 @@ gls2.EnemySoft.reika = tm.createClass(
             gls2.EnemySoft.attack(this, this.patternName);
             this.rad = 0;
             this.on("enterframe", function() {
-                this.x += this.speed;
-                this.y = this.py+Math.sin(this.rad)*8;
+                if (this.y < this.sy) {
+                    this.y += 0.5;
+                    this.py = this.y;
+                } else {
+                    this.x += this.speed;
+                    this.y = this.py+Math.sin(this.rad)*8;
+                }
                 this.rad+=0.03;
             });
         }.bind(enemy));
@@ -1411,11 +1416,16 @@ var _Setsuna = tm.createClass(
                 this.startAttack = true;
                 this.dispatchEvent(tm.event.Event("completeattack"));
                 var temp = function() {
+                    var r = gls2.FixedRandom.rand(0,100);
                     var a = gls2.FixedRandom.random() * Math.PI*2;
                     var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
-                    this.tweener
-                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad")
-                        .call(temp);
+                    if (r > 20 && this.frame > 300) {
+                        //アカルンワープ！（テスト中）
+                        this.teleport(true);
+                        this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad").call(this.teleport()).call(temp);
+                    } else {
+                        this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad").call(temp);
+                    }
                 }.bind(this);
                 temp();
             }.bind(enemy));

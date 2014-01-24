@@ -611,7 +611,7 @@ gls2.Enemy.reika = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "aoki");
-        this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(69);//仮
+        this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(1);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -626,10 +626,11 @@ gls2.Enemy.reika = tm.createClass(
     },
     onLaunch: function() {
         //初期位置で向きを決定
-        if (this.x > SC_W){
+        if (this.x > SC_W/2){
             this.speed *= -1;
             this.scaleX = -1;
         }
+        this.sy = this.y+SC_H*0.2;
         this.py = this.y;
     },
 });
@@ -689,6 +690,7 @@ gls2.Enemy.miyuki_y = tm.createClass(
         this._sprite.draw(canvas);
     },
     destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     },
     onLaunch: function() {
@@ -697,6 +699,11 @@ gls2.Enemy.miyuki_y = tm.createClass(
             this.velocityX *= -1;
             this._sprite.scaleX = -1;
         }
+    },
+    isInScreen: function() {
+        //一部でも表示されたら画面内とする
+        return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
+            && 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
     },
 });
 
@@ -726,12 +733,18 @@ gls2.Enemy.miyuki_t = tm.createClass(
         this._sprite.draw(canvas);
     },
     destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     },
     onLaunch: function() {
         if (this.x > SC_W/2){
             this.velocityX *= -1;
         }
+    },
+    isInScreen: function() {
+        //一部でも表示されたら画面内とする
+        return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
+            && 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
     },
 });
 
@@ -986,6 +999,7 @@ gls2.Enemy.Setsuna = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "higashi");
         this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(2);
+        this.blendMode = "lighter";
     },
     ondying: function() {
     },
@@ -994,6 +1008,22 @@ gls2.Enemy.Setsuna = tm.createClass(
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
+    },
+    //テレポート演出
+    teleport: function(b) {
+        if (b) {
+            //テレポートイン
+            for (var i = 0; i < 10; i++) {
+                gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-128,128), this.y+gls2.FixedRandom.rand(-64,64), this.gameScene, gls2.FixedRandom.rand(4,10) );
+            }
+            this.alpha = 0.2;
+        } else {
+            //テレポートアウト
+            for (var i = 0; i < 10; i++) {
+                gls2.Effect.genShockwaveRev(this.x+gls2.FixedRandom.rand(-128,128), this.y+gls2.FixedRandom.rand(-64,64), this.gameScene, gls2.FixedRandom.rand(4,10) );
+            }
+            this.alpha = 1.0;
+        }
     },
 });
 
