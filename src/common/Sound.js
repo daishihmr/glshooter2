@@ -1,7 +1,7 @@
 (function() {
 
 gls2.currentBgm = null;
-gls2.playBgm = function(bgmName, continuePrevBgm) {
+gls2.playBgm = function(bgmName, continuePrevBgm, unloop) {
     if (!continuePrevBgm) gls2.stopBgm();
 
     var bgm = tm.asset.AssetManager.get(bgmName);
@@ -9,7 +9,7 @@ gls2.playBgm = function(bgmName, continuePrevBgm) {
     if (bgm) {
         gls2.currentBgm = bgm.clone();
         gls2.currentBgm.volume = gls2.core.bgmVolume * 0.1;
-        gls2.currentBgm.loop = true;
+        gls2.currentBgm.loop = !unloop;
         gls2.currentBgm.play();
 
         if (loop.data[bgmName]) {

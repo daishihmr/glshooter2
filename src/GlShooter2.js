@@ -38,8 +38,6 @@ gls2.GlShooter2 = tm.createClass(
 
     gameScene: null,
 
-    continueCountMax: 3,
-
     init: function(id) {
         if (gls2.core !== null) throw new Error("class 'gls2.GlShooter2' is singleton!!");
         this.superInit(id);
@@ -53,6 +51,9 @@ gls2.GlShooter2 = tm.createClass(
         this.keyboard = tm.input.Keyboard(window);
 
         var assets = {
+            // data
+            "achevements": "assets/achevements.json",
+
             // image
             "tex0": "assets/tex0.png",
             "tex_bit": "assets/tex_bit.png",
@@ -89,6 +90,7 @@ gls2.GlShooter2 = tm.createClass(
             "bgm5": "assets2/nc60627.mp3",
             "bgmBoss": "assets2/nc29206.mp3",
             "bgmResult": "assets2/nc54077.mp3",
+            "bgmEnding": "assets2/nc69311.mp3",
             "bgmLoopInfo": "assets2/loop.json",
 
             // sound
@@ -125,9 +127,10 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgm2"];
             delete assets["bgm3"];
             delete assets["bgm4"];
-            // delete assets["bgm5"];
+            delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
+            delete assets["bgmEnding"];
 
             // 遊び用
             // assets["bgmShipSelect"] = "/gls2-bgm/select.mp3";
@@ -147,10 +150,15 @@ gls2.GlShooter2 = tm.createClass(
                 return gls2.TitleScene();
             }.bind(this),
         }));
+    },
 
-        if (window["achevements"]) {
-            this.continueCountMax = window["achevements"].length;
-        }
+    calcContinueCountMax: function() {
+        var achevements = window["achevements"];
+        var data = tm.asset.AssetManager.get("achevements").data;
+        if (!achevements) return 0;
+        return achevements.reduce(function(a, b) {
+            return data[b] ? a + gls2.Setting.CONTINUE_COUNT_BY_ACHEVEMENT_GRADE[data[b].grade] : a;
+        }, 0);
     },
 
     update: function() {
@@ -286,9 +294,12 @@ gls2.GlShooter2 = tm.createClass(
             return;
         }
 
+        var data = tm.asset.AssetManager.get("achevements").data;
+        if (!data[key]) return;
+
         var achevements = window["achevements"];
+
         if (achevements.indexOf(key) == -1) {
-            this.continueCountMax += 1;
             achevements.push(key);
             tm.util.Ajax.load({
                 url: "/api/achevement/" + key,
@@ -296,9 +307,9 @@ gls2.GlShooter2 = tm.createClass(
                 dataType: "json",
                 success: function(json) {
                     console.dir(json);
-                    if (gls2.Achevement[key]) {
+                    if (data[key]) {
                         gls2.playSound("achevement");
-                        this.gameScene.labelLayer.addChild(gls2.GetTrophyEffect(gls2.Achevement[key].title));
+                        this.gameScene.labelLayer.addChild(gls2.GetTrophyEffect(data[key].title));
                     }
                 }.bind(this),
                 error: function() {
@@ -306,9 +317,9 @@ gls2.GlShooter2 = tm.createClass(
                 },
             });
 
-            if (DEBUG && gls2.Achevement[key]) {
+            if (DEBUG && data[key]) {
                 gls2.playSound("achevement");
-                this.currentScene.addChild(gls2.GetTrophyEffect(gls2.Achevement[key].title));
+                this.currentScene.addChild(gls2.GetTrophyEffect(data[key].title));
             }
         }
     }
@@ -332,9 +343,3 @@ gls2["pause"] = function() {
         gls2.GameScene.SINGLETON.openPauseMenu(0);
     }
 };
-
-gls2["continueCountMax"] = function(v) {
-    if (gls2.core) {
-        gls2.core.continueCountMax = v;
-    }
-}

@@ -535,7 +535,7 @@ gls2.EnemySoft.Urara = tm.createClass(
                 .wait(this.delay)
                 .to({
                     x: SC_W*d(0.3)
-                }, 2000, "easeOutQuad");
+                }, 5000, "easeOutQuad");
             tm.app.Tweener(enemy)
                 .wait(this.delay)
                 .to({
