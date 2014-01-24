@@ -127,7 +127,7 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgm2"];
             delete assets["bgm3"];
             delete assets["bgm4"];
-            delete assets["bgm5"];
+            // delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
             delete assets["bgmEnding"];

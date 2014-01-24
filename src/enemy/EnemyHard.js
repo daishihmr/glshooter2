@@ -25,7 +25,7 @@ gls2.Enemy.DATA = {
     "shirabe":   [    35,     5000, false, false,  5, {"width":100, "height":20}, ],
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yumehara":  [   250,   500000, false,  true, 20, {"width":180, "heightBottom":40, "heightTop":60}, ],
-    "aono":      [   250,   300000, false,  true, 10, {"width":280, "heightBottom":30, "heightTop":60}, ],
+    "aono":      [   300,   300000, false,  true, 10, {"width":280, "heightBottom":30, "heightTop":60}, ],
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],

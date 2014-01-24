@@ -30,50 +30,101 @@ gls2.Stage5 = tm.createClass(
         this.seq.add(260, "urara5-1");
 
         this.seq.add(380, "nozomi5-1");
-        this.seq.add(100, "nozomi5-0");
-        this.seq.add(200, "nozomi5-2");
+        this.seq.add( 25, "heri2-left");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add( 50, "nozomi5-0");
+        this.seq.add( 25, "heri2-left");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add( 25, "heri2-left");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add(100, "nozomi5-2");
 
-        this.seq.add(200, "tankRD-left");
-        this.seq.add( 50, "tank5-left");
-        this.seq.add( 50, "tank5-center");
-        this.seq.add( 50, "tankRD-left");
-        this.seq.add( 50, "tank5-left");
-        this.seq.add( 50, "tank5-center");
+        this.seq.add( 20, "tankRD-left");
+        this.seq.add( 25, "tank5-left");
+        this.seq.add( 25, "tank5-center");
+        this.seq.add( 25, "tankRD-left");
+        this.seq.add( 25, "tank5-left");
+        this.seq.add( 25, "tank5-center");
+        this.seq.add( 25, "tankRD-left");
+        this.seq.add( 25, "tank5-left");
+        this.seq.add( 25, "tank5-center");
+        this.seq.add( 25, "heri2-left");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add( 25, "heri2-right");
+        this.seq.add( 25, "heri2-left");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add( 25, "heri2-right");
 
         this.seq.add(300, "mktn5-0");
-        this.seq.add(120, "heri1-4-left");
-        this.seq.add( 10, "tankL-top");
-        this.seq.add( 20, "heri1-4-center");
-        this.seq.add( 10, "tankL-top");
-        this.seq.add( 35, "heri1-4-left2");
-        this.seq.add( 35, "heri1-4-center2");
-        this.seq.add( 10, "tankRD-left");
-        this.seq.add( 20, "heri1-4-left");
-        this.seq.add( 10, "tankL-top");
-        this.seq.add( 20, "heri1-4-left");
-        this.seq.add( 10, "tankL-top");
-        this.seq.add( 20, "heri1-4-center");
-        this.seq.add( 10, "tankL-top");
+        this.seq.add( 60, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 10, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 10, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left1");
 
-        this.seq.add(220, "mktn5-1");
-        this.seq.add( 20, "heri1-4-right");
-        this.seq.add( 10, "tankRD-left");
-        this.seq.add( 20, "heri1-4-center");
-        this.seq.add( 10, "tank5-center");
-        this.seq.add( 35, "heri1-4-right2");
-        this.seq.add( 35, "heri1-4-center2");
-        this.seq.add( 10, "tankRD-left");
-        this.seq.add( 20, "heri1-4-right");
-        this.seq.add( 10, "tankL-top");
-
-        this.seq.add(260, "urara5-2");
-        this.seq.add(260, "urara5-3");
-        this.seq.add(260, "urara5-2");
-        this.seq.add(260, "urara5-1");
+        this.seq.add(300, "mktn5-1");
+        this.seq.add( 60, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add( 10, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add( 10, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right1");
 
         // 10%
 
-        this.seq.add(200, function() {
+        this.seq.add(300, "urara5-2");
+        this.seq.add(300, "urara5-3");
+        this.seq.add(260, "urara5-0");
+        this.seq.add(260, "urara5-1");
+        this.seq.add(260, "urara5-4");
+        this.seq.add(260, "urara5-5");
+
+        this.seq.add(200, "milk5-0");
+        this.seq.add(  1, "itsuki-2");
+        this.seq.add( 50, "tank5-center");
+        this.seq.add( 50, "tank5-left");
+        this.seq.add( 50, "tankL-top");
+
+        this.seq.add(200, "milk5-1");
+        this.seq.add(  1, "itsuki-0");
+        this.seq.add( 50, "tank5-center");
+        this.seq.add( 50, "tank5-left");
+        this.seq.add( 50, "tankL-top");
+
+        this.seq.add(230, "komachi5-0");
+        this.seq.add( 10, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add( 10, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add( 10, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add( 10, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right1");
+
+        this.seq.add( 30, "komachi5-2");
+        this.seq.add( 10, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 10, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 10, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 10, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left1");
+
+        this.seq.add( 30, "komachi5-1");
+        this.seq.add( 10, "heri1-4-center2");
+        this.seq.add( 10, "heri1-4-center1");
+        this.seq.add( 10, "heri1-4-center2");
+        this.seq.add( 10, "heri1-4-center1");
+        this.seq.add( 10, "heri1-4-center2");
+        this.seq.add( 10, "heri1-4-center1");
+        this.seq.add( 10, "heri1-4-center2");
+        this.seq.add( 10, "heri1-4-center1");
+
+        this.seq.add(3000, function() {
             this.alartWarning(function() {
                 gls2.playBgm("bgmBoss", true);
             });
