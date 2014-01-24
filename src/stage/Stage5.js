@@ -55,7 +55,7 @@ gls2.Stage5 = tm.createClass(
         this.seq.add( 25, "heri2-center");
         this.seq.add( 25, "heri2-right");
 
-        this.seq.add(300, "mktn5-0");
+        this.seq.add(200, "mktn5-0");
         this.seq.add( 60, "heri1-4-left2");
         this.seq.add( 10, "heri1-4-left1");
         this.seq.add( 10, "heri1-4-left2");
@@ -84,45 +84,50 @@ gls2.Stage5 = tm.createClass(
 
         this.seq.add(200, "milk5-0");
         this.seq.add(  1, "itsuki-2");
-        this.seq.add( 50, "tank5-center");
-        this.seq.add( 50, "tank5-left");
-        this.seq.add( 50, "tankL-top");
 
-        this.seq.add(200, "milk5-1");
+        this.seq.add(300, "milk5-1");
         this.seq.add(  1, "itsuki-0");
-        this.seq.add( 50, "tank5-center");
-        this.seq.add( 50, "tank5-left");
-        this.seq.add( 50, "tankL-top");
 
-        this.seq.add(230, "komachi5-0");
-        this.seq.add( 10, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right1");
-        this.seq.add( 10, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right1");
-        this.seq.add( 10, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right1");
-        this.seq.add( 10, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add(350, "komachi5-0");
+        this.seq.add( 30, "heri1-4-right2");
+        this.seq.add( 30, "heri1-4-right1");
+        this.seq.add( 30, "heri1-4-right2");
+        this.seq.add( 30, "heri1-4-right1");
 
-        this.seq.add( 30, "komachi5-2");
-        this.seq.add( 10, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left1");
-        this.seq.add( 10, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left1");
-        this.seq.add( 10, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left1");
-        this.seq.add( 10, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 80, "komachi5-2");
+        this.seq.add( 30, "heri1-4-left2");
+        this.seq.add( 30, "heri1-4-left1");
+        this.seq.add( 30, "heri1-4-left2");
+        this.seq.add( 30, "heri1-4-left1");
 
-        this.seq.add( 30, "komachi5-1");
-        this.seq.add( 10, "heri1-4-center2");
-        this.seq.add( 10, "heri1-4-center1");
-        this.seq.add( 10, "heri1-4-center2");
-        this.seq.add( 10, "heri1-4-center1");
-        this.seq.add( 10, "heri1-4-center2");
-        this.seq.add( 10, "heri1-4-center1");
-        this.seq.add( 10, "heri1-4-center2");
-        this.seq.add( 10, "heri1-4-center1");
+        this.seq.add( 80, "komachi5-1");
+        this.seq.add( 30, "heri1-4-center2");
+        this.seq.add( 30, "heri1-4-center1");
+        this.seq.add( 30, "heri1-4-center2");
+        this.seq.add( 30, "heri1-4-center1");
+
+        this.seq.add(100, "komachi5-0");
+        this.seq.add( 30, "heri1-4-right2");
+        this.seq.add( 30, "heri1-4-right1");
+        this.seq.add( 30, "heri1-4-right2");
+        this.seq.add( 30, "heri1-4-right1");
+
+        this.seq.add(120, "komachi5-2");
+        this.seq.add( 30, "heri1-4-left2");
+        this.seq.add( 30, "heri1-4-left1");
+        this.seq.add( 30, "heri1-4-left2");
+        this.seq.add( 30, "heri1-4-left1");
+
+        this.seq.add(160, "komachi5-1");
+        this.seq.add( 30, "heri1-4-center2");
+        this.seq.add( 30, "heri1-4-center1");
+        this.seq.add( 30, "heri1-4-center2");
+        this.seq.add( 30, "heri1-4-center1");
+
+        this.seq.add(450, "ako5-0");
+        this.seq.add( 25, "heri2-center");
+        this.seq.add(250, "ako5-1");
+        this.seq.add( 25, "heri2-center");
 
         this.seq.add(3000, function() {
             this.alartWarning(function() {

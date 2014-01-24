@@ -658,9 +658,9 @@ gls2.Danmaku["komachi-5"] = new bulletml.Root({
             $.fire($.direction(210, "absolute"), $spd1(1), RNS, $.offsetX(-40)),
             $.fire($.direction(120, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
             $.fire($.direction(120, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
-            $.repeat(77, [
+            $.repeat(60, [
                 $interval(4),
-                $.fire($.direction(-360/77, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
+                $.fire($.direction(-360/60, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
                 $.fire($.direction(    120, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
                 $.fire($.direction(    120, "sequence"), $spd1(1), RNS, $.offsetX(-40)),
             ]),
@@ -671,9 +671,9 @@ gls2.Danmaku["komachi-5"] = new bulletml.Root({
             $.fire($.direction(-210, "absolute"), $spd1(1), RNS, $.offsetX(40)),
             $.fire($.direction( 120, "sequence"), $spd1(1), RNS, $.offsetX(40)),
             $.fire($.direction( 120, "sequence"), $spd1(1), RNS, $.offsetX(40)),
-            $.repeat(77, [
+            $.repeat(60, [
                 $interval(4),
-                $.fire($.direction(+360/77, "sequence"), $spd1(1), RNS, $.offsetX(40)),
+                $.fire($.direction(+360/60, "sequence"), $spd1(1), RNS, $.offsetX(40)),
                 $.fire($.direction(    120, "sequence"), $spd1(1), RNS, $.offsetX(40)),
                 $.fire($.direction(    120, "sequence"), $spd1(1), RNS, $.offsetX(40)),
             ]),
