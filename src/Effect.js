@@ -412,6 +412,7 @@ gls2.GetTrophyEffect = tm.createClass({
             .setAlign("left")
             .setBaseline("middle")
             .setPosition(SC_W, 0)
+            .setFillStyle("rgba(255, 255, 255, 0.5)")
             .addChildTo(this);
         this.star = tm.display.Sprite("tex3", 64, 64)
             .setScale(0.3)
@@ -427,12 +428,15 @@ gls2.GetTrophyEffect = tm.createClass({
         }
     },
     update: function() {
+        if (gls2.core.gameScene.player.y > SC_H*0.9) {
+            this.alpha = 0.1;
+        } else {
+            this.alpha = 1.0;
+        }
+
         this.label.x -= 2;
-        if (this.label.x < -SC_W) {
-            this.alpha *= 0.9;
-            if (this.alpha < 0.001) {
-                this.remove();
-            }
+        if (this.label.x < -SC_W*2) {
+            this.remove();
         }
     }
 });
