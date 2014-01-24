@@ -611,7 +611,7 @@ gls2.Enemy.reika = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "aoki");
-        this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(8);//仮
+        this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(69);//仮
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
