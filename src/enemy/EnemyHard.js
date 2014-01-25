@@ -635,7 +635,7 @@ gls2.Enemy.akane = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hino");
 
-        this._sprite = _Sprite("tex_stage3", 64, 32).setFrameIndex(0);
+        this._sprite = _Sprite("tex4", 64, 32).setFrameIndex(0);
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -653,7 +653,7 @@ gls2.Enemy.nao = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "midorikawa");
-        this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(8);
+        this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(8);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -674,7 +674,7 @@ gls2.Enemy.reika = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "aoki");
-        this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(1);
+        this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(1);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -709,7 +709,7 @@ gls2.Enemy.aguri = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "madoka");
-        this._sprite = _Sprite("tex_stage3", 256, 64).setFrameIndex(3);
+        this._sprite = _Sprite("tex4", 256, 64).setFrameIndex(3);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -728,7 +728,7 @@ gls2.Enemy.miyuki_y = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hoshizora_y");
 
-        this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(1);
+        this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(1);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -771,7 +771,7 @@ gls2.Enemy.miyuki_t = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hoshizora_t");
 
-        this._sprite = _Sprite("tex_stage3", 64, 128).setFrameIndex(1);
+        this._sprite = _Sprite("tex4", 64, 128).setFrameIndex(1);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -811,7 +811,7 @@ gls2.Enemy.Alice = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsuba");
-        this._sprite = _Sprite("tex_stage3", 128, 128).setFrameIndex(1);
+        this._sprite = _Sprite("tex4", 128, 128).setFrameIndex(1);
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -1053,7 +1053,7 @@ gls2.Enemy.Setsuna = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "higashi");
-        this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(2);
+        this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(2);
         this.blendMode = "lighter";
     },
     ondying: function() {
@@ -1091,7 +1091,7 @@ gls2.Enemy.Love = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "momozono");
-        this._sprite = _Sprite("tex_stage3", 256, 128).setFrameIndex(4);
+        this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(4);
         this._sprite.setScale(2);
     },
     ondying: function() {

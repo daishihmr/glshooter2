@@ -60,7 +60,9 @@ gls2.GlShooter2 = tm.createClass(
             "tex1": "assets/tex1.png",
             "tex2": "assets/tex2.png",
             "tex3": "assets/tex3.png",
+            "tex4": "assets/tex4.png",
             "tex_tank1": "assets/tex_tank1.png",
+            "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
             "fighter": "assets/fighters.png",
             "laserR": "assets/laser_r.png",
             "laserG": "assets/laser_g.png",
@@ -76,10 +78,6 @@ gls2.GlShooter2 = tm.createClass(
             "bomb": "assets/bomb.png",
             "bombIcon": "assets/bomb_icon.png",
             "result_bg": "assets/result_bg.png",
-
-            // use stage3
-            "tex_stage3": "assets/tex_stage3.png",
-            "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",

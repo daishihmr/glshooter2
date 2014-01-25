@@ -30,8 +30,8 @@ Palette:
 fram
 {
 	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
-	{	mov ( 1737.95 -11.2203 11389.1 ) eye deg( 45 ) }
-	{	mov ( -290.643 1.8764 0.50728 ) target }
+	{	mov ( 1286 -8.30248 11397.4 ) eye deg( 45 ) }
+	{	mov ( -235.939 1.52323 -9.2372 ) target }
 	{	mov ( 119.4 -484.973 184.223 ) rotz ( 0 ) roty ( 0 ) rotx ( -50 )
 		scal ( 1.6 1.6 1.6 ) obj SL14 /* "mecha\sfetc\SL14.suf" atr "noname" */
 	}
@@ -66,28 +66,19 @@ fram
 		scal ( 2.08 -0.64 1.6 ) obj BR14 /* "BR\BR14.suf" atr "#02" */
 	}
 	{	mov ( -280.6 -1364.97 1.82338 ) rotz ( -10 ) roty ( 0 ) rotx ( -90 )
-		scal ( 3.04 1.92 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "#01" */
+		scal ( 3.04 1.2 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
 	}
 	{	mov ( -680.6 -1524.97 1.82338 ) rotz ( -20 ) roty ( 0 ) rotx ( -90 )
-		scal ( 4.96 1.92 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "#01" */
+		scal ( 4.96 2.7 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
 	}
 	{	mov ( -1080.6 -1764.97 1.82338 ) rotz ( -30 ) roty ( 0 ) rotx ( -90 )
-		scal ( 6.72 1.92 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "#01" */
+		scal ( 6.72 2.9 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
 	}
 	{	mov ( -1320.6 -740.373 -98.1766 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 3.52 1.6 2.08 ) obj sfcar15 /* "mecha\sfcar\sfcar15.suf" atr "noname" */
 	}
 	{	mov ( 39.4 964.973 1.82338 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 0.8 1.6 1.28 ) obj S107 /* "mecha\sfship\S107.suf" atr "noname" */
-	}
-	{	mov ( -280.6 1364.97 1.82338 ) rotz ( 10 ) roty ( 0 ) rotx ( 90 )
-		scal ( 3.04 -1.92 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "#01" */
-	}
-	{	mov ( -680.6 1524.97 1.82338 ) rotz ( 20 ) roty ( 0 ) rotx ( 90 )
-		scal ( 4.96 -1.92 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "#01" */
-	}
-	{	mov ( -1080.6 1764.97 1.82338 ) rotz ( 30 ) roty ( 0 ) rotx ( 90 )
-		scal ( 6.72 -1.92 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "#01" */
 	}
 	{	mov ( -1320.6 740.373 -98.1766 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 3.52 -1.6 2.08 ) obj sfcar15 /* "mecha\sfcar\sfcar15.suf" atr "noname" */
@@ -102,9 +93,18 @@ fram
 		scal ( 1.4 -1 1 ) obj sfcar02 /* "mecha\sfcar\sfcar02.suf" atr "noname" */
 	}
 	{	mov ( -1400 -2100 0 ) rotz ( -50 ) roty ( 0 ) rotx ( -90 )
-		scal ( 8.2 1.92 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "#01" */
+		scal ( 8.2 3.3 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
+	}
+	{	mov ( -280.6 1364.97 1.82338 ) rotz ( 10 ) roty ( 0 ) rotx ( 90 )
+		scal ( 3.04 -1.2 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
+	}
+	{	mov ( -680.6 1524.97 1.82338 ) rotz ( 20 ) roty ( 0 ) rotx ( 90 )
+		scal ( 4.96 -2.7 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
+	}
+	{	mov ( -1080.6 1764.97 1.82338 ) rotz ( 30 ) roty ( 0 ) rotx ( 90 )
+		scal ( 6.72 -2.9 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
 	}
 	{	mov ( -1400 2100 0 ) rotz ( 50 ) roty ( 0 ) rotx ( 90 )
-		scal ( 8.2 -1.92 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "#01" */
+		scal ( 8.2 -3.3 3.84 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
 	}
 }
