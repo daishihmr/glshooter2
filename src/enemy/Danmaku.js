@@ -910,7 +910,7 @@ gls2.Danmaku["reika"] = new bulletml.Root({
 });
 
 /**
- *
+ * あぐりちゃん
  */
 gls2.Danmaku["aguri"] = new bulletml.Root({
     "top": $.action([

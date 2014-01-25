@@ -45,7 +45,7 @@ gls2.Enemy.DATA = {
     "yotsubaLeaf":[  100,    30000, false, false, 10, {"width": 64, "height": 64}, ],
     "midorikawa":[     5,     1000, false, false,  1, {"width": 64, "height": 64}, ],
     "aoki":      [     5,     1200, false, false,  1, {"width": 64, "height": 64}, ],
-    "madoka":    [     5,     1200, false, false,  1, {"width": 64, "height": 64}, ],
+    "madoka":    [   250,    15000, false, true,   5, {"width":256, "height": 64}, ],
 };
 
 /**
@@ -699,7 +699,7 @@ gls2.Enemy.reika = tm.createClass(
 });
 
 /**
- * 「マドカ」
+ * 大型戦闘機「マドカ」
  */
 gls2.Enemy.aguri = tm.createClass(
 {
@@ -709,21 +709,13 @@ gls2.Enemy.aguri = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "madoka");
-
-//        this._sprite = _Sprite("tex_stage3", 64, 64).setFrameIndex(8);//仮
-        this.boundingWidthLeft = 0;
-        this.boundingHeightTop = 0;
-        this.boundingWidthRight = 64;
-        this.boundingHeightBottom = 64;
+        this._sprite = _Sprite("tex_stage3", 256, 64).setFrameIndex(3);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
     },
     draw: function(canvas) {
-//        this._sprite.draw(canvas);
-        canvas.fillStyle = "yellow";
-        canvas.fillRect(-this.boundingWidthLeft, -this.boundingHeightTop,
-            this.boundingWidthLeft+this.boundingWidthRight, this.boundingHeightTop+this.boundingHeightBottom);
+        this._sprite.draw(canvas);
     },
 });
 
