@@ -1,9 +1,8 @@
 /*							Parts Assembler
-                                  Version 2.04.051226(:
+                                  Version 2.04.080709(:
 Parts: 
 	BR\BR05.suf
 	JT\JT12.suf
-	basic\ball\ball01.suf
 Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
 	DisplayOffset: (   0.000   0.000 -75.000 )
@@ -24,8 +23,8 @@ Palette:
 fram
 {
 	light pal( rgb ( 1.00 1.00 1.00 ) -67 -22 -70 )
-	{	mov ( 564.758 -282.379 551.196 ) eye deg( 45 ) }
-	{	mov ( 0 0 0 ) target }
+	{	mov ( 905.728 -451.766 455.246 ) eye deg( 45 ) }
+	{	mov ( 12.2028 -5.00359 -416.821 ) target }
 	{	mov ( 0 0 -616 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 1 1 1 ) obj JT12 /* "JT\JT12.suf" atr "noname" */
 	}
@@ -52,8 +51,5 @@ fram
 	}
 	{	mov ( 74.2462 74.2462 -263.8 ) rotz ( 45 ) roty ( 30 ) rotx ( 0 )
 		scal ( -0.7 0.56 0.7 ) obj BR05 /* "BR\BR05.suf" atr "noname" */
-	}
-	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 0.239475 0.239475 0.239475 ) obj ball01 /* "basic\ball\ball01.suf" atr "#01" */
 	}
 }

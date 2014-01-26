@@ -27,9 +27,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -49  50 -70 )
-	{	mov ( -14.1749 -2195.64 3312.76 ) eye deg( 45 ) }
-	{	mov ( 0 0 0 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -70   0 -70 )
+	{	mov ( 3158.82 -3056.41 1353.11 ) eye deg( 45 ) }
+	{	mov ( -1.69124 89.7777 119.414 ) target }
 	{	mov ( 87.6 910 -204.8 ) rotz ( 0 ) roty ( 0 ) rotx ( -90 )
 		scal ( 2.38 1.4 2.52 ) obj TK12 /* "TK\TK12.suf" atr "noname" */
 	}

@@ -25,9 +25,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -49  50 -70 )
-	{	mov ( -13.3681 -2070.26 1957.79 ) eye deg( 45 ) }
-	{	mov ( 0 0 0 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -69 -10 -70 )
+	{	mov ( 1845.36 -1027.72 829.293 ) eye deg( 45 ) }
+	{	mov ( 262.721 137.822 -83.0662 ) target }
 	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 1 3.4 0.6 ) obj S201 /* "S2\S201.suf" atr "noname" */
 	}

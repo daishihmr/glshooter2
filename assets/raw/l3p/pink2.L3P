@@ -1,9 +1,8 @@
 /*							Parts Assembler
-                                  Version 2.04.051226(:
+                                  Version 2.04.080709(:
 Parts: 
 	OT\OT13.suf
 	P1\P111.suf
-	basic\ball\ball01.suf
 Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
 	DisplayOffset: (   0.000 -29.000   0.000 )
@@ -23,25 +22,22 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -69 -11 -70 )
-	{	mov ( 991.176 -714.363 845.356 ) eye deg( 45 ) }
-	{	mov ( 0 0 0 ) target }
-	{	mov ( 0 0 -1184 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+	light pal( rgb ( 1.00 1.00 1.00 ) -22 -67 -70 )
+	{	mov ( 952.777 506.934 480.671 ) eye deg( 45 ) }
+	{	mov ( 38.5879 50.2078 -460.715 ) target }
+	{	mov ( 0 0 -710 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 2.8 2.8 1.3 ) obj P111 /* "P1\P111.suf" atr "noname" */
 	}
-	{	mov ( 0 -350 -866 ) rotz ( 90 ) roty ( -90 ) rotx ( 0 )
+	{	mov ( 0 -350 -392 ) rotz ( 90 ) roty ( -90 ) rotx ( 0 )
 		scal ( -0.2 0.534483 0.481034 ) obj OT13 /* "OT\OT13.suf" atr "noname" */
 	}
-	{	mov ( 0 350 -866 ) rotz ( -90 ) roty ( -90 ) rotx ( 0 )
+	{	mov ( 0 350 -392 ) rotz ( -90 ) roty ( -90 ) rotx ( 0 )
 		scal ( -0.2 -0.534483 0.481034 ) obj OT13 /* "OT\OT13.suf" atr "noname" */
 	}
-	{	mov ( 350 0 -866 ) rotz ( -180 ) roty ( -90 ) rotx ( 0 )
+	{	mov ( 350 0 -392 ) rotz ( -180 ) roty ( -90 ) rotx ( 0 )
 		scal ( -0.2 -0.534483 0.481034 ) obj OT13 /* "OT\OT13.suf" atr "noname" */
 	}
-	{	mov ( -350 0 -866 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+	{	mov ( -350 0 -392 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
 		scal ( -0.2 0.534483 0.481034 ) obj OT13 /* "OT\OT13.suf" atr "noname" */
-	}
-	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 1 1 1 ) obj ball01 /* "basic\ball\ball01.suf" atr "#01" */
 	}
 }
