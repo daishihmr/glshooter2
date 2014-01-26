@@ -562,12 +562,12 @@ gls2.EnemyUnit = {
 
 //小型浮揚戦車「アオキ」
 "reika1-left": [  //左側
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.10, y:SC_H*-0.1 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.15, y:SC_H*-0.2 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.20, y:SC_H*-0.1 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.25, y:SC_H*-0.2 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.30, y:SC_H*-0.1 },
-    { hard:$e.reika, soft:$s.reika1, x:SC_W*0.35, y:SC_H*-0.2 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.10, y:SC_H*-0.1 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.15, y:SC_H*-0.2 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.20, y:SC_H*-0.1 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.25, y:SC_H*-0.2 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.30, y:SC_H*-0.1 },
+    { hard:$e.reika, soft:$s.reika1, x:SC_W*-0.35, y:SC_H*-0.2 },
 ],
 "reika1-right": [  //右側
     { hard:$e.reika, soft:$s.reika1, x:SC_W*1.10, y:SC_H*-0.1 },

@@ -19,14 +19,14 @@ gls2.Stage3 = tm.createClass(
         //start
         this.seq.add(  0, function() {
             gls2.playBgm("bgm3", true),
-            this.gameScene.ground.direction = Math.PI*0.5;
+            this.gameScene.ground.direction = Math.PI*0.5; //前進
             this.gameScene.ground.speed = 2;
             this.gameScene.ground.tweener.clear().to({speed:5}, 4000, "easeInOutQuad");
         });
         
         //test
 //        this.seq.add(100, "higashi", true); //中ボス
-//        this.seq.add( 60, "reika1-left");
+        this.seq.add( 60, "reika1-left");
 //        this.seq.add(100, "miyuki_y2");
 
         //0%
@@ -70,7 +70,7 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(120, function() {
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:3, direction:-Math.PI/180*90}, 3000, "easeInOutQuad")
+                .to({speed:4, direction:0}, 3000, "easeInOutQuad")
 //                .to({direction:-Math.PI/180*90}, 3000, "easeInOutQuad")
         });
   
@@ -92,9 +92,10 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "komachi3-0");
         //40%
         //50%
+        this.seq.add( 60, "komachi3-0");
 
         //60%
-        this.seq.add(600, "higashi", true); //中ボス
+        this.seq.add(300, "higashi", true); //中ボス
 
         this.seq.add(300, "nao1-left");
         for (var i = 0; i < 8; i++) {
@@ -106,7 +107,7 @@ gls2.Stage3 = tm.createClass(
 
         //80%        
         this.seq.add(100, "alice");
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < 3; i++) {
             this.seq.add( 60, "reika1-left");
             this.seq.add( 60, "reika1-right");
         }
