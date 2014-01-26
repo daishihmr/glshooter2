@@ -709,7 +709,7 @@ gls2.Enemy.aguri = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "madoka");
-        this._sprite = _Sprite("tex4", 256, 64).setFrameIndex(3);
+        this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(3);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -1055,6 +1055,7 @@ gls2.Enemy.Setsuna = tm.createClass(
         this.superInit(gameScene, software, "higashi");
         this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(2);
         this.blendMode = "lighter";
+        this.setScale(1.5);
     },
     ondying: function() {
     },
@@ -1092,7 +1093,7 @@ gls2.Enemy.Love = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "momozono");
         this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(4);
-        this._sprite.setScale(2);
+        this.setScale(1.5);
     },
     ondying: function() {
     },
