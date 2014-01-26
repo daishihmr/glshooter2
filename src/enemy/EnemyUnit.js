@@ -636,6 +636,11 @@ gls2.EnemyUnit = {
  */
 "mana": [{ hard:$e.Mana, soft:[$s.Mana1, $s.Mana2, $s.Mana3], x:SC_W*0.5, y:-100, boss:true }],
 
+/**
+ * ステージ５中ボス「ミナミノ」
+ */
+"kanade": [{ hard:$e.Kanade, soft:$s.Kanade1, x:SC_W*0.9, y:SC_H*-0.7 }],
+
 };
 
 })();

@@ -35,6 +35,13 @@ gls2.Enemy.DATA = {
     "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
     "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
     // "aida":      [     1,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
+    "minamino":  [   750,  5000000,  true,  true, 30, {"width": 25, "heightTop":-(-350-25), "heightBottom":-350+25} ],
+    "rery":      [   450,     2000,  true, false,  5, {"radius": 24} ],
+    "fary":      [   400,     2000,  true, false,  5, {"radius": 24} ],
+    "sory":      [   350,     2000,  true, false,  5, {"radius": 24} ],
+    "lary":      [   300,     2000,  true,  true,  5, {"radius": 24} ],
+    "shiry":     [   250,     2000,  true,  true,  5, {"radius": 24} ],
+    "dodory":    [   120,     2000,  true, false,  5, {"radius": 24} ],
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
@@ -228,7 +235,7 @@ gls2.Enemy.Urara = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kasugano");
 
-        this._sprite = _Sprite("tex1", 64*1, 64*1).setFrameIndex(23);
+        this._sprite = _Sprite("tex5", 64*1, 64*1).setFrameIndex(1);
         this.aura = gls2.Particle(80, 1.0, 0.8);
 
         this.beforePos = tm.geom.Vector2();
@@ -335,7 +342,7 @@ gls2.Enemy.Ako = tm.createClass(
     _sprite: null,
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "shirabe");
-        this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(1);
+        this._sprite = _Sprite("tex5", 64*2, 64*2).setFrameIndex(4);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -542,7 +549,7 @@ gls2.Enemy.Itsuki = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "myodoin");
 
-        this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(12);
+        this._sprite = _Sprite("tex5", 64*1, 64*2).setFrameIndex(0);
     },
     ondying: function() {
     },
@@ -601,11 +608,8 @@ gls2.Enemy.Cannon3 = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "minazuki");
 
-        this._sprite = _Sprite("tex1", 64*2, 64*4);
-        this._sprite.srcRect.x = 0;
-        this._sprite.srcRect.y = 128;
-        this._sprite.srcRect.width = 64*2;
-        this._sprite.srcRect.height = 64*4;
+        this._sprite = _Sprite("tex5", 64*2, 64*4);
+        this._sprite.setFrameIndex(1);
         this.setScale(1.2);
     },
     ondying: function() {
@@ -1204,6 +1208,237 @@ gls2.Enemy.Mana = tm.createClass(
 /**
  * ステージ５中ボス「ミナミノ」
  */
+gls2.Enemy.Kanade = tm.createClass(
+{
+    superClass: gls2.Enemy,
+
+    cannons: null,
+    /** @const */
+    cannonPositions: [
+        // レリー
+        { x:   -50, y: -355 },
+        { x:   +50, y: -355 },
+        { x:   -60, y:  -60 },
+        { x:   +60, y:  -60 },
+
+        // ファリー
+        { x:   -60, y: -290 },
+        { x:   +60, y: -290 },
+        { x:   -40, y: -220 },
+        { x:   +40, y: -220 },
+        { x:   -40, y:   90 },
+        { x:   +40, y:   90 },
+
+        // ソリー
+        { x:   -65, y: -140 },
+        { x:   +65, y: -140 },
+        { x:   -80, y: -190 },
+        { x:   +80, y: -190 },
+
+        // ラリー
+        { x:     0, y: -280 },
+
+        // シリー
+        { x:     0, y: -140 },
+
+        // ドドリー
+        { x:  -100, y:  120 },
+        { x:  +100, y:  120 },
+        { x:   -50, y:  140 },
+        { x:   +50, y:  140 },
+    ],
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "minamino");
+        this.altitude = 10;
+        this.muteki = true;
+
+        this._sprite = _Sprite("tex5", 64*4, 64*8).setFrameIndex(1);
+        this.setScale(1.8);
+
+        this.cannons = [];
+    },
+    onlaunch: function() {
+        Array.prototype.push.apply(this.cannons, [
+
+            // レリー
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Rery, "soft": gls2.EnemySoft.Rery(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Rery, "soft": gls2.EnemySoft.Rery(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Rery, "soft": gls2.EnemySoft.Rery(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Rery, "soft": gls2.EnemySoft.Rery(), "x": 0, "y": 0 }),
+
+            // ファリー
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Fary, "soft": gls2.EnemySoft.Fary(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Fary, "soft": gls2.EnemySoft.Fary(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Fary, "soft": gls2.EnemySoft.Fary(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Fary, "soft": gls2.EnemySoft.Fary(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Fary, "soft": gls2.EnemySoft.Fary(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Fary, "soft": gls2.EnemySoft.Fary(), "x": 0, "y": 0 }),
+
+            // ソリー
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Sory, "soft": gls2.EnemySoft.Sory(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Sory, "soft": gls2.EnemySoft.Sory(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Sory, "soft": gls2.EnemySoft.Sory(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Sory, "soft": gls2.EnemySoft.Sory(), "x": 0, "y": 0 }),
+
+            // ラリー
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Lary, "soft": gls2.EnemySoft.Lary(), "x": 0, "y": 0 }),
+
+            // シリー
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Shiry, "soft": gls2.EnemySoft.Shiry(), "x": 0, "y": 0 }),
+
+            // ドドリー
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Dodory, "soft": gls2.EnemySoft.Dodory(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Dodory, "soft": gls2.EnemySoft.Dodory(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Dodory, "soft": gls2.EnemySoft.Dodory(), "x": 0, "y": 0 }),
+            this.stage.launchEnemy({ "hard": gls2.Enemy.Dodory, "soft": gls2.EnemySoft.Dodory(), "x": 0, "y": 0 }),
+
+        ]);
+    },
+    update: function(app) {
+        this.cannons.forEach(function(cannon, i) {
+            cannon.setPosition(this.x + this.cannonPositions[i].x, this.y + this.cannonPositions[i].y);
+        }.bind(this));
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    destroy: function() {
+        // TODO ド派手にする
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+});
+/**
+ * ミナミノ砲台
+ * @interface
+ */
+gls2.Enemy.KanadeCannon = tm.createClass(
+/** @lends {gls2.Enemy.KanadeCannon.prototype} */
+{
+    superClass: gls2.Enemy,
+    textureRow: 0,
+    init: function(gameScene, software, name, textureName, textureRow) {
+        this.superInit(gameScene, software, name);
+        this._sprite = _Sprite(textureName, 64, 64);
+        this._sprite.setScale(2);
+        this.textureRow = textureRow;
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.apply(this, arguments);
+
+        var a = tm.geom.Vector2.sub(this.gameScene.player.position, this.position).toAngle();
+        while(a < 0) { a += Math.PI*2; }
+        while(Math.PI*2 <= a) { a -= Math.PI*2; }
+        this._sprite.setFrameIndex(this.textureRow*16 + Math.floor(a / (Math.PI*2) * 16));
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    destroy: function() {
+        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
+        this.remove();
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    }
+});
+
+/**
+ * ミナミノ主砲「レリー」
+ * @extends {gls2.Enemy.KanadeCannon}
+ */
+gls2.Enemy.Rery = tm.createClass(
+/** @lends {gls2.Enemy.Rery.prototype} */
+{
+    superClass: gls2.Enemy.KanadeCannon,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "rery", "tex_tank1", 0);
+        // dory
+        // miry
+    }
+});
+/**
+ * ミナミノ副砲「ファリー」
+ * @extends {gls2.Enemy.KanadeCannon}
+ */
+gls2.Enemy.Fary = tm.createClass(
+/** @lends {gls2.Enemy.Fary.prototype} */
+{
+    superClass: gls2.Enemy.KanadeCannon,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "rery", "tex_tank1", 1);
+    }
+});
+/**
+ * ミナミノ対空機関砲「ソリー」
+ * @extends {gls2.Enemy.KanadeCannon}
+ */
+gls2.Enemy.Sory = tm.createClass(
+/** @lends {gls2.Enemy.Sory.prototype} */
+{
+    superClass: gls2.Enemy.KanadeCannon,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "sory", "yotsubaLeaf", 0);
+    }
+});
+/**
+ * ミナミノ副砲「ラリー」
+ * @extends {gls2.Enemy.KanadeCannon}
+ */
+gls2.Enemy.Lary = tm.createClass(
+/** @lends {gls2.Enemy.Lary.prototype} */
+{
+    superClass: gls2.Enemy.KanadeCannon,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "lary", "yotsubaLeaf", 0);
+    }
+});
+/**
+ * ミナミノ副砲「シリー」
+ * @extends {gls2.Enemy.KanadeCannon}
+ */
+gls2.Enemy.Shiry = tm.createClass(
+/** @lends {gls2.Enemy.Shiry.prototype} */
+{
+    superClass: gls2.Enemy.KanadeCannon,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "shiry", "yotsubaLeaf", 0);
+    }
+});
+/**
+ * ミナミノ機雷散布システム「ドドリー」
+ * @extends {gls2.Enemy.KanadeCannon}
+ */
+gls2.Enemy.Dodory = tm.createClass(
+/** @lends {gls2.Enemy.Dodory.prototype} */
+{
+    superClass: gls2.Enemy.KanadeCannon,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "dodory", "yotsubaLeaf", 0);
+    }
+});
 
 /**
  * ステージ５ボス「ホウジョウ」

@@ -64,6 +64,10 @@ gls2.Enemy = tm.createClass(
      * 可視範囲に入った時点からの経過フレーム
      */
     frame: 0,
+    /**
+     * 攻撃はすりぬけ、自機との衝突も発生しない
+     */
+    muteki: false,
 
     /**
      * 速度
@@ -111,6 +115,8 @@ gls2.Enemy = tm.createClass(
         }
 
         this.velocity = {x:0, y:0};
+
+        this.muteki = false;
 
         if (DEBUG) {
             this.label = tm.display.Label("", 20).addChildTo(this);
