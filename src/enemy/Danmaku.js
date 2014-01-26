@@ -913,10 +913,35 @@ gls2.Danmaku["reika"] = new bulletml.Root({
  * あぐりちゃん
  */
 gls2.Danmaku["aguri"] = new bulletml.Root({
-    "top": $.action([
+    "top0": $.action([
         $.repeat(999, [
-            $interval(30),
-            $.fire($.direction(0), $spd3, BL),
+            $whip($spd3, -0.01, 4, function(spd) {
+                return $.action([
+                    $nway(8, -60, 60, spd, BNL, $.offsetX(-45), $.autonomy(true)),
+                    $interval(4),
+                ]);
+            }),
+            $whip($spd3, -0.01, 4, function(spd) {
+                return $.action([
+                    $interval(4),
+                    $nway(8, -60, 60, spd, BNL, $.offsetX(+45), $.autonomy(true)),
+                ]);
+            }),
+            $interval(90),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $interval(45),
+            $whip($spd2, 0.01, 22, function(spd) {
+                return $.action([
+                    $.repeat("1 + $rand*6", [
+                        $.fire($.direction("-5+$rand*10"), spd, RS),
+                    ]),
+                    $interval(1),
+                ]);
+            }),
+            $interval(180),
         ]),
     ]),
 });
