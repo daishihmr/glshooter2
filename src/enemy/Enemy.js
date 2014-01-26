@@ -66,6 +66,11 @@ gls2.Enemy = tm.createClass(
     frame: 0,
 
     /**
+     * 攻撃がヒットしないフラグ
+     */
+    throughShot: false,
+
+    /**
      * 速度
      * 爆風の移動計算用
      */

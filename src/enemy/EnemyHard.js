@@ -29,7 +29,7 @@ gls2.Enemy.DATA = {
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
-    "higashi":   [  1300,  1200000, false,  true, 20, {"width":256, "height":128}, ],
+    "higashi":   [  1000,  1200000, false,  true, 20, {"width":256, "height":128}, ],
     "momozono":  [  6000,  3500000, false,  true,  0, {"width":256, "height":128}, ],
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
     "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
@@ -1064,22 +1064,6 @@ gls2.Enemy.Setsuna = tm.createClass(
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
-    },
-    //テレポート演出
-    teleport: function(b) {
-        if (b) {
-            //テレポートイン
-            for (var i = 0; i < 3; i++) {
-                gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-100,100), this.y+gls2.FixedRandom.rand(-50,50), this.gameScene, 2);
-            }
-            this.alpha = 0.0;
-        } else {
-            //テレポートアウト
-            for (var i = 0; i < 3; i++) {
-                gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-100,100), this.y+gls2.FixedRandom.rand(-50,50), this.gameScene, 2);
-            }
-            this.alpha = 1.0;
-        }
     },
 });
 

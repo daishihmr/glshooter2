@@ -249,7 +249,7 @@ gls2.GameScene = tm.createClass(
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
                 var shot = shots[j];
-                if (e.hp <= 0) continue;
+                if (e.hp <= 0　|| e.throughShot) continue;
                 if (gls2.Collision.isHit(e, shot)) {
                     shot.genParticle(1);
                     shot.remove();
@@ -277,7 +277,7 @@ gls2.GameScene = tm.createClass(
             });
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
-                if (e.hp <= 0) continue;
+                if (e.hp <= 0　|| e.throughShot) continue;
                 if (gls2.Collision.isHit(e, laser)) {
                     laser.setHitY(e.y + e.boundingHeightBottom);
                     if (e.damage(laser.attackPower)) {
@@ -314,7 +314,7 @@ gls2.GameScene = tm.createClass(
             enemies = [].concat(gls2.Enemy.activeList);
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
-                if (e.hp <= 0) continue;
+                if (e.hp <= 0　|| e.throughShot) continue;
                 if (gls2.Collision.isHit(e, aura)) {
                     if(e.damage(laser.attackPower)) {
                         this.killCount += 1;
