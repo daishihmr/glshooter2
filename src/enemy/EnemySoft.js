@@ -830,7 +830,7 @@ gls2.EnemySoft.reika = tm.createClass(
                 }
                 this.x += this.speed;
                 this.y = this.py+Math.sin(this.rad)*8;
-                this.rad+=0.03;
+                this.rad+=0.06;
             });
         }.bind(enemy));
     },
@@ -839,7 +839,7 @@ gls2.EnemySoft.reika1 = gls2.EnemySoft.reika(1.0);
 gls2.EnemySoft.reika2 = gls2.EnemySoft.reika(2.0);
 
 /**
- * 大型戦闘機「あぐり」
+ * 大型戦闘機「マドカ」
  *
  * @class
  * @extends {gls2.EnemySoft}
@@ -1491,6 +1491,7 @@ var _Setsuna = tm.createClass(
         enemy.startAttack = false;
         enemy.endAttack = false;
         enemy.teleporting = false;
+        enemy.teleportFrame = 0;
         enemy.tweener
             .clear()
             .move(SC_W*0.5, SC_H*0.3, 1200, "easeOutQuad")
@@ -1500,19 +1501,18 @@ var _Setsuna = tm.createClass(
                 var temp = function() {
                     this.teleporting = false;
                     this.alpha = 1.0;
-                    this.throughShot = false;
+                    this.muteki = false;
                     var r = gls2.FixedRandom.rand(0,100);
-                    if (r > 50 && this.frame > 300 || this.x-32 < this.player.x && this.player.x < this.x+32) {
+                    if (r > 50 && this.frame > 300 || this.x-64 < this.player.x && this.player.x < this.x+64) {
                         //アカルンワープ！（テスト中）
-                        for (var i = 0; i < 10; i++) {
-                            gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-100,100), this.y+gls2.FixedRandom.rand(-50,50), this.gameScene, 2);
-                        }
+                        gls2.Effect.genShockwave(this.x, this.y, this.gameScene, 8);
                         this.teleporting = true;
                         this.alpha = 0.3;
-                        this.throughShot = true;
+                        this.muteki = true;
+                        this.teleportFrame = this.frame;
                         var x = gls2.FixedRandom.rand(SC_W*0.1, SC_W*0.9);
                         var y = gls2.FixedRandom.rand(SC_H*0.2, SC_W*0.4);
-                        this.tweener.move(x, y, 500, "easeInOutQuad").call(temp);
+                        this.tweener.move(x, y, 250, "easeInOutQuad").call(temp);
                     } else {
                         var a = gls2.FixedRandom.random() * Math.PI*2;
                         var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
@@ -1534,7 +1534,7 @@ var _Setsuna = tm.createClass(
                         this.remove();
                     }.bind(this));
             }
-            if (this.teleporting && this.frame % 10 == 0) {
+            if (this.teleporting && this.frame % 5 == 0) {
                 var s = tm.display.Sprite("tex4", 256, 128).setFrameIndex(2);
                 s.alpha = 0.3;
                 s.x = this.x;

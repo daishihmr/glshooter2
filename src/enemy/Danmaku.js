@@ -905,7 +905,7 @@ gls2.Danmaku["nao-3"] = new bulletml.Root({
 gls2.Danmaku["reika"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
-            $interval(30),
+            $interval(60),
             $.fire($.direction(0), $spd3, BL),
         ]),
     ]),
@@ -917,33 +917,26 @@ gls2.Danmaku["reika"] = new bulletml.Root({
 gls2.Danmaku["aguri"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
-            $whip($spd3, -0.01, 4, function(spd) {
-                return $.action([
-                    $nway(8, -60, 60, spd, BNL, $.offsetX(-45), $.autonomy(true)),
-                    $interval(4),
-                ]);
-            }),
-            $whip($spd3, -0.01, 4, function(spd) {
-                return $.action([
-                    $interval(4),
-                    $nway(8, -60, 60, spd, BNL, $.offsetX(+45), $.autonomy(true)),
-                ]);
-            }),
-            $interval(90),
+            $interval(30),
+            $nway(3, -30, 30, $spd1, RNL, $.offsetX(0), $.offsetY(0), $.autonomy(true)),
         ]),
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $interval(45),
-            $whip($spd2, 0.01, 22, function(spd) {
-                return $.action([
-                    $.repeat("1 + $rand*6", [
-                        $.fire($.direction("-5+$rand*10"), spd, RS),
-                    ]),
-                    $interval(1),
-                ]);
-            }),
-            $interval(180),
+            $interval(30),
+            $nway(3, -30, 30, $spd1, BNL, $.offsetX(-64), $.offsetY(24), $.autonomy(true)),
+        ]),
+    ]),
+    "top2": $.action([
+        $.repeat(999, [
+            $interval(30),
+            $nway(3, -30, 30, $spd1, BNL, $.offsetX(-80), $.offsetY(10), $.autonomy(true)),
+        ]),
+    ]),
+    "top3": $.action([
+        $.repeat(999, [
+            $interval(30),
+            $nway(3, -30, 30, $spd1, BNL, $.offsetX(-90), $.offsetY(5), $.autonomy(true)),
         ]),
     ]),
 });
@@ -1023,7 +1016,7 @@ gls2.Danmaku["alice"] = new bulletml.Root({
             $interval(10),
         ]),
     ]),
-    "top1": $.action([
+    "top2": $.action([
         $.repeat(999, [
             $.fire($.direction(10, "sequence"), $spd2, RS, $.offsetX(0), $.autonomy(true)),
             $interval(10),

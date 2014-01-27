@@ -25,10 +25,9 @@ gls2.Stage3 = tm.createClass(
         });
 
         //test
-//        this.seq.add(100, "higashi", true); //中ボス
 //        this.seq.add( 60, "reika1-left");
 //        this.seq.add(100, "miyuki_y2");
-//        this.seq.add(100, "aguri1");
+        this.seq.add(100, "madoka-1");
 
         //0%
         this.seq.add(150, "nao2-center");
@@ -43,11 +42,10 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 30, "nao1-left");
         }
 
+        //10%
         this.seq.add( 60, function() {
             this.gameScene.ground.tweener.clear().to({speed:7}, 1000, "easeInOutQuad");
         });
-
-        //10%
         this.seq.add(120, "akane-center");
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-center");
@@ -68,50 +66,87 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "reika1-right");
 
         //20%
-        this.seq.add(120, function() {
-            this.gameScene.ground.tweener
-                .clear()
-                .to({speed:4, direction:0}, 3000, "easeInOutQuad")
-//                .to({direction:-Math.PI/180*90}, 3000, "easeInOutQuad")
+        this.seq.add( 60, function() {
+            this.gameScene.ground.tweener.clear().to({speed:3}, 1000, "easeInOutQuad");
         });
-  
+        this.seq.add(120, "akane-center");
+        this.seq.add( 60, "akane-right");
+        this.seq.add( 60, "akane-left");
         for (var i = 0; i < 3; i++) {
             this.seq.add( 60, "nao2-center");
             this.seq.add( 60, "nao2-left");
             this.seq.add( 60, "nao2-right");
         }
-        this.seq.add( 60, "miyuki_y1");
 
+        
+        //30%
+        this.seq.add(60, function() {
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:4, direction:-Math.PI/180*90}, 3000, "easeInOutQuad");
+        });
+        this.seq.add( 60, "miyuki_y1");
+        this.seq.add( 60, "reika1-right");
+        this.seq.add(180, "reika1-right");
+
+        this.seq.add(120, "komachi3-0");
+        this.seq.add(120, "madoka-1");
+        this.seq.add( 60, "reika1-left");
+        this.seq.add( 60, "reika1-left");
+
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-center");
+
+        this.seq.add(120, "reika1-left");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add(120, "reika1-left");
+        this.seq.add(120, "reika1-left");
+
+        //40%
         this.seq.add(  1, function() {
             this.gameScene.ground.tweener
                 .clear()
                 .to({speed:4}, 2000, "easeInOutQuad")
                 .to({direction:Math.PI*0.5}, 2000, "easeInOutQuad")
         });
-        
-        //30%
-        this.seq.add( 60, "komachi3-0");
-        //40%
+        this.seq.add( 60, "komachi3-1");
+        this.seq.add( 60, "madoka-0");
+        this.seq.add(120, "reika1-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-right");
+        this.seq.add(120, "reika1-right");
+        this.seq.add(120, "reika1-right");
+
         //50%
-        this.seq.add( 60, "komachi3-0");
 
         //60%
         this.seq.add(300, "higashi", true); //中ボス
 
+        //70%
         this.seq.add(300, "nao1-left");
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < 2; i++) {
             this.seq.add( 60, "nao1-center");
             this.seq.add( 60, "nao1-right");
             this.seq.add( 60, "nao1-left");
         }
-        //70%
+        this.seq.add(120, "reika1-right");
+
+        this.seq.add(100, "alice");
+
+        for (var i = 0; i < 5; i++) {
+            this.seq.add( 60, "nao2-center");
+            this.seq.add( 60, "nao2-left");
+            this.seq.add( 60, "nao2-right");
+        }
 
         //80%        
-        this.seq.add(100, "alice");
-        for (var i = 0; i < 3; i++) {
-            this.seq.add( 60, "reika1-left");
-            this.seq.add( 60, "reika1-right");
-        }
+        this.seq.add( 60, "komachi3-0");
+        this.seq.add( 60, "madoka-1");
+
+        //90
+        this.seq.add( 60, "komachi3-1");
+        this.seq.add( 60, "madoka-0");
 
         //100%
         this.seq.add(600, function() {
