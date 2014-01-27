@@ -139,9 +139,10 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     /**
      * @constructs
      */
-    init: function(patternName) {
+    init: function(patternName, delay) {
         this.superInit();
         this.patternName = patternName;
+        this.delay = delay;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -149,7 +150,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         enemy.angle = Math.PI * 0.5;
         enemy.patternName = this.patternName;
 
-        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+        enemy.tweener.wait(this.delay === undefined ? gls2.math.rand(0, 1000) : this.delay).call(function() {
             this.speed = 6;
             gls2.EnemySoft.attack(this, this.patternName);
             this.on("enterframe", function() {
@@ -174,6 +175,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     },
 });
 gls2.EnemySoft.Heri21 = gls2.EnemySoft.Heri2("basic1-0");
+gls2.EnemySoft.Heri25 = function(delay) { return gls2.EnemySoft.Heri2("basic1-3", delay*gls2.math.randf(1, 2)); };
 
 /**
  * @class
@@ -1867,7 +1869,7 @@ gls2.EnemySoft.Kanade1 = tm.createClass(
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
         enemy.on("enemyconsumed", function() {
-            this.stage.seq.stoping = true;
+            this.stage.seq.stoping = false;
         });
 
         enemy.tweener0 = tm.app.Tweener(enemy)

@@ -55,21 +55,21 @@ gls2.Stage5 = tm.createClass(
 
         this.seq.add(200, "mktn5-0");
         this.seq.add( 60, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 10, "heri1-4-left");
         this.seq.add( 10, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left1");
-        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 10, "heri1-4-left");
+        this.seq.add( 10, "heri1-4-left");
         this.seq.add( 10, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left1");
+        this.seq.add( 10, "heri1-4-left");
 
         this.seq.add(300, "mktn5-1");
         this.seq.add( 60, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add( 10, "heri1-4-right");
         this.seq.add( 10, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right1");
-        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add( 10, "heri1-4-right");
+        this.seq.add( 10, "heri1-4-right");
         this.seq.add( 10, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right1");
+        this.seq.add( 10, "heri1-4-right");
 
         // 10%
 
@@ -97,58 +97,55 @@ gls2.Stage5 = tm.createClass(
 
         this.seq.add(450, "komachi5-0");
         this.seq.add( 30, "heri1-4-right2");
-        this.seq.add( 30, "heri1-4-right1");
+        this.seq.add( 30, "heri1-4-right");
         this.seq.add( 30, "heri1-4-right2");
-        this.seq.add( 30, "heri1-4-right1");
+        this.seq.add( 30, "heri1-4-right");
 
         this.seq.add( 80, "komachi5-2");
         this.seq.add( 30, "heri1-4-left2");
-        this.seq.add( 30, "heri1-4-left1");
+        this.seq.add( 30, "heri1-4-left");
         this.seq.add( 30, "heri1-4-left2");
-        this.seq.add( 30, "heri1-4-left1");
+        this.seq.add( 30, "heri1-4-left");
 
         this.seq.add( 80, "komachi5-1");
         this.seq.add( 30, "heri1-4-center2");
-        this.seq.add( 30, "heri1-4-center1");
+        this.seq.add( 30, "heri1-4-center");
         this.seq.add( 30, "heri1-4-center2");
-        this.seq.add( 30, "heri1-4-center1");
+        this.seq.add( 30, "heri1-4-center");
 
         this.seq.add(100, "komachi5-0");
         this.seq.add( 30, "heri1-4-right2");
-        this.seq.add( 30, "heri1-4-right1");
+        this.seq.add( 30, "heri1-4-right");
         this.seq.add( 30, "heri1-4-right2");
-        this.seq.add( 30, "heri1-4-right1");
+        this.seq.add( 30, "heri1-4-right");
 
         this.seq.add(120, "komachi5-2");
         this.seq.add( 30, "heri1-4-left2");
-        this.seq.add( 30, "heri1-4-left1");
+        this.seq.add( 30, "heri1-4-left");
         this.seq.add( 30, "heri1-4-left2");
-        this.seq.add( 30, "heri1-4-left1");
+        this.seq.add( 30, "heri1-4-left");
 
         this.seq.add(160, "komachi5-1");
         this.seq.add( 30, "heri1-4-center2");
-        this.seq.add( 30, "heri1-4-center1");
+        this.seq.add( 30, "heri1-4-center");
         this.seq.add( 30, "heri1-4-center2");
-        this.seq.add( 30, "heri1-4-center1");
+        this.seq.add( 30, "heri1-4-center");
 
         this.seq.add(450, "ako5-0");
         this.seq.add(250, "ako5-1");
 
         // この辺から中ボス戦
 
-        this.seq.add(10000, function() {});
+        this.seq.add(1200, function() {});
 
-        this.index = 0;
-        for (var i = 0; i < 20; i++) {
-            this.seq.add( 33, "heri2-left");
-            this.seq.add( 33, "heri2-center");
-            this.seq.add( 33, "heri2-right");
-            this.seq.add(  1, function() {
-                console.log(++this.index);
-            });
+        for (var i = 0; i < 45; i++) { // 早回しザコラッシュ
+            this.seq.add( 66, "heri2-5-left");
+            this.seq.add( 66, "heri2-5-center");
+            this.seq.add( 66, "heri2-5-right");
+            this.seq.add(  2, "DUMMY+"+i);
         }
 
-        this.seq.add(30000, function() {
+        this.seq.add(300, function() {
             this.alartWarning(function() {
                 gls2.playBgm("bgmBoss", true);
             });

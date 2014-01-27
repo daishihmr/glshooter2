@@ -98,6 +98,48 @@ gls2.EnemyUnit = {
     { hard:$e.Heri1, soft:$s.Heri21, x:SC_W*0.9, y:-100 },
 ],
 
+/** 突撃ヘリ5機5面用。左側から */
+"heri2-5-left": [
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.1, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.2, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.1, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.2, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.5, y:-100 },
+],
+
+/** 突撃ヘリ5機5面用。中央から */
+"heri2-5-center": [
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.3, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.4, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.7, y:-100 },
+],
+
+/** 突撃ヘリ5機5面用。右側から */
+"heri2-5-right": [
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.8, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25( 0), x:SC_W*0.9, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.5, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.6, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.7, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.8, y:-100 },
+    { hard:$e.Heri1, soft:$s.Heri25(30), x:SC_W*0.9, y:-100 },
+],
+
 /** ヘリ5機4面。左側から */
 "heri1-4-left": [
     { hard:$e.Heri1, soft:$s.Heri14a, x:SC_W*0.1, y:-100 },
