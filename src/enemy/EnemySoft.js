@@ -1522,7 +1522,7 @@ var _Setsuna = tm.createClass(
 
         enemy.on("enterframe", function() {
             if (this.startAttack === false || this.hp <= 0) return;
-            if (1500 < this.frame && this.endAttack === false) {
+            if (1800 < this.frame && this.endAttack === false) {
                 this.endAttack = true;
                 this.tweener
                     .clear()

@@ -917,26 +917,17 @@ gls2.Danmaku["reika"] = new bulletml.Root({
 gls2.Danmaku["aguri"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
-            $interval(30),
-            $nway(3, -30, 30, $spd1, RNL, $.offsetX(0), $.offsetY(0), $.autonomy(true)),
+            $interval(360),
+            $whip($spd4, -0.01, 8, $nwayVs(4, -15, 15))
         ]),
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $interval(30),
-            $nway(3, -30, 30, $spd1, BNL, $.offsetX(-64), $.offsetY(24), $.autonomy(true)),
-        ]),
-    ]),
-    "top2": $.action([
-        $.repeat(999, [
-            $interval(30),
-            $nway(3, -30, 30, $spd1, BNL, $.offsetX(-80), $.offsetY(10), $.autonomy(true)),
-        ]),
-    ]),
-    "top3": $.action([
-        $.repeat(999, [
-            $interval(30),
-            $nway(3, -30, 30, $spd1, BNL, $.offsetX(-90), $.offsetY(5), $.autonomy(true)),
+            $interval(60),
+            $.repeat(5, [
+                $interval(10),
+                $nway(3, -30, 30, $spd4, RNL, $.offsetX(0), $.offsetY(32), $.autonomy(true)),
+            ]),
         ]),
     ]),
 });
@@ -1004,22 +995,38 @@ gls2.Danmaku["alice"] = new bulletml.Root({
         $.repeat(999, [
             $absoluteNway(8, 0,  180, $spd1, BL),
             $absoluteNway(8, 0, -180, $spd1, BL),
-            $interval(60),
+            $interval(30),
             $absoluteNway(9, 0,  180, $spd1, RL),
             $absoluteNway(9, 0, -180, $spd1, RL),
-            $interval(60),
+            $interval(30),
         ]),
     ]),
     "top1": $.action([
+        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
         $.repeat(999, [
-            $.fire($.direction( 5, "sequence"), $spd1, BS, $.offsetX(0), $.autonomy(true)),
+            $.fire($.direction(10, "sequence"), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
             $interval(10),
         ]),
     ]),
     "top2": $.action([
+        $.fire($.direction(90), $spd1, BS, $.offsetX(0), $.autonomy(true)),
         $.repeat(999, [
-            $.fire($.direction(10, "sequence"), $spd2, RS, $.offsetX(0), $.autonomy(true)),
+            $.fire($.direction(10, "sequence"), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
             $interval(10),
+        ]),
+    ]),
+    "top3": $.action([
+        $.fire($.direction(180), $spd1, BS, $.offsetX(0), $.autonomy(true)),
+        $.repeat(999, [
+            $.fire($.direction(10, "sequence"), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+            $interval(10),
+        ]),
+    ]),
+    "top4": $.action([
+        $.fire($.direction(-90), $spd1, BS, $.offsetX(0), $.autonomy(true)),
+        $.repeat(999, [
+            $.fire($.direction(10, "sequence"), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+            $interval(20),
         ]),
     ]),
 });
@@ -1027,11 +1034,12 @@ gls2.Danmaku["alice"] = new bulletml.Root({
  * ありす端末
 */
 gls2.Danmaku["aliceLeaf"] = new bulletml.Root({
-    "top": $.action([
-        $.wait(20),
+    "top1": $.action([
+        $.wait(60),
+        $.fire($.direction(0), $spd3(5), RI, $.offsetX(0), $.autonomy(true)),
         $.repeat(999, [
-            $.fire($.direction(10, "sequence"), $spd3(5), RI, $.offsetX(0), $.autonomy(true)),
-            $interval(10),
+            $.fire($.direction(-10), $spd3(5), RI, $.offsetX(0), $.autonomy(true)),
+            $interval(60),
         ]),
     ]),
 });
@@ -1897,32 +1905,20 @@ gls2.Danmaku["dodory"] = new bulletml.Root({
 gls2.Danmaku["setsuna-1"] = new bulletml.Root({
     "top0": $.action([
         $.wait(60),
-        $.repeat(10, [
-            $nway(4, -40, 40, $spd2, RI, $.offsetX(0), $.offsetY(30)),
-            $interval(30),
-            $nway(5, -40, 40, $spd1, RI, $.offsetX(0), $.offsetY(30)),
-            $interval(30),
+        $.repeat(5, [
+            $nway(5, -2, 2, $spd2(1.8), BNS),
+            $nway(4, -3, 3, $spd2(1.4), BNS),
+            $nway(3, -4, 4, $spd2(1.0), BNS),
+            $nway(2, -5, 5, $spd2(0.6), BNS),
+            $interval(110),
         ]),
     ]),
     "top1": $.action([
         $.wait(60),
-        $.repeat(5, [
-            $nway(2, -2, 2, $spd2(0.6), RNS),
-            $nway(3, -3, 3, $spd2(1.0), RNS),
-            $nway(4, -4, 4, $spd2(1.4), RNS),
-            $nway(5, -5, 5, $spd2(1.8), RNS),
-            $interval(110),
-        ]),
-    ]),
-    "top2": $.action([
-        $.repeat(20, [
-            $absoluteNway(12, -10, -170, $spd1, BS, $.offsetX(-110), $.offsetY(-70)),
+        $.repeat(10, [
+            $nway(4, -40, 40, $spd2, RL, $.offsetX(0), $.offsetY(30)),
             $interval(30),
-        ]),
-    ]),
-    "top3": $.action([
-        $.repeat(20, [
-            $absoluteNway(12, +10, +170, $spd1, BS, $.offsetX(+110), $.offsetY(-70)),
+            $nway(5, -40, 40, $spd1, RL, $.offsetX(0), $.offsetY(30)),
             $interval(30),
         ]),
     ]),

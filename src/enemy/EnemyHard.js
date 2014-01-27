@@ -721,6 +721,10 @@ gls2.Enemy.aguri = tm.createClass(
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
+    destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+        this.fallDown();
+    }
 });
 
 /**
