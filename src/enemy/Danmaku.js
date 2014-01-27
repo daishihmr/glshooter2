@@ -1795,12 +1795,18 @@ gls2.Danmaku["kanade"] = new bulletml.Root({
             $interval(57),
         ]),
     ]),
+    "top2": $.action([
+        $.repeat(999, [
+            $nway(3, -3,  +3, $spd4(5), RNSH, $.offsetY(-350)),
+            $interval(37),
+        ]),
+    ]),
 });
 gls2.Danmaku["rery"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval("180+$rand*120"),
-            $.repeat(5, [
+            $.repeat(10, [
                 $.fire($.direction(-90), $.speed(2), IVS($.actionRef("fire", +90, "$loop.index"))),
                 $.fire($.direction(+90), $.speed(2), IVS($.actionRef("fire", -90, "$loop.index"))),
             ]),
@@ -1808,7 +1814,7 @@ gls2.Danmaku["rery"] = new bulletml.Root({
     ]),
     "fire": $.action([
         $.wait(5),
-        $.fire($.direction("$1", "relative"), $spd5("$2*2"), RNL),
+        $.fire($.direction("$1", "relative"), $spd5("$2"), RNL),
         $.vanish(),
     ]),
 });
@@ -1826,17 +1832,18 @@ gls2.Danmaku["fary"] = new bulletml.Root({
 gls2.Danmaku["sory"] = new bulletml.Root({
     "top": $.action([
         $.bindVar("d", "$rand<0.5 ? -5 : 5"),
+        $.bindVar("s", "1+$rand*0.5"),
         $.repeat(999, [
-            $.fire($.direction("360/8+$d", "sequence"), $.speed(2), IVS($.actionRef("fire"))),
-            $.repeat(8-1, [
-                $.fire($.direction(360/8, "sequence"), $.speed(2), IVS($.actionRef("fire"))),
+            $.fire($.direction("360/8+$d*$s", "sequence"), $.speed(2), IVS($.actionRef("fire"))),
+            $.repeat(4-1, [
+                $.fire($.direction(360/4, "sequence"), $.speed(2), IVS($.actionRef("fire"))),
             ]),
-            $interval(20),
+            $interval(60),
         ]),
     ]),
     "fire": $.action([
         $.wait(2),
-        $.fire($.direction(0, "relative"), $spd2, RI),
+        $.fire($.direction(0, "relative"), $spd1, RI),
         $.vanish(),
     ]),
 });

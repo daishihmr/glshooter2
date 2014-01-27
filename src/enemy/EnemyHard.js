@@ -1313,6 +1313,10 @@ gls2.Enemy.Kanade = tm.createClass(
         // TODO ド派手にする
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
         this.remove();
+
+        this.cannons.forEach(function(cannon) {
+            if (cannon.parent) cannon.remove();
+        }.bind(this));
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -1326,11 +1330,11 @@ gls2.Enemy.KanadeCannon = tm.createClass(
 /** @lends {gls2.Enemy.KanadeCannon.prototype} */
 {
     superClass: gls2.Enemy,
+    _sprite: null,
     textureRow: 0,
     init: function(gameScene, software, name, textureName, textureRow) {
         this.superInit(gameScene, software, name);
         this._sprite = _Sprite(textureName, 64, 64);
-        this._sprite.setScale(2);
         this.textureRow = textureRow;
     },
     update: function(app) {
@@ -1369,7 +1373,8 @@ gls2.Enemy.Rery = tm.createClass(
     superClass: gls2.Enemy.KanadeCannon,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "rery", "tex_tank1", 0);
+        this.superInit(gameScene, software, "rery", "kanade-cannon", 0);
+        this.setScale(1.6);
         // dory
         // miry
     }
@@ -1384,7 +1389,7 @@ gls2.Enemy.Fary = tm.createClass(
     superClass: gls2.Enemy.KanadeCannon,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "rery", "tex_tank1", 1);
+        this.superInit(gameScene, software, "rery", "kanade-cannon", 1);
     }
 });
 /**
@@ -1411,6 +1416,7 @@ gls2.Enemy.Lary = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "lary", "yotsubaLeaf", 0);
+        this.setScale(1.2);
     }
 });
 /**
@@ -1423,7 +1429,8 @@ gls2.Enemy.Shiry = tm.createClass(
     superClass: gls2.Enemy.KanadeCannon,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "shiry", "yotsubaLeaf", 0);
+        this.superInit(gameScene, software, "shiry", "kanade-cannon", 1);
+        this.setScale(1.4);
     }
 });
 /**
@@ -1436,7 +1443,8 @@ gls2.Enemy.Dodory = tm.createClass(
     superClass: gls2.Enemy.KanadeCannon,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "dodory", "yotsubaLeaf", 0);
+        this.superInit(gameScene, software, "dodory", "tex_tank1", 1);
+        this.setScale(1.2);
     }
 });
 

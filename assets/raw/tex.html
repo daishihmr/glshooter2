@@ -7,8 +7,9 @@
 <div>
 <ul>
     <li>
-        キャンバスのサイズ
-        <input type="number" id="canvasSize" value="256">
+        キャンバスのサイズ<br>
+        width<input type="number" id="canvasWidth" class="canvasSize" value="256"><br>
+        height<input type="number" id="canvasHeight" class="canvasSize" value="256"><br>
     </li>
     <li>
         移動グリッドサイズ
@@ -106,9 +107,12 @@ tm.main(function() {
         });
     });
 
-    tm.dom.Element("#canvasSize").event.add("change", function() {
-        var s = ~~this.value;
-        app.resize(s, s);
+    tm.dom.ElementList(".canvasSize").forEach(function(element) {
+        element.event.add("change", function() {
+            var w = ~~tm.dom.Element("#canvasWidth").value;
+            var h = ~~tm.dom.Element("#canvasHeight").value;
+            app.resize(w, h);
+        });
     });
 });
 

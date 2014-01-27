@@ -1,0 +1,52 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	nozzle\nozzle04.suf
+	nozzle\nozzle10.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000   0.000 )
+	DisplayScale: 0.125000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr "#01" { col ( 1.000 ) amb ( 1.000 ) dif ( 0.000 ) opt ( emittion 0.050 5.000 ) }
+	1: atr noname { col ( rgb ( 0.920 0.900 0.920 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -50  50 -70 )
+	{	mov ( 0 -461.445 1284.02 ) eye deg( 45 ) }
+	{	mov ( 0 2.06412 127.75 ) target }
+	{	mov ( -250 0 0 ) rotz ( -180 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.7 1 2.1 ) obj nozzle10 /* "nozzle\nozzle10.suf" atr "noname" */
+	}
+	{	mov ( 250 0 0 ) rotz ( -180 ) roty ( 0 ) rotx ( 0 )
+		scal ( -0.7 1 2.1 ) obj nozzle10 /* "nozzle\nozzle10.suf" atr "noname" */
+	}
+	{	mov ( 0 -150 0 ) rotz ( -90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.4 1.7 2.1 ) obj nozzle10 /* "nozzle\nozzle10.suf" atr "noname" */
+	}
+	{	mov ( 0 150 0 ) rotz ( 90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.4 -1.7 2.1 ) obj nozzle10 /* "nozzle\nozzle10.suf" atr "noname" */
+	}
+	{	mov ( -200 0 200 ) rotz ( -180 ) roty ( 85 ) rotx ( 0 )
+		scal ( 1 1 1 ) obj nozzle04 /* "nozzle\nozzle04.suf" atr "noname" */
+	}
+	{	mov ( 200 0 200 ) rotz ( -180 ) roty ( -85 ) rotx ( 0 )
+		scal ( -1 1 1 ) obj nozzle04 /* "nozzle\nozzle04.suf" atr "noname" */
+	}
+	{	mov ( 0 -150 200 ) rotz ( -90 ) roty ( 85 ) rotx ( 0 )
+		scal ( 1 1 0.6 ) obj nozzle04 /* "nozzle\nozzle04.suf" atr "noname" */
+	}
+	{	mov ( 0 150 200 ) rotz ( 90 ) roty ( 85 ) rotx ( 0 )
+		scal ( 1 -1 0.6 ) obj nozzle04 /* "nozzle\nozzle04.suf" atr "noname" */
+	}
+}
