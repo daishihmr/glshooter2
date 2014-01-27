@@ -579,8 +579,8 @@ gls2.EnemyUnit = {
 ],
 
 //大型戦闘機「マドカ」
-"madoka-1": [{ hard:$e.aguri, soft:$s.aguri, x:SC_W*0.25, y:SC_H*-0.3 }],
-"madoka-2": [{ hard:$e.aguri, soft:$s.aguri, x:SC_W*0.75, y:SC_H*-0.3 }],
+"madoka-0": [{ hard:$e.aguri, soft:$s.aguri, x:SC_W*0.3, y:SC_H*-0.2 }],
+"madoka-1": [{ hard:$e.aguri, soft:$s.aguri, x:SC_W*0.7, y:SC_H*-0.2 }],
 
 //大型戦艦「ホシゾラ」
 "miyuki_y1": [{ hard:$e.miyuki_y, soft:$s.miyuki_y, x:-128    , y: 140}],
