@@ -25,10 +25,9 @@ gls2.Stage3 = tm.createClass(
         });
 
         //test
-//        this.seq.add(100, "higashi", true); //中ボス
 //        this.seq.add( 60, "reika1-left");
 //        this.seq.add(100, "miyuki_y2");
-//        this.seq.add(100, "aguri1");
+        this.seq.add(100, "aguri1");
 
         //0%
         this.seq.add(150, "nao2-center");
