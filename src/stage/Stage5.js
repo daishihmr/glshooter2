@@ -39,13 +39,6 @@ gls2.Stage5 = tm.createClass(
         this.seq.add( 25, "heri2-center");
         this.seq.add(100, "nozomi5-2");
 
-        this.seq.add( 20, "tankRD-left");
-        this.seq.add( 25, "tank5-left");
-        this.seq.add( 25, "tank5-center");
-        this.seq.add( 25, "tankRD-left");
-        this.seq.add( 25, "tank5-left");
-        this.seq.add( 25, "tank5-center");
-        this.seq.add( 25, "tankRD-left");
         this.seq.add( 25, "tank5-left");
         this.seq.add( 25, "tank5-center");
         this.seq.add( 25, "heri2-left");
@@ -54,6 +47,11 @@ gls2.Stage5 = tm.createClass(
         this.seq.add( 25, "heri2-left");
         this.seq.add( 25, "heri2-center");
         this.seq.add( 25, "heri2-right");
+        this.seq.add( 25, "tank5-left");
+        this.seq.add( 25, "tank5-center");
+        this.seq.add( 55, "tankRD-left");
+        this.seq.add( 25, "tankRD-left");
+        this.seq.add( 25, "tankRD-left");
 
         this.seq.add(200, "mktn5-0");
         this.seq.add( 60, "heri1-4-left2");

@@ -1813,7 +1813,7 @@ gls2.Danmaku["rery"] = new bulletml.Root({
         ]),
     ]),
     "fire": $.action([
-        $.wait(5),
+        $.wait(3),
         $.fire($.direction("$1", "relative"), $spd5("$2"), RNL),
         $.vanish(),
     ]),
@@ -1896,7 +1896,7 @@ gls2.Danmaku["dodory"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval("40+$rand*20"),
-            $whip($spd4, -0.1, 5, function(spd) {
+            $whip($spd4, -0.1, 3, function(spd) {
                 return $.action([
                     $.fire(spd, BNS),
                 ]);
