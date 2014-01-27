@@ -1478,9 +1478,9 @@ var _Setsuna = tm.createClass(
      * @constructs
      * @param {Array.<string>} patterns
      */
-    init: function(patterns) {
+    init: function() {
         this.superInit();
-        this.patterns = patterns;
+        this.patterns = "setsuna-1";
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -1488,6 +1488,7 @@ var _Setsuna = tm.createClass(
         enemy.patterns = [].concat(this.patterns);
         enemy.startAttack = false;
         enemy.endAttack = false;
+        enemy.teleporting = false;
         enemy.tweener
             .clear()
             .move(SC_W*0.5, SC_H*0.3, 1200, "easeOutQuad")
@@ -1495,13 +1496,21 @@ var _Setsuna = tm.createClass(
                 this.startAttack = true;
                 this.dispatchEvent(tm.event.Event("completeattack"));
                 var temp = function() {
+                    this.teleporting = false;
+                    this.alpha = 1.0;
+                    this.throughShot = false;
                     var r = gls2.FixedRandom.rand(0,100);
                     if (r > 50 && this.frame > 300 || this.x-32 < this.player.x && this.player.x < this.x+32) {
                         //アカルンワープ！（テスト中）
-                        this.teleport(true);
+                        for (var i = 0; i < 10; i++) {
+                            gls2.Effect.genShockwave(this.x+gls2.FixedRandom.rand(-100,100), this.y+gls2.FixedRandom.rand(-50,50), this.gameScene, 2);
+                        }
+                        this.teleporting = true;
+                        this.alpha = 0.3;
+                        this.throughShot = true;
                         var x = gls2.FixedRandom.rand(SC_W*0.1, SC_W*0.9);
                         var y = gls2.FixedRandom.rand(SC_H*0.2, SC_W*0.4);
-                        this.tweener.move(x, y, 10, "easeInOutQuad").call(this.teleport()).call(temp);
+                        this.tweener.move(x, y, 500, "easeInOutQuad").call(temp);
                     } else {
                         var a = gls2.FixedRandom.random() * Math.PI*2;
                         var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
@@ -1523,6 +1532,18 @@ var _Setsuna = tm.createClass(
                         this.remove();
                     }.bind(this));
             }
+            if (this.teleporting && this.frame % 10 == 0) {
+                var s = tm.display.Sprite("tex4", 256, 128).setFrameIndex(2);
+                s.alpha = 0.3;
+                s.x = this.x;
+                s.y = this.y;
+                s.setScale(1.5);
+                s.update = function() {
+                    this.alpha-=0.01;
+                    if (this.alpha < 0)this.remove();
+                }
+                this.gameScene.enemyLayer.addChild(s);
+            }
         });
 
         enemy.on("completeattack", function() {
@@ -1534,7 +1555,7 @@ var _Setsuna = tm.createClass(
         });
     },
 });
-gls2.EnemySoft.Setsuna = _Setsuna(["setsuna-1"]);
+gls2.EnemySoft.Setsuna = _Setsuna();
 
 /**
  * ステージ３ボス「モモゾノ」
@@ -1909,6 +1930,13 @@ gls2.EnemySoft.Rery = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "rery");
+        enemy.on("enterframe", function() {
+            if (this.position.y > this.gameScene.player.y) {
+                gls2.EnemySoft.pauseAttack(this);
+            } else {
+                gls2.EnemySoft.resumeAttack(this);
+            }
+        });
     }
 });
 /**
