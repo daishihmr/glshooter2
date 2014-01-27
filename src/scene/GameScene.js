@@ -314,11 +314,7 @@ gls2.GameScene = tm.createClass(
             enemies = [].concat(gls2.Enemy.activeList);
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
-<<<<<<< HEAD
-                if (e.hp <= 0　|| e.throughShot) continue;
-=======
                 if (e.hp <= 0 || e.muteki) continue;
->>>>>>> 0380c24860baa2ed0784520ae9b1af6891f6cadf
                 if (gls2.Collision.isHit(e, aura)) {
                     if(e.damage(laser.attackPower)) {
                         this.killCount += 1;
