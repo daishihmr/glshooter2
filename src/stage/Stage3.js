@@ -52,18 +52,17 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-center");
 
-        this.seq.add(120, "akane-right");
+        this.seq.add(240, "akane-right");
         this.seq.add(180, "akane-left");
         this.seq.add(120, "reika1-left");
         this.seq.add(180, "reika1-left");
 
-        this.seq.add(120, "akane-center");
+        this.seq.add(240, "akane-center");
         this.seq.add(180, "akane-left");
         this.seq.add( 60, "reika1-left");
         this.seq.add( 60, "reika1-left");
 
-        this.seq.add(120, "akane-center");
-        this.seq.add(120, "akane-right");
+        this.seq.add(360, "akane-center");
         this.seq.add( 60, "reika1-right");
         this.seq.add( 60, "reika1-right");
 

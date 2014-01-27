@@ -638,8 +638,8 @@ gls2.Enemy.akane = tm.createClass(
     superClass: gls2.Enemy,
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hino");
-
         this._sprite = _Sprite("tex4", 64, 32).setFrameIndex(0);
+        this.setScale(1.5);
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);

@@ -476,23 +476,20 @@ gls2.EnemyUnit = {
 
 //強襲戦闘機「ヒノ」
 "akane-center": [
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y:130 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.4, y: 80 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.5, y:140 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y: 80 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.7, y:130 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.35, y:SC_H*0.4 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.40, y:SC_H*0.2 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.60, y:SC_H*0.2 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.65, y:SC_H*0.4 },
 ],
 "akane-right": [
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y:160 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y:120 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.6, y: 80 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y: 40 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y:SC_H*0.10 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.7, y:SC_H*0.25 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.8, y:SC_H*0.40 },
 ],
 "akane-left": [
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y:160 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y:120 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y: 80 },
-    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y: 40 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y:SC_H*0.10 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.3, y:SC_H*0.25 },
+    { hard:$e.akane, soft:$s.akane, x:SC_W*0.2, y:SC_H*0.40 },
 ],
 
 //小型戦闘機「ミドリカワ」
