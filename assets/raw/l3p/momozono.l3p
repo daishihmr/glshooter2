@@ -13,7 +13,7 @@ Parts:
 	roarm\roarm14.suf
 	robody\robody13.suf
 	rohead\rohead01.suf
-Light: (   71   71    0 ) ( 1.00 1.00 1.00)
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
 	DisplayOffset: (  71.418   0.000   0.000 )
 	DisplayScale: 0.088388347649
@@ -33,9 +33,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -51 -48 -70 )
-	{	mov ( 1765.77 -66.0495 5326.95 ) eye deg( 45 ) }
-	{	mov ( -505.025 8.08616 247.819 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -68 -16 -70 )
+	{	mov ( 1954.54 -1659.32 2753.13 ) eye deg( 45 ) }
+	{	mov ( -798.189 52.1026 -312.082 ) target }
 	{	mov ( 23.2689 -252.036 0 ) rotz ( 10 ) roty ( 10 ) rotx ( 60 )
 		scal ( 0.6 0.4 0.5 ) obj sfcar01 /* "mecha\sfcar\sfcar01.suf" atr "noname" */
 	}

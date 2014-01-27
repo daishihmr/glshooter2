@@ -9,7 +9,7 @@ Parts:
 	mecha\sfetc\SL14.suf
 	mecha\sfship\S105.suf
 	mecha\sfship\S107.suf
-Light: (   71   71    0 ) ( 1.00 1.00 1.00)
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
 	DisplayOffset: (  39.799  28.858  18.385 )
 	DisplayScale: 0.044194173824
@@ -29,9 +29,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
-	{	mov ( 1286 -8.30248 11397.4 ) eye deg( 45 ) }
-	{	mov ( -235.939 1.52323 -9.2372 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -69 -12 -70 )
+	{	mov ( 6506.56 -5206.36 5763.45 ) eye deg( 45 ) }
+	{	mov ( -61.7442 -629.37 -468.831 ) target }
 	{	mov ( 119.4 -484.973 184.223 ) rotz ( 0 ) roty ( 0 ) rotx ( -50 )
 		scal ( 1.6 1.6 1.6 ) obj SL14 /* "mecha\sfetc\SL14.suf" atr "noname" */
 	}

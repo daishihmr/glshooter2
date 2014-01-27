@@ -249,7 +249,7 @@ gls2.GameScene = tm.createClass(
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
                 var shot = shots[j];
-                if (e.hp <= 0　|| e.throughShot) continue;
+                if (e.hp <= 0 || e.muteki) continue;
                 if (gls2.Collision.isHit(e, shot)) {
                     shot.genParticle(1);
                     shot.remove();
@@ -277,7 +277,7 @@ gls2.GameScene = tm.createClass(
             });
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
-                if (e.hp <= 0　|| e.throughShot) continue;
+                if (e.hp <= 0 || e.muteki) continue;
                 if (gls2.Collision.isHit(e, laser)) {
                     laser.setHitY(e.y + e.boundingHeightBottom);
                     if (e.damage(laser.attackPower)) {
@@ -314,7 +314,11 @@ gls2.GameScene = tm.createClass(
             enemies = [].concat(gls2.Enemy.activeList);
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
+<<<<<<< HEAD
                 if (e.hp <= 0　|| e.throughShot) continue;
+=======
+                if (e.hp <= 0 || e.muteki) continue;
+>>>>>>> 0380c24860baa2ed0784520ae9b1af6891f6cadf
                 if (gls2.Collision.isHit(e, aura)) {
                     if(e.damage(laser.attackPower)) {
                         this.killCount += 1;
@@ -346,7 +350,7 @@ gls2.GameScene = tm.createClass(
             enemies = [].concat(gls2.Enemy.activeList);
             for (var i = enemies.length; enemies[--i] !== undefined;) {
                 var e = enemies[i];
-                if (e.hp <= 0) continue;
+                if (e.hp <= 0 || e.muteki) continue;
                 if (e.isInScreen()) {
                     if (e.damage(BOMB_ATTACK_POWER)) {
                         this.addScore(e.score);
@@ -410,7 +414,7 @@ gls2.GameScene = tm.createClass(
                 // 敵vs自機
                 for (var i = gls2.Enemy.activeList.length; gls2.Enemy.activeList[--i] !== undefined;) {
                     var e = gls2.Enemy.activeList[i];
-                    if (e.hp <= 0) continue;
+                    if (e.hp <= 0 || e.muteki) continue;
                     if (e.isGround) continue;
                     if (gls2.Collision.isHit(e, this.player)) {
                         this.player.damage();

@@ -61,6 +61,7 @@ gls2.GlShooter2 = tm.createClass(
             "tex2": "assets/tex2.png",
             "tex3": "assets/tex3.png",
             "tex4": "assets/tex4.png",
+            "tex5": "assets/tex5.png",
             "tex_tank1": "assets/tex_tank1.png",
             "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
             "fighter": "assets/fighters.png",
@@ -125,7 +126,7 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgm2"];
             delete assets["bgm3"];
             delete assets["bgm4"];
-            // delete assets["bgm5"];
+            delete assets["bgm5"];
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
             delete assets["bgmEnding"];
@@ -177,7 +178,7 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.FixedRandom.setup(12345);
 
-        ["tex1", "tex2", "tex3", "tex_tank1"].forEach(function(name) {
+        ["tex1", "tex2", "tex3", "tex4", "tex5", "tex_tank1", "yotsubaLeaf"].forEach(function(name) {
 
             var tex = tm.asset.AssetManager.get(name);
             var canvas = tm.graphics.Canvas();

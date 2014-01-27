@@ -15,7 +15,7 @@ gls2.EnemySoft = tm.createClass(
 {
     setup: function(enemy) {
         enemy.on("destroy", function() {
-            gls2.EnemySoft.stopAttack(this);
+            gls2.EnemySoft.pauseAttack(this);
         });
     },
 });
@@ -24,6 +24,10 @@ gls2.EnemySoft = tm.createClass(
  * @static
  */
 gls2.EnemySoft.attack = function(enemy, danmakuName) {
+    if (gls2.Danmaku[danmakuName] === undefined) {
+        console.warn("Danmaku[" + danmakuName + "] is undefined!");
+        return;
+    }
     var ticker = gls2.Danmaku[danmakuName].createTicker();
     enemy.on("enterframe", ticker);
     enemy.on("completeattack", function() {
@@ -34,12 +38,26 @@ gls2.EnemySoft.attack = function(enemy, danmakuName) {
 /**
  * @static
  */
-gls2.EnemySoft.stopAttack = function(enemy) {
+gls2.EnemySoft.pauseAttack = function(enemy) {
     var listeners = [].concat(enemy._listeners["enterframe"]);
     if (listeners) {
         for (var i = 0, len = listeners.length; i < len; i++) {
             if (listeners[i] && listeners[i].isDanmaku) {
                 listeners[i].stop = true;
+            }
+        }
+    }
+};
+
+/**
+ * @static
+ */
+gls2.EnemySoft.resumeAttack = function(enemy) {
+    var listeners = [].concat(enemy._listeners["enterframe"]);
+    if (listeners) {
+        for (var i = 0, len = listeners.length; i < len; i++) {
+            if (listeners[i] && listeners[i].isDanmaku) {
+                listeners[i].stop = false;
             }
         }
     }
@@ -407,7 +425,7 @@ var _MiddleFighterCommon = tm.createClass(
 
             this.y += this.velocityY;
             if (this.y > SC_H*0.6) {
-                gls2.EnemySoft.stopAttack(this);
+                gls2.EnemySoft.pauseAttack(this);
             }
             if (this.entered && !this.isInScreen()) {
                 this.remove();
@@ -1831,6 +1849,205 @@ gls2.EnemySoft.Mana3 = tm.createClass(
     },
 });
 gls2.EnemySoft.Mana3 = gls2.EnemySoft.Mana3();
+
+/**
+ * ステージ５中ボス「ミナミノ」
+ */
+gls2.EnemySoft.Kanade1 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        enemy.tweener0 = tm.app.Tweener(enemy)
+            .to({
+                x:SC_W*0.9,
+            }, 30000, "easeInOutQuad")
+            .to({
+                x:SC_W*0.1,
+            }, 30000, "easeInOutQuad")
+            .setLoop(true);
+        enemy.tweener1 = tm.app.Tweener(enemy)
+            .to({
+                y:SC_H*0.7
+            }, 150000, "easeInOutQuad") // 100000
+            .to({
+                y:SC_H*0.2
+            }, 90000, "easeInOutQuad")
+            .setLoop(true);
+        enemy.tweener.wait(300000).call(function() {
+            this.tweener0.clear();
+            this.tweener1.clear();
+            this.tweener.clear().to({
+                x: SC_W*2.0
+            }, 10000, "easeInQuad");
+        }.bind(enemy))
+
+        enemy.startAttack = false;
+        enemy.on("enterframe", function() {
+            //　砲台が残り3基まで破壊されたらダメージが入るようになる
+            this.muteki = this.cannons.filter(function(cannon) { return !!cannon.parent; }).length > 3;
+            this.entered = !this.muteki;
+
+            // そして攻撃開始
+            if (!this.startAttack && !this.muteki) {
+                gls2.EnemySoft.attack(this, "kanade");
+                this.startAttack = true;
+            }
+        });
+    }
+});
+gls2.EnemySoft.Kanade1 = gls2.EnemySoft.Kanade1();
+/**
+ * レリー
+ */
+gls2.EnemySoft.Rery = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        gls2.EnemySoft.attack(enemy, "rery");
+        enemy.on("enterframe", function() {
+            if (this.position.y > this.gameScene.player.y) {
+                gls2.EnemySoft.pauseAttack(this);
+            } else {
+                gls2.EnemySoft.resumeAttack(this);
+            }
+        });
+    }
+});
+/**
+ * ファリー
+ */
+gls2.EnemySoft.Fary = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        gls2.EnemySoft.attack(enemy, "fary");
+        enemy.on("enterframe", function() {
+            if (this.position.y > this.gameScene.player.y) {
+                gls2.EnemySoft.pauseAttack(this);
+            } else {
+                gls2.EnemySoft.resumeAttack(this);
+            }
+        });
+    }
+});
+/**
+ * ソリー
+ */
+gls2.EnemySoft.Sory = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        gls2.EnemySoft.attack(enemy, "sory");
+        enemy.on("enterframe", function() {
+            if (this.position.y > this.gameScene.player.y) {
+                gls2.EnemySoft.pauseAttack(this);
+            } else {
+                gls2.EnemySoft.resumeAttack(this);
+            }
+        });
+    }
+});
+/**
+ * ラリー
+ */
+gls2.EnemySoft.Lary = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        gls2.EnemySoft.attack(enemy, "lary");
+        enemy.on("enterframe", function() {
+            if (this.position.y > this.gameScene.player.y) {
+                gls2.EnemySoft.pauseAttack(this);
+            } else {
+                gls2.EnemySoft.resumeAttack(this);
+            }
+        });
+    }
+});
+/**
+ * シリー
+ */
+gls2.EnemySoft.Shiry = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        gls2.EnemySoft.attack(enemy, "shiry");
+        enemy.on("enterframe", function() {
+            if (this.position.y > this.gameScene.player.y) {
+                gls2.EnemySoft.pauseAttack(this);
+            } else {
+                gls2.EnemySoft.resumeAttack(this);
+            }
+        });
+    }
+});
+/**
+ * ドドリー
+ */
+gls2.EnemySoft.Dodory = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        gls2.EnemySoft.attack(enemy, "dodory");
+        enemy.on("enterframe", function() {
+            if (this.position.y > this.gameScene.player.y) {
+                gls2.EnemySoft.pauseAttack(this);
+            } else {
+                gls2.EnemySoft.resumeAttack(this);
+            }
+        });
+    }
+});
 
 })();
 

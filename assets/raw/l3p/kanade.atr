@@ -1,0 +1,16 @@
+atr "#01"
+{
+	col ( 1.000 )
+	amb ( 1.000 )
+	dif ( 0.000 )
+	opt ( emittion 0.050 5.000 )
+}
+atr noname
+{
+	col ( rgb ( 0.920 0.900 0.920 ) )
+	amb ( 0.330 )
+	dif ( 0.800 )
+	spc ( 0.050 0.100 0.000 )
+	colormap ( "L3\effect\horizon.png" 0.300 1.000 )
+	mapsize ( 0 0 1 1 )
+}

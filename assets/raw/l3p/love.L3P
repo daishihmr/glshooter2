@@ -31,9 +31,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
-	{	mov ( 2327.29 -10.1993 5037.1 ) eye deg( 45 ) }
-	{	mov ( -505.025 8.08616 247.819 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -6 -70 )
+	{	mov ( 1615.05 -2041.43 2755.14 ) eye deg( 45 ) }
+	{	mov ( -791.825 -66.5171 -293.736 ) target }
 	{	mov ( 23.2689 -252.036 0 ) rotz ( 10 ) roty ( 10 ) rotx ( 60 )
 		scal ( 0.6 0.4 0.5 ) obj sfcar01 /* "mecha\sfcar\sfcar01.suf" atr "noname" */
 	}

@@ -1,0 +1,43 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	OT\OT09.suf
+	SD\SD12.suf
+	TK\TK12.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: ( -48.435  20.000 -135.439 )
+	DisplayScale: 0.125000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
+	{	mov ( 2318.93 -0.356983 2742.85 ) eye deg( 45 ) }
+	{	mov ( -402.334 0.0191922 531.747 ) target }
+	{	mov ( -350 -600 300 ) rotz ( 70 ) roty ( 30 ) rotx ( 100 )
+		scal ( 1.7 1.3 1.7 ) obj OT09 /* "OT\OT09.suf" atr "noname" */
+	}
+	{	mov ( -350 600 300 ) rotz ( -70 ) roty ( 30 ) rotx ( -100 )
+		scal ( 1.7 -1.3 1.7 ) obj OT09 /* "OT\OT09.suf" atr "noname" */
+	}
+	{	mov ( -300 0 350 ) rotz ( 0 ) roty ( 25 ) rotx ( 0 )
+		scal ( 0.8 1 2.7 ) obj TK12 /* "TK\TK12.suf" atr "noname" */
+	}
+	{	mov ( -400 -450 350 ) rotz ( 10 ) roty ( 25 ) rotx ( -70 )
+		scal ( 1 2.7 1 ) obj SD12 /* "SD\SD12.suf" atr "noname" */
+	}
+	{	mov ( -400 450 350 ) rotz ( -10 ) roty ( 25 ) rotx ( 70 )
+		scal ( 1 -2.7 1 ) obj SD12 /* "SD\SD12.suf" atr "noname" */
+	}
+}

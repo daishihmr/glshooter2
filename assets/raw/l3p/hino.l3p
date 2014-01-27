@@ -18,13 +18,13 @@ Info:
 	SelectedOnly: 0
 	DispRelative: 0
 Palette:
-	0: atr noname { col ( rgb ( 0.850 0.840 0.930 ) ) amb ( 0.200 ) dif ( 0.800 ) spc ( 0.700 1.000 0.000 ) }
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
-	{	mov ( 3135.68 -53.6747 2530.55 ) eye deg( 45 ) }
-	{	mov ( 0 0 0 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -69 -14 -70 )
+	{	mov ( 2633.31 -2177.36 2335.11 ) eye deg( 45 ) }
+	{	mov ( -228.08 -284.83 -148.263 ) target }
 	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 1 1 1 ) obj F211 /* "F2\F211.suf" atr "noname" */
 	}
