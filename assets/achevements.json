@@ -102,27 +102,27 @@
     "nomiss1": {
         "title": "ステージ1ノーミスクリア！",
         "description": "ステージ1をノーミスノーコンティニューでクリアする",
-        "grade": 1
+        "grade": 2
     },
     "nomiss2": {
         "title": "ステージ2ノーミスクリア！",
         "description": "ステージ2をノーミスノーコンティニューでクリアする",
-        "grade": 1
+        "grade": 2
     },
     "nomiss3": {
         "title": "ステージ3ノーミスクリア！",
         "description": "ステージ3をノーミスノーコンティニューでクリアする",
-        "grade": 1
+        "grade": 2
     },
     "nomiss4": {
         "title": "ステージ4ノーミスクリア！",
         "description": "ステージ4をノーミスノーコンティニューでクリアする",
-        "grade": 1
+        "grade": 2
     },
     "nomiss5": {
         "title": "ステージ5ノーミスクリア！",
         "description": "ステージ5をノーミスノーコンティニューでクリアする",
-        "grade": 1
+        "grade": 2
     },
     "mboss1": {
         "title": "ユキシロ撃破！",
@@ -177,16 +177,16 @@
     "allclear0": {
         "title": "タイプA完！",
         "description": "自機タイプAですべてのステージをクリアする",
-        "grade": 1
+        "grade": 2
     },
     "allclear1": {
         "title": "タイプB完！",
         "description": "自機タイプBですべてのステージをクリアする",
-        "grade": 1
+        "grade": 2
     },
     "allclear2": {
         "title": "タイプC完！",
         "description": "自機タイプCですべてのステージをクリアする",
-        "grade": 1
+        "grade": 2
     }
 }
