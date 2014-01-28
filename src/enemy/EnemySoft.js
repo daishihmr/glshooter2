@@ -842,7 +842,58 @@ gls2.EnemySoft.reika2 = gls2.EnemySoft.reika(2.0);
  * @class
  * @extends {gls2.EnemySoft}
  */
-gls2.EnemySoft.aguri = _MiddleFighterCommon(0.5, "aguri");
+gls2.EnemySoft.aguri = tm.createClass(
+/** @lends {gls2.EnemySoft.aguri.prototype} */
+{
+    superClass: gls2.EnemySoft,
+
+    velocityY: 0,
+    attackPattern: null,
+    delay: 0,
+
+    /**
+     * @constructs
+     * @param {number} velocityY
+     * @param {string} attackPattern
+     */
+    init: function() {
+        this.superInit();
+        this.velocityY = 0.5;
+        this.attackPattern = "aguri";
+        this.delay = 0;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.velocityY = this.velocityY;
+        enemy.patterns = [this.attackPattern];
+        enemy.ready = false;
+
+        enemy.tweener
+            .clear()
+            .wait(this.delay)
+            .moveBy(0, SC_H*0.3, 800, "easeOutQuad")
+            .call(function() {
+                gls2.EnemySoft.attack(this, this.patterns[0]);
+                this.ready = true;
+            }.bind(enemy));
+
+        enemy.on("enterframe", function() {
+            if (!this.ready) return;
+
+            this.y += this.velocityY;
+            if (this.y > SC_H*0.6) {
+                gls2.EnemySoft.pauseAttack(this);
+            }
+            if (this.entered && !this.isInScreen()) {
+                this.remove();
+            }
+
+            this.enableFire = this.y < this.player.y;
+        });
+    },
+})
+gls2.EnemySoft.aguri = gls2.EnemySoft.aguri();
 
 /**
  * 戦艦
@@ -852,7 +903,7 @@ gls2.EnemySoft.aguri = _MiddleFighterCommon(0.5, "aguri");
  * @class
  * @extends {gls2.EnemySoft}
  */
-gls2.EnemySoft.miyuki_y = tm.createClass(
+gls2.EnemySoft.miyuki = tm.createClass(
 {
     superClass: gls2.EnemySoft,
 
@@ -867,7 +918,7 @@ gls2.EnemySoft.miyuki_y = tm.createClass(
     init: function(velocityX, attackPattern) {
         this.superInit();
         this.velocityX = velocityX;
-        this.attackPattern = "miyuki_y";
+        this.attackPattern = "miyuki";
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -890,61 +941,7 @@ gls2.EnemySoft.miyuki_y = tm.createClass(
         });
     },
 });
-gls2.EnemySoft.miyuki_y = gls2.EnemySoft.miyuki_y(1.0);
-
-/**
- * 戦艦
- *
- * 上から出現、そのまま等速で画面中心まで降りて停止
- * 一定時間後、左右近い方の画面端方向に移動してスクリーンアウト
- *
- * @class
- * @extends {gls2.EnemySoft}
- */
-gls2.EnemySoft.miyuki_t = tm.createClass(
-{
-    superClass: gls2.EnemySoft,
-
-    velocityX: 0,
-    attackPattern: null,
-
-    /**
-     * @constructs
-     * @param {number} velocityY
-     * @param {string} attackPattern
-     */
-    init: function(velocityX) {
-        this.superInit();
-        this.velocityX = velocityX;
-        this.attackPattern = "miyuki_t";
-    },
-    setup: function(enemy) {
-        gls2.EnemySoft.prototype.setup.call(this, enemy);
-
-        enemy.velocityX = this.velocityX;
-        enemy.patterns = [this.attackPattern];
-        enemy.phase = 0;
-
-        enemy.tweener
-            .clear()
-            .call(function() {
-                gls2.EnemySoft.attack(this, this.patterns[0]);
-            }.bind(enemy));
-
-        enemy.on("enterframe", function() {
-            if (this.phase == 0) {
-                this.y += 0.5;
-                if (this.y > SC_H*0.4)this.phase++;
-            } else {
-                this.x += this.velocityX;
-            }
-            if (this.entered && !this.isInScreen()) {
-                this.remove();
-            }
-        });
-    },
-});
-gls2.EnemySoft.miyuki_t = gls2.EnemySoft.miyuki_t(0.5);
+gls2.EnemySoft.miyuki = gls2.EnemySoft.miyuki(1.0);
 
 /**
  * 浮遊砲台
@@ -1522,7 +1519,7 @@ var _Setsuna = tm.createClass(
 
         enemy.on("enterframe", function() {
             if (this.startAttack === false || this.hp <= 0) return;
-            if (1500 < this.frame && this.endAttack === false) {
+            if (1800 < this.frame && this.endAttack === false) {
                 this.endAttack = true;
                 this.tweener
                     .clear()
