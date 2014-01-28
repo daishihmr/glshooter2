@@ -19,15 +19,19 @@ gls2.Stage3 = tm.createClass(
         //start
         this.seq.add(  0, function() {
             gls2.playBgm("bgm3", true),
-            this.gameScene.ground.direction = Math.PI*0.5; //前進
+            //前進
+            this.gameScene.ground.direction = Math.PI*0.5;
             this.gameScene.ground.speed = 2;
             this.gameScene.ground.tweener.clear().to({speed:5}, 4000, "easeInOutQuad");
         });
 
         //test
-//        this.seq.add( 60, "reika1-left");
-//        this.seq.add(100, "miyuki_y2");
-        this.seq.add(100, "madoka-1");
+//        this.seq.add(120, "madoka-0");
+//        this.seq.add(300, "higashi", true); //中ボス
+//        this.seq.add( 60, "madoka-0");
+//        this.seq.add( 60, "alice");
+//        this.seq.add( 60, "miyuki-2");
+//        this.seq.add(1200, function() {});
 
         //0%
         this.seq.add(150, "nao2-center");
@@ -51,19 +55,20 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-center");
 
         this.seq.add(120, "akane-right");
-        this.seq.add(180, "akane-left");
+        this.seq.add( 60, "akane-left");
+        this.seq.add( 60, "reika1-left");
         this.seq.add(120, "reika1-left");
-        this.seq.add(180, "reika1-left");
 
         this.seq.add(120, "akane-center");
-        this.seq.add(180, "akane-left");
+        this.seq.add( 60, "akane-left");
         this.seq.add( 60, "reika1-left");
-        this.seq.add( 60, "reika1-left");
+        this.seq.add(120, "reika1-left");
 
-        this.seq.add(120, "akane-center");
-        this.seq.add(120, "akane-right");
+        this.seq.add(240, "akane-center");
         this.seq.add( 60, "reika1-right");
-        this.seq.add( 60, "reika1-right");
+        this.seq.add(120, "reika1-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-center");
 
         //20%
         this.seq.add( 60, function() {
@@ -78,25 +83,32 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 60, "nao2-right");
         }
 
-        
         //30%
         this.seq.add(60, function() {
+            //左へ
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:4, direction:-Math.PI/180*90}, 3000, "easeInOutQuad");
+                .to({speed:4, direction:0}, 3000, "easeInOutQuad");
         });
-        this.seq.add( 60, "miyuki_y1");
+        this.seq.add( 60, "miyuki-1");
         this.seq.add( 60, "reika1-right");
         this.seq.add(180, "reika1-right");
-
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add(120, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+ 
+        this.seq.add( 60, function() {
+            this.gameScene.ground.tweener.clear().to({speed:5}, 3000, "easeInOutQuad");
+        });
         this.seq.add(120, "komachi3-0");
+        this.seq.add( 60, "reika1-left");
+        this.seq.add( 60, "reika1-left");
+
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-center");
+
         this.seq.add(120, "madoka-1");
-        this.seq.add( 60, "reika1-left");
-        this.seq.add( 60, "reika1-left");
-
-        this.seq.add( 60, "nao2-center");
-        this.seq.add( 60, "nao2-center");
-
         this.seq.add(120, "reika1-left");
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
@@ -105,34 +117,58 @@ gls2.Stage3 = tm.createClass(
 
         //40%
         this.seq.add(  1, function() {
+            //左ななめ前
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:4}, 2000, "easeInOutQuad")
-                .to({direction:Math.PI*0.5}, 2000, "easeInOutQuad")
+                .to({speed:3, direction:Math.PI*0.2}, 3000, "easeInOutQuad");
         });
         this.seq.add( 60, "komachi3-1");
-        this.seq.add( 60, "madoka-0");
         this.seq.add(120, "reika1-right");
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-right");
+
+        this.seq.add( 60, "madoka-0");
         this.seq.add(120, "reika1-right");
         this.seq.add(120, "reika1-right");
 
         //50%
+        this.seq.add( 60, "madoka-0");
+        this.seq.add(180, "madoka-1");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+
+        this.seq.add( 80, "erika");
 
         //60%
+        this.seq.add(  1, function() {
+            //前進
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:7}, 2000, "easeInOutQuad");
+        });
         this.seq.add(300, "higashi", true); //中ボス
+        this.seq.add(1200, function() {});
 
         //70%
-        this.seq.add(300, "nao1-left");
-        for (var i = 0; i < 2; i++) {
-            this.seq.add( 60, "nao1-center");
+        for (var i = 0; i < 4; i++) {
+            this.seq.add( 90, "nao1-center");
             this.seq.add( 60, "nao1-right");
             this.seq.add( 60, "nao1-left");
         }
-        this.seq.add(120, "reika1-right");
+        this.seq.add(  1, function() {
+            //前進
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:2, direction:Math.PI*0.5}, 3000, "easeInOutQuad");
+        });
+        
+        this.seq.add( 60, "komachi3-1");
+        this.seq.add(240, "komachi3-0");
 
-        this.seq.add(100, "alice");
+        this.seq.add(120, "alice");
+        this.seq.add(600, function() {});
 
         for (var i = 0; i < 5; i++) {
             this.seq.add( 60, "nao2-center");
@@ -140,24 +176,67 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 60, "nao2-right");
         }
 
-        //80%        
+        //80%
+        this.seq.add(120, "reika1-left");
+        this.seq.add(120, "reika1-left");
+        this.seq.add(120, "heri1-left");
+        this.seq.add( 60, "heri1-right");
+        this.seq.add( 40, "heri1-right2");
+        this.seq.add( 40, "heri1-left2");
         this.seq.add( 60, "komachi3-0");
-        this.seq.add( 60, "madoka-1");
+        this.seq.add(120, "akane-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
 
-        //90
-        this.seq.add( 60, "komachi3-1");
-        this.seq.add( 60, "madoka-0");
+        this.seq.add(120, "reika1-left");
+        this.seq.add(120, "reika1-left");
+        this.seq.add(160, "heri1-left");
+        this.seq.add(100, "heri1-right");
+        this.seq.add( 40, "heri1-right2");
+        this.seq.add( 40, "heri1-left2");
+        this.seq.add( 60, "madoka-1");
+        this.seq.add(120, "akane-left");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+
+        //90%
+        this.seq.add(120, "reika1-right");
+        this.seq.add(120, "reika1-right");
+        this.seq.add(120, "akane-left");
+        this.seq.add(120, "heri1-left");
+        this.seq.add( 60, "heri1-right");
+        this.seq.add( 40, "heri1-right2");
+        this.seq.add( 40, "heri1-left2");
+        this.seq.add(180, "komachi3-1");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+
+        this.seq.add(120, "reika1-right");
+        this.seq.add(120, "reika1-right");
+        this.seq.add(120, "akane-right");
+        this.seq.add(120, "heri1-left");
+        this.seq.add( 60, "heri1-right");
+        this.seq.add( 40, "heri1-right2");
+        this.seq.add( 40, "heri1-left2");
+        this.seq.add(180, "madoka-0");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
+
+        this.seq.add( 80, "erika");
 
         //100%
-        this.seq.add(600, function() {
+        this.seq.add(300, function() {
             this.alartWarning(function() {
                 gls2.playBgm("bgmBoss", true);
             });
         });
 
         this.seq.add(  1, function() {
-            this.gameScene.ground.direction = Math.PI/2;
-            this.gameScene.ground.tweener.clear().to({speed:7}, 8000, "easeInOutQuad");
+            this.gameScene.ground.tweener.clear().to({speed:8, direction:Math.PI/2}, 5000, "easeInOutQuad");
         });
 
         //ステージボス
@@ -176,11 +255,14 @@ gls2.Stage3 = tm.createClass(
 })();
 
 //Stage3 使用敵機
+//kujo
 //hino
 //aoki
 //midorikawa
 //hoshizora
 //yotsuba
-//komachi
+//akimoto
+//madoka
+//kurumi
 //higashi
 //momozono

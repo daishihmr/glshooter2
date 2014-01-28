@@ -45,14 +45,13 @@ gls2.Enemy.DATA = {
     "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
-    "hino":      [    20,      500, false, false,  1, {"width": 24, "height": 48}, ],
-    "hoshizora_y":[  100,    20000, false,  true, 30, {"width":128, "height": 64}, ],
-    "hoshizora_t":[  100,    20000, false,  true, 30, {"width":128, "height": 64}, ],
-    "yotsuba":    [  300,   100000, false,  true, 30, {"width": 64, "height": 64}, ],
-    "yotsubaLeaf":[  100,    30000, false, false, 10, {"width": 64, "height": 64}, ],
-    "midorikawa":[     5,     1000, false, false,  1, {"width": 64, "height": 64}, ],
-    "aoki":      [     5,     1200, false, false,  1, {"width": 64, "height": 64}, ],
-    "madoka":    [   250,    15000, false, true,   5, {"width":256, "height": 64}, ],
+    "hino":      [    20,    10000, false, false,  1, {"width": 64, "height": 64}, ],
+    "hoshizora": [   300,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
+    "yotsuba":    [  300,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
+    "yotsubaLeaf":[  100,   100000, false, false, 10, {"width": 64, "height": 64}, ],
+    "midorikawa":[     5,     2000, false, false,  1, {"width": 64, "height": 64}, ],
+    "aoki":      [     5,     3200, false, false,  1, {"width": 64, "height": 64}, ],
+    "madoka":    [   350,   400000, false,  true, 10, {"width":256, "height": 64}, ],
 };
 
 /**
@@ -638,8 +637,8 @@ gls2.Enemy.akane = tm.createClass(
     superClass: gls2.Enemy,
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hino");
-
         this._sprite = _Sprite("tex4", 64, 32).setFrameIndex(0);
+        this.setScale(1.5);
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -721,18 +720,23 @@ gls2.Enemy.aguri = tm.createClass(
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
+    destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+        this.fallDown();
+    }
 });
 
 /**
  * 大型戦艦「ホシゾラ」横
  */
-gls2.Enemy.miyuki_y = tm.createClass(
+gls2.Enemy.miyuki = tm.createClass(
 {
     superClass: gls2.Enemy,
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "hoshizora_y");
-
+        this.superInit(gameScene, software, "hoshizora");
         this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(1);
+        this.boundingWidth = 384;
+        this.setScale(1.5);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -754,50 +758,9 @@ gls2.Enemy.miyuki_y = tm.createClass(
     },
     onLaunch: function() {
         //初期位置で向きを決定
-        if (this.x > SC_W){ //画面左端から出現
+        if (this.x > SC_W/2){ //画面左端から出現
             this.velocityX *= -1;
-            this._sprite.scaleX = -1;
-        }
-    },
-    isInScreen: function() {
-        //一部でも表示されたら画面内とする
-        return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
-            && 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
-    },
-});
-
-/**
- * 大型戦艦「ホシゾラ」縦
- */
-gls2.Enemy.miyuki_t = tm.createClass(
-{
-    superClass: gls2.Enemy,
-    init: function(gameScene, software) {
-        this.superInit(gameScene, software, "hoshizora_t");
-
-        this._sprite = _Sprite("tex4", 64, 128).setFrameIndex(1);
-    },
-    update: function(app) {
-        gls2.Enemy.prototype.update.call(this, app);
-        //一部でも表示されたら画面内とする
-        if (this.entered === false) {
-            if (0 <= this.x - this.boundingWidthLeft || this.x + this.boundingWidthRight < SC_W
-            || 0 <= this.y - this.boundingHeightTop || this.y + this.boundingHeightBottom < SC_H) {
-                this.entered = true;
-                this.dispatchEvent(tm.event.Event("enter"));
-            }
-        }
-    },
-    draw: function(canvas) {
-        this._sprite.draw(canvas);
-    },
-    destroy: function() {
-        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
-        this.fallDown();
-    },
-    onLaunch: function() {
-        if (this.x > SC_W/2){
-            this.velocityX *= -1;
+            this.setScale(-1.5);
         }
     },
     isInScreen: function() {
