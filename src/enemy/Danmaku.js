@@ -916,22 +916,22 @@ gls2.Danmaku["reika"] = new bulletml.Root({
  */
 gls2.Danmaku["aguri"] = new bulletml.Root({
     "top0": $.action([
-        $interval(30),
-        $.repeat(3, [
-            $whip($spd4, 0.01, 4, function(spd) {
-                return $.action([
-                    //左側
-                    $nway(3, -30, 30, spd, BL, $.offsetX(-32), $.offsetY(-20)),
-                    //右側
-                    $nway(3, -30, 30, spd, BL, $.offsetX(+32), $.offsetY(-20)),
-                    $.wait(10),
-                ]);
-            }),
-            $interval(60),
+        $.repeat(999, [
+            $interval(120),
+            $.repeat(3, [
+                $whip($spd3, 0.05, 4, function(spd) {
+                    return $.action([
+                        //左側
+                        $nway(3, -30, 30, spd, BL, $.offsetX(-32), $.offsetY(-20)),
+                        //右側
+                        $nway(3, -30, 30, spd, BL, $.offsetX(+32), $.offsetY(-20)),
+                        $.wait(5),
+                    ]);
+                }),
+                $interval(30),
+            ]),
         ]),
-        $interval(60),
     ]),
-    //トキメキなさい！
     "top1": $.action([
         $.repeat(999, [
             //真ん中
@@ -950,17 +950,6 @@ gls2.Danmaku["aguri"] = new bulletml.Root({
             $interval(60),
         ]),
     ]),
-/*
-    "top2": $.action([
-        $.repeat(999, [
-            $interval(60),
-            $.repeat(5, [
-                $interval(10),
-                $nway(3, -30, 30, $spd4, RNL, $.offsetX(0), $.offsetY(32), $.autonomy(true)),
-            ]),
-        ]),
-    ]),
-*/
 });
 
 /**

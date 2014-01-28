@@ -52,19 +52,21 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-center");
 
-        this.seq.add(240, "akane-right");
-        this.seq.add(180, "akane-left");
+        this.seq.add(120, "akane-right");
+        this.seq.add( 60, "akane-left");
+        this.seq.add( 60, "reika1-left");
         this.seq.add(120, "reika1-left");
-        this.seq.add(180, "reika1-left");
+
+        this.seq.add(120, "akane-center");
+        this.seq.add( 60, "akane-left");
+        this.seq.add( 60, "reika1-left");
+        this.seq.add(120, "reika1-left");
 
         this.seq.add(240, "akane-center");
-        this.seq.add(180, "akane-left");
-        this.seq.add( 60, "reika1-left");
-        this.seq.add( 60, "reika1-left");
-
-        this.seq.add(360, "akane-center");
         this.seq.add( 60, "reika1-right");
-        this.seq.add( 60, "reika1-right");
+        this.seq.add(120, "reika1-right");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-center");
 
         //20%
         this.seq.add( 60, function() {
@@ -79,7 +81,6 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 60, "nao2-right");
         }
 
-        
         //30%
         this.seq.add(60, function() {
             //左へ
@@ -135,6 +136,8 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
+
+        this.seq.add( 80, "erika");
 
         //60%
         this.seq.add(  1, function() {
@@ -217,6 +220,8 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
 
+        this.seq.add( 80, "erika");
+
         //100%
         this.seq.add(300, function() {
             this.alartWarning(function() {
@@ -244,11 +249,14 @@ gls2.Stage3 = tm.createClass(
 })();
 
 //Stage3 使用敵機
+//kujo
 //hino
 //aoki
 //midorikawa
 //hoshizora
 //yotsuba
-//komachi
+//akimoto
+//madoka
+//kurumi
 //higashi
 //momozono
