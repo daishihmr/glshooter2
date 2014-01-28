@@ -1363,7 +1363,7 @@ gls2.Danmaku["saki-1-1"] = new bulletml.Root({
     ]),
     "oneround": $.action([
         $.bindVar("way", "$1"),
-        $.repeat("30", [
+        $.repeat("10", [
             $nway("$way", "3 * $loop.index*+1", "3 * $loop.index*+1 + 360", $spd3, BNS),
             $nway("$way", "3 * $loop.index*-1", "3 * $loop.index*-1 + 360", $spd3, BNS),
             $interval(12),
@@ -1742,7 +1742,8 @@ gls2.Danmaku["mana-1-2"] = new bulletml.Root({
         $.repeat(5, [
             $.bindVar("i", "$loop.index"),
             $.bindVar("j", "1/($i+1) * 4"),
-            $whip($spd3(6), 0.02, "4+$loop.index*3", function(spd) {
+            $.bindVar("k", "6+$i*3"),
+            $whip($spd3("$k"), 0.02, "4+$loop.index*3", function(spd) {
                 return $.action([
                     $.fire($.direction("(12-$i)*(-3*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
                     $.fire($.direction("(12-$i)*(-2*$j)"), spd, BNL, $.offsetX(-145), $.offsetY(-50)),
@@ -1763,14 +1764,51 @@ gls2.Danmaku["mana-1-2"] = new bulletml.Root({
                     $interval(5),
                 ]);
             }),
-            $interval(60),
+            $interval(30),
         ]),
     ]),
 });
 /**
  * マナ第１形態-3
  */
-gls2.Danmaku["mana-1-3"] = gls2.Danmaku["mana-1-1"];
+gls2.Danmaku["mana-1-3"] = new bulletml.Root({
+    "top0": $.action([
+        $interval(20),
+        $.actionRef("fire", -145),
+    ]),
+    "top1": $.action([
+        $interval(40),
+        $.actionRef("fire", +145),
+    ]),
+    "top2": $.action([
+        $.repeat(8, [
+            $interval(9),
+            $.bindVar("d", "-3*($rand*2-1)"),
+            $.bindVar("s", "$loop.index*2"),
+            $.fire($.direction("$d"), IVS($.actionRef("dmy"))),
+            $.fire($.direction(0, "sequence"), $spd5("$s"), RNSH),
+            $.repeat(5, [
+                $.wait(7),
+                $.bindVar("way", "$loop.index+2"),
+                $.fire($.direction("-$way*1.2*0.5", "sequence"), $spd5("$s"), RNSH),
+                $.repeat("$way", [
+                    $.fire($.direction(+1.2, "sequence"), $spd5("$s"), RNSH),
+                ]),
+                $.fire($.direction("-$way*1.2*0.5", "sequence"), IVS($.actionRef("dmy"))),
+            ]),
+        ]),
+    ]),
+    "fire": $.action([
+        $.repeat(8, [
+            $nway(72, -180+180/72, +180-180/72, $spd2, BNL, $.offsetX("$1"), $.offsetY(-50)),
+            $interval(50),
+        ]),
+    ]),
+    "dmy": $.action([
+        $.wait(1),
+        $.vanish(),
+    ]),
+});
 /**
  * マナ第２形態-1
  */
