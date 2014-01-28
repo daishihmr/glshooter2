@@ -805,7 +805,7 @@ gls2.Enemy.Alice = tm.createClass({
             var distance = 64;
             var sx = this.x+Math.sin(dir)*distance;
             var sy = this.y+Math.cos(dir)*distance;
-            this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.AliceLeaf, soft:gls2.EnemySoft.AliceLeaf, x:sx, y:sy});
+            this.leaf[i] = this.stage.launchEnemy({ "hard":gls2.Enemy.AliceLeaf, "soft":gls2.EnemySoft.AliceLeaf, "x":sx, "y":sy});
             this.leaf[i].dir = dir;
             this.leaf[i].current = this;
             this.leaf[i].number = i;
@@ -1152,7 +1152,7 @@ gls2.Enemy.Mana = tm.createClass(
     },
 });
 
-/** 
+/**
  * 調整中...
  * @const
  */

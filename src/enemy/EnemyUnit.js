@@ -642,7 +642,7 @@ gls2.EnemyUnit = {
 /**
  * ステージ１ボス「ミスミ」
  */
-"misumi": [{ "hard":$e.Nagisa, "soft":[$s.Nagisa1, $s.Nagisa2, $s.Nagisa3], "x":SC_W*0.5, "y":-100, boss:true }],
+"misumi": [{ "hard":$e.Nagisa, "soft":[$s.Nagisa1, $s.Nagisa2, $s.Nagisa3], "x":SC_W*0.5, "y":-100, "boss":true }],
 
 /**
  * ステージ２中ボス「ミショウ」
@@ -652,7 +652,7 @@ gls2.EnemyUnit = {
 /**
  * ステージ２ボス「ヒュウガ」
  */
-"hyuga": [{ "hard":$e.Saki, "soft":[$s.Saki1, $s.Saki2, $s.Saki3], "x":SC_W*0.5, "y":-100, boss:true }],
+"hyuga": [{ "hard":$e.Saki, "soft":[$s.Saki1, $s.Saki2, $s.Saki3], "x":SC_W*0.5, "y":-100, "boss":true }],
 
 /**
  * ステージ３中ボス「ヒガシ」
@@ -662,7 +662,7 @@ gls2.EnemyUnit = {
 /**
  * ステージ３ボス「モモゾノ」
  */
-"momozono": [{ "hard":$e.Love, "soft":[$s.Love1, $s.Love2, $s.Love3], "x":SC_W*0.5, "y":-100, boss:true }],
+"momozono": [{ "hard":$e.Love, "soft":[$s.Love1, $s.Love2, $s.Love3], "x":SC_W*0.5, "y":-100, "boss":true }],
 
 /**
  * ステージ４中ボス「ヒシカワ」
@@ -672,7 +672,7 @@ gls2.EnemyUnit = {
 /**
  * ステージ４ボス「アイダ」
  */
-"mana": [{ "hard":$e.Mana, "soft":[$s.Mana1, $s.Mana2, $s.Mana3], "x":SC_W*0.5, "y":-100, boss:true }],
+"mana": [{ "hard":$e.Mana, "soft":[$s.Mana1, $s.Mana2, $s.Mana3], "x":SC_W*0.5, "y":-100, "boss":true }],
 
 /**
  * ステージ５中ボス「ミナミノ」
