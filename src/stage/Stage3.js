@@ -28,7 +28,7 @@ gls2.Stage3 = tm.createClass(
         //test
 //        this.seq.add(120, "madoka-0");
 //        this.seq.add(300, "higashi", true); //中ボス
-//        this.seq.add(180, "alice");
+//        this.seq.add( 60, "madoka-0");
 //        this.seq.add(1200, function() {});
 
         //0%
@@ -87,7 +87,7 @@ gls2.Stage3 = tm.createClass(
                 .clear()
                 .to({speed:4, direction:0}, 3000, "easeInOutQuad");
         });
-        this.seq.add( 60, "miyuki_y1");
+        this.seq.add( 60, "miyuki-1");
         this.seq.add( 60, "reika1-right");
         this.seq.add(180, "reika1-right");
         this.seq.add( 60, "nao2-center");
@@ -159,7 +159,7 @@ gls2.Stage3 = tm.createClass(
                 .to({speed:2, direction:Math.PI*0.5}, 3000, "easeInOutQuad");
         });
 
-        this.seq.add(180, "alice");
+        this.seq.add( 60, "alice");
 
         for (var i = 0; i < 5; i++) {
             this.seq.add( 60, "nao2-center");
@@ -170,6 +170,10 @@ gls2.Stage3 = tm.createClass(
         //80%
         this.seq.add(120, "reika1-left");
         this.seq.add(120, "reika1-left");
+        this.seq.add(120, "heri1-left");
+        this.seq.add( 60, "heri1-right");
+        this.seq.add( 40, "heri1-right2");
+        this.seq.add( 40, "heri1-left2");
         this.seq.add( 60, "komachi3-0");
         this.seq.add(120, "akane-right");
         this.seq.add( 60, "nao2-center");
@@ -178,6 +182,10 @@ gls2.Stage3 = tm.createClass(
 
         this.seq.add(120, "reika1-left");
         this.seq.add(120, "reika1-left");
+        this.seq.add(160, "heri1-left");
+        this.seq.add(100, "heri1-right");
+        this.seq.add( 40, "heri1-right2");
+        this.seq.add( 40, "heri1-left2");
         this.seq.add( 60, "madoka-1");
         this.seq.add(120, "akane-left");
         this.seq.add( 60, "nao2-center");
@@ -188,6 +196,10 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(120, "reika1-right");
         this.seq.add(120, "reika1-right");
         this.seq.add(120, "akane-left");
+        this.seq.add(120, "heri1-left");
+        this.seq.add( 60, "heri1-right");
+        this.seq.add( 40, "heri1-right2");
+        this.seq.add( 40, "heri1-left2");
         this.seq.add(180, "komachi3-1");
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
@@ -196,13 +208,17 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(120, "reika1-right");
         this.seq.add(120, "reika1-right");
         this.seq.add(120, "akane-right");
+        this.seq.add(120, "heri1-left");
+        this.seq.add( 60, "heri1-right");
+        this.seq.add( 40, "heri1-right2");
+        this.seq.add( 40, "heri1-left2");
         this.seq.add(180, "madoka-0");
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
 
         //100%
-        this.seq.add(600, function() {
+        this.seq.add(300, function() {
             this.alartWarning(function() {
                 gls2.playBgm("bgmBoss", true);
             });

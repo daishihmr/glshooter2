@@ -916,12 +916,42 @@ gls2.Danmaku["reika"] = new bulletml.Root({
  */
 gls2.Danmaku["aguri"] = new bulletml.Root({
     "top0": $.action([
+        $interval(30),
+        $.repeat(3, [
+            $whip($spd4, 0.01, 4, function(spd) {
+                return $.action([
+                    //左側
+                    $nway(3, -30, 30, spd, BL, $.offsetX(-32), $.offsetY(-20)),
+                    //右側
+                    $nway(3, -30, 30, spd, BL, $.offsetX(+32), $.offsetY(-20)),
+                    $.wait(10),
+                ]);
+            }),
+            $interval(60),
+        ]),
+        $interval(60),
+    ]),
+    //トキメキなさい！
+    "top1": $.action([
         $.repeat(999, [
-            $interval(360),
-            $whip($spd4, -0.01, 8, $nwayVs(4, -15, 15))
+            //真ん中
+            $nway(3,-10, 10, $spd4, RS, $.offsetX(  0), $.offsetY(  0)),
+            $nway(3,-10, 10, $spd4, RS, $.offsetX(  0), $.offsetY( 30)),
+            //右側
+            $nway(3,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY(-10)),
+            $nway(3,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY(  0)),
+            $nway(3,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY( 10)),
+            $nway(3,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY( 20)),
+            //左側
+            $nway(3,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY(-10)),
+            $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY(  0)),
+            $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY( 10)),
+            $nway(3,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY( 20)),
+            $interval(60),
         ]),
     ]),
-    "top1": $.action([
+/*
+    "top2": $.action([
         $.repeat(999, [
             $interval(60),
             $.repeat(5, [
@@ -930,12 +960,13 @@ gls2.Danmaku["aguri"] = new bulletml.Root({
             ]),
         ]),
     ]),
+*/
 });
 
 /**
  *　小学８年生用
  */
-gls2.Danmaku["miyuki_y"] = new bulletml.Root({
+gls2.Danmaku["miyuki"] = new bulletml.Root({
     "top": $.action([
         $.wait("40"),
         $.repeat(999, [
@@ -949,40 +980,6 @@ gls2.Danmaku["miyuki_y"] = new bulletml.Root({
                     $nway(3, "-45", "+45", spd, BL, $.offsetX(0), $.offsetY(0)),
                 ]);
             }),
-        ]),
-    ]),
-});
-gls2.Danmaku["miyuki_t"] = new bulletml.Root({
-    "top0": $.action([
-        $.wait("40"),
-        $.repeat(999, [
-            $.repeat(3, [
-                $absoluteNway(3, -20, 20, $spd3, BL, $.offsetX(32), $.offsetY(32)),
-                $interval(30),
-            ]),
-            $.repeat(3, [
-                $absoluteNway(3, -10, 10, $spd3, BL, $.offsetX(-32), $.offsetY(-32)),
-                $interval(30),
-            ]),
-            $.repeat(3, [
-                $absoluteNway(3, -5, 5, $spd3, BL, $.offsetX(-16), $.offsetY(-16)),
-                $interval(30),
-            ]),
-            $interval(120),
-        ]),
-    ]),
-    "top0": $.action([
-        $.wait("40"),
-        $.repeat(999, [
-            $.repeat(5, [
-                $absoluteNway(5, -30, 30, $spd3, BL, $.offsetX(-32), $.offsetY(32)),
-                $interval(45),
-            ]),
-            $.repeat(5, [
-                $absoluteNway(5, -30, 30, $spd3, BL, $.offsetX( 32), $.offsetY(32)),
-                $interval(45),
-            ]),
-            $interval(120),
         ]),
     ]),
 });
@@ -1898,6 +1895,7 @@ gls2.Danmaku["dodory"] = new bulletml.Root({
         ]),
     ]),
 });
+
 
 /**
  * せつな-1
