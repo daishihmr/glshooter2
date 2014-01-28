@@ -6,7 +6,7 @@
 /**
  * @const
  */
-var MUTEKI = false;
+var MUTEKI = true;
 
 /**
  * FPS

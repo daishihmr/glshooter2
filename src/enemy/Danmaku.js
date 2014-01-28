@@ -681,16 +681,24 @@ gls2.Danmaku["komachi-5"] = new bulletml.Root({
     ]),
     "top2": $.action([
         $.repeat(999, [
-            $.fire($.direction(0), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
+            $.fire($.direction(-10), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
+            $.fire($.direction(+10, "sequence"), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
+            $.fire($.direction(+10, "sequence"), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
             $.repeat(30, [
                 $.wait(1),
-                $.fire($.direction(0, "sequence"), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
+                $.fire($.direction(-20, "sequence"), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
+                $.fire($.direction(+10, "sequence"), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
+                $.fire($.direction(+10, "sequence"), $spd4(0), BS, $.offsetX(-110), $.autonomy(true)),
             ]),
             $interval(5),
-            $.fire($.direction(0), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
+            $.fire($.direction(-10), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
+            $.fire($.direction(+10, "sequence"), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
+            $.fire($.direction(+10, "sequence"), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
             $.repeat(30, [
                 $.wait(1),
-                $.fire($.direction(0, "sequence"), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
+                $.fire($.direction(-20, "sequence"), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
+                $.fire($.direction(+10, "sequence"), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
+                $.fire($.direction(+10, "sequence"), $spd4(0), BS, $.offsetX(+110), $.autonomy(true)),
             ]),
             $interval(5),
         ]),
@@ -1845,7 +1853,7 @@ gls2.Danmaku["lary"] = new bulletml.Root({
         $.fire($.direction(0, "absolute"), $.speed(1), IVS($.actionRef("fire"))),
         $.repeat(999, [
             $interval(10),
-            $.fire($.direction(360/4+5, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
+            $.fire($.direction(360/4+8, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
             $.fire($.direction(360/4, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
             $.fire($.direction(360/4, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
             $.fire($.direction(360/4, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
@@ -1855,7 +1863,7 @@ gls2.Danmaku["lary"] = new bulletml.Root({
         $.fire($.direction(47, "absolute"), $.speed(1), IVS($.actionRef("fire"))),
         $.repeat(999, [
             $interval(10),
-            $.fire($.direction(360/4-7, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
+            $.fire($.direction(360/4-14, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
             $.fire($.direction(360/4, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
             $.fire($.direction(360/4, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
             $.fire($.direction(360/4, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
@@ -1863,8 +1871,8 @@ gls2.Danmaku["lary"] = new bulletml.Root({
     ]),
     "fire": $.action([
         $.wait(5),
-        $.fire($.direction(-3, "relative"), $spd2, BNSH),
-        $.fire($.direction(+3, "relative"), $spd2, BNSH),
+        $.fire($.direction(-1, "relative"), $spd2, BNSH),
+        $.fire($.direction(+1, "relative"), $spd2, BNSH),
         $.vanish(),
     ]),
 });
@@ -1872,11 +1880,11 @@ gls2.Danmaku["shiry"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
             $.bindVar("d", "$loop.index*-6"),
-            $.repeat(20 - 1, [
-                $.fire($.direction(360/20, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
+            $.repeat(24 - 1, [
+                $.fire($.direction(360/24, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
             ]),
             $interval(30),
-            $.fire($.direction(360/20 + 1, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
+            $.fire($.direction(360/24 + 1, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
         ]),
     ]),
     "ivs0": $.action([

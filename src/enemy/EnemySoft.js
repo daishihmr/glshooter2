@@ -175,7 +175,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     },
 });
 gls2.EnemySoft.Heri21 = gls2.EnemySoft.Heri2("basic1-0");
-gls2.EnemySoft.Heri25 = function(delay) { return gls2.EnemySoft.Heri2("basic1-3", delay*gls2.math.randf(1, 2)); };
+gls2.EnemySoft.Heri25 = function(delay) { return gls2.EnemySoft.Heri2("basic1-3", delay*(Math.random()*2+1)); };
 
 /**
  * @class
@@ -1885,12 +1885,18 @@ gls2.EnemySoft.Kanade1 = tm.createClass(
             .setLoop(true);
         enemy.tweener1 = tm.app.Tweener(enemy)
             .to({
-                y:SC_H*0.7
-            }, 150000, "easeInOutQuad")
-            .to({
-                y:SC_H*0.6
-            }, 90000, "easeInOutQuad")
-            .setLoop(true);
+                y:SC_H*0.9
+            }, 160000, "easeInOutQuad")
+            .call(function() {
+                tm.app.Tweener(this)
+                    .to({
+                        y:SC_H*0.7
+                    }, 20000, "easeInOutQuad")
+                    .to({
+                        y:SC_H*0.9
+                    }, 20000, "easeInOutQuad")
+                    .setLoop(true);
+            }.bind(enemy));
         enemy.tweener.wait(220000).call(function() {
             // 撤退開始
             this.stage.seq.stoping = false;
