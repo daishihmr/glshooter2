@@ -29,6 +29,8 @@ gls2.Stage3 = tm.createClass(
 //        this.seq.add(120, "madoka-0");
 //        this.seq.add(300, "higashi", true); //中ボス
 //        this.seq.add( 60, "madoka-0");
+//        this.seq.add( 60, "alice");
+//        this.seq.add( 60, "miyuki-2");
 //        this.seq.add(1200, function() {});
 
         //0%
@@ -161,8 +163,12 @@ gls2.Stage3 = tm.createClass(
                 .clear()
                 .to({speed:2, direction:Math.PI*0.5}, 3000, "easeInOutQuad");
         });
+        
+        this.seq.add( 60, "komachi3-1");
+        this.seq.add(240, "komachi3-0");
 
-        this.seq.add( 60, "alice");
+        this.seq.add(120, "alice");
+        this.seq.add(600, function() {});
 
         for (var i = 0; i < 5; i++) {
             this.seq.add( 60, "nao2-center");

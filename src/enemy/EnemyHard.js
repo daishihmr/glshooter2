@@ -46,7 +46,7 @@ gls2.Enemy.DATA = {
 
     //Stage3
     "hino":      [    20,    10000, false, false,  1, {"width": 64, "height": 64}, ],
-    "hoshizora": [  100,    300000 ,false,  true, 30, {"width":128, "height": 64}, ],
+    "hoshizora": [   300,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
     "yotsuba":    [  300,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
     "yotsubaLeaf":[  100,   100000, false, false, 10, {"width": 64, "height": 64}, ],
     "midorikawa":[     5,     2000, false, false,  1, {"width": 64, "height": 64}, ],
@@ -735,6 +735,7 @@ gls2.Enemy.miyuki = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hoshizora");
         this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(1);
+        this.boundingWidth = 384;
         this.setScale(1.5);
     },
     update: function(app) {
@@ -757,9 +758,9 @@ gls2.Enemy.miyuki = tm.createClass(
     },
     onLaunch: function() {
         //初期位置で向きを決定
-        if (this.x > SC_W){ //画面左端から出現
+        if (this.x > SC_W/2){ //画面左端から出現
             this.velocityX *= -1;
-            this._sprite.scaleX = -1;
+            this.setScale(-1.5);
         }
     },
     isInScreen: function() {
