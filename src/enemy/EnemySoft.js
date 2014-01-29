@@ -139,9 +139,10 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     /**
      * @constructs
      */
-    init: function(patternName) {
+    init: function(patternName, delay) {
         this.superInit();
         this.patternName = patternName;
+        this.delay = delay;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -149,7 +150,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         enemy.angle = Math.PI * 0.5;
         enemy.patternName = this.patternName;
 
-        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+        enemy.tweener.wait(this.delay === undefined ? gls2.math.rand(0, 1000) : this.delay).call(function() {
             this.speed = 6;
             gls2.EnemySoft.attack(this, this.patternName);
             this.on("enterframe", function() {
@@ -174,6 +175,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     },
 });
 gls2.EnemySoft.Heri21 = gls2.EnemySoft.Heri2("basic1-0");
+gls2.EnemySoft.Heri25 = function(delay) { return gls2.EnemySoft.Heri2("basic1-3", delay*gls2.math.randf(1, 2)); };
 
 /**
  * @class
@@ -1011,9 +1013,9 @@ var _aliceLeaf = tm.createClass(
      * @param {number} initialDirection
      * @param
      */
-    init: function() {
+    init: function(attackPattern) {
         this.superInit();
-        this.attackPattern = "aliceLeaf";
+        this.attackPattern = attackPattern;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -1049,7 +1051,11 @@ var _aliceLeaf = tm.createClass(
         });
     },
 });
-gls2.EnemySoft.AliceLeaf = _aliceLeaf();
+gls2.EnemySoft.AliceLeaf = [];
+gls2.EnemySoft.AliceLeaf[0] = _aliceLeaf("aliceLeaf-1");
+gls2.EnemySoft.AliceLeaf[1] = _aliceLeaf("aliceLeaf-2");
+gls2.EnemySoft.AliceLeaf[2] = _aliceLeaf("aliceLeaf-1");
+gls2.EnemySoft.AliceLeaf[3] = _aliceLeaf("aliceLeaf-2");
 
 /**
  * 大型戦闘機
@@ -1486,7 +1492,6 @@ var _Setsuna = tm.createClass(
         enemy.startAttack = false;
         enemy.endAttack = false;
         enemy.teleporting = false;
-        enemy.teleportFrame = 0;
         enemy.tweener
             .clear()
             .move(SC_W*0.5, SC_H*0.3, 1200, "easeOutQuad")
@@ -1498,17 +1503,18 @@ var _Setsuna = tm.createClass(
                     this.alpha = 1.0;
                     this.muteki = false;
                     var r = gls2.FixedRandom.rand(0,100);
-                    if (r > 50 && this.frame > 300 || this.x-64 < this.player.x && this.player.x < this.x+64) {
-                        //アカルンワープ！（テスト中）
+                    //移動シーケンス終了時に射線上にいる、もしくは50%の確立でワープ発動
+                    if (r > 50 && this.frame > 300 || this.x-76 < this.player.x && this.player.x < this.x+76) {
+                        //アカルンワープ！
                         gls2.Effect.genShockwave(this.x, this.y, this.gameScene, 8);
                         this.teleporting = true;
                         this.alpha = 0.3;
-                        this.muteki = true;
-                        this.teleportFrame = this.frame;
+                        this.muteki = true; //ワープ中は無敵
                         var x = gls2.FixedRandom.rand(SC_W*0.1, SC_W*0.9);
                         var y = gls2.FixedRandom.rand(SC_H*0.2, SC_W*0.4);
                         this.tweener.move(x, y, 250, "easeInOutQuad").call(temp);
                     } else {
+                        //通常移動
                         var a = gls2.FixedRandom.random() * Math.PI*2;
                         var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
                         this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 2000, "easeInOutQuad").call(temp);
@@ -1519,6 +1525,7 @@ var _Setsuna = tm.createClass(
 
         enemy.on("enterframe", function() {
             if (this.startAttack === false || this.hp <= 0) return;
+            //時間切れ（他の中ボスより少し長め）
             if (1800 < this.frame && this.endAttack === false) {
                 this.endAttack = true;
                 this.tweener
@@ -1529,6 +1536,7 @@ var _Setsuna = tm.createClass(
                         this.remove();
                     }.bind(this));
             }
+            //ワープ残像
             if (this.teleporting && this.frame % 5 == 0) {
                 var s = tm.display.Sprite("tex4", 256, 128).setFrameIndex(2);
                 s.alpha = 0.3;
@@ -1539,7 +1547,7 @@ var _Setsuna = tm.createClass(
                     this.alpha-=0.01;
                     if (this.alpha < 0)this.remove();
                 }
-                this.gameScene.enemyLayer.addChild(s);
+                this.gameScene.enemyLayer.addChild(s);  //敵レイヤーへ追加
             }
         });
 
@@ -1862,6 +1870,11 @@ gls2.EnemySoft.Kanade1 = tm.createClass(
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.on("enemyconsumed", function() {
+            this.stage.seq.stoping = false;
+        });
+
         enemy.tweener0 = tm.app.Tweener(enemy)
             .to({
                 x:SC_W*0.9,
@@ -1869,16 +1882,22 @@ gls2.EnemySoft.Kanade1 = tm.createClass(
             .to({
                 x:SC_W*0.1,
             }, 30000, "easeInOutQuad")
+            .call(function() {
+                this.stage.seq.stoping = true;
+            }.bind(enemy))
             .setLoop(true);
         enemy.tweener1 = tm.app.Tweener(enemy)
             .to({
                 y:SC_H*0.7
-            }, 150000, "easeInOutQuad") // 100000
+            }, 150000, "easeInOutQuad")
             .to({
-                y:SC_H*0.2
+                y:SC_H*0.6
             }, 90000, "easeInOutQuad")
             .setLoop(true);
-        enemy.tweener.wait(300000).call(function() {
+        enemy.tweener.wait(220000).call(function() {
+            // 撤退開始
+            this.stage.seq.stoping = false;
+
             this.tweener0.clear();
             this.tweener1.clear();
             this.tweener.clear().to({
@@ -1940,13 +1959,6 @@ gls2.EnemySoft.Fary = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "fary");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 /**
@@ -1964,13 +1976,6 @@ gls2.EnemySoft.Sory = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "sory");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 /**
@@ -1988,13 +1993,6 @@ gls2.EnemySoft.Lary = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "lary");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 /**
@@ -2012,13 +2010,6 @@ gls2.EnemySoft.Shiry = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "shiry");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 /**
@@ -2036,13 +2027,6 @@ gls2.EnemySoft.Dodory = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "dodory");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 

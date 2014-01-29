@@ -915,23 +915,28 @@ gls2.Danmaku["reika"] = new bulletml.Root({
  * あぐりちゃん
  */
 gls2.Danmaku["aguri"] = new bulletml.Root({
+    //TODO:もう少しカッコよくしたい
     "top0": $.action([
-        $interval(30),
-        $.repeat(3, [
-            $whip($spd4, 0.01, 4, function(spd) {
-                return $.action([
-                    //左側
-                    $nway(3, -30, 30, spd, BL, $.offsetX(-32), $.offsetY(-20)),
-                    //右側
-                    $nway(3, -30, 30, spd, BL, $.offsetX(+32), $.offsetY(-20)),
-                    $.wait(10),
-                ]);
-            }),
-            $interval(60),
+        $.repeat(999, [
+            $.repeat(3, [
+                $whip($spd3, 0.001, 4, function(spd) {
+                    return $.action([
+                        //左側
+                        $nway(3, -30, 30, spd, BL, $.offsetX( -32), $.offsetY(-20)),
+                        $nway(2, -30, 30, spd, BL, $.offsetX(-120), $.offsetY( 10)),
+                        $nway(2, -30, 30, spd, BL, $.offsetX( -80), $.offsetY( 12)),
+                        //右側
+                        $nway(3, -30, 30, spd, BL, $.offsetX(  32), $.offsetY(-20)),
+                        $nway(2, -30, 30, spd, BL, $.offsetX( 120), $.offsetY( 10)),
+                        $nway(2, -30, 30, spd, BL, $.offsetX(  80), $.offsetY( 12)),
+                        $.wait(1),
+                    ]);
+                }),
+                $interval(10),
+            ]),
+            $interval(120),
         ]),
-        $interval(60),
     ]),
-    //トキメキなさい！
     "top1": $.action([
         $.repeat(999, [
             //真ん中
@@ -950,17 +955,6 @@ gls2.Danmaku["aguri"] = new bulletml.Root({
             $interval(60),
         ]),
     ]),
-/*
-    "top2": $.action([
-        $.repeat(999, [
-            $interval(60),
-            $.repeat(5, [
-                $interval(10),
-                $nway(3, -30, 30, $spd4, RNL, $.offsetX(0), $.offsetY(32), $.autonomy(true)),
-            ]),
-        ]),
-    ]),
-*/
 });
 
 /**
@@ -990,52 +984,102 @@ gls2.Danmaku["miyuki"] = new bulletml.Root({
 gls2.Danmaku["alice"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
-            $absoluteNway(8, 0,  180, $spd1, BL),
-            $absoluteNway(8, 0, -180, $spd1, BL),
-            $interval(30),
-            $absoluteNway(9, 0,  180, $spd1, RL),
-            $absoluteNway(9, 0, -180, $spd1, RL),
+            $.repeat(5, [
+                $absoluteNway(10, 0,  180, $spd1, BL),
+                $absoluteNway(10, 0, -180, $spd1, BL),
+                $interval(30),
+                $absoluteNway( 5, 0,  180, $spd1, RL),
+                $absoluteNway( 5, 0, -180, $spd1, RL),
+                $interval(30),
+            ]),
             $interval(30),
         ]),
     ]),
     "top1": $.action([
         $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
         $.repeat(999, [
-            $.fire($.direction(10, "sequence"), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+            $.fire($.direction(10, "sequence"), $spd1, BR, $.offsetX(0), $.autonomy(true)),
             $interval(10),
         ]),
     ]),
     "top2": $.action([
         $.fire($.direction(90), $spd1, BS, $.offsetX(0), $.autonomy(true)),
         $.repeat(999, [
-            $.fire($.direction(10, "sequence"), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+            $.fire($.direction(10, "sequence"), $spd1, BR, $.offsetX(0), $.autonomy(true)),
             $interval(10),
         ]),
     ]),
     "top3": $.action([
         $.fire($.direction(180), $spd1, BS, $.offsetX(0), $.autonomy(true)),
         $.repeat(999, [
-            $.fire($.direction(10, "sequence"), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+            $.fire($.direction(10, "sequence"), $spd1, BR, $.offsetX(0), $.autonomy(true)),
             $interval(10),
         ]),
     ]),
     "top4": $.action([
         $.fire($.direction(-90), $spd1, BS, $.offsetX(0), $.autonomy(true)),
         $.repeat(999, [
-            $.fire($.direction(10, "sequence"), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
-            $interval(20),
+            $.fire($.direction(10, "sequence"), $spd1, BR, $.offsetX(0), $.autonomy(true)),
+            $interval(10),
         ]),
     ]),
 });
 /*
  * ありす端末
 */
-gls2.Danmaku["aliceLeaf"] = new bulletml.Root({
-    "top1": $.action([
-        $.wait(60),
-        $.fire($.direction(0), $spd3(5), RI, $.offsetX(0), $.autonomy(true)),
+gls2.Danmaku["aliceLeaf-1"] = new bulletml.Root({
+    "top0": $.action([
         $.repeat(999, [
-            $.fire($.direction(-10), $spd3(5), RI, $.offsetX(0), $.autonomy(true)),
+            $.repeat(1, [
+                //真ん中
+                $nway(1,-10, 10, $spd4, RS, $.offsetX(  0), $.offsetY(  0)),
+                //右上
+                $nway(1,-10, 10, $spd4, BS, $.offsetX( 10), $.offsetY(-10)),
+                $nway(1,-10, 10, $spd4, BS, $.offsetX( 10), $.offsetY(-20)),
+                $nway(1,-10, 10, $spd4, BS, $.offsetX( 20), $.offsetY(-10)),
+                //右下
+                $nway(1,-10, 10, $spd4, BS, $.offsetX( 10), $.offsetY( 10)),
+                $nway(1,-10, 10, $spd4, BS, $.offsetX( 10), $.offsetY( 20)),
+                $nway(1,-10, 10, $spd4, BS, $.offsetX( 20), $.offsetY( 10)),
+                //左上
+                $nway(1,-10, 10, $spd4, BS, $.offsetX(-10), $.offsetY(-10)),
+                $nway(1,-10, 10, $spd4, BS, $.offsetX(-10), $.offsetY(-20)),
+                $nway(1,-10, 10, $spd4, BS, $.offsetX(-20), $.offsetY(-10)),
+                //左下
+                $nway(1,-10, 10, $spd4, BS, $.offsetX(-10), $.offsetY( 10)),
+                $nway(1,-10, 10, $spd4, BS, $.offsetX(-10), $.offsetY( 20)),
+                $nway(1,-10, 10, $spd4, BS, $.offsetX(-20), $.offsetY( 10)),
+                $interval(20),
+            ]),
+            $interval(60),
+        ]),
+    ]),
+});
+gls2.Danmaku["aliceLeaf-2"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.repeat(999, [
+            $.repeat(1, [
+                //真ん中
+                $nway(1,-10, 10, $spd4, BS, $.offsetX(  0), $.offsetY(  0)),
+                //右上
+                $nway(1,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY(-10)),
+                $nway(1,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY(-20)),
+                $nway(1,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY(-10)),
+                //右下
+                $nway(1,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY( 10)),
+                $nway(1,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY( 20)),
+                $nway(1,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY( 10)),
+                //左上
+                $nway(1,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY(-10)),
+                $nway(1,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY(-20)),
+                $nway(1,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY(-10)),
+                //左下
+                $nway(1,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY( 10)),
+                $nway(1,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY( 20)),
+                $nway(1,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY( 10)),
+                $interval(20),
+            ]),
             $interval(60),
         ]),
     ]),
@@ -1793,20 +1837,26 @@ gls2.Danmaku["kanade"] = new bulletml.Root({
             $interval(57),
         ]),
     ]),
+    "top2": $.action([
+        $.repeat(999, [
+            $nway(3, -3,  +3, $spd4(5), RNSH, $.offsetY(-350)),
+            $interval(37),
+        ]),
+    ]),
 });
 gls2.Danmaku["rery"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval("180+$rand*120"),
-            $.repeat(5, [
+            $.repeat(10, [
                 $.fire($.direction(-90), $.speed(2), IVS($.actionRef("fire", +90, "$loop.index"))),
                 $.fire($.direction(+90), $.speed(2), IVS($.actionRef("fire", -90, "$loop.index"))),
             ]),
         ]),
     ]),
     "fire": $.action([
-        $.wait(5),
-        $.fire($.direction("$1", "relative"), $spd5("$2*2"), RNL),
+        $.wait(3),
+        $.fire($.direction("$1", "relative"), $spd5("$2"), RNL),
         $.vanish(),
     ]),
 });
@@ -1824,17 +1874,18 @@ gls2.Danmaku["fary"] = new bulletml.Root({
 gls2.Danmaku["sory"] = new bulletml.Root({
     "top": $.action([
         $.bindVar("d", "$rand<0.5 ? -5 : 5"),
+        $.bindVar("s", "1+$rand*0.5"),
         $.repeat(999, [
-            $.fire($.direction("360/8+$d", "sequence"), $.speed(2), IVS($.actionRef("fire"))),
-            $.repeat(8-1, [
-                $.fire($.direction(360/8, "sequence"), $.speed(2), IVS($.actionRef("fire"))),
+            $.fire($.direction("360/8+$d*$s", "sequence"), $.speed(2), IVS($.actionRef("fire"))),
+            $.repeat(4-1, [
+                $.fire($.direction(360/4, "sequence"), $.speed(2), IVS($.actionRef("fire"))),
             ]),
-            $interval(20),
+            $interval(60),
         ]),
     ]),
     "fire": $.action([
         $.wait(2),
-        $.fire($.direction(0, "relative"), $spd2, RI),
+        $.fire($.direction(0, "relative"), $spd1, RI),
         $.vanish(),
     ]),
 });
@@ -1850,10 +1901,10 @@ gls2.Danmaku["lary"] = new bulletml.Root({
         ]),
     ]),
     "top1": $.action([
-        $.fire($.direction(0, "absolute"), $.speed(1), IVS($.actionRef("fire"))),
+        $.fire($.direction(47, "absolute"), $.speed(1), IVS($.actionRef("fire"))),
         $.repeat(999, [
             $interval(10),
-            $.fire($.direction(360/4-5, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
+            $.fire($.direction(360/4-7, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
             $.fire($.direction(360/4, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
             $.fire($.direction(360/4, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
             $.fire($.direction(360/4, "sequence"), $.speed(1), IVS($.actionRef("fire"))),
@@ -1870,11 +1921,11 @@ gls2.Danmaku["shiry"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
             $.bindVar("d", "$loop.index*-6"),
-            $.repeat(10 - 1, [
-                $.fire($.direction(360/10, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
+            $.repeat(20 - 1, [
+                $.fire($.direction(360/20, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
             ]),
             $interval(30),
-            $.fire($.direction(360/10 + 1, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
+            $.fire($.direction(360/20 + 1, "sequence"), $.speed(1), IVS($.actionRef("ivs0", "$d"))),
         ]),
     ]),
     "ivs0": $.action([
@@ -1887,7 +1938,7 @@ gls2.Danmaku["dodory"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
             $interval("40+$rand*20"),
-            $whip($spd4, -0.1, 5, function(spd) {
+            $whip($spd4, -0.1, 3, function(spd) {
                 return $.action([
                     $.fire(spd, BNS),
                 ]);
