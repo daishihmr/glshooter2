@@ -139,9 +139,10 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     /**
      * @constructs
      */
-    init: function(patternName) {
+    init: function(patternName, delay) {
         this.superInit();
         this.patternName = patternName;
+        this.delay = delay;
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -149,7 +150,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
         enemy.angle = Math.PI * 0.5;
         enemy.patternName = this.patternName;
 
-        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+        enemy.tweener.wait(this.delay === undefined ? gls2.math.rand(0, 1000) : this.delay).call(function() {
             this.speed = 6;
             gls2.EnemySoft.attack(this, this.patternName);
             this.on("enterframe", function() {
@@ -174,6 +175,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     },
 });
 gls2.EnemySoft.Heri21 = gls2.EnemySoft.Heri2("basic1-0");
+gls2.EnemySoft.Heri25 = function(delay) { return gls2.EnemySoft.Heri2("basic1-3", delay*gls2.math.randf(1, 2)); };
 
 /**
  * @class
@@ -1868,6 +1870,11 @@ gls2.EnemySoft.Kanade1 = tm.createClass(
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.on("enemyconsumed", function() {
+            this.stage.seq.stoping = false;
+        });
+
         enemy.tweener0 = tm.app.Tweener(enemy)
             .to({
                 x:SC_W*0.9,
@@ -1875,16 +1882,22 @@ gls2.EnemySoft.Kanade1 = tm.createClass(
             .to({
                 x:SC_W*0.1,
             }, 30000, "easeInOutQuad")
+            .call(function() {
+                this.stage.seq.stoping = true;
+            }.bind(enemy))
             .setLoop(true);
         enemy.tweener1 = tm.app.Tweener(enemy)
             .to({
                 y:SC_H*0.7
-            }, 150000, "easeInOutQuad") // 100000
+            }, 150000, "easeInOutQuad")
             .to({
-                y:SC_H*0.2
+                y:SC_H*0.6
             }, 90000, "easeInOutQuad")
             .setLoop(true);
-        enemy.tweener.wait(300000).call(function() {
+        enemy.tweener.wait(220000).call(function() {
+            // 撤退開始
+            this.stage.seq.stoping = false;
+
             this.tweener0.clear();
             this.tweener1.clear();
             this.tweener.clear().to({
@@ -1946,13 +1959,6 @@ gls2.EnemySoft.Fary = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "fary");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 /**
@@ -1970,13 +1976,6 @@ gls2.EnemySoft.Sory = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "sory");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 /**
@@ -1994,13 +1993,6 @@ gls2.EnemySoft.Lary = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "lary");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 /**
@@ -2018,13 +2010,6 @@ gls2.EnemySoft.Shiry = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "shiry");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 /**
@@ -2042,13 +2027,6 @@ gls2.EnemySoft.Dodory = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
         gls2.EnemySoft.attack(enemy, "dodory");
-        enemy.on("enterframe", function() {
-            if (this.position.y > this.gameScene.player.y) {
-                gls2.EnemySoft.pauseAttack(this);
-            } else {
-                gls2.EnemySoft.resumeAttack(this);
-            }
-        });
     }
 });
 
