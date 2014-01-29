@@ -735,7 +735,7 @@ gls2.Enemy.aguri = tm.createClass(
 });
 
 /**
- * 大型戦艦「ホシゾラ」横
+ * 大型戦艦「ホシゾラ」
  */
 gls2.Enemy.miyuki = tm.createClass(
 {
