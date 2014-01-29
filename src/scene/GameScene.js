@@ -148,6 +148,9 @@ gls2.GameScene = tm.createClass(
     /** 総ポーズ時間(ms) */
     pauseTimeTotal: 0,
 
+    /** オーラ撃ち成立フレーム数 */
+    auraAttackFrameTotal: 0,
+
     init: function() {
         if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
 
@@ -362,6 +365,11 @@ gls2.GameScene = tm.createClass(
                         }
                     }
                     laser.genAuraParticle(2, this.player.x, this.player.y-30);
+
+                    this.auraAttackFrameTotal += 1;
+                    if (this.auraAttackFrameTotal > 300) {
+                        gls2.core.putAchevement("aura300");
+                    }
                 }
             }
         }
@@ -676,6 +684,8 @@ gls2.GameScene = tm.createClass(
         this.pauseEndTime = 0;
         this.pauseTimeTotal = 0;
 
+        this.auraAttackFrameTotal = 0;
+
         this.stageStartFrame = gls2.core.frame;
         this.stageStartTime = Date.now();
     },
@@ -810,8 +820,8 @@ gls2.GameScene = tm.createClass(
         this.stageEndFrame = gls2.core.frame;
         var time = (this.stageEndTime - this.stageStartTime) - this.pauseTimeTotal;
         var frame = this.stageEndFrame - this.stageStartFrame;
-        this.fpsAvgByStage[this.stageNumber] = frame / time;
-        console.log("this.fpsAvgByStage[this.stageNumber]" = this.fpsAvgByStage[this.stageNumber]);
+        this.fpsAvgByStage[this.stageNumber] = frame / time * 1000;
+        console.log("this.fpsAvgByStage[this.stageNumber]" + this.fpsAvgByStage[this.stageNumber]);
     },
 
     addScore: function(score) {
