@@ -46,7 +46,7 @@ gls2.Stage = tm.createClass(
             data.value.call(this);
         } else if (gls2.EnemyUnit[data.value] !== undefined){
             var unit = gls2.EnemyUnit[data.value];
-            if (unit) {
+            if (unit !== null) {
                 if (unit[0].boss === true) {
                     this.launchEnemy(unit[0]);
                 } else {
@@ -60,14 +60,12 @@ gls2.Stage = tm.createClass(
                     }
                 }
             }
-        } else {
-            console.warn("gls2.EnemyUnit['" + data.value + "'] is undefined");
         }
     },
 
     launchEnemy: function(data) {
         this.gameScene.enemyCount += 1;
-        var enemy = data.hard(this.gameScene, data.soft)
+        var enemy = data["hard"](this.gameScene, data["soft"])
             .setPosition(data.x, data.y)
             .addChildTo(this.gameScene);
         enemy.stage = this;

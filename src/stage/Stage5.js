@@ -139,9 +139,12 @@ gls2.Stage5 = tm.createClass(
         this.seq.add(1200, function() {});
 
         for (var i = 0; i < 45; i++) { // 早回しザコラッシュ
-            this.seq.add( 66, "heri2-5-left");
-            this.seq.add( 66, "heri2-5-center");
-            this.seq.add( 66, "heri2-5-right");
+            this.seq.add( 33, "heri2-5-left");
+            this.seq.add( 33, "heri2-5-center");
+            this.seq.add( 33, "heri2-5-right");
+            this.seq.add( 33, "heri2-5-left");
+            this.seq.add( 33, "heri2-5-center");
+            this.seq.add( 33, "heri2-5-right");
             this.seq.add(  2, "DUMMY+"+i);
         }
 
