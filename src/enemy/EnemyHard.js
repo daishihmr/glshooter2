@@ -525,8 +525,7 @@ gls2.Enemy.Tsubomi = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hanasaki");
-
-        this._sprite = _Sprite("tex1", 64*1, 64*2).setFrameIndex(14);
+        this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(12);
     },
     ondying: function() {
     },
