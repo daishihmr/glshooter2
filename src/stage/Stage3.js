@@ -33,6 +33,7 @@ gls2.Stage3 = tm.createClass(
 //        this.seq.add( 60, "madoka-0");
 //        this.seq.add( 60, "alice");
 //        this.seq.add( 60, "miyuki-2");
+          this.seq.add( 60, "momozono");
 //        this.seq.add(2400, function() {});
 
         //0%

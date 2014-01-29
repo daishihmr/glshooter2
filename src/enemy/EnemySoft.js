@@ -1575,9 +1575,9 @@ gls2.EnemySoft.Love1 = tm.createClass(
     init: function() {
         this.superInit();
         this.patterns = [
-            "saki-1-1",
-            "saki-1-2",
-            "saki-1-3",
+            "love-1-1",
+            "love-1-2",
+            "love-1-3",
         ];
     },
     setup: function(enemy) {
@@ -1613,6 +1613,7 @@ gls2.EnemySoft.Love1 = tm.createClass(
     },
 });
 gls2.EnemySoft.Love1 = gls2.EnemySoft.Love1();
+
 gls2.EnemySoft.Love2 = tm.createClass(
 {
     superClass: gls2.EnemySoft,
@@ -1623,9 +1624,9 @@ gls2.EnemySoft.Love2 = tm.createClass(
     init: function() {
         this.superInit();
         this.patterns = [
-            "saki-1-1",
-            "saki-1-2",
-            "saki-1-3",
+            "love-2-1",
+            "love-2-2",
+            "love-2-3",
         ];
     },
     setup: function(enemy) {
@@ -1671,22 +1672,17 @@ gls2.EnemySoft.Love3 = tm.createClass(
     init: function() {
         this.superInit();
         this.patterns = [
-            "saki-1-1",
-            "saki-1-2",
-            "saki-1-3",
+            "love-3-1",
+            "love-3-2",
         ];
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
         enemy.patterns = [].concat(this.patterns);
-        enemy.startAttack = false;
-        enemy.endAttack = false;
-        enemy.tweener
-            .clear()
-            .move(SC_W*0.5, SC_H*0.2, 1200, "easeOutQuad")
+        enemy.tweener.clear()
+            .wait(800)
             .call(function() {
-                this.startAttack = true;
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
@@ -1701,7 +1697,6 @@ gls2.EnemySoft.Love3 = tm.createClass(
 
         enemy.on("completeattack", function() {
             if (this.hp <= 0) return;
-            if (this.endAttack) return;
             var pattern = this.patterns.shift();
             gls2.EnemySoft.attack(this, pattern);
             this.patterns.push(pattern);

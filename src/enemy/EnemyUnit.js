@@ -662,7 +662,7 @@ gls2.EnemyUnit = {
 /**
  * ステージ３ボス「モモゾノ」
  */
-"momozono": [{ hard:$e.Love, soft:[$s.Love1, $s.Love2, $s.Love3], x:SC_W*0.5, y:-100, boss:true }],
+"momozono": [{ hard:$e.Love, soft:[$s.Love1, $s.Love1, $s.Love1], x:SC_W*0.5, y:-100, boss:true }],
 
 /**
  * ステージ４中ボス「ヒシカワ」
