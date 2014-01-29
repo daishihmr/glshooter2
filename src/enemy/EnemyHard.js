@@ -47,8 +47,8 @@ gls2.Enemy.DATA = {
     //Stage3
     "hino":      [    20,    10000, false, false,  1, {"width": 64, "height": 64}, ],
     "hoshizora": [   300,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
-    "yotsuba":    [  300,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
-    "yotsubaLeaf":[  100,   100000, false, false, 10, {"width": 64, "height": 64}, ],
+    "yotsuba":    [  500,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
+    "yotsubaLeaf":[   30,   100000, false, false, 10, {"width": 64, "height": 64}, ],
     "midorikawa":[     5,     2000, false, false,  1, {"width": 64, "height": 64}, ],
     "aoki":      [     5,     3200, false, false,  1, {"width": 64, "height": 64}, ],
     "madoka":    [   350,   400000, false,  true, 10, {"width":256, "height": 64}, ],
@@ -720,6 +720,15 @@ gls2.Enemy.aguri = tm.createClass(
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
     destroy: function() {
         gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
@@ -756,6 +765,15 @@ gls2.Enemy.miyuki = tm.createClass(
         gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
     onLaunch: function() {
         //初期位置で向きを決定
         if (this.x > SC_W/2){ //画面左端から出現
@@ -783,6 +801,15 @@ gls2.Enemy.Alice = tm.createClass({
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
     destroy: function() {
         gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
@@ -805,7 +832,7 @@ gls2.Enemy.Alice = tm.createClass({
             var distance = 64;
             var sx = this.x+Math.sin(dir)*distance;
             var sy = this.y+Math.cos(dir)*distance;
-            this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.AliceLeaf, soft:gls2.EnemySoft.AliceLeaf, x:sx, y:sy});
+            this.leaf[i] = this.stage.launchEnemy({ hard:gls2.Enemy.AliceLeaf, soft:gls2.EnemySoft.AliceLeaf[i], x:sx, y:sy});
             this.leaf[i].dir = dir;
             this.leaf[i].current = this;
             this.leaf[i].number = i;
@@ -1025,6 +1052,13 @@ gls2.Enemy.Setsuna = tm.createClass(
         this.setScale(1.5);
     },
     ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     destroy: function() {
         this.fallDown();
@@ -1047,6 +1081,13 @@ gls2.Enemy.Love = tm.createClass(
         this.setScale(1.5);
     },
     ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
     },
     destroy: function() {
         this.bossDestroy();

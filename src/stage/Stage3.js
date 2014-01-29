@@ -27,11 +27,13 @@ gls2.Stage3 = tm.createClass(
 
         //test
 //        this.seq.add(120, "madoka-0");
+//        this.seq.add(120, "madoka-1");
+//        this.seq.add(120, "madoka-2");
 //        this.seq.add(300, "higashi", true); //中ボス
 //        this.seq.add( 60, "madoka-0");
 //        this.seq.add( 60, "alice");
 //        this.seq.add( 60, "miyuki-2");
-//        this.seq.add(1200, function() {});
+//        this.seq.add(2400, function() {});
 
         //0%
         this.seq.add(150, "nao2-center");
