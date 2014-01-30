@@ -30,30 +30,18 @@ gls2.Stage5 = tm.createClass(
         this.seq.add(260, "urara5-1");
 
         this.seq.add(380, "nozomi5-1");
-        this.seq.add( 25, "heri2-left");
-        this.seq.add( 25, "heri2-center");
-        this.seq.add( 50, "nozomi5-0");
-        this.seq.add( 25, "heri2-left");
-        this.seq.add( 25, "heri2-center");
-        this.seq.add( 25, "heri2-left");
-        this.seq.add( 25, "heri2-center");
-        this.seq.add(100, "nozomi5-2");
+        this.seq.add(100, "nozomi5-0");
+        this.seq.add(175, "nozomi5-2");
 
-        this.seq.add( 25, "tank5-left");
+        this.seq.add(325, "tank5-left");
         this.seq.add( 25, "tank5-center");
         this.seq.add( 25, "heri2-left");
         this.seq.add( 25, "heri2-center");
-        this.seq.add( 25, "heri2-right");
         this.seq.add( 25, "heri2-left");
-        this.seq.add( 25, "heri2-center");
-        this.seq.add( 25, "heri2-right");
         this.seq.add( 25, "tank5-left");
         this.seq.add( 25, "tank5-center");
-        this.seq.add( 55, "tankRD-left");
-        this.seq.add( 25, "tankRD-left");
-        this.seq.add( 25, "tankRD-left");
 
-        this.seq.add(200, "mktn5-0");
+        this.seq.add(260, "mktn5-0");
         this.seq.add( 60, "heri1-4-left2");
         this.seq.add( 10, "heri1-4-left");
         this.seq.add( 10, "heri1-4-left2");
@@ -73,7 +61,31 @@ gls2.Stage5 = tm.createClass(
 
         // 10%
 
-        // TODO ここにあと２波ほど入れる
+        this.seq.add(300, "tank5-left");
+        for (var i = 0; i < 2; i++) {
+            this.seq.add( 33, "heri2-5-left");
+            this.seq.add( 33, "heri2-5-center");
+            this.seq.add( 33, "heri2-5-right");
+            this.seq.add( 33, "heri2-5-left");
+            this.seq.add( 33, "heri2-5-center");
+            this.seq.add( 33, "heri2-5-right");
+            this.seq.add(  2, "DUMMY+"+i);
+        }
+        this.seq.add( 25, "tank5-left");
+        for (var i = 0; i < 2; i++) {
+            this.seq.add( 33, "heri2-5-left");
+            this.seq.add( 33, "heri2-5-center");
+            this.seq.add( 33, "heri2-5-right");
+            this.seq.add( 33, "heri2-5-left");
+            this.seq.add( 33, "heri2-5-center");
+            this.seq.add( 33, "heri2-5-right");
+            this.seq.add(  2, "DUMMY+"+i);
+        }
+        this.seq.add( 25, "tank5-center");
+
+        // 20%
+
+        // TODO
 
         // 40%
 
@@ -87,13 +99,10 @@ gls2.Stage5 = tm.createClass(
         this.seq.add(  1, "kanade"); // ここで出現させると中ボス戦に間に合う
 
         this.seq.add(200, "milk5-0");
-        this.seq.add(  1, "itsuki-2");
 
         this.seq.add(300, "milk5-1");
-        this.seq.add(  1, "itsuki-0");
 
         this.seq.add(200, "milk5-0");
-        this.seq.add(  1, "itsuki-2");
 
         this.seq.add(450, "komachi5-0");
         this.seq.add( 30, "heri1-4-right2");
@@ -134,11 +143,11 @@ gls2.Stage5 = tm.createClass(
         this.seq.add(450, "ako5-0");
         this.seq.add(250, "ako5-1");
 
-        // この辺から中ボス戦
+        // 50% この辺から中ボス戦
 
         this.seq.add(1200, function() {});
 
-        for (var i = 0; i < 45; i++) { // 早回しザコラッシュ
+        for (var i = 0; i < 22; i++) { // 早回しザコラッシュ
             this.seq.add( 33, "heri2-5-left");
             this.seq.add( 33, "heri2-5-center");
             this.seq.add( 33, "heri2-5-right");
@@ -147,6 +156,58 @@ gls2.Stage5 = tm.createClass(
             this.seq.add( 33, "heri2-5-right");
             this.seq.add(  2, "DUMMY+"+i);
         }
+
+        this.seq.add(260, "urara5-0");
+        this.seq.add(300, "urara5-1");
+        this.seq.add(300, "urara5-2");
+        this.seq.add(300, "urara5-3");
+        this.seq.add(300, "urara5-4");
+        this.seq.add(300, "urara5-5");
+
+        // 60%
+
+        this.seq.add(300, "ako5-0");
+
+        this.seq.add(260, "komachi5-1");
+        this.seq.add( 30, "heri1-4-center2");
+        this.seq.add( 30, "heri1-4-center");
+        this.seq.add( 30, "heri1-4-center2");
+        this.seq.add( 30, "heri1-4-center");
+
+        this.seq.add(300, "milk5-1");
+
+        this.seq.add(160, "komachi5-1");
+        this.seq.add( 30, "heri1-4-center2");
+        this.seq.add( 30, "heri1-4-center");
+        this.seq.add( 30, "heri1-4-center2");
+        this.seq.add( 30, "heri1-4-center");
+
+        this.seq.add(200, "mktn5-0");
+        this.seq.add( 60, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left");
+        this.seq.add( 10, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left");
+        this.seq.add( 10, "heri1-4-left");
+        this.seq.add( 10, "heri1-4-left2");
+        this.seq.add( 10, "heri1-4-left");
+
+        this.seq.add(300, "mktn5-1");
+        this.seq.add( 60, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right");
+        this.seq.add( 10, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right");
+        this.seq.add( 10, "heri1-4-right");
+        this.seq.add( 10, "heri1-4-right2");
+        this.seq.add( 10, "heri1-4-right");
+
+        this.seq.add(380, "nozomi5-1");
+        this.seq.add(100, "nozomi5-0");
+        this.seq.add(175, "nozomi5-2");
+        this.seq.add(150, "nozomi5-0");
+
+        // 70% ここから新展開
+
+        this.seq.add(3000, function() {});
 
         this.seq.add(300, function() {
             this.alartWarning(function() {
