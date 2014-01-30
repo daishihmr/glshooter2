@@ -85,7 +85,20 @@ gls2.Stage5 = tm.createClass(
 
         // 20%
 
-        // TODO
+        this.seq.add(180, "bukky-5-l");
+        this.seq.add( 60, "heri1-4-center2");
+        this.seq.add( 60, "heri1-4-center");
+        this.seq.add(180, "bukky-5-r");
+        this.seq.add( 60, "heri1-4-center2");
+        this.seq.add( 60, "heri1-4-center");
+        this.seq.add(180, "bukky-5-l");
+        this.seq.add( 60, "heri1-4-center2");
+        this.seq.add( 60, "heri1-4-center");
+        this.seq.add(180, "bukky-5-r");
+        this.seq.add( 60, "heri1-4-center2");
+        this.seq.add( 60, "heri1-4-center");
+        this.seq.add( 60, "heri1-4-center2");
+        this.seq.add( 60, "heri1-4-center");
 
         // 40%
 

@@ -301,6 +301,10 @@ gls2.EnemySoft.BigTankR = tm.createClass({
  * 大型戦車ヤマブキ4面
  */
 gls2.EnemySoft.Bukky4 = gls2.EnemySoft.BigTankR("bukky-4-0");
+/**
+ * 大型戦車ヤマブキ5面
+ */
+gls2.EnemySoft.Bukky5 = gls2.EnemySoft.BigTankR("bukky-5-0");
 
 /**
  * 固定砲台共通
