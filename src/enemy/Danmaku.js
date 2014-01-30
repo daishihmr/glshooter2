@@ -1869,22 +1869,37 @@ gls2.Danmaku["mana-3-2"] = gls2.Danmaku["mana-1-1"];
 gls2.Danmaku["kanade"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
-            $absoluteNway(50, -180+180/50, +180-180/50, $spd1, RL, $.offsetY(-350)),
-            $interval(42),
-            $absoluteNway(50, -180+180/50+360/50/2, +180-180/50+360/50/2, $spd1, RL, $.offsetY(-350)),
-            $interval(42),
+            $.repeat(23 - 1, [
+                $.fire($.direction(360/23, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
+            ]),
+            $interval(20),
+            $.fire($.direction(360/23 - 3, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
         ]),
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $nway(5, -12  +0, +12  +0, $spd2, BL, $.offsetY(-350)),
-            $nway(5, -12 +90, +12 +90, $spd2, BL, $.offsetY(-350)),
-            $nway(5, -12+180, +12+180, $spd2, BL, $.offsetY(-350)),
-            $nway(5, -12+270, +12+270, $spd2, BL, $.offsetY(-350)),
+            $.repeat(23 - 1, [
+                $.fire($.direction(360/23, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
+            ]),
+            $interval(20),
+            $.fire($.direction(360/23 + 3, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
+        ]),
+    ]),
+    "ivs0": $.action([
+        $.wait(5),
+        $.fire($.direction("$1", "relative"), $spd2, RR),
+        $.vanish(),
+    ]),
+    "top2": $.action([
+        $.repeat(999, [
+            $nway(5, -12  +0, +12  +0, $spd1, BNL, $.offsetY(-350)),
+            $nway(5, -12 +90, +12 +90, $spd1, BNL, $.offsetY(-350)),
+            $nway(5, -12+180, +12+180, $spd1, BNL, $.offsetY(-350)),
+            $nway(5, -12+270, +12+270, $spd1, BNL, $.offsetY(-350)),
             $interval(57),
         ]),
     ]),
-    "top2": $.action([
+    "top3": $.action([
         $.repeat(999, [
             $nway(3, -3,  +3, $spd3(5), RNSH, $.offsetY(-350)),
             $interval(37),
