@@ -994,7 +994,7 @@ gls2.GameScene = tm.createClass(
         switch (result) {
         case 0: // resume
             this.pauseEndTime = Date.now();
-            this.pauseTimeTotal += this.pauseEndTime + this.pauseStartTime;
+            this.pauseTimeTotal += this.pauseEndTime - this.pauseStartTime;
             break;
         case 1: // setting
             this.openSetting();
