@@ -26,15 +26,17 @@ gls2.Stage3 = tm.createClass(
         });
 
         //test
-//        this.seq.add(120, "madoka-0");
-//        this.seq.add(120, "madoka-1");
-//        this.seq.add(120, "madoka-2");
-//        this.seq.add(300, "higashi", true); //中ボス
-//        this.seq.add( 60, "madoka-0");
-//        this.seq.add( 60, "alice");
-//        this.seq.add( 60, "miyuki-2");
-//        this.seq.add( 60, "momozono", true);
-//        this.seq.add(2400, function() {});
+        if (DEBUG) { //消し忘れ対策
+//            this.seq.add(120, "madoka-0");
+//            this.seq.add(120, "madoka-1");
+//            this.seq.add(120, "madoka-2");
+//            this.seq.add(300, "higashi", true); //中ボス
+//            this.seq.add( 60, "madoka-0");
+//            this.seq.add( 60, "alice");
+//            this.seq.add( 60, "miyuki-2");
+//            this.seq.add( 60, "momozono", true);
+//            this.seq.add(2400, function() {});
+        }
 
         //0%
         this.seq.add(150, "nao2-center");
@@ -85,6 +87,7 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 60, "nao2-left");
             this.seq.add( 60, "nao2-right");
         }
+        //TODO:２セット程度追加
 
         //30%
         this.seq.add(60, function() {

@@ -2029,18 +2029,31 @@ gls2.Danmaku["setsuna-1"] = new bulletml.Root({
  */
 gls2.Danmaku["love-1-1"] = new bulletml.Root({
     "top0": $.action([
-        $.wait(30),
+        $interval(30),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
         $.repeat(60, [
             $.fire($.direction(+20, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-105), $.offsetY(0)),
             $interval(2),
         ]),
+        $interval(60),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(60, [
+            $.fire($.direction(-20, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-105), $.offsetY(0)),
+            $interval(2),
+        ]),
+        $interval(120),
     ]),
     "top1": $.action([
         $.wait(30),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
         $.repeat(30, [
             $.fire($.direction(+30, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-85), $.offsetY(0)),
+            $interval(4),
+        ]),
+        $interval(60),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(30, [
+            $.fire($.direction(-30, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-85), $.offsetY(0)),
             $interval(4),
         ]),
     ]),
@@ -2051,6 +2064,12 @@ gls2.Danmaku["love-1-1"] = new bulletml.Root({
             $.fire($.direction(-20, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+105), $.offsetY(0)),
             $interval(2),
         ]),
+        $interval(60),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(60, [
+            $.fire($.direction(+20, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+105), $.offsetY(0)),
+            $interval(2),
+        ]),
     ]),
     "top3": $.action([
         $.wait(30),
@@ -2059,15 +2078,33 @@ gls2.Danmaku["love-1-1"] = new bulletml.Root({
             $.fire($.direction(-30, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+85), $.offsetY(0)),
             $interval(4),
         ]),
+        $interval(60),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(30, [
+            $.fire($.direction(+30, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+85), $.offsetY(0)),
+            $interval(4),
+        ]),
     ]),
 });
-
 /**
  * 桃園羅武第１形態-2
  */
 gls2.Danmaku["love-1-2"] = new bulletml.Root({
     "top0": $.action([
         $.wait(30),
+        $.repeat(2, [
+            $whip($spd3, 0.02, 10, function(spd) {
+                return $.action([
+                    $absoluteNway(5, 200, 120, spd, RNS, $.offsetX(-85), $.offsetY(0)),
+                    $absoluteNway(5, 260, 210, spd, RNS, $.offsetX(+85), $.offsetY(0)),
+                    $.wait(5),
+                ]);
+            }),
+            $interval(180),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(60),
         $.repeat(10, [
             $nway(4, -40, 40, $spd2, RI, $.offsetX(0), $.offsetY(30)),
             $interval(30),
@@ -2075,17 +2112,7 @@ gls2.Danmaku["love-1-2"] = new bulletml.Root({
             $interval(30),
         ]),
     ]),
-    "top1": $.action([
-        $.wait(120),
-        $.repeat(10, [
-            $.bindVar("c", "$loop.index*5"),
-            $nway(2, "-30+$c", "30-$c", $spd4(10), BNS, $.offsetX(0), $.offsetY(0)),
-            $interval(5),
-        ]),
-        $interval(40),
-    ]),
 });
-
 /**
  * 桃園羅武第１形態-3
  */
@@ -2099,28 +2126,34 @@ gls2.Danmaku["love-1-3"] = new bulletml.Root({
             $interval(30),
         ]),
     ]),
+    "top1": $.action([
+        $.wait(120),
+        $.repeat(5, [
+            $.repeat(10, [
+                $.bindVar("c", "$loop.index*5"),
+                $nway(2, "-30+$c", "30-$c", $spd4(10), BNS, $.offsetX(0), $.offsetY(0)),
+                $interval(5),
+            ]),
+        ]),
+        $interval(120),
+    ]),
 });
-
 /**
  * 桃園羅武第２形態-1
  */
 gls2.Danmaku["love-2-1"] = gls2.Danmaku["love-1-1"];
-
 /**
  * 桃園羅武第２形態-2
  */
 gls2.Danmaku["love-2-2"] = gls2.Danmaku["love-1-2"];
-
 /**
  * 桃園羅武第２形態-3
  */
 gls2.Danmaku["love-2-3"] = gls2.Danmaku["love-1-3"];
-
 /**
  * 桃園羅武発狂-1
  */
 gls2.Danmaku["love-3-1"] = gls2.Danmaku["love-1-1"];
-
 /**
  * 桃園羅武発狂-2
  */
