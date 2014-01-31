@@ -2153,7 +2153,20 @@ gls2.Danmaku["love-2-3"] = gls2.Danmaku["love-1-3"];
 /**
  * 桃園羅武発狂-1
  */
-gls2.Danmaku["love-3-1"] = gls2.Danmaku["love-1-1"];
+gls2.Danmaku["love-3-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.repeat(3, [
+            $whip($spd4, 0.01, 10, function(spd) {
+                return $.action([
+                    $absoluteNway(20, 270, 90, spd, RNS, $.offsetX(-85), $.offsetY(0)),
+                    $absoluteNway(20, 270, 90, spd, RNS, $.offsetX(+85), $.offsetY(0)),
+                ]);
+            }),
+            $interval(180),
+        ]),
+    ]),
+});
 /**
  * 桃園羅武発狂-2
  */
