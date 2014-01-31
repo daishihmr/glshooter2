@@ -188,5 +188,15 @@
         "title": "タイプC完！",
         "description": "自機タイプCですべてのステージをクリアする",
         "grade": 2
+    },
+    "aura300": {
+        "title": "超接近戦！",
+        "description": "1ステージ中にオーラ撃ちを合計300フレーム間成立させる",
+        "grade": 1
+    },
+    "hyperAndHyper": {
+        "title": "ハイパー狂！",
+        "description": "1ステージ中にハイパーシステムを5回発動する",
+        "grade": 1
     }
 }

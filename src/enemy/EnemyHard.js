@@ -35,7 +35,7 @@ gls2.Enemy.DATA = {
     "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
     "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
     // "aida":      [     1,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
-    "minamino":  [  1500,  5000000,  true,  true, 30, {"width": 100, "heightTop":-(-350-25), "heightBottom":-350+25} ],
+    "minamino":  [  1500,  5000000,  true,  true, 30, {"width": 180, "heightTop":-(-350-25), "heightBottom":-350+25} ],
     "rery":      [   250,     2000,  true, false,  5, {"radius": 24} ],
     "fary":      [   200,     2000,  true, false,  5, {"radius": 24} ],
     "sory":      [   350,     2000,  true, false,  5, {"radius": 24} ],
@@ -525,8 +525,7 @@ gls2.Enemy.Tsubomi = tm.createClass({
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hanasaki");
-
-        this._sprite = _Sprite("tex1", 64*1, 64*2).setFrameIndex(14);
+        this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(12);
     },
     ondying: function() {
     },

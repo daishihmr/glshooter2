@@ -210,6 +210,13 @@ gls2.ResultScene = tm.createClass(
             this.promptEnter.visible = true;
             if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
                 gls2.playSound("decision");
+
+                if (this.gameScene.scoreByStage[this.gameScene.stageNumber - 1] === undefined) {
+                    this.gameScene.scoreByStage[this.gameScene.stageNumber] = this.gameScene.score;
+                } else {
+                    this.gameScene.scoreByStage[this.gameScene.stageNumber] = this.gameScene.score - this.gameScene.scoreByStage[this.gameScene.stageNumber - 1];
+                }
+
                 if (this.gameScene.stageNumber + 1 == STAGE_NUMBER) {
                     // goto ending
                     app.replaceScene(gls2.EndingScene());

@@ -114,12 +114,42 @@ gls2.GameScene = tm.createClass(
     demoPlaying: false,
     isBossBattle: false,
 
-    /**
-     * 平均FPS
-     */
-    avgFps: 0,
-
     screenShot: null,
+
+    /** ステージごとのスコア */
+    scoreByStage: null,
+    /** ステージごとの平均FPS */
+    fpsAvgByStage: null,
+    /** ステージごとのミス回数 */
+    missCountByStage: null,
+    /** ステージごとのコンティニュー回数 */
+    continueCountByStage: null,
+    /** ステージごとのボム投下数 */
+    bombCountByStage: null,
+    /** ステージごとのオートボム投下数 */
+    autoBombCountByStage: null,
+    /** ステージごとのハイパー発動数 */
+    hyperCountByStage: null,
+    /** ハイパー発動レベル履歴 */
+    hyperLevelHistory: null,
+
+    /** ステージ開始フレーム */
+    stageStartFrame: 0,
+    /** ステージ終了フレーム */
+    stageEndFrame: 0,
+    /** ステージ開始時刻 */
+    stageStartTime: 0,
+    /** ステージ終了時刻 */
+    stageEndTime: 0,
+    /** ポーズ開始時(ms) */
+    pauseStartTime: 0,
+    /** ポーズ解除時(ms) */
+    pauseEndTime: 0,
+    /** 総ポーズ時間(ms) */
+    pauseTimeTotal: 0,
+
+    /** オーラ撃ち成立フレーム数 */
+    auraAttackFrameTotal: 0,
 
     init: function() {
         if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
@@ -335,6 +365,11 @@ gls2.GameScene = tm.createClass(
                         }
                     }
                     laser.genAuraParticle(2, this.player.x, this.player.y-30);
+
+                    this.auraAttackFrameTotal += 1;
+                    if (this.auraAttackFrameTotal > 300) {
+                        gls2.core.putAchevement("aura300");
+                    }
                 }
             }
         }
@@ -389,17 +424,21 @@ gls2.GameScene = tm.createClass(
 
             if (this.player.parent !== null && this.player.muteki === false && this.isBombActive === false && this.hyperMutekiTime <= 0 && !MUTEKI) {
 
+                var damage = false;
+
                 // 敵弾vs自機
                 for (var i = gls2.Bullet.activeList.length; gls2.Bullet.activeList[--i] !== undefined;) {
                     var b = gls2.Bullet.activeList[i];
                     if (b.visible === false) continue;
                     if (gls2.Collision.isHit(b, this.player)) {
                         this.player.damage();
+                        damage = true;
                         if (this.bomb > 0 && this.autoBomb) {
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
                             this.addRank(-0.01);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
                             gls2.core.putAchevement("bomb2");
+                            this.autoBombCountByStage[this.stageNumber] += 1;
                         } else {
                             this.miss();
                         }
@@ -407,22 +446,25 @@ gls2.GameScene = tm.createClass(
                     }
                 }
 
-                // 敵vs自機
-                for (var i = gls2.Enemy.activeList.length; gls2.Enemy.activeList[--i] !== undefined;) {
-                    var e = gls2.Enemy.activeList[i];
-                    if (e.hp <= 0 || e.muteki) continue;
-                    if (e.isGround) continue;
-                    if (gls2.Collision.isHit(e, this.player)) {
-                        this.player.damage();
-                        if (this.bomb > 0 && this.autoBomb) {
-                            this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
-                            this.addRank(-0.01);
-                            gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
-                            gls2.core.putAchevement("bomb2");
-                        } else {
-                            this.miss();
+                if (!damage) {
+                    // 敵vs自機
+                    for (var i = gls2.Enemy.activeList.length; gls2.Enemy.activeList[--i] !== undefined;) {
+                        var e = gls2.Enemy.activeList[i];
+                        if (e.hp <= 0 || e.muteki) continue;
+                        if (e.isGround) continue;
+                        if (gls2.Collision.isHit(e, this.player)) {
+                            this.player.damage();
+                            if (this.bomb > 0 && this.autoBomb) {
+                                this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
+                                this.addRank(-0.01);
+                                gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
+                                gls2.core.putAchevement("bomb2");
+                                this.autoBombCountByStage[this.stageNumber] += 1;
+                            } else {
+                                this.miss();
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
@@ -559,7 +601,24 @@ gls2.GameScene = tm.createClass(
         this.endHyperMode();
         this.isBombActive = false;
         this.missCount = this.missCountTotal = 0;
-        this.avgFps = 0;
+
+        this.scoreByStage = [];
+        this.fpsAvgByStage = [];
+        this.missCountByStage = [];
+        this.continueCountByStage = [];
+        this.bombCountByStage = [];
+        this.autoBombCountByStage = [];
+        this.hyperCountByStage = [];
+        for (var i = 0; i < STAGE_NUMBER; i++) {
+            this.scoreByStage.push(0);
+            this.fpsAvgByStage.push(0);
+            this.missCountByStage.push(0);
+            this.continueCountByStage.push(0);
+            this.bombCountByStage.push(0);
+            this.autoBombCountByStage.push(0);
+            this.hyperCountByStage.push(0);
+        }
+        this.hyperLevelHistory = [];
 
         this.player = gls2.Player(this, playerType, playerStyle);
         this.setRank(INITIAL_RANK);
@@ -616,6 +675,19 @@ gls2.GameScene = tm.createClass(
         }.bind(this));
 
         this.ground.tweener.clear();
+
+        this.stageStartFrame = 0;
+        this.stageEndFrame = 0;
+        this.stageStartTime = 0;
+        this.stageEndTime = 0;
+        this.pauseStartTime = 0;
+        this.pauseEndTime = 0;
+        this.pauseTimeTotal = 0;
+
+        this.auraAttackFrameTotal = 0;
+
+        this.stageStartFrame = gls2.core.frame;
+        this.stageStartTime = Date.now();
     },
 
     launch: function() {
@@ -658,6 +730,7 @@ gls2.GameScene = tm.createClass(
 
         this.missCount += 1;
         this.missCountTotal += 1;
+        this.missCountByStage[this.stageNumber] += 1;
 
         this.hyperRank = gls2.math.clamp(this.hyperRank - 3, 0, 1);
         this.addRank(-0.03);
@@ -698,10 +771,14 @@ gls2.GameScene = tm.createClass(
     },
 
     gameContinue: function() {
+        this.pauseEndTime = Date.now();
+        this.pauseTimeTotal += this.pauseEndTime - this.pauseStartTime;
+
         this.println("System rebooted.", true);
 
         this.score = 0;
         this.continueCount += 1;
+        this.continueCountByStage[this.stageNumber] += 1;
         this.zanki = INITIAL_ZANKI;
         this.bomb = this.bombMax = INITIAL_BOMB_MAX[this.player.style];
         this.hyperRank = 0;
@@ -711,6 +788,8 @@ gls2.GameScene = tm.createClass(
     },
 
     clearStage: function() {
+        this.calcStageFpsAvg();
+
         gls2.playBgm("bgmResult");
         var tempTimer = tm.app.Object2D();
         tempTimer.addChildTo(this.lastElement);
@@ -721,13 +800,28 @@ gls2.GameScene = tm.createClass(
     },
 
     gameOver: function() {
+        this.pauseEndTime = Date.now();
+        this.pauseTimeTotal += this.pauseEndTime - this.pauseStartTime;
+
+        if (this.scoreByStage[this.stageNumber - 1] === undefined) {
+            this.scoreByStage[this.stageNumber] = this.score;
+        } else {
+            this.scoreByStage[this.stageNumber] = this.score - this.scoreByStage[this.stageNumber - 1];
+        }
+        this.calcStageFpsAvg();
+
         // ゲームオーバー画面へ
         gls2.stopBgm();
         this.app.replaceScene(gls2.GameOverScene());
     },
 
-    gameClear: function() {
-        // TODO エンディング画面へ
+    calcStageFpsAvg: function() {
+        this.stageEndTime = Date.now();
+        this.stageEndFrame = gls2.core.frame;
+        var time = (this.stageEndTime - this.stageStartTime) - this.pauseTimeTotal;
+        var frame = this.stageEndFrame - this.stageStartFrame;
+        this.fpsAvgByStage[this.stageNumber] = frame / time * 1000;
+        console.log("this.fpsAvgByStage[this.stageNumber]" + this.fpsAvgByStage[this.stageNumber]);
     },
 
     addScore: function(score) {
@@ -838,6 +932,9 @@ gls2.GameScene = tm.createClass(
         if (this.currentHyperLevel == 10) {
             this.app.putAchevement("hyper10");
         }
+
+        this.hyperCountByStage[this.stageNumber] += 1;
+        this.hyperLevelHistory.push(this.currentHyperLevel);
     },
 
     endHyperMode: function() {
@@ -881,6 +978,8 @@ gls2.GameScene = tm.createClass(
     },
 
     openPauseMenu: function(defaultValue) {
+        this.pauseStartTime = Date.now();
+
         this.openDialogMenu("PAUSE", [ "resume", "setting", "exit game" ], this.onResultPause, {
             "defaultValue": defaultValue,
             "menuDescriptions": [
@@ -894,6 +993,8 @@ gls2.GameScene = tm.createClass(
     onResultPause: function(result) {
         switch (result) {
         case 0: // resume
+            this.pauseEndTime = Date.now();
+            this.pauseTimeTotal += this.pauseEndTime - this.pauseStartTime;
             break;
         case 1: // setting
             this.openSetting();
@@ -975,6 +1076,8 @@ gls2.GameScene = tm.createClass(
     },
 
     openContinueMenu: function() {
+        this.pauseStartTime = Date.now();
+
         this.openDialogMenu("CONTINUE? (" + this.continueCount + "/" + gls2.core.calcContinueCountMax() + ")", [ "yes", "no" ], this.onResultContinue, {
             "defaultValue": 0,
             "menuDescriptions": [

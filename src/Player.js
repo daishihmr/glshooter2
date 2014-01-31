@@ -288,6 +288,8 @@ gls2.Player = tm.createClass(
                         .setPosition(gls2.math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);
                     gls2.core.putAchevement("bomb1");
+
+                    this.gameScene.bombCountByStage[this.gameScene.stageNumber] += 1;
                 }
             }
 

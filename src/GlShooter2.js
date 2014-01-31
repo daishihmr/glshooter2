@@ -131,25 +131,19 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
             delete assets["bgmEnding"];
-
-            // 遊び用
-            // assets["bgmShipSelect"] = "/gls2-bgm/select.mp3";
-            // assets["bgm1"] = "/gls2-bgm/1.mp3";
-            // assets["bgm2"] = "/gls2-bgm/2.mp3";
-            // assets["bgm3"] = "/gls2-bgm/3.mp3";
-            // assets["bgm4"] = "/gls2-bgm/4.mp3";
-            // assets["bgm5"] = "/gls2-bgm/5.mp3";
-            // assets["bgmBoss"] = "/gls2-bgm/boss.mp3";
-            // assets["bgmResult"] = "/gls2-bgm/clear.mp3";
         }
 
-        this.replaceScene(tm.ui["LoadingScene"]({
+        var loadingScene = tm.ui["LoadingScene"]({
             assets: assets,
+            width: SC_W,
+            height: SC_H,
             nextScene: function() {
                 this._onLoadAssets();
                 return gls2.TitleScene();
             }.bind(this),
-        }));
+        });
+        loadingScene.bg.canvas.clearColor("black");
+        this.replaceScene(loadingScene);
     },
 
     calcContinueCountMax: function() {
@@ -231,7 +225,7 @@ gls2.GlShooter2 = tm.createClass(
             "continueCount": this.gameScene.continueCount,
             "shipType": this.gameScene.player.type,
             "shipStyle": this.gameScene.player.style,
-            "fps": 0,
+            "fps": this.gameScene.fpsAvgByStage.slice(0, this.gameScene.stageNumber)["average"](),
             "screenShot": this.gameScene.screenShot
         };
         if (userName) {
@@ -299,7 +293,7 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     putAchevement: function(key) {
-        if (!window["achevements"]) {
+        if (!window["achevements"] || window["achevements"].indexOf(key) !== -1) {
             return;
         }
 
