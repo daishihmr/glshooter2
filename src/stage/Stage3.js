@@ -35,6 +35,7 @@ gls2.Stage3 = tm.createClass(
 //            this.seq.add( 60, "miyuki-2");
 //            this.seq.add(300, "higashi", true); //中ボス
 //            this.seq.add( 60, "momozono", true);
+//            this.seq.add( 60, "hyuga", true);
 //            this.seq.add(2400, function() {});
         }
 
@@ -170,19 +171,6 @@ gls2.Stage3 = tm.createClass(
                 .to({speed:2, direction:Math.PI*0.5}, 3000, "easeInOutQuad");
         });
         
-        this.seq.add( 60, "komachi3-1");
-        this.seq.add(240, "komachi3-0");
-
-        this.seq.add(120, "alice");
-        this.seq.add(600, function() {});
-
-        for (var i = 0; i < 5; i++) {
-            this.seq.add( 60, "nao2-center");
-            this.seq.add( 60, "nao2-left");
-            this.seq.add( 60, "nao2-right");
-        }
-
-        //80%
         this.seq.add(120, "reika1-left");
         this.seq.add(120, "reika1-left");
         this.seq.add(120, "heri1-left");
@@ -195,6 +183,7 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
 
+        //80%
         this.seq.add(120, "reika1-left");
         this.seq.add(120, "reika1-left");
         this.seq.add(160, "heri1-left");
@@ -206,6 +195,25 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
+
+        this.seq.add( 60, "komachi3-1");
+        this.seq.add(240, "komachi3-0");
+
+        this.seq.add(120, "alice");
+        this.seq.add(600, function() {});
+
+        for (var i = 0; i < 5; i++) {
+            this.seq.add( 60, "nao2-center");
+            this.seq.add( 60, "nao2-left");
+            this.seq.add( 60, "nao2-right");
+        }
+
+        this.seq.add(  1, function() {
+            //前進
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:8, direction:Math.PI*0.5}, 5000, "easeInOutQuad");
+        });
 
         //90%
         this.seq.add(120, "reika1-right");
