@@ -1651,7 +1651,7 @@ gls2.Danmaku["saki-3-2"] = new bulletml.Root({
             $.fire($.direction( 90, "sequence"), $spd2, RNS),
             $.fire($.direction( 90, "sequence"), $spd2, RNS),
             $interval(10),
-            $.fire($.direction( 80, "sequence"), $spd2, RNS),
+               $.fire($.direction( 80, "sequence"), $spd2, RNS),
         ]),
     ]),
 });
@@ -2222,14 +2222,18 @@ gls2.Danmaku["love-2-3"] = gls2.Danmaku["love-1-3"];
 gls2.Danmaku["love-3-1"] = new bulletml.Root({
     "top0": $.action([
         $.wait(30),
-        $.repeat(3, [
-            $whip($spd4, 0.01, 10, function(spd) {
+        $.repeat(2, [
+            $whip($spd4, 0.005, 10, function(spd) {
                 return $.action([
+/*
                     $absoluteNway(20, 270, 90, spd, RNS, $.offsetX(-85), $.offsetY(0)),
                     $absoluteNway(20, 270, 90, spd, RNS, $.offsetX(+85), $.offsetY(0)),
+*/                    
+                    $nway(20, -90, 90, spd, RNS, $.offsetX(-85), $.offsetY(0)),
+                    $nway(20, -90, 90, spd, RNS, $.offsetX(+85), $.offsetY(0)),
                 ]);
             }),
-            $interval(180),
+            $interval(300),
         ]),
     ]),
 });
