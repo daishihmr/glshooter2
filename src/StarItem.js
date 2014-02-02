@@ -40,7 +40,7 @@ gls2.StarItem = tm.createClass(
         this.addChildTo(this.gameScene);
 
         var a = gls2.FixedRandom.random() * Math.PI*0.5 - Math.PI*0.75;
-        var s = 30;
+        var s = 10 + Math.random() * 30;
         this.dx = Math.cos(a) * s;
         this.dy = Math.sin(a) * s;
     },

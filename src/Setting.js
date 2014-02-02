@@ -266,6 +266,12 @@ var BULLET_SCORE = 10;
 var BULLET_COMBO = 1;
 
 /**
+ * ハイパー中の星アイテム増加倍率
+ * @const
+ */
+var STAR_ITEM_BY_HYPERLEVEL = [ 1, 1, 2, 3, 4, 8, 16, 20, 24, 32, 40 ];
+
+/**
  * 星アイテム（大）取得時のスコア
  * @const
  */
