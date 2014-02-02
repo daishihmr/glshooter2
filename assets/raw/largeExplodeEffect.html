@@ -1,0 +1,89 @@
+<html>
+<head>
+</head>
+<body>
+<canvas id="app"></canvas>
+<script src="../../libs/tmlib.js"></script>
+<script>
+gls2 = {};
+
+tm.main(function() {
+    app = tm.display.CanvasApp("#app");
+    app.resize(480, 640).fitWindow();
+    app.fps = 60;
+    app.background = "hsl(180, 50%, 50%)"
+
+    app.replaceScene(tm.app.LoadingScene({
+        assets: {
+            "explode0": "../explode0.png",
+            "explode1": "../explode1.png",
+            "explode2": "../explode2.png"
+        },
+        nextScene: TestScene
+    }))
+
+    app.run();
+});
+
+var TestScene = tm.createClass({
+    superClass: tm.app.Scene,
+    init: function() {
+        this.superInit();
+        this.on("pointingstart", function(e) {
+            gls2.LargeExplodeEffect(this).setPosition(e.pointing.x, e.pointing.y).addChildTo(this);
+        });
+    }
+});
+
+gls2.LargeExplodeEffect = tm.createClass({
+    superClass: tm.app.Object2D,
+    isEffect: true,
+
+    gameScene: null,
+    age: 0,
+
+    init: function(gameScene) {
+        this.superInit();
+        this.gameScene = gameScene;
+    },
+    onadded: function() {
+        for (var j = 0; j < 20; j++) {
+            var angle = Math.random() * 360;
+            var speed = gls2.Noise.noise[Math.floor(gls2.Noise.noise.length * angle/360)] * 50;
+
+            var position = tm.geom.Vector2(this.x, this.y);
+            var velocity = tm.geom.Vector2().setAngle(angle, speed);
+
+            for (var i = 0; i < 8; i++) {
+                position.add(velocity);
+
+                var e = tm.display.Sprite("explode" + Math.floor(Math.random() * 3), 100, 100)
+                    .setPosition(position.x, position.y)
+                    .setScale(2+Math.random()*0.5)
+                    .setRotation(Math.random()*360)
+                    .setFrameIndex(0);
+                e.frameIndex = -i*3;
+                e.update = function() {
+                    this.frameIndex += 0.3;
+
+                    if (this.frameIndex < 0) {
+                        this.visible = false;
+                        return;
+                    } else if (this.frameIndex >= 64) {
+                        this.remove();
+                        return;
+                    }
+
+                    this.setFrameIndex(Math.floor(this.frameIndex));
+                    this.visible = true;
+                };
+                e.isEffect = true;
+                e.addChildTo(this.gameScene);
+            }
+        }
+    }
+});
+</script>
+<script src="../../src/common/Noise.js"></script>
+</body>
+</html>
