@@ -532,7 +532,7 @@ gls2.GameScene = tm.createClass(
             this.isHyperMode || gls2.distanceSq(enemy,this.player) < CROSS_RANGE,
             enemy.x,
             enemy.y,
-            enemy.star,
+            enemy.star * STAR_ITEM_BY_HYPERLEVEL[this.currentHyperLevel],
             (enemy instanceof gls2.Boss)
         );
 
