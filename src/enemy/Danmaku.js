@@ -1013,7 +1013,7 @@ gls2.Danmaku["aguri"] = new bulletml.Root({
                 $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY(  0)),
                 $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY( 10)),
                 $nway(3,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY( 20)),
-                $interval(60),
+                $interval(40),
             ]),
             $interval(180),
         ]),
