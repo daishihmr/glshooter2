@@ -197,21 +197,12 @@ gls2.Stage5 = tm.createClass(
 
         this.seq.add(200, "mktn5-0");
         this.seq.add( 60, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left");
+        this.seq.add( 10, "heri1-4-center2");
         this.seq.add( 10, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left");
-        this.seq.add( 10, "heri1-4-left");
+        this.seq.add( 10, "heri1-4-center2");
+        this.seq.add( 10, "heri1-4-right2");
         this.seq.add( 10, "heri1-4-left2");
-        this.seq.add( 10, "heri1-4-left");
-
-        this.seq.add(300, "mktn5-1");
-        this.seq.add( 60, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right");
-        this.seq.add( 10, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right");
-        this.seq.add( 10, "heri1-4-right");
-        this.seq.add( 10, "heri1-4-right2");
-        this.seq.add( 10, "heri1-4-right");
+        this.seq.add( 10, "heri1-4-center2");
 
         this.seq.add(380, "nozomi5-1");
         this.seq.add(100, "nozomi5-0");
