@@ -2100,58 +2100,58 @@ gls2.Danmaku["love-1-1"] = new bulletml.Root({
     "top0": $.action([
         $interval(30),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(60, [
+        $.repeat(90, [
             $.fire($.direction(+20, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-105), $.offsetY(0)),
-            $interval(2),
+            $interval(1),
         ]),
         $interval(60),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(60, [
+        $.repeat(90, [
             $.fire($.direction(-20, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-105), $.offsetY(0)),
-            $interval(2),
+            $interval(1),
         ]),
         $interval(120),
     ]),
     "top1": $.action([
         $.wait(30),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(30, [
-            $.fire($.direction(+30, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-85), $.offsetY(0)),
-            $interval(4),
+        $.repeat(90, [
+            $.fire($.direction(+25, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-85), $.offsetY(0)),
+            $interval(1),
         ]),
         $interval(60),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(30, [
-            $.fire($.direction(-30, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-85), $.offsetY(0)),
-            $interval(4),
+        $.repeat(90, [
+            $.fire($.direction(-25, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(-85), $.offsetY(0)),
+            $interval(1),
         ]),
     ]),
     "top2": $.action([
         $.wait(30),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(60, [
+        $.repeat(90, [
             $.fire($.direction(-20, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+105), $.offsetY(0)),
-            $interval(2),
+            $interval(1),
         ]),
         $interval(60),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(60, [
+        $.repeat(90, [
             $.fire($.direction(+20, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+105), $.offsetY(0)),
-            $interval(2),
+            $interval(1),
         ]),
     ]),
     "top3": $.action([
         $.wait(30),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(30, [
-            $.fire($.direction(-30, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+85), $.offsetY(0)),
-            $interval(4),
+        $.repeat(90, [
+            $.fire($.direction(-25, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+85), $.offsetY(0)),
+            $interval(1),
         ]),
         $interval(60),
         $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(30, [
-            $.fire($.direction(+30, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+85), $.offsetY(0)),
-            $interval(4),
+        $.repeat(90, [
+            $.fire($.direction(+25, "sequence"), $spd2("$loop.index*0.3"), BNL, $.offsetX(+85), $.offsetY(0)),
+            $interval(1),
         ]),
     ]),
 });
@@ -2164,8 +2164,10 @@ gls2.Danmaku["love-1-2"] = new bulletml.Root({
         $.repeat(2, [
             $whip($spd3, 0.02, 10, function(spd) {
                 return $.action([
-                    $absoluteNway(5, 200, 120, spd, RNS, $.offsetX(-85), $.offsetY(0)),
-                    $absoluteNway(5, 260, 210, spd, RNS, $.offsetX(+85), $.offsetY(0)),
+                    $absoluteNway(5, 200, 120, spd, RNS, $.offsetX( -85), $.offsetY(  0)),
+                    $absoluteNway(5, 260, 210, spd, RNS, $.offsetX( +85), $.offsetY(  0)),
+                    $absoluteNway(6, 190, 130, spd, BNS, $.offsetX(-170), $.offsetY(+40)),
+                    $absoluteNway(6, 270, 220, spd, BNS, $.offsetX(+170), $.offsetY(+40)),
                     $.wait(5),
                 ]);
             }),
@@ -2228,10 +2230,6 @@ gls2.Danmaku["love-3-1"] = new bulletml.Root({
         $.repeat(2, [
             $whip($spd4, 0.005, 10, function(spd) {
                 return $.action([
-/*
-                    $absoluteNway(20, 270, 90, spd, RNS, $.offsetX(-85), $.offsetY(0)),
-                    $absoluteNway(20, 270, 90, spd, RNS, $.offsetX(+85), $.offsetY(0)),
-*/                    
                     $nway(20, -90, 90, spd, RNS, $.offsetX(-85), $.offsetY(0)),
                     $nway(20, -90, 90, spd, RNS, $.offsetX(+85), $.offsetY(0)),
                 ]);
