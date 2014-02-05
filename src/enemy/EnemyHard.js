@@ -42,7 +42,7 @@ gls2.Enemy.DATA = {
     "lary":      [   300,     2000,  true,  true,  5, {"radius": 24} ],
     "shiry":     [   250,     2000,  true,  true,  5, {"radius": 24} ],
     "dodory":    [   120,     2000,  true, false,  5, {"radius": 24} ],
-    "erika":     [    30,      500, false, false,  1, {"width":24, "height":48}, ],
+    "kurumi":    [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
     //Stage3
     "hino":      [    20,    10000, false, false,  1, {"width": 64, "height": 64}, ],
@@ -877,7 +877,7 @@ gls2.Enemy.Erika = tm.createClass({
     superClass: gls2.Enemy,
 
     init: function(gameScene, software) {
-        this.superInit(gameScene, software, "erika");
+        this.superInit(gameScene, software, "kurumi");
         this._sprite = _Sprite("tex3", 64, 128);
         this._sprite.setFrameIndex(8);
     },
@@ -959,6 +959,7 @@ gls2.Enemy.Nagisa = tm.createClass(
     },
     destroy: function() {
         this.bossDestroy();
+        gls2.core.fps = FPS;
     },
 });
 
@@ -1036,6 +1037,7 @@ gls2.Enemy.Saki = tm.createClass(
     },
     destroy: function() {
         this.bossDestroy();
+        gls2.core.fps = FPS;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -1095,6 +1097,7 @@ gls2.Enemy.Love = tm.createClass(
     },
     destroy: function() {
         this.bossDestroy();
+        gls2.core.fps = FPS;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -1191,6 +1194,7 @@ gls2.Enemy.Mana = tm.createClass(
     },
     destroy: function() {
         this.bossDestroy();
+        gls2.core.fps = FPS;
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
