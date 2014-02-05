@@ -22,7 +22,7 @@ gls2.Stage3 = tm.createClass(
             //前進
             this.gameScene.ground.direction = Math.PI*0.5;
             this.gameScene.ground.speed = 2;
-            this.gameScene.ground.tweener.clear().to({speed:5}, 4000, "easeInOutQuad");
+            this.gameScene.ground.tweener.clear().to({speed:6}, 5000, "easeInOutQuad");
         });
 
         //test
@@ -54,7 +54,7 @@ gls2.Stage3 = tm.createClass(
 
         //10%
         this.seq.add( 60, function() {
-            this.gameScene.ground.tweener.clear().to({speed:7}, 1000, "easeInOutQuad");
+            this.gameScene.ground.tweener.clear().to({speed:3}, 1000, "easeInOutQuad");
         });
         this.seq.add(120, "akane-center");
         this.seq.add( 60, "nao2-center");
@@ -77,8 +77,11 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-center");
 
         //20%
-        this.seq.add( 60, function() {
-            this.gameScene.ground.tweener.clear().to({speed:3}, 1000, "easeInOutQuad");
+        this.seq.add(60, function() {
+            //左へ
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:4, direction:0}, 3000, "easeInOutQuad");
         });
         this.seq.add(120, "akane-center");
         this.seq.add( 60, "akane-right");
@@ -88,10 +91,9 @@ gls2.Stage3 = tm.createClass(
             this.seq.add( 60, "nao2-left");
             this.seq.add( 60, "nao2-right");
         }
-        //TODO:２セット程度追加
 
         //30%
-        this.seq.add(60, function() {
+        this.seq.add( 1, function() {
             //左へ
             this.gameScene.ground.tweener
                 .clear()
@@ -140,26 +142,26 @@ gls2.Stage3 = tm.createClass(
 
         //50%
         this.seq.add( 60, "madoka-0");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-center");
         this.seq.add(180, "madoka-1");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
 
-        this.seq.add( 80, "erika");
+        this.seq.add(120, "erika");
 
         //60%
         this.seq.add(  1, function() {
             //前進
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:7}, 2000, "easeInOutQuad");
+                .to({speed:7}, 3000, "easeInOutQuad");
         });
         this.seq.add(300, "higashi", true); //中ボス
-        this.seq.add(1200, function() {});
+        this.seq.add(900, function() {});
 
         //70%
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < 6; i++) {
             this.seq.add( 90, "nao1-center");
             this.seq.add( 60, "nao1-right");
             this.seq.add( 60, "nao1-left");
@@ -170,6 +172,11 @@ gls2.Stage3 = tm.createClass(
                 .clear()
                 .to({speed:2, direction:Math.PI*0.5}, 3000, "easeInOutQuad");
         });
+        this.seq.add( 60, "miyuki-2");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-center");
+        this.seq.add( 60, "nao2-left");
+        this.seq.add( 60, "nao2-right");
         
         this.seq.add(120, "reika1-left");
         this.seq.add(120, "reika1-left");
@@ -200,19 +207,25 @@ gls2.Stage3 = tm.createClass(
         this.seq.add(240, "komachi3-0");
 
         this.seq.add(120, "alice");
-        this.seq.add(600, function() {});
+        this.seq.add(300, function() {});
 
+        this.seq.add(180, "madoka-0");
         for (var i = 0; i < 5; i++) {
             this.seq.add( 60, "nao2-center");
             this.seq.add( 60, "nao2-left");
             this.seq.add( 60, "nao2-right");
         }
+        this.seq.add(160, "heri1-left");
+        this.seq.add(100, "heri1-right");
+        this.seq.add(180, "madoka-1");
+        this.seq.add( 40, "heri1-right2");
+        this.seq.add( 40, "heri1-left2");
 
         this.seq.add(  1, function() {
             //前進
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:8, direction:Math.PI*0.5}, 5000, "easeInOutQuad");
+                .to({speed:4, direction:Math.PI*0.5}, 5000, "easeInOutQuad");
         });
 
         //90%

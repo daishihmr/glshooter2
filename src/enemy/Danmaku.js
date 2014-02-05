@@ -999,20 +999,23 @@ gls2.Danmaku["aguri"] = new bulletml.Root({
     //トキメキなさい！
     "top1": $.action([
         $.repeat(999, [
-            //真ん中
-            $nway(3,-10, 10, $spd4, RS, $.offsetX(  0), $.offsetY(  0)),
-            $nway(3,-10, 10, $spd4, RS, $.offsetX(  0), $.offsetY( 30)),
-            //右側
-            $nway(3,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY(-10)),
-            $nway(3,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY(  0)),
-            $nway(3,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY( 10)),
-            $nway(3,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY( 20)),
-            //左側
-            $nway(3,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY(-10)),
-            $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY(  0)),
-            $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY( 10)),
-            $nway(3,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY( 20)),
-            $interval(60),
+            $.repeat(3, [
+                //真ん中
+                $nway(3,-10, 10, $spd4, RS, $.offsetX(  0), $.offsetY(  0)),
+                $nway(3,-10, 10, $spd4, RS, $.offsetX(  0), $.offsetY( 30)),
+                //右側
+                $nway(3,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY(-10)),
+                $nway(3,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY(  0)),
+                $nway(3,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY( 10)),
+                $nway(3,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY( 20)),
+                //左側
+                $nway(3,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY(-10)),
+                $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY(  0)),
+                $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY( 10)),
+                $nway(3,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY( 20)),
+                $interval(40),
+            ]),
+            $interval(180),
         ]),
     ]),
 });
