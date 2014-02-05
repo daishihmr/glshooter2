@@ -904,7 +904,7 @@ gls2.EnemySoft.aguri = gls2.EnemySoft.aguri();
 /**
  * 戦艦
  *
- * 左右から出現、そのまま等速で横断する。
+ * 左右から出現、そのまま等速で中心へ。
  *
  * @class
  * @extends {gls2.EnemySoft}
@@ -929,17 +929,15 @@ gls2.EnemySoft.miyuki = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
-        enemy.velocityX = this.velocityX;
         enemy.patterns = [this.attackPattern];
+        enemy.startY = enemy.y;
 
         enemy.tweener
             .clear()
             .call(function() {
                 gls2.EnemySoft.attack(this, this.patterns[0]);
             }.bind(enemy));
-
         enemy.on("enterframe", function() {
-            this.x += this.velocityX;
             if (this.entered && !this.isInScreen()) {
                 this.remove();
             }

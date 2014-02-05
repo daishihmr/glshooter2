@@ -774,10 +774,15 @@ gls2.Enemy.miyuki = tm.createClass(
         });
     },
     onLaunch: function() {
+        this.tweener
+        .move(SC_W/2, this.y, 6000, "easeInOutQuad")
+        .moveBy(0, SC_H*0.1, 5000, "easeInOutQuad");
         //初期位置で向きを決定
         if (this.x > SC_W/2){ //画面左端から出現
-            this.velocityX *= -1;
-            this.setScale(-1.5);
+            this.scaleX = -1.5;
+            this.tweener.moveBy(-SC_W/2-256, 0, 8000, "easeInOutQuad");
+        } else {
+            this.tweener.moveBy(SC_W/2+256, 0, 8000, "easeInOutQuad");
         }
     },
     isInScreen: function() {

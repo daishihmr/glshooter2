@@ -1001,18 +1001,18 @@ gls2.Danmaku["aguri"] = new bulletml.Root({
         $.repeat(999, [
             $.repeat(3, [
                 //真ん中
-                $nway(3,-10, 10, $spd4, RS, $.offsetX(  0), $.offsetY(  0)),
-                $nway(3,-10, 10, $spd4, RS, $.offsetX(  0), $.offsetY( 30)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX(  0), $.offsetY(  0)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX(  0), $.offsetY( 30)),
                 //右側
-                $nway(3,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY(-10)),
-                $nway(3,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY(  0)),
-                $nway(3,-10, 10, $spd4, RS, $.offsetX(-20), $.offsetY( 10)),
-                $nway(3,-10, 10, $spd4, RS, $.offsetX(-10), $.offsetY( 20)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX(-10), $.offsetY(-10)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX(-20), $.offsetY(  0)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX(-20), $.offsetY( 10)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX(-10), $.offsetY( 20)),
                 //左側
-                $nway(3,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY(-10)),
-                $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY(  0)),
-                $nway(3,-10, 10, $spd4, RS, $.offsetX( 20), $.offsetY( 10)),
-                $nway(3,-10, 10, $spd4, RS, $.offsetX( 10), $.offsetY( 20)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX( 10), $.offsetY(-10)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX( 20), $.offsetY(  0)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX( 20), $.offsetY( 10)),
+                $nway(3,-15, 15, $spd4, RS, $.offsetX( 10), $.offsetY( 20)),
                 $interval(40),
             ]),
             $interval(180),
@@ -1023,6 +1023,7 @@ gls2.Danmaku["aguri"] = new bulletml.Root({
 /**
  *　小学８年生用
  */
+ //TODO:もう少し厳しくする
 gls2.Danmaku["miyuki"] = new bulletml.Root({
     "top": $.action([
         $.wait("40"),
