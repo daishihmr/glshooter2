@@ -1956,7 +1956,7 @@ gls2.Danmaku["kanade"] = new bulletml.Root({
     "top3": $.action([
         $.repeat(999, [
             $nway(3, -3,  +3, $spd3, RNSH, $.offsetY(-350)),
-            $interval(37),
+            $interval(91),
         ]),
     ]),
 });
