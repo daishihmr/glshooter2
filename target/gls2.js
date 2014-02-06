@@ -965,9 +965,8 @@ gls2.lj = tm.createClass({superClass:tm.display.CanvasApp, ze:0, uk:0, wk:0, vk:
 }, rl:function() {
   this.stop()
 }, Ei:t, jh:function(c, a) {
-  var f = this.ba.xe.slice(0, this.ba.Aa).average();
-  console.log("avgFps = " + f);
-  f = {score:Math.floor(this.ba.score), stage:this.ba.Aa + 1, continueCount:this.ba.Pc, shipType:this.ba.da.type, shipStyle:this.ba.da.style, fps:this.ba.xe.slice(0, this.ba.Aa).average(), screenShot:this.ba.be};
+  this.ba.xe.slice(0, this.ba.Aa + 1).average();
+  var f = {score:Math.floor(this.ba.score), stage:this.ba.Aa + 1, continueCount:this.ba.Pc, shipType:this.ba.da.type, shipStyle:this.ba.da.style, fps:this.ba.xe.slice(0, this.ba.Aa).average(), screenShot:this.ba.be};
   c ? (f.userName = c, this.Ei = t) : this.Ei = k;
   tm.util.Ajax.load({url:"/api/ranking/post", data:f, type:"POST", dataType:"json", success:function(c) {
     if(c) {
@@ -1009,8 +1008,7 @@ gls2.lj = tm.createClass({superClass:tm.display.CanvasApp, ze:0, uk:0, wk:0, vk:
     var a = tm.asset.AssetManager.get("achevements").data;
     if(a[c]) {
       var f = window.achevements;
-      -1 == f.indexOf(c) && (f.push(c), tm.util.Ajax.load({url:"/api/achevement/" + c, type:"POST", dataType:"json", success:function(d) {
-        console.dir(d);
+      -1 == f.indexOf(c) && (f.push(c), tm.util.Ajax.load({url:"/api/achevement/" + c, type:"POST", dataType:"json", success:function() {
         a[c] && (gls2.sa("achevement"), this.ba.xi.addChild(gls2.Gh(a[c].title)))
       }.bind(this), error:function() {
         console.warn("error!")
@@ -3410,8 +3408,6 @@ gls2.ab = tm.createClass({superClass:gls2.Scene, da:l, score:0, Pc:0, pb:0, Sa:0
     c.remove()
   }.bind(this))
 }, qi:function() {
-  this.Cd = Date.now();
-  this.cd += this.Cd - this.ae;
   this.gd[this.Aa] = this.gd[this.Aa - 1] === i ? this.score : this.score - this.gd[this.Aa - 1];
   this.ci();
   gls2.Pe();
@@ -3538,7 +3534,7 @@ gls2.ab = tm.createClass({superClass:gls2.Scene, da:l, score:0, Pc:0, pb:0, Sa:0
       this.kk();
       break;
     case 1:
-      this.qi()
+      this.Cd = Date.now(), this.cd += this.Cd - this.ae, this.qi()
   }
 }, yd:G(), Zk:function() {
   this.Rb.Cb.tweener.clear().to({ye:-480}, 1600, "easeInBack").to({Cc:30}, 800, "easeInOutBack")
@@ -3546,7 +3542,6 @@ gls2.ab = tm.createClass({superClass:gls2.Scene, da:l, score:0, Pc:0, pb:0, Sa:0
   this.Rb.Cb.tweener.clear().to({Cc:0}, 800, "easeInOutBack").to({ye:0}, 1600, "easeOutBack")
 }, Le:l, Me:0, Ce:l, Xe:0, cl:function() {
   if(1 === this.Xe) {
-    console.log("rec start");
     if(localStorage.getItem("recCount") !== i) {
       this.Ce = [];
       for(var c = ~~localStorage.getItem("recCount"), a = 0;a < c;a++) {
@@ -3557,7 +3552,7 @@ gls2.ab = tm.createClass({superClass:gls2.Scene, da:l, score:0, Pc:0, pb:0, Sa:0
     this.Le = [];
     this.Me = 0
   }else {
-    if(2 === this.Xe && (console.log("replay start"), localStorage.getItem("recCount") !== i)) {
+    if(2 === this.Xe && localStorage.getItem("recCount") !== i) {
       this.Ce = [];
       c = ~~localStorage.getItem("recCount");
       for(a = 0;a < c;a++) {
@@ -3569,7 +3564,7 @@ gls2.ab = tm.createClass({superClass:gls2.Scene, da:l, score:0, Pc:0, pb:0, Sa:0
   }
 }, Tk:function(c) {
   if(1 === this.Xe) {
-    1E3 < this.Le.length && (console.log("save"), localStorage.setItem("rec" + this.Me, this.Le), localStorage.setItem("recCount", this.Me), this.Le = [], this.Me += 1), this.Le.push("" + ~~c.getKey("up") + ~~c.getKey("down") + ~~c.getKey("left") + ~~c.getKey("right") + ~~c.getKey("z") + ~~c.getKey("x") + ~~c.getKey("c"))
+    1E3 < this.Le.length && (localStorage.setItem("rec" + this.Me, this.Le), localStorage.setItem("recCount", this.Me), this.Le = [], this.Me += 1), this.Le.push("" + ~~c.getKey("up") + ~~c.getKey("down") + ~~c.getKey("left") + ~~c.getKey("right") + ~~c.getKey("z") + ~~c.getKey("x") + ~~c.getKey("c"))
   }else {
     if(2 === this.Xe && this.Ce) {
       var a = this.Ce.shift();

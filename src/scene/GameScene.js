@@ -772,7 +772,9 @@ gls2.GameScene = tm.createClass(
 
     gameContinue: function() {
         this.pauseEndTime = Date.now();
-        this.pauseTimeTotal += this.pauseEndTime - this.pauseStartTime;
+        var pauseTime = this.pauseEndTime - this.pauseStartTime;
+        // console.log("pauseTime = " + pauseTime);
+        this.pauseTimeTotal += pauseTime;
 
         this.println("System rebooted.", true);
 
@@ -800,9 +802,6 @@ gls2.GameScene = tm.createClass(
     },
 
     gameOver: function() {
-        this.pauseEndTime = Date.now();
-        this.pauseTimeTotal += this.pauseEndTime - this.pauseStartTime;
-
         if (this.scoreByStage[this.stageNumber - 1] === undefined) {
             this.scoreByStage[this.stageNumber] = this.score;
         } else {
@@ -993,7 +992,9 @@ gls2.GameScene = tm.createClass(
         switch (result) {
         case 0: // resume
             this.pauseEndTime = Date.now();
-            this.pauseTimeTotal += this.pauseEndTime - this.pauseStartTime;
+            var pauseTime = this.pauseEndTime - this.pauseStartTime;
+            // console.log("pauseTime = " + pauseTime);
+            this.pauseTimeTotal += pauseTime;
             break;
         case 1: // setting
             this.openSetting();
@@ -1092,6 +1093,10 @@ gls2.GameScene = tm.createClass(
             this.gameContinue();
             break;
         case 1: // no
+            this.pauseEndTime = Date.now();
+            var pauseTime = this.pauseEndTime - this.pauseStartTime;
+            // console.log("pauseTime = " + pauseTime);
+            this.pauseTimeTotal += pauseTime;
             this.gameOver();
             break;
         }
@@ -1135,7 +1140,7 @@ gls2.GameScene = tm.createClass(
     RECMODE: 0,
     startRec: function() {
         if (this.RECMODE === 1) {
-            console.log("rec start");
+            // console.log("rec start");
             if (localStorage.getItem("recCount") !== undefined) {
                 this.kbary = [];
                 var c = ~~localStorage.getItem("recCount");
@@ -1147,7 +1152,7 @@ gls2.GameScene = tm.createClass(
             this.rec = [];
             this.recCount = 0;
         } else if (this.RECMODE === 2) {
-            console.log("replay start");
+            // console.log("replay start");
             if (localStorage.getItem("recCount") !== undefined) {
                 this.kbary = [];
                 var c = ~~localStorage.getItem("recCount");
@@ -1164,7 +1169,7 @@ gls2.GameScene = tm.createClass(
     record: function(kb) {
         if (this.RECMODE === 1) {
             if (1000 < this.rec.length) {
-                console.log("save");
+                // console.log("save");
                 localStorage.setItem("rec" + this.recCount, this.rec);
                 localStorage.setItem("recCount", this.recCount);
                 this.rec = [];
