@@ -1688,11 +1688,20 @@ gls2.EnemySoft.Love3 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
-                    this.tweener
-                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 2000, "easeInOutQuad")
-                        .call(temp);
+                    var ptn = ([].concat(this.patterns)).pop();
+                    if ( ptn == "love-3-1") {
+                        //発狂パターン１は動く
+                        var a = gls2.FixedRandom.random() * Math.PI*2;
+                        var d = gls2.FixedRandom.randf(SC_W*0.05, SC_W*0.1);
+                        this.tweener
+                            .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.2, 2000, "easeInOutQuad")
+                            .call(temp);
+                     } else {
+                        //発狂パターン２は中心にいる
+                        this.tweener
+                            .move(SC_W*0.5, SC_H*0.2, 1000, "easeInOutQuad")
+                            .call(temp);
+                     }
                 }.bind(this);
                 temp();
             }.bind(enemy));
