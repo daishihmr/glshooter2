@@ -821,7 +821,6 @@ gls2.GameScene = tm.createClass(
         var time = (this.stageEndTime - this.stageStartTime) - this.pauseTimeTotal;
         var frame = this.stageEndFrame - this.stageStartFrame;
         this.fpsAvgByStage[this.stageNumber] = frame / time * 1000;
-        console.log("this.fpsAvgByStage[this.stageNumber]" + this.fpsAvgByStage[this.stageNumber]);
     },
 
     addScore: function(score) {
