@@ -2085,10 +2085,12 @@ gls2.Danmaku["setsuna-1"] = new bulletml.Root({
     "top1": $.action([
         $.wait(60),
         $.repeat(10, [
-            $nway(4, -40, 40, $spd2, RL, $.offsetX(0), $.offsetY(30)),
-            $interval(30),
-            $nway(5, -40, 40, $spd1, RL, $.offsetX(0), $.offsetY(30)),
-            $interval(30),
+            $nway(4, -40, 40, $spd3, RL, $.offsetX(0), $.offsetY(30)),
+            $interval(15),
+            $nway(5, -40, 40, $spd2, RL, $.offsetX(0), $.offsetY(30)),
+            $interval(15),
+            $nway(6, -40, 40, $spd1, RL, $.offsetX(0), $.offsetY(30)),
+            $interval(15),
         ]),
     ]),
 });
@@ -2166,9 +2168,9 @@ gls2.Danmaku["love-1-2"] = new bulletml.Root({
             $whip($spd3, 0.02, 10, function(spd) {
                 return $.action([
                     $absoluteNway(5, 200, 120, spd, RNS, $.offsetX( -85), $.offsetY(  0)),
+                    $absoluteNway(6, 190, 130, spd, BS,  $.offsetX(-170), $.offsetY(+40)),
                     $absoluteNway(5, 260, 210, spd, RNS, $.offsetX( +85), $.offsetY(  0)),
-                    $absoluteNway(6, 190, 130, spd, BNS, $.offsetX(-170), $.offsetY(+40)),
-                    $absoluteNway(6, 270, 220, spd, BNS, $.offsetX(+170), $.offsetY(+40)),
+                    $absoluteNway(6, 270, 220, spd, BS,  $.offsetX(+170), $.offsetY(+40)),
                     $.wait(5),
                 ]);
             }),
@@ -2242,7 +2244,20 @@ gls2.Danmaku["love-3-1"] = new bulletml.Root({
 /**
  * 桃園羅武発狂-2
  */
-gls2.Danmaku["love-3-2"] = gls2.Danmaku["love-1-2"];
+gls2.Danmaku["love-3-2"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.repeat(2, [
+            $whip($spd4, 0.005, 10, function(spd) {
+                return $.action([
+                    $nway(20, -90, 90, spd, RNS, $.offsetX(-85), $.offsetY(0)),
+                    $nway(20, -90, 90, spd, RNS, $.offsetX(+85), $.offsetY(0)),
+                ]);
+            }),
+            $interval(300),
+        ]),
+    ]),
+});
 
 
 /**
