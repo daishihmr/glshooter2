@@ -147,6 +147,12 @@ gls2.GameScene = tm.createClass(
     pauseEndTime: 0,
     /** 総ポーズ時間(ms) */
     pauseTimeTotal: 0,
+    /** ポーズ開始フレーム */
+    pauseStartFrame: 0,
+    /** ポーズ解除フレーム */
+    pauseEndFrame: 0,
+    /** 総ポーズフレーム数 */
+    pauseFrameTotal: 0,
 
     /** オーラ撃ち成立フレーム数 */
     auraAttackFrameTotal: 0,
@@ -678,11 +684,13 @@ gls2.GameScene = tm.createClass(
 
         this.stageStartFrame = 0;
         this.stageEndFrame = 0;
-        this.stageStartTime = 0;
         this.stageEndTime = 0;
         this.pauseStartTime = 0;
         this.pauseEndTime = 0;
         this.pauseTimeTotal = 0;
+        this.pauseStartFrame = 0;
+        this.pauseEndFrame = 0;
+        this.pauseFrameTotal = 0;
 
         this.auraAttackFrameTotal = 0;
 
@@ -776,6 +784,11 @@ gls2.GameScene = tm.createClass(
         // console.log("pauseTime = " + pauseTime);
         this.pauseTimeTotal += pauseTime;
 
+        this.pauseEndFrame = gls2.core.frame;
+        var pauseFrame = this.pauseEndFrame - this.pauseStartFrame;
+        // console.log("pauseFrame = " + pauseFrame);
+        this.pauseFrameTotal += pauseFrame;
+
         this.println("System rebooted.", true);
 
         this.score = 0;
@@ -816,10 +829,13 @@ gls2.GameScene = tm.createClass(
 
     calcStageFpsAvg: function() {
         this.stageEndTime = Date.now();
-        this.stageEndFrame = gls2.core.frame;
         var time = (this.stageEndTime - this.stageStartTime) - this.pauseTimeTotal;
-        var frame = this.stageEndFrame - this.stageStartFrame;
+
+        this.stageEndFrame = gls2.core.frame;
+        var frame = (this.stageEndFrame - this.stageStartFrame) - this.pauseFrameTotal;
+
         this.fpsAvgByStage[this.stageNumber] = frame / time * 1000;
+        console.log("this.fpsAvgByStage[" + this.stageNumber + "] = " + this.fpsAvgByStage[this.stageNumber]);
     },
 
     addScore: function(score) {
@@ -977,6 +993,7 @@ gls2.GameScene = tm.createClass(
 
     openPauseMenu: function(defaultValue) {
         this.pauseStartTime = Date.now();
+        this.pauseStartFrame = gls2.core.frame;
 
         this.openDialogMenu("PAUSE", [ "resume", "setting", "exit game" ], this.onResultPause, {
             "defaultValue": defaultValue,
@@ -995,6 +1012,12 @@ gls2.GameScene = tm.createClass(
             var pauseTime = this.pauseEndTime - this.pauseStartTime;
             // console.log("pauseTime = " + pauseTime);
             this.pauseTimeTotal += pauseTime;
+
+            this.pauseEndFrame = gls2.core.frame;
+            var pauseFrame = this.pauseEndFrame - this.pauseStartFrame;
+            // console.log("pauseFrame = " + pauseFrame);
+            this.pauseFrameTotal += pauseFrame;
+
             break;
         case 1: // setting
             this.openSetting();
@@ -1077,6 +1100,7 @@ gls2.GameScene = tm.createClass(
 
     openContinueMenu: function() {
         this.pauseStartTime = Date.now();
+        this.pauseStartFrame = gls2.core.frame;
 
         this.openDialogMenu("CONTINUE? (" + this.continueCount + "/" + gls2.core.calcContinueCountMax() + ")", [ "yes", "no" ], this.onResultContinue, {
             "defaultValue": 0,
@@ -1097,6 +1121,12 @@ gls2.GameScene = tm.createClass(
             var pauseTime = this.pauseEndTime - this.pauseStartTime;
             // console.log("pauseTime = " + pauseTime);
             this.pauseTimeTotal += pauseTime;
+
+            this.pauseEndFrame = gls2.core.frame;
+            var pauseFrame = this.pauseEndFrame - this.pauseStartFrame;
+            // console.log("pauseFrame = " + pauseFrame);
+            this.pauseFrameTotal += pauseFrame;
+
             this.gameOver();
             break;
         }
