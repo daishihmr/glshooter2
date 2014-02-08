@@ -36,7 +36,7 @@ gls2.Stage3 = tm.createClass(
 //            this.seq.add(300, "higashi", true); //中ボス
 //            this.seq.add( 60, "momozono", true);
 //            this.seq.add( 60, "hyuga", true);
-            this.seq.add(2400, function() {});
+//            this.seq.add(2400, function() {});
         }
 
         //0%
