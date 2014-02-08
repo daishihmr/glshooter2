@@ -683,6 +683,11 @@ gls2.EnemyUnit = {
  */
 "kanade": [{ "hard":$e.Kanade, "soft":$s.Kanade1, "x":SC_W*0.9, "y":SC_H*-0.7 }],
 
+/**
+ * ステージ５ボス「ホウジョウ」
+ */
+"hibiki": [{ "hard":$e.Hibiki, "soft":[$s.Hibiki1, $s.Hibiki2, $s.Hibiki3], "x":SC_W*0.5, "y":-100, "boss":true }],
+
 };
 
 })();
