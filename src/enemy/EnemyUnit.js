@@ -627,8 +627,8 @@ gls2.EnemyUnit = {
 "madoka-2": [{ "hard":$e.aguri, "soft":$s.aguri, "x":SC_W*0.5, "y":SC_H*-0.2 }],
 
 //大型戦艦「ホシゾラ」
-"miyuki-1": [{ "hard":$e.miyuki, "soft":$s.miyuki, "x":-128    , "y": 140}],
-"miyuki-2": [{ "hard":$e.miyuki, "soft":$s.miyuki, "x":SC_W+128, "y":  60}],
+"miyuki-1": [{ "hard":$e.miyuki, "soft":$s.miyuki, "x":-256    , "y": 140}],
+"miyuki-2": [{ "hard":$e.miyuki, "soft":$s.miyuki, "x":SC_W+256, "y":  60}],
 
 //浮遊砲台「ヨツバ」
 "alice": [
@@ -661,7 +661,7 @@ gls2.EnemyUnit = {
 /**
  * ステージ３中ボス「ヒガシ」
  */
-"higashi": [{ "hard":$e.Setsuna, "soft":$s.Setsuna, "x":SC_W+300, "y":SC_H*0.2}],
+"higashi": [{ "hard":$e.Setsuna, "soft":$s.Setsuna, "x":SC_W*0.5, "y":-100}],
 
 /**
  * ステージ３ボス「モモゾノ」

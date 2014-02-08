@@ -47,8 +47,8 @@ gls2.Enemy.DATA = {
 
     //Stage3
     "hino":      [    20,    10000, false, false,  1, {"width": 64, "height": 64}, ],
-    "hoshizora": [   300,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
-    "yotsuba":    [  400,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
+    "hoshizora": [   400,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
+    "yotsuba":    [  300,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
     "yotsubaLeaf":[   30,   100000, false, false, 10, {"width": 64, "height": 64}, ],
     "midorikawa":[     5,     2000, false, false,  1, {"width": 64, "height": 64}, ],
     "aoki":      [     5,     3200, false, false,  1, {"width": 64, "height": 64}, ],
@@ -790,6 +790,30 @@ gls2.Enemy.miyuki = tm.createClass(
         //一部でも表示されたら画面内とする
         return 0 <= this.x + this.width/2 || this.x - this.width/2 < SC_W
             && 0 <= this.y + this.height/2 || this.y - this.height/2 < SC_H;
+    },
+    fallDown: function() {
+        this.remove();
+        this.gameScene.fallDownLayer.addChild(this);
+        this.addEventListener("enterframe", function() {
+            if (Math.random() < 0.2) {
+                gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {
+                    "x": 0,
+                    "y": -3,
+                });
+            }
+        });
+        this.tweener
+            .clear()
+            .to({
+                "altitude": 4,
+                "y": this.y + 200,
+            }, 2000)
+            .call(function() {
+                gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+                gls2.Effect.explodeL(this.x+64, this.y, this.gameScene);
+                gls2.Effect.explodeL(this.x-64, this.y, this.gameScene);
+                this.remove();
+            }.bind(this));
     },
 });
 
