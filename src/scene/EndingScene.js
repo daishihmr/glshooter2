@@ -27,6 +27,9 @@ var texts = [
     "GAME ENGINE (tmlib.js)",
     "phi_jp",
     "",
+    "TEST PLAY",
+    "manofac",
+    "",
     "PROGRAM AND GRAPHICS",
     "minimo(stage3)", // (｀皿´）)
     "daishi_hmr",
