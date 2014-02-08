@@ -1916,7 +1916,6 @@ gls2.Danmaku["mana-2-1"] = new bulletml.Root({
         ]),
     ]),
 });
-
 /**
  * マナ第２形態-2
  */
@@ -1958,7 +1957,6 @@ gls2.Danmaku["mana-2-2"] = new bulletml.Root({
         ]),
     ]),
 });
-
 /**
  * マナ第２形態-3
  */
@@ -1987,15 +1985,25 @@ gls2.Danmaku["mana-2-3"] = new bulletml.Root({
         $.vanish,
     ]),
 });
-
 /**
  * マナ発狂-1
  */
-gls2.Danmaku["mana-3-1"] = gls2.Danmaku["mana-1-1"];
-/**
- * マナ発狂-2
- */
-gls2.Danmaku["mana-3-2"] = gls2.Danmaku["mana-1-1"];
+gls2.Danmaku["mana-3-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(999, [
+            $interval(20),
+            $.bindVar("w", "5+$rand*15"),
+            $nway("$w", -90, +90, $spd1, RI, $.offsetX(-145), $.offsetY(-50)),
+            $nway("$w", -90, +90, $spd1, RI, $.offsetX(+145), $.offsetY(-50)),
+        ]),
+    ]),
+    "top1": $.action([
+        $.repeat(999, [
+            $interval(43),
+            $nway(12, -5, 5, $spd4, BNSH),
+        ]),
+    ]),
+});
 
 /**
  * 奏
