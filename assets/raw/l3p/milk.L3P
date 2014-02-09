@@ -1,0 +1,59 @@
+/*							Parts Assembler
+                                  Version 2.04.051226(:
+Parts: 
+	BR\BR14.suf
+	G1\G110.suf
+	roarm\roarm14.suf
+	roetc\roetc02.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (  18.000 -22.000   0.000 )
+	DisplayScale: 0.125000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -4 -70 )
+	{	mov ( 2276.37 -2182.04 2643.13 ) eye deg( 45 ) }
+	{	mov ( -108.326 -81.8733 -164.635 ) target }
+	{	mov ( 51.3098 0 90.1107 ) rotz ( -22.9897 ) roty ( -67.3538 ) rotx ( 106.345 )
+		scal ( 1.92 2.28 2.76 ) obj BR14 /* "BR\BR14.suf" atr "noname" */
+	}
+	{	mov ( 51.3098 0 90.1107 ) rotz ( 22.9897 ) roty ( -67.3538 ) rotx ( -106.345 )
+		scal ( 1.92 -2.28 2.76 ) obj BR14 /* "BR\BR14.suf" atr "noname" */
+	}
+	{	mov ( 78.5816 568.501 19.6692 ) rotz ( 71.2967 ) roty ( 5.59204 ) rotx ( -59.6476 )
+		scal ( 1.26335 0.2 1.8 ) obj G110 /* "G1\G110.suf" atr "noname" */
+	}
+	{	mov ( 78.5816 568.501 19.6692 ) rotz ( 71.2967 ) roty ( 5.59204 ) rotx ( 96.0576 )
+		scal ( 0.690885 0.2 -2.81396 ) obj G110 /* "G1\G110.suf" atr "noname" */
+	}
+	{	mov ( 78.5816 -568.501 19.6692 ) rotz ( -71.2967 ) roty ( 5.59204 ) rotx ( 59.6476 )
+		scal ( 1.26335 -0.2 1.8 ) obj G110 /* "G1\G110.suf" atr "noname" */
+	}
+	{	mov ( 78.5816 -568.501 19.6692 ) rotz ( -71.2967 ) roty ( 5.59204 ) rotx ( -96.0576 )
+		scal ( 0.690885 -0.2 -2.81396 ) obj G110 /* "G1\G110.suf" atr "noname" */
+	}
+	{	mov ( -742 464 280 ) rotz ( 180 ) roty ( 80 ) rotx ( 10 )
+		scal ( 1.2 2.6 1.6 ) obj roarm14 /* "roarm\roarm14.suf" atr "noname" */
+	}
+	{	mov ( -742 -464 280 ) rotz ( -180 ) roty ( 80 ) rotx ( -10 )
+		scal ( 1.2 -2.6 1.6 ) obj roarm14 /* "roarm\roarm14.suf" atr "noname" */
+	}
+	{	mov ( 262 10 -58 ) rotz ( -7.08175 ) roty ( 11.7251 ) rotx ( -90 )
+		scal ( 3.43705 2.20622 1.71853 ) obj roetc02 /* "roetc\roetc02.suf" atr "noname" */
+	}
+	{	mov ( 262 -10 -58 ) rotz ( 7.08175 ) roty ( 11.7251 ) rotx ( 90 )
+		scal ( 3.43705 -2.20622 1.71853 ) obj roetc02 /* "roetc\roetc02.suf" atr "noname" */
+	}
+}

@@ -8,7 +8,7 @@
 /**
  * @define {boolean}
  */
-var STATS = true;
+var STATS = false;
 
 /**
  * @define {boolean}

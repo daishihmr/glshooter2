@@ -36,6 +36,7 @@ gls2.Enemy.DATA = {
     "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
     // "aida":      [     1,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
     "minamino":  [  1500,  5000000,  true,  true, 30, {"width": 180, "heightTop":-(-350-25), "heightBottom":-350+25} ],
+    "houjou":    [ 10000,  8000000, false,  true,  0, {"width":300, "heightBottom":85, "heightTop":60}, ],
     "rery":      [   250,     2000,  true, false,  5, {"radius": 24} ],
     "fary":      [   200,     2000,  true, false,  5, {"radius": 24} ],
     "sory":      [   350,     2000,  true, false,  5, {"radius": 24} ],
@@ -311,7 +312,7 @@ gls2.Enemy.Milk = tm.createClass(
     _sprite: null,
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "mimino");
-        this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(1);
+        this._sprite = _Sprite("tex4", 64*2, 64*2).setFrameIndex(10);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -1479,7 +1480,56 @@ gls2.Enemy.Dodory = tm.createClass(
 
 /**
  * ステージ５ボス「ホウジョウ」
+ * @extends {gls2.Boss}
  */
+gls2.Enemy.Hibiki = tm.createClass(
+/** @lends {gls2.Enemy.Hibiki.prototype} */
+{
+    superClass: gls2.Boss,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "houjou");
+        this._sprite = _Sprite("tex5", 64*4, 64*4).setFrameIndex(2);
+        this.setScale(2);
+        this.backFire = gls2.Particle(60, 1.0, 0.95);
+        this.aura = gls2.Particle(500, 1.0, 0.8);
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.apply(this, arguments);
+        if (app.frame%2 === 0 && this.hp > 0) {
+            this.backFire.clone().setPosition(this.x-60, this.y+30)
+                .on("enterframe", function() { this.y+=10; })
+                .addChildTo(this.gameScene);
+            this.backFire.clone().setPosition(this.x-35, this.y+40)
+                .on("enterframe", function() { this.y+=10; })
+                .addChildTo(this.gameScene);
+            this.backFire.clone().setPosition(this.x+35, this.y+40)
+                .on("enterframe", function() { this.y+=10; })
+                .addChildTo(this.gameScene);
+            this.backFire.clone().setPosition(this.x+60, this.y+30)
+                .on("enterframe", function() { this.y+=10; })
+                .addChildTo(this.gameScene);
+            this.aura.clone().setPosition(this.x, this.y)
+                .addChildTo(this.gameScene);
+        }
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 30 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 30 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    destroy: function() {
+        this.bossDestroy();
+        gls2.core.fps = FPS;
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+});
 
 /**
  * エクストラボス「ヒビカナ」
