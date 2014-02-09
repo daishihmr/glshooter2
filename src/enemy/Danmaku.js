@@ -2356,7 +2356,7 @@ gls2.Danmaku["love-1-3"] = new bulletml.Root({
         $.repeat(2, [
             $.repeat(5, [
                 $.repeat(10, [
-                    $.bindVar("c", "$loop.index*5"),
+                    $.bindVar("c", "$loop.index*10"),
                     $nway(2, "-30+$c", "30-$c", $spd3(5), BLSR, $.offsetX(0), $.offsetY(0)),
                     $interval(6),
                 ]),
@@ -2391,7 +2391,7 @@ gls2.Danmaku["love-2-1"] = new bulletml.Root({
         $.wait(60),
         $.repeat(2, [
             $.repeat(5, [
-                $.repeat(36, [
+                $.repeat(35, [
                     $.fire($.direction(" $loop.index*10"), $spd2, BL, $.offsetX(-130), $.offsetY(40)),
                     $.fire($.direction("-$loop.index*10"), $spd2, BL, $.offsetX(+130), $.offsetY(40)),
                 ]),
@@ -2449,7 +2449,7 @@ gls2.Danmaku["love-2-2"] = new bulletml.Root({
         $.wait(600),
         $.repeat(5, [
             $.repeat(36, [
-                $.fire($.direction("$loop.index*10"), $.speed(1), BL($.actionRef("seed"))),
+                $.fire($.direction("$loop.index*7"), $.speed(1), BL($.actionRef("seed"))),
             ]),
             $interval(300),
         ]),
