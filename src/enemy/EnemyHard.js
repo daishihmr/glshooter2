@@ -83,7 +83,7 @@ gls2.Enemy.Heri1 = tm.createClass(
     },
     draw: function(canvas) {
         this._sprite.setFrameIndex((this.frame % 4 < 2) ? 0 : 1).draw(canvas);
-    },
+    }
 });
 
 /**
@@ -1338,13 +1338,42 @@ gls2.Enemy.Kanade = tm.createClass(
         });
     },
     destroy: function() {
-        // TODO ド派手にする
-        gls2.Effect.explodeM(this.x, this.y, this.gameScene);
-        this.remove();
-
+        this.dispatchEvent(tm.event.Event("enemyconsumed"));
         this.cannons.forEach(function(cannon) {
             if (cannon.parent) cannon.remove();
         }.bind(this));
+
+        this.tweener.clear();
+        this.tweener0.clear();
+        this.tweener1.clear();
+
+        var age = 0;
+        var x = this.x;
+        var y = this.y;
+        var mexp = function() {
+            if (age % 23 === 0 || age % 37 === 0) {
+                gls2.Effect.explodeM(this.x + gls2.math.rand(-200, 200), this.y + gls2.math.rand(-300, 300), this.gameScene);
+            }
+            age++;
+        };
+        this.on("enterframe", mexp);
+        this.on("enterframe", function() {
+            this.x += ((Math.random() * 3)-1.5);
+            this.y += 1;
+        });
+        this.tweener.clear()
+            .wait(4000)
+            .call(function() {
+                this.off("enterframe", mexp);
+            }.bind(this))
+            .call(function() {
+                gls2.LargeExplodeEffect(this.x, this.y-300, this.gameScene);
+                gls2.LargeExplodeEffect(this.x, this.y+  0, this.gameScene);
+            }.bind(this))
+            .wait(2000)
+            .call(function() {
+                this.remove();
+            }.bind(this));
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
