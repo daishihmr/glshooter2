@@ -47,7 +47,7 @@ gls2.Enemy.DATA = {
 
     //Stage3
     "hino":      [    20,    10000, false, false,  1, {"width": 64, "height": 64}, ],
-    "hoshizora": [   400,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
+    "hoshizora": [   600,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
     "yotsuba":    [  300,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
     "yotsubaLeaf":[   30,   100000, false, false, 10, {"width": 64, "height": 64}, ],
     "midorikawa":[     5,     2000, false, false,  1, {"width": 64, "height": 64}, ],
@@ -776,7 +776,7 @@ gls2.Enemy.miyuki = tm.createClass(
     },
     onLaunch: function() {
         this.tweener
-        .move(SC_W/2, this.y, 6000, "easeInOutQuad")
+        .move(SC_W/2, this.y, 7000, "easeInOutQuad")
         .moveBy(0, SC_H*0.1, 5000, "easeInOutQuad");
         //初期位置で向きを決定
         if (this.x > SC_W/2){ //画面左端から出現
