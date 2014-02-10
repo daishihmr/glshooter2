@@ -1344,10 +1344,10 @@ gls2.Danmaku["nagisa-2-2"] = new bulletml.Root({
             $absoluteNway(9, 180 + -30, 180 + -50, $spd1(0.8), RNS),
             $absoluteNway(9, 180 +  -8, 180 +  +8, $spd1(0.8), RNS),
             $absoluteNway(9, 180 + +30, 180 + +50, $spd1(0.8), RNS),
-            $interval(30),
+            $interval(50),
             $absoluteNway(9, 180 + -10, 180 + -30, $spd1(0.8), RNS),
             $absoluteNway(9, 180 + +10, 180 + +30, $spd1(0.8), RNS),
-            $interval(30),
+            $interval(50),
         ]),
     ]),
 });
@@ -2181,7 +2181,16 @@ gls2.Danmaku["dodory"] = new bulletml.Root({
  */
 gls2.Danmaku["hibiki-1-1"] = new bulletml.Root({
     "top0": $.action([
-        $.fire(BL),
+        $interval(120),
+        $.repeat(6, [
+            $absoluteNway(9, 180 + -30, 180 + -50, $spd1(0.8), RNS),
+            $absoluteNway(9, 180 +  -8, 180 +  +8, $spd1(0.8), RNS),
+            $absoluteNway(9, 180 + +30, 180 + +50, $spd1(0.8), RNS),
+            $interval(50),
+            $absoluteNway(9, 180 + -10, 180 + -30, $spd1(0.8), RNS),
+            $absoluteNway(9, 180 + +10, 180 + +30, $spd1(0.8), RNS),
+            $interval(50),
+        ]),
     ]),
 });
 /**

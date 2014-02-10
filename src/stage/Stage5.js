@@ -225,7 +225,7 @@ gls2.Stage5 = tm.createClass(
             }, 2000);
         });
 
-        this.seq.add(600, "hibiki");
+        this.seq.add(100, "hibiki");
     },
 
     setupBackground: function() {
