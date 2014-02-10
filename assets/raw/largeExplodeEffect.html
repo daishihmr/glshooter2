@@ -5,24 +5,39 @@
 <canvas id="app"></canvas>
 <script src="../../libs/tmlib.js"></script>
 <script>
-gls2 = {};
+var gls2 = {
+    core: {
+        seVolume: 10.0,
+        frame: 0
+    }
+};
+</script>
+<script src="../../src/common/Sound.js"></script>
+<script src="../../src/common/Particle.js"></script>
+<script>
 
 tm.main(function() {
     app = tm.display.CanvasApp("#app");
     app.resize(480, 640).fitWindow();
     app.fps = 60;
-    app.background = "hsl(180, 50%, 50%)"
+    app.background = "hsl(180, 15%, 25%)"
 
     app.replaceScene(tm.app.LoadingScene({
         assets: {
             "explode0": "../explode0.png",
             "explode1": "../explode1.png",
-            "explode2": "../explode2.png"
+            "explode2": "../explode2.png",
+            "sound/explode3": "../../assets2/sen_ge_bom02.mp3",
+            "sound/explode4": "../../assets2/sen_ge_bom14.mp3",
+            "sound/explode5": "../../assets2/sen_ge_bom17.mp3",
         },
         nextScene: TestScene
     }))
 
     app.run();
+    app.update = function() {
+        gls2.core.frame+=1;
+    };
 });
 
 var TestScene = tm.createClass({
@@ -30,7 +45,7 @@ var TestScene = tm.createClass({
     init: function() {
         this.superInit();
         this.on("pointingstart", function(e) {
-            gls2.LargeExplodeEffect(this).setPosition(e.pointing.x, e.pointing.y).addChildTo(this);
+            gls2.LargeExplodeEffect(e.pointing.x, e.pointing.y, this);
         });
     }
 });
@@ -42,27 +57,29 @@ gls2.LargeExplodeEffect = tm.createClass({
     gameScene: null,
     age: 0,
 
-    init: function(gameScene) {
+    init: function(x, y, gameScene) {
         this.superInit();
         this.gameScene = gameScene;
+        this.setPosition(x, y);
+
+        this.addChildTo(gameScene);
     },
     onadded: function() {
-        for (var j = 0; j < 20; j++) {
+        for (var i = 0; i < 20; i++) {
             var angle = Math.random() * 360;
             var speed = gls2.Noise.noise[Math.floor(gls2.Noise.noise.length * angle/360)] * 50;
 
             var position = tm.geom.Vector2(this.x, this.y);
             var velocity = tm.geom.Vector2().setAngle(angle, speed);
 
-            for (var i = 0; i < 8; i++) {
-                position.add(velocity);
-
+            for (var j = 0; j < 5; j++) {
                 var e = tm.display.Sprite("explode" + Math.floor(Math.random() * 3), 100, 100)
-                    .setPosition(position.x, position.y)
-                    .setScale(2+Math.random()*0.5)
-                    .setRotation(Math.random()*360)
-                    .setFrameIndex(0);
-                e.frameIndex = -i*3;
+                    .setPosition(this.x, this.y)
+                    .setScale(1+Math.random()*3.5)
+                    .setRotation(Math.random()*360);
+                e.dx = velocity.x * (6 - j)*0.02;
+                e.dy = velocity.y * (6 - j)*0.02;
+                e.frameIndex = -j*3 + Math.floor(Math.random() * -10 - 7);
                 e.update = function() {
                     this.frameIndex += 0.3;
 
@@ -76,10 +93,44 @@ gls2.LargeExplodeEffect = tm.createClass({
 
                     this.setFrameIndex(Math.floor(this.frameIndex));
                     this.visible = true;
+
+                    this.x += this.dx;
+                    this.y += this.dy;
+
+                    this.blendMode = this.frameIndex < 10 ? "lighter" : "source-over";
                 };
                 e.isEffect = true;
                 e.addChildTo(this.gameScene);
             }
+        }
+
+        var p = gls2.Particle(500, 0.001, 1.002);
+        for (var i = 0; i < 80; i++) {
+            var c = p.clone().setPosition(this.x, this.y).addChildTo(this.gameScene);
+            var angle = Math.random() * 360;
+            var speed = gls2.Noise.noise[Math.floor(gls2.Noise.noise.length * angle/360)] * 15;
+            c.velocity = tm.geom.Vector2().setAngle(angle, speed);
+            c.position.add(tm.geom.Vector2.mul(c.velocity, -40));
+            c.setScale(0.1, 0.1);
+            c.age = 0;
+            c.onenterframe = function() {
+                this.age += 1;
+                this.position.add(this.velocity);
+                this.scaleX += 0.01;
+                this.scaleY += 0.01;
+                if (this.age > 80) this.alphaDecayRate = 0.99;
+            };
+        }
+
+        var t = this.tweener.clear().wait(200);
+        for (var i = 0; i < 3; i++) {
+            t.wait(100 + Math.random() * 300).call(function() {
+                gls2.playSound("explode2");
+            }).wait(100 + Math.random() * 300).call(function() {
+                gls2.playSound("explode4");
+            }).wait(100 + Math.random() * 300).call(function() {
+                gls2.playSound("explode5");
+            });
         }
     }
 });
