@@ -1067,7 +1067,7 @@ gls2.Danmaku["alice"] = new bulletml.Root({
     "top0": $.action([
         $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
         $.repeat(999, [
-            $.fire($.direction(  5, "sequence"), $spd1, BR, $.offsetX(0), $.offsetY(-16)),
+            $.fire($.direction(  7, "sequence"), $spd1, BR, $.offsetX(0), $.offsetY(-16)),
             $.fire($.direction( 90, "sequence"), $spd1, BR, $.offsetX(0), $.offsetY(-16)),
             $.fire($.direction( 90, "sequence"), $spd1, BR, $.offsetX(0), $.offsetY(-16)),
             $.fire($.direction( 90, "sequence"), $spd1, BR, $.offsetX(0), $.offsetY(-16)),

@@ -826,6 +826,9 @@ gls2.Enemy.Alice = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsuba");
         this._sprite = _Sprite("tex4", 128, 128).setFrameIndex(1);
+        this.boundingWidth = 192;
+        this.boundingHeight = 192;
+        this.setScale(1.5);
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -858,7 +861,7 @@ gls2.Enemy.Alice = tm.createClass({
         this.leaf = [];
         for (var i = 0; i<4; i++) {
             var dir = Math.PI*0.5*i;
-            var distance = 64;
+            var distance = 96;
             var sx = this.x+Math.sin(dir)*distance;
             var sy = this.y+Math.cos(dir)*distance;
             this.leaf[i] = this.stage.launchEnemy({ "hard":gls2.Enemy.AliceLeaf, "soft":gls2.EnemySoft.AliceLeaf[i], "x":sx, "y":sy});
@@ -881,6 +884,9 @@ gls2.Enemy.AliceLeaf = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsubaLeaf");
         this._sprite = _Sprite("yotsubaLeaf", 64, 64).setFrameIndex(0);
+        this.boundingWidth = 96;
+        this.boundingHeight = 96;
+        this.setScale(1.5);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
