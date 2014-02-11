@@ -50,6 +50,8 @@ gls2.playSound = function(soundName) {
 
             if (gls2.playSound.voice !== null) gls2.playSound.voice.stop();
             gls2.playSound.voice = sound;
+        } else if (soundName === "explode6") {
+            sound.volume = gls2.core.seVolume * 0.2;
         } else {
             sound.volume = gls2.core.seVolume * 0.1;
         }
