@@ -47,7 +47,7 @@ gls2.Enemy.DATA = {
 
     //Stage3
     "hino":      [    20,    10000, false, false,  1, {"width": 64, "height": 64}, ],
-    "hoshizora": [   600,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
+    "hoshizora": [   400,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
     "yotsuba":    [  300,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
     "yotsubaLeaf":[   30,   100000, false, false, 10, {"width": 64, "height": 64}, ],
     "midorikawa":[     5,     2000, false, false,  1, {"width": 64, "height": 64}, ],
