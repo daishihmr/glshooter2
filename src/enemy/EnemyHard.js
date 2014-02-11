@@ -1560,6 +1560,9 @@ gls2.Enemy.Hibiki = tm.createClass(
     destroy: function() {
         this.bossDestroy();
         gls2.core.fps = FPS;
+
+        // スクショを撮る
+        this.gameScene.screenShot = this.gameScene.shotScreen().canvas.toDataURL("image/png")
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
