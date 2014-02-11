@@ -2472,12 +2472,11 @@ gls2.Danmaku["love-2-2"] = new bulletml.Root({
  * 桃園羅武第２形態-3
  */
 gls2.Danmaku["love-2-3"] = new bulletml.Root({
-/*
     "top8": $.action([
         $.wait(120),
         $.repeat(5, [
-            $.repeat(18, [
-                $.fire($.direction("$loop.index*10", "absolute"), $.speed(1), BL($.actionRef("seed")), $.offsetX(-130), $.offsetY(40)),
+            $.repeat(5, [
+                $.fire($.direction("-$loop.index*30", "absolute"), $.speed(1), BL($.actionRef("seed1")), $.offsetX(-130), $.offsetY(40)),
                 $interval(6),
             ]),
             $interval(120),
@@ -2486,24 +2485,33 @@ gls2.Danmaku["love-2-3"] = new bulletml.Root({
     "top9": $.action([
         $.wait(120),
         $.repeat(5, [
-            $.repeat(18, [
-                $.fire($.direction("-$loop.index*10", "absolute"), $.speed(1), BL($.actionRef("seed")), $.offsetX(130), $.offsetY(40)),
+            $.repeat(5, [
+                $.fire($.direction("$loop.index*30", "absolute"), $.speed(1), BL($.actionRef("seed1")), $.offsetX(130), $.offsetY(40)),
                 $interval(6),
             ]),
             $interval(120),
         ]),
     ]),
-    "seed": $.action([
+    "seed1": $.action([
         $.wait(10),
-        $.changeSpeed($.speed(0), 60),
-        $.wait(90),
+        $.changeSpeed($.speed(0), 90),
+        $.wait(60),
         $.repeat(3, [
             $nway(4, -20, 20, $spd2, RI),
             $interval(5),
         ]),
         $.vanish,
     ]),
-*/    
+    "seed2": $.action([
+        $.wait(10),
+        $.changeSpeed($.speed(0), 90),
+        $.wait(60),
+        $.repeat(2, [
+            $nway(5, -20, 20, $spd2, BI),
+            $interval(5),
+        ]),
+        $.vanish,
+    ]),
 });
 /**
  * 桃園羅武発狂-1
