@@ -329,6 +329,7 @@ gls2.Enemy = tm.createClass(
             .call(function() {
                 this.off("enterframe", mexp);
             }.bind(this))
+            .wait(500)
             .call(function() {
                 gls2.LargeExplodeEffect(this.x, this.y, this.gameScene);
             }.bind(this))
