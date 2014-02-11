@@ -64,26 +64,25 @@ gls2.ExtendItem = tm.createClass(
     vy: 0,
     player: null,
     age: 0,
+    labels: null,
 
     init: function(x, y, player) {
         this.superInit("tex3", 64, 64);
         this.setFrameIndex(8, 64, 64);
-        tm.display.Label("1 up", 20)
-            .setFillStyle("hsla(180, 70%, 100%, 1)")
-            .addChildTo(this);
+        this.labels = [];
         for (var ix = -1; ix <= 1; ix++) {
             for (var iy = -1; iy <= 1; iy++) {
-                this.label = tm.display.Label("1 up", 20)
-                    .setFillStyle("hsla(180, 50%, 50%, 0.2)")
+                this.labels.push(tm.display.Label("1 up", 30)
+                    .setFillStyle("hsla(180, 60%, 60%, 0.2)")
                     .setPosition(ix, iy)
-                    .addChildTo(this);
+                    .addChildTo(this));
             }
         }
 
         this.setPosition(x, y);
         this.player = player;
     },
-    update: function() {
+    update: function(app) {
         this.y += 0.5;
         if (gls2.distanceSq(this, this.player) < 64*64) {
             this.player.gameScene.extendZanki();
@@ -93,6 +92,10 @@ gls2.ExtendItem = tm.createClass(
         if (this.y > SC_H+64) {
                this.remove();
         }
+
+        this.labels.forEach(function(l) {
+            l.setScale(1 + Math.sin(app.frame*0.2)*0.3);
+        });
     }
 });
 

@@ -236,7 +236,15 @@ gls2.GlShooter2 = tm.createClass(
             "shipType": this.gameScene.player.type,
             "shipStyle": this.gameScene.player.style,
             "fps": avgFps,
-            "screenShot": this.gameScene.screenShot
+            "screenShot": this.gameScene.screenShot,
+            "scoreByStage": this.gameScene.scoreByStage,
+            "fpsAvgByStage": this.gameScene.fpsAvgByStage,
+            "missCountByStage": this.gameScene.missCountByStage,
+            "continueCountByStage": this.gameScene.continueCountByStage,
+            "bombCountByStage": this.gameScene.bombCountByStage,
+            "autoBombCountByStage": this.gameScene.autoBombCountByStage,
+            "hyperCountByStage": this.gameScene.hyperCountByStage,
+            "hyperLevelHistory": this.gameScene.hyperLevelHistory,
         };
         if (userName) {
             data["userName"] = userName;
@@ -284,13 +292,13 @@ gls2.GlShooter2 = tm.createClass(
     getAnonName: function() {
         return [
             "名無しシューター",
-            "大佐",
-            "レイニャンにゃん",
-            "アイたそ",
-            "ぱふぇ☆",
-            "能登真璃亜",
-            "にゃんぱすー(30)",
-            "相田総理"
+            "名無し大佐",
+            "名無しにゃん",
+            "名無したそ",
+            "名無し☆",
+            "能登名無し",
+            "名無し(30)",
+            "名無し総理"
         ]["pickup"]();
     },
 
