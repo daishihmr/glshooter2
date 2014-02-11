@@ -30,7 +30,7 @@ gls2.Enemy.DATA = {
     "misumi":    [  4000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
     "higashi":   [  1000,  1200000, false,  true, 20, {"width":256, "height":128}, ],
-    "momozono":  [  6000,  3500000, false,  true,  0, {"width":256, "height":128}, ],
+    "momozono":  [  7000,  3500000, false,  true,  0, {"width":256, "height":128}, ],
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
     "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
     "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
