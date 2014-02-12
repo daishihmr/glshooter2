@@ -81,7 +81,7 @@ gls2.Stage3 = tm.createClass(
             //左へ
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:4, direction:0}, 3000, "easeInOutQuad");
+                .to({speed:4, direction:Math.PI*0.2}, 3000, "easeInOutQuad");
         });
         this.seq.add(120, "akane-center");
         this.seq.add( 60, "akane-right");
@@ -94,7 +94,6 @@ gls2.Stage3 = tm.createClass(
 
         //30%
         this.seq.add( 1, function() {
-            //左へ
             this.gameScene.ground.tweener
                 .clear()
                 .to({speed:4, direction:0}, 3000, "easeInOutQuad");
@@ -108,7 +107,9 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-left");
  
         this.seq.add( 60, function() {
-            this.gameScene.ground.tweener.clear().to({speed:5}, 3000, "easeInOutQuad");
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:5, direction:-Math.PI*0.2}, 5000, "easeInOutQuad");
         });
         this.seq.add(120, "komachi3-0");
         this.seq.add( 60, "reika1-left");
@@ -129,7 +130,7 @@ gls2.Stage3 = tm.createClass(
             //左ななめ前
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:3, direction:Math.PI*0.2}, 3000, "easeInOutQuad");
+                .to({speed:2, direction:Math.PI*0.2}, 4000, "easeInOutQuad");
         });
         this.seq.add( 60, "komachi3-1");
         this.seq.add(120, "reika1-right");
@@ -191,6 +192,11 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-right");
 
         //80%
+        this.seq.add(  1, function() {
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:4, direction:Math.PI*0.5}, 3000, "easeInOutQuad");
+        });
         this.seq.add(120, "reika1-left");
         this.seq.add(120, "reika1-left");
         this.seq.add(160, "heri1-left");
@@ -225,7 +231,7 @@ gls2.Stage3 = tm.createClass(
             //前進
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:4, direction:Math.PI*0.5}, 5000, "easeInOutQuad");
+                .to({speed:5, direction:Math.PI*0.5}, 5000, "easeInOutQuad");
         });
 
         //90%
@@ -240,6 +246,13 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "nao2-center");
         this.seq.add( 60, "nao2-left");
         this.seq.add( 60, "nao2-right");
+
+        this.seq.add(  1, function() {
+            //前進
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:7, direction:Math.PI*0.5}, 5000, "easeInOutQuad");
+        });
 
         this.seq.add(120, "reika1-right");
         this.seq.add(120, "reika1-right");
@@ -261,9 +274,11 @@ gls2.Stage3 = tm.createClass(
                 gls2.playBgm("bgmBoss", true);
             });
         });
-
         this.seq.add(  1, function() {
-            this.gameScene.ground.tweener.clear().to({speed:8, direction:Math.PI/2}, 5000, "easeInOutQuad");
+            //前進
+            this.gameScene.ground.tweener
+                .clear()
+                .to({speed:8, direction:Math.PI*0.5}, 8000, "easeInOutQuad");
         });
 
         //ステージボス

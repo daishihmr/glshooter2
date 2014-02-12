@@ -2624,9 +2624,9 @@ gls2.Danmaku["love-2-3"] = new bulletml.Root({
         $.wait(120),
         $.repeat(5, [
             $.repeat(5, [
-                $.fire($.direction("-$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(-130), $.offsetY(40)),
+                $.fire($.direction("$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(-130), $.offsetY(40)),
                 $interval(6),
-                $.fire($.direction("-($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(-130), $.offsetY(40)),
+                $.fire($.direction("($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(-130), $.offsetY(40)),
                 $interval(6),
             ]),
             $interval(120),
@@ -2636,9 +2636,9 @@ gls2.Danmaku["love-2-3"] = new bulletml.Root({
         $.wait(120),
         $.repeat(5, [
             $.repeat(5, [
-                $.fire($.direction("$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(130), $.offsetY(40)),
+                $.fire($.direction("-$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(130), $.offsetY(40)),
                 $interval(6),
-                $.fire($.direction("($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(130), $.offsetY(40)),
+                $.fire($.direction("-($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(130), $.offsetY(40)),
                 $interval(6),
             ]),
             $interval(120),
