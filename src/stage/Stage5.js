@@ -148,12 +148,12 @@ gls2.Stage5 = tm.createClass(
         this.seq.add( 30, "heri1-4-left");
 
         this.seq.add(160, "komachi5-1");
-        this.seq.add( 30, "heri1-4-center2");
-        this.seq.add( 30, "heri1-4-center");
-        this.seq.add( 30, "heri1-4-center2");
-        this.seq.add( 30, "heri1-4-center");
+        this.seq.add( 10, "heri1-4-center2");
+        this.seq.add( 10, "heri1-4-center");
+        this.seq.add( 10, "heri1-4-center2");
+        this.seq.add( 10, "heri1-4-center");
 
-        this.seq.add(450, "ako5-0");
+        this.seq.add(400, "ako5-0");
         this.seq.add(250, "ako5-1");
 
         // 50% この辺から中ボス戦
@@ -179,11 +179,11 @@ gls2.Stage5 = tm.createClass(
 
         // 60%
 
-        this.seq.add(300, "ako5-0");
+        this.seq.add(200, "ako5-0");
 
-        this.seq.add(260, "komachi5-1");
+        this.seq.add(200, "komachi5-1");
 
-        this.seq.add(300, "milk5-1");
+        this.seq.add(200, "milk5-1");
 
         this.seq.add(200, "komachi5-1");
 
@@ -192,7 +192,7 @@ gls2.Stage5 = tm.createClass(
         this.seq.add(200, "komachi5-0");
 
         this.seq.add(200, "mktn5-0");
-        this.seq.add(300, "mktn5-1");
+        this.seq.add(200, "mktn5-1");
         this.seq.add( 10, "heri1-4-left2");
         this.seq.add( 10, "heri1-4-center2");
         this.seq.add( 10, "heri1-4-left2");
@@ -204,13 +204,13 @@ gls2.Stage5 = tm.createClass(
         this.seq.add(380, "nozomi5-1");
         this.seq.add(100, "nozomi5-0");
         this.seq.add(175, "nozomi5-2");
-        this.seq.add(150, "nozomi5-0");
+        this.seq.add(200, "nozomi5-0");
 
         // 70% ここから新展開
 
-        // this.seq.add(3000, function() {});
+        this.seq.add( 80, "erika");
 
-        this.seq.add(300, function() {
+        this.seq.add(600, function() {
             this.alartWarning(function() {
                 gls2.playBgm("bgmBoss", true);
             });
@@ -222,7 +222,7 @@ gls2.Stage5 = tm.createClass(
             }, 2000);
         });
 
-        this.seq.add(100, "hibiki");
+        this.seq.add(600, "hibiki");
     },
 
     setupBackground: function() {

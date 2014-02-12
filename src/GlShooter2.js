@@ -203,15 +203,17 @@ gls2.GlShooter2 = tm.createClass(
 
         this.gameScene = gls2.GameScene();
 
-        tm.asset.Loader().load({
-            "bgm2": "assets2/nc28687.mp3",
-            "bgm3": "assets2/nc80728.mp3",
-            "bgm4": "assets2/nc67876.mp3",
-            "bgm5": "assets2/nc60627.mp3",
-            "bgmBoss": "assets2/nc29206.mp3",
-            "bgmResult": "assets2/nc54077.mp3",
-            "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
-        });
+        if (!DEBUG) {
+            tm.asset.Loader().load({
+                "bgm2": "assets2/nc28687.mp3",
+                "bgm3": "assets2/nc80728.mp3",
+                "bgm4": "assets2/nc67876.mp3",
+                "bgm5": "assets2/nc60627.mp3",
+                "bgmBoss": "assets2/nc29206.mp3",
+                "bgmResult": "assets2/nc54077.mp3",
+                "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
+            });
+        }
     },
 
     exitApp: function() {

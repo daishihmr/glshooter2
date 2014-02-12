@@ -2056,7 +2056,10 @@ gls2.EnemySoft.Hibiki1 = tm.createClass(
         this.patterns = [
             "hibiki-1-1",
             "hibiki-1-2",
-            "hibiki-1-3",
+            "hibiki-1-3a",
+            "hibiki-1-1",
+            "hibiki-1-2",
+            "hibiki-1-3b",
         ];
     },
     setup: function(enemy) {
@@ -2071,18 +2074,6 @@ gls2.EnemySoft.Hibiki1 = tm.createClass(
             .call(function() {
                 this.startAttack = true;
                 this.dispatchEvent(tm.event.Event("completeattack"));
-
-                var temp = function() {
-                    var d = gls2.FixedRandom.randf(SC_W*-0.1, SC_W*0.1);
-                    this.tweener
-                        .move(
-                            Math.clamp(this.player.x, SC_W*0.1, SC_W*0.9) + d*0.3,
-                            SC_H*0.2 + d*0.3,
-                            3000, "easeInOutQuad"
-                        )
-                        .call(temp);
-                }.bind(this);
-                temp();
             }.bind(enemy));
 
         enemy.on("completeattack", function() {

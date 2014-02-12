@@ -1373,8 +1373,8 @@ gls2.Enemy.Kanade = tm.createClass(
                 this.off("enterframe", mexp);
             }.bind(this))
             .call(function() {
-                gls2.LargeExplodeEffect(this.x, this.y-300, this.gameScene);
-                gls2.LargeExplodeEffect(this.x, this.y+  0, this.gameScene);
+                gls2.LargeExplodeEffect(this.x, this.y-300, this.gameScene.fallDownLayer);
+                gls2.LargeExplodeEffect(this.x, this.y+  0, this.gameScene.fallDownLayer);
             }.bind(this))
             .wait(2000)
             .call(function() {
@@ -1525,7 +1525,7 @@ gls2.Enemy.Hibiki = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "houjou");
         this._sprite = _Sprite("tex5", 64*4, 64*4).setFrameIndex(2);
-        this.setScale(2);
+        this.setScale(1.5);
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
     },
