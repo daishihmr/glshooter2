@@ -1697,395 +1697,6 @@ gls2.Danmaku["saki-3-2"] = new bulletml.Root({
 });
 
 /**
- * せつな-1
- */
-gls2.Danmaku["setsuna-1"] = new bulletml.Root({
-    "top0": $.action([
-        $.wait(60),
-        $.repeat(5, [
-            $nway(3, -2, 2, $spd2(1.8), BNS, $.offsetX(0),  $.offsetX(0)),
-            $nway(3, -4, 4, $spd2(1.4), BNS, $.offsetX(0),  $.offsetX(0)),
-            $nway(3, -6, 6, $spd2(1.0), BNS, $.offsetX(0),  $.offsetX(0)),
-            $nway(3, -8, 8, $spd2(0.6), BNS, $.offsetX(0),  $.offsetX(0)),
-            $interval(110),
-        ]),
-    ]),
-    "top1": $.action([
-        $.wait(60),
-        $.repeat(10, [
-            $nway(4, -40, 40, $spd3, RL, $.offsetX(0), $.offsetY(30)),
-            $interval(15),
-            $nway(5, -40, 40, $spd2, RL, $.offsetX(0), $.offsetY(30)),
-            $interval(15),
-            $nway(6, -40, 40, $spd1, RL, $.offsetX(0), $.offsetY(30)),
-            $interval(15),
-        ]),
-    ]),
-});
-
-
-/**
- * 桃園羅武第１形態-1
- */
-gls2.Danmaku["love-1-1"] = new bulletml.Root({
-    "top0": $.action([
-        $interval(30),
-        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(90, [
-            $.fire($.direction(+17, "sequence"), $spd1("$loop.index*0.1"), BNL, $.offsetX(-105), $.offsetY(0)),
-            $interval(1),
-        ]),
-        $interval(30),
-        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(90, [
-            $.fire($.direction(-17, "sequence"), $spd1("$loop.index*0.1"), RNL, $.offsetX(-105), $.offsetY(0)),
-            $interval(1),
-        ]),
-        $interval(120),
-    ]),
-    "top1": $.action([
-        $.wait(30),
-        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(90, [
-            $.fire($.direction(+11, "sequence"), $spd1("$loop.index*0.1"), BNL, $.offsetX(-85), $.offsetY(0)),
-            $interval(1),
-        ]),
-        $interval(30),
-        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(90, [
-            $.fire($.direction(-11, "sequence"), $spd1("$loop.index*0.1"), RNL, $.offsetX(-85), $.offsetY(0)),
-            $interval(1),
-        ]),
-    ]),
-    "top2": $.action([
-        $.wait(30),
-        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(90, [
-            $.fire($.direction(-19, "sequence"), $spd1("$loop.index*0.1"), BNL, $.offsetX(+105), $.offsetY(0)),
-            $interval(1),
-        ]),
-        $interval(30),
-        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(90, [
-            $.fire($.direction(+19, "sequence"), $spd1("$loop.index*0.1"), RNL, $.offsetX(+105), $.offsetY(0)),
-            $interval(1),
-        ]),
-    ]),
-    "top3": $.action([
-        $.wait(30),
-        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(90, [
-            $.fire($.direction(-23, "sequence"), $spd1("$loop.index*0.1"), BNL, $.offsetX(+85), $.offsetY(0)),
-            $interval(1),
-        ]),
-        $interval(30),
-        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
-        $.repeat(90, [
-            $.fire($.direction(+23, "sequence"), $spd1("$loop.index*0.1"), RNL, $.offsetX(+85), $.offsetY(0)),
-            $interval(1),
-        ]),
-    ]),
-});
-/**
- * 桃園羅武第１形態-2
- */
-gls2.Danmaku["love-1-2"] = new bulletml.Root({
-    "top0": $.action([
-        $.wait(30),
-        $.repeat(2, [
-            $whip($spd3, 0.02, 10, function(spd) {
-                return $.action([
-                    $absoluteNway(5, 200, 120, spd, RNSH, $.offsetX( -85), $.offsetY(  0)),
-                    $absoluteNway(6, 190, 130, spd, BNSH,  $.offsetX(-170), $.offsetY(+40)),
-                    $absoluteNway(5, 260, 210, spd, RNSH, $.offsetX( +85), $.offsetY(  0)),
-                    $absoluteNway(6, 270, 220, spd, BNSH,  $.offsetX(+170), $.offsetY(+40)),
-                    $.wait(5),
-                ]);
-            }),
-            $interval(120),
-        ]),
-    ]),
-    "top1": $.action([
-        $.wait(60),
-        $.repeat(10, [
-            $nway(6, -40, 40, $spd2, RR, $.offsetX(-130), $.offsetY(30)),
-            $interval(30),
-            $nway(7, -40, 40, $spd1, RR, $.offsetX(-130), $.offsetY(30)),
-            $interval(30),
-        ]),
-    ]),
-    "top2": $.action([
-        $.wait(60),
-        $.repeat(10, [
-            $nway(6, -40, 40, $spd2, RR, $.offsetX(+130), $.offsetY(30)),
-            $interval(30),
-            $nway(7, -40, 40, $spd1, RR, $.offsetX(+130), $.offsetY(30)),
-            $interval(30),
-        ]),
-    ]),
-});
-/**
- * 桃園羅武第１形態-3
- */
-gls2.Danmaku["love-1-3"] = new bulletml.Root({
-    "top0": $.action([
-        $.wait(120),
-        $.repeat(2, [
-            $.repeat(5, [
-                $.repeat(10, [
-                    $.bindVar("c", "$loop.index*10"),
-                    $nway(2, "-30+$c", "30-$c", $spd3(5), BLSR, $.offsetX(0), $.offsetY(0)),
-                    $interval(6),
-                ]),
-            ]),
-            $interval(120),
-        ]),
-    ]),
-    "top1": $.action([
-        $.wait(60),
-        $.repeat(10, [
-            $nway(4, -40, 40, $spd2, RR, $.offsetX(-130), $.offsetY(30)),
-            $interval(30),
-            $nway(5, -40, 40, $spd1, RR, $.offsetX(-130), $.offsetY(30)),
-            $interval(30),
-        ]),
-    ]),
-    "top2": $.action([
-        $.wait(60),
-        $.repeat(10, [
-            $nway(4, -40, 40, $spd2, RR, $.offsetX(+130), $.offsetY(30)),
-            $interval(30),
-            $nway(5, -40, 40, $spd1, RR, $.offsetX(+130), $.offsetY(30)),
-            $interval(30),
-        ]),
-    ]),
-});
-/**
- * 桃園羅武第２形態-1
- */
-gls2.Danmaku["love-2-1"] = new bulletml.Root({
-    "top0": $.action([
-        $.wait(60),
-        $.repeat(2, [
-            $.repeat(5, [
-                $.repeat(36, [
-                    $.fire($.direction(" $loop.index*10"), $spd2, BL, $.offsetX(-130), $.offsetY(40)),
-                    $.fire($.direction("-$loop.index*10"), $spd2, BL, $.offsetX(+130), $.offsetY(40)),
-                ]),
-                $interval(12),
-            ]),
-            $interval(120),
-        ]),
-    ]),
-    "top1": $.action([
-        $.wait(30),
-        $.repeat(2, [
-            $.repeat(5, [
-                $.repeat(36, [
-                    $.fire($.direction(" $loop.index*10"), $spd1, RL, $.offsetX(0), $.offsetY(-30)),
-                ]),
-                $interval(12),
-            ]),
-            $interval(120),
-        ]),
-    ]),
-});
-/**
- * 桃園羅武第２形態-2
- */
-gls2.Danmaku["love-2-2"] = new bulletml.Root({
-    "top0": $.action([
-        $.wait(60),
-        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
-        $.repeat(60, [
-            $.fire($.direction(21, "sequence"), $spd1, RNL, $.offsetX(-85), $.offsetY(0)),
-            $.fire($.direction(90, "sequence"), $spd1, RNL, $.offsetX(-85), $.offsetY(0)),
-            $.fire($.direction(90, "sequence"), $spd1, RNL, $.offsetX(-85), $.offsetY(0)),
-            $.fire($.direction(90, "sequence"), $spd1, RNL, $.offsetX(-85), $.offsetY(0)),
-            $interval(10),
-        ]),
-    ]),
-    "top1": $.action([
-        $.wait(60),
-        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
-        $.repeat(60, [
-            $.fire($.direction(-21, "sequence"), $spd1, RNL, $.offsetX(85), $.offsetY(0)),
-            $.fire($.direction( 90, "sequence"), $spd1, RNL, $.offsetX( 85), $.offsetY(0)),
-            $.fire($.direction( 90, "sequence"), $spd1, RNL, $.offsetX( 85), $.offsetY(0)),
-            $.fire($.direction( 90, "sequence"), $spd1, RNL, $.offsetX( 85), $.offsetY(0)),
-            $interval(10),
-        ]),
-    ]),
-    "top9": $.action([
-        $.wait(200),
-        $.repeat(5, [
-            $.repeat(36, [
-                $.fire($.direction("$loop.index*10"), $.speed(1), IVS($.actionRef("seed"))),
-            ]),
-            $interval(120),
-        ]),
-    ]),
-    "seed": $.action([
-        $.wait(10),
-        $.changeSpeed($.speed(0), 30),
-        $.wait(30),
-        $nway(5, -40, 40, $spd2, BLSR),
-        $.vanish,
-    ]),
-});
-/**
- * 桃園羅武第２形態-3
- */
-gls2.Danmaku["love-2-3"] = new bulletml.Root({
-    "top8": $.action([
-        $.wait(120),
-        $.repeat(5, [
-            $.repeat(5, [
-                $.fire($.direction("-$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(-130), $.offsetY(40)),
-                $interval(6),
-                $.fire($.direction("-($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(-130), $.offsetY(40)),
-                $interval(6),
-            ]),
-            $interval(120),
-        ]),
-    ]),
-    "top9": $.action([
-        $.wait(120),
-        $.repeat(5, [
-            $.repeat(5, [
-                $.fire($.direction("$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(130), $.offsetY(40)),
-                $interval(6),
-                $.fire($.direction("($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(130), $.offsetY(40)),
-                $interval(6),
-            ]),
-            $interval(120),
-        ]),
-    ]),
-    "seed1": $.action([
-        $.wait(10),
-        $.changeSpeed($.speed(0), 60),
-        $.wait(30),
-        $.repeat(5, [
-            $nway(4, -40, 40, $spd3, RNS),
-            $interval(5),
-        ]),
-        $.vanish,
-    ]),
-    "seed2": $.action([
-        $.wait(10),
-        $.changeSpeed($.speed(0), 90),
-        $.wait(60),
-        $.repeat(5, [
-            $nway(5, -40, 40, $spd3, BNS),
-            $interval(5),
-        ]),
-        $.vanish,
-    ]),
-});
-/**
- * 桃園羅武発狂-1
- */
-gls2.Danmaku["love-3-1"] = new bulletml.Root({
-    "top0": $.action([
-        $.wait(60),
-        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
-        $.repeat(5, [
-            $.repeat(30, [
-                $.fire($.direction(11, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
-                $interval(3),
-            ]),
-            $interval(10),
-        ]),
-    ]),
-    "top1": $.action([
-        $.wait(60),
-        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
-        $.repeat(5, [
-            $.repeat(30, [
-                $.fire($.direction(-11, "sequence"), $spd1, BR, $.offsetX(85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
-                $interval(3),
-            ]),
-        ]),
-        $interval(10),
-    ]),
-    "top2": $.action([
-        $.wait(120),
-        $.repeat(2, [
-            $whip($spd4, 0.005, 10, function(spd) {
-                return $.action([
-                    $nway(20, -90, 90, spd, RNS, $.offsetX(-85), $.offsetY(0)),
-                    $nway(20, -90, 90, spd, RNS, $.offsetX(+85), $.offsetY(0)),
-                ]);
-            }),
-            $interval(240),
-        ]),
-    ]),
-});
-/**
- * 桃園羅武発狂-2
- */
-gls2.Danmaku["love-3-2"] = new bulletml.Root({
-    "top0": $.action([
-        $.wait(60),
-        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
-        $.repeat(5, [
-            $.repeat(30, [
-                $.fire($.direction(-11, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
-                $interval(3),
-            ]),
-            $interval(10),
-        ]),
-    ]),
-    "top1": $.action([
-        $.wait(60),
-        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
-        $.repeat(5, [
-            $.repeat(30, [
-                $.fire($.direction(11, "sequence"), $spd1, RR, $.offsetX(85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
-                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
-                $interval(3),
-            ]),
-        ]),
-        $interval(10),
-    ]),
-    "top2": $.action([
-        $.wait(120),
-        $.repeat(2, [
-            $whip($spd4, 0.002, 10, function(spd) {
-                return $.action([
-                    $nway(21, -90, 90, spd, BNS, $.offsetX(-85), $.offsetY(0)),
-                    $nway(21, -90, 90, spd, BNS, $.offsetX(+85), $.offsetY(0)),
-                ]);
-            }),
-            $interval(240),
-        ]),
-    ]),
-});
-
-/**
  * 六花-1
  */
 gls2.Danmaku["rikka-1"] = new bulletml.Root({
@@ -2767,6 +2378,395 @@ gls2.Danmaku["hibiki-3-1"] = gls2.Danmaku["hibiki-1-1"];
  * 響発狂-2
  */
 gls2.Danmaku["hibiki-3-2"] = gls2.Danmaku["hibiki-1-1"];
+
+/**
+ * せつな-1
+ */
+gls2.Danmaku["setsuna-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.repeat(5, [
+            $nway(3, -2, 2, $spd2(1.8), BNS, $.offsetX(0),  $.offsetX(0)),
+            $nway(3, -4, 4, $spd2(1.4), BNS, $.offsetX(0),  $.offsetX(0)),
+            $nway(3, -6, 6, $spd2(1.0), BNS, $.offsetX(0),  $.offsetX(0)),
+            $nway(3, -8, 8, $spd2(0.6), BNS, $.offsetX(0),  $.offsetX(0)),
+            $interval(110),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(60),
+        $.repeat(10, [
+            $nway(4, -40, 40, $spd3, RL, $.offsetX(0), $.offsetY(30)),
+            $interval(15),
+            $nway(5, -40, 40, $spd2, RL, $.offsetX(0), $.offsetY(30)),
+            $interval(15),
+            $nway(6, -40, 40, $spd1, RL, $.offsetX(0), $.offsetY(30)),
+            $interval(15),
+        ]),
+    ]),
+});
+
+
+/**
+ * 桃園羅武第１形態-1
+ */
+gls2.Danmaku["love-1-1"] = new bulletml.Root({
+    "top0": $.action([
+        $interval(30),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(90, [
+            $.fire($.direction(+17, "sequence"), $spd1("$loop.index*0.1"), BNL, $.offsetX(-105), $.offsetY(0)),
+            $interval(1),
+        ]),
+        $interval(30),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(90, [
+            $.fire($.direction(-17, "sequence"), $spd1("$loop.index*0.1"), RNL, $.offsetX(-105), $.offsetY(0)),
+            $interval(1),
+        ]),
+        $interval(120),
+    ]),
+    "top1": $.action([
+        $.wait(30),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(90, [
+            $.fire($.direction(+11, "sequence"), $spd1("$loop.index*0.1"), BNL, $.offsetX(-85), $.offsetY(0)),
+            $interval(1),
+        ]),
+        $interval(30),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(90, [
+            $.fire($.direction(-11, "sequence"), $spd1("$loop.index*0.1"), RNL, $.offsetX(-85), $.offsetY(0)),
+            $interval(1),
+        ]),
+    ]),
+    "top2": $.action([
+        $.wait(30),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(90, [
+            $.fire($.direction(-19, "sequence"), $spd1("$loop.index*0.1"), BNL, $.offsetX(+105), $.offsetY(0)),
+            $interval(1),
+        ]),
+        $interval(30),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(90, [
+            $.fire($.direction(+19, "sequence"), $spd1("$loop.index*0.1"), RNL, $.offsetX(+105), $.offsetY(0)),
+            $interval(1),
+        ]),
+    ]),
+    "top3": $.action([
+        $.wait(30),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(90, [
+            $.fire($.direction(-23, "sequence"), $spd1("$loop.index*0.1"), BNL, $.offsetX(+85), $.offsetY(0)),
+            $interval(1),
+        ]),
+        $interval(30),
+        $.fire($.direction(-10), IVS, $.offsetX(0), $.offsetY(0)),
+        $.repeat(90, [
+            $.fire($.direction(+23, "sequence"), $spd1("$loop.index*0.1"), RNL, $.offsetX(+85), $.offsetY(0)),
+            $interval(1),
+        ]),
+    ]),
+});
+/**
+ * 桃園羅武第１形態-2
+ */
+gls2.Danmaku["love-1-2"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.repeat(2, [
+            $whip($spd3, 0.02, 10, function(spd) {
+                return $.action([
+                    $absoluteNway(5, 200, 120, spd, RNSH, $.offsetX( -85), $.offsetY(  0)),
+                    $absoluteNway(6, 190, 130, spd, BNSH,  $.offsetX(-170), $.offsetY(+40)),
+                    $absoluteNway(5, 260, 210, spd, RNSH, $.offsetX( +85), $.offsetY(  0)),
+                    $absoluteNway(6, 270, 220, spd, BNSH,  $.offsetX(+170), $.offsetY(+40)),
+                    $.wait(5),
+                ]);
+            }),
+            $interval(120),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(60),
+        $.repeat(10, [
+            $nway(6, -40, 40, $spd2, RR, $.offsetX(-130), $.offsetY(30)),
+            $interval(30),
+            $nway(7, -40, 40, $spd1, RR, $.offsetX(-130), $.offsetY(30)),
+            $interval(30),
+        ]),
+    ]),
+    "top2": $.action([
+        $.wait(60),
+        $.repeat(10, [
+            $nway(6, -40, 40, $spd2, RR, $.offsetX(+130), $.offsetY(30)),
+            $interval(30),
+            $nway(7, -40, 40, $spd1, RR, $.offsetX(+130), $.offsetY(30)),
+            $interval(30),
+        ]),
+    ]),
+});
+/**
+ * 桃園羅武第１形態-3
+ */
+gls2.Danmaku["love-1-3"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(120),
+        $.repeat(2, [
+            $.repeat(5, [
+                $.repeat(10, [
+                    $.bindVar("c", "$loop.index*10"),
+                    $nway(2, "-30+$c", "30-$c", $spd3(5), BLSR, $.offsetX(0), $.offsetY(0)),
+                    $interval(6),
+                ]),
+            ]),
+            $interval(120),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(60),
+        $.repeat(10, [
+            $nway(4, -40, 40, $spd2, RR, $.offsetX(-130), $.offsetY(30)),
+            $interval(30),
+            $nway(5, -40, 40, $spd1, RR, $.offsetX(-130), $.offsetY(30)),
+            $interval(30),
+        ]),
+    ]),
+    "top2": $.action([
+        $.wait(60),
+        $.repeat(10, [
+            $nway(4, -40, 40, $spd2, RR, $.offsetX(+130), $.offsetY(30)),
+            $interval(30),
+            $nway(5, -40, 40, $spd1, RR, $.offsetX(+130), $.offsetY(30)),
+            $interval(30),
+        ]),
+    ]),
+});
+/**
+ * 桃園羅武第２形態-1
+ */
+gls2.Danmaku["love-2-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.repeat(2, [
+            $.repeat(5, [
+                $.repeat(36, [
+                    $.fire($.direction(" $loop.index*10"), $spd2, BL, $.offsetX(-130), $.offsetY(40)),
+                    $.fire($.direction("-$loop.index*10"), $spd2, BL, $.offsetX(+130), $.offsetY(40)),
+                ]),
+                $interval(12),
+            ]),
+            $interval(120),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(30),
+        $.repeat(2, [
+            $.repeat(5, [
+                $.repeat(36, [
+                    $.fire($.direction(" $loop.index*10"), $spd1, RL, $.offsetX(0), $.offsetY(-30)),
+                ]),
+                $interval(12),
+            ]),
+            $interval(120),
+        ]),
+    ]),
+});
+/**
+ * 桃園羅武第２形態-2
+ */
+gls2.Danmaku["love-2-2"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+        $.repeat(60, [
+            $.fire($.direction(21, "sequence"), $spd1, RNL, $.offsetX(-85), $.offsetY(0)),
+            $.fire($.direction(90, "sequence"), $spd1, RNL, $.offsetX(-85), $.offsetY(0)),
+            $.fire($.direction(90, "sequence"), $spd1, RNL, $.offsetX(-85), $.offsetY(0)),
+            $.fire($.direction(90, "sequence"), $spd1, RNL, $.offsetX(-85), $.offsetY(0)),
+            $interval(10),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(60),
+        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+        $.repeat(60, [
+            $.fire($.direction(-21, "sequence"), $spd1, RNL, $.offsetX(85), $.offsetY(0)),
+            $.fire($.direction( 90, "sequence"), $spd1, RNL, $.offsetX( 85), $.offsetY(0)),
+            $.fire($.direction( 90, "sequence"), $spd1, RNL, $.offsetX( 85), $.offsetY(0)),
+            $.fire($.direction( 90, "sequence"), $spd1, RNL, $.offsetX( 85), $.offsetY(0)),
+            $interval(10),
+        ]),
+    ]),
+    "top9": $.action([
+        $.wait(200),
+        $.repeat(5, [
+            $.repeat(36, [
+                $.fire($.direction("$loop.index*10"), $.speed(1), IVS($.actionRef("seed"))),
+            ]),
+            $interval(120),
+        ]),
+    ]),
+    "seed": $.action([
+        $.wait(10),
+        $.changeSpeed($.speed(0), 30),
+        $.wait(30),
+        $nway(5, -40, 40, $spd2, BLSR),
+        $.vanish,
+    ]),
+});
+/**
+ * 桃園羅武第２形態-3
+ */
+gls2.Danmaku["love-2-3"] = new bulletml.Root({
+    "top8": $.action([
+        $.wait(120),
+        $.repeat(5, [
+            $.repeat(5, [
+                $.fire($.direction("-$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(-130), $.offsetY(40)),
+                $interval(6),
+                $.fire($.direction("-($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(-130), $.offsetY(40)),
+                $interval(6),
+            ]),
+            $interval(120),
+        ]),
+    ]),
+    "top9": $.action([
+        $.wait(120),
+        $.repeat(5, [
+            $.repeat(5, [
+                $.fire($.direction("$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(130), $.offsetY(40)),
+                $interval(6),
+                $.fire($.direction("($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(130), $.offsetY(40)),
+                $interval(6),
+            ]),
+            $interval(120),
+        ]),
+    ]),
+    "seed1": $.action([
+        $.wait(10),
+        $.changeSpeed($.speed(0), 60),
+        $.wait(30),
+        $.repeat(5, [
+            $nway(4, -40, 40, $spd3, RNS),
+            $interval(5),
+        ]),
+        $.vanish,
+    ]),
+    "seed2": $.action([
+        $.wait(10),
+        $.changeSpeed($.speed(0), 90),
+        $.wait(60),
+        $.repeat(5, [
+            $nway(5, -40, 40, $spd3, BNS),
+            $interval(5),
+        ]),
+        $.vanish,
+    ]),
+});
+/**
+ * 桃園羅武発狂-1
+ */
+gls2.Danmaku["love-3-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+        $.repeat(5, [
+            $.repeat(30, [
+                $.fire($.direction(11, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX(-85), $.offsetY(0)),
+                $interval(3),
+            ]),
+            $interval(10),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(60),
+        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+        $.repeat(5, [
+            $.repeat(30, [
+                $.fire($.direction(-11, "sequence"), $spd1, BR, $.offsetX(85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, BR, $.offsetX( 85), $.offsetY(0)),
+                $interval(3),
+            ]),
+        ]),
+        $interval(10),
+    ]),
+    "top2": $.action([
+        $.wait(120),
+        $.repeat(2, [
+            $whip($spd4, 0.005, 10, function(spd) {
+                return $.action([
+                    $nway(20, -90, 90, spd, RNS, $.offsetX(-85), $.offsetY(0)),
+                    $nway(20, -90, 90, spd, RNS, $.offsetX(+85), $.offsetY(0)),
+                ]);
+            }),
+            $interval(240),
+        ]),
+    ]),
+});
+/**
+ * 桃園羅武発狂-2
+ */
+gls2.Danmaku["love-3-2"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(60),
+        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+        $.repeat(5, [
+            $.repeat(30, [
+                $.fire($.direction(-11, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX(-85), $.offsetY(0)),
+                $interval(3),
+            ]),
+            $interval(10),
+        ]),
+    ]),
+    "top1": $.action([
+        $.wait(60),
+        $.fire($.direction(0), $spd1, BNS, $.offsetX(0), $.autonomy(true)),
+        $.repeat(5, [
+            $.repeat(30, [
+                $.fire($.direction(11, "sequence"), $spd1, RR, $.offsetX(85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
+                $.fire($.direction(45, "sequence"), $spd1, RR, $.offsetX( 85), $.offsetY(0)),
+                $interval(3),
+            ]),
+        ]),
+        $interval(10),
+    ]),
+    "top2": $.action([
+        $.wait(120),
+        $.repeat(2, [
+            $whip($spd4, 0.002, 10, function(spd) {
+                return $.action([
+                    $nway(21, -90, 90, spd, BNS, $.offsetX(-85), $.offsetY(0)),
+                    $nway(21, -90, 90, spd, BNS, $.offsetX(+85), $.offsetY(0)),
+                ]);
+            }),
+            $interval(240),
+        ]),
+    ]),
+});
 
 /**
  * 弾幕初期設定
