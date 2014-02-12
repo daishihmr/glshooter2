@@ -847,7 +847,7 @@ gls2.Enemy.Alice = tm.createClass({
         this.fallDown();
 
         //ボム効果時間中はエクステンドアイテムを出さない
-        if (!this.gameScene.isBombActive) gls2.ExtendItem(this.x, this.y, this.player).addChildTo(this.parent);
+        if (!this.gameScene.isBombActive) gls2.ExtendItem(this.x, this.y, this.player).addChildTo(this.gameScene);
 
         //本体破壊時に端末も破壊
         for (var i = 0; i<4; i++) {
@@ -922,7 +922,7 @@ gls2.Enemy.Erika = tm.createClass({
 
     destroy: function() {
         gls2.Effect.explodeM(this.x, this.y, this.gameScene);
-        gls2.BombItem(this.x, this.y, this.player).addChildTo(this.parent);
+        gls2.BombItem(this.x, this.y, this.player).addChildTo(this.gameScene);
         this.remove();
     }
 });

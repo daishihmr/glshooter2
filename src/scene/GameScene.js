@@ -198,7 +198,9 @@ gls2.GameScene = tm.createClass(
             this.effectLayer0.addChild(child);
         } else if (child instanceof gls2.Bullet) {
             this.bulletLayer.addChild(child);
-        } else if (child instanceof gls2.StarItem) {
+        } else if (child instanceof gls2.StarItem
+            || child instanceof gls2.BombItem
+            || child instanceof gls2.ExtendItem) {
             this.groundLayer.addChild(child);
         } else if (child instanceof gls2.Enemy) {
             if (child.isGround) {

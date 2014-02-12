@@ -84,13 +84,6 @@ gls2.GlShooter2 = tm.createClass(
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",
             "bgm1": "assets2/nc54073.mp3",
-            "bgm2": "assets2/nc28687.mp3",
-            "bgm3": "assets2/nc80728.mp3",
-            "bgm4": "assets2/nc67876.mp3",
-            "bgm5": "assets2/nc60627.mp3",
-            "bgmBoss": "assets2/nc29206.mp3",
-            "bgmResult": "assets2/nc54077.mp3",
-            "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
             "bgmLoopInfo": "assets2/loop.json",
 
             // sound
@@ -99,7 +92,7 @@ gls2.GlShooter2 = tm.createClass(
             "sound/explode3": "assets2/sen_ge_bom02.mp3",
             "sound/explode4": "assets2/sen_ge_bom14.mp3",
             "sound/explode5": "assets2/sen_ge_bom17.mp3",
-            "sound/explode6": "assets2/sen_ge_hasai01.mp3",
+            "sound/explode6": "assets2/nc17909.mp3",
             "sound/star": "assets2/se_maoudamashii_system24.mp3",
             "sound/bomb": "assets2/sen_ge_bom17.mp3",
             "sound/warning": "assets2/meka_ge_keihou06.mp3",
@@ -209,6 +202,16 @@ gls2.GlShooter2 = tm.createClass(
         gls2.Effect.setup();
 
         this.gameScene = gls2.GameScene();
+
+        tm.asset.Loader().load({
+            "bgm2": "assets2/nc28687.mp3",
+            "bgm3": "assets2/nc80728.mp3",
+            "bgm4": "assets2/nc67876.mp3",
+            "bgm5": "assets2/nc60627.mp3",
+            "bgmBoss": "assets2/nc29206.mp3",
+            "bgmResult": "assets2/nc54077.mp3",
+            "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
+        });
     },
 
     exitApp: function() {

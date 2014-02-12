@@ -455,21 +455,24 @@ gls2.LargeExplodeEffect = tm.createClass({
 
         this.addChildTo(gameScene);
     },
-    onadded: function() {
-        for (var i = 0; i < 20; i++) {
+    "onadded": function() {
+        var soundStarted = false;;
+
+        for (var i = 0; i < 30; i++) {
             var angle = Math.random() * 360;
             var speed = gls2.Noise.noise[Math.floor(gls2.Noise.noise.length * angle/360)] * 50;
 
             var position = tm.geom.Vector2(this.x, this.y);
             var velocity = tm.geom.Vector2().setAngle(angle, speed);
 
-            for (var j = 0; j < 5; j++) {
+            var jlen = 7;
+            for (var j = 0; j < jlen; j++) {
                 var e = tm.display.Sprite("explode" + Math.floor(Math.random() * 3), 100, 100)
                     .setPosition(this.x, this.y)
-                    .setScale(1+Math.random()*3.5)
+                    .setScale(1+Math.random()*3.0)
                     .setRotation(Math.random()*360);
-                e.dx = velocity.x * (6 - j)*0.02;
-                e.dy = velocity.y * (6 - j)*0.02;
+                e.dx = velocity.x * (jlen + 1 - j)*0.02;
+                e.dy = velocity.y * (jlen + 1 - j)*0.02;
                 e.frameIndex = -j*3 + Math.floor(Math.random() * -10 - 7);
                 e.update = function() {
                     this.frameIndex += 0.3;
@@ -480,6 +483,11 @@ gls2.LargeExplodeEffect = tm.createClass({
                     } else if (this.frameIndex >= 64) {
                         this.remove();
                         return;
+                    } else {
+                        if (!soundStarted) {
+                            soundStarted = true;
+                            gls2.playSound("explode6");
+                        }
                     }
 
                     this.setFrameIndex(Math.floor(this.frameIndex));
@@ -495,32 +503,21 @@ gls2.LargeExplodeEffect = tm.createClass({
             }
         }
 
-        var p = gls2.Particle(500, 0.001, 1.002);
+        var p = gls2.Particle(500, 0.001, 1.003);
         for (var i = 0; i < 80; i++) {
-            var c = p.clone().setPosition(this.x, this.y).addChildTo(this.gameScene);
             var angle = Math.random() * 360;
             var speed = gls2.Noise.noise[Math.floor(gls2.Noise.noise.length * angle/360)] * 15;
+            var c = p.clone().setPosition(this.x, this.y).addChildTo(this.gameScene);
             c.velocity = tm.geom.Vector2().setAngle(angle, speed);
             c.position.add(tm.geom.Vector2.mul(c.velocity, -40));
             c.setScale(0.1, 0.1);
             c.age = 0;
-            c.onenterframe = function() {
+            c.on("enterframe", function() {
                 this.age += 1;
                 this.position.add(this.velocity);
                 this.scaleX += 0.01;
                 this.scaleY += 0.01;
                 if (this.age > 80) this.alphaDecayRate = 0.99;
-            };
-        }
-
-        var t = this.tweener.clear().wait(200);
-        for (var i = 0; i < 3; i++) {
-            t.wait(50 + Math.random() * 100).call(function() {
-                gls2.playSound("explode2");
-            }).wait(50 + Math.random() * 100).call(function() {
-                gls2.playSound("explode3");
-            }).wait(50 + Math.random() * 100).call(function() {
-                gls2.playSound("explode5");
             });
         }
     }
