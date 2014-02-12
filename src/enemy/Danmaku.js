@@ -2432,9 +2432,12 @@ gls2.Danmaku["hibiki-3-2"] = gls2.Danmaku["hibiki-1-1"];
 gls2.Danmaku["dory"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
-            $.fire(RS),
-            $interval(100),
+            $.actionRef("attack0"),
+            $.actionRef("attack1"),
         ]),
+    ]),
+    "attack0": $.action([
+        
     ]),
 });
 /**
@@ -2443,8 +2446,8 @@ gls2.Danmaku["dory"] = new bulletml.Root({
 gls2.Danmaku["miry"] = new bulletml.Root({
     "top": $.action([
         $.repeat(999, [
-            $.fire(BS),
-            $interval(100),
+            $.actionRef("attack0"),
+            $.actionRef("attack1"),
         ]),
     ]),
 });

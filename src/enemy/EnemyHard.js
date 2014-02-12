@@ -35,7 +35,7 @@ gls2.Enemy.DATA = {
     "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
     "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
     "minamino":  [  1500,  5000000,  true,  true, 30, {"width": 180, "heightTop":-(-350-25), "heightBottom":-350+25} ],
-    "houjou":    [ 10000,  8000000, false,  true,  0, {"width":300, "heightBottom":85, "heightTop":60}, ],
+    "houjou":    [ 10000,  8000000, false,  true,  0, {"width":220, "heightBottom":100, "heightTop":60}, ],
     "dory":      [   350,     2000, false,  true,  5, {"radius": 24} ],
     "rery":      [   250,     2000,  true, false,  5, {"radius": 24} ],
     "miry":      [   350,     2000, false,  true,  5, {"radius": 24} ],
@@ -1439,8 +1439,6 @@ gls2.Enemy.Rery = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "rery", "kanade-cannon", 0);
         this.setScale(1.6*KANADE_SCALE);
-        // dory
-        // miry
     }
 });
 /**
@@ -1583,13 +1581,21 @@ gls2.Enemy.Dory = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "dory");
-        this._sprite = _Sprite("tex1", 64, 64);
+        this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(48);
+        this.setScale(1.5);
+        this.aura = gls2.Particle(80, 1.0, 0.8);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
+        this._sprite.setFrameIndex(48+Math.floor(app.frame/5)%3);
+        if (app.frame%2 === 0 && this.hp > 0) {
+            this.aura.clone()
+                .setPosition(this.x, this.y)
+                .addChildTo(this.gameScene);
+        }
     },
     draw: function(canvas) {
-        this._sprite.setFrameIndex((this.frame % 4 < 2) ? 0 : 1).draw(canvas);
+        this._sprite.draw(canvas);
     }
 });
 /**
@@ -1606,13 +1612,21 @@ gls2.Enemy.Miry = tm.createClass(
 
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "miry");
-        this._sprite = _Sprite("tex1", 64, 64);
+        this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(56);
+        this.setScale(1.5);
+        this.aura = gls2.Particle(80, 1.0, 0.8);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
+        this._sprite.setFrameIndex(56+Math.floor(app.frame/5)%3);
+        if (app.frame%2 === 0 && this.hp > 0) {
+            this.aura.clone()
+                .setPosition(this.x, this.y)
+                .addChildTo(this.gameScene);
+        }
     },
     draw: function(canvas) {
-        this._sprite.setFrameIndex((this.frame % 4 < 2) ? 0 : 1).draw(canvas);
+        this._sprite.draw(canvas);
     }
 });
 

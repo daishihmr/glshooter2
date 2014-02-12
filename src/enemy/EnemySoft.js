@@ -2105,9 +2105,9 @@ gls2.EnemySoft.Hibiki2 = tm.createClass(
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
         // ドリー
-        enemy.stage.launchEnemy({ "hard": gls2.Enemy.Dory, "soft": gls2.EnemySoft.Dory(enemy, "dory"), "x": 0, "y": SC_H*-0.3 }),
+        enemy.stage.launchEnemy({ "hard": gls2.Enemy.Dory, "soft": gls2.EnemySoft.Dory(enemy, "dory"), "x": SC_W/2, "y": SC_H*-0.3 }),
         // ミリー
-        enemy.stage.launchEnemy({ "hard": gls2.Enemy.Miry, "soft": gls2.EnemySoft.Miry(enemy, "miry"), "x": 0, "y": SC_H*-0.3 }),
+        enemy.stage.launchEnemy({ "hard": gls2.Enemy.Miry, "soft": gls2.EnemySoft.Miry(enemy, "miry"), "x": SC_W/2, "y": SC_H*-0.3 }),
         // スクロール速度アップ
         enemy.gameScene.ground.tweener.clear().to({
             speed: 16,
@@ -2212,8 +2212,7 @@ gls2.EnemySoft.HibikiBit = tm.createClass(
                 .to({
                     x: positions[pp].x + hibiki.x,
                     y: positions[pp].y + hibiki.y,
-                }, 1200, "easeInOutQuad")
-                .wait(2000)
+                }, 2000, "easeInOutSine")
                 .call(temp);
             pp = (pp+1)%positions.length;
         }.bind(enemy);
