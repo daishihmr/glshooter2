@@ -34,10 +34,11 @@ gls2.Enemy.DATA = {
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
     "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
     "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
-    // "aida":      [     1,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
     "minamino":  [  1500,  5000000,  true,  true, 30, {"width": 180, "heightTop":-(-350-25), "heightBottom":-350+25} ],
     "houjou":    [ 10000,  8000000, false,  true,  0, {"width":300, "heightBottom":85, "heightTop":60}, ],
+    "dory":      [   350,     2000, false,  true,  5, {"radius": 24} ],
     "rery":      [   250,     2000,  true, false,  5, {"radius": 24} ],
+    "miry":      [   350,     2000, false,  true,  5, {"radius": 24} ],
     "fary":      [   200,     2000,  true, false,  5, {"radius": 24} ],
     "sory":      [   350,     2000,  true, false,  5, {"radius": 24} ],
     "lary":      [   300,     2000,  true,  true,  5, {"radius": 24} ],
@@ -1567,6 +1568,52 @@ gls2.Enemy.Hibiki = tm.createClass(
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
+});
+/**
+ * ホウジョウ浮遊砲台「ドリー」
+ * @class
+ * @extends {gls2.Enemy}
+ */
+gls2.Enemy.Dory = tm.createClass(
+/** @lends {gls2.Enemy.Dory.prototype} */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "dory");
+        this._sprite = _Sprite("tex1", 64, 64);
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+    },
+    draw: function(canvas) {
+        this._sprite.setFrameIndex((this.frame % 4 < 2) ? 0 : 1).draw(canvas);
+    }
+});
+/**
+ * ホウジョウ浮遊砲台「ミリー」
+ * @class
+ * @extends {gls2.Enemy}
+ */
+gls2.Enemy.Miry = tm.createClass(
+/** @lends {gls2.Enemy.Miry.prototype} */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "miry");
+        this._sprite = _Sprite("tex1", 64, 64);
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+    },
+    draw: function(canvas) {
+        this._sprite.setFrameIndex((this.frame % 4 < 2) ? 0 : 1).draw(canvas);
+    }
 });
 
 /**

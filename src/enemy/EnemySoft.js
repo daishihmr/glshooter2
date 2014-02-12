@@ -2054,10 +2054,10 @@ gls2.EnemySoft.Hibiki1 = tm.createClass(
     init: function() {
         this.superInit();
         this.patterns = [
-            "hibiki-1-1",
+            "hibiki-1-1a",
             "hibiki-1-2",
             "hibiki-1-3a",
-            "hibiki-1-1",
+            "hibiki-1-1b",
             "hibiki-1-2",
             "hibiki-1-3b",
         ];
@@ -2103,6 +2103,15 @@ gls2.EnemySoft.Hibiki2 = tm.createClass(
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        // ドリー
+        enemy.stage.launchEnemy({ "hard": gls2.Enemy.Dory, "soft": gls2.EnemySoft.Dory(enemy, "dory"), "x": 0, "y": SC_H*-0.3 }),
+        // ミリー
+        enemy.stage.launchEnemy({ "hard": gls2.Enemy.Miry, "soft": gls2.EnemySoft.Miry(enemy, "miry"), "x": 0, "y": SC_H*-0.3 }),
+        // スクロール速度アップ
+        enemy.gameScene.ground.tweener.clear().to({
+            speed: 16,
+        }, 5000);
 
         enemy.patterns = [].concat(this.patterns);
         enemy.tweener.clear()
@@ -2171,6 +2180,86 @@ gls2.EnemySoft.Hibiki3 = tm.createClass(
     },
 });
 gls2.EnemySoft.Hibiki3 = gls2.EnemySoft.Hibiki3();
+/**
+ * 響ビット
+ */
+gls2.EnemySoft.HibikiBit = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    hibiki: null,
+    patternName: null,
+
+    positions: null,
+
+    /**
+     * @constructs
+     */
+    init: function(hibiki, patternName) {
+        this.superInit();
+        this.hibiki = hibiki;
+        this.patternName = patternName;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        gls2.EnemySoft.attack(enemy, this.patternName);
+
+        var pp = 0;
+        var positions = this.positions;
+        var hibiki = this.hibiki;
+        var temp = function() {
+            this.tweener.clear()
+                .to({
+                    x: positions[pp].x + hibiki.x,
+                    y: positions[pp].y + hibiki.y,
+                }, 1200, "easeInOutQuad")
+                .wait(2000)
+                .call(temp);
+            pp = (pp+1)%positions.length;
+        }.bind(enemy);
+        temp();
+    }
+});
+/**
+ * ドリー
+ */
+gls2.EnemySoft.Dory = tm.createClass(
+{
+    superClass: gls2.EnemySoft.HibikiBit,
+
+    /**
+     * @constructs
+     */
+    init: function(hibiki, patternName) {
+        this.superInit(hibiki, patternName);
+        this.positions = [
+            { x:-200, y:   0 },
+            { x:   0, y:-100 },
+            { x:+200, y:   0 },
+            { x:   0, y:+100 }
+        ];
+    }
+});
+/**
+ * ミリー
+ */
+gls2.EnemySoft.Miry = tm.createClass(
+{
+    superClass: gls2.EnemySoft.HibikiBit,
+
+    /**
+     * @constructs
+     */
+    init: function(hibiki, patternName) {
+        this.superInit(hibiki, patternName);
+        this.positions = [
+            { x:+200, y:   0 },
+            { x:   0, y:+100 },
+            { x:-200, y:   0 },
+            { x:   0, y:-100 }
+        ];
+    }
+});
 
 })();
 
