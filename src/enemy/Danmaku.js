@@ -2696,45 +2696,56 @@ gls2.Danmaku["love-2-2"] = new bulletml.Root({
 gls2.Danmaku["love-2-3"] = new bulletml.Root({
     "top8": $.action([
         $.wait(120),
-        $.repeat(5, [
+        $.repeat(3, [
             $.repeat(5, [
-                $.fire($.direction("$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(-130), $.offsetY(40)),
+                $.fire($.direction("-$loop.index*30", "absolute"), $spd1, BL($.actionRef("seed1")), $.offsetX(-130), $.offsetY(40)),
                 $interval(6),
-                $.fire($.direction("($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(-130), $.offsetY(40)),
+                $.fire($.direction("-$loop.index*30+15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(-130), $.offsetY(40)),
                 $interval(6),
             ]),
-            $interval(120),
+            $interval(90),
         ]),
     ]),
     "top9": $.action([
         $.wait(120),
-        $.repeat(5, [
+        $.repeat(3, [
             $.repeat(5, [
-                $.fire($.direction("-$loop.index*30", "absolute"), $spd0, BL($.actionRef("seed1")), $.offsetX(130), $.offsetY(40)),
+                $.fire($.direction("$loop.index*30", "absolute"), $spd1, BL($.actionRef("seed1")), $.offsetX(130), $.offsetY(40)),
                 $interval(6),
-                $.fire($.direction("-($loop.index+1)*15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(130), $.offsetY(40)),
+                $.fire($.direction("$loop.index*30+15", "absolute"), $spd1, RL($.actionRef("seed2")), $.offsetX(130), $.offsetY(40)),
                 $interval(6),
             ]),
-            $interval(120),
+            $interval(90),
         ]),
     ]),
     "seed1": $.action([
         $.wait(10),
-        $.changeSpeed($.speed(0), 60),
-        $.wait(30),
+        $.changeSpeed($.speed(0), 90),
+        $.wait(60),
+        $.fire($.direction(0), $spd3, IVS),
         $.repeat(5, [
-            $nway(4, -40, 40, $spd3, RNS),
-            $interval(5),
+            $.fire($.direction(-30,"sequence"), $spd4, RNS),
+            $.fire($.direction( 20,"sequence"), $spd4, RNS),
+            $.fire($.direction( 20,"sequence"), $spd4, RNS),
+            $.fire($.direction( 20,"sequence"), $spd4, RNS),
+            $.fire($.direction(-30,"sequence"), $spd4, IVS),
+            $interval(4),
         ]),
         $.vanish,
     ]),
     "seed2": $.action([
         $.wait(10),
         $.changeSpeed($.speed(0), 90),
-        $.wait(60),
+        $.wait(120),
+        $.fire($.direction(0), $spd3, IVS),
         $.repeat(5, [
-            $nway(5, -40, 40, $spd3, BNS),
-            $interval(5),
+            $.fire($.direction(-30,"sequence"), $spd4, BNS),
+            $.fire($.direction( 15,"sequence"), $spd4, BNS),
+            $.fire($.direction( 15,"sequence"), $spd4, BNS),
+            $.fire($.direction( 15,"sequence"), $spd4, BNS),
+            $.fire($.direction( 15,"sequence"), $spd4, BNS),
+            $.fire($.direction(-30,"sequence"), $spd4, IVS),
+            $interval(4),
         ]),
         $.vanish,
     ]),
