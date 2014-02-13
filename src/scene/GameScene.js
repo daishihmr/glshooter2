@@ -983,8 +983,9 @@ gls2.GameScene = tm.createClass(
     },
 
     extendZanki: function() {
-        // TODO エクステンドエフェクト
+        // エクステンドエフェクト
         gls2.playSound("voExtend");
+        gls2.playSound("decision");
         this.println("extended.");
         this.zanki += 1;
     },

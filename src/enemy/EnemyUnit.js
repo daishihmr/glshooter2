@@ -686,7 +686,7 @@ gls2.EnemyUnit = {
 /**
  * ステージ５ボス「ホウジョウ」
  */
-"hibiki": [{ "hard":$e.Hibiki, "soft":[$s.Hibiki1, $s.Hibiki2, $s.Hibiki3], "x":SC_W*0.5, "y":-100, "boss":true }],
+"hibiki": [{ "hard":$e.Hibiki, "soft":[$s.Hibiki1, $s.Hibiki2, $s.Hibiki3], "x":SC_W*0.5, "y":-200, "boss":true }],
 
 };
 

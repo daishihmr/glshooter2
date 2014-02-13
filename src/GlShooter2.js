@@ -100,7 +100,6 @@ gls2.GlShooter2 = tm.createClass(
             "sound/decision": "assets2/se_maoudamashii_system03.mp3",
             "sound/achevement": "assets2/se_maoudamashii_system46.mp3",
             // TODO
-            // "sound/extend": "",
             // "sound/hyper": "",
 
             // voice
