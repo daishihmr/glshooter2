@@ -134,12 +134,12 @@ gls2.EndingScene = tm.createClass(
             this.startBgm = true;
         }.bind(this));
     },
-    onenter: function() {
+    "onenter": function() {
         if (gls2.core.gameScene.player.type === 0) gls2.core.putAchevement("allclear0");
         else if (gls2.core.gameScene.player.type === 1) gls2.core.putAchevement("allclear1");
         else if (gls2.core.gameScene.player.type === 2) gls2.core.putAchevement("allclear2");
     },
-    onexit: function() {
+    "onexit": function() {
         // groundをgameSceneに返す
         this.ground.addChildTo(gls2.core.gameScene);
     },
