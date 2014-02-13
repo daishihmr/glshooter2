@@ -1,0 +1,50 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	F2\F209.suf
+	SL\SL14.suf
+	roetc\roetc04.suf
+	roetc\roetc11.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000   0.000 )
+	DisplayScale: 0.176776695297
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -64 -28 -70 )
+	{	mov ( 1636 -517.841 1705.99 ) eye deg( 45 ) }
+	{	mov ( 139.931 71.4775 -58.4865 ) target }
+	{	mov ( 268.796 -341.421 75.9569 ) rotz ( -167.341 ) roty ( -1.14012 ) rotx ( 108.22 )
+		scal ( 3.42773 -1 1 ) obj roetc04 /* "roetc\roetc04.suf" atr "noname" */
+	}
+	{	mov ( -145.082 -388.617 107.211 ) rotz ( 16.9166 ) roty ( 19.4926 ) rotx ( -28.6356 )
+		scal ( 1 -1.58369 1 ) obj roetc11 /* "roetc\roetc11.suf" atr "noname" */
+	}
+	{	mov ( 268.796 341.421 75.9569 ) rotz ( 167.341 ) roty ( -1.14012 ) rotx ( -108.22 )
+		scal ( 3.42773 1 1 ) obj roetc04 /* "roetc\roetc04.suf" atr "noname" */
+	}
+	{	mov ( -145.082 388.617 107.211 ) rotz ( -16.9166 ) roty ( 19.4926 ) rotx ( 28.6356 )
+		scal ( 1 1.58369 1 ) obj roetc11 /* "roetc\roetc11.suf" atr "noname" */
+	}
+	{	mov ( -67.8823 -181.019 96.1665 ) rotz ( -160 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.635559 0.647657 0.7 ) obj F209 /* "F2\F209.suf" atr "noname" */
+	}
+	{	mov ( -67.8823 181.019 96.1665 ) rotz ( 160 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.635559 -0.647657 0.7 ) obj F209 /* "F2\F209.suf" atr "noname" */
+	}
+	{	mov ( -90.5097 0 164.049 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.840522 0.647667 1.51294 ) obj SL14 /* "SL\SL14.suf" atr "noname" */
+	}
+}

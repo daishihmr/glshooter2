@@ -36,14 +36,20 @@ gls2.ShipSelectScene = tm.createClass(
     /** @constructs */
     init: function() {
         this.superInit();
-        tm.app.Label("PLAYER SELECT", 40)
+
+        // 背景
+        tm.display.Sprite("result_bg", SC_W*1.1, SC_H*1.1)
+            .setPosition(SC_W/2, SC_H/2)
+            .addChildTo(this);
+
+        tm.display.Label("PLAYER SELECT", 40)
             .setPosition(SC_W*0.5,SC_H*0.1)
             .addChildTo(this);
 
         this.types = this.setupTypes();
         this.styles = this.setupStyles();
 
-        var left = tm.app.TriangleShape(20, 20, {
+        var left = tm.display.TriangleShape(20, 20, {
             fillStyle: "rgba(255,255,255,0.7)",
             strokeStyle: "transparent"
         }).setPosition(SC_W*0.1, SC_H*0.5).setRotation(-90);
@@ -52,7 +58,7 @@ gls2.ShipSelectScene = tm.createClass(
             this.alpha = 1 + Math.sin(app*0.1)*0.5;
         };
         left.addChildTo(this);
-        var right = tm.app.TriangleShape(20, 20, {
+        var right = tm.display.TriangleShape(20, 20, {
             fillStyle: "rgba(255,255,255,0.7)",
             strokeStyle: "transparent"
         }).setPosition(SC_W*0.9, SC_H*0.5).setRotation(90);
@@ -71,28 +77,29 @@ gls2.ShipSelectScene = tm.createClass(
         this.typeC.update();
 
         gls2.playSound("voSelectShip");
+        gls2.playBgm("bgmShipSelect", true);
     },
 
     setupTypes: function() {
-        var types = tm.app.CanvasElement();
+        var types = tm.display.CanvasElement();
         types.addChildTo(this);
 
-        this.labelType = tm.app.Label("Type-A").setPosition(SC_W*0.5, 150);
+        this.labelType = tm.display.Label("Type-A").setPosition(SC_W*0.5, 150);
         this.labelType.addChildTo(types);
 
         var typeDescription = [
             "一点集中型\nスピード：最速\n\n絶大な威力を誇る\n正面火力と\nスピードで\n敵を蹂躙する",
             "可変型\nスピード：中\n\n正面と両サイドに\n撃ち分けできる\n可変型ビットを持つ\nテクニカルな機体",
-            "広範囲型\nスピード：遅\n\n広範囲に攻撃可能な\nワイドショットを\n持つ機体\n強力な雑魚掃討能力",
+            "広範囲型\nスピード：遅\n\n広範囲に攻撃可能な\nワイドショットを\n持つ機体\n高い掃討能力",
         ];
 
-        this.labelTypeDescription = tm.app.Label(typeDescription[0], 16).setPosition(SC_W*0.5, 500);
+        this.labelTypeDescription = tm.display.Label(typeDescription[0], 16).setPosition(SC_W*0.5, 500);
         this.labelTypeDescription.update = function() {
             this.labelTypeDescription.text = typeDescription[this.type];
         }.bind(this);
         this.labelTypeDescription.addChildTo(types);
 
-        var typeBSpriteSheet = tm.app.SpriteSheet({
+        var typeBSpriteSheet = tm.asset.SpriteSheet({
             image: "fighter",
             frame: {
                 width: 64,
@@ -107,9 +114,9 @@ gls2.ShipSelectScene = tm.createClass(
             },
         });
 
-        this.typeA = tm.app.Sprite("fighter", 64, 64).setFrameIndex(3);
-        this.typeB = tm.app.AnimationSprite(typeBSpriteSheet, 64, 64).gotoAndPlay("typeB");
-        this.typeC = tm.app.Sprite("fighter", 64, 64).setFrameIndex(31);
+        this.typeA = tm.display.Sprite("fighter", 64, 64).setFrameIndex(3);
+        this.typeB = tm.display.AnimationSprite(typeBSpriteSheet, 64, 64).gotoAndPlay("typeB");
+        this.typeC = tm.display.Sprite("fighter", 64, 64).setFrameIndex(31);
 
         this.typeA.pos = 0;
         this.typeB.pos = 1;
@@ -132,13 +139,13 @@ gls2.ShipSelectScene = tm.createClass(
     },
 
     setupStyles: function() {
-        var styles = tm.app.CanvasElement();
+        var styles = tm.display.CanvasElement();
         styles.addChildTo(this);
 
-        this.labelStyle = tm.app.Label("Shot Style").setPosition(SC_W*0.5, 150);
+        this.labelStyle = tm.display.Label("Shot Style").setPosition(SC_W*0.5, 150);
         this.labelStyle.addChildTo(styles);
 
-        this.styleBase = tm.app.TriangleShape(40, 40, {
+        this.styleBase = tm.display.TriangleShape(40, 40, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         }).setPosition(SC_W*0.5, SC_H*0.6).addChildTo(styles);
@@ -155,7 +162,7 @@ gls2.ShipSelectScene = tm.createClass(
 
         this.styleBits = [];
 
-        this.styleBits[0] = tm.app.TriangleShape(20, 20, {
+        this.styleBits[0] = tm.display.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         });
@@ -169,7 +176,7 @@ gls2.ShipSelectScene = tm.createClass(
             }
         }.bind(this);
 
-        this.styleBits[1] = tm.app.TriangleShape(20, 20, {
+        this.styleBits[1] = tm.display.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         });
@@ -183,7 +190,7 @@ gls2.ShipSelectScene = tm.createClass(
             }
         }.bind(this);
 
-        this.styleBits[2] = tm.app.TriangleShape(20, 20, {
+        this.styleBits[2] = tm.display.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         });
@@ -197,7 +204,7 @@ gls2.ShipSelectScene = tm.createClass(
             }
         }.bind(this);
 
-        this.styleBits[3] = tm.app.TriangleShape(20, 20, {
+        this.styleBits[3] = tm.display.TriangleShape(20, 20, {
             fillStyle: "hsla(180, 80%, 80%, 0.5)",
             strokeStyle: "transparent"
         });
@@ -222,10 +229,10 @@ gls2.ShipSelectScene = tm.createClass(
         var styleDescription = [
             "ショット強化型\n\nビットを４つ装備した\nショット重視のスタイル",
             "レーザー強化型\n\nレーザーの威力に優れ\n対大型機戦で\n有利なスタイル",
-            "エキスパート強化型\n\nショットとレーザーの\n両方が強化されたスタイル\n\nゲーム難易度が上昇する\n<<上級者向け>>",
+            "エキスパート強化型\n\nショットとレーザーの\n両方が強化されたスタイル\n\n<<ゲーム難易度が上昇します！>>\n<<上級者向け>>",
         ];
 
-        this.labelStyleDescription = tm.app.Label(styleDescription[0], 16).setPosition(SC_W*0.5, 500);
+        this.labelStyleDescription = tm.display.Label(styleDescription[0], 16).setPosition(SC_W*0.5, 500);
         this.labelStyleDescription.update = function() {
             this.labelStyleDescription.text = styleDescription[this.style];
         }.bind(this);
@@ -261,7 +268,7 @@ gls2.ShipSelectScene = tm.createClass(
                 this.style = (this.style + 1 + 3) % 3;
                 gls2.playSound("select");
             } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
-                if (gls2.Setting.AUTO_BOMB_SELECT) {
+                if (AUTO_BOMB_SELECT) {
                     this.openAutoBombDialog();
                 } else {
                     this.autoBomb = true;
@@ -337,12 +344,26 @@ gls2.ShipSelectScene = tm.createClass(
 
     startGame: function() {
         gls2.core.gameScene.autoBomb = this.autoBomb;
-        gls2.core.gameScene.start(this.type, this.style);
         gls2.core.replaceScene(gls2.core.gameScene);
+        gls2.core.gameScene.start(this.type, this.style);
+        gls2.fadeOutBgm();
     },
 
     updateStyle: function(shot) {
         this.labelStyle.text = ["Shot", "Laser", "Expert"][this.style] + " Style";
+        if (this.style === 1) {
+            this.styleBase.line.shotTwoWay = false;
+            this.styleBits[0].line.shotTwoWay = false;
+            this.styleBits[1].line.shotTwoWay = false;
+            this.styleBits[2].line.shotTwoWay = false;
+            this.styleBits[3].line.shotTwoWay = false;
+        } else {
+            this.styleBase.line.shotTwoWay = true;
+            this.styleBits[0].line.shotTwoWay = true;
+            this.styleBits[1].line.shotTwoWay = true;
+            this.styleBits[2].line.shotTwoWay = true;
+            this.styleBits[3].line.shotTwoWay = true;
+        }
         if (shot) {
             this.styleBits[0].visible = true;
             this.styleBits[1].visible = true;
@@ -359,48 +380,21 @@ gls2.ShipSelectScene = tm.createClass(
             if (this.style === 0) {
                 this.styleBase.line.lineWidth = 10;
             } else {
-                this.styleBase.line.lineWidth = 20;
+                this.styleBase.line.lineWidth = 25;
             }
         }
     },
 
-    draw: function(canvas) {
-        canvas.clearColor(
-            tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
-                .addColorStopList([
-                    { offset: 0.0, color: "hsl(220, 90%, 60%)" },
-                    { offset: 1.0, color: "hsl(220, 90%, 10%)" },
-                ])
-                .toStyle()
-        );
-
-        canvas.lineWidth = 1;
-        canvas.strokeStyle = tm.graphics.LinearGradient(0, 0, SC_W, SC_H)
-            .addColorStopList([
-                { offset: 0.0, color: "hsl(200, 90%, 10%)" },
-                { offset: 1.0, color: "hsl(200, 90%, 60%)" },
-            ])
-            .toStyle();
-        canvas.beginPath();
-        var yy = 0;
-        for (var x = 0-C*3; x < SC_W+C*3; x += C*1.5) {
-            yy = (yy === 0) ? L : 0;
-            for (var y = -L*2 + yy; y < SC_H+L*2; y += L*2) {
-                canvas.line(x, y, x + C, y);
-                canvas.line(x, y, x - C/2, y + L);
-                canvas.line(x, y, x - C/2, y - L);
-            }
-        }
-        canvas.stroke();
-
-        canvas.fillStyle = "hsla(220, 90%, 10%, 0.6)";
-        canvas.fillRect(10, 10, SC_W-10*2, SC_H-10*2);
+    drawBackground: function(canvas) {
     }
 
 });
 
 var ShotLine = tm.createClass({
-    superClass: tm.app.CanvasElement,
+    superClass: tm.display.CanvasElement,
+
+    shotTwoWay: true,
+
     init: function(x, y, angle, length, width) {
         this.superInit();
         this.angle = angle-Math.PI*0.5;
@@ -416,15 +410,22 @@ var ShotLine = tm.createClass({
     },
     draw: function(canvas) {
         canvas.lineWidth = this.lineWidth;
-        canvas.drawArrow(this.x, this.y,
-            Math.cos(this.angle)*this.length*this.i+this.x,
-            Math.sin(this.angle)*this.length*this.i+this.y, this.lineWidth*1.2);
+
+        if (this.shotTwoWay && this.lineWidth === 5) {
+            var dx = Math.cos(this.angle-Math.PI/2) * 5;
+            var dy = Math.sin(this.angle-Math.PI/2) * 5;
+            canvas.drawArrow(this.x - dx, this.y - dy,
+                Math.cos(this.angle)*this.length*this.i+this.x - dx,
+                Math.sin(this.angle)*this.length*this.i+this.y - dy, this.lineWidth*1.2);
+            canvas.drawArrow(this.x + dx, this.y + dy,
+                Math.cos(this.angle)*this.length*this.i+this.x + dx,
+                Math.sin(this.angle)*this.length*this.i+this.y + dy, this.lineWidth*1.2);
+        } else {
+            canvas.drawArrow(this.x, this.y,
+                Math.cos(this.angle)*this.length*this.i+this.x,
+                Math.sin(this.angle)*this.length*this.i+this.y, this.lineWidth*1.2);
+        }
     },
 })
-
-/** @const */
-var C = 8 * 2;
-/** @const */
-var L = C/2*Math.sqrt(3);
 
 })();

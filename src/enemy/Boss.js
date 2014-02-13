@@ -56,13 +56,14 @@ gls2.Boss = tm.createClass(
         var beforeHp = this.hp;
         if (gls2.Enemy.prototype.damage.call(this, damagePoint)) {
             this.gameScene.demoPlaying = true;
+            this.gameScene.player.attackable = false;
             gls2.fadeOutBgm();
             return true;
         }
 
         // 形態変化
         if (this.hp <= this.hpMax*0.55 && this.hpMax*0.55 < beforeHp) {
-            gls2.EnemySoft.stopAttack(this);
+            gls2.EnemySoft.pauseAttack(this);
             this.clearEventListener("completeattack");
             this.tweener.clear();
 
@@ -74,7 +75,7 @@ gls2.Boss = tm.createClass(
             this.softwares[1].setup(this);
 
         } else if (this.hp <= this.hpMax*0.1 && this.hpMax*0.1 < beforeHp) {
-            gls2.EnemySoft.stopAttack(this);
+            gls2.EnemySoft.pauseAttack(this);
             this.clearEventListener("completeattack");
             this.tweener.clear();
 

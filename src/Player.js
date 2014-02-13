@@ -27,12 +27,12 @@ var KEYBOARD_MOVE = {
 /**
  * 自機
  * @class
- * @extends {tm.app.Sprite}
+ * @extends {tm.display.Sprite}
  */
 gls2.Player = tm.createClass(
 /** @lends {gls2.Player.prototype} */
 {
-    superClass: tm.app.Sprite,
+    superClass: tm.display.Sprite,
 
     /**
      * 0:赤
@@ -49,6 +49,7 @@ gls2.Player = tm.createClass(
 
     roll: 0,
     controllable: true,
+    attackable: true,
     muteki: false,
     gameScene : null,
 
@@ -108,13 +109,13 @@ gls2.Player = tm.createClass(
             this.bits = [this.bits[1], this.bits[2]];
         }
 
-        this.bitPivot = tm.app.CanvasElement().addChildTo(this);
+        this.bitPivot = tm.display.CanvasElement().addChildTo(this);
         for (var i = 0, end = this.bits.length; i < end; i++) {
             var bit = this.bits[i];
             gls2.Bit(this, bit).setPosition(bit.x, bit.y).addChildTo(this.bitPivot);
         }
 
-        this.light = tm.app.CircleShape(140, 140, {
+        this.light = tm.display.CircleShape(140, 140, {
             strokeStyle: "rgba(0,0,0,0)",
             fillStyle: tm.graphics.RadialGradient(70,70,0,70,70,70).addColorStopList([
                 { offset:0.0, color:"rgba(255,255,255,0.1)" },
@@ -124,7 +125,7 @@ gls2.Player = tm.createClass(
         }).addChildTo(this);
         this.light.blendMode = "lighter";
 
-        this.hyperCircle0 = tm.app.CircleShape(80, 80, {
+        this.hyperCircle0 = tm.display.CircleShape(80, 80, {
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
                 { offset:0.0, color:"rgba(255,255,100,0.0)" },
@@ -141,7 +142,7 @@ gls2.Player = tm.createClass(
             this.visible = gameScene.hyperLevel > 0 && !gameScene.isHyperMode;
         };
 
-        this.hyperCircle1 = tm.app.CircleShape(80, 80, {
+        this.hyperCircle1 = tm.display.CircleShape(80, 80, {
             fillStyle: "rgba(0,0,0,0)",
             strokeStyle: tm.graphics.LinearGradient(0,0,0,80).addColorStopList([
                 { offset:0.0, color:"rgba(255,255,100,0.0)" },
@@ -158,7 +159,7 @@ gls2.Player = tm.createClass(
             this.visible = gameScene.hyperLevel > 0 && !gameScene.isHyperMode;
         };
 
-        this.hyperCircle2 = tm.app.CanvasElement(80, 80).addChildTo(this);
+        this.hyperCircle2 = tm.display.CanvasElement(80, 80).addChildTo(this);
         this.hyperCircle2.blendMode = "lighter";
         this.hyperCircle2.rotation = -90;
         this.hyperCircle2.strokeStyle = "rgba(180,180,255,0.4)";
@@ -167,7 +168,7 @@ gls2.Player = tm.createClass(
         };
         this.hyperCircle2.draw = function(canvas) {
             canvas.lineCap = "round";
-            var value = gameScene.hyperTime / gls2.Setting.HYPERMODE_TIME;
+            var value = gameScene.hyperTime / HYPERMODE_TIME;
 
             canvas.strokeStyle = "rgba(50,50,255,0.4)";
             canvas.lineWidth = "12";
@@ -179,7 +180,7 @@ gls2.Player = tm.createClass(
             canvas.lineWidth = "4";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
         };
-        this.hyperCircle3 = tm.app.CircleShape(80, 80, {
+        this.hyperCircle3 = tm.display.CircleShape(80, 80, {
             fillStyle: tm.graphics.RadialGradient(40,40,0,40,40,35).addColorStopList([
                 { offset:0.0, color:"rgba(0,0,50,0.0)" },
                 { offset:0.9, color:"rgba(0,0,50,0.8)" },
@@ -221,7 +222,7 @@ gls2.Player = tm.createClass(
     },
 
     _createHitCircle: function() {
-        this.hitCircle = tm.app.Sprite("tex0", 20, 20).addChildTo(this);
+        this.hitCircle = tm.display.Sprite("tex0", 20, 20).addChildTo(this);
         this.hitCircle.setFrameIndex(5);
         // this.hitCircle.blendMode = "lighter";
         this.hitCircle.update = function(app) {
@@ -246,14 +247,14 @@ gls2.Player = tm.createClass(
             var angle = kb.getKeyAngle();
             if (angle !== null) {
                 var m = KEYBOARD_MOVE[angle];
-                this.x += m.x * this.speed * (this.fireLaser ? 0.75 : 1);
-                this.y += m.y * this.speed * (this.fireLaser ? 0.75 : 1);
+                this.x += m.x * this.speed * (this.fireLaser ? 0.5 : 1);
+                this.y += m.y * this.speed * (this.fireLaser ? 0.5 : 1);
             }
             this.x = gls2.math.clamp(this.x, 15, SC_W-15);
             this.y = gls2.math.clamp(this.y, 15, SC_H-15);
 
-            var pressC = kb.getKey("c");
-            var pressZ = kb.getKey("z");
+            var pressC = kb.getKey("c") && this.attackable;
+            var pressZ = kb.getKey("z") && this.attackable;
 
             if (pressC) {
                 this.pressTimeC += 1;
@@ -274,7 +275,7 @@ gls2.Player = tm.createClass(
             this.laser.y = this.y - 40;
 
             // スペシャルウェポン
-            if (kb.getKeyDown("x")) {
+            if (kb.getKeyDown("x") && this.attackable) {
                 if (this.gameScene.hyperLevel > 0 && !this.gameScene.isHyperMode) {
                     // ハイパー
                     this.gameScene.startHyperMode();
@@ -282,10 +283,13 @@ gls2.Player = tm.createClass(
                 } else if (!this.gameScene.isBombActive && this.gameScene.bomb > 0) {
                     // ボム
                     this.hyperRank = gls2.math.clamp(this.hyperRank - 2, 0, 1);
-                    bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(bulletml.Walker.globalScope["$rank"]-0.02, 0, 1);
+                    this.gameScene.addRank(-0.02);
                     gls2.Bomb(this, this.gameScene)
                         .setPosition(gls2.math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);
+                    gls2.core.putAchevement("bomb1");
+
+                    this.gameScene.bombCountByStage[this.gameScene.stageNumber] += 1;
                 }
             }
 
@@ -357,18 +361,22 @@ gls2.Player = tm.createClass(
             }
         } else if (this.type === 1) {
             var p = this.bitPivot;
-            if (this.controllable && kb.getKey("left")) {
-                p.rotation = Math.max(p.rotation - 3, -50);
-            } else if (this.controllable && kb.getKey("right")) {
-                p.rotation = Math.min(p.rotation + 3,  50);
-            } else {
-                if (3 < p.rotation) {
-                    p.rotation -= 3;
-                } else if (p.rotation < -3) {
-                    p.rotation += 3;
+            if (!this.fireLaser) {
+                if (this.controllable && kb.getKey("left")) {
+                    p.rotation = Math.max(p.rotation - 3, -50);
+                } else if (this.controllable && kb.getKey("right")) {
+                    p.rotation = Math.min(p.rotation + 3,  50);
                 } else {
-                    p.rotation = 0;
+                    if (3 < p.rotation) {
+                        p.rotation -= 3;
+                    } else if (p.rotation < -3) {
+                        p.rotation += 3;
+                    } else {
+                        p.rotation = 0;
+                    }
                 }
+            } else {
+                p.rotation = 0;
             }
         }
     },
@@ -399,12 +407,12 @@ gls2.Player = tm.createClass(
 
 /**
  * @class
- * @extends {tm.app.AnimationSprite}
+ * @extends {tm.display.AnimationSprite}
  */
 gls2.Bit = tm.createClass(
 /** @lends {gls2.Bit.prototype} */
 {
-    superClass: tm.app.AnimationSprite,
+    superClass: tm.display.AnimationSprite,
     bit: null,
     player: null,
 
@@ -412,20 +420,20 @@ gls2.Bit = tm.createClass(
      * @constructs
      */
     init: function(player, bit) {
-        this.superInit(tm.app.SpriteSheet({
-            image: "tex1",
+        this.superInit(tm.asset.SpriteSheet({
+            image: "tex_bit",
             frame: {
                 width: 32,
                 height: 32
             },
             animations: {
                 "anim0": {
-                    frames: [ 8+16*8, 9+16*8, 10+16*8, 8+16*9, 9+16*9, 10+16*9, ],
+                    frames: [ 0, 1, 2, 3, 4, 5, ],
                     next: "anim0",
                     frequency: 3
                 },
                 "anim1": {
-                    frames: [ 9+16*8, 10+16*8, 8+16*9, 9+16*9, 10+16*9, 8+16*8, ].reverse(),
+                    frames: [ 1, 2, 3, 4, 5, 0, ].reverse(),
                     next: "anim1",
                     frequency: 3
                 }
@@ -456,7 +464,7 @@ gls2.Bit = tm.createClass(
             var g = this.parent.localToGlobal(this);
 
             // バックファイア
-            if (this.bit.v && core.frame%2 === 0) backfireParticle.clone(40).setPosition(g.x, g.y).addChildTo(core.gameScene);
+            if (this.bit.v && core.frame%2 === 0) backfireParticle.clone(40).setPosition(g.x, g.y).addChildTo(this.player.gameScene);
 
             // ショット
             if (this.player.fireShot) {

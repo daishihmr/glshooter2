@@ -22,8 +22,8 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
-	{	mov ( 2318.93 -0.356983 2742.85 ) eye deg( 45 ) }
+	light pal( rgb ( 1.00 1.00 1.00 ) -69 -12 -70 )
+	{	mov ( 2420.63 -1977.23 1176.43 ) eye deg( 45 ) }
 	{	mov ( -402.334 0.0191922 531.747 ) target }
 	{	mov ( -350 -600 300 ) rotz ( 70 ) roty ( 30 ) rotx ( 100 )
 		scal ( 1.7 1.3 1.7 ) obj OT09 /* "OT\OT09.suf" atr "noname" */

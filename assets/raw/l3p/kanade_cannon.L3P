@@ -1,0 +1,59 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	G1\G107.suf
+	P1\P101.suf
+	mecha\planeetc\HCEG02.suf
+	mecha\planeetc\PLEG03.suf
+	mecha\sfnozzle\EG13.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000  31.384 -48.763 )
+	DisplayScale: 0.125000000001
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr "#01" { col ( 1.000 ) amb ( 1.000 ) dif ( 0.000 ) opt ( emittion 0.050 5.000 ) }
+	1: atr "#02" { col ( 1.000 ) amb ( 1.000 ) dif ( 0.000 ) tra ( 1.000 ) }
+	2: atr noname { col ( rgb ( 0.920 0.900 0.920 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -50  50 -70 )
+	{	mov ( -50 -879.724 2307.28 ) eye deg( 45 ) }
+	{	mov ( -50 0 0 ) target }
+	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.7 1 1 ) obj G107 /* "G1\G107.suf" atr "noname" */
+	}
+	{	mov ( 39.8561 -316.784 169.437 ) rotz ( -15.4308 ) roty ( 1.75622 ) rotx ( 57.9496 )
+		scal ( 0.72712 0.489764 1.38153 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( 39.8561 -316.784 137.263 ) rotz ( -15.4308 ) roty ( 1.75622 ) rotx ( 107.61 )
+		scal ( 0.72712 0.489764 1.38153 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( 39.8561 316.784 169.437 ) rotz ( 15.4308 ) roty ( 1.75622 ) rotx ( -57.9496 )
+		scal ( 0.72712 -0.489764 1.38153 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( 39.8561 316.784 137.263 ) rotz ( 15.4308 ) roty ( 1.75622 ) rotx ( -107.61 )
+		scal ( 0.72712 -0.489764 1.38153 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -29.196 0 260.309 ) rotz ( 0 ) roty ( -82.7315 ) rotx ( 180 )
+		scal ( 0.2 0.78125 2.1 ) obj HCEG02 /* "mecha\planeetc\HCEG02.suf" atr "noname" */
+	}
+	{	mov ( 492.017 -201.472 390.101 ) rotz ( 0 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.417362 1.21383 0.933719 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( 492.017 201.472 390.101 ) rotz ( 0 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.417362 -1.21383 0.933719 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( -700 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 1 1 ) obj P101 /* "P1\P101.suf" atr "#02" */
+	}
+}

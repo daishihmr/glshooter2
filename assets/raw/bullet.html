@@ -12,7 +12,7 @@ tm.main(function() {
     });
 
     var SZ = 20;
-    canvas.resize(SZ*8, SZ); //.fitWindow();
+    canvas.resize(SZ*10, SZ); //.fitWindow();
 
     // canvas.globalCompositeOperation = "lighter";
 
@@ -117,6 +117,34 @@ tm.main(function() {
             { offset:1.0, color:"rgba(  0,255,  0,0.0)"},
         ]).toStyle())
         .fillCircle(cx, cy, 8);
+
+    // 6
+    i = 6;
+    var x = SZ*i;
+    var y = 0;
+    var cx = SZ*i + SZ*0.5;
+    var cy = SZ*0.5;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 10).addColorStopList([
+            { offset:0.0, color:"rgba(  0,  0,255,0.0)"},
+            { offset:0.5, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(  0,  0,255,0.0)"},
+        ]).toStyle())
+        .fillCircle(cx, cy, 10);
+
+    // 7
+    i = 7;
+    var x = SZ*i;
+    var y = 0;
+    var cx = SZ*i + SZ*0.5;
+    var cy = SZ*0.5;
+    canvas
+        .setFillStyle(tm.graphics.RadialGradient(cx, cy, 0, cx, cy, 10).addColorStopList([
+            { offset:0.0, color:"rgba(255,  0,  0,0.0)"},
+            { offset:0.5, color:"rgba(255,255,255,1.0)"},
+            { offset:1.0, color:"rgba(255,  0,  0,0.0)"},
+        ]).toStyle())
+        .fillCircle(cx, cy, 10);
 
 });
 </script>

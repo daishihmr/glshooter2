@@ -1,0 +1,52 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	SL\SL15.suf
+	mecha\sfnozzle\EG09.suf
+	mecha\sfnozzle\NOZ02.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000   0.000 )
+	DisplayScale: 0.125000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -3 -70 )
+	{	mov ( 1243.21 -1231.31 1360.18 ) eye deg( 45 ) }
+	{	mov ( -145.449 13.3485 -117.865 ) target }
+	{	mov ( 0 -300 150 ) rotz ( 0 ) roty ( 0 ) rotx ( -60 )
+		scal ( 1 0.5 1 ) obj EG09 /* "mecha\sfnozzle\EG09.suf" atr "noname" */
+	}
+	{	mov ( 0 300 150 ) rotz ( 0 ) roty ( 0 ) rotx ( 60 )
+		scal ( 1 -0.5 1 ) obj EG09 /* "mecha\sfnozzle\EG09.suf" atr "noname" */
+	}
+	{	mov ( 0 -300 -150 ) rotz ( 0 ) roty ( 0 ) rotx ( 60 )
+		scal ( 1 0.5 -1 ) obj EG09 /* "mecha\sfnozzle\EG09.suf" atr "noname" */
+	}
+	{	mov ( 0 300 -150 ) rotz ( 0 ) roty ( 0 ) rotx ( -60 )
+		scal ( 1 -0.5 -1 ) obj EG09 /* "mecha\sfnozzle\EG09.suf" atr "noname" */
+	}
+	{	mov ( -450 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.4 2.3 1.8 ) obj Noz02 /* "mecha\sfnozzle\NOZ02.suf" atr "noname" */
+	}
+	{	mov ( -50 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( -1.4 2.3 1.8 ) obj Noz02 /* "mecha\sfnozzle\NOZ02.suf" atr "noname" */
+	}
+	{	mov ( 0 0 100 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 0.3 0.8 ) obj SL15 /* "SL\SL15.suf" atr "noname" */
+	}
+	{	mov ( 0 0 -100 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 0.3 -0.8 ) obj SL15 /* "SL\SL15.suf" atr "noname" */
+	}
+}

@@ -124,15 +124,11 @@ gls2.Stage2 = tm.createClass(
         this.seq.add(  1, "mai", true);
 
         this.seq.add(300, "heri2-left");
-        for (var i = 0; i < 6; i++) {
+        for (var i = 0; i < 12; i++) {
             this.seq.add( 30, "heri2-center");
             this.seq.add( 30, "heri2-right");
             this.seq.add( 30, "heri2-center");
             this.seq.add( 30, "heri2-left");
-            this.seq.add( 30, "heri1-center2");
-            this.seq.add( 30, "heri1-right2");
-            this.seq.add( 30, "heri1-center2");
-            this.seq.add( 30, "heri1-left2");
         }
 
         this.seq.add(  1, function() {
@@ -151,17 +147,33 @@ gls2.Stage2 = tm.createClass(
         this.seq.add(120, "itsuki-2");
         this.seq.add(  1, "komachi2-0");
 
-        this.seq.add(300, "tsubomi-0");
+        this.seq.add(380, "tsubomi-0");
         this.seq.add(  1, "komachi2-1");
 
-        this.seq.add(300, "itsuki-0");
-        this.seq.add(  1, "itsuki-2");
+        this.seq.add(380, "itsuki-1");
 
-        this.seq.add(300, "makoto-4");
+        this.seq.add(380, "makoto-4");
         this.seq.add(  1, "komachi2-0");
 
-        this.seq.add(300, "makoto-7");
-        this.seq.add( 90, "makoto-1");
+        this.seq.add(380, "makoto-1");
+
+        this.seq.add(580, "erika");
+
+        this.seq.add(520, function() {
+            this.alartWarning(function() {
+                gls2.playBgm("bgmBoss", true);
+            });
+        });
+
+        this.seq.add(300, function() {
+            this.gameScene.ground.tweener
+                .clear()
+                .to({
+                    speed: 5.0,
+                }, 5000, "easeInOutQuad");
+        });
+
+        this.seq.add(300, "hyuga");
     },
 
     setupBackground: function() {

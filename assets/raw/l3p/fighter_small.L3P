@@ -1,0 +1,54 @@
+/*							Parts Assembler
+                                  Version 2.04.051226(:
+Parts: 
+	CP\CP08.suf
+	SD\SD12.suf
+	armor\armor01.suf
+	robody\robody02.suf
+	roetc\roetc03.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000   0.000 )
+	DisplayScale: 0.088388347648
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 10
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -68 -18 -70 )
+	{	mov ( 2602.73 -1585.37 3532.18 ) eye deg( 45 ) }
+	{	mov ( -132.369 0.310602 9.31898 ) target }
+	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( -180 )
+		scal ( 1.5 1 1 ) obj robody02 /* "robody\robody02.suf" atr "noname" */
+	}
+	{	mov ( 35.6569 0 182.024 ) rotz ( 0 ) roty ( 9.80488 ) rotx ( 0 )
+		scal ( 1.3 2.59448 1.95 ) obj CP08 /* "CP\CP08.suf" atr "noname" */
+	}
+	{	mov ( 66.3534 289.777 105.054 ) rotz ( 180 ) roty ( -5 ) rotx ( -99.4198 )
+		scal ( 2.25 1.4655 1.4655 ) obj roetc03 /* "roetc\roetc03.suf" atr "noname" */
+	}
+	{	mov ( 66.3534 -289.777 105.054 ) rotz ( -180 ) roty ( -5 ) rotx ( 99.4198 )
+		scal ( 2.25 -1.4655 1.4655 ) obj roetc03 /* "roetc\roetc03.suf" atr "noname" */
+	}
+	{	mov ( -630.739 398.808 175.716 ) rotz ( 103.646 ) roty ( 72.2303 ) rotx ( -144.958 )
+		scal ( 0.475215 1 1 ) obj armor01 /* "armor\armor01.suf" atr "noname" */
+	}
+	{	mov ( -630.739 -398.808 175.716 ) rotz ( -103.646 ) roty ( 72.2303 ) rotx ( 144.958 )
+		scal ( 0.475215 -1 1 ) obj armor01 /* "armor\armor01.suf" atr "noname" */
+	}
+	{	mov ( -350 -540 170.059 ) rotz ( 165 ) roty ( -5 ) rotx ( -180 )
+		scal ( 1 2.9 1 ) obj SD12 /* "SD\SD12.suf" atr "noname" */
+	}
+	{	mov ( -350 540 170.059 ) rotz ( -165 ) roty ( -5 ) rotx ( 180 )
+		scal ( 1 -2.9 1 ) obj SD12 /* "SD\SD12.suf" atr "noname" */
+	}
+}

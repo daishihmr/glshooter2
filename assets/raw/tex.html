@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset=UTF-8>
+</head>
+<body>
+<div>
+<ul>
+    <li>
+        キャンバスのサイズ<br>
+        width<input type="number" id="canvasWidth" class="canvasSize" value="256"><br>
+        height<input type="number" id="canvasHeight" class="canvasSize" value="256"><br>
+    </li>
+    <li>
+        移動グリッドサイズ
+        <input type="number" id="moveGridSize" value="32">
+    </li>
+</ul>
+</div>
+
+<div>↓画像ファイルをドラッグ&amp;ドロップしよう！ 画像はカーソルキーで移動できます</div>
+<canvas id="app"></canvas>
+<div>
+<button id="ok">save</button>
+<button id="del">delete</button>
+<button id="clear">clear</button>
+</div>
+
+<script src="../../libs/tmlib.js"></script>
+<script>
+var app;
+tm.main(function() {
+
+    app = tm.display.CanvasApp("#app");
+    app.background = "black";
+    app.resize(256, 256);
+    app.run();
+
+    app.focus = null;
+
+    var moveGridSize = tm.dom.Element("#moveGridSize");
+
+    var scene = app.currentScene;
+    scene.update = function(app) {
+        var kb = app.keyboard;
+        if (app.focus) {
+            var g = ~~moveGridSize.value;
+            if (kb.getKeyDown("up")) {
+                app.focus.y -= g;
+            } else if (kb.getKeyDown("down")) {
+                app.focus.y += g;
+            }
+            if (kb.getKeyDown("left")) {
+                app.focus.x -= g;
+            } else if (kb.getKeyDown("right")) {
+                app.focus.x += g;
+            }
+        }
+    };
+
+    tm.dom.Element("#app").event
+        .add("dragenter", function(e) { return false; })
+        .add("dragover", function(e) { return false; })
+        .add("drop", function(e) {
+
+            try {
+
+                for (var i = 0; i < e.dataTransfer.files.length; i++) {
+                    var file = e.dataTransfer.files[i];
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        console.dir(e);
+                        var tex = tm.asset.Texture(e.target.result);
+                        tex.onload = function() {
+                            var newTex = Tex(this).addChildTo(scene);
+                            app.focus = newTex;
+                        };
+                    };
+                    reader.readAsDataURL(file);
+                };
+
+            } catch(ex) {
+                console.error(ex);
+            }
+
+            return false;
+        });
+
+    tm.dom.Element("#ok").event.click(function() {
+        app.focus = null;
+        app.canvas.clear();
+        app.background = "transparent";
+        scene.tweener.clear().wait(200).call(function() {
+            app.canvas.saveAsImage();
+            app.background = "black";
+        });
+    });
+
+    tm.dom.Element("#del").event.click(function() {
+        if (app.focus) app.focus.remove();
+    });
+
+    tm.dom.Element("#clear").event.click(function() {
+        var c = scene.children.slice();
+        c.forEach(function(elm) {
+            elm.remove();
+        });
+    });
+
+    tm.dom.ElementList(".canvasSize").forEach(function(element) {
+        element.event.add("change", function() {
+            var w = ~~tm.dom.Element("#canvasWidth").value;
+            var h = ~~tm.dom.Element("#canvasHeight").value;
+            app.resize(w, h);
+        });
+    });
+});
+
+tm.define("Tex", {
+    superClass: "tm.display.Sprite",
+
+    init: function(sprite) {
+        this.superInit(sprite);
+        this.origin.set(0, 0);
+
+        this.border = tm.display.RectangleShape(this.width, this.height, {
+            fillStyle: "transparent",
+            strokeStyle: "rgba(255, 255, 255, 0.5)",
+            lineWidth: 2
+        });
+        this.border.origin.set(0, 0);
+        this.border.addChildTo(this);
+
+        this.boundingType = "rect";
+
+        this.setInteractive(true);
+    },
+
+    update: function(app) {
+        this.border.visible = app.focus === this;
+    },
+
+    onpointingstart: function() {
+        app.focus = this;
+    }
+
+});
+
+</script>
+</body>
+</html>

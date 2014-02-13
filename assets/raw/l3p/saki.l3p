@@ -1,0 +1,148 @@
+/*							Parts Assembler
+                                  Version 2.04.051226(:
+Parts: 
+	G1\G102.suf
+	armor\armor16.suf
+	basic\ball\ball15.suf
+	basic\plane\plane15.suf
+	roarm\roarm14.suf
+	roetc\roetc04.suf
+	weapon\weapon04.suf
+	weapon\weapon07.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: ( -18.507   0.000 -73.838 )
+	DisplayScale: 0.176776695297
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 100
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr black { col ( 0.000 ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
+	1: atr body { col ( rgb ( 0.750 0.130 0.460 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
+	2: atr light { col ( rgb ( 1.000 0.700 0.150 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
+	3: atr purple { col ( rgb ( 0.620 0.100 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
+	4: atr red { col ( rgb ( 0.900 0.100 0.150 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) }
+	5: atr white { col ( 0.720 ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) }
+	6: atr white2 { col ( rgb ( 0.410 0.390 0.390 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) }
+	7: atr yellow { col ( rgb ( 0.870 0.770 0.100 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
+	{	mov ( 1993.46 0 1386.17 ) eye deg( 45 ) }
+	{	mov ( 76.8132 0 330.177 ) target }
+	{	mov ( 0 0 440 ) rotz ( 0 ) roty ( 0 ) rotx ( 180 )
+		scal ( 0.65 1 0.6 ) obj ball15 /* "basic\ball\ball15.suf" atr "body" */
+	}
+	{	mov ( 0 0 418 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.999998 1.47368 1.68421 ) obj weapon07 /* "weapon\weapon07.suf" atr "yellow" */
+	}
+	{	mov ( 69.4936 0 404.612 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.155187 2.20232 1.2616 ) obj weapon04 /* "weapon\weapon04.suf" atr "white2" */
+	}
+	{	mov ( 250.506 0 404.612 ) rotz ( 0 ) roty ( 90 ) rotx ( 0 )
+		scal ( -0.155187 2.20232 1.2616 ) obj weapon04 /* "weapon\weapon04.suf" atr "white" */
+	}
+	{	mov ( 160 150.844 404.612 ) rotz ( 0 ) roty ( 90 ) rotx ( 0 )
+		scal ( -0.129322 1.71962 0.99557 ) obj weapon04 /* "weapon\weapon04.suf" atr "white2" */
+	}
+	{	mov ( 160 -150.844 404.612 ) rotz ( 0 ) roty ( 90 ) rotx ( 0 )
+		scal ( -0.129322 -1.71962 0.99557 ) obj weapon04 /* "weapon\weapon04.suf" atr "white2" */
+	}
+	{	mov ( -69.4936 0 404.612 ) rotz ( 0 ) roty ( 90 ) rotx ( 0 )
+		scal ( -0.155187 2.20232 1.2616 ) obj weapon04 /* "weapon\weapon04.suf" atr "white" */
+	}
+	{	mov ( -250.506 0 404.612 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.155187 2.20232 1.2616 ) obj weapon04 /* "weapon\weapon04.suf" atr "white2" */
+	}
+	{	mov ( -160 150.844 404.612 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.129322 1.71962 0.99557 ) obj weapon04 /* "weapon\weapon04.suf" atr "white" */
+	}
+	{	mov ( -160 -150.844 404.612 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.129322 -1.71962 0.99557 ) obj weapon04 /* "weapon\weapon04.suf" atr "white2" */
+	}
+	{	mov ( -90.5064 340 404.612 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.155187 2.20232 1.2616 ) obj weapon04 /* "weapon\weapon04.suf" atr "white" */
+	}
+	{	mov ( 90.5064 340 404.612 ) rotz ( 0 ) roty ( 90 ) rotx ( 0 )
+		scal ( -0.155187 2.20232 1.2616 ) obj weapon04 /* "weapon\weapon04.suf" atr "white" */
+	}
+	{	mov ( 0 189.156 404.612 ) rotz ( 0 ) roty ( 90 ) rotx ( 0 )
+		scal ( -0.129322 -1.71962 0.99557 ) obj weapon04 /* "weapon\weapon04.suf" atr "white2" */
+	}
+	{	mov ( -90.5064 -340 404.612 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.155187 -2.20232 1.2616 ) obj weapon04 /* "weapon\weapon04.suf" atr "white2" */
+	}
+	{	mov ( 90.5064 -340 404.612 ) rotz ( 0 ) roty ( 90 ) rotx ( 0 )
+		scal ( -0.155187 -2.20232 1.2616 ) obj weapon04 /* "weapon\weapon04.suf" atr "white" */
+	}
+	{	mov ( 0 -189.156 404.612 ) rotz ( 0 ) roty ( 90 ) rotx ( 0 )
+		scal ( -0.129322 1.71962 0.99557 ) obj weapon04 /* "weapon\weapon04.suf" atr "white" */
+	}
+	{	mov ( 0 0 440 ) rotz ( 0 ) roty ( 90 ) rotx ( 0 )
+		scal ( 1 0.982986 0.606934 ) obj plane15 /* "basic\plane\plane15.suf" atr "black" */
+	}
+	{	mov ( 16 -124.154 294.274 ) rotz ( -90 ) roty ( 15 ) rotx ( 0 )
+		scal ( 0.948047 -1.08 0.410855 ) obj armor16 /* "armor\armor16.suf" atr "purple" */
+	}
+	{	mov ( 16 112 397.6 ) rotz ( 90 ) roty ( -25 ) rotx ( 0 )
+		scal ( 0.948047 1.08 0.410855 ) obj armor16 /* "armor\armor16.suf" atr "body" */
+	}
+	{	mov ( 16 124.154 294.274 ) rotz ( 90 ) roty ( 15 ) rotx ( 0 )
+		scal ( 0.948047 1.08 0.410855 ) obj armor16 /* "armor\armor16.suf" atr "purple" */
+	}
+	{	mov ( 16 -112 397.6 ) rotz ( -90 ) roty ( -25 ) rotx ( 0 )
+		scal ( 0.948047 -1.08 0.410855 ) obj armor16 /* "armor\armor16.suf" atr "body" */
+	}
+	{	mov ( 472 -112 432.753 ) rotz ( -75.2389 ) roty ( 10.7198 ) rotx ( 3.15395 )
+		scal ( 0.84 0.24 0.64 ) obj roetc04 /* "roetc\roetc04.suf" atr "red" */
+	}
+	{	mov ( 472 112 432.753 ) rotz ( 75.2389 ) roty ( 10.7198 ) rotx ( -3.15395 )
+		scal ( 0.84 -0.24 0.64 ) obj roetc04 /* "roetc\roetc04.suf" atr "red" */
+	}
+	{	mov ( 520.678 -8.90797 393.447 ) rotz ( 89.6032 ) roty ( 18.7082 ) rotx ( -0.102361 )
+		scal ( 0.312 0.312 0.1716 ) obj roarm14 /* "roarm\roarm14.suf" atr "yellow" */
+	}
+	{	mov ( 520.853 21.0387 402.2 ) rotz ( -90.2927 ) roty ( 36.2917 ) rotx ( 0.120287 )
+		scal ( 0.24 -0.312 0.2 ) obj roarm14 /* "roarm\roarm14.suf" atr "yellow" */
+	}
+	{	mov ( 90 160 436 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.5 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+	{	mov ( 0 310 380 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.45 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "white" */
+	}
+	{	mov ( 80 -160 380 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.85 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+	{	mov ( -170 -40 390 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.6 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+	{	mov ( 0 -320 400 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.508721 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+	{	mov ( 240 160 410 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.508721 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+	{	mov ( 240 -170 400 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.75 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+	{	mov ( 180 280 410 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.75 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+	{	mov ( 0 440 410 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.75 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+	{	mov ( 0 -440 420 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.75 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+	{	mov ( -240 160 430 ) rotz ( 0 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.4 0.194017 0.194017 ) obj G102 /* "G1\G102.suf" atr "light" */
+	}
+}

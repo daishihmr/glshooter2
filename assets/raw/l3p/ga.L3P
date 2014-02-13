@@ -24,9 +24,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
-	{	mov ( 3496.18 -0.629218 4031.31 ) eye deg( 45 ) }
-	{	mov ( -375.639 -0.0939953 -134.498 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -9 -70 )
+	{	mov ( 3009.42 -2877.2 2520.29 ) eye deg( 45 ) }
+	{	mov ( -451.267 -268.63 -304.254 ) target }
 	{	mov ( -300 1150 0 ) rotz ( 110 ) roty ( 0 ) rotx ( -90 )
 		scal ( 1 1 1.7 ) obj S209 /* "S2\S209.suf" atr "noname" */
 	}
@@ -45,10 +45,10 @@ fram
 	{	mov ( -450 -350 0 ) rotz ( 0 ) roty ( 0 ) rotx ( -90 )
 		scal ( 1.4 -1.1 1 ) obj rb03 /* "RB\RB03.suf" atr "noname" */
 	}
-	{	mov ( 600 1050 -345 ) rotz ( -90 ) roty ( -90 ) rotx ( -90 )
+	{	mov ( 600 1050 -345 ) rotz ( -180 ) roty ( -90 ) rotx ( 0 )
 		scal ( 1 0.5 1.5 ) obj rb15 /* "RB\RB15.suf" atr "noname" */
 	}
-	{	mov ( 600 -1050 -345 ) rotz ( 90 ) roty ( -90 ) rotx ( 90 )
+	{	mov ( 600 -1050 -345 ) rotz ( 180 ) roty ( -90 ) rotx ( 0 )
 		scal ( 1 -0.5 1.5 ) obj rb15 /* "RB\RB15.suf" atr "noname" */
 	}
 	{	mov ( -400 0 150 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )

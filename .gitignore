@@ -1,2 +1,7 @@
 **/Thumbs.db
 copy-dependencies.bat
+.DS-Store
+*.sln
+*.suo
+*.tmp
+package/

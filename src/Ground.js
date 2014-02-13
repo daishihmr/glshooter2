@@ -4,14 +4,14 @@
  */
 (function() {
 
-/** @const */
-var C = 16 * 2;
-/** @const */
-var L = C/2*Math.sqrt(3);
-/** @const */
-var C2 = C*0.8;
-/** @const */
-var L2 = C2/2*Math.sqrt(3);
+/**
+ * レイヤ数
+ * @const
+ */
+var layerCount = 5;
+var layerScale = Array.range(0, layerCount).map(function(n) {
+    return Math.pow(0.9, n+1);
+});
 
 /**
  * @class
@@ -24,6 +24,15 @@ gls2.Ground = tm.createClass(
     /** @type {gls2.GroundElement} */
     gElement: null,
 
+    /** 
+     * 長辺の長さ
+     */
+    lengthH: null,
+    /**
+     * 短辺の長さ
+     */
+    lengthV: null,
+
     init: function() {
         this.superInit("#background");
         this.resize(SC_W, SC_H).fitWindow();
@@ -35,29 +44,34 @@ gls2.Ground = tm.createClass(
         }.bind(this);
 
         this.blendMode = "lighter";
+
+        this.lengthH = [];
+        this.lengthV = [];
+        for (var i = 0; i < layerCount; i++) {
+            this.lengthH[i] = 40 * layerScale[i];
+            this.lengthV[i] = this.lengthH[i]/2*Math.sqrt(3);
+        }
     },
 
     update: function(frame) {
+        // var beginProcessTime = new Date().getTime();
+
         this.gElement.dx = Math.cos(this.gElement.direction) * this.gElement.speed;
         this.gElement.dy = Math.sin(this.gElement.direction) * this.gElement.speed;
 
-        this.gElement.gx += this.gElement.dx;
-        while (C*3 < this.gElement.gx) this.gElement.gx -= C*3;
-        while (this.gElement.gx < -C*3) this.gElement.gx += C*3;
+        for (var i = 0; i < layerCount; i++) {
+            this.gElement.gx[i] += this.gElement.dx * Math.pow(0.8, i);
+            while (this.lengthH[i]*3 < this.gElement.gx[i]) this.gElement.gx[i] -= this.lengthH[i]*3;
+            while (this.gElement.gx[i] < -this.lengthH[i]*3) this.gElement.gx[i] += this.lengthH[i]*3;
 
-        this.gElement.gy += this.gElement.dy;
-        while (L*2 < this.gElement.gy) this.gElement.gy -= L*2;
-        while (this.gElement.gy < -L*2) this.gElement.gy += L*2;
-
-        this.gElement.gx2 += this.gElement.dx*0.8;
-        while (C2*3 < this.gElement.gx2) this.gElement.gx2 -= C2*3;
-        while (this.gElement.gx2 < -C2*3) this.gElement.gx2 += C2*3;
-
-        this.gElement.gy2 += this.gElement.dy*0.8;
-        while (L2*2 < this.gElement.gy2) this.gElement.gy2 -= L2*2;
-        while (this.gElement.gy2 < -L2*2) this.gElement.gy2 += L2*2;
+            this.gElement.gy[i] += this.gElement.dy * Math.pow(0.8, i);
+            while (this.lengthV[i]*2 < this.gElement.gy[i]) this.gElement.gy[i] -= this.lengthV[i]*2;
+            while (this.gElement.gy[i] < -this.lengthV[i]*2) this.gElement.gy[i] += this.lengthV[i]*2;
+        }
 
         if (frame % 2 === 0) this.draw();
+
+        // console.log("Ground update " + (new Date().getTime() - beginProcessTime));
     },
 
     draw: function() {
@@ -67,43 +81,26 @@ gls2.Ground = tm.createClass(
             this.clear();
         }
 
-        this.lineWidth = 0.3;
-        this.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
-            .addColorStopList([
-                { offset: 0.0, color: "rgba(255,255,255,1.0)" },
-                { offset: 1.0, color: "rgba(255,255,255,0.5)" },
-            ])
-            .toStyle();
-        this.beginPath();
-        var yy = 0;
-        for (var x = this.gElement.gx-C*3; x < SC_W+C*3; x += C*1.5) {
-            yy = (yy === 0) ? L : 0;
-            for (var y = this.gElement.gy-L*2 + yy; y < SC_H+L*2; y += L*2) {
-                this.line(x, y, x + C, y);
-                this.line(x, y, x - C/2, y + L);
-                this.line(x, y, x - C/2, y - L);
+        for (var i = 0; i < layerCount; i++) {
+            this.lineWidth = 0.3 * Math.pow(0.8, i);
+            this.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
+                .addColorStopList([
+                    { offset: 0.0, color: "rgba(255,255,255," + (0.8 * layerScale[i]) + ")" },
+                    { offset: 1.0, color: "rgba(255,255,255," + (0.6 * layerScale[i]) + ")" },
+                ])
+                .toStyle();
+            this.beginPath();
+            var yy = 0;
+            for (var x = this.gElement.gx[i]-this.lengthH[i]*3; x < SC_W+this.lengthH[i]*3; x += this.lengthH[i]*1.5) {
+                yy = (yy === 0) ? this.lengthV[i] : 0;
+                for (var y = this.gElement.gy[i]-this.lengthV[i]*2 + yy; y < SC_H+this.lengthV[i]*2; y += this.lengthV[i]*2) {
+                    this.line(x, y, x + this.lengthH[i], y);
+                    this.line(x, y, x - this.lengthH[i]/2, y + this.lengthV[i]);
+                    this.line(x, y, x - this.lengthH[i]/2, y - this.lengthV[i]);
+                }
             }
+            this.stroke();
         }
-        this.stroke();
-
-        this.lineWidth = 0.2;
-        this.strokeStyle = tm.graphics.LinearGradient(0, 0, 0, SC_H)
-            .addColorStopList([
-                { offset: 0.0, color: "rgba(255,255,255,0.6)" },
-                { offset: 1.0, color: "rgba(255,255,255,0.3)" },
-            ])
-            .toStyle();
-        this.beginPath();
-        yy = 0;
-        for (var x = this.gElement.gx2-C2*3; x < SC_W+C2*3; x += C2*1.5) {
-            yy = (yy === 0) ? L2 : 0;
-            for (var y = this.gElement.gy2-L2*2 + yy; y < SC_H+L2*2; y += L2*2) {
-                this.line(x, y, x + C2, y);
-                this.line(x, y, x - C2/2, y + L2);
-                this.line(x, y, x - C2/2, y - L2);
-            }
-        }
-        this.stroke();
     },
 
 })
@@ -119,10 +116,17 @@ gls2.GroundElement = tm.createClass(
 
     gx: 0,
     gy: 0,
-    gx2: 0,
-    gy2: 0,
+
+    /**
+     * スクロール方向
+     */
     direction: 0,
+
+    /**
+     * スクロール速度
+     */
     speed: 0,
+
     dx: 0,
     dy: 0,
 
@@ -131,8 +135,12 @@ gls2.GroundElement = tm.createClass(
     init: function() {
         this.superInit();
 
-        this.gx = this.gy = 0;
-        this.gx2 = this.gy2 = 0;
+        this.gx = [];
+        this.gy = [];
+        for (var i = 0; i < layerCount; i++) {
+            this.gx[i] = SC_W*0.5;
+            this.gy[i] = SC_H*0.5;
+        }
         this.direction = Math.PI * 0.5;
         this.speed = 1;
         this.dx = 0;

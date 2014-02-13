@@ -19,6 +19,8 @@ gls2.ScoreLabel = tm.createClass(
 
     scoreLabelElement: null,
 
+    frame: 0,
+
     init: function(gameScene) {
         this.superInit("#scoreLabel");
 
@@ -35,6 +37,8 @@ gls2.ScoreLabel = tm.createClass(
     },
 
     update: function() {
+        // var beginProcessTime = new Date().getTime();
+
         this.clear();
 
         // ボスHP
@@ -73,7 +77,7 @@ gls2.ScoreLabel = tm.createClass(
         for (var i = 0; i < score.length; i += 4) {
             text += score.substring(i, i+4) + " ";
         }
-        var bonus = (~~(this.gameScene.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+        var bonus = (~~(this.gameScene.comboCount / COMBO_BONUS) + 1);
         this.fillText(text + "x " + bonus, this.scoreLabelElement.gpsOffsetX + SC_W*0.4, 22);
 
         // 残機数
@@ -93,17 +97,39 @@ gls2.ScoreLabel = tm.createClass(
         // コンボ数
         if (0 < ~~this.gameScene.comboCount || DEBUG) {
             this.setText("bold 45px Orbitron", "left", "top");
-            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, -this.scoreLabelElement.gpsOffsetY + 115);
+            this.strokeText(~~this.gameScene.comboCount + " HIT!!", 10, -this.scoreLabelElement.gpsOffsetY*0.5 + 115);
+        }
+
+        // ハイパーレベル
+        if (this.frame % 2 === 0) {
+            if (!this.gameScene.isHyperMode && this.gameScene.hyperLevel > 0) {
+                this.strokeStyle = "rgba(255,255,100,0.5)";
+                this.setText("bold 24px Orbitron", "left", "bottom");
+                this.strokeText("HYPER LV " + this.gameScene.hyperLevel, 5, SC_H-3);
+            } else if (this.gameScene.isHyperMode) {
+                this.strokeStyle = "rgba(255,255,100,0.5)";
+                this.setText("bold 28px Orbitron", "left", "bottom");
+                this.strokeText("HYPER LV " + this.gameScene.currentHyperLevel, 5, SC_H-3);
+            }
         }
 
         // ボム数
         for (var i = 0; i < this.gameScene.bomb; i++) {
             this.drawTexture(tm.asset.AssetManager.get("bombIcon"), SC_W-(i+1)*(20+5) - 20, SC_H-(20+5), 20, 20);
         }
+        if (this.frame % 2 === 0) {
+            if (this.gameScene.isBombMaximum) {
+                this.strokeStyle = "rgba(255,255,255,0.5)";
+                this.setText("bold 28px Orbitron", "right", "bottom");
+                this.strokeText("MAXIMUM", SC_W-20, SC_H-3);
+            }
+        }
 
         this.consoleWindow.update();
         this.consoleWindow.posY = this.scoreLabelElement.gpsOffsetY + 5;
         this.consoleWindow.draw(this);
+
+        this.frame += 1;
 
         // debug
         if (DEBUG) {
@@ -114,6 +140,7 @@ gls2.ScoreLabel = tm.createClass(
             this.fillText("hyper rank " + this.gameScene.hyperRank, SC_W-30, SC_H-50);
         }
 
+        // console.log("ScoreLabel " + (new Date().getTime() - beginProcessTime));
     },
 
 });

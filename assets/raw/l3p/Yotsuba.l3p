@@ -1,0 +1,84 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	BL\BL12.suf
+	JT\JT12.suf
+	JT\JT14.suf
+	P3\P312.suf
+	SD\SD16.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000 -24.042 )
+	DisplayScale: 0.044194173824
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.790 0.870 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -68 -17 -70 )
+	{	mov ( 4419.79 -2651.45 3072.09 ) eye deg( 45 ) }
+	{	mov ( 22.0786 -74.4283 -170.621 ) target }
+	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.3 2.1 1 ) obj JT12 /* "JT\JT12.suf" atr "noname" */
+	}
+	{	mov ( 0 0 309 ) rotz ( 90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 1 1 ) obj BL12 /* "BL\BL12.suf" atr "noname" */
+	}
+	{	mov ( -1200 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.8 1.8 2.2 ) obj JT14 /* "JT\JT14.suf" atr "noname" */
+	}
+	{	mov ( 0 -1100 0 ) rotz ( 90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.8 -1.8 2.2 ) obj JT14 /* "JT\JT14.suf" atr "noname" */
+	}
+	{	mov ( 0 1100 0 ) rotz ( -90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.8 1.8 2.2 ) obj JT14 /* "JT\JT14.suf" atr "noname" */
+	}
+	{	mov ( 1200 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( -1.8 1.8 2.2 ) obj JT14 /* "JT\JT14.suf" atr "noname" */
+	}
+	{	mov ( 0 0 -50 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 3 3.1 1 ) obj SD16 /* "SD\SD16.suf" atr "noname" */
+	}
+	{	mov ( 0 0 -50 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 3.1 -3.1 1 ) obj SD16 /* "SD\SD16.suf" atr "noname" */
+	}
+	{	mov ( 0 -1850 -100 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.5 1.9 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+	{	mov ( -1600 -850 -100 ) rotz ( -70 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.7 1.7 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+	{	mov ( -950 -1650 -100 ) rotz ( -30 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.7 1.8 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+	{	mov ( 1000 -1500 -100 ) rotz ( 40 ) roty ( 0 ) rotx ( 0 )
+		scal ( -2.7 1.8 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+	{	mov ( 1700 -600 -100 ) rotz ( 70 ) roty ( 0 ) rotx ( 0 )
+		scal ( -2.7 1.7 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+	{	mov ( 0 1850 -100 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.5 -1.9 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+	{	mov ( -1600 850 -100 ) rotz ( 70 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.7 -1.7 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+	{	mov ( -950 1650 -100 ) rotz ( 30 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.7 -1.8 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+	{	mov ( 1000 1500 -100 ) rotz ( -40 ) roty ( 0 ) rotx ( 0 )
+		scal ( -2.7 -1.8 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+	{	mov ( 1700 600 -100 ) rotz ( -70 ) roty ( 0 ) rotx ( 0 )
+		scal ( -2.7 -1.7 1 ) obj P312 /* "P3\P312.suf" atr "noname" */
+	}
+}

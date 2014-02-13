@@ -1,0 +1,115 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	SL\SL14.suf
+	W1\W104.suf
+	mecha\sfcar\sfcar01.suf
+	mecha\sfcar\sfcar07.suf
+	mecha\sfcar\sfcar10.suf
+	mecha\sfcar\sfcar15.suf
+	mecha\sfetc\TK11.suf
+	mecha\sfetc\TK12.suf
+	mecha\sfwing\W210.suf
+	roarm\roarm14.suf
+	robody\robody13.suf
+	rohead\rohead01.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (  71.418   0.000   0.000 )
+	DisplayScale: 0.088388347649
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( 1.000 ) amb ( 0.200 ) dif ( 0.800 ) spc ( 0.700 1.000 0.000 ) colormap ( "L3\effect\horizon.png" 0.250 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -6 -70 )
+	{	mov ( 1615.05 -2041.43 2755.14 ) eye deg( 45 ) }
+	{	mov ( -791.825 -66.5171 -293.736 ) target }
+	{	mov ( 23.2689 -252.036 0 ) rotz ( 10 ) roty ( 10 ) rotx ( 60 )
+		scal ( 0.6 0.4 0.5 ) obj sfcar01 /* "mecha\sfcar\sfcar01.suf" atr "noname" */
+	}
+	{	mov ( -159.182 -422.95 0 ) rotz ( 0 ) roty ( 20 ) rotx ( 60 )
+		scal ( 0.6 0.4 0.5 ) obj sfcar01 /* "mecha\sfcar\sfcar01.suf" atr "noname" */
+	}
+	{	mov ( 23.2689 252.036 0 ) rotz ( -10 ) roty ( 10 ) rotx ( -60 )
+		scal ( 0.6 -0.4 0.5 ) obj sfcar01 /* "mecha\sfcar\sfcar01.suf" atr "noname" */
+	}
+	{	mov ( -400 0 -150 ) rotz ( 0 ) roty ( 10 ) rotx ( 0 )
+		scal ( 1.6 1 1 ) obj sfcar15 /* "mecha\sfcar\sfcar15.suf" atr "noname" */
+	}
+	{	mov ( -150 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 0.6 1 ) obj SL14 /* "SL\SL14.suf" atr "noname" */
+	}
+	{	mov ( -600 -200 0 ) rotz ( 0 ) roty ( 0 ) rotx ( -40 )
+		scal ( 1 0.4 2.2 ) obj W104 /* "W1\W104.suf" atr "noname" */
+	}
+	{	mov ( -159.182 422.95 0 ) rotz ( 0 ) roty ( 20 ) rotx ( -60 )
+		scal ( 0.6 -0.4 0.5 ) obj sfcar01 /* "mecha\sfcar\sfcar01.suf" atr "noname" */
+	}
+	{	mov ( -600 200 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 40 )
+		scal ( 1 -0.4 2.2 ) obj W104 /* "W1\W104.suf" atr "noname" */
+	}
+	{	mov ( -950 750 150 ) rotz ( -50 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1.8 0.4 1 ) obj sfcar07 /* "mecha\sfcar\sfcar07.suf" atr "noname" */
+	}
+	{	mov ( -950 -750 150 ) rotz ( 50 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1.8 -0.4 1 ) obj sfcar07 /* "mecha\sfcar\sfcar07.suf" atr "noname" */
+	}
+	{	mov ( -572.627 -1200 150 ) rotz ( -30 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1.8 -0.4 1 ) obj sfcar07 /* "mecha\sfcar\sfcar07.suf" atr "noname" */
+	}
+	{	mov ( -572.627 1200 150 ) rotz ( 30 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1.8 0.4 1 ) obj sfcar07 /* "mecha\sfcar\sfcar07.suf" atr "noname" */
+	}
+	{	mov ( -550 400 -200 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.9 1.7 1 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
+	}
+	{	mov ( -550 -400 -200 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.9 -1.7 1 ) obj sfcar10 /* "mecha\sfcar\sfcar10.suf" atr "noname" */
+	}
+	{	mov ( -1050 -350 -100 ) rotz ( -90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.6 1 0.7 ) obj TK11 /* "mecha\sfetc\TK11.suf" atr "noname" */
+	}
+	{	mov ( -1250 0 -250 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.8 1 1 ) obj TK12 /* "mecha\sfetc\TK12.suf" atr "noname" */
+	}
+	{	mov ( -650 -350 200 ) rotz ( 0 ) roty ( 0 ) rotx ( -30 )
+		scal ( 1 1 1.7 ) obj W210 /* "mecha\sfwing\W210.suf" atr "noname" */
+	}
+	{	mov ( -650 350 200 ) rotz ( 0 ) roty ( 0 ) rotx ( 30 )
+		scal ( 1 -1 1.7 ) obj W210 /* "mecha\sfwing\W210.suf" atr "noname" */
+	}
+	{	mov ( -1150 -550 50 ) rotz ( -90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.6 1 0.7 ) obj TK11 /* "mecha\sfetc\TK11.suf" atr "noname" */
+	}
+	{	mov ( -1050 350 -100 ) rotz ( 90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.6 -1 0.7 ) obj TK11 /* "mecha\sfetc\TK11.suf" atr "noname" */
+	}
+	{	mov ( -1150 550 50 ) rotz ( 90 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.6 -1 0.7 ) obj TK11 /* "mecha\sfetc\TK11.suf" atr "noname" */
+	}
+	{	mov ( -2200 350 -400 ) rotz ( -80 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1 1 1.6 ) obj roarm14 /* "roarm\roarm14.suf" atr "noname" */
+	}
+	{	mov ( -2200 -350 -400 ) rotz ( 80 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1 -1 1.6 ) obj roarm14 /* "roarm\roarm14.suf" atr "noname" */
+	}
+	{	mov ( -1550 -900 -150 ) rotz ( 0 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1.7 0.7 1.2 ) obj robody13 /* "robody\robody13.suf" atr "noname" */
+	}
+	{	mov ( -1550 900 -150 ) rotz ( 0 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1.7 -0.7 1.2 ) obj robody13 /* "robody\robody13.suf" atr "noname" */
+	}
+	{	mov ( -1350 0 200 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.3 1.8 1.1 ) obj rohead01 /* "rohead\rohead01.suf" atr "noname" */
+	}
+}

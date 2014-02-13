@@ -12,6 +12,12 @@ var STATS = false;
 
 /**
  * @define {boolean}
+ *
+ * true時：
+ *   BGMオフ
+ *   右下に隠し情報表示
+ *   hキーでハイパーチャージ
+ *   pキーでスクリーンショットを撮る
  */
 var DEBUG = true;
 
@@ -19,7 +25,7 @@ tm.preload(function() {
     if (STATS) tm.util.ScriptManager.loadStats();
 });
 tm.main(function() {
-    var app = gls2.GlShooter2("#canvas2d");
-    if (STATS) app.enableStats();
-    app.run();
+    gls2.GlShooter2("#canvas2d");
+    if (STATS) gls2.core.enableStats();
+    gls2.core.run();
 });

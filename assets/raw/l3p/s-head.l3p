@@ -7,6 +7,7 @@ Parts:
 	EG\EG13.suf
 	OT\OT09.suf
 	P1\P101.suf
+	P1\P103.suf
 	S1\S109.suf
 	SD\SD01.suf
 	SL\SL14.suf
@@ -14,8 +15,8 @@ Parts:
 	W1\W107.suf
 Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
-	DisplayOffset: (   0.000   0.000  -3.000 )
-	DisplayScale: 0.062500000000
+	DisplayOffset: ( -22.981   0.000   0.000 )
+	DisplayScale: 0.176776695296
 	MeshFlag: 1
 	MeshSpacing: 200
 	ShowStatus: 1
@@ -26,73 +27,91 @@ Info:
 	SelectedOnly: 0
 	DispRelative: 0
 Palette:
-	0: atr "#01" { col ( rgb ( 0.450 0.640 0.920 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) colormap ( "L3\effect\horizon.png" 0.500 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
-	1: atr "#02" { col ( rgb ( 0.970 0.530 0.540 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.150 ) spc ( 0.900 1.500 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
-	2: atr "#03" { col ( 1.000 ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.400 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
-	3: atr "#04" { col ( 1.000 ) amb ( 1.000 ) dif ( 0.000 ) tra ( 1.000 ) spc ( 0.000 45.507 0.000 ) }
-	4: atr "#05" { col ( rgb ( 0.480 0.480 0.520 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) }
-	5: atr "#06" { col ( rgb ( 0.970 0.530 0.540 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.150 ) spc ( 0.900 1.500 0.000 ) colormap ( "L3\effect\horizon.png" 1.000 0.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
+	0: atr "#01" { col ( rgb ( 0.120 0.690 1.000 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.300 ) spc ( 0.900 1.000 0.650 ) colormap ( "L3\effect\horizon.png" 0.710 1.000 ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow noreceivedecal ) }
+	1: atr "#02" { col ( 1.000 ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) opt ( castshadow receiveshadow ) }
+	2: atr "#03" { col ( rgb ( 0.710 0.750 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) opt ( castshadow receiveshadow ) }
+	3: atr "#03k" { col ( rgb ( 0.710 0.750 0.800 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) opt ( castshadow receiveshadow noreceivedecal ) }
+	4: atr "#04" { col ( 1.000 ) amb ( 1.000 ) dif ( 0.000 ) tra ( 1.000 ) spc ( 0.000 45.507 0.000 ) }
+	5: atr "#05" { col ( rgb ( 0.300 0.620 0.950 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.150 ) spc ( 0.900 1.500 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow ) }
+	6: atr "#05k" { col ( rgb ( 0.300 0.620 0.950 ) ) amb ( 0.200 ) dif ( 0.800 ) ref ( 0.150 ) spc ( 0.900 1.500 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) opt ( castshadow receiveshadow noreceivedecal ) }
+	7: atr d { col ( 1.000 ) amb ( 0.200 ) dif ( 0.800 ) spc ( 0.700 1.000 0.000 ) opt ( castdecal 1000 ) }
+	8: atr w { col ( 1.000 ) amb ( 0.200 ) dif ( 0.800 ) spc ( 0.700 1.000 0.000 ) opt ( receiveshadow noreceivedecal ) }
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 )  50  49 -70 )
-	{	mov ( -214.027 -0.000931008 4678.05 ) eye deg( 45 ) }
-	{	mov ( -205.989 -0.000964668 50.7241 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -9 -70 )
+	{	mov ( 2802.65 -2162.91 2563.88 ) eye deg( 45 ) }
+	{	mov ( -129.173 86.7552 -233.974 ) target }
 	{	mov ( -200 -100 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 0.7 1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "#06" */
+		scal ( 0.7 1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "#03" */
 	}
-	{	mov ( -1000 -400 71 ) rotz ( 180 ) roty ( 0 ) rotx ( 0.727644 )
-		scal ( 1.5 -1.5918 5.1 ) obj W107 /* "W1\W107.suf" atr "#02" */
+	{	mov ( -950 -400 50 ) rotz ( 180 ) roty ( 0 ) rotx ( -5.82343 )
+		scal ( 1.8 -1.7 5.1 ) obj W107 /* "W1\W107.suf" atr "#05" */
 	}
-	{	mov ( 200 0 -183 ) rotz ( 0 ) roty ( -1.18456 ) rotx ( 0 )
-		scal ( 1.22589 0.7 2 ) obj S109 /* "S1\S109.suf" atr "#03" */
+	{	mov ( 200 0 -167 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1.3 0.7 2 ) obj S109 /* "S1\S109.suf" atr "#03" */
 	}
-	{	mov ( 350 0 137 ) rotz ( 0 ) roty ( 15.5514 ) rotx ( 0 )
-		scal ( 2.19383 2.06828 2.12941 ) obj CP09 /* "CP\CP09.suf" atr "#03" */
+	{	mov ( 350 0 137 ) rotz ( 0 ) roty ( 12.6957 ) rotx ( 0 )
+		scal ( 2.57244 2.06828 2.12941 ) obj CP09 /* "CP\CP09.suf" atr "#03" */
 	}
 	{	mov ( -200 100 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 0.7 -1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "#06" */
+		scal ( 0.7 -1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "#03" */
 	}
 	{	mov ( -864 -248 235 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 0.662989 1.62064 1.62064 ) obj EG06 /* "EG\EG06.suf" atr "#01" */
 	}
-	{	mov ( -300 0 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 1.4 0.9 2.6 ) obj SL14 /* "SL\SL14.suf" atr "#03" */
+	{	mov ( -300 0 71 ) rotz ( 0 ) roty ( -1.78084 ) rotx ( 0 )
+		scal ( 1.4 0.9 2.32632 ) obj SL14 /* "SL\SL14.suf" atr "#03k" */
 	}
 	{	mov ( 250 0 71 ) rotz ( 0 ) roty ( 0 ) rotx ( -180 )
-		scal ( 1 1 1.8 ) obj EG13 /* "EG\EG13.suf" atr "#02" */
+		scal ( 1 1 1.8 ) obj EG13 /* "EG\EG13.suf" atr "#05" */
 	}
-	{	mov ( 0 0 -900 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+	{	mov ( 0 0 -1000 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 1 1 1 ) obj P101 /* "P1\P101.suf" atr "#04" */
 	}
 	{	mov ( 99.275 -252.922 -267.882 ) rotz ( -174.433 ) roty ( 16.308 ) rotx ( 0 )
-		scal ( 1.2 -0.715385 0.8 ) obj OT09 /* "OT\OT09.suf" atr "#05" */
+		scal ( 1.2 -0.715385 0.8 ) obj OT09 /* "OT\OT09.suf" atr "#05k" */
 	}
 	{	mov ( 99.275 252.922 -267.882 ) rotz ( 174.433 ) roty ( 16.308 ) rotx ( 0 )
-		scal ( 1.2 0.715385 0.8 ) obj OT09 /* "OT\OT09.suf" atr "#05" */
+		scal ( 1.2 0.715385 0.8 ) obj OT09 /* "OT\OT09.suf" atr "#05k" */
 	}
-	{	mov ( -1098.4 -493.603 -274.766 ) rotz ( 0 ) roty ( 0 ) rotx ( 38.0861 )
-		scal ( 1.32 0.806298 0.649516 ) obj EG03 /* "EG\EG03.suf" atr "#05" */
+	{	mov ( -1098.4 -451.177 -229.511 ) rotz ( 0 ) roty ( 0 ) rotx ( 38.0861 )
+		scal ( 1.32 0.806298 0.868643 ) obj EG03 /* "EG\EG03.suf" atr "#03k" */
 	}
 	{	mov ( -822.4 -235.831 -60.7419 ) rotz ( 0 ) roty ( 0 ) rotx ( 128.086 )
 		scal ( 1.2 1.2 6.24 ) obj EG13 /* "EG\EG13.suf" atr "#01" */
 	}
-	{	mov ( -1000 400 71 ) rotz ( -180 ) roty ( 0 ) rotx ( -0.727644 )
-		scal ( 1.5 1.5918 5.1 ) obj W107 /* "W1\W107.suf" atr "#02" */
-	}
 	{	mov ( -864 248 235 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 0.662989 -1.62064 1.62064 ) obj EG06 /* "EG\EG06.suf" atr "#01" */
+	}
+	{	mov ( -1098.4 451.177 -229.511 ) rotz ( 0 ) roty ( 0 ) rotx ( -38.0861 )
+		scal ( 1.32 -0.806298 0.868643 ) obj EG03 /* "EG\EG03.suf" atr "#03k" */
 	}
 	{	mov ( -822.4 235.831 -60.7419 ) rotz ( 0 ) roty ( 0 ) rotx ( -128.086 )
 		scal ( 1.2 -1.2 6.24 ) obj EG13 /* "EG\EG13.suf" atr "#01" */
 	}
-	{	mov ( -1134 -292 400 ) rotz ( 0 ) roty ( 0 ) rotx ( -70.0367 )
-		scal ( 1 0.70906 1 ) obj W102 /* "W1\W102.suf" atr "#02" */
+	{	mov ( -1134 -292 400 ) rotz ( 0 ) roty ( 0 ) rotx ( -55.4751 )
+		scal ( 1 0.70906 1 ) obj W102 /* "W1\W102.suf" atr "#05" */
 	}
-	{	mov ( -1134 292 400 ) rotz ( 0 ) roty ( 0 ) rotx ( 70.0367 )
-		scal ( 1 -0.70906 1 ) obj W102 /* "W1\W102.suf" atr "#02" */
+	{	mov ( -750 -1050 150 ) rotz ( 10 ) roty ( 0 ) rotx ( 0 )
+		scal ( 3.8 0.7 1 ) obj P103 /* "P1\P103.suf" atr "d" */
 	}
-	{	mov ( -1098.4 493.603 -274.766 ) rotz ( 0 ) roty ( 0 ) rotx ( -38.0861 )
-		scal ( 1.32 -0.806298 0.649516 ) obj EG03 /* "EG\EG03.suf" atr "#05" */
+	{	mov ( 165.966 316.971 339.598 ) rotz ( 110 ) roty ( 0 ) rotx ( 0 )
+		scal ( 3.5 0.7 1 ) obj P103 /* "P1\P103.suf" atr "d" */
+	}
+	{	mov ( -750 1050 150 ) rotz ( -10 ) roty ( 0 ) rotx ( 0 )
+		scal ( 3.8 -0.7 1 ) obj P103 /* "P1\P103.suf" atr "d" */
+	}
+	{	mov ( 165.966 -316.971 339.598 ) rotz ( -110 ) roty ( 0 ) rotx ( 0 )
+		scal ( 3.5 -0.7 1 ) obj P103 /* "P1\P103.suf" atr "d" */
+	}
+	{	mov ( -950 400 50 ) rotz ( -180 ) roty ( 0 ) rotx ( 5.82343 )
+		scal ( 1.8 1.7 5.1 ) obj W107 /* "W1\W107.suf" atr "#05" */
+	}
+	{	mov ( -1134 292 400 ) rotz ( 0 ) roty ( 0 ) rotx ( 55.4751 )
+		scal ( 1 -0.70906 1 ) obj W102 /* "W1\W102.suf" atr "#05" */
+	}
+	{	mov ( -1200 0 600 ) rotz ( 0 ) roty ( 0 ) rotx ( 90 )
+		scal ( 3.8 -0.5 1 ) obj P103 /* "P1\P103.suf" atr "d" */
 	}
 }

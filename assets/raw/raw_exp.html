@@ -1,0 +1,29 @@
+<html>
+<head>
+</head>
+<body style="background:black">
+<canvas id="c"></canvas>
+<script src="../../libs/tmlib.js"></script>
+<script>
+tm.main(function() {
+
+    var RAD = 64;
+
+    var c = new tm.graphics.Canvas("#c");
+    c.resize(RAD*2, RAD*2)
+        .setFillStyle(new tm.graphics.RadialGradient(RAD, RAD, 0, RAD, RAD, RAD)
+            .addColorStopList([
+                { offset: 0.0, color: "rgba(255, 255, 255, 0.0)" },
+                { offset: 0.6, color: "rgba(255, 255, 255, 0.0)" },
+                { offset: 0.9, color: "rgba(255, 255, 255, 1.0)" },
+                { offset: 1.0, color: "rgba(255, 255, 255, 0.0)" },
+            ])
+            .toStyle()
+        )
+        .fillRect(0, 0, RAD*2, RAD*2);
+
+    c.saveAsImage();
+});
+</script>
+</body>
+</html>

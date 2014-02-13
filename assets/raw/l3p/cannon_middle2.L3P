@@ -1,0 +1,71 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	basic\plane\plane23.suf
+	mecha\sfcar\sfcar06.suf
+	rohead\rohead03.suf
+	rohead\rohead08.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (   0.000   0.000   0.000 )
+	DisplayScale: 0.125000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 100
+	RotSpacing: 5
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr noname { col ( rgb ( 0.310 0.530 0.840 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 )  66  23 -70 )
+	{	mov ( -2921.91 1578.72 2252.94 ) eye deg( 45 ) }
+	{	mov ( 92.2591 149.422 -123.337 ) target }
+	{	mov ( -282.843 -282.843 386 ) rotz ( -135 ) roty ( -35 ) rotx ( -180 )
+		scal ( -1 2.4 1.8 ) obj rohead08 /* "rohead\rohead08.suf" atr "noname" */
+	}
+	{	mov ( -300 0 686 ) rotz ( 180 ) roty ( -45 ) rotx ( 180 )
+		scal ( 1.5 1 1.8 ) obj rohead03 /* "rohead\rohead03.suf" atr "noname" */
+	}
+	{	mov ( 300 0 686 ) rotz ( -180 ) roty ( 45 ) rotx ( 180 )
+		scal ( -1.5 1 1.8 ) obj rohead03 /* "rohead\rohead03.suf" atr "noname" */
+	}
+	{	mov ( 0 -300 686 ) rotz ( -90 ) roty ( -45 ) rotx ( -180 )
+		scal ( 1.5 -1 1.8 ) obj rohead03 /* "rohead\rohead03.suf" atr "noname" */
+	}
+	{	mov ( 0 300 686 ) rotz ( -90 ) roty ( 45 ) rotx ( -180 )
+		scal ( -1.5 -1 1.8 ) obj rohead03 /* "rohead\rohead03.suf" atr "noname" */
+	}
+	{	mov ( -282.843 282.843 386 ) rotz ( 135 ) roty ( -35 ) rotx ( 180 )
+		scal ( -1 -2.4 1.8 ) obj rohead08 /* "rohead\rohead08.suf" atr "noname" */
+	}
+	{	mov ( 282.843 -282.843 386 ) rotz ( 135 ) roty ( 35 ) rotx ( -180 )
+		scal ( 1 2.4 1.8 ) obj rohead08 /* "rohead\rohead08.suf" atr "noname" */
+	}
+	{	mov ( 282.843 282.843 386 ) rotz ( -135 ) roty ( 35 ) rotx ( 180 )
+		scal ( 1 -2.4 1.8 ) obj rohead08 /* "rohead\rohead08.suf" atr "noname" */
+	}
+	{	mov ( 0 0 -222 ) rotz ( -180 ) roty ( 90 ) rotx ( 0 )
+		scal ( 0.909567 0.909567 0.909567 ) obj plane23 /* "basic\plane\plane23.suf" atr "noname" */
+	}
+	{	mov ( 0 0 -520.753 ) rotz ( -180 ) roty ( 90 ) rotx ( 0 )
+		scal ( 0.614552 0.614552 0.614552 ) obj plane23 /* "basic\plane\plane23.suf" atr "noname" */
+	}
+	{	mov ( 0 260 -222 ) rotz ( -90 ) roty ( -55 ) rotx ( 0 )
+		scal ( 2.77557 2.77557 2.77557 ) obj sfcar06 /* "mecha\sfcar\sfcar06.suf" atr "noname" */
+	}
+	{	mov ( 260 0 -222 ) rotz ( -180 ) roty ( -55 ) rotx ( 0 )
+		scal ( 2.77557 2.77557 2.77557 ) obj sfcar06 /* "mecha\sfcar\sfcar06.suf" atr "noname" */
+	}
+	{	mov ( -260 0 -222 ) rotz ( 0 ) roty ( -55 ) rotx ( 0 )
+		scal ( 2.77557 2.77557 2.77557 ) obj sfcar06 /* "mecha\sfcar\sfcar06.suf" atr "noname" */
+	}
+	{	mov ( 0 -260 -222 ) rotz ( 90 ) roty ( -55 ) rotx ( 0 )
+		scal ( 2.77557 2.77557 2.77557 ) obj sfcar06 /* "mecha\sfcar\sfcar06.suf" atr "noname" */
+	}
+}

@@ -11,7 +11,7 @@
 gls2.Enemy = tm.createClass(
 /** @lends {gls2.Enemy.prototype} */
 {
-    superClass: tm.app.CanvasElement,
+    superClass: tm.display.CanvasElement,
 
     /**
      * @type {string}
@@ -28,12 +28,17 @@ gls2.Enemy = tm.createClass(
      * @type {gls2.GameScene}
      */
     gameScene: null,
+    /**
+     * @type {gls2.Stage}
+     */
+    stage: null,
 
     /**
      * 耐久力
      * 0以下になったら破壊される
      */
     hp: 0,
+    hpMax: 0,
     /** 撃破時の素点 */
     score: 0,
     /** 地上物か */
@@ -59,6 +64,10 @@ gls2.Enemy = tm.createClass(
      * 可視範囲に入った時点からの経過フレーム
      */
     frame: 0,
+    /**
+     * 攻撃はすりぬけ、自機との衝突も発生しない
+     */
+    muteki: false,
 
     /**
      * 速度
@@ -106,6 +115,22 @@ gls2.Enemy = tm.createClass(
         }
 
         this.velocity = {x:0, y:0};
+
+        this.muteki = false;
+
+        if (DEBUG) {
+            this.label = tm.display.Label("", 20).addChildTo(this);
+            var that = this;
+            this.label.update = function() {
+                this.rotation = -that.rotation;
+                this.text = "[ " + ~~(that.hp) + " / " + that.hpMax + " ]";
+                if (!that.entered) {
+                    this.fillStyle = "red";
+                } else {
+                    this.fillStyle = "white";
+                }
+            };
+        }
     },
 
     /**
@@ -171,14 +196,28 @@ gls2.Enemy = tm.createClass(
             }
 
             if (this.erase) {
-                gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
+                gls2.Danmaku.erase(true, this.gameScene.isHyperMode, (this instanceof gls2.Boss));
             }
 
             this.dispatchEvent(tm.event.Event("destroy"));
             this.destroy();
 
+            if (this.name === "yukishiro") gls2.core.putAchevement("mboss1");
+            else if (this.name === "mishou") gls2.core.putAchevement("mboss2");
+            else if (this.name === "higashi") gls2.core.putAchevement("mboss3");
+            else if (this.name === "hishikawa") gls2.core.putAchevement("mboss4");
+            else if (this.name === "minamino") gls2.core.putAchevement("mboss5");
+            else if (this.name === "misumi") gls2.core.putAchevement("boss1");
+            else if (this.name === "hyuga") gls2.core.putAchevement("boss2");
+            else if (this.name === "momozono") gls2.core.putAchevement("boss3");
+            else if (this.name === "aida") gls2.core.putAchevement("boss4");
+            else if (this.name === "hojo") gls2.core.putAchevement("boss5");
+
             return true;
         } else {
+            if (this.hp < 40) {
+                this.ondying();
+            }
             return false;
         }
     },
@@ -204,11 +243,18 @@ gls2.Enemy = tm.createClass(
         return this.enableFire;
     },
 
+    /**
+     * 瀕死になった時に呼び出される
+     */
+    ondying: function() {
+
+    },
+
     _setData: function(name) {
         this.name = name;
 
         var data = gls2.Enemy.DATA[name];
-        this.hp = data[0];
+        this.hp = this.hpMax = data[0];
         this.score = data[1];
         this.isGround = data[2];
         this.erase = data[3];
@@ -260,26 +306,74 @@ gls2.Enemy = tm.createClass(
     },
 
     bossDestroy: function() {
-        // TODO ド派手にする
-        this.addEventListener("enterframe", function() {
-            if (Math.random() < 0.2) {
-                gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {
-                    "x": 0,
-                    "y": -3,
-                });
+        var age = 0;
+        var x = this.x;
+        var y = this.y;
+        var mexp = function() {
+            if (age % 23 === 0 || age % 37 === 0) {
+                gls2.Effect.explodeM(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene);
             }
+            age++;
+        };
+        this.on("enterframe", mexp);
+        this.on("enterframe", function() {
+            this.x += ((Math.random() * 3)-1.5);
+            this.y += ((Math.random() * 3)-1.5) + 1;
         });
-        this.tweener
-            .clear()
+        this.tweener.clear()
             .to({
-                "altitude": 4,
-                "y": this.y + 200,
-            }, 2000)
+                x: SC_W*0.5,
+                y: SC_H*0.2
+            }, 500, "easeOutQuad")
+            .wait(2000)
             .call(function() {
-                gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+                this.off("enterframe", mexp);
+            }.bind(this))
+            .wait(500)
+            .call(function() {
+                gls2.LargeExplodeEffect(this.x, this.y, this.gameScene);
+            }.bind(this))
+            .wait(2000)
+            .call(function() {
                 this.remove();
             }.bind(this));
     },
+
+    lastBossDestroy: function() {
+        var age = 0;
+        var x = this.x;
+        var y = this.y;
+        var mexp = function() {
+            if (age % 23 === 0 || age % 37 === 0 || age % 53 === 0) {
+                gls2.Effect.explodeL(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene);
+            }
+            age++;
+        };
+        this.on("enterframe", mexp);
+        var baseX = this.x;
+        var baseY = this.y;
+        var yy = 0;
+        this.on("enterframe", function() {
+            this.x = baseX + ((Math.random() * 3)-1.5);
+            this.y = baseY + ((Math.random() * 3)-1.5) + yy;
+            yy += 1;
+        });
+        this.tweener.clear()
+            .wait(2000)
+            .call(function() {
+                this.off("enterframe", mexp);
+            }.bind(this))
+            .wait(500)
+            .call(function() {
+                for (var i = 0; i < 8; i++) {
+                    gls2.LargeExplodeEffect(this.x+Math.cos(Math.PI*2*i/8)*80, this.y+Math.sin(Math.PI*2*i/8)*80, this.gameScene);
+                }
+            }.bind(this))
+            .wait(2000)
+            .call(function() {
+                this.remove();
+            }.bind(this));
+    }
 
 });
 

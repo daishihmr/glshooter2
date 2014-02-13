@@ -22,26 +22,30 @@ gls2.TitleScene = tm.createClass({
     init: function() {
         this.superInit();
 
-        tm.app.Label("GL-Shooter 2", 50)
+        tm.display.Label("TM-Shooter", 50)
             .setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
-        tm.app.Label("version 1.0-beta", 22)
+        tm.display.Label("version 1.0", 22)
             .setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
-        this.highScoreLabel = tm.app.Label()
-            .setPosition(SC_W * 0.5, SC_H * 0.40).addChildTo(this);
-        tm.app.Label("press space key").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
+        this.highScoreLabel = tm.display.Label()
+            .setPosition(SC_W * 0.5, SC_H * 0.40); //.addChildTo(this);
+        // tm.display.Label("press space key").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.addEventListener("enter", function() {
             this.gameStarted = false;
-            var score = ("" + Math.floor(gls2.core.highScore)).padding(16, " ");
-            var text = "";
-            for (var i = 0; i < score.length; i += 4) {
-                text += score.substring(i, i+4) + " ";
-            }
-            this.highScoreLabel.text = "HIGH SCORE: " + text.trim();
+            this.updateHighScoreLabel();
         });
     },
 
-    draw: function(canvas) {
+    updateHighScoreLabel: function() {
+        var score = ("" + Math.floor(gls2.core.highScore)).padding(16, " ");
+        var text = "";
+        for (var i = 0; i < score.length; i += 4) {
+            text += score.substring(i, i+4) + " ";
+        }
+        this.highScoreLabel.text = "HIGH SCORE: " + text.trim();
+    },
+
+    drawBackground: function(canvas) {
         canvas.fillStyle = "black";
         canvas.fillRect(0,0,SC_W,SC_H);
     },
@@ -103,18 +107,18 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        this.openDialogMenu("MAIN MENU", [ "start", "tutorial", "setting", "save score" ], this.onResultMainMenu, {
+        var menu = [ "start", "setting" ];
+        var labels = [
+            "ゲームを開始します",
+            "設定を変更します"
+        ];
+        this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
             "defaultValue": this.lastMainMenu,
-            "menuDescriptions": [
-                "ゲームを開始します",
-                "チュートリアルを開始します",
-                "設定を変更します",
-                "ゲームを終了し9leapにスコアを登録します",
-            ]
+            "menuDescriptions": labels
         });
     },
     onResultMainMenu: function(result) {
-        if (result !== 4) this.lastMainMenu = result;
+        if (result !== 2) this.lastMainMenu = result;
         switch (result) {
         case 0: // start
             this.tweener
@@ -130,24 +134,21 @@ gls2.TitleScene = tm.createClass({
                     gls2.core.replaceScene(gls2.ShipSelectScene());
                 }.bind(this));
             break;
-        case 1: // tutorial
-            break;
-        case 2: // option
+        case 1: // option
             this.openSetting();
-            break;
-        case 3: // to 9leap
-            gls2.core.exitApp();
             break;
         }
     },
 
     openSetting: function() {
-        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume", "difficulty" ], this.onResultSetting, {
+        this.openDialogMenu("SETTING", [
+            "bgm volume",
+            "sound volume"
+        ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
-                "効果音ボリュームを設定します",
-                "難易度を設定します",
+                "効果音ボリュームを設定します"
             ],
         });
     },
@@ -159,9 +160,6 @@ gls2.TitleScene = tm.createClass({
             break;
         case 1:
             this.openSeSetting();
-            break;
-        case 2:
-            this.openDifficultySetting();
             break;
         default:
             this.openMainMenu();

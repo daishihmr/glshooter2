@@ -23,28 +23,28 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 )  -2 -70 -70 )
-	{	mov ( 1052.97 930.99 1161.43 ) eye deg( 45 ) }
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -3 -70 )
+	{	mov ( 1103.08 -854.988 1080.66 ) eye deg( 45 ) }
 	{	mov ( 103.395 56.8827 98.8811 ) target }
 	{	mov ( 19.5 0 17.7 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 0.7 0.7 0.7 ) obj CP05 /* "CP\CP05.suf" atr "noname" */
 	}
-	{	mov ( 0 0 200 ) rotz ( 90 ) roty ( 0 ) rotx ( 0 )
+	{	mov ( 0 0 200 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
 	}
-	{	mov ( 0 0 200 ) rotz ( 50 ) roty ( 0 ) rotx ( 0 )
+	{	mov ( 0 0 200 ) rotz ( -40 ) roty ( 0 ) rotx ( 0 )
 		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
 	}
-	{	mov ( 0 0 200 ) rotz ( 60 ) roty ( 0 ) rotx ( 0 )
+	{	mov ( 0 0 200 ) rotz ( -30 ) roty ( 0 ) rotx ( 0 )
 		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
 	}
 	{	mov ( -15.5 0 52.7 ) rotz ( -180 ) roty ( 90 ) rotx ( 0 )
 		scal ( 0.21 0.35 2.9 ) obj EG13 /* "EG\EG13.suf" atr "noname" */
 	}
-	{	mov ( 0 0 200 ) rotz ( 70 ) roty ( 0 ) rotx ( 0 )
+	{	mov ( 0 0 200 ) rotz ( -20 ) roty ( 0 ) rotx ( 0 )
 		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
 	}
-	{	mov ( 0 0 200 ) rotz ( 80 ) roty ( 0 ) rotx ( 0 )
+	{	mov ( 0 0 200 ) rotz ( -10 ) roty ( 0 ) rotx ( 0 )
 		scal ( 5.7 5.7 5.7 ) obj P110 /* "P1\P110.suf" atr "#01" */
 	}
 }

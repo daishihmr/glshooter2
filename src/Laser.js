@@ -10,7 +10,7 @@
 gls2.Laser = tm.createClass(
 /** @lends {gls2.Laser.prototype} */
 {
-    superClass: tm.app.Sprite,
+    superClass: tm.display.Sprite,
     player: null,
     gameScene: null,
 
@@ -31,7 +31,7 @@ gls2.Laser = tm.createClass(
 
     isEffect: true,
 
-    attackPower: gls2.Setting.LASER_ATTACK_POWER,
+    attackPower: LASER_ATTACK_POWER,
 
     origParticle: null,
 
@@ -53,7 +53,7 @@ gls2.Laser = tm.createClass(
         this.scrollOffset = 0;
         this.origin.y = 1.0;
 
-        var a = this.aura = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        var a = this.aura = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: textures["aura"],
             frame: {
                 width: 100,
@@ -85,7 +85,7 @@ gls2.Laser = tm.createClass(
         a.y = 60;
         a.addChildTo(this);
 
-        var f = this.foot = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        var f = this.foot = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: textures["foot"],
             frame: {
                 width: 120,
@@ -116,7 +116,7 @@ gls2.Laser = tm.createClass(
         }), 140, 80);
         f.addChildTo(this);
 
-        var h = this.head = tm.app.AnimationSprite(tm.app.SpriteSheet({
+        var h = this.head = tm.display.AnimationSprite(tm.asset.SpriteSheet({
             image: textures["head"],
             frame: {
                 width: 80,
@@ -181,10 +181,10 @@ gls2.Laser = tm.createClass(
     },
 
     setLevel: function(hyperLevel) {
-        this.width = this.baseWidth + 30 * hyperLevel / gls2.Setting.HYPER_LEVEL_MAX;
+        this.width = this.baseWidth + 30 * hyperLevel / HYPER_LEVEL_MAX;
         this.boundingWidth = this.width;
         this.head.setScale(this.width*0.02, this.width*0.02);
-        this.attackPower = this.baseAttackPower * gls2.Setting.LASER_ATTACK_POWER + gls2.Setting.LASER_ATTACK_POWER_RATE * hyperLevel;
+        this.attackPower = this.baseAttackPower * LASER_ATTACK_POWER + LASER_ATTACK_POWER_RATE * hyperLevel;
 
         if (hyperLevel === 0) {
             this.setColor(["red", "green", "blue"][this.player.type]);
