@@ -5,7 +5,7 @@ HTML5弾幕STG、GL-Shooterシリーズの２作目です。
 
 <img src="glshooter2.png" />
 
-http://daishihmr.github.io/glshooter2/ (Google Chrome専用)
+http://tmshooter.net/ (Google Chrome専用)
 
 ## 操作方法
 
