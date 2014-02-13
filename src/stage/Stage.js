@@ -65,7 +65,7 @@ gls2.Stage = tm.createClass(
 
     launchEnemy: function(data) {
         this.gameScene.enemyCount += 1;
-        var enemy = data.hard(this.gameScene, data.soft)
+        var enemy = data["hard"](this.gameScene, data["soft"])
             .setPosition(data.x, data.y)
             .addChildTo(this.gameScene);
         enemy.stage = this;
@@ -125,7 +125,7 @@ gls2.Stage = tm.createClass(
  * @static
  */
 gls2.Stage.create = function(gameScene, stageNumber) {
-    // return gls2.Stage5(gameScene); // TODO あとで消す
+    //return gls2.Stage3(gameScene); // TODO あとで消す
 
     switch (stageNumber) {
         case 0:  return gls2.Stage1(gameScene);

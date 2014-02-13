@@ -4,7 +4,7 @@ Parts:
 	SL\SL15.suf
 	mecha\sfnozzle\EG09.suf
 	mecha\sfnozzle\NOZ02.suf
-Light: (   71   71    0 ) ( 1.00 1.00 1.00)
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
 Info:
 	DisplayOffset: (   0.000   0.000   0.000 )
 	DisplayScale: 0.125000000000
@@ -22,9 +22,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -51 -48 -70 )
-	{	mov ( 731.742 -17.4987 2174.95 ) eye deg( 45 ) }
-	{	mov ( 0 0 0 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -3 -70 )
+	{	mov ( 1243.21 -1231.31 1360.18 ) eye deg( 45 ) }
+	{	mov ( -145.449 13.3485 -117.865 ) target }
 	{	mov ( 0 -300 150 ) rotz ( 0 ) roty ( 0 ) rotx ( -60 )
 		scal ( 1 0.5 1 ) obj EG09 /* "mecha\sfnozzle\EG09.suf" atr "noname" */
 	}

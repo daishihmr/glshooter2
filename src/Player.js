@@ -168,7 +168,7 @@ gls2.Player = tm.createClass(
         };
         this.hyperCircle2.draw = function(canvas) {
             canvas.lineCap = "round";
-            var value = gameScene.hyperTime / gls2.Setting.HYPERMODE_TIME;
+            var value = gameScene.hyperTime / HYPERMODE_TIME;
 
             canvas.strokeStyle = "rgba(50,50,255,0.4)";
             canvas.lineWidth = "12";
@@ -288,6 +288,8 @@ gls2.Player = tm.createClass(
                         .setPosition(gls2.math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);
                     gls2.core.putAchevement("bomb1");
+
+                    this.gameScene.bombCountByStage[this.gameScene.stageNumber] += 1;
                 }
             }
 

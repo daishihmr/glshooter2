@@ -43,7 +43,7 @@ gls2.GlShooter2 = tm.createClass(
         this.superInit(id);
         gls2.core = this;
         this.resize(SC_W, SC_H).fitWindow();
-        this.fps = gls2.Setting.FPS;
+        this.fps = FPS;
         this.background = "rgba(0,0,0,0)";
 
         this.timeoutTasks = [];
@@ -60,7 +60,11 @@ gls2.GlShooter2 = tm.createClass(
             "tex1": "assets/tex1.png",
             "tex2": "assets/tex2.png",
             "tex3": "assets/tex3.png",
+            "tex4": "assets/tex4.png",
+            "tex5": "assets/tex5.png",
             "tex_tank1": "assets/tex_tank1.png",
+            "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
+            "kanade-cannon": "assets/kanade-cannon.png",
             "fighter": "assets/fighters.png",
             "laserR": "assets/laser_r.png",
             "laserG": "assets/laser_g.png",
@@ -77,26 +81,18 @@ gls2.GlShooter2 = tm.createClass(
             "bombIcon": "assets/bomb_icon.png",
             "result_bg": "assets/result_bg.png",
 
-            // use stage3
-            "tex_stage3": "assets/tex_stage3.png",
-            "yotsubaLeaf": "assets/tex_yotsubaLeaf.png",
-
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",
             "bgm1": "assets2/nc54073.mp3",
-            "bgm2": "assets2/nc28687.mp3",
-            // "bgm3": "assets2/nc80728.mp3",
-            // "bgm4": "assets2/nc67876.mp3",
-            // "bgm5": "assets2/nc60627.mp3",
-            "bgmBoss": "assets2/nc29206.mp3",
-            "bgmResult": "assets2/nc54077.mp3",
-            // "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
             "bgmLoopInfo": "assets2/loop.json",
 
             // sound
             "sound/explode": "assets2/sen_ge_taihou03.mp3",
             "sound/explode2": "assets2/sen_ge_bom13.mp3",
             "sound/explode3": "assets2/sen_ge_bom02.mp3",
+            "sound/explode4": "assets2/sen_ge_bom14.mp3",
+            "sound/explode5": "assets2/sen_ge_bom17.mp3",
+            "sound/explode6": "assets2/nc17909.mp3",
             "sound/star": "assets2/se_maoudamashii_system24.mp3",
             "sound/bomb": "assets2/sen_ge_bom17.mp3",
             "sound/warning": "assets2/meka_ge_keihou06.mp3",
@@ -104,7 +100,6 @@ gls2.GlShooter2 = tm.createClass(
             "sound/decision": "assets2/se_maoudamashii_system03.mp3",
             "sound/achevement": "assets2/se_maoudamashii_system46.mp3",
             // TODO
-            // "sound/extend": "",
             // "sound/hyper": "",
 
             // voice
@@ -131,34 +126,28 @@ gls2.GlShooter2 = tm.createClass(
             delete assets["bgmBoss"];
             delete assets["bgmResult"];
             delete assets["bgmEnding"];
-
-            // 遊び用
-            // assets["bgmShipSelect"] = "/gls2-bgm/select.mp3";
-            // assets["bgm1"] = "/gls2-bgm/1.mp3";
-            // assets["bgm2"] = "/gls2-bgm/2.mp3";
-            // assets["bgm3"] = "/gls2-bgm/3.mp3";
-            // assets["bgm4"] = "/gls2-bgm/4.mp3";
-            // assets["bgm5"] = "/gls2-bgm/5.mp3";
-            // assets["bgmBoss"] = "/gls2-bgm/boss.mp3";
-            // assets["bgmResult"] = "/gls2-bgm/clear.mp3";
         }
 
-        this.replaceScene(tm.ui["LoadingScene"]({
+        var loadingScene = tm.ui["LoadingScene"]({
             assets: assets,
+            width: SC_W,
+            height: SC_H,
             nextScene: function() {
                 this._onLoadAssets();
                 return gls2.TitleScene();
             }.bind(this),
-        }));
+        });
+        loadingScene.bg.canvas.clearColor("black");
+        this.replaceScene(loadingScene);
     },
 
     calcContinueCountMax: function() {
         var achevements = window["achevements"];
         var data = tm.asset.AssetManager.get("achevements").data;
-        if (!achevements) return gls2.Setting.INITIAL_CONTINUE_COUNT;
-        return achevements.reduce(function(a, b) {
-            return data[b] ? a + gls2.Setting.CONTINUE_COUNT_BY_ACHEVEMENT_GRADE[data[b].grade] : a;
-        }, gls2.Setting.INITIAL_CONTINUE_COUNT);
+        if (!achevements) return INITIAL_CONTINUE_COUNT;
+        return Math.floor(achevements.reduce(function(a, b) {
+            return data[b] ? a + CONTINUE_COUNT_BY_ACHEVEMENT_GRADE[data[b]["grade"]] : a;
+        }, INITIAL_CONTINUE_COUNT));
     },
 
     update: function() {
@@ -179,7 +168,16 @@ gls2.GlShooter2 = tm.createClass(
     _onLoadAssets: function() {
         gls2.FixedRandom.setup(12345);
 
-        ["tex1", "tex2", "tex3", "tex_tank1"].forEach(function(name) {
+        [
+            "tex1",
+            "tex2",
+            "tex3",
+            "tex4",
+            "tex5",
+            "tex_tank1",
+            "yotsubaLeaf",
+            "kanade-cannon",
+        ].forEach(function(name) {
 
             var tex = tm.asset.AssetManager.get(name);
             var canvas = tm.graphics.Canvas();
@@ -203,6 +201,18 @@ gls2.GlShooter2 = tm.createClass(
         gls2.Effect.setup();
 
         this.gameScene = gls2.GameScene();
+
+        if (!DEBUG) {
+            tm.asset.Loader().load({
+                "bgm2": "assets2/nc28687.mp3",
+                "bgm3": "assets2/nc80728.mp3",
+                "bgm4": "assets2/nc67876.mp3",
+                "bgm5": "assets2/nc60627.mp3",
+                "bgmBoss": "assets2/nc29206.mp3",
+                "bgmResult": "assets2/nc54077.mp3",
+                "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
+            });
+        }
     },
 
     exitApp: function() {
@@ -216,14 +226,26 @@ gls2.GlShooter2 = tm.createClass(
      * @param {function()} callback
      */
     postScore: function(userName, callback) {
+        // console.log("this.gameScene.fpsAvgByStage = " + this.gameScene.fpsAvgByStage);
+        // console.log("this.gameScene.stageNumber = " + this.gameScene.stageNumber);
+        var avgFps = this.gameScene.fpsAvgByStage.slice(0, this.gameScene.stageNumber+1)["average"]();
+        // console.log("avgFps = " + avgFps);
         var data = {
             "score": Math.floor(this.gameScene.score),
             "stage": this.gameScene.stageNumber + 1,
             "continueCount": this.gameScene.continueCount,
             "shipType": this.gameScene.player.type,
             "shipStyle": this.gameScene.player.style,
-            "fps": 0,
-            "screenShot": this.gameScene.screenShot
+            "fps": avgFps,
+            "screenShot": this.gameScene.screenShot,
+            "scoreByStage": this.gameScene.scoreByStage,
+            "fpsAvgByStage": this.gameScene.fpsAvgByStage,
+            "missCountByStage": this.gameScene.missCountByStage,
+            "continueCountByStage": this.gameScene.continueCountByStage,
+            "bombCountByStage": this.gameScene.bombCountByStage,
+            "autoBombCountByStage": this.gameScene.autoBombCountByStage,
+            "hyperCountByStage": this.gameScene.hyperCountByStage,
+            "hyperLevelHistory": this.gameScene.hyperLevelHistory,
         };
         if (userName) {
             data["userName"] = userName;
@@ -271,13 +293,13 @@ gls2.GlShooter2 = tm.createClass(
     getAnonName: function() {
         return [
             "名無しシューター",
-            "大佐",
-            "レイニャンにゃん",
-            "アイたそ",
-            "ぱふぇ☆",
-            "能登真璃亜",
-            "にゃんぱすー(30)",
-            "相田総理"
+            "名無し大佐",
+            "名無しにゃん",
+            "名無したそ",
+            "名無し☆",
+            "能登名無し",
+            "名無し(30)",
+            "名無し総理"
         ]["pickup"]();
     },
 
@@ -290,7 +312,7 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     putAchevement: function(key) {
-        if (!window["achevements"]) {
+        if (!window["achevements"] || window["achevements"].indexOf(key) !== -1) {
             return;
         }
 
@@ -306,7 +328,7 @@ gls2.GlShooter2 = tm.createClass(
                 type: "POST",
                 dataType: "json",
                 success: function(json) {
-                    console.dir(json);
+                    // console.dir(json);
                     if (data[key]) {
                         gls2.playSound("achevement");
                         this.gameScene.labelLayer.addChild(gls2.GetTrophyEffect(data[key].title));

@@ -23,7 +23,7 @@ gls2.ShotBullet = tm.createClass({
         this.blendMode = "lighter";
         this.alpha = 0.5;
 
-        this.attackPower = gls2.Setting.SHOT_ATTACK_POWER;
+        this.attackPower = SHOT_ATTACK_POWER;
 
         if (origParticle === null) {
             var size = 16;
@@ -107,7 +107,7 @@ gls2.ShotBulletPool = tm.createClass({
 
             var self = this;
             sb.addEventListener("added", function() {
-                this.hp = gls2.Setting.SHOT_HP;
+                this.hp = SHOT_HP;
                 activeList.push(this);
             });
             sb.addEventListener("removed", function() {
@@ -144,7 +144,7 @@ gls2.ShotBulletPool = tm.createClass({
 
     setLevel: function(hyperLevel) {
         for (var i = this.pool.length; this.pool[--i] !== undefined; ) {
-            this.pool[i].attackPower = gls2.Setting.SHOT_ATTACK_POWER + gls2.Setting.HYPER_SHOT_ATTACK_POWER * hyperLevel;
+            this.pool[i].attackPower = SHOT_ATTACK_POWER + HYPER_SHOT_ATTACK_POWER * hyperLevel;
             this.pool[i].hyperScale = hyperLevel * 0.2;
         }
     },

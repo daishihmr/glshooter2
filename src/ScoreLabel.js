@@ -77,7 +77,7 @@ gls2.ScoreLabel = tm.createClass(
         for (var i = 0; i < score.length; i += 4) {
             text += score.substring(i, i+4) + " ";
         }
-        var bonus = (~~(this.gameScene.comboCount / gls2.Setting.COMBO_BONUS) + 1);
+        var bonus = (~~(this.gameScene.comboCount / COMBO_BONUS) + 1);
         this.fillText(text + "x " + bonus, this.scoreLabelElement.gpsOffsetX + SC_W*0.4, 22);
 
         // 残機数

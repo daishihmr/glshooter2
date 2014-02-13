@@ -57,7 +57,7 @@ gls2.math = {};
      * ランダムな値を指定された範囲内で生成
      */
     gls2.math.rand = function(min, max) {
-        return window.Math.floor( Math.random()*(max-min+1) ) + min;
+        return window.Math.floor( window.Math.random()*(max-min+1) ) + min;
     };
     
     /**

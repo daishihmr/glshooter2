@@ -24,9 +24,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
-	{	mov ( 1917.32 -10.2015 4893.2 ) eye deg( 45 ) }
-	{	mov ( 249.439 0.566398 -81.2221 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -68 -17 -70 )
+	{	mov ( 4419.79 -2651.45 3072.09 ) eye deg( 45 ) }
+	{	mov ( 22.0786 -74.4283 -170.621 ) target }
 	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 2.3 2.1 1 ) obj JT12 /* "JT\JT12.suf" atr "noname" */
 	}

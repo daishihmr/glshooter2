@@ -1,8 +1,7 @@
 /*							Parts Assembler
-                                  Version 2.04.051226(:
+                                  Version 2.04.080709(:
 Parts: 
 	armor\armor14.suf
-	basic\ball\ball01.suf
 	robody\robody10.suf
 	rohand\rohand14.suf
 Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
@@ -56,8 +55,5 @@ fram
 	}
 	{	mov ( -242.426 128.343 -612 ) rotz ( -53.0846 ) roty ( 32.7936 ) rotx ( -174.657 )
 		scal ( -2.17195 -1.37926 2.94 ) obj rohand14 /* "rohand\rohand14.suf" atr "noname" */
-	}
-	{	mov ( 0 0 0 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
-		scal ( 0.880811 0.880811 0.880811 ) obj ball01 /* "basic\ball\ball01.suf" atr "#01" */
 	}
 }

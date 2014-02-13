@@ -64,6 +64,10 @@ gls2.Enemy = tm.createClass(
      * 可視範囲に入った時点からの経過フレーム
      */
     frame: 0,
+    /**
+     * 攻撃はすりぬけ、自機との衝突も発生しない
+     */
+    muteki: false,
 
     /**
      * 速度
@@ -111,6 +115,8 @@ gls2.Enemy = tm.createClass(
         }
 
         this.velocity = {x:0, y:0};
+
+        this.muteki = false;
 
         if (DEBUG) {
             this.label = tm.display.Label("", 20).addChildTo(this);
@@ -300,26 +306,74 @@ gls2.Enemy = tm.createClass(
     },
 
     bossDestroy: function() {
-        // TODO ド派手にする
-        this.addEventListener("enterframe", function() {
-            if (Math.random() < 0.2) {
-                gls2.Effect.explodeS(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene, {
-                    "x": 0,
-                    "y": -3,
-                });
+        var age = 0;
+        var x = this.x;
+        var y = this.y;
+        var mexp = function() {
+            if (age % 23 === 0 || age % 37 === 0) {
+                gls2.Effect.explodeM(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene);
             }
+            age++;
+        };
+        this.on("enterframe", mexp);
+        this.on("enterframe", function() {
+            this.x += ((Math.random() * 3)-1.5);
+            this.y += ((Math.random() * 3)-1.5) + 1;
         });
-        this.tweener
-            .clear()
+        this.tweener.clear()
             .to({
-                "altitude": 4,
-                "y": this.y + 200,
-            }, 2000)
+                x: SC_W*0.5,
+                y: SC_H*0.2
+            }, 500, "easeOutQuad")
+            .wait(2000)
             .call(function() {
-                gls2.Effect.explodeL(this.x, this.y, this.gameScene);
+                this.off("enterframe", mexp);
+            }.bind(this))
+            .wait(500)
+            .call(function() {
+                gls2.LargeExplodeEffect(this.x, this.y, this.gameScene);
+            }.bind(this))
+            .wait(2000)
+            .call(function() {
                 this.remove();
             }.bind(this));
     },
+
+    lastBossDestroy: function() {
+        var age = 0;
+        var x = this.x;
+        var y = this.y;
+        var mexp = function() {
+            if (age % 23 === 0 || age % 37 === 0 || age % 53 === 0) {
+                gls2.Effect.explodeL(this.x + gls2.math.rand(-100, 100), this.y + gls2.math.rand(-40, 40), this.gameScene);
+            }
+            age++;
+        };
+        this.on("enterframe", mexp);
+        var baseX = this.x;
+        var baseY = this.y;
+        var yy = 0;
+        this.on("enterframe", function() {
+            this.x = baseX + ((Math.random() * 3)-1.5);
+            this.y = baseY + ((Math.random() * 3)-1.5) + yy;
+            yy += 1;
+        });
+        this.tweener.clear()
+            .wait(2000)
+            .call(function() {
+                this.off("enterframe", mexp);
+            }.bind(this))
+            .wait(500)
+            .call(function() {
+                for (var i = 0; i < 8; i++) {
+                    gls2.LargeExplodeEffect(this.x+Math.cos(Math.PI*2*i/8)*80, this.y+Math.sin(Math.PI*2*i/8)*80, this.gameScene);
+                }
+            }.bind(this))
+            .wait(2000)
+            .call(function() {
+                this.remove();
+            }.bind(this));
+    }
 
 });
 

@@ -29,9 +29,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -50 -49 -70 )
-	{	mov ( 5165.5 -0.000000000001 1889.73 ) eye deg( 45 ) }
-	{	mov ( -888.89 0 355.71 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -7 -70 )
+	{	mov ( 3270.02 -4297.1 1478.97 ) eye deg( 45 ) }
+	{	mov ( -1531.18 -409.168 309.622 ) target }
 	{	mov ( -50 0 100 ) rotz ( 90 ) roty ( 0 ) rotx ( 120 )
 		scal ( 1 2.4 2.1 ) obj SL10 /* "SL\SL10.suf" atr "#01" */
 	}

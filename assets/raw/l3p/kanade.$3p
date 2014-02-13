@@ -1,0 +1,279 @@
+/*							Parts Assembler
+                                  Version 2.04.080709(:
+Parts: 
+	F1\F110.suf
+	F2\F209.suf
+	G1\G102.suf
+	G1\G106.suf
+	G1\G107.suf
+	SL\SL14.suf
+	mecha\planeetc\HCEG02.suf
+	mecha\planeetc\PLEG03.suf
+	mecha\sfcar\sfcar07.suf
+	mecha\sfnozzle\EG10.suf
+	mecha\sfnozzle\EG13.suf
+	roarm\roarm11.suf
+	robody\robody11.suf
+	robody\robody13.suf
+	robody\robody14.suf
+	robody\robody16.suf
+	roetc\roetc01.suf
+	roetc\roetc04.suf
+	roetc\roetc07.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: ( -90.758 -51.206 -83.591 )
+	DisplayScale: 0.353553390593
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 1
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr "#01" { col ( rgb ( 0.400 0.400 0.450 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
+	1: atr noname { col ( rgb ( 0.920 0.900 0.920 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.300 1.000 ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 )  50  49 -70 )
+	{	mov ( -1708.07 -1.47609 3718.98 ) eye deg( 45 ) }
+	{	mov ( -1100.36 -6.77944 -75.1865 ) target }
+	{	mov ( -2093.64 568.755 0 ) rotz ( 8.83014 ) roty ( 0 ) rotx ( 90 )
+		scal ( 0.923605 -0.6 1.2 ) obj robody16 /* "robody\robody16.suf" atr "noname" */
+	}
+	{	mov ( -2503.48 619.385 0 ) rotz ( -48.6843 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1.00505 -0.6 0.527439 ) obj F209 /* "F2\F209.suf" atr "noname" */
+	}
+	{	mov ( -1762 850 0 ) rotz ( -67.9576 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1.85505 -0.609415 0.699562 ) obj robody14 /* "robody\robody14.suf" atr "noname" */
+	}
+	{	mov ( -1762 -850 0 ) rotz ( 67.9576 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1.85505 0.609415 0.699562 ) obj robody14 /* "robody\robody14.suf" atr "noname" */
+	}
+	{	mov ( -1270 -144 0 ) rotz ( 12.2505 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 1.58661 1.364 ) obj EG10 /* "mecha\sfnozzle\EG10.suf" atr "noname" */
+	}
+	{	mov ( -1270 144 0 ) rotz ( -12.2505 ) roty ( 0 ) rotx ( 0 )
+		scal ( 1 -1.58661 1.364 ) obj EG10 /* "mecha\sfnozzle\EG10.suf" atr "noname" */
+	}
+	{	mov ( -654 -301.74 -184 ) rotz ( 5.92571 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.34891 3.14593 1 ) obj sfcar07 /* "mecha\sfcar\sfcar07.suf" atr "noname" */
+	}
+	{	mov ( -960 8 -104 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 4.4 1.456 1.456 ) obj roetc07 /* "roetc\roetc07.suf" atr "noname" */
+	}
+	{	mov ( -2093.64 -568.755 0 ) rotz ( -8.83014 ) roty ( 0 ) rotx ( -90 )
+		scal ( 0.923605 0.6 1.2 ) obj robody16 /* "robody\robody16.suf" atr "noname" */
+	}
+	{	mov ( -2503.48 -619.385 0 ) rotz ( 48.6843 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1.00505 0.6 0.527439 ) obj F209 /* "F2\F209.suf" atr "noname" */
+	}
+	{	mov ( 100 408 -64 ) rotz ( 70 ) roty ( 0 ) rotx ( -90 )
+		scal ( 2 1.8 2.7 ) obj roetc04 /* "roetc\roetc04.suf" atr "noname" */
+	}
+	{	mov ( 100 -408 -64 ) rotz ( -70 ) roty ( 0 ) rotx ( 90 )
+		scal ( 2 -1.8 2.7 ) obj roetc04 /* "roetc\roetc04.suf" atr "noname" */
+	}
+	{	mov ( -322 -398 -136 ) rotz ( 19.3905 ) roty ( 4.51633 ) rotx ( -90 )
+		scal ( 1.5 1.5 2.23445 ) obj roetc01 /* "roetc\roetc01.suf" atr "noname" */
+	}
+	{	mov ( -322 398 -136 ) rotz ( -19.3905 ) roty ( 4.51633 ) rotx ( 90 )
+		scal ( 1.5 -1.5 2.23445 ) obj roetc01 /* "roetc\roetc01.suf" atr "noname" */
+	}
+	{	mov ( -654 301.74 -184 ) rotz ( -5.92571 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.34891 -3.14593 1 ) obj sfcar07 /* "mecha\sfcar\sfcar07.suf" atr "noname" */
+	}
+	{	mov ( -1776.09 0 223.446 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.547336 0.472538 1.0488 ) obj SL14 /* "SL\SL14.suf" atr "noname" */
+	}
+	{	mov ( -1456 -120 160 ) rotz ( -44.6632 ) roty ( -9.82606 ) rotx ( -103.877 )
+		scal ( 0.931806 0.483694 1.19129 ) obj roarm11 /* "roarm\roarm11.suf" atr "noname" */
+	}
+	{	mov ( -1456 120 160 ) rotz ( 44.6632 ) roty ( -9.82606 ) rotx ( 103.877 )
+		scal ( 0.931806 -0.483694 1.19129 ) obj roarm11 /* "roarm\roarm11.suf" atr "noname" */
+	}
+	{	mov ( 1072 326 -100 ) rotz ( -13.7524 ) roty ( 0 ) rotx ( -90 )
+		scal ( 1.6 0.5 1.24268 ) obj robody13 /* "robody\robody13.suf" atr "noname" */
+	}
+	{	mov ( 1072 -326 -100 ) rotz ( 13.7524 ) roty ( 0 ) rotx ( 90 )
+		scal ( 1.6 -0.5 1.24268 ) obj robody13 /* "robody\robody13.suf" atr "noname" */
+	}
+	{	mov ( 153.681 0 153.948 ) rotz ( 0 ) roty ( 13.069 ) rotx ( 0 )
+		scal ( 0.460497 0.397567 0.882404 ) obj SL14 /* "SL\SL14.suf" atr "noname" */
+	}
+	{	mov ( 403.939 -100.961 41.0551 ) rotz ( -43.84 ) roty ( -0.444952 ) rotx ( -113.024 )
+		scal ( 0.783968 0.406953 1.00229 ) obj roarm11 /* "roarm\roarm11.suf" atr "noname" */
+	}
+	{	mov ( 403.939 100.961 41.0551 ) rotz ( 43.84 ) roty ( -0.444952 ) rotx ( 113.024 )
+		scal ( 0.783968 -0.406953 1.00229 ) obj roarm11 /* "roarm\roarm11.suf" atr "noname" */
+	}
+	{	mov ( 900 0 -306 ) rotz ( 180 ) roty ( 0 ) rotx ( 0 )
+		scal ( 2.1 1 0.865693 ) obj robody11 /* "robody\robody11.suf" atr "noname" */
+	}
+	{	mov ( -842 -400 -150 ) rotz ( 19.3905 ) roty ( 4.51633 ) rotx ( -90 )
+		scal ( 1.5 1.5 2.23445 ) obj roetc01 /* "roetc\roetc01.suf" atr "noname" */
+	}
+	{	mov ( -842 400 -150 ) rotz ( -19.3905 ) roty ( 4.51633 ) rotx ( 90 )
+		scal ( 1.5 -1.5 2.23445 ) obj roetc01 /* "roetc\roetc01.suf" atr "noname" */
+	}
+	{	mov ( -242.897 399.984 -27.8212 ) rotz ( 150 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.347123 0.495889 0.495889 ) obj G107 /* "G1\G107.suf" atr "noname" */
+	}
+	{	mov ( -181.469 545.91 56.2008 ) rotz ( 134.569 ) roty ( 1.75622 ) rotx ( 57.9496 )
+		scal ( 0.360571 0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -181.469 545.91 40.2461 ) rotz ( 134.569 ) roty ( 1.75622 ) rotx ( 107.61 )
+		scal ( 0.360571 0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -338.558 273.822 56.2008 ) rotz ( 165.431 ) roty ( 1.75622 ) rotx ( -57.9496 )
+		scal ( 0.360571 -0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -338.558 273.822 40.2461 ) rotz ( 165.431 ) roty ( 1.75622 ) rotx ( -107.61 )
+		scal ( 0.360571 -0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -230.359 392.745 101.263 ) rotz ( 150 ) roty ( -82.7315 ) rotx ( 180 )
+		scal ( 0.0991779 0.387414 1.04137 ) obj HCEG02 /* "mecha\planeetc\HCEG02.suf" atr "noname" */
+	}
+	{	mov ( -404.241 608.5 165.626 ) rotz ( 150 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.206965 0.601925 0.463021 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( -504.149 435.454 165.626 ) rotz ( 150 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.206965 -0.601925 0.463021 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( -817.897 372.984 98.1494 ) rotz ( 150 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.347123 0.495889 0.495889 ) obj G107 /* "G1\G107.suf" atr "noname" */
+	}
+	{	mov ( -756.469 518.91 182.171 ) rotz ( 134.569 ) roty ( 1.75622 ) rotx ( 57.9496 )
+		scal ( 0.360571 0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -756.469 518.91 166.217 ) rotz ( 134.569 ) roty ( 1.75622 ) rotx ( 107.61 )
+		scal ( 0.360571 0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -913.558 246.822 182.171 ) rotz ( 165.431 ) roty ( 1.75622 ) rotx ( -57.9496 )
+		scal ( 0.360571 -0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -913.558 246.822 166.217 ) rotz ( 165.431 ) roty ( 1.75622 ) rotx ( -107.61 )
+		scal ( 0.360571 -0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -805.359 365.745 227.234 ) rotz ( 150 ) roty ( -82.7315 ) rotx ( 180 )
+		scal ( 0.0991779 0.387414 1.04137 ) obj HCEG02 /* "mecha\planeetc\HCEG02.suf" atr "noname" */
+	}
+	{	mov ( -979.241 581.5 291.596 ) rotz ( 150 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.206965 0.601925 0.463021 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( -1079.15 408.454 291.596 ) rotz ( 150 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.206965 -0.601925 0.463021 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( -242.897 -399.984 -27.8212 ) rotz ( -150 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.347123 -0.495889 0.495889 ) obj G107 /* "G1\G107.suf" atr "noname" */
+	}
+	{	mov ( -181.469 -545.91 56.2008 ) rotz ( -134.569 ) roty ( 1.75622 ) rotx ( -57.9496 )
+		scal ( 0.360571 -0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -181.469 -545.91 40.2461 ) rotz ( -134.569 ) roty ( 1.75622 ) rotx ( -107.61 )
+		scal ( 0.360571 -0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -338.558 -273.822 56.2008 ) rotz ( -165.431 ) roty ( 1.75622 ) rotx ( 57.9496 )
+		scal ( 0.360571 0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -338.558 -273.822 40.2461 ) rotz ( -165.431 ) roty ( 1.75622 ) rotx ( 107.61 )
+		scal ( 0.360571 0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -230.359 -392.745 101.263 ) rotz ( -150 ) roty ( -82.7315 ) rotx ( -180 )
+		scal ( 0.0991779 -0.387414 1.04137 ) obj HCEG02 /* "mecha\planeetc\HCEG02.suf" atr "noname" */
+	}
+	{	mov ( -404.241 -608.5 165.626 ) rotz ( -150 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.206965 -0.601925 0.463021 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( -504.149 -435.454 165.626 ) rotz ( -150 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.206965 0.601925 0.463021 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( -817.897 -372.984 98.1494 ) rotz ( -150 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.347123 -0.495889 0.495889 ) obj G107 /* "G1\G107.suf" atr "noname" */
+	}
+	{	mov ( -756.469 -518.91 182.171 ) rotz ( -134.569 ) roty ( 1.75622 ) rotx ( -57.9496 )
+		scal ( 0.360571 -0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -756.469 -518.91 166.217 ) rotz ( -134.569 ) roty ( 1.75622 ) rotx ( -107.61 )
+		scal ( 0.360571 -0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -913.558 -246.822 182.171 ) rotz ( -165.431 ) roty ( 1.75622 ) rotx ( 57.9496 )
+		scal ( 0.360571 0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -913.558 -246.822 166.217 ) rotz ( -165.431 ) roty ( 1.75622 ) rotx ( 107.61 )
+		scal ( 0.360571 0.242869 0.685086 ) obj EG13 /* "mecha\sfnozzle\EG13.suf" atr "noname" */
+	}
+	{	mov ( -805.359 -365.745 227.234 ) rotz ( -150 ) roty ( -82.7315 ) rotx ( -180 )
+		scal ( 0.0991779 -0.387414 1.04137 ) obj HCEG02 /* "mecha\planeetc\HCEG02.suf" atr "noname" */
+	}
+	{	mov ( -979.241 -581.5 291.596 ) rotz ( -150 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.206965 -0.601925 0.463021 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( -1079.15 -408.454 291.596 ) rotz ( -150 ) roty ( -23.1784 ) rotx ( 0 )
+		scal ( 0.206965 0.601925 0.463021 ) obj PLEG03 /* "mecha\planeetc\PLEG03.suf" atr "noname" */
+	}
+	{	mov ( -1645.06 241.745 287.131 ) rotz ( 50 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.12 0.24 0.3 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( -1645.06 241.745 287.131 ) rotz ( 140 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.12 -0.24 0.3 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( -1645.06 -241.745 287.131 ) rotz ( -50 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.12 -0.24 0.3 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( -1645.06 -241.745 287.131 ) rotz ( -140 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.12 0.24 0.3 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( 762.225 492.426 95.2548 ) rotz ( 135.022 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.517474 0.684932 0.684932 ) obj G102 /* "G1\G102.suf" atr "noname" */
+	}
+	{	mov ( 651.917 452.828 94.1942 ) rotz ( 140.444 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.517474 0.684932 0.684932 ) obj G102 /* "G1\G102.suf" atr "noname" */
+	}
+	{	mov ( 510.495 396.26 98.7904 ) rotz ( 140.444 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.517474 0.684932 0.684932 ) obj G102 /* "G1\G102.suf" atr "noname" */
+	}
+	{	mov ( 762.225 -492.426 95.2548 ) rotz ( -135.022 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.517474 -0.684932 0.684932 ) obj G102 /* "G1\G102.suf" atr "noname" */
+	}
+	{	mov ( 651.917 -452.828 94.1942 ) rotz ( -140.444 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.517474 -0.684932 0.684932 ) obj G102 /* "G1\G102.suf" atr "noname" */
+	}
+	{	mov ( 510.495 -396.26 98.7904 ) rotz ( -140.444 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.517474 -0.684932 0.684932 ) obj G102 /* "G1\G102.suf" atr "noname" */
+	}
+	{	mov ( 50 450 88.6863 ) rotz ( 131.869 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.456799 0.456799 0.456799 ) obj G106 /* "G1\G106.suf" atr "noname" */
+	}
+	{	mov ( 50 -450 88.6863 ) rotz ( -131.869 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.456799 -0.456799 0.456799 ) obj G106 /* "G1\G106.suf" atr "noname" */
+	}
+	{	mov ( 648.426 323.489 212.398 ) rotz ( 50 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.0748505 0.149701 0.187126 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( 648.426 323.489 212.398 ) rotz ( 140 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.0748505 -0.149701 0.187126 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( 648.426 -323.489 212.398 ) rotz ( -50 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.0748505 -0.149701 0.187126 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( 648.426 -323.489 212.398 ) rotz ( -140 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.0748505 0.149701 0.187126 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( 229.819 221.665 211.338 ) rotz ( 50 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.0748505 0.149701 0.187126 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( 229.819 221.665 211.338 ) rotz ( 140 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.0748505 -0.149701 0.187126 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( 229.819 -221.665 211.338 ) rotz ( -50 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.0748505 -0.149701 0.187126 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+	{	mov ( 229.819 -221.665 211.338 ) rotz ( -140 ) roty ( -90 ) rotx ( 0 )
+		scal ( 0.0748505 0.149701 0.187126 ) obj F110 /* "F1\F110.suf" atr "noname" */
+	}
+}

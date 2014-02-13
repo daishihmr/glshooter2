@@ -39,9 +39,9 @@ Palette:
 */
 fram
 {
-	light pal( rgb ( 1.00 1.00 1.00 ) -3.00 -2.00 -4.00 )
-	{	mov ( -662.591 0 4600 ) eye deg( 45 ) }
-	{	mov ( -5.95927 0 -150 ) target }
+	light pal( rgb ( 1.00 1.00 1.00 ) -70  -9 -70 )
+	{	mov ( 2802.65 -2162.91 2563.88 ) eye deg( 45 ) }
+	{	mov ( -129.173 86.7552 -233.974 ) target }
 	{	mov ( -200 -100 71 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
 		scal ( 0.7 1.4 1 ) obj SD01 /* "SD\SD01.suf" atr "#03" */
 	}

@@ -412,6 +412,7 @@ gls2.GetTrophyEffect = tm.createClass({
             .setAlign("left")
             .setBaseline("middle")
             .setPosition(SC_W, 0)
+            .setFillStyle("rgba(255, 255, 255, 0.5)")
             .addChildTo(this);
         this.star = tm.display.Sprite("tex3", 64, 64)
             .setScale(0.3)
@@ -427,13 +428,100 @@ gls2.GetTrophyEffect = tm.createClass({
         }
     },
     update: function() {
+        if (gls2.core.gameScene.player.y > SC_H*0.9) {
+            this.alpha = 0.1;
+        } else {
+            this.alpha = 1.0;
+        }
+
         this.label.x -= 2;
-        if (this.label.x < -SC_W) {
-            this.alpha *= 0.9;
-            if (this.alpha < 0.001) {
-                this.remove();
+        if (this.label.x < -SC_W*2) {
+            this.remove();
+        }
+    }
+});
+
+gls2.LargeExplodeEffect = tm.createClass({
+    superClass: tm.app.Object2D,
+    isEffect: true,
+
+    addTarget: null,
+    age: 0,
+
+    init: function(x, y, addTarget) {
+        this.superInit();
+        this.addTarget = addTarget;
+        this.setPosition(x, y);
+
+        this.addChildTo(addTarget);
+    },
+    "onadded": function() {
+        var soundStarted = false;;
+
+        for (var i = 0; i < 30; i++) {
+            var angle = Math.random() * 360;
+            var speed = gls2.Noise.noise[Math.floor(gls2.Noise.noise.length * angle/360)] * 50;
+
+            var position = tm.geom.Vector2(this.x, this.y);
+            var velocity = tm.geom.Vector2().setAngle(angle, speed);
+
+            var jlen = 7;
+            for (var j = 0; j < jlen; j++) {
+                var e = tm.display.Sprite("explode" + Math.floor(Math.random() * 3), 100, 100)
+                    .setPosition(this.x, this.y)
+                    .setScale(1+Math.random()*3.0)
+                    .setRotation(Math.random()*360);
+                e.dx = velocity.x * (jlen + 1 - j)*0.02;
+                e.dy = velocity.y * (jlen + 1 - j)*0.02;
+                e.frameIndex = -j*3 + Math.floor(Math.random() * -10 - 7);
+                e.update = function() {
+                    this.frameIndex += 0.3;
+
+                    if (this.frameIndex < 0) {
+                        this.visible = false;
+                        return;
+                    } else if (this.frameIndex >= 64) {
+                        this.remove();
+                        return;
+                    } else {
+                        if (!soundStarted) {
+                            soundStarted = true;
+                            gls2.playSound("explode6");
+                        }
+                    }
+
+                    this.setFrameIndex(Math.floor(this.frameIndex));
+                    this.visible = true;
+
+                    this.x += this.dx;
+                    this.y += this.dy;
+
+                    this.blendMode = this.frameIndex < 10 ? "lighter" : "source-over";
+                };
+                e.isEffect = true;
+                e.addChildTo(this.addTarget);
             }
         }
+
+        var p = gls2.Particle(500, 0.001, 1.003);
+        for (var i = 0; i < 80; i++) {
+            var angle = Math.random() * 360;
+            var speed = gls2.Noise.noise[Math.floor(gls2.Noise.noise.length * angle/360)] * 15;
+            var c = p.clone().setPosition(this.x, this.y).addChildTo(this.addTarget);
+            c.velocity = tm.geom.Vector2().setAngle(angle, speed);
+            c.position.add(tm.geom.Vector2.mul(c.velocity, -40));
+            c.setScale(0.1, 0.1);
+            c.age = 0;
+            c.on("enterframe", function() {
+                this.age += 1;
+                this.position.add(this.velocity);
+                this.scaleX += 0.01;
+                this.scaleY += 0.01;
+                if (this.age > 80) this.alphaDecayRate = 0.99;
+            });
+        }
+
+        this.remove();
     }
 });
 

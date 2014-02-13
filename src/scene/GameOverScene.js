@@ -27,6 +27,7 @@ gls2.GameOverScene = tm.createClass(
 
         this.on("enter", function() {
             gls2.playBgm("gameover");
+            if (!this.tried) this.sendScore();
         });
     },
     update: function(app) {
@@ -41,24 +42,37 @@ gls2.GameOverScene = tm.createClass(
         canvas.clearColor("black");
     },
 
+    tried: false,
     posted: false,
     wait: false,
     scoreId: null,
+
+    sendScore: function() {
+        this.wait = true;
+        this.tried = true;
+        this.app.postScore(null, function(error, success, scoreId) {
+            this.wait = false;
+            if (error) {
+                this.openErrorDialog(error);
+            } else if (success) {
+                this.posted = true;
+                this.scoreId = scoreId;
+                this.openSuccessDialog();
+            } else {
+                this.openMenu();
+            }
+        }.bind(this));
+    },
 
     openMenu: function() {
         if (this.wait) return;
         this.opened = true;
 
-        var menu = [ "save score", "tweet result", "back to title" ];
+        var menu = [ "tweet result", "back to title" ];
         var labels = [
-            "スコアをランキングサーバーへ送信します",
             "スコアをTwitterへ投稿します",
             "タイトルへ戻ります"
         ];
-        if (this.posted) {
-            menu.shift();
-            labels.shift();
-        }
 
         this.openDialogMenu("GAME OVER", menu, this.onResultMenu, {
             "defaultValue": this.posted ? 1 : 0,
@@ -68,27 +82,7 @@ gls2.GameOverScene = tm.createClass(
     },
 
     onResultMenu: function(result) {
-        if (this.posted) {
-            result += 1;
-        }
         if (result === 0) {
-            if (this.posted) {
-                return;
-            }
-            this.wait = true;
-            this.app.postScore(null, function(error, success, scoreId) {
-                this.wait = false;
-                if (error) {
-                    this.openErrorDialog(error);
-                } else if (success) {
-                    this.posted = true;
-                    this.scoreId = scoreId;
-                    this.openSuccessDialog();
-                } else {
-                    this.openMenu();
-                }
-            }.bind(this));
-        } else if (result === 1) {
             this.tweetScore();
         } else {
             this.app.replaceScene(gls2.TitleScene());
@@ -112,7 +106,7 @@ gls2.GameOverScene = tm.createClass(
     tweetScore: function() {
         var text = "TM-Shooter SCORE: {score} {stage} {type}-{style} continue:{cont}".format({
             "score": Math.floor(this.app.gameScene.score),
-            "stage": this.app.gameScene.stageNumber < gls2.Setting.STAGE_NUMBER ? ("Stage" + (this.app.gameScene.stageNumber + 1)) : "ALL",
+            "stage": this.app.gameScene.stageNumber < STAGE_NUMBER ? ("Stage" + (this.app.gameScene.stageNumber + 1)) : "ALL",
             "type": "ABC"[this.app.gameScene.player.type],
             "style": ["S", "L", "EX"][this.app.gameScene.player.style],
             "cont": this.app.gameScene.continueCount
@@ -120,7 +114,7 @@ gls2.GameOverScene = tm.createClass(
         var twitterURL = tm.social.Twitter.createURL({
             "type"    : "tweet",
             "text"    : text,
-            "hashtags": gls2.Setting.HASH_TAG,
+            "hashtags": HASH_TAG,
             "url"     : this.scoreId ? (window.location.origin + "/ranking/" + this.scoreId) : window.location.origin
         });
         window.open(twitterURL, "tweet", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
