@@ -445,15 +445,15 @@ gls2.LargeExplodeEffect = tm.createClass({
     superClass: tm.app.Object2D,
     isEffect: true,
 
-    gameScene: null,
+    addTarget: null,
     age: 0,
 
-    init: function(x, y, gameScene) {
+    init: function(x, y, addTarget) {
         this.superInit();
-        this.gameScene = gameScene;
+        this.addTarget = addTarget;
         this.setPosition(x, y);
 
-        this.addChildTo(gameScene);
+        this.addChildTo(addTarget);
     },
     "onadded": function() {
         var soundStarted = false;;
@@ -499,7 +499,7 @@ gls2.LargeExplodeEffect = tm.createClass({
                     this.blendMode = this.frameIndex < 10 ? "lighter" : "source-over";
                 };
                 e.isEffect = true;
-                e.addChildTo(this.gameScene);
+                e.addChildTo(this.addTarget);
             }
         }
 
@@ -507,7 +507,7 @@ gls2.LargeExplodeEffect = tm.createClass({
         for (var i = 0; i < 80; i++) {
             var angle = Math.random() * 360;
             var speed = gls2.Noise.noise[Math.floor(gls2.Noise.noise.length * angle/360)] * 15;
-            var c = p.clone().setPosition(this.x, this.y).addChildTo(this.gameScene);
+            var c = p.clone().setPosition(this.x, this.y).addChildTo(this.addTarget);
             c.velocity = tm.geom.Vector2().setAngle(angle, speed);
             c.position.add(tm.geom.Vector2.mul(c.velocity, -40));
             c.setScale(0.1, 0.1);
@@ -520,6 +520,8 @@ gls2.LargeExplodeEffect = tm.createClass({
                 if (this.age > 80) this.alphaDecayRate = 0.99;
             });
         }
+
+        this.remove();
     }
 });
 

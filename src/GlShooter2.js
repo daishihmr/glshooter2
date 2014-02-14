@@ -100,7 +100,6 @@ gls2.GlShooter2 = tm.createClass(
             "sound/decision": "assets2/se_maoudamashii_system03.mp3",
             "sound/achevement": "assets2/se_maoudamashii_system46.mp3",
             // TODO
-            // "sound/extend": "",
             // "sound/hyper": "",
 
             // voice
@@ -203,15 +202,17 @@ gls2.GlShooter2 = tm.createClass(
 
         this.gameScene = gls2.GameScene();
 
-        tm.asset.Loader().load({
-            "bgm2": "assets2/nc28687.mp3",
-            "bgm3": "assets2/nc80728.mp3",
-            "bgm4": "assets2/nc67876.mp3",
-            "bgm5": "assets2/nc60627.mp3",
-            "bgmBoss": "assets2/nc29206.mp3",
-            "bgmResult": "assets2/nc54077.mp3",
-            "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
-        });
+        if (!DEBUG) {
+            tm.asset.Loader().load({
+                "bgm2": "assets2/nc28687.mp3",
+                "bgm3": "assets2/nc80728.mp3",
+                "bgm4": "assets2/nc67876.mp3",
+                "bgm5": "assets2/nc60627.mp3",
+                "bgmBoss": "assets2/nc29206.mp3",
+                "bgmResult": "assets2/nc54077.mp3",
+                "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
+            });
+        }
     },
 
     exitApp: function() {
@@ -236,7 +237,15 @@ gls2.GlShooter2 = tm.createClass(
             "shipType": this.gameScene.player.type,
             "shipStyle": this.gameScene.player.style,
             "fps": avgFps,
-            "screenShot": this.gameScene.screenShot
+            "screenShot": this.gameScene.screenShot,
+            "scoreByStage": this.gameScene.scoreByStage,
+            "fpsAvgByStage": this.gameScene.fpsAvgByStage,
+            "missCountByStage": this.gameScene.missCountByStage,
+            "continueCountByStage": this.gameScene.continueCountByStage,
+            "bombCountByStage": this.gameScene.bombCountByStage,
+            "autoBombCountByStage": this.gameScene.autoBombCountByStage,
+            "hyperCountByStage": this.gameScene.hyperCountByStage,
+            "hyperLevelHistory": this.gameScene.hyperLevelHistory,
         };
         if (userName) {
             data["userName"] = userName;
@@ -284,13 +293,13 @@ gls2.GlShooter2 = tm.createClass(
     getAnonName: function() {
         return [
             "名無しシューター",
-            "大佐",
-            "レイニャンにゃん",
-            "アイたそ",
-            "ぱふぇ☆",
-            "能登真璃亜",
-            "にゃんぱすー(30)",
-            "相田総理"
+            "名無し大佐",
+            "名無しにゃん",
+            "名無したそ",
+            "名無し☆",
+            "能登名無し",
+            "名無し(30)",
+            "名無し総理"
         ]["pickup"]();
     },
 

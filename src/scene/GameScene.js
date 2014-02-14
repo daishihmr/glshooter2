@@ -837,7 +837,7 @@ gls2.GameScene = tm.createClass(
         var frame = (this.stageEndFrame - this.stageStartFrame) - this.pauseFrameTotal;
 
         this.fpsAvgByStage[this.stageNumber] = frame / time * 1000;
-        console.log("this.fpsAvgByStage[" + this.stageNumber + "] = " + this.fpsAvgByStage[this.stageNumber]);
+        // console.log("this.fpsAvgByStage[" + this.stageNumber + "] = " + this.fpsAvgByStage[this.stageNumber]);
     },
 
     addScore: function(score) {
@@ -983,8 +983,9 @@ gls2.GameScene = tm.createClass(
     },
 
     extendZanki: function() {
-        // TODO エクステンドエフェクト
+        // エクステンドエフェクト
         gls2.playSound("voExtend");
+        gls2.playSound("decision");
         this.println("extended.");
         this.zanki += 1;
     },

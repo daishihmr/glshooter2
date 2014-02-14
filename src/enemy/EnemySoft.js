@@ -2054,9 +2054,12 @@ gls2.EnemySoft.Hibiki1 = tm.createClass(
     init: function() {
         this.superInit();
         this.patterns = [
-            "hibiki-1-1",
+            "hibiki-1-1a",
             "hibiki-1-2",
-            "hibiki-1-3",
+            "hibiki-1-3a",
+            "hibiki-1-1b",
+            "hibiki-1-2",
+            "hibiki-1-3b",
         ];
     },
     setup: function(enemy) {
@@ -2071,18 +2074,6 @@ gls2.EnemySoft.Hibiki1 = tm.createClass(
             .call(function() {
                 this.startAttack = true;
                 this.dispatchEvent(tm.event.Event("completeattack"));
-
-                var temp = function() {
-                    var d = gls2.FixedRandom.randf(SC_W*-0.1, SC_W*0.1);
-                    this.tweener
-                        .move(
-                            Math.clamp(this.player.x, SC_W*0.1, SC_W*0.9) + d*0.3,
-                            SC_H*0.2 + d*0.3,
-                            3000, "easeInOutQuad"
-                        )
-                        .call(temp);
-                }.bind(this);
-                temp();
             }.bind(enemy));
 
         enemy.on("completeattack", function() {
@@ -2099,6 +2090,8 @@ gls2.EnemySoft.Hibiki2 = tm.createClass(
 {
     superClass: gls2.EnemySoft,
     patterns: null,
+    positionsX: [262, 267, 320, 107, 407, 149, 306, 319, 301, 149, 248, 201, 378],
+    positionsY: [257, 167, 268, 209, 233, 113, 268, 231, 92, 235, 170, 122, 87],
     /**
      * @constructs
      */
@@ -2114,17 +2107,32 @@ gls2.EnemySoft.Hibiki2 = tm.createClass(
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
         enemy.patterns = [].concat(this.patterns);
+
+        var positionsX = this.positionsX;
+        var positionsY = this.positionsY;
+        var pp = 0;
+
         enemy.tweener.clear()
+            .wait(10)
+            .call(function() {
+                // ドリー
+                this.stage.launchEnemy({ "hard": gls2.Enemy.Dory, "soft": gls2.EnemySoft.Dory(this, "dory"), "x": SC_W/2, "y": SC_H*-0.3 });
+                // ミリー
+                this.stage.launchEnemy({ "hard": gls2.Enemy.Miry, "soft": gls2.EnemySoft.Miry(this, "miry"), "x": SC_W/2, "y": SC_H*-0.3 });
+                // スクロール速度アップ
+                this.gameScene.ground.tweener.clear().to({
+                    speed: 16,
+                }, 5000);
+            }.bind(enemy))
             .wait(800)
             .call(function() {
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
-                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.4, 3000, "easeInOutQuad")
+                        .move(positionsX[pp], positionsY[pp], 3000, "easeInOutQuad")
                         .call(temp);
+                    pp = (pp+1) % positionsX.length;
                 }.bind(this);
                 temp();
             }.bind(enemy));
@@ -2157,18 +2165,12 @@ gls2.EnemySoft.Hibiki3 = tm.createClass(
 
         enemy.patterns = [].concat(this.patterns);
         enemy.tweener.clear()
-            .wait(800)
+            .to({
+                x: SC_W/2,
+                y: SC_H*0.2
+            }, 1000, "easeOutQuad")
             .call(function() {
                 this.dispatchEvent(tm.event.Event("completeattack"));
-
-                var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
-                    this.tweener
-                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.3, 1500, "easeInOutQuad")
-                        .call(temp);
-                }.bind(this);
-                temp();
             }.bind(enemy));
 
         enemy.on("completeattack", function() {
@@ -2177,9 +2179,123 @@ gls2.EnemySoft.Hibiki3 = tm.createClass(
             gls2.EnemySoft.attack(this, pattern);
             this.patterns.push(pattern);
         });
+
+        enemy.on("destroy", function() {
+            if (this.dory.parent) {
+                this.dory.remove();
+            }
+            if (this.miry.parent) {
+                this.miry.remove();
+            }
+            // スクロール速度ダウン
+            this.gameScene.ground.tweener.clear().to({
+                speed: 1,
+            }, 5000);
+        });
     },
 });
 gls2.EnemySoft.Hibiki3 = gls2.EnemySoft.Hibiki3();
+/**
+ * 響ビット
+ */
+gls2.EnemySoft.HibikiBit = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+
+    hibiki: null,
+    patternName: null,
+
+    positions: null,
+
+    /**
+     * @constructs
+     */
+    init: function(hibiki, patternName) {
+        this.superInit();
+        this.hibiki = hibiki;
+        this.patternName = patternName;
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+        gls2.EnemySoft.attack(enemy, this.patternName);
+
+        var pp = 0;
+        var positions = this.positions;
+        var hibiki = this.hibiki;
+        var temp = function() {
+            this.tweener.clear()
+                .to({
+                    x: positions[pp].x + hibiki.x,
+                    y: positions[pp].y + hibiki.y,
+                }, 5000, "easeInOutSine")
+                .call(temp);
+            pp = (pp+1)%positions.length;
+        }.bind(enemy);
+        temp();
+    }
+});
+/**
+ * ドリー
+ */
+gls2.EnemySoft.Dory = tm.createClass(
+{
+    superClass: gls2.EnemySoft.HibikiBit,
+
+    /**
+     * @constructs
+     */
+    init: function(hibiki, patternName) {
+        this.superInit(hibiki, patternName);
+        this.positions = [
+            { x:-140, y:-100 },
+            { x:+140, y:-100 },
+            { x:+140, y:+120 },
+            { x:-140, y:+120 }
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.HibikiBit.prototype.setup.call(this, enemy);
+
+        var hibiki = this.hibiki;
+        hibiki.dory = enemy;
+        enemy.on("destroy", function() {
+            if (hibiki.hp > 0) {
+                this.stage.launchEnemy({ "hard": gls2.Enemy.Dory, "soft": gls2.EnemySoft.Dory(hibiki, "dory"), "x": SC_W/2, "y": SC_H*-0.3 });
+            }
+        });
+    }
+});
+/**
+ * ミリー
+ */
+gls2.EnemySoft.Miry = tm.createClass(
+{
+    superClass: gls2.EnemySoft.HibikiBit,
+
+    /**
+     * @constructs
+     */
+    init: function(hibiki, patternName) {
+        this.superInit(hibiki, patternName);
+        this.positions = [
+            { x:+140, y:+120 },
+            { x:-140, y:+120 },
+            { x:-140, y:-100 },
+            { x:+140, y:-100 }
+        ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.HibikiBit.prototype.setup.call(this, enemy);
+
+        var hibiki = this.hibiki;
+        hibiki.miry = enemy;
+        enemy.on("destroy", function() {
+            if (hibiki.hp > 0) {
+                this.stage.launchEnemy({ "hard": gls2.Enemy.Miry, "soft": gls2.EnemySoft.Miry(hibiki, "miry"), "x": SC_W/2, "y": SC_H*-0.3 });
+            }
+        });
+    }
+});
 
 })();
 

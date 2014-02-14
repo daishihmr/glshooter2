@@ -34,10 +34,11 @@ gls2.Enemy.DATA = {
     "hyuga":     [  6000,  3000000, false,  true,  0, {"width":240, "height":80}, ],
     "hishikawa": [  2000,  2000000, false,  true, 20, {"radius":130}, ],
     "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
-    // "aida":      [     1,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
     "minamino":  [  1500,  5000000,  true,  true, 30, {"width": 180, "heightTop":-(-350-25), "heightBottom":-350+25} ],
-    "houjou":    [ 10000,  8000000, false,  true,  0, {"width":300, "heightBottom":85, "heightTop":60}, ],
+    "houjou":    [ 10000,  8000000, false,  true,  0, {"width":220, "heightBottom":100, "heightTop":60}, ],
+    "dory":      [   150,     2000, false,  true,  5, {"radius": 24} ],
     "rery":      [   250,     2000,  true, false,  5, {"radius": 24} ],
+    "miry":      [   150,     2000, false,  true,  5, {"radius": 24} ],
     "fary":      [   200,     2000,  true, false,  5, {"radius": 24} ],
     "sory":      [   350,     2000,  true, false,  5, {"radius": 24} ],
     "lary":      [   300,     2000,  true,  true,  5, {"radius": 24} ],
@@ -1373,8 +1374,8 @@ gls2.Enemy.Kanade = tm.createClass(
                 this.off("enterframe", mexp);
             }.bind(this))
             .call(function() {
-                gls2.LargeExplodeEffect(this.x, this.y-300, this.gameScene);
-                gls2.LargeExplodeEffect(this.x, this.y+  0, this.gameScene);
+                gls2.LargeExplodeEffect(this.x, this.y-300, this.gameScene.fallDownLayer);
+                gls2.LargeExplodeEffect(this.x, this.y+  0, this.gameScene.fallDownLayer);
             }.bind(this))
             .wait(2000)
             .call(function() {
@@ -1438,8 +1439,6 @@ gls2.Enemy.Rery = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "rery", "kanade-cannon", 0);
         this.setScale(1.6*KANADE_SCALE);
-        // dory
-        // miry
     }
 });
 /**
@@ -1522,10 +1521,13 @@ gls2.Enemy.Hibiki = tm.createClass(
 {
     superClass: gls2.Boss,
 
+    dory: null,
+    miry: null,
+
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "houjou");
         this._sprite = _Sprite("tex5", 64*4, 64*4).setFrameIndex(2);
-        this.setScale(2);
+        this.setScale(1.5);
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
     },
@@ -1558,12 +1560,77 @@ gls2.Enemy.Hibiki = tm.createClass(
         });
     },
     destroy: function() {
-        this.bossDestroy();
+        this.lastBossDestroy();
         gls2.core.fps = FPS;
+
+        // スクショを撮る
+        this.gameScene.screenShot = this.gameScene.shotScreen().canvas.toDataURL("image/png")
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
     },
+});
+/**
+ * ホウジョウ浮遊砲台「ドリー」
+ * @class
+ * @extends {gls2.Enemy}
+ */
+gls2.Enemy.Dory = tm.createClass(
+/** @lends {gls2.Enemy.Dory.prototype} */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "dory");
+        this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(48);
+        this.setScale(1.5);
+        this.aura = gls2.Particle(80, 1.0, 0.8);
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+        this._sprite.setFrameIndex(48+Math.floor(app.frame/5)%3);
+        if (app.frame%2 === 0 && this.hp > 0) {
+            this.aura.clone()
+                .setPosition(this.x, this.y)
+                .addChildTo(this.gameScene);
+        }
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    }
+});
+/**
+ * ホウジョウ浮遊砲台「ミリー」
+ * @class
+ * @extends {gls2.Enemy}
+ */
+gls2.Enemy.Miry = tm.createClass(
+/** @lends {gls2.Enemy.Miry.prototype} */
+{
+    superClass: gls2.Enemy,
+
+    _sprite: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "miry");
+        this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(56);
+        this.setScale(1.5);
+        this.aura = gls2.Particle(80, 1.0, 0.8);
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.call(this, app);
+        this._sprite.setFrameIndex(56+Math.floor(app.frame/5)%3);
+        if (app.frame%2 === 0 && this.hp > 0) {
+            this.aura.clone()
+                .setPosition(this.x, this.y)
+                .addChildTo(this.gameScene);
+        }
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    }
 });
 
 /**
