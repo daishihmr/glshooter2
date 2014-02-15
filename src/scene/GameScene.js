@@ -116,6 +116,9 @@ gls2.GameScene = tm.createClass(
 
     screenShot: null,
 
+    /** ハイパーチャージ開始フレーム */
+    hyperChargeStart: 0,
+
     /** ステージごとのスコア */
     scoreByStage: null,
     /** ステージごとの平均FPS */
@@ -156,6 +159,9 @@ gls2.GameScene = tm.createClass(
 
     /** オーラ撃ち成立フレーム数 */
     auraAttackFrameTotal: 0,
+
+    /** ステージ中にCボタンを押した */
+    pressC: false,
 
     init: function() {
         if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
@@ -231,7 +237,7 @@ gls2.GameScene = tm.createClass(
         this.stage.update(app.frame);
         if (app.frame % 2 === 0) this.scoreLabel.update();
 
-        if (app.keyboard.getKeyDown("escape")) {
+        if (DEBUG && app.keyboard.getKeyDown("escape")) {
             // タイトル画面に戻る
             this.app.replaceScene(gls2.TitleScene());
             gls2.stopBgm();
@@ -246,9 +252,6 @@ gls2.GameScene = tm.createClass(
         if (DEBUG) {
             if (app.keyboard.getKeyDown("h")) {
                 this.addHyperGauge(1.2 / HYPER_CHARGE_RATE);
-            }
-            if (app.keyboard.getKey("v")) {
-
             }
         }
 
@@ -696,6 +699,8 @@ gls2.GameScene = tm.createClass(
 
         this.auraAttackFrameTotal = 0;
 
+        this.pressC = false;
+
         this.stageStartFrame = gls2.core.frame;
         this.stageStartTime = Date.now();
     },
@@ -859,12 +864,12 @@ gls2.GameScene = tm.createClass(
             gls2.core.highScoreContinueCount = this.continueCount;
         }
 
-        if (this.score >= 100000000) gls2.core.putAchevement("score100M");
-        if (this.score >= 2000000000) gls2.core.putAchevement("score2G");
-        if (this.score >= 20000000000) gls2.core.putAchevement("score20G");
-        if (this.score >= 50000000000) gls2.core.putAchevement("score50G");
-        if (this.score >= 100000000000) gls2.core.putAchevement("score100G");
         if (this.score >= 1000000000000) gls2.core.putAchevement("score1T");
+        else if (this.score >= 100000000000) gls2.core.putAchevement("score100G");
+        else if (this.score >= 50000000000) gls2.core.putAchevement("score50G");
+        else if (this.score >= 20000000000) gls2.core.putAchevement("score20G");
+        else if (this.score >= 2000000000) gls2.core.putAchevement("score2G");
+        else if (this.score >= 100000000) gls2.core.putAchevement("score100M");
     },
 
     addCombo: function(v) {
@@ -873,14 +878,15 @@ gls2.GameScene = tm.createClass(
         this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
         if (1 <= v) this.comboGauge = 1;
 
-        if (this.comboCount >= 100) this.app.putAchevement("combo100");
-        if (this.comboCount >= 1000) this.app.putAchevement("combo1000");
-        if (this.comboCount >= 10000) this.app.putAchevement("combo10000");
         if (this.comboCount >= 100000) this.app.putAchevement("combo100000");
+        else if (this.comboCount >= 10000) this.app.putAchevement("combo10000");
+        else if (this.comboCount >= 1000) this.app.putAchevement("combo1000");
+        else if (this.comboCount >= 100) this.app.putAchevement("combo100");
     },
 
     addHyperGauge: function(v) {
         if (this.hyperLevel === HYPER_LEVEL_MAX) return;
+        else if (this.hyperLevel === 0) this.hyperChargeStart = gls2.core.frame;
 
         v *= HYPER_CHARGE_RATE;
 
@@ -896,6 +902,8 @@ gls2.GameScene = tm.createClass(
                 this.println("HYPER SYSTEM, ready.", true);
                 gls2.playSound("voHyperReady");
             }
+
+            if (this.hyperLevel > 5 && gls2.core.frame-this.hyperChargeStart <= 60) gls2.core.putAchevement("hyperAndHyperAndHyper");
         }
 
         this.hyperGauge = gls2.math.clamp(this.hyperGauge + v, 0, 1);

@@ -24,7 +24,7 @@ gls2.TitleScene = tm.createClass({
 
         tm.display.Label("TM-Shooter", 50)
             .setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
-        tm.display.Label("version 1.1", 22)
+        tm.display.Label("version 1.2", 22)
             .setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
         this.highScoreLabel = tm.display.Label()
             .setPosition(SC_W * 0.5, SC_H * 0.40); //.addChildTo(this);
