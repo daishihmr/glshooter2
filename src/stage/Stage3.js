@@ -25,20 +25,6 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.tweener.clear().to({speed:6}, 5000, "easeInOutQuad");
         });
 
-        //test
-        if (DEBUG) { //消し忘れ対策
-//            this.seq.add(120, "madoka-0");
-//            this.seq.add(120, "madoka-1");
-//            this.seq.add(120, "madoka-2");
-//            this.seq.add( 60, "madoka-0");
-//            this.seq.add( 60, "alice");
-//            this.seq.add( 60, "miyuki-1");
-//            this.seq.add(300, "higashi", true); //中ボス
-//            this.seq.add( 60, "momozono", true);
-//            this.seq.add( 60, "hyuga", true);
-//            this.seq.add(2400, function() {});
-        }
-
         //0%
         this.seq.add(150, "nao2-center");
         this.seq.add( 30, "nao2-left");

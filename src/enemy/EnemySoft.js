@@ -2090,6 +2090,8 @@ gls2.EnemySoft.Hibiki2 = tm.createClass(
 {
     superClass: gls2.EnemySoft,
     patterns: null,
+    positionsX: [262, 267, 320, 107, 407, 149, 306, 319, 301, 149, 248, 201, 378],
+    positionsY: [257, 167, 268, 209, 233, 113, 268, 231, 92, 235, 170, 122, 87],
     /**
      * @constructs
      */
@@ -2104,27 +2106,33 @@ gls2.EnemySoft.Hibiki2 = tm.createClass(
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
 
-        // ドリー
-        enemy.stage.launchEnemy({ "hard": gls2.Enemy.Dory, "soft": gls2.EnemySoft.Dory(enemy, "dory"), "x": SC_W/2, "y": SC_H*-0.3 }),
-        // ミリー
-        enemy.stage.launchEnemy({ "hard": gls2.Enemy.Miry, "soft": gls2.EnemySoft.Miry(enemy, "miry"), "x": SC_W/2, "y": SC_H*-0.3 }),
-        // スクロール速度アップ
-        enemy.gameScene.ground.tweener.clear().to({
-            speed: 16,
-        }, 5000);
-
         enemy.patterns = [].concat(this.patterns);
+
+        var positionsX = this.positionsX;
+        var positionsY = this.positionsY;
+        var pp = 0;
+
         enemy.tweener.clear()
+            .wait(10)
+            .call(function() {
+                // ドリー
+                this.stage.launchEnemy({ "hard": gls2.Enemy.Dory, "soft": gls2.EnemySoft.Dory(this, "dory"), "x": SC_W/2, "y": SC_H*-0.3 });
+                // ミリー
+                this.stage.launchEnemy({ "hard": gls2.Enemy.Miry, "soft": gls2.EnemySoft.Miry(this, "miry"), "x": SC_W/2, "y": SC_H*-0.3 });
+                // スクロール速度アップ
+                this.gameScene.ground.tweener.clear().to({
+                    speed: 16,
+                }, 5000);
+            }.bind(enemy))
             .wait(800)
             .call(function() {
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
-                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.4, 3000, "easeInOutQuad")
+                        .move(positionsX[pp], positionsY[pp], 3000, "easeInOutQuad")
                         .call(temp);
+                    pp = (pp+1) % positionsX.length;
                 }.bind(this);
                 temp();
             }.bind(enemy));
@@ -2157,18 +2165,12 @@ gls2.EnemySoft.Hibiki3 = tm.createClass(
 
         enemy.patterns = [].concat(this.patterns);
         enemy.tweener.clear()
-            .wait(800)
+            .to({
+                x: SC_W/2,
+                y: SC_H*0.2
+            }, 1000, "easeOutQuad")
             .call(function() {
                 this.dispatchEvent(tm.event.Event("completeattack"));
-
-                var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
-                    this.tweener
-                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.3, 1500, "easeInOutQuad")
-                        .call(temp);
-                }.bind(this);
-                temp();
             }.bind(enemy));
 
         enemy.on("completeattack", function() {
@@ -2176,6 +2178,19 @@ gls2.EnemySoft.Hibiki3 = tm.createClass(
             var pattern = this.patterns.shift();
             gls2.EnemySoft.attack(this, pattern);
             this.patterns.push(pattern);
+        });
+
+        enemy.on("destroy", function() {
+            if (this.dory.parent) {
+                this.dory.remove();
+            }
+            if (this.miry.parent) {
+                this.miry.remove();
+            }
+            // スクロール速度ダウン
+            this.gameScene.ground.tweener.clear().to({
+                speed: 1,
+            }, 5000);
         });
     },
 });
@@ -2212,7 +2227,7 @@ gls2.EnemySoft.HibikiBit = tm.createClass(
                 .to({
                     x: positions[pp].x + hibiki.x,
                     y: positions[pp].y + hibiki.y,
-                }, 2000, "easeInOutSine")
+                }, 5000, "easeInOutSine")
                 .call(temp);
             pp = (pp+1)%positions.length;
         }.bind(enemy);
@@ -2232,11 +2247,22 @@ gls2.EnemySoft.Dory = tm.createClass(
     init: function(hibiki, patternName) {
         this.superInit(hibiki, patternName);
         this.positions = [
-            { x:-200, y:   0 },
-            { x:   0, y:-100 },
-            { x:+200, y:   0 },
-            { x:   0, y:+100 }
+            { x:-140, y:-100 },
+            { x:+140, y:-100 },
+            { x:+140, y:+120 },
+            { x:-140, y:+120 }
         ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.HibikiBit.prototype.setup.call(this, enemy);
+
+        var hibiki = this.hibiki;
+        hibiki.dory = enemy;
+        enemy.on("destroy", function() {
+            if (hibiki.hp > 0) {
+                this.stage.launchEnemy({ "hard": gls2.Enemy.Dory, "soft": gls2.EnemySoft.Dory(hibiki, "dory"), "x": SC_W/2, "y": SC_H*-0.3 });
+            }
+        });
     }
 });
 /**
@@ -2252,11 +2278,22 @@ gls2.EnemySoft.Miry = tm.createClass(
     init: function(hibiki, patternName) {
         this.superInit(hibiki, patternName);
         this.positions = [
-            { x:+200, y:   0 },
-            { x:   0, y:+100 },
-            { x:-200, y:   0 },
-            { x:   0, y:-100 }
+            { x:+140, y:+120 },
+            { x:-140, y:+120 },
+            { x:-140, y:-100 },
+            { x:+140, y:-100 }
         ];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.HibikiBit.prototype.setup.call(this, enemy);
+
+        var hibiki = this.hibiki;
+        hibiki.miry = enemy;
+        enemy.on("destroy", function() {
+            if (hibiki.hp > 0) {
+                this.stage.launchEnemy({ "hard": gls2.Enemy.Miry, "soft": gls2.EnemySoft.Miry(hibiki, "miry"), "x": SC_W/2, "y": SC_H*-0.3 });
+            }
+        });
     }
 });
 

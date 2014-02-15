@@ -36,9 +36,9 @@ gls2.Enemy.DATA = {
     "aida":      [  8000,  4000000, false,  true,  0, {"width":370, "heightBottom":5, "heightTop":60}, ],
     "minamino":  [  1500,  5000000,  true,  true, 30, {"width": 180, "heightTop":-(-350-25), "heightBottom":-350+25} ],
     "houjou":    [ 10000,  8000000, false,  true,  0, {"width":220, "heightBottom":100, "heightTop":60}, ],
-    "dory":      [   350,     2000, false,  true,  5, {"radius": 24} ],
+    "dory":      [   150,     2000, false,  true,  5, {"radius": 24} ],
     "rery":      [   250,     2000,  true, false,  5, {"radius": 24} ],
-    "miry":      [   350,     2000, false,  true,  5, {"radius": 24} ],
+    "miry":      [   150,     2000, false,  true,  5, {"radius": 24} ],
     "fary":      [   200,     2000,  true, false,  5, {"radius": 24} ],
     "sory":      [   350,     2000,  true, false,  5, {"radius": 24} ],
     "lary":      [   300,     2000,  true,  true,  5, {"radius": 24} ],
@@ -1521,6 +1521,9 @@ gls2.Enemy.Hibiki = tm.createClass(
 {
     superClass: gls2.Boss,
 
+    dory: null,
+    miry: null,
+
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "houjou");
         this._sprite = _Sprite("tex5", 64*4, 64*4).setFrameIndex(2);
@@ -1557,7 +1560,7 @@ gls2.Enemy.Hibiki = tm.createClass(
         });
     },
     destroy: function() {
-        this.bossDestroy();
+        this.lastBossDestroy();
         gls2.core.fps = FPS;
 
         // スクショを撮る
