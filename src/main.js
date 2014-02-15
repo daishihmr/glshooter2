@@ -1,5 +1,5 @@
 /**
- * @preserve gls2.js v1.0-beta
+ * @preserve gls2.js v1.2
  *
  * License
  * http://daishihmr.mit-license.org/

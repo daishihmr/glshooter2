@@ -74,6 +74,11 @@ gls2.GameOverScene = tm.createClass(
             "タイトルへ戻ります"
         ];
 
+        if (!this.posted) {
+            menu.push("save score");
+            labels.push("スコアを登録します");
+        }
+
         this.openDialogMenu("GAME OVER", menu, this.onResultMenu, {
             "defaultValue": this.posted ? 1 : 0,
             "menuDescriptions": labels,
@@ -84,21 +89,23 @@ gls2.GameOverScene = tm.createClass(
     onResultMenu: function(result) {
         if (result === 0) {
             this.tweetScore();
-        } else {
+        } else if (result === 1) {
             this.app.replaceScene(gls2.TitleScene());
+        } else {
+            this.sendScore();
         }
     },
 
     openSuccessDialog: function() {
         this.openDialogMenu("SUCCESS!", ["ok"], function() { this.openMenu() }, {
-            "menuDescriptions": ["登録しました！"],
+            "menuDescriptions": ["スコア登録しました！"],
             "showExit": false
         });
     },
 
     openErrorDialog: function() {
         this.openDialogMenu("ERROR!", ["ok"], function() { this.openMenu() }, {
-            "menuDescriptions": ["登録に失敗しました！＞＜"],
+            "menuDescriptions": ["スコア登録に失敗しました！＞＜"],
             "showExit": false
         });
     },
