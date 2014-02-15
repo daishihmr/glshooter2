@@ -69,13 +69,13 @@
         "title": "スコア1000億！",
         "description": "スコアを1000億点以上獲得する",
         "grade": 1,
-        "secret": false
+        "secret": true
     },
     "score1T": {
         "title": "スコア1兆！",
         "description": "スコアを1兆点以上獲得する",
         "grade": 2,
-        "secret": false
+        "secret": true
     },
     "combo100": {
         "title": "100HIT達成！",
