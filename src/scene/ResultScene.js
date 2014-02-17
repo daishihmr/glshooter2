@@ -121,7 +121,7 @@ gls2.ResultScene = tm.createClass(
             .setPosition(SC_W*0.8, SC_H*0.8)
             .addChildTo(this);
 
-        this.promptEnter = tm.display.Label("press space key")
+        this.promptEnter = tm.display.Label("press button")
             .setPosition(SC_W*0.5, SC_H*0.9)
             .addChildTo(this);
         this.promptEnter.visible = false;
@@ -176,12 +176,30 @@ gls2.ResultScene = tm.createClass(
         // this.wait = 60;
 
         this.on("enter", function() {
+            if (this.gameScene.killCount === this.gameScene.enemyCount) {
+                gls2.core.putAchevement("kill100");
+            } else if (this.gameScene.killCount / this.gameScene.enemyCount < 0.4) {
+                gls2.core.putAchevement("kill40");
+            }
+
             if (this.gameScene.missCountTotal === 0 && this.gameScene.continueCount === 0) {
                 if (this.gameScene.stageNumber === 0) gls2.core.putAchevement("nomiss1");
                 else if (this.gameScene.stageNumber === 1) gls2.core.putAchevement("nomiss2");
                 else if (this.gameScene.stageNumber === 2) gls2.core.putAchevement("nomiss3");
                 else if (this.gameScene.stageNumber === 3) gls2.core.putAchevement("nomiss4");
                 else if (this.gameScene.stageNumber === 4) gls2.core.putAchevement("nomiss5");
+            }
+
+            if (this.gameScene.hyperCountByStage[this.gameScene.stageNumber] === 0) {
+                gls2.core.putAchevement("nohyper");
+            } else if (this.gameScene.hyperCountByStage[this.gameScene.stageNumber] >= 5) {
+                gls2.core.putAchevement("hyperAndHyper");
+            }
+            if (this.gameScene.bombCountByStage[this.gameScene.stageNumber] === 0 && this.gameScene.autoBombCountByStage[this.gameScene.stageNumber] === 0) {
+                gls2.core.putAchevement("nobomb");
+            }
+            if (!this.gameScene.pressC) {
+                gls2.core.putAchevement("manpower");
             }
         });
         this.on("exit", function() {
@@ -211,7 +229,7 @@ gls2.ResultScene = tm.createClass(
             if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
                 gls2.playSound("decision");
 
-                if (this.gameScene.scoreByStage[this.gameScene.stageNumber - 1] === undefined) {
+                if (this.gameScene.stageNumber === 0) {
                     this.gameScene.scoreByStage[this.gameScene.stageNumber] = this.gameScene.score;
                 } else {
                     this.gameScene.scoreByStage[this.gameScene.stageNumber] = this.gameScene.score - this.gameScene.scoreByStage[this.gameScene.stageNumber - 1];

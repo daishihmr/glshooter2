@@ -1,5 +1,5 @@
 /**
- * @preserve gls2.js v1.0-beta
+ * @preserve TM-Shooter
  *
  * License
  * http://daishihmr.mit-license.org/
@@ -20,6 +20,11 @@ var STATS = false;
  *   pキーでスクリーンショットを撮る
  */
 var DEBUG = true;
+
+/**
+ * @define {number}
+ */
+var VERSION = 99.9;
 
 tm.preload(function() {
     if (STATS) tm.util.ScriptManager.loadStats();

@@ -261,7 +261,7 @@ gls2.GlShooter2 = tm.createClass(
             "dataType": "json",
             "success": function(result) {
                 if (!result) {
-                    callback("登録に失敗しました！＞＜");
+                    callback("スコア登録に失敗しました！＞＜");
                 } else if (result["success"]) {
                     callback(null, true, result["scoreId"]);
                 } else if (result["confirmLogin"]) {
@@ -281,11 +281,11 @@ gls2.GlShooter2 = tm.createClass(
                         callback(null, false);
                     }
                 } else {
-                    callback("登録に失敗しました！＞＜");
+                    callback("スコア登録に失敗しました！＞＜");
                 }
             }.bind(this),
             "error": function() {
-                callback("登録に失敗しました！＞＜");
+                callback("スコア登録に失敗しました！＞＜");
             }
         });
     },

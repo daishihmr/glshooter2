@@ -24,8 +24,18 @@ gls2.TitleScene = tm.createClass({
 
         tm.display.Label("TM-Shooter", 50)
             .setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
-        tm.display.Label("version 1.1", 22)
+        tm.display.Label("version " + VERSION, 22)
             .setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
+
+        tm.display.Label("1st ", 22)
+            .setPosition(SC_W * 0.15, SC_H * 0.70).setAlign("left").addChildTo(this);
+        tm.display.Label(EXTEND_SCORE[0] + " PTS", 22)
+            .setPosition(SC_W * 0.85, SC_H * 0.70).setAlign("right").addChildTo(this);
+        tm.display.Label("2nd ", 22)
+            .setPosition(SC_W * 0.15, SC_H * 0.75).setAlign("left").addChildTo(this);
+        tm.display.Label(EXTEND_SCORE[1] + " PTS", 22)
+            .setPosition(SC_W * 0.85, SC_H * 0.75).setAlign("right").addChildTo(this);
+
         this.highScoreLabel = tm.display.Label()
             .setPosition(SC_W * 0.5, SC_H * 0.40); //.addChildTo(this);
         tm.display.Label("press button").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);

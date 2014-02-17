@@ -420,7 +420,7 @@ gls2.GetTrophyEffect = tm.createClass({
             .setPosition(-20, 0)
             .addChildTo(this.label);
     },
-    onadded: function() {
+    "onadded": function() {
         if (this.parent instanceof tm.app.Scene) {
             this.parent.one("exit", function() {
                 if (this.parent) this.remove();

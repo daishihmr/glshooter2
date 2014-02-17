@@ -1,6 +1,7 @@
 rm -f target/gls2.js
 
 java -jar tools/compiler.jar \
+--define VERSION=1.3 \
 --define DEBUG=false \
 --define STATS=false \
 --externs libs/tmlib.js \
@@ -53,7 +54,7 @@ java -jar tools/compiler.jar \
 --js libs/math.js \
 --compilation_level ADVANCED_OPTIMIZATIONS \
 --language_in ECMASCRIPT5 \
---js_output_file target/gls2.js
+--js_output_file target/gls2.js \
 # --formatting PRETTY_PRINT
 
 # --formatting SINGLE_QUOTES
