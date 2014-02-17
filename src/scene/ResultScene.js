@@ -121,7 +121,7 @@ gls2.ResultScene = tm.createClass(
             .setPosition(SC_W*0.8, SC_H*0.8)
             .addChildTo(this);
 
-        this.promptEnter = tm.display.Label("press space key")
+        this.promptEnter = tm.display.Label("press button")
             .setPosition(SC_W*0.5, SC_H*0.9)
             .addChildTo(this);
         this.promptEnter.visible = false;
@@ -229,7 +229,7 @@ gls2.ResultScene = tm.createClass(
             if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space") || this.frame > 30*60) {
                 gls2.playSound("decision");
 
-                if (this.gameScene.scoreByStage[this.gameScene.stageNumber - 1] === undefined) {
+                if (this.gameScene.stageNumber === 0) {
                     this.gameScene.scoreByStage[this.gameScene.stageNumber] = this.gameScene.score;
                 } else {
                     this.gameScene.scoreByStage[this.gameScene.stageNumber] = this.gameScene.score - this.gameScene.scoreByStage[this.gameScene.stageNumber - 1];

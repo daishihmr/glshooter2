@@ -822,7 +822,7 @@ gls2.GameScene = tm.createClass(
     },
 
     gameOver: function() {
-        if (this.scoreByStage[this.stageNumber - 1] === undefined) {
+        if (this.stageNumber === 0) {
             this.scoreByStage[this.stageNumber] = this.score;
         } else {
             this.scoreByStage[this.stageNumber] = this.score - this.scoreByStage[this.stageNumber - 1];
