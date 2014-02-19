@@ -87,10 +87,8 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 60, "miyuki-1");
         this.seq.add( 60, "reika1-right");
         this.seq.add(180, "reika1-right");
-        this.seq.add( 60, "nao2-center");
-        this.seq.add( 60, "nao2-left");
-        this.seq.add(120, "nao2-center");
-        this.seq.add( 60, "nao2-left");
+        this.seq.add(120, "nao2-right");
+        this.seq.add(120, "nao2-left");
  
         this.seq.add( 60, function() {
             this.gameScene.ground.tweener
@@ -142,7 +140,7 @@ gls2.Stage3 = tm.createClass(
             //前進
             this.gameScene.ground.tweener
                 .clear()
-                .to({speed:7}, 3000, "easeInOutQuad");
+                .to({speed:7, direction:Math.PI*0.5}, 3000, "easeInOutQuad");
         });
         this.seq.add(300, "higashi", true); //中ボス
         this.seq.add(900, function() {});
