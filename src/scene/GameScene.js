@@ -799,6 +799,9 @@ gls2.GameScene = tm.createClass(
         this.println("System rebooted.", true);
 
         this.score = 0;
+        for (var i = 0; i < this.scoreByStage.length; i++) {
+            this.scoreByStage[i] = 0;
+        }
         this.continueCount += 1;
         this.continueCountByStage[this.stageNumber] += 1;
         this.zanki = INITIAL_ZANKI;
