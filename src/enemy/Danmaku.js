@@ -48,16 +48,16 @@ var RLSR = function(action) { return $.bullet(action, {frame:1,laser:true}); };
  * ランクによって短くなる
  * ハイパー中も短くなる
  */
-var $interval = function(v) { return $.wait(v + "*(1-$rank)*$hyperOff") };
+var $interval = function(v) { return $.wait(v + "*(1-$rank)*$hyperOff + $bg*20") };
 
 // 弾速
-var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 0.20 + ("+v+"*0.1)" ); };
-var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 0.50 + ("+v+"*0.1)" ); };
-var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 0.80 + ("+v+"*0.1)" ); };
-var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 1.10 + ("+v+"*0.1)" ); };
-var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 1.40 + ("+v+"*0.1)" ); };
-var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 1.70 + ("+v+"*0.1)" ); };
-var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("($rank + $ex*0.2)*1.5 + 2.00 + ("+v+"*0.1)" ); };
+var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 0.20 + ("+v+"*0.1)" ); };
+var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 0.50 + ("+v+"*0.1)" ); };
+var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 0.80 + ("+v+"*0.1)" ); };
+var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 1.10 + ("+v+"*0.1)" ); };
+var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 1.40 + ("+v+"*0.1)" ); };
+var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 1.70 + ("+v+"*0.1)" ); };
+var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 2.00 + ("+v+"*0.1)" ); };
 
 /** 自機狙い弾 */
 var $fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3, RNS) };
@@ -67,9 +67,10 @@ var $fire1 = function(spd) { return $.fire($.direction(0), spd || $spd3, BNS) };
 var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {
     return $.action([
         $.fire($.direction(rangeFrom), speed, bullet || RNS, offsetX, offsetY, autonomy),
-        $.repeat(way + "+($ex*2)-1", [
-            $.fire($.direction("((" + rangeTo + ")-(" + rangeFrom + "))/(" + way + "+($ex*2)-1)", "sequence"), speed, bullet || RNS, offsetX, offsetY, autonomy),
-        ])
+        $.bindVar("way", "Math.max(2, " + way + "-$bg*2+$ex*2)"),
+        $.repeat("$way-1", [
+            $.fire($.direction("((" + rangeTo + ")-(" + rangeFrom + "))/($way-1)", "sequence"), speed, bullet || RNS, offsetX, offsetY, autonomy),
+        ]),
     ]);
 };
 var $nwayVs = function(way, rangeFrom, rangeTo, bullet, offsetX, offsetY, autonomy) {
@@ -82,9 +83,10 @@ var $nwayVs = function(way, rangeFrom, rangeTo, bullet, offsetX, offsetY, autono
 var $absoluteNway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY) {
     return $.action([
         $.fire($.direction(rangeFrom, "absolute"), speed, bullet || RNS, offsetX, offsetY),
-        $.repeat(way + "-1", [
-            $.fire($.direction("((" + rangeTo + ")-(" + rangeFrom + "))/(" + way + "-1)", "sequence"), speed, bullet || RNS, offsetX, offsetY),
-        ])
+        $.bindVar("way", "Math.max(2, " + way + "-$bg*2+$ex*2)"),
+        $.repeat("$way-1", [
+            $.fire($.direction("((" + rangeTo + ")-(" + rangeFrom + "))/($way-1)", "sequence"), speed, bullet || RNS, offsetX, offsetY),
+        ]),
     ]);
 };
 var $absoluteNwayVs = function(way, rangeFrom, rangeTo, bullet, offsetX, offsetY) {
@@ -3122,6 +3124,9 @@ gls2.Danmaku.setup = function() {
     bulletml.Walker.globalScope["$rank"] = 0;
     // ハイパー？
     bulletml.Walker.globalScope["$hyperOff"] = 1.0;
+    // スタイル
+    bulletml.Walker.globalScope["$bg"] = 0;
+    bulletml.Walker.globalScope["$ex"] = 0;
 };
 /**
  * エフェクト付きの弾幕全消し
@@ -3163,7 +3168,7 @@ gls2.Bullet = tm.createClass(
     init: function() {
         this.superInit("tex0", 20, 20);
 
-        this.boundingRadius = 7;
+        this.boundingRadius = 3;
 
         this.addEventListener("removed", function() {
             this.clearEventListener("enterframe");

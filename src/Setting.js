@@ -58,13 +58,13 @@ var INITIAL_ZANKI = 3;
  * ボムスロット初期数
  * @const
  */
-var INITIAL_BOMB_MAX = [3, 2, 1];
+var INITIAL_BOMB_MAX = [3, 2, 1, 5];
 
 /**
  * ボムスロット最大数
  * @const
  */
-var BOMB_MAX_MAX = [6, 4, 2];
+var BOMB_MAX_MAX = [6, 4, 2, 99];
 
 /**
  * ショットの攻撃力
