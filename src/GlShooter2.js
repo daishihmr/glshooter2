@@ -272,15 +272,15 @@ gls2.GlShooter2 = tm.createClass(
                 } else if (result["success"]) {
                     callback(null, true, result["scoreId"]);
                 } else if (result["confirmLogin"]) {
-                    if (confirm("ログインしていません。ログインしますか？")) {
+                    if (window.confirm("login (or sign up) ?\nログインしていません。ログインしますか？")) {
                         window["onchildclose"] = function() {
                             this.postScore(null, callback);
                             window["onchildclose"] = undefined;
                         }.bind(this);
                         window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
-                    } else if (confirm("匿名でスコア登録しますか？")) {
+                    } else if (window.confirm("try anonymous submit?\n匿名でスコア登録しますか？")) {
                         var userName = "";
-                        while (userName === "") userName = window.prompt("仮のユーザー名:", this.getAnonName());
+                        while (userName === "") userName = window.prompt("user name\n仮のユーザー名:", this.getAnonName());
                         if (userName === null) return;
                         userName = userName.substring(0, 10);
                         this.postScore(userName + " (匿名)", callback);
