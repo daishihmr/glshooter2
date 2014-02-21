@@ -33,8 +33,7 @@ gls2.GlShooter2 = tm.createClass(
     bgmVolume: 3,
     /** SE音量(0～5) */
     seVolume: 3,
-    /** 難易度(0～4) */
-    difficulty: 1,
+    particleEffectLevel: 0,
 
     gameScene: null,
 
@@ -139,6 +138,14 @@ gls2.GlShooter2 = tm.createClass(
         });
         loadingScene.bg.canvas.clearColor("black");
         this.replaceScene(loadingScene);
+
+        var configJson = localStorage.getItem("tmshooter.config");
+        if (configJson) {
+            var config = JSON.parse(configJson);
+            this.bgmVolume = config.bgmVolume;
+            this.seVolume = config.seVolume;
+            this.particleEffectLevel = config.particleEffectLevel;
+        }
     },
 
     calcContinueCountMax: function() {

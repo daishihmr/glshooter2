@@ -153,12 +153,14 @@ gls2.TitleScene = tm.createClass({
     openSetting: function() {
         this.openDialogMenu("SETTING", [
             "bgm volume",
-            "sound volume"
+            "sound volume",
+            "particle"
         ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
-                "効果音ボリュームを設定します"
+                "効果音ボリュームを設定します",
+                "パーティクルのON/OFFを設定します"
             ],
         });
     },
@@ -170,6 +172,9 @@ gls2.TitleScene = tm.createClass({
             break;
         case 1:
             this.openSeSetting();
+            break;
+        case 2:
+            this.openParticleSetting();
             break;
         default:
             this.openMainMenu();
@@ -185,10 +190,10 @@ gls2.TitleScene = tm.createClass({
             },
             "showExit": false,
         });
-
     },
     onResultBgmSetting: function(result) {
         if (result !== 6) gls2.core.bgmVolume = result;
+        this.saveSetting();
         this.openSetting();
     },
 
@@ -202,24 +207,29 @@ gls2.TitleScene = tm.createClass({
         if (result !== 6) {
             gls2.core.seVolume = result;
         }
+        this.saveSetting();
         this.openSetting();
     },
 
-    openDifficultySetting: function() {
-        this.openDialogMenu("DIFFICULTY", [ "easy", "normal", "hard", "very hard", "hell" ], this.onResultDifficultySetting, {
-            "defaultValue": gls2.core.difficulty,
-            "menuDescriptions": [
-                "初心者でも安心して挑戦可能な入門コース",
-                "普通の難易度。easyでは物足りない人へ",
-                "一般的な弾幕STGの難易度",
-                "hardはヌルすぎるという人向け",
-                "死ぬがよい",
-            ],
+    openParticleSetting: function() {
+        this.openDialogMenu("PARTICLES", [ "ON", "LITE", "OFF" ], this.onResultParticleSetting, {
+            "defaultValue": gls2.core.particleEffectLevel,
+            "showExit": false,
         });
     },
-    onResultDifficultySetting: function(result) {
-        if (result !== 5) gls2.core.difficulty = result;
+    onResultParticleSetting: function(result) {
+        gls2.core.particleEffectLevel = result;
+        this.saveSetting();
         this.openSetting();
+    },
+
+    saveSetting: function() {
+        var config = {
+            bgmVolume: gls2.core.bgmVolume,
+            seVolume: gls2.core.seVolume,
+            particleEffectLevel: gls2.core.particleEffectLevel,
+        };
+        localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },
 
     toString: function() { return "gls2.TitleScene" },
