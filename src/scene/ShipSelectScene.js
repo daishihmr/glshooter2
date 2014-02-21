@@ -230,6 +230,7 @@ gls2.ShipSelectScene = tm.createClass(
             "ショット強化型\n\nビットを４つ装備した\nショット重視のスタイル",
             "レーザー強化型\n\nレーザーの威力に優れ\n対大型機戦で\n有利なスタイル",
             "エキスパート強化型\n\nショットとレーザーの\n両方が強化されたスタイル\n\n<<ゲーム難易度が上昇します！>>\n<<上級者向け>>",
+            "ビギナー養成型\n\nショットとレーザーの両方を\n同時に発射できるスタイル\n\n<<スコアが1/10になります！>>\n<<初心者向け>>"
         ];
 
         this.labelStyleDescription = tm.display.Label(styleDescription[0], 16).setPosition(SC_W*0.5, 500);
@@ -262,10 +263,10 @@ gls2.ShipSelectScene = tm.createClass(
             this.styles.visible = true;
 
             if (app.keyboard.getKeyDown("left")) {
-                this.style = (this.style - 1 + 3) % 3;
+                this.style = (this.style - 1 + 4) % 4;
                 gls2.playSound("select");
             } else if (app.keyboard.getKeyDown("right")) {
-                this.style = (this.style + 1 + 3) % 3;
+                this.style = (this.style + 1 + 4) % 4;
                 gls2.playSound("select");
             } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
                 if (AUTO_BOMB_SELECT) {
@@ -350,7 +351,7 @@ gls2.ShipSelectScene = tm.createClass(
     },
 
     updateStyle: function(shot) {
-        this.labelStyle.text = ["Shot", "Laser", "Expert"][this.style] + " Style";
+        this.labelStyle.text = ["Shot", "Laser", "Expert", "Beginner"][this.style] + " Style";
         if (this.style === 1) {
             this.styleBase.line.shotTwoWay = false;
             this.styleBits[0].line.shotTwoWay = false;
@@ -376,7 +377,9 @@ gls2.ShipSelectScene = tm.createClass(
             }
             this.styleBase.line.lineWidth = 5;
         } else {
-            this.styleBits.each(function(b) { b.visible = false });
+            if (this.style !== 3) {
+                this.styleBits.each(function(b) { b.visible = false });
+            }
             if (this.style === 0) {
                 this.styleBase.line.lineWidth = 10;
             } else {

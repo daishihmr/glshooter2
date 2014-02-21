@@ -633,6 +633,7 @@ gls2.GameScene = tm.createClass(
 
         this.player = gls2.Player(this, playerType, playerStyle);
         this.setRank(INITIAL_RANK);
+        bulletml.Walker.globalScope["$bg"] = playerStyle !== 3 ? 0 : 1;
         bulletml.Walker.globalScope["$ex"] = playerStyle !== 2 ? 0 : 1;
 
         this.startStage(INITIAL_STAGE);
@@ -799,6 +800,9 @@ gls2.GameScene = tm.createClass(
         this.println("System rebooted.", true);
 
         this.score = 0;
+        for (var i = 0; i < this.scoreByStage.length; i++) {
+            this.scoreByStage[i] = 0;
+        }
         this.continueCount += 1;
         this.continueCountByStage[this.stageNumber] += 1;
         this.zanki = INITIAL_ZANKI;
@@ -846,6 +850,8 @@ gls2.GameScene = tm.createClass(
     },
 
     addScore: function(score) {
+        if (this.player.style === 3) score *= 0.1;
+
         var before = this.score;
         this.score += score;
         for (var i = 0; i < EXTEND_SCORE.length; i++) {
@@ -1040,11 +1046,16 @@ gls2.GameScene = tm.createClass(
     },
 
     openSetting: function() {
-        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume" ], this.onResultSetting, {
+        this.openDialogMenu("SETTING", [
+            "bgm volume",
+            "sound volume",
+            "particle"
+        ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
                 "効果音ボリュームを設定します",
+                "パーティクルのON/OFFを設定します"
             ],
         });
     },
@@ -1056,6 +1067,9 @@ gls2.GameScene = tm.createClass(
             break;
         case 1:
             this.openSeSetting();
+            break;
+        case 2:
+            this.openParticleSetting();
             break;
         default:
             this.openPauseMenu();
@@ -1093,6 +1107,7 @@ gls2.GameScene = tm.createClass(
     },
     onResultBgmSetting: function(result) {
         if (result !== 6) gls2.core.bgmVolume = result;
+        this.saveSetting();
         this.openSetting(1);
     },
 
@@ -1106,7 +1121,29 @@ gls2.GameScene = tm.createClass(
         if (result !== 6) {
             gls2.core.seVolume = result;
         }
+        this.saveSetting();
         this.openSetting(1);
+    },
+
+    openParticleSetting: function() {
+        this.openDialogMenu("PARTICLES", [ "ON", "LITE", "OFF" ], this.onResultParticleSetting, {
+            "defaultValue": gls2.core.particleEffectLevel,
+            "showExit": false,
+        });
+    },
+    onResultParticleSetting: function(result) {
+        gls2.core.particleEffectLevel = result;
+        this.saveSetting();
+        this.openSetting(1);
+    },
+
+    saveSetting: function() {
+        var config = {
+            "bgmVolume": gls2.core.bgmVolume,
+            "seVolume": gls2.core.seVolume,
+            "particleEffectLevel": gls2.core.particleEffectLevel,
+        };
+        localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },
 
     openContinueMenu: function() {

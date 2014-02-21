@@ -21,12 +21,22 @@ gls2.Particle = tm.createClass({
      */
     init: function(size, initialAlpha, alphaDecayRate, image) {
         this.superInit();
+        if (initialAlpha === undefined) initialAlpha = 1;
+        if (alphaDecayRate === undefined) alphaDecayRate = 0.85;
+
+        if (gls2.core.particleEffectLevel === 1) {
+            this.size *= 0.7;
+            this.alphaDecayRate *= 0.9;
+        }
+
         this.width = this.height = this.size = size;
-        if (initialAlpha !== undefined) this.alpha = initialAlpha;
-        else this.alpha = 1.0;
-        if (alphaDecayRate !== undefined) this.alphaDecayRate = alphaDecayRate;
-        else this.alphaDecayRate = 0.85;
+        this.alpha = initialAlpha;
+        this.alphaDecayRate = alphaDecayRate;
         this.blendMode = "lighter";
+
+        if (gls2.core.particleEffectLevel === 1) {
+            this.alphaDecayRate *= 0.9;
+        }
 
         if (image) {
             this.image = image
@@ -42,6 +52,12 @@ gls2.Particle = tm.createClass({
                 )
                 .fillRect(0, 0, size, size)
                 .element;
+        }
+
+        if (gls2.core.particleEffectLevel === 2) {
+            this.on("added", function() {
+                this.remove();
+            });
         }
     },
     update: function(app) {
