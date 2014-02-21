@@ -33,7 +33,7 @@ gls2.GlShooter2 = tm.createClass(
     bgmVolume: 3,
     /** SE音量(0～5) */
     seVolume: 3,
-    enableParticle: true,
+    particleEffectLevel: 0,
 
     gameScene: null,
 
@@ -144,7 +144,7 @@ gls2.GlShooter2 = tm.createClass(
             var config = JSON.parse(configJson);
             this.bgmVolume = config.bgmVolume;
             this.seVolume = config.seVolume;
-            this.enableParticle = config.enableParticle;
+            this.particleEffectLevel = config.particleEffectLevel;
         }
     },
 

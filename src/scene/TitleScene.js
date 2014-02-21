@@ -212,13 +212,13 @@ gls2.TitleScene = tm.createClass({
     },
 
     openParticleSetting: function() {
-        this.openDialogMenu("PARTICLES", [ "ON", "OFF" ], this.onResultParticleSetting, {
-            "defaultValue": gls2.core.enableParticle ? 0 : 1,
+        this.openDialogMenu("PARTICLES", [ "ON", "LITE", "OFF" ], this.onResultParticleSetting, {
+            "defaultValue": gls2.core.particleEffectLevel,
             "showExit": false,
         });
     },
     onResultParticleSetting: function(result) {
-        gls2.core.enableParticle = result === 0;
+        gls2.core.particleEffectLevel = result;
         this.saveSetting();
         this.openSetting();
     },
@@ -227,7 +227,7 @@ gls2.TitleScene = tm.createClass({
         var config = {
             bgmVolume: gls2.core.bgmVolume,
             seVolume: gls2.core.seVolume,
-            enableParticle: gls2.core.enableParticle,
+            particleEffectLevel: gls2.core.particleEffectLevel,
         };
         localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },
