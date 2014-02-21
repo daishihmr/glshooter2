@@ -60,10 +60,10 @@ gls2.ShotBullet = tm.createClass({
         this.setFrameIndex(col, 64, 64);
         if (col === 3) {
             this.speed = 45;
-            this.boundingRadius = 48;
+            this.boundingRadius = 52;
         } else {
             this.speed = 30;
-            this.boundingRadius = 32;
+            this.boundingRadius = 36;
         }
     },
 

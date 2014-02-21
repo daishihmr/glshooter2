@@ -633,6 +633,7 @@ gls2.GameScene = tm.createClass(
 
         this.player = gls2.Player(this, playerType, playerStyle);
         this.setRank(INITIAL_RANK);
+        bulletml.Walker.globalScope["$bg"] = playerStyle !== 3 ? 0 : 1;
         bulletml.Walker.globalScope["$ex"] = playerStyle !== 2 ? 0 : 1;
 
         this.startStage(INITIAL_STAGE);
@@ -849,6 +850,8 @@ gls2.GameScene = tm.createClass(
     },
 
     addScore: function(score) {
+        if (this.player.style === 3) score *= 0.1;
+
         var before = this.score;
         this.score += score;
         for (var i = 0; i < EXTEND_SCORE.length; i++) {

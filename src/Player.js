@@ -44,6 +44,7 @@ gls2.Player = tm.createClass(
      * 0:ショット
      * 1:レーザー
      * 2:エキスパート
+     * 3:ビギナー
      */
     style: 0,
 
@@ -85,7 +86,7 @@ gls2.Player = tm.createClass(
 
         this.speed = [6.0, 5.0, 4.5][type];
 
-        this.boundingRadius = 3;
+        this.boundingRadius = style === 3 ? 2 : 7;
         this.altitude = 10;
 
         this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type, 100);
@@ -271,6 +272,9 @@ gls2.Player = tm.createClass(
             if (pressZ) {
                 this.pressTimeC = 0;
             }
+            if (this.style === 3 && this.fireLaser) {
+                this.fireShot = app.frame % shotInterval === 0;
+            }
 
             this.laser.x = this.x;
             this.laser.y = this.y - 40;
@@ -317,13 +321,12 @@ gls2.Player = tm.createClass(
         }
 
         // レーザー発射
-        if (this.fireLaser) {
+        if (this.fireLaser && this.style !== 3) {
             for (var i = 0, len = this.bits.length; i < len; i++) {
                 this.bits[i].v = false;
             }
             this.bitPivot.rotation = 0;
         } else {
-            this.laser.visible = false;
             for (var i = 0, len = this.bits.length; i < len; i++) {
                 this.bits[i].v = true;
             }
@@ -369,7 +372,7 @@ gls2.Player = tm.createClass(
             }
         } else if (this.type === 1) {
             var p = this.bitPivot;
-            if (!this.fireLaser) {
+            if (!this.fireLaser || this.style !== 3) {
                 if (this.controllable && kb.getKey("left")) {
                     p.rotation = Math.max(p.rotation - 3, -50);
                 } else if (this.controllable && kb.getKey("right")) {
