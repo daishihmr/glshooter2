@@ -43,6 +43,12 @@ gls2.Particle = tm.createClass({
                 .fillRect(0, 0, size, size)
                 .element;
         }
+
+        if (!gls2.core.enableParticle) {
+            this.on("added", function() {
+                this.remove();
+            });
+        }
     },
     update: function(app) {
         this.alpha *= this.alphaDecayRate;
