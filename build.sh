@@ -1,7 +1,7 @@
 rm -f target/gls2.js
 
 java -jar tools/compiler.jar \
---define VERSION=1.3 \
+--define VERSION=1.4 \
 --define DEBUG=false \
 --define STATS=false \
 --externs libs/tmlib.js \

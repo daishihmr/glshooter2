@@ -225,9 +225,9 @@ gls2.TitleScene = tm.createClass({
 
     saveSetting: function() {
         var config = {
-            bgmVolume: gls2.core.bgmVolume,
-            seVolume: gls2.core.seVolume,
-            particleEffectLevel: gls2.core.particleEffectLevel,
+            "bgmVolume": gls2.core.bgmVolume,
+            "seVolume": gls2.core.seVolume,
+            "particleEffectLevel": gls2.core.particleEffectLevel,
         };
         localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },

@@ -1046,11 +1046,16 @@ gls2.GameScene = tm.createClass(
     },
 
     openSetting: function() {
-        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume" ], this.onResultSetting, {
+        this.openDialogMenu("SETTING", [
+            "bgm volume",
+            "sound volume",
+            "particle"
+        ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
                 "効果音ボリュームを設定します",
+                "パーティクルのON/OFFを設定します"
             ],
         });
     },
@@ -1062,6 +1067,9 @@ gls2.GameScene = tm.createClass(
             break;
         case 1:
             this.openSeSetting();
+            break;
+        case 2:
+            this.openParticleSetting();
             break;
         default:
             this.openPauseMenu();
@@ -1099,6 +1107,7 @@ gls2.GameScene = tm.createClass(
     },
     onResultBgmSetting: function(result) {
         if (result !== 6) gls2.core.bgmVolume = result;
+        this.saveSetting();
         this.openSetting(1);
     },
 
@@ -1112,7 +1121,29 @@ gls2.GameScene = tm.createClass(
         if (result !== 6) {
             gls2.core.seVolume = result;
         }
+        this.saveSetting();
         this.openSetting(1);
+    },
+
+    openParticleSetting: function() {
+        this.openDialogMenu("PARTICLES", [ "ON", "LITE", "OFF" ], this.onResultParticleSetting, {
+            "defaultValue": gls2.core.particleEffectLevel,
+            "showExit": false,
+        });
+    },
+    onResultParticleSetting: function(result) {
+        gls2.core.particleEffectLevel = result;
+        this.saveSetting();
+        this.openSetting(1);
+    },
+
+    saveSetting: function() {
+        var config = {
+            "bgmVolume": gls2.core.bgmVolume,
+            "seVolume": gls2.core.seVolume,
+            "particleEffectLevel": gls2.core.particleEffectLevel,
+        };
+        localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },
 
     openContinueMenu: function() {

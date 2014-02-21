@@ -142,9 +142,9 @@ gls2.GlShooter2 = tm.createClass(
         var configJson = localStorage.getItem("tmshooter.config");
         if (configJson) {
             var config = JSON.parse(configJson);
-            this.bgmVolume = config.bgmVolume;
-            this.seVolume = config.seVolume;
-            this.particleEffectLevel = config.particleEffectLevel;
+            this.bgmVolume = config["bgmVolume"];
+            this.seVolume = config["seVolume"];
+            this.particleEffectLevel = config["particleEffectLevel"];
         }
     },
 
