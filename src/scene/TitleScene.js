@@ -99,8 +99,8 @@ gls2.TitleScene = tm.createClass({
         var p = (col === 0) ? origParticle0.clone().addChildTo(this) : origParticle1.clone().addChildTo(this);
 
         p.speed = 0.6;
-        var a = gls2.math.randf(0, Math.PI*2);
-        var r = gls2.math.rand(0, 20);
+        var a = Math["origRandom"]()*Math.PI*2;
+        var r = Math["origRandom"]()*20;
         p.setPosition(Math.cos(a) * r + cx, Math.sin(a) * r + cy);
         var self = this;
         p.update = function() {

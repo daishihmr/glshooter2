@@ -230,6 +230,7 @@ gls2.GameScene = tm.createClass(
     },
 
     update: function(app) {
+        Math.random.set((app.frame-this.stageStartFrame) % 500);
         // var beginProcessTime = new Date().getTime();
 
         this.record(app.keyboard);
@@ -648,6 +649,7 @@ gls2.GameScene = tm.createClass(
     },
 
     startStage: function(stageNumber) {
+        Math.random.reset();
         this.println("3...2...1...");
 
         if (this.player.parent !== null) this.player.remove();
@@ -728,6 +730,7 @@ gls2.GameScene = tm.createClass(
             .wait(LAUNCH_MUTEKI_TIME)
             .call(function() {
                 this.muteki = false;
+                console.log(gls2.core.frame - gls2.core.gameScene.stageStartFrame);
             }.bind(this.player));
     },
 
@@ -1237,7 +1240,7 @@ gls2.GameScene = tm.createClass(
      * 0:何もしない 1:記録 2:再生
      * @const
      */
-    RECMODE: 0,
+    RECMODE: 2,
     startRec: function() {
         if (this.RECMODE === 1) {
             // console.log("rec start");
@@ -1269,7 +1272,7 @@ gls2.GameScene = tm.createClass(
     record: function(kb) {
         if (this.RECMODE === 1) {
             if (1000 < this.rec.length) {
-                // console.log("save");
+                console.log("save");
                 localStorage.setItem("rec" + this.recCount, this.rec);
                 localStorage.setItem("recCount", this.recCount);
                 this.rec = [];

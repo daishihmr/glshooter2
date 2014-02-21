@@ -93,10 +93,10 @@ gls2.EnemySoft.Heri1 = tm.createClass(
         var targetY = this.targetY;
 
         enemy.on("launch", function() {
-            var y = gls2.FixedRandom.randf(SC_H*(targetY-0.1), SC_H*(targetY+0.1));
+            var y = gls2.math.randf(SC_H*(targetY-0.1), SC_H*(targetY+0.1));
             this.tweener
                 .clear()
-                .wait(gls2.FixedRandom.rand(10, 500))
+                .wait(gls2.math.rand(10, 500))
                 .move(this.x, y, y*5, "easeOutQuad")
                 .call(function() {
                     gls2.EnemySoft.attack(this, pattern);
@@ -767,7 +767,7 @@ gls2.EnemySoft.nao = tm.createClass(
         enemy.patternName = this.patternName;
         enemy.speed = this.speed;
 
-        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+        enemy.tweener.wait(gls2.math.rand(0, 1000)).call(function() {
             gls2.EnemySoft.attack(this, this.patternName);
             var toDeg = 180/Math.PI;
             this.on("enterframe", function() {
@@ -825,7 +825,7 @@ gls2.EnemySoft.reika = tm.createClass(
         enemy.patternName = this.patternName;
         enemy.speed = this.speed;
 
-        enemy.tweener.wait(gls2.FixedRandom.rand(0, 1000)).call(function() {
+        enemy.tweener.wait(gls2.math.rand(0, 1000)).call(function() {
             gls2.EnemySoft.attack(this, this.patternName);
             this.rad = 0;
             this.on("enterframe", function() {
@@ -1161,8 +1161,8 @@ var _MBossCommon = tm.createClass(
                 this.startAttack = true;
                 this.dispatchEvent(tm.event.Event("completeattack"));
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 3000, "easeInOutQuad")
                         .call(temp);
@@ -1231,8 +1231,8 @@ gls2.EnemySoft.Nagisa = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
                         .call(temp);
@@ -1278,8 +1278,8 @@ gls2.EnemySoft.Nagisa2 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
                         .call(temp);
@@ -1366,8 +1366,8 @@ gls2.EnemySoft.Saki1 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
                         .call(temp);
@@ -1410,8 +1410,8 @@ gls2.EnemySoft.Saki2 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
                         .call(temp);
@@ -1452,8 +1452,8 @@ gls2.EnemySoft.Saki3 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
                         .call(temp);
@@ -1504,7 +1504,7 @@ var _Setsuna = tm.createClass(
                     this.teleporting = false;
                     this.alpha = 1.0;
                     this.muteki = false;
-                    var r = gls2.FixedRandom.rand(0,100);
+                    var r = gls2.math.rand(0,100);
                     //移動シーケンス終了時に射線上にいる、もしくは50%の確立でワープ発動
                     if (r > 50 && this.frame > 300 || this.x-76 < this.player.x && this.player.x < this.x+76) {
                         //アカルンワープ！
@@ -1512,13 +1512,13 @@ var _Setsuna = tm.createClass(
                         this.teleporting = true;
                         this.alpha = 0.3;
                         this.muteki = true; //ワープ中は無敵
-                        var x = gls2.FixedRandom.rand(SC_W*0.1, SC_W*0.9);
-                        var y = gls2.FixedRandom.rand(SC_H*0.2, SC_W*0.4);
+                        var x = gls2.math.rand(SC_W*0.1, SC_W*0.9);
+                        var y = gls2.math.rand(SC_H*0.2, SC_W*0.4);
                         this.tweener.move(x, y, 250, "easeInOutQuad").call(temp);
                     } else {
                         //通常移動
-                        var a = gls2.FixedRandom.random() * Math.PI*2;
-                        var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                        var a = Math.random() * Math.PI*2;
+                        var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                         this.tweener.move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.5, 2000, "easeInOutQuad").call(temp);
                     }
                 }.bind(this);
@@ -1596,8 +1596,8 @@ gls2.EnemySoft.Love1 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
                         .call(temp);
@@ -1645,8 +1645,8 @@ gls2.EnemySoft.Love2 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.3, 3000, "easeInOutQuad")
                         .call(temp);
@@ -1691,8 +1691,8 @@ gls2.EnemySoft.Love3 = tm.createClass(
                     var ptn = ([].concat(this.patterns)).pop();
                     if ( ptn == "love-3-1") {
                         //発狂パターン１は動く
-                        var a = gls2.FixedRandom.random() * Math.PI*2;
-                        var d = gls2.FixedRandom.randf(SC_W*0.05, SC_W*0.1);
+                        var a = Math.random() * Math.PI*2;
+                        var d = gls2.math.randf(SC_W*0.05, SC_W*0.1);
                         this.tweener
                             .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.2+Math.sin(a)*d*0.2, 2000, "easeInOutQuad")
                             .call(temp);
@@ -1753,7 +1753,7 @@ gls2.EnemySoft.Mana1 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var d = gls2.FixedRandom.randf(SC_W*-0.1, SC_W*0.1);
+                    var d = gls2.math.randf(SC_W*-0.1, SC_W*0.1);
                     this.tweener
                         .move(
                             Math.clamp(this.player.x, SC_W*0.1, SC_W*0.9) + d*0.3,
@@ -1800,8 +1800,8 @@ gls2.EnemySoft.Mana2 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.4, 3000, "easeInOutQuad")
                         .call(temp);
@@ -1841,8 +1841,8 @@ gls2.EnemySoft.Mana3 = tm.createClass(
                 this.dispatchEvent(tm.event.Event("completeattack"));
 
                 var temp = function() {
-                    var a = gls2.FixedRandom.random() * Math.PI*2;
-                    var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
+                    var a = Math.random() * Math.PI*2;
+                    var d = gls2.math.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
                         .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.3, 1500, "easeInOutQuad")
                         .call(temp);

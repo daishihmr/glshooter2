@@ -122,4 +122,33 @@ tm.input.Keyboard.prototype.getKeyDown = function(key) {
     else return origGetKeyDown.call(this, key);
 };
 
+
+var random ={
+    data: [],
+    pointerI: 0,
+    pointerJ: 0
+};
+var mt = new MersenneTwister(12345);
+for (var i = 0; i < 500; i++) {
+    random.data[i] = [];
+    for (var j = 0; j < 30; j++) {
+        random.data[i][j] = mt.next();
+    }
+}
+
+Math["origRandom"] = Math.random;
+Math.random = function() {
+    var r = random.data[random.pointerI][random.pointerJ];
+    random.pointerJ = (random.pointerJ + 1) % random.data[random.pointerI].length;
+    return r;
+};
+Math.random.reset = function() {
+    random.pointerI = 0;
+    random.pointerJ = 0;
+};
+Math.random.set = function(i) {
+    random.pointerI = i;
+    random.pointerJ = 0;
+};
+
 })();

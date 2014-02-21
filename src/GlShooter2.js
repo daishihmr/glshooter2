@@ -150,6 +150,11 @@ gls2.GlShooter2 = tm.createClass(
         }
     },
 
+    run: function() {
+        setTimeout(arguments.callee.bind(this), 16);
+        this._loop();
+    },
+
     calcContinueCountMax: function() {
         var achevements = window["achevements"];
         var data = tm.asset.AssetManager.get("achevements").data;
@@ -160,14 +165,7 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     update: function() {
-        var copied = [].concat(this.timeoutTasks);
-        for (var i = 0; i < copied.length; i++) {
-            if (copied[i].frame === this.frame) {
-                copied[i].fn();
-            } else {
-                this.timeoutTasks.erase(copied[i]);
-            }
-        }
+        this.applyTimeoutTasks();
     },
 
     draw: function() {
@@ -175,8 +173,6 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     _onLoadAssets: function() {
-        gls2.FixedRandom.setup(12345);
-
         [
             "tex1",
             "tex2",
@@ -314,10 +310,20 @@ gls2.GlShooter2 = tm.createClass(
 
     timeoutTasks: null,
     setTimeoutF: function(fn, t) {
-        timeoutTasks.push({
+        this.timeoutTasks.push({
             frame: this.frame + t,
             fn: fn,
         });
+    },
+    applyTimeoutTasks: function() {
+        var copied = [].concat(this.timeoutTasks);
+        for (var i = 0; i < copied.length; i++) {
+            if (copied[i].frame === this.frame) {
+                copied[i].fn();
+            } else {
+                this.timeoutTasks.erase(copied[i]);
+            }
+        }
     },
 
     putAchevement: function(key) {
