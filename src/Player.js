@@ -86,7 +86,7 @@ gls2.Player = tm.createClass(
 
         this.speed = [6.0, 5.0, 4.5][type];
 
-        this.boundingRadius = style === 3 ? 2 : 7;
+        this.boundingRadius = (style === 2 || style === 3) ? 2 : 7;
         this.altitude = 10;
 
         this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type, 100);
