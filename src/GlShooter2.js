@@ -34,6 +34,7 @@ gls2.GlShooter2 = tm.createClass(
     /** SE音量(0～5) */
     seVolume: 3,
     particleEffectLevel: 0,
+    bulletBig: false,
 
     gameScene: null,
 
@@ -145,6 +146,7 @@ gls2.GlShooter2 = tm.createClass(
             this.bgmVolume = config["bgmVolume"];
             this.seVolume = config["seVolume"];
             this.particleEffectLevel = config["particleEffectLevel"];
+            this.bulletBig = config["bulletBig"];
         }
     },
 

@@ -3083,21 +3083,21 @@ gls2.Danmaku.setup = function() {
 
             b.blendMode = "source-over";
             if (spec.ball) {
-                b.scaleX = 1.0;
-                b.scaleY = 1.0;
+                b.scaleX = 1.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 1.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.updateProperties = false;
             } else if (spec.needle) {
-                b.scaleX = 0.4;
-                b.scaleY = 1.5;
+                b.scaleX = 0.4 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 1.5 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.updateProperties = true;
             } else if (spec.laser) {
-                b.scaleX = 1.0;
-                b.scaleY = 10.0;
+                b.scaleX = 1.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 10.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.blendMode = "lighter";
                 b.updateProperties = true;
             } else {
-                b.scaleX = 0.8;
-                b.scaleY = 1.5;
+                b.scaleX = 0.8 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 1.5 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.updateProperties = true;
             }
 

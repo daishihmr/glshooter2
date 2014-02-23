@@ -154,13 +154,15 @@ gls2.TitleScene = tm.createClass({
         this.openDialogMenu("SETTING", [
             "bgm volume",
             "sound volume",
-            "particle"
+            "particle",
+            "bullet appearance"
         ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
                 "効果音ボリュームを設定します",
-                "パーティクルのON/OFFを設定します"
+                "パーティクルのON/OFFを設定します",
+                "敵弾の見た目に関する設定です"
             ],
         });
     },
@@ -175,6 +177,9 @@ gls2.TitleScene = tm.createClass({
             break;
         case 2:
             this.openParticleSetting();
+            break;
+        case 3:
+            this.openBulletAppearanceSetting();
             break;
         default:
             this.openMainMenu();
@@ -223,11 +228,28 @@ gls2.TitleScene = tm.createClass({
         this.openSetting();
     },
 
+    openBulletAppearanceSetting: function() {
+        this.openDialogMenu("BULLET", [ "NORMAL", "LARGE" ], this.onResultBulletAppearanceSetting, {
+            "defaultValue": gls2.core.bulletBig,
+            "showExit": false,
+            "menuDescriptions": [
+                "通常サイズで表示します",
+                "大きめに表示します"
+            ]
+        });
+    },
+    onResultBulletAppearanceSetting: function(result) {
+        gls2.core.bulletBig = result;
+        this.saveSetting();
+        this.openSetting();
+    },
+
     saveSetting: function() {
         var config = {
             "bgmVolume": gls2.core.bgmVolume,
             "seVolume": gls2.core.seVolume,
             "particleEffectLevel": gls2.core.particleEffectLevel,
+            "bulletBig": gls2.core.bulletBig
         };
         localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },
