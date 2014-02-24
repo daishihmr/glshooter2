@@ -829,7 +829,7 @@ gls2.Danmaku["nozomi-5"] = new bulletml.Root({
         $.repeat(999, [
             $.wait(20),
             $.fire($.direction(+5), IVS($.actionRef("noop"))),
-            $whip($spd3, 0.06, 15, function(spd) {
+            $whip($spd2(1.5), 0.05, 15, function(spd) {
                 return $.action([
                     $.fire($.direction(-1, "sequence"), spd, BNS, $.offsetX(-50)),
                     $interval(3),
@@ -837,7 +837,7 @@ gls2.Danmaku["nozomi-5"] = new bulletml.Root({
             }),
             $.wait(20),
             $.fire($.direction(-5), IVS($.actionRef("noop"))),
-            $whip($spd3, 0.06, 15, function(spd) {
+            $whip($spd2(1.5), 0.05, 15, function(spd) {
                 return $.action([
                     $.fire($.direction(+1, "sequence"), spd, BNS, $.offsetX(+50)),
                     $interval(3),
@@ -2052,20 +2052,20 @@ gls2.Danmaku["mana-3-1"] = new bulletml.Root({
 gls2.Danmaku["kanade"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
-            $.repeat(17 - 1, [
-                $.fire($.direction(360/17, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
+            $.repeat(14 - 1, [
+                $.fire($.direction(360/14, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
             ]),
             $interval(20),
-            $.fire($.direction(360/17 - 3, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
+            $.fire($.direction(360/14 - 3, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
         ]),
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $.repeat(17 - 1, [
-                $.fire($.direction(360/17, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
+            $.repeat(12 - 1, [
+                $.fire($.direction(360/12, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
             ]),
             $interval(20),
-            $.fire($.direction(360/17 + 6, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
+            $.fire($.direction(360/12 + 6, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
         ]),
     ]),
     "ivs0": $.action([
@@ -2075,11 +2075,11 @@ gls2.Danmaku["kanade"] = new bulletml.Root({
     ]),
     "top2": $.action([
         $.repeat(999, [
-            $nway(5, -12  +0, +12  +0, $spd1, BNL, $.offsetY(-350)),
-            $nway(5, -12 +90, +12 +90, $spd1, BNL, $.offsetY(-350)),
-            $nway(5, -12+180, +12+180, $spd1, BNL, $.offsetY(-350)),
-            $nway(5, -12+270, +12+270, $spd1, BNL, $.offsetY(-350)),
-            $interval(57),
+            $nway(3, -12  +0, +12  +0, $spd1, BNL, $.offsetY(-350)),
+            $nway(3, -12 +90, +12 +90, $spd1, BNL, $.offsetY(-350)),
+            $nway(3, -12+180, +12+180, $spd1, BNL, $.offsetY(-350)),
+            $nway(3, -12+270, +12+270, $spd1, BNL, $.offsetY(-350)),
+            $interval(114),
         ]),
     ]),
     "top3": $.action([

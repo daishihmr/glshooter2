@@ -18,13 +18,13 @@ var FPS = 60;
  * 処理落ちが入り始める弾の数
  * @const
  */
-var FPS_DOWN_BULLET_COUNT = 50;
+var FPS_DOWN_BULLET_COUNT = 500;
 
 /**
  * 処理落ちにより最大どこまでFPSが下がるか(0.0～1.0)
  * @const
  */
-var FPS_DOWN_MIN_RATE = 0.05;
+var FPS_DOWN_MIN_RATE = 0.2;
 
 
 /**
@@ -404,10 +404,10 @@ var INITIAL_CONTINUE_COUNT = 0;
 var CONTINUE_COUNT_BY_ACHEVEMENT_GRADE = [ 0.1, 0.4, 1.0 ];
 
 /**
-　* 開始ステージ(0～)
+ * 開始ステージ(0～)
  * @const
  */
-var INITIAL_STAGE = 4;
+var INITIAL_STAGE = 0;
 
 /**
  * 総ステージ数
