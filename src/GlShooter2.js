@@ -112,7 +112,7 @@ gls2.GlShooter2 = tm.createClass(
             "sound/voGetBomb": "assets/vo_getbomb.mp3",
             "sound/voJacms": "assets/vo_jacms.mp3",
             "sound/voLetsGo": "assets/vo_letsgo.mp3",
-            "sound/voSelectShip": "assets/vo_select_your_battle_ship.mp3",
+            "sound/voSelectShip": "assets/vo_select_your_machine.mp3",
             "sound/voWarning": "assets/vo_warning.mp3",
         };
 
