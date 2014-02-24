@@ -41,6 +41,7 @@ gls2.TitleScene = tm.createClass({
         tm.display.Label("press button").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.addEventListener("enter", function() {
+            gls2.core.fps = FPS;
             this.gameStarted = false;
             this.updateHighScoreLabel();
         });

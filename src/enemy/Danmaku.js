@@ -826,8 +826,8 @@ gls2.Danmaku["nozomi-5"] = new bulletml.Root({
         ]),
     ]),
     "top1": $.action([
-        $.wait(20),
         $.repeat(999, [
+            $.wait(20),
             $.fire($.direction(+5), IVS($.actionRef("noop"))),
             $whip($spd3, 0.06, 15, function(spd) {
                 return $.action([
@@ -835,6 +835,7 @@ gls2.Danmaku["nozomi-5"] = new bulletml.Root({
                     $interval(3),
                 ]);
             }),
+            $.wait(20),
             $.fire($.direction(-5), IVS($.actionRef("noop"))),
             $whip($spd3, 0.06, 15, function(spd) {
                 return $.action([
