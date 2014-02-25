@@ -826,17 +826,18 @@ gls2.Danmaku["nozomi-5"] = new bulletml.Root({
         ]),
     ]),
     "top1": $.action([
-        $.wait(20),
         $.repeat(999, [
+            $.wait(20),
             $.fire($.direction(+5), IVS($.actionRef("noop"))),
-            $whip($spd3, 0.06, 15, function(spd) {
+            $whip($spd2(1.5), 0.05, 15, function(spd) {
                 return $.action([
                     $.fire($.direction(-1, "sequence"), spd, BNS, $.offsetX(-50)),
                     $interval(3),
                 ]);
             }),
+            $.wait(20),
             $.fire($.direction(-5), IVS($.actionRef("noop"))),
-            $whip($spd3, 0.06, 15, function(spd) {
+            $whip($spd2(1.5), 0.05, 15, function(spd) {
                 return $.action([
                     $.fire($.direction(+1, "sequence"), spd, BNS, $.offsetX(+50)),
                     $interval(3),
@@ -2051,20 +2052,20 @@ gls2.Danmaku["mana-3-1"] = new bulletml.Root({
 gls2.Danmaku["kanade"] = new bulletml.Root({
     "top0": $.action([
         $.repeat(999, [
-            $.repeat(17 - 1, [
-                $.fire($.direction(360/17, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
+            $.repeat(14 - 1, [
+                $.fire($.direction(360/14, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
             ]),
             $interval(20),
-            $.fire($.direction(360/17 - 3, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
+            $.fire($.direction(360/14 - 3, "sequence"), $.speed(2), IVS($.actionRef("ivs0", -110)), $.offsetY(-350)),
         ]),
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $.repeat(17 - 1, [
-                $.fire($.direction(360/17, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
+            $.repeat(12 - 1, [
+                $.fire($.direction(360/12, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
             ]),
             $interval(20),
-            $.fire($.direction(360/17 + 6, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
+            $.fire($.direction(360/12 + 6, "sequence"), $.speed(2), IVS($.actionRef("ivs0", +110)), $.offsetY(-350)),
         ]),
     ]),
     "ivs0": $.action([
@@ -2074,11 +2075,11 @@ gls2.Danmaku["kanade"] = new bulletml.Root({
     ]),
     "top2": $.action([
         $.repeat(999, [
-            $nway(5, -12  +0, +12  +0, $spd1, BNL, $.offsetY(-350)),
-            $nway(5, -12 +90, +12 +90, $spd1, BNL, $.offsetY(-350)),
-            $nway(5, -12+180, +12+180, $spd1, BNL, $.offsetY(-350)),
-            $nway(5, -12+270, +12+270, $spd1, BNL, $.offsetY(-350)),
-            $interval(57),
+            $nway(3, -12  +0, +12  +0, $spd1, BNL, $.offsetY(-350)),
+            $nway(3, -12 +90, +12 +90, $spd1, BNL, $.offsetY(-350)),
+            $nway(3, -12+180, +12+180, $spd1, BNL, $.offsetY(-350)),
+            $nway(3, -12+270, +12+270, $spd1, BNL, $.offsetY(-350)),
+            $interval(114),
         ]),
     ]),
     "top3": $.action([
@@ -2451,7 +2452,7 @@ gls2.Danmaku["hibiki-2-1"] = new bulletml.Root({
             $.repeat("$1-1", [
                 $.fire($.direction("60/($1-1)", "sequence"), $spd3("$2"), BNL),
             ]),
-            $interval(1),
+            $.wait(1),
         ]),
     ]),
     "dummy": $.action([
@@ -3083,21 +3084,21 @@ gls2.Danmaku.setup = function() {
 
             b.blendMode = "source-over";
             if (spec.ball) {
-                b.scaleX = 1.0;
-                b.scaleY = 1.0;
+                b.scaleX = 1.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 1.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.updateProperties = false;
             } else if (spec.needle) {
-                b.scaleX = 0.4;
-                b.scaleY = 1.5;
+                b.scaleX = 0.4 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 1.5 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.updateProperties = true;
             } else if (spec.laser) {
-                b.scaleX = 1.0;
-                b.scaleY = 10.0;
+                b.scaleX = 1.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 10.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.blendMode = "lighter";
                 b.updateProperties = true;
             } else {
-                b.scaleX = 0.8;
-                b.scaleY = 1.5;
+                b.scaleX = 0.8 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 1.5 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.updateProperties = true;
             }
 

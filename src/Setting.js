@@ -404,7 +404,7 @@ var INITIAL_CONTINUE_COUNT = 0;
 var CONTINUE_COUNT_BY_ACHEVEMENT_GRADE = [ 0.1, 0.4, 1.0 ];
 
 /**
-　* 開始ステージ(0～)
+ * 開始ステージ(0～)
  * @const
  */
 var INITIAL_STAGE = 0;

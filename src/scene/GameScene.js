@@ -636,7 +636,11 @@ gls2.GameScene = tm.createClass(
         bulletml.Walker.globalScope["$bg"] = playerStyle !== 3 ? 0 : 1;
         bulletml.Walker.globalScope["$ex"] = playerStyle !== 2 ? 0 : 1;
 
-        this.startStage(INITIAL_STAGE);
+        if (gls2.core.mode === 0) {
+            this.startStage(INITIAL_STAGE);
+        } else if (gls2.core.mode === 1) {
+            this.startStage(gls2.core.selectedStage);
+        }
 
         gls2.playSound("voLetsGo");
 
@@ -767,7 +771,7 @@ gls2.GameScene = tm.createClass(
             }
             this.tweener.clear()
                 .wait(2000).call(function() {
-                    if (this.continueCount < gls2.core.calcContinueCountMax()) {
+                    if (this.continueCount < gls2.core.calcContinueCountMax() || gls2.core.mode === 1) {
                         this.openContinueMenu();
                     } else {
                         this.gameOver();
@@ -1049,18 +1053,20 @@ gls2.GameScene = tm.createClass(
         this.openDialogMenu("SETTING", [
             "bgm volume",
             "sound volume",
-            "particle"
+            "particle",
+            "bullet appearance"
         ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
                 "効果音ボリュームを設定します",
-                "パーティクルのON/OFFを設定します"
+                "パーティクルのON/OFFを設定します",
+                "敵弾の見た目に関する設定です"
             ],
         });
     },
     onResultSetting: function(result) {
-        if (result !== 3) this.lastSetting = result;
+        if (result !== 4) this.lastSetting = result;
         switch (result) {
         case 0:
             this.openBgmSetting();
@@ -1071,8 +1077,11 @@ gls2.GameScene = tm.createClass(
         case 2:
             this.openParticleSetting();
             break;
+        case 3:
+            this.openBulletAppearanceSetting();
+            break;
         default:
-            this.openPauseMenu();
+            this.openPauseMenu(0);
             break;
         }
     },
@@ -1137,11 +1146,28 @@ gls2.GameScene = tm.createClass(
         this.openSetting(1);
     },
 
+    openBulletAppearanceSetting: function() {
+        this.openDialogMenu("BULLET", [ "NORMAL", "LARGE" ], this.onResultBulletAppearanceSetting, {
+            "defaultValue": gls2.core.bulletBig,
+            "showExit": false,
+            "menuDescriptions": [
+                "通常サイズで表示します",
+                "大きめに表示します"
+            ]
+        });
+    },
+    onResultBulletAppearanceSetting: function(result) {
+        gls2.core.bulletBig = result;
+        this.saveSetting();
+        this.openSetting(1);
+    },
+
     saveSetting: function() {
         var config = {
             "bgmVolume": gls2.core.bgmVolume,
             "seVolume": gls2.core.seVolume,
             "particleEffectLevel": gls2.core.particleEffectLevel,
+            "bulletBig": gls2.core.bulletBig
         };
         localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },

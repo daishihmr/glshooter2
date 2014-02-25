@@ -16,6 +16,16 @@ gls2.GlShooter2 = tm.createClass(
 /** @lends {gls2.GlShooter2.prototype} */
 {
     superClass: tm.display.CanvasApp,
+
+    /**
+     * ゲームモード
+     * 0: アーケードモード
+     * 1: トレーニングモード
+     */
+    mode: 0,
+    /** トレーニングモード時の選択ステージ */
+    selectedStage: 0,
+
     /** アプリ実行中のハイスコア */
     highScore: 0,
     /** ハイスコア取得時の最終到達ステージ */
@@ -34,6 +44,7 @@ gls2.GlShooter2 = tm.createClass(
     /** SE音量(0～5) */
     seVolume: 3,
     particleEffectLevel: 0,
+    bulletBig: false,
 
     gameScene: null,
 
@@ -111,7 +122,7 @@ gls2.GlShooter2 = tm.createClass(
             "sound/voGetBomb": "assets/vo_getbomb.mp3",
             "sound/voJacms": "assets/vo_jacms.mp3",
             "sound/voLetsGo": "assets/vo_letsgo.mp3",
-            "sound/voSelectShip": "assets/vo_select_your_battle_ship.mp3",
+            "sound/voSelectShip": "assets/vo_select_your_machine.mp3",
             "sound/voWarning": "assets/vo_warning.mp3",
         };
 
@@ -145,6 +156,7 @@ gls2.GlShooter2 = tm.createClass(
             this.bgmVolume = config["bgmVolume"];
             this.seVolume = config["seVolume"];
             this.particleEffectLevel = config["particleEffectLevel"];
+            this.bulletBig = config["bulletBig"];
         }
     },
 
@@ -233,6 +245,8 @@ gls2.GlShooter2 = tm.createClass(
      * @param {function()} callback
      */
     postScore: function(userName, callback) {
+        if (this.mode !== 0) return;
+
         // console.log("this.gameScene.fpsAvgByStage = " + this.gameScene.fpsAvgByStage);
         // console.log("this.gameScene.stageNumber = " + this.gameScene.stageNumber);
         var avgFps = this.gameScene.fpsAvgByStage.slice(0, this.gameScene.stageNumber+1)["average"]();
@@ -319,6 +333,7 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     putAchevement: function(key) {
+        if (this.mode !== 0) return;
         if (!window["achevements"] || window["achevements"].indexOf(key) !== -1) {
             return;
         }

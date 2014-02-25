@@ -1,13 +1,15 @@
 rm -f target/gls2.js
 
 java -jar tools/compiler.jar \
---define VERSION=1.4 \
+--define VERSION=1.5 \
 --define DEBUG=false \
 --define STATS=false \
 --externs libs/tmlib.js \
 --externs libs/mt.js \
 --externs extern/extern.js \
 --externs extern/tween.js \
+--externs extern/tweener.js \
+--externs extern/keyboard.js \
 --externs extern/gls2.js \
 --js libs/bulletml.js \
 --js libs/bulletml.walker.js \

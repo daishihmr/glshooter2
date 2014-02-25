@@ -111,11 +111,11 @@ gls2.Stage5 = tm.createClass(
 
         this.seq.add(  1, "kanade"); // ここで出現させると中ボス戦に間に合う
 
-        this.seq.add(200, "milk5-0");
-
         this.seq.add(300, "milk5-1");
 
         this.seq.add(200, "milk5-0");
+
+        this.seq.add(200, "milk5-1");
 
         this.seq.add(450, "komachi5-0");
         this.seq.add( 30, "heri1-4-right2");

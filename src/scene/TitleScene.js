@@ -41,6 +41,7 @@ gls2.TitleScene = tm.createClass({
         tm.display.Label("press button").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.addEventListener("enter", function() {
+            gls2.core.fps = FPS;
             this.gameStarted = false;
             this.updateHighScoreLabel();
         });
@@ -117,9 +118,10 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        var menu = [ "start", "setting" ];
+        var menu = [ "arcade mode", "training mode", "setting" ];
         var labels = [
             "ゲームを開始します",
+            "トレーニングを開始します",
             "設定を変更します"
         ];
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
@@ -131,6 +133,7 @@ gls2.TitleScene = tm.createClass({
         if (result !== 2) this.lastMainMenu = result;
         switch (result) {
         case 0: // start
+            gls2.core.mode = 0;
             this.tweener
                 .clear()
                 .call(function() {
@@ -144,28 +147,63 @@ gls2.TitleScene = tm.createClass({
                     gls2.core.replaceScene(gls2.ShipSelectScene());
                 }.bind(this));
             break;
-        case 1: // option
+        case 1: // training
+            this.openStageSelect();
+            break;
+        case 2: // option
             this.openSetting();
             break;
         }
+    },
+
+    openStageSelect: function() {
+        this.openDialogMenu("STAGE", [
+            "stage 1",
+            "stage 2",
+            "stage 3",
+            "stage 4",
+            "stage 5",
+        ], this.onResultStageSelect, {});
+    },
+    onResultStageSelect: function(result) {
+        if (result === 5) {
+            this.openMainMenu();
+            return;
+        }
+        gls2.core.mode = 1;
+        gls2.core.selectedStage = result;
+        this.tweener
+            .clear()
+            .call(function() {
+                this.gameStarted = true;
+                for (var i = 0, end = this.particles.length; i < end; i++) {
+                    this.particles[i].speed = 8;
+                }
+            }.bind(this))
+            .wait(1000)
+            .call(function() {
+                gls2.core.replaceScene(gls2.ShipSelectScene());
+            }.bind(this));
     },
 
     openSetting: function() {
         this.openDialogMenu("SETTING", [
             "bgm volume",
             "sound volume",
-            "particle"
+            "particle",
+            "bullet appearance"
         ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
                 "効果音ボリュームを設定します",
-                "パーティクルのON/OFFを設定します"
+                "パーティクルのON/OFFを設定します",
+                "敵弾の見た目に関する設定です"
             ],
         });
     },
     onResultSetting: function(result) {
-        if (result !== 3) this.lastSetting = result;
+        if (result !== 4) this.lastSetting = result;
         switch (result) {
         case 0:
             this.openBgmSetting();
@@ -175,6 +213,9 @@ gls2.TitleScene = tm.createClass({
             break;
         case 2:
             this.openParticleSetting();
+            break;
+        case 3:
+            this.openBulletAppearanceSetting();
             break;
         default:
             this.openMainMenu();
@@ -223,11 +264,28 @@ gls2.TitleScene = tm.createClass({
         this.openSetting();
     },
 
+    openBulletAppearanceSetting: function() {
+        this.openDialogMenu("BULLET", [ "NORMAL", "LARGE" ], this.onResultBulletAppearanceSetting, {
+            "defaultValue": gls2.core.bulletBig,
+            "showExit": false,
+            "menuDescriptions": [
+                "通常サイズで表示します",
+                "大きめに表示します"
+            ]
+        });
+    },
+    onResultBulletAppearanceSetting: function(result) {
+        gls2.core.bulletBig = result;
+        this.saveSetting();
+        this.openSetting();
+    },
+
     saveSetting: function() {
         var config = {
             "bgmVolume": gls2.core.bgmVolume,
             "seVolume": gls2.core.seVolume,
             "particleEffectLevel": gls2.core.particleEffectLevel,
+            "bulletBig": gls2.core.bulletBig
         };
         localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },
