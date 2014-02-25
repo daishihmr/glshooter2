@@ -16,6 +16,16 @@ gls2.GlShooter2 = tm.createClass(
 /** @lends {gls2.GlShooter2.prototype} */
 {
     superClass: tm.display.CanvasApp,
+
+    /**
+     * ゲームモード
+     * 0: アーケードモード
+     * 1: トレーニングモード
+     */
+    mode: 0,
+    /** トレーニングモード時の選択ステージ */
+    selectedStage: 0,
+
     /** アプリ実行中のハイスコア */
     highScore: 0,
     /** ハイスコア取得時の最終到達ステージ */
@@ -321,6 +331,7 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     putAchevement: function(key) {
+        if (this.mode !== 0) return;
         if (!window["achevements"] || window["achevements"].indexOf(key) !== -1) {
             return;
         }
