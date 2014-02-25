@@ -2452,7 +2452,7 @@ gls2.Danmaku["hibiki-2-1"] = new bulletml.Root({
             $.repeat("$1-1", [
                 $.fire($.direction("60/($1-1)", "sequence"), $spd3("$2"), BNL),
             ]),
-            $interval(1),
+            $.wait(1),
         ]),
     ]),
     "dummy": $.action([

@@ -771,7 +771,7 @@ gls2.GameScene = tm.createClass(
             }
             this.tweener.clear()
                 .wait(2000).call(function() {
-                    if (this.continueCount < gls2.core.calcContinueCountMax()) {
+                    if (this.continueCount < gls2.core.calcContinueCountMax() || gls2.core.mode === 1) {
                         this.openContinueMenu();
                     } else {
                         this.gameOver();
@@ -1066,7 +1066,7 @@ gls2.GameScene = tm.createClass(
         });
     },
     onResultSetting: function(result) {
-        if (result !== 3) this.lastSetting = result;
+        if (result !== 4) this.lastSetting = result;
         switch (result) {
         case 0:
             this.openBgmSetting();
@@ -1081,7 +1081,7 @@ gls2.GameScene = tm.createClass(
             this.openBulletAppearanceSetting();
             break;
         default:
-            this.openMainMenu();
+            this.openPauseMenu(0);
             break;
         }
     },

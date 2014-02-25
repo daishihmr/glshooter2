@@ -245,6 +245,8 @@ gls2.GlShooter2 = tm.createClass(
      * @param {function()} callback
      */
     postScore: function(userName, callback) {
+        if (this.mode !== 0) return;
+
         // console.log("this.gameScene.fpsAvgByStage = " + this.gameScene.fpsAvgByStage);
         // console.log("this.gameScene.stageNumber = " + this.gameScene.stageNumber);
         var avgFps = this.gameScene.fpsAvgByStage.slice(0, this.gameScene.stageNumber+1)["average"]();
