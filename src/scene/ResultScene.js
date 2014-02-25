@@ -235,12 +235,17 @@ gls2.ResultScene = tm.createClass(
                     this.gameScene.scoreByStage[this.gameScene.stageNumber] = this.gameScene.score - this.gameScene.scoreByStage[this.gameScene.stageNumber - 1];
                 }
 
-                if (this.gameScene.stageNumber + 1 == STAGE_NUMBER) {
-                    // goto ending
-                    app.replaceScene(gls2.EndingScene());
-                } else {
-                    this.gameScene.startStage(this.gameScene.stageNumber + 1);
-                    app.replaceScene(this.gameScene);
+                if (gls2.core.mode === 0) {
+                    if (this.gameScene.stageNumber + 1 == STAGE_NUMBER) {
+                        // goto ending
+                        app.replaceScene(gls2.EndingScene());
+                    } else {
+                        this.gameScene.startStage(this.gameScene.stageNumber + 1);
+                        app.replaceScene(this.gameScene);
+                    }
+                } else if (gls2.core.mode === 1) {
+                    gls2.stopBgm();
+                    app.replaceScene(gls2.TitleScene());
                 }
             }
         }

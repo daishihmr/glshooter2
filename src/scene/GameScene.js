@@ -636,7 +636,11 @@ gls2.GameScene = tm.createClass(
         bulletml.Walker.globalScope["$bg"] = playerStyle !== 3 ? 0 : 1;
         bulletml.Walker.globalScope["$ex"] = playerStyle !== 2 ? 0 : 1;
 
-        this.startStage(INITIAL_STAGE);
+        if (gls2.core.mode === 0) {
+            this.startStage(INITIAL_STAGE);
+        } else if (gls2.core.mode === 1) {
+            this.startStage(gls2.core.selectedStage);
+        }
 
         gls2.playSound("voLetsGo");
 
