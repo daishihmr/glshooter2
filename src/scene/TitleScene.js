@@ -165,6 +165,10 @@ gls2.TitleScene = tm.createClass({
         ], this.onResultStageSelect, {});
     },
     onResultStageSelect: function(result) {
+        if (result === 5) {
+            this.openMainMenu();
+            return;
+        }
         gls2.core.mode = 1;
         gls2.core.selectedStage = result;
         this.tweener
