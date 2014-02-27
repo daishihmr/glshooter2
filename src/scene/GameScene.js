@@ -169,9 +169,6 @@ gls2.GameScene = tm.createClass(
         this.superInit();
         gls2.GameScene.SINGLETON = this;
 
-        this.scoreLabel = gls2.ScoreLabel(this);
-        this.scoreLabel.scoreLabelElement.addChildTo(this);
-
         var g = gls2.Ground();
         this.ground = g.gElement;
         this.ground.addChildTo(this);
@@ -185,6 +182,8 @@ gls2.GameScene = tm.createClass(
         this.bulletLayer = gls2.GameScene.Layer().addChildTo(this);
         this.labelLayer = gls2.GameScene.LabelLayer(this).addChildTo(this);
 
+        this.scoreLabel = gls2.ScoreLabel(this).addChildTo(this);
+
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
 
         this.lastElement = tm.app.Object2D();
@@ -192,10 +191,6 @@ gls2.GameScene = tm.createClass(
         this.lastElement.update = function(app) {
             this.onexitframe(app);
         }.bind(this);
-
-        this.addEventListener("exit", function() {
-            this.scoreLabel.clear();
-        });
     },
 
     addChild: function(child) {
@@ -220,7 +215,7 @@ gls2.GameScene = tm.createClass(
             || child === this.ground
             || child instanceof gls2.GameScene.Layer
             || child instanceof gls2.GameScene.LabelLayer
-            || child instanceof gls2.ScoreLabelElement
+            || child instanceof gls2.ScoreLabel
             || child instanceof gls2.GetTrophyEffect) {
             this.superClass.prototype.addChild.apply(this, arguments);
         } else {
@@ -235,7 +230,6 @@ gls2.GameScene = tm.createClass(
         this.record(app.keyboard);
 
         this.stage.update(app.frame);
-        if (app.frame % 2 === 0) this.scoreLabel.update();
 
         if (DEBUG && app.keyboard.getKeyDown("escape")) {
             // タイトル画面に戻る
@@ -265,7 +259,6 @@ gls2.GameScene = tm.createClass(
         out.clearColor("black");
         out.drawImage(this.ground.ground.element, 0, 0);
         out.drawImage(this.app.canvas.element, 0, 0);
-        out.drawImage(this.scoreLabel.element, 0, 0);
         return out;
     },
 
@@ -679,8 +672,8 @@ gls2.GameScene = tm.createClass(
         this.isBossBattle = false;
         this.missCount = 0;
 
-        this.scoreLabel.scoreLabelElement.gpsOffsetX = 0;
-        this.scoreLabel.scoreLabelElement.gpsOffsetY = 0;
+        // this.scoreLabel.scoreLabelElement.gpsOffsetX = 0;
+        // this.scoreLabel.scoreLabelElement.gpsOffsetY = 0;
 
         this.hyperRank = 0;
 
@@ -1211,27 +1204,27 @@ gls2.GameScene = tm.createClass(
     },
 
     showBossLife: function() {
-        this.scoreLabel.scoreLabelElement.tweener
-            .clear()
-            .to({
-                gpsOffsetX: -SC_W,
-            }, 1600, "easeInBack")
-            .to({
-                gpsOffsetY: 30,
-            }, 800, "easeInOutBack")
-        ;
+        // this.scoreLabel.scoreLabelElement.tweener
+        //     .clear()
+        //     .to({
+        //         gpsOffsetX: -SC_W,
+        //     }, 1600, "easeInBack")
+        //     .to({
+        //         gpsOffsetY: 30,
+        //     }, 800, "easeInOutBack")
+        // ;
     },
 
     hideBossLife: function() {
-        this.scoreLabel.scoreLabelElement.tweener
-            .clear()
-            .to({
-                gpsOffsetY: 0,
-            }, 800, "easeInOutBack")
-            .to({
-                gpsOffsetX: 0,
-            }, 1600, "easeOutBack")
-        ;
+        // this.scoreLabel.scoreLabelElement.tweener
+        //     .clear()
+        //     .to({
+        //         gpsOffsetY: 0,
+        //     }, 800, "easeInOutBack")
+        //     .to({
+        //         gpsOffsetX: 0,
+        //     }, 1600, "easeOutBack")
+        // ;
     },
 
     rec: null,

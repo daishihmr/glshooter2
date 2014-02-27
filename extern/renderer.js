@@ -70,7 +70,7 @@
             
             obj.draw(this.canvas);
             
-            if (obj instanceof tm.display.Layer) {
+            if (obj.drawToItself) {
                 return;
             }
 

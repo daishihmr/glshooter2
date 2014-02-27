@@ -37,6 +37,7 @@ tm.display = tm.display || {};
 
         _drawInterval: 0,
         _drawCounter: 0,
+        drawToItself: true,
 
         init: function(width, height) {
             this.superInit();

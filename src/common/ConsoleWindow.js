@@ -7,6 +7,8 @@
 gls2.ConsoleWindow = tm.createClass(
 /** @lends {gls2.ConsoleWindow.prototype} */
 {
+    superClass: tm.display.CanvasElement,
+
     width: 0,
     label: null,
     buf: null,
@@ -14,6 +16,8 @@ gls2.ConsoleWindow = tm.createClass(
     posX: 0,
     posY: 0,
     init: function(w) {
+        this.superInit();
+
         this.width = w;
         this.label = tm.display.Label("_", 10)
             .setAlign("left")
