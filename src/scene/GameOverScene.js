@@ -48,6 +48,8 @@ gls2.GameOverScene = tm.createClass(
     scoreId: null,
 
     sendScore: function() {
+        if (gls2.core.mode === 1) return;
+
         this.wait = true;
         this.tried = true;
         this.app.postScore(null, function(error, success, scoreId) {
