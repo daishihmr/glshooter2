@@ -22,9 +22,9 @@ var STATS = false;
 var DEBUG = true;
 
 /**
- * @define {number}
+ * @define {string}
  */
-var VERSION = 99.9;
+var VERSION = "99.9";
 
 tm.preload(function() {
     if (STATS) tm.util.ScriptManager.loadStats();
