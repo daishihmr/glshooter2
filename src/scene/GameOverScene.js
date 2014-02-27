@@ -82,7 +82,7 @@ gls2.GameOverScene = tm.createClass(
         }
 
         this.openDialogMenu("GAME OVER", menu, this.onResultMenu, {
-            "defaultValue": this.posted ? 1 : 0,
+            "defaultValue": 1,
             "menuDescriptions": labels,
             "showExit": false
         });
