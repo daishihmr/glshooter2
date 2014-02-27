@@ -129,36 +129,7 @@ gls2.ScoreLabel = tm.createClass(
         comboCountLabel.stroke = true;
     },
 
-    update: function() {
-    //     // var beginProcessTime = new Date().getTime();
-
-    //     this.clear();
-
-    //     // ボスHP
-    //     if (this.gameScene.boss !== null) {
-    //         this.fillStyle = tm.graphics.LinearGradient(0, 0, SC_W, 0)
-    //             .addColorStopList([
-    //                 { offset: 0.0, color: "rgba(255,255,0,0.4)" },
-    //                 { offset: 1.0, color: "rgba(0,255,255,0.4)" },
-    //             ]).toStyle();
-    //         this.strokeStyle = "rgba(255,255,255,0.8)";
-    //         this.lineWidth = 2;
-    //         this.fillRect(5, this.scoreLabelElement["gpsOffsetY"] - 20, (SC_W-10) * this.gameScene.boss.hp/this.gameScene.boss.hpMax, 20);
-    //         this.strokeRect(5, this.scoreLabelElement["gpsOffsetY"] - 20, SC_W-10, 20);
-    //         this.clear(5 + (SC_W-10)*0.55, this.scoreLabelElement["gpsOffsetY"] - 20+2, 2, 20-4);
-    //         this.clear(5 + (SC_W-10)*0.1, this.scoreLabelElement["gpsOffsetY"] - 20+2, 2, 20-4);
-    //     }
-
-    //     this.fillStyle = "rgba(255,255,255,0.4)";
-    //     this.strokeStyle = "rgba(255,255,255,0.4)";
-    //     this.lineWidth = 1;
-
-    //     // 残機数
-    //     var y = [0, 1, 4][this.gameScene.player.type];
-    //     for (var i = 0; i < this.gameScene.zanki-1; i++) {
-    //         this.drawTexture(tm.asset.AssetManager.get("fighter"), 64*3, 64*y, 64, 64, 5 + (i*32), 40, 32, 32);
-    //     }
-
+    // update: function() {
     //     // ハイパーレベル
     //     if (this.frame % 2 === 0) {
     //         if (!this.gameScene.isHyperMode && this.gameScene.hyperLevel > 0) {
@@ -184,12 +155,6 @@ gls2.ScoreLabel = tm.createClass(
     //         }
     //     }
 
-    //     this.consoleWindow.update();
-    //     this.consoleWindow.posY = this.scoreLabelElement["gpsOffsetY"] + 5;
-    //     this.consoleWindow.draw(this);
-
-    //     this.frame += 1;
-
     //     // debug
     //     if (DEBUG) {
     //         this.fillStyle = "rgba(255,255,255,0.2)";
@@ -199,9 +164,7 @@ gls2.ScoreLabel = tm.createClass(
     //         this.fillText("hyper rank " + this.gameScene.hyperRank, SC_W-30, SC_H-50);
     //     }
 
-    //     // console.log("ScoreLabel " + (new Date().getTime() - beginProcessTime));
-    }
-
+    // }
 });
 
 gls2.BossHpGauge = tm.createClass({
