@@ -76,7 +76,7 @@ gls2.GameOverScene = tm.createClass(
             "タイトルへ戻ります"
         ];
 
-        if (!this.posted) {
+        if (!this.posted && gls2.core.mode === 0) {
             menu.push("save score");
             labels.push("スコアを登録します");
         }
