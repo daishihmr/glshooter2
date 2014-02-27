@@ -672,8 +672,8 @@ gls2.GameScene = tm.createClass(
         this.isBossBattle = false;
         this.missCount = 0;
 
-        // this.scoreLabel.scoreLabelElement.gpsOffsetX = 0;
-        // this.scoreLabel.scoreLabelElement.gpsOffsetY = 0;
+        this.scoreLabel.gpsOffsetX = 0;
+        this.scoreLabel.gpsOffsetY = 0;
 
         this.hyperRank = 0;
 
@@ -1204,27 +1204,27 @@ gls2.GameScene = tm.createClass(
     },
 
     showBossLife: function() {
-        // this.scoreLabel.scoreLabelElement.tweener
-        //     .clear()
-        //     .to({
-        //         gpsOffsetX: -SC_W,
-        //     }, 1600, "easeInBack")
-        //     .to({
-        //         gpsOffsetY: 30,
-        //     }, 800, "easeInOutBack")
-        // ;
+        this.scoreLabel.tweener
+            .clear()
+            .to({
+                "gpsOffsetX": -SC_W,
+            }, 1600, "easeInBack")
+            .to({
+                "gpsOffsetY": 30,
+            }, 800, "easeInOutBack")
+        ;
     },
 
     hideBossLife: function() {
-        // this.scoreLabel.scoreLabelElement.tweener
-        //     .clear()
-        //     .to({
-        //         gpsOffsetY: 0,
-        //     }, 800, "easeInOutBack")
-        //     .to({
-        //         gpsOffsetX: 0,
-        //     }, 1600, "easeOutBack")
-        // ;
+        this.scoreLabel.tweener
+            .clear()
+            .to({
+                "gpsOffsetY": 0,
+            }, 800, "easeInOutBack")
+            .to({
+                "gpsOffsetX": 0,
+            }, 1600, "easeOutBack")
+        ;
     },
 
     rec: null,

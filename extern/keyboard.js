@@ -56,17 +56,17 @@ tm.input = tm.input || {};
             var self = this;
             this.element.addEventListener("keydown", function(e){
                 self.key[e.keyCode] = true;
-                e.preventDefault();
+                // e.preventDefault();
             }, false);
             this.element.addEventListener("keyup", function(e){
                 // delete self.key[e.keyCode];
                 self.key[e.keyCode] = false;
                 // self.button |= 1<<e.button;
-                e.preventDefault();
+                // e.preventDefault();
             }, false);
             this.element.addEventListener("keypress", function(e){
                 // self.button &= ~(1<<e.button);
-                e.preventDefault();
+                // e.preventDefault();
             }, false);
         },
 
