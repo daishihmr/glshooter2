@@ -117,7 +117,7 @@ gls2.GameOverScene = tm.createClass(
             "score": Math.floor(this.app.gameScene.score),
             "stage": this.app.gameScene.stageNumber < STAGE_NUMBER ? ("Stage" + (this.app.gameScene.stageNumber + 1)) : "ALL",
             "type": "ABC"[this.app.gameScene.player.type],
-            "style": ["S", "L", "EX"][this.app.gameScene.player.style],
+            "style": ["S", "L", "EX", "BG"][this.app.gameScene.player.style],
             "cont": this.app.gameScene.continueCount
         });
         var twitterURL = tm.social.Twitter.createURL({
