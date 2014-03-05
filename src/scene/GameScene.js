@@ -632,7 +632,9 @@ gls2.GameScene = tm.createClass(
         this.hyperLevelHistory = [];
 
         this.player = gls2.Player(this, playerType, playerStyle);
-        this.setRank(INITIAL_RANK);
+        if (gls2.core.mode === 0) {
+            this.setRank(INITIAL_RANK);
+        }
         bulletml.Walker.globalScope["$bg"] = playerStyle !== 3 ? 0 : 1;
         bulletml.Walker.globalScope["$ex"] = playerStyle !== 2 ? 0 : 1;
 
