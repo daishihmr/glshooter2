@@ -156,14 +156,16 @@ gls2.TitleScene = tm.createClass({
         }
     },
 
-    openStageSelect: function() {
+    openStageSelect: function(defaultValue) {
         this.openDialogMenu("STAGE", [
             "stage 1",
             "stage 2",
             "stage 3",
             "stage 4",
             "stage 5",
-        ], this.onResultStageSelect, {});
+        ], this.onResultStageSelect, {
+            "defaultValue": defaultValue || 0
+        });
     },
     onResultStageSelect: function(result) {
         if (result === 5) {
@@ -172,6 +174,25 @@ gls2.TitleScene = tm.createClass({
         }
         gls2.core.mode = 1;
         gls2.core.selectedStage = result;
+        this.openRankSelect();
+    },
+
+    openRankSelect: function() {
+        this.openDialogMenu("RANK", [
+            "0",
+            "10",
+            "20",
+            "30",
+            "40",
+            "50",
+        ], this.onResultRankSelect, {});
+    },
+    onResultRankSelect: function(result) {
+        if (result === 6) {
+            this.openStageSelect(gls2.core.selectedStage);
+            return;
+        }
+        gls2.core.gameScene.setRank(result*0.1);
         this.tweener
             .clear()
             .call(function() {
