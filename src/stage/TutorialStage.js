@@ -16,11 +16,23 @@ gls2.TutorialStage = tm.createClass(
     init: function(gameScene) {
         this.superInit(gameScene);
 
+        var key = gameScene.scoreLabel.scoreLabelElement.key;
+        var player = gameScene.player;
+
         this.seq.add(  0, function() {
-            this.gameScene.ground.direction = Math.PI*0.5;
-            this.gameScene.ground.speed = 1;
+            gameScene.ground.direction = Math.PI*0.5;
+            gameScene.ground.speed = 1;
         });
 
+        this.seq.add(400, function() {
+            key["left"] = true;
+            player.on("enterframe", function() {
+                this.x -= this.speed;
+            });
+        });
+        this.seq.add(600, function() {
+            key["left"] = false;
+        });
     },
 
     setupBackground: function() {

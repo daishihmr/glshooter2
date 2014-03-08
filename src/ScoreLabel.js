@@ -41,6 +41,8 @@ gls2.ScoreLabel = tm.createClass(
 
         this.clear();
 
+        this.globalAlpha = 1.0;
+
         // ボスHP
         if (this.gameScene.boss !== null) {
             this.fillStyle = tm.graphics.LinearGradient(0, 0, SC_W, 0)
@@ -140,6 +142,23 @@ gls2.ScoreLabel = tm.createClass(
             this.fillText("hyper rank " + this.gameScene.hyperRank, SC_W-30, SC_H-50);
         }
 
+        if (gls2.core.mode === 2) {
+            this.globalAlpha = this.scoreLabelElement.key["up"] ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyUp"), SC_W*0.75-32, SC_H*0.3-32, 64, 64);
+            this.globalAlpha = this.scoreLabelElement.key["down"] ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyDown"), SC_W*0.75-32, SC_H*0.4-32, 64, 64);
+            this.globalAlpha = this.scoreLabelElement.key["left"] ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyLeft"), SC_W*0.63-32, SC_H*0.4-32, 64, 64);
+            this.globalAlpha = this.scoreLabelElement.key["right"] ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyRight"), SC_W*0.87-32, SC_H*0.4-32, 64, 64);
+            this.globalAlpha = this.scoreLabelElement.key["z"] ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyZ"), SC_W*0.15-32, SC_H*0.4-32, 64, 64);
+            this.globalAlpha = this.scoreLabelElement.key["x"] ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyX"), SC_W*0.27-32, SC_H*0.4-32, 64, 64);
+            this.globalAlpha = this.scoreLabelElement.key["c"] ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyC"), SC_W*0.39-32, SC_H*0.4-32, 64, 64);
+        }
+
         // console.log("ScoreLabel " + (new Date().getTime() - beginProcessTime));
     },
 
@@ -159,8 +178,19 @@ gls2.ScoreLabelElement = tm.createClass(
     gpsOffsetX: 0,
     gpsOffsetY: 0,
 
+    key: null,
+
     init: function(scoreLabel) {
         this.superInit();
+        this.key = {
+            "up": false,
+            "down": false,
+            "left": false,
+            "right": false,
+            "z": false,
+            "x": false,
+            "c": false
+        }
         this.scoreLabel = scoreLabel;
     },
 
