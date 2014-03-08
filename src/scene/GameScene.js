@@ -193,6 +193,44 @@ gls2.GameScene = tm.createClass(
             this.onexitframe(app);
         }.bind(this);
 
+        this.keyImages = {
+            "up": tm.display.Sprite("keyUp")
+                .setPosition(SC_W*0.75, SC_H*0.3)
+                .setAlpha(0.2)
+                .setScale(0.5, 0.5)
+                .addChildTo(this.labelLayer),
+            "down": tm.display.Sprite("keyDown")
+                .setPosition(SC_W*0.75, SC_H*0.4)
+                .setAlpha(0.2)
+                .setScale(0.5, 0.5)
+                .addChildTo(this.labelLayer),
+            "left": tm.display.Sprite("keyLeft")
+                .setPosition(SC_W*0.63, SC_H*0.4)
+                .setAlpha(0.2)
+                .setScale(0.5, 0.5)
+                .addChildTo(this.labelLayer),
+            "right": tm.display.Sprite("keyRight")
+                .setPosition(SC_W*0.87, SC_H*0.4)
+                .setAlpha(0.2)
+                .setScale(0.5, 0.5)
+                .addChildTo(this.labelLayer),
+            "z": tm.display.Sprite("keyZ")
+                .setPosition(SC_W*0.15, SC_H*0.4)
+                .setAlpha(0.2)
+                .setScale(0.5, 0.5)
+                .addChildTo(this.labelLayer),
+            "x": tm.display.Sprite("keyX")
+                .setPosition(SC_W*0.27, SC_H*0.4)
+                .setAlpha(0.2)
+                .setScale(0.5, 0.5)
+                .addChildTo(this.labelLayer),
+            "c": tm.display.Sprite("keyC")
+                .setPosition(SC_W*0.39, SC_H*0.4)
+                .setAlpha(0.2)
+                .setScale(0.5, 0.5)
+                .addChildTo(this.labelLayer)
+        };
+
         this.addEventListener("exit", function() {
             this.scoreLabel.clear();
         });
@@ -642,6 +680,8 @@ gls2.GameScene = tm.createClass(
             this.startStage(INITIAL_STAGE);
         } else if (gls2.core.mode === 1) {
             this.startStage(gls2.core.selectedStage);
+        } else if (gls2.core.mode === 2) {
+            this.startStage(-1);
         }
 
         gls2.playSound("voLetsGo");
@@ -728,8 +768,10 @@ gls2.GameScene = tm.createClass(
             .clear()
             .moveBy(0, -180, 1000, "easeOutBack")
             .call(function() {
-                this.controllable = true;
-                this.attackable = true;
+                if (gls2.core.mode !== 2) {
+                    this.controllable = true;
+                    this.attackable = true;
+                }
             }.bind(this.player))
             .wait(LAUNCH_MUTEKI_TIME)
             .call(function() {
