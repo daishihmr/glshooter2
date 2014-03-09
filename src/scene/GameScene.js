@@ -276,7 +276,7 @@ gls2.GameScene = tm.createClass(
     onexitframe: function(app) {
         // var beginProcessTime = new Date().getTime();
 
-        if (this.player.controllable === false) {
+        if (this.player.controllable === false && gls2.core.mode !== 2) {
             gls2.Danmaku.erase();
         }
 

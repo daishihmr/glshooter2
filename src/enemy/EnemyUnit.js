@@ -98,6 +98,15 @@ gls2.EnemyUnit = {
     { "hard":$e.Heri1, "soft":$s.Heri21, "x":SC_W*0.9, "y":-100 },
 ],
 
+/** 突撃ヘリ5機チュートリアル用 */
+"heri2-T-center": [
+    { "hard":$e.Heri1, "soft":$s.Heri2T, "x":SC_W*0.3, "y":-100 },
+    { "hard":$e.Heri1, "soft":$s.Heri2T, "x":SC_W*0.4, "y":-100 },
+    { "hard":$e.Heri1, "soft":$s.Heri2T, "x":SC_W*0.5, "y":-100 },
+    { "hard":$e.Heri1, "soft":$s.Heri2T, "x":SC_W*0.6, "y":-100 },
+    { "hard":$e.Heri1, "soft":$s.Heri2T, "x":SC_W*0.7, "y":-100 },
+],
+
 /** 突撃ヘリ5機5面用。左側から */
 "heri2-5-left": [
     { "hard":$e.Heri1, "soft":$s.Heri25( 0*1000/60), "x":SC_W*0.1, "y":-100 },
