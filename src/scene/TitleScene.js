@@ -118,12 +118,12 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        var menu = [ "arcade mode", "training mode", "setting", "tutorial" ];
+        var menu = [ "arcade mode", "training mode", "tutorial", "setting" ];
         var labels = [
             "ゲームを開始します",
             "トレーニングを開始します",
-            "設定を変更します",
-            "チュートリアルを開始します"
+            "チュートリアルを開始します",
+            "設定を変更します"
         ];
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
             "defaultValue": this.lastMainMenu,
@@ -151,10 +151,7 @@ gls2.TitleScene = tm.createClass({
         case 1: // training
             this.openStageSelect();
             break;
-        case 2: // option
-            this.openSetting();
-            break;
-        case 3: // tutorial
+        case 2: // tutorial
             gls2.core.mode = 2;
             this.tweener
                 .clear()
@@ -169,6 +166,9 @@ gls2.TitleScene = tm.createClass({
                     gls2.core.replaceScene(gls2.core.gameScene);
                     gls2.core.gameScene.start(2, 0);
                 }.bind(this));
+            break;
+        case 3: // option
+            this.openSetting();
             break;
         }
     },
