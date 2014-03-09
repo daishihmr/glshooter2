@@ -128,6 +128,7 @@ gls2.Stage.create = function(gameScene, stageNumber) {
     //return gls2.Stage3(gameScene); // TODO あとで消す
 
     switch (stageNumber) {
+        case -1: return gls2.TutorialStage(gameScene);
         case 0:  return gls2.Stage1(gameScene);
         case 1:  return gls2.Stage2(gameScene);
         case 2:  return gls2.Stage3(gameScene);
