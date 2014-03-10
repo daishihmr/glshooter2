@@ -276,7 +276,7 @@ gls2.GameScene = tm.createClass(
     onexitframe: function(app) {
         // var beginProcessTime = new Date().getTime();
 
-        if (this.player.controllable === false) {
+        if (this.player.controllable === false && gls2.core.mode !== 2) {
             gls2.Danmaku.erase();
         }
 
@@ -632,7 +632,9 @@ gls2.GameScene = tm.createClass(
         this.hyperLevelHistory = [];
 
         this.player = gls2.Player(this, playerType, playerStyle);
-        this.setRank(INITIAL_RANK);
+        if (gls2.core.mode === 0) {
+            this.setRank(INITIAL_RANK);
+        }
         bulletml.Walker.globalScope["$bg"] = playerStyle !== 3 ? 0 : 1;
         bulletml.Walker.globalScope["$ex"] = playerStyle !== 2 ? 0 : 1;
 
@@ -640,6 +642,8 @@ gls2.GameScene = tm.createClass(
             this.startStage(INITIAL_STAGE);
         } else if (gls2.core.mode === 1) {
             this.startStage(gls2.core.selectedStage);
+        } else if (gls2.core.mode === 2) {
+            this.startStage(-1);
         }
 
         gls2.playSound("voLetsGo");
@@ -726,8 +730,10 @@ gls2.GameScene = tm.createClass(
             .clear()
             .moveBy(0, -180, 1000, "easeOutBack")
             .call(function() {
-                this.controllable = true;
-                this.attackable = true;
+                if (gls2.core.mode !== 2) {
+                    this.controllable = true;
+                    this.attackable = true;
+                }
             }.bind(this.player))
             .wait(LAUNCH_MUTEKI_TIME)
             .call(function() {

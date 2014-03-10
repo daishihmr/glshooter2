@@ -118,10 +118,11 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        var menu = [ "arcade mode", "training mode", "setting" ];
+        var menu = [ "arcade mode", "training mode", "tutorial", "setting" ];
         var labels = [
             "ゲームを開始します",
             "トレーニングを開始します",
+            "チュートリアルを開始します",
             "設定を変更します"
         ];
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
@@ -150,20 +151,38 @@ gls2.TitleScene = tm.createClass({
         case 1: // training
             this.openStageSelect();
             break;
-        case 2: // option
+        case 2: // tutorial
+            gls2.core.mode = 2;
+            this.tweener
+                .clear()
+                .call(function() {
+                    this.gameStarted = true;
+                    for (var i = 0, end = this.particles.length; i < end; i++) {
+                        this.particles[i].speed = 8;
+                    }
+                }.bind(this))
+                .wait(1000)
+                .call(function() {
+                    gls2.core.replaceScene(gls2.core.gameScene);
+                    gls2.core.gameScene.start(2, 0);
+                }.bind(this));
+            break;
+        case 3: // option
             this.openSetting();
             break;
         }
     },
 
-    openStageSelect: function() {
+    openStageSelect: function(defaultValue) {
         this.openDialogMenu("STAGE", [
             "stage 1",
             "stage 2",
             "stage 3",
             "stage 4",
             "stage 5",
-        ], this.onResultStageSelect, {});
+        ], this.onResultStageSelect, {
+            "defaultValue": defaultValue || 0
+        });
     },
     onResultStageSelect: function(result) {
         if (result === 5) {
@@ -172,6 +191,25 @@ gls2.TitleScene = tm.createClass({
         }
         gls2.core.mode = 1;
         gls2.core.selectedStage = result;
+        this.openRankSelect();
+    },
+
+    openRankSelect: function() {
+        this.openDialogMenu("RANK", [
+            "0",
+            "10",
+            "20",
+            "30",
+            "40",
+            "50",
+        ], this.onResultRankSelect, {});
+    },
+    onResultRankSelect: function(result) {
+        if (result === 6) {
+            this.openStageSelect(gls2.core.selectedStage);
+            return;
+        }
+        gls2.core.gameScene.setRank(result*0.1);
         this.tweener
             .clear()
             .call(function() {

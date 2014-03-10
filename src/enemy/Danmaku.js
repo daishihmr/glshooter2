@@ -111,6 +111,12 @@ var $whip = function(baseSpeed, delta, count, actionFunc) {
     ]);
 };
 
+gls2.Danmaku["donothing"] = new bulletml.Root({
+    "top": $.action([
+        $.wait(5000),
+    ]),
+});
+
 /**
  * 自機狙い弾を1発発射.
  */

@@ -41,6 +41,8 @@ gls2.ScoreLabel = tm.createClass(
 
         this.clear();
 
+        if (gls2.core.currentScene !== this.gameScene) return;
+
         // ボスHP
         if (this.gameScene.boss !== null) {
             this.fillStyle = tm.graphics.LinearGradient(0, 0, SC_W, 0)
@@ -138,6 +140,35 @@ gls2.ScoreLabel = tm.createClass(
             this.fillText(this.gameScene.killCount + "/" + this.gameScene.enemyCount, SC_W-30, SC_H);
             this.fillText("STAR S:" + this.gameScene.starItem + " L:" + this.gameScene.starItemLarge, SC_W-30, SC_H-25);
             this.fillText("hyper rank " + this.gameScene.hyperRank, SC_W-30, SC_H-50);
+        }
+
+        if (gls2.core.mode === 2) {
+            this.fillStyle = "rgba(0,0,0, 0.5)";
+            this.gameScene.stage.lines.forEach(function(line, i) {
+                this.fillRect(0, SC_H*0.3+SC_H*0.05*i-18, SC_W, 30);
+            }.bind(this));
+            this.fillStyle = "rgb(255,255,255)";
+            this.setText("bold 20px Orbitron", "center", "middle");
+            this.gameScene.stage.lines.forEach(function(line, i) {
+                this.fillText(line, SC_W*0.5, SC_H*0.3+SC_H*0.05*i);
+            }.bind(this));
+
+            this.globalAlpha = this.gameScene.stage.keyboard.getKey("up")  ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyUp"), SC_W*0.75-32, SC_H*0.4-32, 64, 64);
+            this.globalAlpha = this.gameScene.stage.keyboard.getKey("down") ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyDown"), SC_W*0.75-32, SC_H*0.5-32, 64, 64);
+            this.globalAlpha = this.gameScene.stage.keyboard.getKey("left") ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyLeft"), SC_W*0.63-32, SC_H*0.5-32, 64, 64);
+            this.globalAlpha = this.gameScene.stage.keyboard.getKey("right") ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyRight"), SC_W*0.87-32, SC_H*0.5-32, 64, 64);
+            this.globalAlpha = this.gameScene.stage.keyboard.getKey("z") ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyZ"), SC_W*0.15-32, SC_H*0.5-32, 64, 64);
+            this.globalAlpha = this.gameScene.stage.keyboard.getKey("x") ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyX"), SC_W*0.27-32, SC_H*0.5-32, 64, 64);
+            this.globalAlpha = this.gameScene.stage.keyboard.getKey("c") ? 1.0 : 0.2;
+            this.drawTexture(tm.asset.AssetManager.get("keyC"), SC_W*0.39-32, SC_H*0.5-32, 64, 64);
+
+            this.globalAlpha = 1.0;
         }
 
         // console.log("ScoreLabel " + (new Date().getTime() - beginProcessTime));

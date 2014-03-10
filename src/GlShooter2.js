@@ -90,6 +90,13 @@ gls2.GlShooter2 = tm.createClass(
             "bomb": "assets/bomb.png",
             "bombIcon": "assets/bomb_icon.png",
             "result_bg": "assets/result_bg.png",
+            "keyDown": "assets/arrow-down-icon.png",
+            "keyLeft": "assets/arrow-left-icon.png",
+            "keyRight": "assets/arrow-right-icon.png",
+            "keyUp": "assets/arrow-up-icon.png",
+            "keyC": "assets/letter-uppercase-C-icon.png",
+            "keyZ": "assets/letter-uppercase-Z-icon.png",
+            "keyX": "assets/letter-uppercase-X-icon.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",

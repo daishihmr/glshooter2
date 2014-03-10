@@ -243,8 +243,8 @@ gls2.Player = tm.createClass(
             this.visible = true;
         }
 
-        var kb = app.keyboard;
-        if (this.controllable) {
+        var kb = gls2.core.mode === 2 ? this.gameScene.stage.keyboard : app.keyboard;
+        if (this.controllable || gls2.core.mode === 2) {
             var angle = kb.getKeyAngle();
             if (angle !== null) {
                 var m = KEYBOARD_MOVE[angle];
@@ -393,9 +393,9 @@ gls2.Player = tm.createClass(
     },
 
     _calcRoll: function(kb, frame) {
-        if (this.controllable && kb.getKey("left")) {
+        if ((this.controllable || gls2.core.mode === 2) && kb.getKey("left")) {
             this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3);
-        } else if (this.controllable && kb.getKey("right")) {
+        } else if ((this.controllable || gls2.core.mode === 2) && kb.getKey("right")) {
             this.roll = gls2.math.clamp(this.roll + 0.2, -3, 3);
         } else {
             if (this.roll < 0) {

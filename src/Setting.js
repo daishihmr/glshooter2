@@ -395,7 +395,7 @@ var HASH_TAG = "tmshooter";
  * コンティニュー可能回数初期値
  * @const
  */
-var INITIAL_CONTINUE_COUNT = 0;
+var INITIAL_CONTINUE_COUNT = 3;
 
 /**
  * 実績グレード別コンティニュー可能回数増加量
