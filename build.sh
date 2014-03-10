@@ -28,6 +28,7 @@ java -jar tools/compiler.jar \
 --js src/Ground.js \
 --js src/StarItem.js \
 --js src/stage/Stage.js \
+--js src/stage/TutorialStage.js \
 --js src/stage/Stage1.js \
 --js src/stage/Stage2.js \
 --js src/stage/Stage3.js \

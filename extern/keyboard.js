@@ -43,7 +43,7 @@ tm.input = tm.input || {};
          *     });
          * });
          */
-        init: function(element) {
+        init: function(element, dummy) {
             this.element = element || document;
 
             this.key = {};
@@ -53,20 +53,22 @@ tm.input = tm.input || {};
             this.up     = {};
             this.last   = {};
 
+            if (dummy) return;
+
             var self = this;
             this.element.addEventListener("keydown", function(e){
                 self.key[e.keyCode] = true;
-                e.preventDefault();
+                // e.preventDefault();
             }, false);
             this.element.addEventListener("keyup", function(e){
                 // delete self.key[e.keyCode];
                 self.key[e.keyCode] = false;
                 // self.button |= 1<<e.button;
-                e.preventDefault();
+                // e.preventDefault();
             }, false);
             this.element.addEventListener("keypress", function(e){
                 // self.button &= ~(1<<e.button);
-                e.preventDefault();
+                // e.preventDefault();
             }, false);
         },
 
@@ -190,13 +192,14 @@ tm.input = tm.input || {};
             if (typeof(key) == "string") {
                 key = KEY_CODE[key];
             }
-            return this.press[key] = flag;
+            this.key[key] = flag;
         },
 
         /**
          * キーを全て離したことにする
          */
         clearKey: function() {
+            this.key = {};
             this.press = {};
         }
 
