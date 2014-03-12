@@ -1804,7 +1804,7 @@ gls2.EnemySoft.Mana2 = tm.createClass(
                     var a = gls2.FixedRandom.random() * Math.PI*2;
                     var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
-                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.4, 3000, "easeInOutQuad")
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3, 3000, "easeInOutQuad")
                         .call(temp);
                 }.bind(this);
                 temp();

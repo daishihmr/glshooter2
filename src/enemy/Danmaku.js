@@ -2024,7 +2024,7 @@ gls2.Danmaku["mana-2-3"] = new bulletml.Root({
         ]),
     ]),
     "ring": $.action([
-        $.wait(3),
+        $.wait(2),
         $.fire($.direction(+90, "absolute"), $spd3, RI),
         $.fire($.direction(-90, "absolute"), $spd3, RI),
         $.vanish,
@@ -2045,9 +2045,9 @@ gls2.Danmaku["mana-3-1"] = new bulletml.Root({
     "top1": $.action([
         $.repeat(999, [
             $interval(43),
-            $nway(12, -25, -15, $spd4, BLSR),
-            $nway(12,  -5,   5, $spd4, BLSR),
-            $nway(12,  15,  25, $spd4, BLSR),
+            $nway(12, -25, -15, $spd4, BNSH),
+            $nway(12,  -5,   5, $spd4, BNSH),
+            $nway(12,  15,  25, $spd4, BNSH),
         ]),
     ]),
 });
@@ -2524,7 +2524,7 @@ gls2.Danmaku["hibiki-3-1"] = new bulletml.Root({
             $.repeat(6, [
                 $.fire($.direction("360/6*$loop.index+180/6"), $.speed(5), IVS($.actionRef("ivsR", "360/6*$loop.index+180/6", "$s")), $.offsetY(-25)),
             ]),
-            $interval(1),
+            $.wait(1),
         ]),
     ]),
     "ivsR": $.action([
