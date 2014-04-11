@@ -789,11 +789,11 @@ gls2.GameScene = tm.createClass(
     setRank: function(v) {
         // var min = Math.max(0, gls2.core.difficulty - 1) * 0.02 + (this.player.style !== 2 ? 0.00 : 0.10);
         var min = 0.00;
-        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(v, min, 0.50);
+        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(v, min, 0.50) * RANK_RATE;
     },
 
     addRank: function(v) {
-        this.setRank(bulletml.Walker.globalScope["$rank"] + v);
+        this.setRank(bulletml.Walker.globalScope["$rank"] / RANK_RATE + v);
     },
 
     gameContinue: function() {

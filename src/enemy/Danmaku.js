@@ -1846,22 +1846,22 @@ gls2.Danmaku["mana-1-1"] = new bulletml.Root({
             $.bindVar("s", "$loop.index"),
             $.repeat(5, [
                 $.bindVar("ss", "($s-$loop.index)*0.5"),
-                $nway(41, -180+360/41/2, 180-360/41/2, $spd4("$ss"), RNL, $.offsetX(-30), $.offsetY(-30)),
+                $nway(33, -180+360/33/2, 180-360/33/2, $spd4("$ss"), RNL, $.offsetX(-30), $.offsetY(-30)),
             ]),
             $interval(5),
             $.repeat(5, [
                 $.bindVar("ss", "($s-$loop.index)*0.5"),
-                $nway(41, -180+360/41/2, 180-360/41/2, $spd4("$ss"), RNL, $.offsetX(+30), $.offsetY(-30)),
+                $nway(33, -180+360/33/2, 180-360/33/2, $spd4("$ss"), RNL, $.offsetX(+30), $.offsetY(-30)),
             ]),
             $interval(20),
             $.repeat(5, [
                 $.bindVar("ss", "($s-$loop.index)*0.5"),
-                $absoluteNway(42, -180+360/42/2, 180-360/42/2, $spd5("$ss"), BNL, $.offsetX(+30), $.offsetY(-30)),
+                $absoluteNway(34, -180+360/34/2, 180-360/34/2, $spd5("$ss"), BNL, $.offsetX(+30), $.offsetY(-30)),
             ]),
             $interval(5),
             $.repeat(5, [
                 $.bindVar("ss", "($s-$loop.index)*0.5"),
-                $absoluteNway(42, -180+360/42/2, 180-360/42/2, $spd5("$ss"), BNL, $.offsetX(-30), $.offsetY(-30)),
+                $absoluteNway(34, -180+360/34/2, 180-360/34/2, $spd5("$ss"), BNL, $.offsetX(-30), $.offsetY(-30)),
             ]),
             $interval(80),
         ]),
@@ -2044,10 +2044,13 @@ gls2.Danmaku["mana-3-1"] = new bulletml.Root({
     ]),
     "top1": $.action([
         $.repeat(999, [
-            $interval(43),
-            $nway(12, -25, -15, $spd4, BNSH),
-            $nway(12,  -5,   5, $spd4, BNSH),
-            $nway(12,  15,  25, $spd4, BNSH),
+            $.repeat(3, [
+                $interval(43),
+                $nway(12, -25, -15, $spd4, BNSH),
+                $nway(12,  -5,   5, $spd4, BNSH),
+                $nway(12,  15,  25, $spd4, BNSH),
+            ]),
+            $interval(55),
         ]),
     ]),
 });

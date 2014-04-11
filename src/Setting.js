@@ -34,6 +34,12 @@ var FPS_DOWN_MIN_RATE = 0.2;
 var INITIAL_RANK = 0.00;
 
 /**
+ * ランクの影響率
+ * @const
+ */
+var RANK_RATE = 0.5;
+
+/**
  * エクステンドスコア
  * @const
  */
@@ -407,7 +413,7 @@ var CONTINUE_COUNT_BY_ACHEVEMENT_GRADE = [ 0.1, 0.4, 1.0 ];
  * 開始ステージ(0～)
  * @const
  */
-var INITIAL_STAGE = 0;
+var INITIAL_STAGE = 3;
 
 /**
  * 総ステージ数
