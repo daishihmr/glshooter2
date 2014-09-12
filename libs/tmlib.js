@@ -17519,10 +17519,9 @@ tm.sound = tm.sound || {};
          */
         stop: function(time) {
             if (time === undefined) time = 0;
-            if (this.source.playbackState == 0) {
-                return ;
-            }
-            this.source.stop(this.context.currentTime + time);
+            try {
+                this.source.stop(this.context.currentTime + time);
+            } catch (e) {}
             
             var buffer = this.buffer;
             var volume = this.volume;
