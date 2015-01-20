@@ -17464,11 +17464,11 @@ tm.sound = tm.sound || {};
         /** context */
         context: null,
         /** panner */
-        panner: null,
+        // panner: null,
         /** volume */
         volume: 0.8,
 
-        _pannerEnabled: true,
+        // _pannerEnabled: true,
 
         /**
          * @constructor
@@ -17566,7 +17566,7 @@ tm.sound = tm.sound || {};
          * dummy
          */
         setPosition: function(x, y, z) {
-            this.panner.setPosition(x, y||0, z||0);
+            // this.panner.setPosition(x, y||0, z||0);
 
             return this;
         },
@@ -17574,7 +17574,7 @@ tm.sound = tm.sound || {};
          * dummy
          */
         setVelocity: function(x, y, z) {
-            this.panner.setVelocity(x, y||0, z||0);
+            // this.panner.setVelocity(x, y||0, z||0);
 
             return this;
         },
@@ -17582,7 +17582,7 @@ tm.sound = tm.sound || {};
          * dummy
          */
         setOrientation: function(x, y, z) {
-            this.panner.setOrientation(x, y||0, z||0);
+            // this.panner.setOrientation(x, y||0, z||0);
 
             return this;
         },
@@ -17655,18 +17655,18 @@ tm.sound = tm.sound || {};
         _setup: function() {
             this.source     = this.context.createBufferSource();
             this.gainNode   = this.context.createGain();
-            this.panner     = this.context.createPanner();
+            // this.panner     = this.context.createPanner();
             this.analyser   = this.context.createAnalyser();
 
             this.source.connect(this.gainNode);
-            this.gainNode.connect(this.panner);
-            this.panner.connect(this.analyser);
+            this.gainNode.connect(this.analyser);
+            // this.panner.connect(this.analyser);
             this.analyser.connect(this.context.destination);
 
             // TODO 暫定的対応
-            if (tm.BROWSER === "Firefox") {
-                this.pannerEnabled = false;
-            }
+            // if (tm.BROWSER === "Firefox") {
+            //     this.pannerEnabled = false;
+            // }
         },
 
         /**
@@ -17731,26 +17731,26 @@ tm.sound = tm.sound || {};
         set: function(v) { this.source.playbackRate.value = v; }
     });
 
-    /**
-     * @property    pannerEnabled
-     * panner有効
-     */
-    tm.sound.WebAudio.prototype.accessor("pannerEnabled", {
-        get: function()  { return this._pannerEnabled; },
-        set: function(v) {
-            this.gainNode.disconnect();
-            this.panner.disconnect();
-            if (v) {
-                this.gainNode.connect(this.panner);
-                this.panner.connect(this.analyser);
-            } else {
-                this.gainNode.connect(this.analyser);
-            }
-            this._pannerEnabled = v;
+    // /**
+    //  * @property    pannerEnabled
+    //  * panner有効
+    //  */
+    // tm.sound.WebAudio.prototype.accessor("pannerEnabled", {
+    //     get: function()  { return this._pannerEnabled; },
+    //     set: function(v) {
+    //         this.gainNode.disconnect();
+    //         this.panner.disconnect();
+    //         if (v) {
+    //             this.gainNode.connect(this.panner);
+    //             this.panner.connect(this.analyser);
+    //         } else {
+    //             this.gainNode.connect(this.analyser);
+    //         }
+    //         this._pannerEnabled = v;
 
-            // console.debug("WebAudio pannerEnabled: " + v);
-        }
-    });
+    //         // console.debug("WebAudio pannerEnabled: " + v);
+    //     }
+    // });
 
     /** @static @property */
     tm.sound.WebAudio.isAvailable = (tm.global.webkitAudioContext || tm.global.mozAudioContext || tm.global.AudioContext) ? true : false;
