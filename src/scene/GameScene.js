@@ -542,7 +542,7 @@ gls2.GameScene = tm.createClass(
     onDestroyEnemy: function(enemy) {
         this.generateStar(
             enemy.isGround,
-            this.isHyperMode || gls2.distanceSq(enemy,this.player) < CROSS_RANGE,
+            gls2.distanceSq(enemy,this.player) < CROSS_RANGE,
             enemy.x,
             enemy.y,
             enemy.star * STAR_ITEM_BY_HYPERLEVEL[this.currentHyperLevel],
@@ -755,7 +755,7 @@ gls2.GameScene = tm.createClass(
         this.comboGauge = 0;
         this.comboCount = 0;
         this.comboDown = 0;
-        this.hyperLevel = 0;
+        this.hyperLevel = ~~(this.hyperLevel / 2 + 0.5);
 
         this.missCount += 1;
         this.missCountTotal += 1;
@@ -793,7 +793,7 @@ gls2.GameScene = tm.createClass(
         // var min = Math.max(0, gls2.core.difficulty - 1) * 0.02 + (this.player.style !== 2 ? 0.00 : 0.10);
         var min = 0.00;
         bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(v, min, 0.50) * RANK_RATE;
-        bulletml.Walker.globalScope["$difficulty"] = Math.sqrt(bulletml.Walker.globalScope["$rank"] * 0.5);
+        bulletml.Walker.globalScope["$difficulty"] = Math.sqrt(bulletml.Walker.globalScope["$rank"] * 0.2);
     },
 
     addRank: function(v) {
@@ -923,8 +923,8 @@ gls2.GameScene = tm.createClass(
                 gls2.playSound("voHyperReady");
             }
 
-            if (this.hyperLevel > 5 && gls2.core.frame-this.hyperChargeStart <= 60) gls2.core.putAchevement("hyperAndHyperAndHyper");
         }
+        if (this.hyperLevel > 5 && gls2.core.frame-this.hyperChargeStart <= 60) gls2.core.putAchevement("hyperAndHyperAndHyper");
 
         this.hyperGauge = gls2.math.clamp(this.hyperGauge + v, 0, 1);
         if (this.hyperGauge >= 1) {
@@ -970,7 +970,7 @@ gls2.GameScene = tm.createClass(
         this.hyperGauge = 0;
 
         // すべての弾を消す
-        gls2.Danmaku.erase(true, true);
+        gls2.Danmaku.erase(true);
 
         this.app.putAchevement("hyper1");
         if (this.currentHyperLevel == 10) {

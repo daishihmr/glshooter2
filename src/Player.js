@@ -84,7 +84,7 @@ gls2.Player = tm.createClass(
 
         tm.bulletml.AttackPattern.defaultConfig.target = this;
 
-        this.speed = [6.0, 5.0, 4.5][type];
+        this.speed = [6.0, 5.0, 4.5][type] * 1.2;
 
         this.boundingRadius = (style === 2 || style === 3) ? 2 : 7;
         this.altitude = 10;
@@ -267,7 +267,7 @@ gls2.Player = tm.createClass(
 
             // 攻撃
             this.fireLaser = (pressZ && pressC) || this.pressTimeC === LASER_FRAME;
-            var shotInterval = this.gameScene.isHyperMode ? 3 : 5;
+            var shotInterval = this.gameScene.isHyperMode ? 3 : 4;
             this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % shotInterval === 0;
             if (pressZ) {
                 this.pressTimeC = 0;

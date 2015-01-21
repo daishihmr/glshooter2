@@ -31,7 +31,7 @@ gls2.StarItem = tm.createClass(
 
         this.large = large;
         if (large) {
-            this.setScale(2, 2);
+            this.setScale(2.5, 2.5);
         }
 
         this.gameScene = gls2.GameScene.SINGLETON;
@@ -62,8 +62,8 @@ gls2.StarItem = tm.createClass(
 
             if (this.stability && this.grub) {
                 var a = Math.atan2(this.player.y - this.y, this.player.x - this.x);
-                this.x += Math.cos(a) * 8;
-                this.y += Math.sin(a) * 8;
+                this.x += Math.cos(a) * 12;
+                this.y += Math.sin(a) * 12;
             } else if (!this.stability) {
                 this.x += this.dx;
                 this.y += this.dy;

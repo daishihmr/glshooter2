@@ -48,20 +48,20 @@ var RLSR = function(action) { return $.bullet(action, {frame:3,laser:true}); };
  * ランクによって短くなる
  * ハイパー中も短くなる
  */
-var $interval = function(v) { return $.wait(v + "*(1-$difficulty*0.5)*$hyperOff + $bg*20") };
+var $interval = function(v) { return $.wait(v + "*(1.1-$difficulty)*$hyperOff + $bg*10") };
 
 // 弾速
-var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 0.20 + ("+v+"*0.1)" ); };
-var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 0.50 + ("+v+"*0.1)" ); };
-var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 0.80 + ("+v+"*0.1)" ); };
-var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 1.10 + ("+v+"*0.1)" ); };
-var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 1.40 + ("+v+"*0.1)" ); };
-var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 1.70 + ("+v+"*0.1)" ); };
-var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 2.00 + ("+v+"*0.1)" ); };
+var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty*3.0 - $bg*0.05 + $ex*0.2)*1.5 + 0.20 + ("+v+"*0.1)" ); };
+var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty*3.0 - $bg*0.05 + $ex*0.2)*1.5 + 0.50 + ("+v+"*0.1)" ); };
+var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty*3.0 - $bg*0.05 + $ex*0.2)*1.5 + 0.80 + ("+v+"*0.1)" ); };
+var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty*3.0 - $bg*0.05 + $ex*0.2)*1.5 + 1.10 + ("+v+"*0.1)" ); };
+var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty*3.0 - $bg*0.05 + $ex*0.2)*1.5 + 1.40 + ("+v+"*0.1)" ); };
+var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty*3.0 - $bg*0.05 + $ex*0.2)*1.5 + 1.70 + ("+v+"*0.1)" ); };
+var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty*3.0 - $bg*0.05 + $ex*0.2)*1.5 + 2.00 + ("+v+"*0.1)" ); };
 
 /** 自機狙い弾 */
-var $fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3, RNS) };
-var $fire1 = function(spd) { return $.fire($.direction(0), spd || $spd3, BNS) };
+var $fire0 = function(spd) { return $.fire($.direction(Math.randf(-2, 2)), spd || $spd3, RNS) };
+var $fire1 = function(spd) { return $.fire($.direction(Math.randf(-2, 2)), spd || $spd3, BNS) };
 
 /** 自機狙いn-way弾 */
 var $nway = function(way, rangeFrom, rangeTo, speed, bullet, offsetX, offsetY, autonomy) {

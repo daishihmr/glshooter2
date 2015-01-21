@@ -63,22 +63,22 @@ gls2.Laser = tm.createClass(
                 "red": {
                     frames: [0, 1, 2, 3],
                     next: "red",
-                    frequency: 2,
+                    frequency: 1,
                 },
                 "green": {
                     frames: [4, 5, 6, 7],
                     next: "green",
-                    frequency: 2,
+                    frequency: 1,
                 },
                 "blue": {
                     frames: [8, 9, 10, 11],
                     next: "blue",
-                    frequency: 2,
+                    frequency: 1,
                 },
                 "hyper": {
                     frames: [12, 13, 14, 15],
                     next: "hyper",
-                    frequency: 2,
+                    frequency: 1,
                 },
             }
         }), 140, 140);
@@ -95,22 +95,22 @@ gls2.Laser = tm.createClass(
                 "red": {
                     frames: [0, 1, 2, 3],
                     next: "red",
-                    frequency: 2,
+                    frequency: 1,
                 },
                 "green": {
                     frames: [4, 5, 6, 7],
                     next: "green",
-                    frequency: 2,
+                    frequency: 1,
                 },
                 "blue": {
                     frames: [8, 9, 10, 11],
                     next: "blue",
-                    frequency: 2,
+                    frequency: 1,
                 },
                 "hyper": {
                     frames: [12, 13, 14, 15],
                     next: "hyper",
-                    frequency: 2,
+                    frequency: 1,
                 },
             }
         }), 140, 80);
@@ -126,22 +126,22 @@ gls2.Laser = tm.createClass(
                 "red": {
                     frames: [0, 1, 2, 3],
                     next: "red",
-                    frequency: 2,
+                    frequency: 1,
                 },
                 "green": {
                     frames: [4, 5, 6, 7],
                     next: "green",
-                    frequency: 2,
+                    frequency: 1,
                 },
                 "blue": {
                     frames: [8, 9, 10, 11],
                     next: "blue",
-                    frequency: 2,
+                    frequency: 1,
                 },
                 "hyper": {
                     frames: [12, 13, 14, 15],
                     next: "hyper",
-                    frequency: 2,
+                    frequency: 1,
                 },
             }
         }), 130, 130);

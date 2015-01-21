@@ -59,10 +59,10 @@ gls2.ShotBullet = tm.createClass({
     setColor: function(col) {
         this.setFrameIndex(col, 64, 64);
         if (col === 3) {
-            this.speed = 45;
+            this.speed = 60;
             this.boundingRadius = 52;
         } else {
-            this.speed = 30;
+            this.speed = 45;
             this.boundingRadius = 36;
         }
     },

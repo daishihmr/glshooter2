@@ -15,7 +15,7 @@ gls2.TitleScene = tm.createClass({
     particles: [],
 
     gameStarted: false,
-    highScoreLabel: null,
+    // highScoreLabel: null,
 
     lastMainMenu: 0,
     lastSetting: 0,
@@ -69,7 +69,7 @@ gls2.TitleScene = tm.createClass({
         this.addEventListener("enter", function() {
             gls2.core.fps = FPS;
             this.gameStarted = false;
-            this.updateHighScoreLabel();
+            // this.updateHighScoreLabel();
         });
     },
 
@@ -79,7 +79,7 @@ gls2.TitleScene = tm.createClass({
         for (var i = 0; i < score.length; i += 4) {
             text += score.substring(i, i+4) + " ";
         }
-        this.highScoreLabel.text = "HIGH SCORE: " + text.trim();
+        // this.highScoreLabel.text = "HIGH SCORE: " + text.trim();
     },
 
     drawBackground: function(canvas) {
