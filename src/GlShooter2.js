@@ -195,6 +195,7 @@ gls2.GlShooter2 = tm.createClass(
         gls2.FixedRandom.setup(12345);
 
         [
+            "fighter",
             "tex1",
             "tex2",
             "tex3",
@@ -203,6 +204,7 @@ gls2.GlShooter2 = tm.createClass(
             "tex_tank1",
             "yotsubaLeaf",
             "kanade-cannon",
+            // "result_bg",
         ].forEach(function(name) {
 
             var tex = tm.asset.AssetManager.get(name);
@@ -220,6 +222,17 @@ gls2.GlShooter2 = tm.createClass(
             cvRed.resize(tex.width, tex.height);
             cvRed.drawBitmap(bmRed, 0, 0);
             tm.asset.AssetManager.set(name + "Red", cvRed);
+
+            var bmBlack = canvas.getBitmap();
+            bmBlack.filter({
+                calc: function(pixel, index, x, y, bitmap) {
+                    bitmap.setPixelIndex(index, pixel[2], pixel[0], pixel[1]);
+                }
+            });
+            var cvBlack = tm.graphics.Canvas();
+            cvBlack.resize(tex.width, tex.height);
+            cvBlack.drawBitmap(bmBlack, 0, 0);
+            tm.asset.AssetManager.set(name, cvBlack);
         });
 
 

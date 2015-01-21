@@ -6,6 +6,7 @@
 
 var origParticle0 = null;
 var origParticle1 = null;
+var origParticle2 = null;
 
 gls2.TitleScene = tm.createClass({
     superClass: gls2.Scene,
@@ -23,22 +24,47 @@ gls2.TitleScene = tm.createClass({
         this.superInit();
 
         tm.display.Label("TM-Shooter", 50)
-            .setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
+            // .setBlendMode("lighter")
+            .setPosition(SC_W * 0.5, SC_H * 0.25)
+            .addChildTo(this);
+        tm.display.Label("cure black label", 40)
+            // .setBlendMode("lighter")
+            .setPosition(SC_W * 0.5, SC_H * 0.33)
+            .addChildTo(this);
         tm.display.Label("version " + VERSION, 22)
-            .setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
+            // .setBlendMode("lighter")
+            .setPosition(SC_W * 0.9, SC_H * 0.40)
+            .setAlign("right")
+            .addChildTo(this);
 
         tm.display.Label("1st ", 22)
-            .setPosition(SC_W * 0.15, SC_H * 0.70).setAlign("left").addChildTo(this);
+            // .setBlendMode("lighter")
+            .setPosition(SC_W * 0.15, SC_H * 0.70)
+            .setAlign("left")
+            .addChildTo(this);
         tm.display.Label(EXTEND_SCORE[0] + " PTS", 22)
-            .setPosition(SC_W * 0.85, SC_H * 0.70).setAlign("right").addChildTo(this);
+            // .setBlendMode("lighter")
+            .setPosition(SC_W * 0.85, SC_H * 0.70)
+            .setAlign("right")
+            .addChildTo(this);
         tm.display.Label("2nd ", 22)
-            .setPosition(SC_W * 0.15, SC_H * 0.75).setAlign("left").addChildTo(this);
+            // .setBlendMode("lighter")
+            .setPosition(SC_W * 0.15, SC_H * 0.75)
+            .setAlign("left")
+            .addChildTo(this);
         tm.display.Label(EXTEND_SCORE[1] + " PTS", 22)
-            .setPosition(SC_W * 0.85, SC_H * 0.75).setAlign("right").addChildTo(this);
+            // .setBlendMode("lighter")
+            .setPosition(SC_W * 0.85, SC_H * 0.75)
+            .setAlign("right")
+            .addChildTo(this);
 
-        this.highScoreLabel = tm.display.Label()
-            .setPosition(SC_W * 0.5, SC_H * 0.40); //.addChildTo(this);
-        tm.display.Label("press button").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
+        // this.highScoreLabel = tm.display.Label()
+        //     .setPosition(SC_W * 0.5, SC_H * 0.40)
+        //     .addChildTo(this);
+        tm.display.Label("press button")
+            .setPosition(SC_W * 0.5, SC_H * 0.9)
+            // .setBlendMode("lighter")
+            .addChildTo(this);
 
         this.addEventListener("enter", function() {
             gls2.core.fps = FPS;
@@ -62,8 +88,11 @@ gls2.TitleScene = tm.createClass({
     },
 
     update: function(app) {
-        this._generateParticle(Math.cos(this.age*0.01)        *80+SC_W*0.5, Math.sin(this.age*0.01)        *80+SC_H*0.5, 0);
-        this._generateParticle(Math.cos(this.age*0.01+Math.PI)*80+SC_W*0.5, Math.sin(this.age*0.01+Math.PI)*80+SC_H*0.5, 1);
+        if (app.frame % 2 === 0) {
+            this._generateParticle(Math.cos(this.age*-0.01)            *100+SC_W*0.5, Math.sin(this.age*-0.01)            *100+SC_H*0.5, 0);
+            this._generateParticle(Math.cos(this.age*-0.01+Math.PI*2/3)*100+SC_W*0.5, Math.sin(this.age*-0.01+Math.PI*2/3)*100+SC_H*0.5, 1);
+            this._generateParticle(Math.cos(this.age*-0.01+Math.PI*4/3)*100+SC_W*0.5, Math.sin(this.age*-0.01+Math.PI*4/3)*100+SC_H*0.5, 2);
+        }
 
         if ((app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) && !this.gameStarted) {
             this.openMainMenu()
@@ -95,10 +124,20 @@ gls2.TitleScene = tm.createClass({
             ).fillRect(0, 0, 80, 80)
             .element
         );
+        if (origParticle2 === null) origParticle2 = gls2.Particle(80, 1.0, 0.8, tm.graphics.Canvas()
+            .resize(80, 80)
+            .setFillStyle(
+                tm.graphics.RadialGradient(40,40,0,40,40,40).addColorStopList([
+                    {offset:0, color: "rgba(255,255,255,0.1)"},
+                    {offset:1, color: "rgba(  0,155,  0,0.0)"},
+                ]).toStyle()
+            ).fillRect(0, 0, 80, 80)
+            .element
+        );
 
-        var p = (col === 0) ? origParticle0.clone().addChildTo(this) : origParticle1.clone().addChildTo(this);
+        var p = [origParticle0, origParticle1, origParticle2][col].clone().addChildTo(this);
 
-        p.speed = 0.6;
+        p.speed = 0.7;
         var a = gls2.math.randf(0, Math.PI*2);
         var r = gls2.math.rand(0, 20);
         p.setPosition(Math.cos(a) * r + cx, Math.sin(a) * r + cy);

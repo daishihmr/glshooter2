@@ -11,53 +11,53 @@ var $ = bulletml.dsl;
 
 // 弾種
 /** 青弾（小） */
-var BS = function(action) { return $.bullet(action, {frame:0,ball:true}); };
+var BS = function(action) { return $.bullet(action, {frame:1,ball:true}); };
 /** 青弾（大） */
-var BL = function(action) { return $.bullet(action, {frame:2,ball:true}); };
+var BL = function(action) { return $.bullet(action, {frame:3,ball:true}); };
 /** 赤弾（小） */
-var RS = function(action) { return $.bullet(action, {frame:1,ball:true}); };
+var RS = function(action) { return $.bullet(action, {frame:0,ball:true}); };
 /** 赤弾（大） */
-var RL = function(action) { return $.bullet(action, {frame:3,ball:true}); };
+var RL = function(action) { return $.bullet(action, {frame:2,ball:true}); };
 /** 青針弾（小） */
-var BNS = function(action) { return $.bullet(action, {frame:0}); };
+var BNS = function(action) { return $.bullet(action, {frame:1}); };
 /** 青針弾（大） */
-var BNL = function(action) { return $.bullet(action, {frame:2}); };
+var BNL = function(action) { return $.bullet(action, {frame:3}); };
 /** 赤針弾（小） */
-var RNS = function(action) { return $.bullet(action, {frame:1}); };
+var RNS = function(action) { return $.bullet(action, {frame:0}); };
 /** 赤針弾（大） */
-var RNL = function(action) { return $.bullet(action, {frame:3}); };
+var RNL = function(action) { return $.bullet(action, {frame:2}); };
 /** 赤イクラ弾 */
 var RI = function(action) { return $.bullet(action, {frame:4,ball:true}); };
 /** 見えない弾 */
 var IVS = function(action) { return $.bullet(action, {visible:false}) };
 /** 赤リング弾（大） */
-var RR = function(action) { return $.bullet(action, {frame:7,ball:true}); };
+var RR = function(action) { return $.bullet(action, {frame:6,ball:true}); };
 /** 青リング（大） */
-var BR = function(action) { return $.bullet(action, {frame:6,ball:true}); };
+var BR = function(action) { return $.bullet(action, {frame:7,ball:true}); };
 /** 青針弾（細） */
-var BNSH = function(action) { return $.bullet(action, {frame:2,needle:true}); };
+var BNSH = function(action) { return $.bullet(action, {frame:0,needle:true}); };
 /** 赤針弾（細） */
-var RNSH = function(action) { return $.bullet(action, {frame:3,needle:true}); };
+var RNSH = function(action) { return $.bullet(action, {frame:1,needle:true}); };
 /** 青レーザー */
-var BLSR = function(action) { return $.bullet(action, {frame:0,laser:true}); };
+var BLSR = function(action) { return $.bullet(action, {frame:2,laser:true}); };
 /** 赤レーザー */
-var RLSR = function(action) { return $.bullet(action, {frame:1,laser:true}); };
+var RLSR = function(action) { return $.bullet(action, {frame:3,laser:true}); };
 
 /**
  * 発射間隔
  * ランクによって短くなる
  * ハイパー中も短くなる
  */
-var $interval = function(v) { return $.wait(v + "*(1-$rank)*$hyperOff + $bg*20") };
+var $interval = function(v) { return $.wait(v + "*(1-$difficulty*0.5)*$hyperOff + $bg*20") };
 
 // 弾速
-var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 0.20 + ("+v+"*0.1)" ); };
-var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 0.50 + ("+v+"*0.1)" ); };
-var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 0.80 + ("+v+"*0.1)" ); };
-var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 1.10 + ("+v+"*0.1)" ); };
-var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 1.40 + ("+v+"*0.1)" ); };
-var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 1.70 + ("+v+"*0.1)" ); };
-var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("($rank - $bg*0.05 + $ex*0.2)*1.5 + 2.00 + ("+v+"*0.1)" ); };
+var $spd0 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 0.20 + ("+v+"*0.1)" ); };
+var $spd1 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 0.50 + ("+v+"*0.1)" ); };
+var $spd2 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 0.80 + ("+v+"*0.1)" ); };
+var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 1.10 + ("+v+"*0.1)" ); };
+var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 1.40 + ("+v+"*0.1)" ); };
+var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 1.70 + ("+v+"*0.1)" ); };
+var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("($difficulty - $bg*0.05 + $ex*0.2)*1.5 + 2.00 + ("+v+"*0.1)" ); };
 
 /** 自機狙い弾 */
 var $fire0 = function(spd) { return $.fire($.direction(0), spd || $spd3, RNS) };
@@ -3098,7 +3098,7 @@ gls2.Danmaku.setup = function() {
                 b.updateProperties = false;
             } else if (spec.needle) {
                 b.scaleX = 0.4 * (gls2.core.bulletBig ? 1.5 : 1.0);
-                b.scaleY = 1.5 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 2.5 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.updateProperties = true;
             } else if (spec.laser) {
                 b.scaleX = 1.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
@@ -3107,7 +3107,7 @@ gls2.Danmaku.setup = function() {
                 b.updateProperties = true;
             } else {
                 b.scaleX = 0.8 * (gls2.core.bulletBig ? 1.5 : 1.0);
-                b.scaleY = 1.5 * (gls2.core.bulletBig ? 1.5 : 1.0);
+                b.scaleY = 2.0 * (gls2.core.bulletBig ? 1.5 : 1.0);
                 b.updateProperties = true;
             }
 

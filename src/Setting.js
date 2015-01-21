@@ -37,7 +37,7 @@ var INITIAL_RANK = 0.00;
  * ランクの影響率
  * @const
  */
-var RANK_RATE = 0.5;
+var RANK_RATE = 1.0;
 
 /**
  * エクステンドスコア
@@ -76,13 +76,13 @@ var BOMB_MAX_MAX = [6, 4, 2, 99];
  * ショットの攻撃力
  * @const
  */
-var SHOT_ATTACK_POWER = 1;
+var SHOT_ATTACK_POWER = 2;
 
 /**
  * ハイパーショットの攻撃力上昇率
  * @const
  */
-var HYPER_SHOT_ATTACK_POWER = 0.1;
+var HYPER_SHOT_ATTACK_POWER = 0.5;
 
 /**
  * レーザーの攻撃力
@@ -118,37 +118,37 @@ var BOMB_ATTACK_POWER = 2;
  * ショットによる敵破壊でチャージされるハイパーゲージ値
  * @const
  */
-var HYPER_CHARGE_BY_SHOT = 0.005;
+var HYPER_CHARGE_BY_SHOT = 0.0025;
 
 /**
  * レーザーによる敵破壊でチャージされるハイパーゲージ値
  * @const
  */
-var HYPER_CHARGE_BY_LASER = 0.010;
+var HYPER_CHARGE_BY_LASER = 0.005;
 
 /**
  * レーザーを敵に当てることでチャージされるハイパーゲージ値
  * @const
  */
-var HYPER_CHARGE_BY_LASER_HIT = 0.001;
+var HYPER_CHARGE_BY_LASER_HIT = 0.0005;
 
 /**
  * オーラによる敵破壊でチャージされるハイパーゲージ値
  * @const
  */
-var HYPER_CHARGE_BY_AURA = 0.015;
+var HYPER_CHARGE_BY_AURA = 0.0075;
 
 /**
  * オーラを敵に当てることでチャージされるハイパーゲージ値
  * @const
  */
-var HYPER_CHARGE_BY_AURA_HIT = 0.002;
+var HYPER_CHARGE_BY_AURA_HIT = 0.001;
 
 /**
  * 星アイテム取得でチャージされるハイパーゲージ値
  * @const
  */
-var HYPER_CHARGE_BY_STAR = 0.001;
+var HYPER_CHARGE_BY_STAR = 0.0005;
 
 /**
  * 星アイテム（大）取得にチャージされるハイパーゲージ値
@@ -185,7 +185,7 @@ var HYPER_CHARGE_BY_AURA_IN_HYPER = 0.030;
  * オーラを敵に当てることでチャージされるハイパーゲージ値
  * @const
  */
-var HYPER_CHARGE_BY_AURA_HIT_IN_HYPER = 0.004;
+var HYPER_CHARGE_BY_AURA_HIT_IN_HYPER = 0.008;
 
 /**
  * 星アイテム取得でチャージされるハイパーゲージ値
@@ -221,7 +221,7 @@ var HYPERMODE_TIME = 800;
  * ハイパーモード起動時の無敵時間
  * @const
  */
-var HYPERMODE_START_MUTEKI_TIME = 0.25;
+var HYPERMODE_START_MUTEKI_TIME = 0.12;
 
 /**
  * ハイパーモード終了時の無敵時間
@@ -275,7 +275,7 @@ var BULLET_COMBO = 1;
  * ハイパー中の星アイテム増加倍率
  * @const
  */
-var STAR_ITEM_BY_HYPERLEVEL = [ 1, 1, 2, 3, 4, 8, 16, 20, 24, 32, 40 ];
+var STAR_ITEM_BY_HYPERLEVEL = [ 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6 ];
 
 /**
  * 星アイテム（大）取得時のスコア
@@ -317,7 +317,7 @@ var STAR_ITEM_BASESCORE = 100;
  * ハイパーモード時の弾幕激化係数（少ないほど激化）
  * @const
  */
-var ENEMY_ATTACK_INTERVAL_RATE_HYPER = 0.5;
+var ENEMY_ATTACK_INTERVAL_RATE_HYPER = 0.3;
 
 /**
  * 基本弾速
@@ -329,19 +329,19 @@ var BULLET_SPEED = 3.0;
  * 星アイテム（大）が出る距離
  * @const
  */
-var CROSS_RANGE = 150*150;
+var CROSS_RANGE = 100*100;
 
 /**
  * 敵弾のHP
  * @const
  */
-var BULLET_HP = 50;
+var BULLET_HP = 40;
 
 /**
  * ショットのHP
  * @const
  */
-var SHOT_HP = 10;
+var SHOT_HP = 20;
 
 /**
  * オートボム選択する？
@@ -389,7 +389,7 @@ var STAGE_CLEAR_BONUS_NO_MISS = 20000000;
  * ボムMAXIMUM時にフレーム毎に増加するスコア
  * @const
  */
-var MAXIMUM_BONUS = 100;
+var MAXIMUM_BONUS = 1000;
 
 /**
  * Twitter投稿用ハッシュタグ
@@ -401,7 +401,7 @@ var HASH_TAG = "tmshooter";
  * コンティニュー可能回数初期値
  * @const
  */
-var INITIAL_CONTINUE_COUNT = 3;
+var INITIAL_CONTINUE_COUNT = 6;
 
 /**
  * 実績グレード別コンティニュー可能回数増加量

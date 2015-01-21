@@ -227,7 +227,7 @@ gls2.Stage5 = tm.createClass(
 
     setupBackground: function() {
         this.gameScene.ground.background = tm.graphics.RadialGradient(SC_W*0.5, 0, 0, SC_W*0.5, SC_H*0.6, SC_H).addColorStopList([
-            { offset:0.00, color:"hsl(200, 20%, 25%)" },
+            { offset:0.00, color:"hsl(200, 30%, 25%)" },
             { offset:0.33, color:"hsl(240, 10%,  5%)" },
             { offset:0.66, color:"hsl(280, 10%,  5%)" },
             { offset:1.00, color:"hsl(340, 10%,  5%)" },
