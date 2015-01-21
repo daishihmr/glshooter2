@@ -252,6 +252,8 @@ gls2.GameScene = tm.createClass(
         if (DEBUG) {
             if (app.keyboard.getKeyDown("h")) {
                 this.addHyperGauge(1.2 / HYPER_CHARGE_RATE);
+            } else if (app.keyboard.getKeyDown("b")) {
+                gls2.BombItem(SC_W * 0.5, SC_H * 0.5, this.player).addChildTo(this);
             }
         }
 
@@ -606,6 +608,7 @@ gls2.GameScene = tm.createClass(
         this.zanki = INITIAL_ZANKI;
         this.bomb = this.bombMax = INITIAL_BOMB_MAX[playerStyle];
         this.bombMaxMax = BOMB_MAX_MAX[playerStyle];
+        this.isBombMaximum = false;
         this.hyperGauge = 0;
         this.hyperRank = 0;
         this.hyperLevel = 0;
