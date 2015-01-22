@@ -99,8 +99,8 @@ gls2.GlShooter2 = tm.createClass(
             "keyX": "assets/letter-uppercase-X-icon.png",
 
             // bgm
-            "bgmShipSelect": "assets2/nc44200.mp3",
-            "bgm1": "assets2/nc54073.mp3",
+            "bgmShipSelect": "assets2/nc99963.mp3",
+            "bgm1": "assets2/nc99049.mp3",
             "bgmLoopInfo": "assets2/loop.json",
 
             // sound
@@ -132,18 +132,6 @@ gls2.GlShooter2 = tm.createClass(
             "sound/voSelectShip": "assets/vo_select_your_machine.mp3",
             "sound/voWarning": "assets/vo_warning.mp3",
         };
-
-        if (DEBUG) {
-            delete assets["bgmShipSelect"];
-            delete assets["bgm1"];
-            delete assets["bgm2"];
-            delete assets["bgm3"];
-            delete assets["bgm4"];
-            delete assets["bgm5"];
-            delete assets["bgmBoss"];
-            delete assets["bgmResult"];
-            delete assets["bgmEnding"];
-        }
 
         var loadingScene = tm.ui["LoadingScene"]({
             assets: assets,
@@ -238,17 +226,16 @@ gls2.GlShooter2 = tm.createClass(
 
         this.gameScene = gls2.GameScene();
 
-        if (!DEBUG) {
-            tm.asset.Loader().load({
-                "bgm2": "assets2/nc28687.mp3",
-                "bgm3": "assets2/nc80728.mp3",
-                "bgm4": "assets2/nc67876.mp3",
-                "bgm5": "assets2/nc60627.mp3",
-                "bgmBoss": "assets2/nc29206.mp3",
-                "bgmResult": "assets2/nc54077.mp3",
-                "bgmEnding": "assets2/Blue_Moon_MIKU_Append.mp3",
-            });
-        }
+        tm.asset.Loader().load({
+            "bgm2": "assets2/nc104507.mp3",
+            "bgm3": "assets2/nc70057.mp3",
+            "bgm4": "assets2/nc67880.mp3",
+            "bgm5": "assets2/nc86158.mp3",
+            "bgmBoss": "assets2/nc66543.mp3",
+            "bgmLastBoss": "assets2/nc67538.mp3",
+            "bgmResult": "assets2/nc66558.mp3",
+            "bgmEnding": "assets2/nc70056.mp3",
+        });
     },
 
     exitApp: function() {

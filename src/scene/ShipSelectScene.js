@@ -39,7 +39,6 @@ gls2.ShipSelectScene = tm.createClass(
 
         // 背景
         tm.display.Sprite("result_bg", SC_W*1.1, SC_H*1.1)
-            .setAlpha(0.5)
             .setPosition(SC_W/2, SC_H/2)
             .addChildTo(this);
 

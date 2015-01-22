@@ -2116,6 +2116,7 @@ gls2.EnemySoft.Hibiki2 = tm.createClass(
         enemy.tweener.clear()
             .wait(10)
             .call(function() {
+                gls2.fadeOutBgm();
                 // ドリー
                 this.stage.launchEnemy({ "hard": gls2.Enemy.Dory, "soft": gls2.EnemySoft.Dory(this, "dory"), "x": SC_W/2, "y": SC_H*-0.3 });
                 // ミリー
@@ -2125,7 +2126,11 @@ gls2.EnemySoft.Hibiki2 = tm.createClass(
                     speed: 16,
                 }, 5000);
             }.bind(enemy))
-            .wait(800)
+            .wait(120)
+            .call(function() {
+                gls2.playBgm("bgmBoss", true);
+            })
+            .wait(680)
             .call(function() {
                 this.dispatchEvent(tm.event.Event("completeattack"));
 

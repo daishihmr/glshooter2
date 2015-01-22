@@ -103,11 +103,11 @@ gls2.DialogMenu = tm.createClass(
             strokeStyle: "rgba(0,0,0,0)",
             fillStyle: tm.graphics.LinearGradient(0,0,SC_W*0.7,0)
                 .addColorStopList([
-                    { offset:0.0, color:"rgba(  0,255,100,0.0)" },
-                    { offset:0.2, color:"rgba(  0,255,100,0.3)" },
+                    { offset:0.0, color:"rgba(  0,100,255,0.0)" },
+                    { offset:0.2, color:"rgba(  0,100,255,0.3)" },
                     { offset:0.5, color:"rgba(  0,255,255,0.5)" },
-                    { offset:0.8, color:"rgba(  0,255,100,0.3)" },
-                    { offset:1.0, color:"rgba(  0,255,100,0.0)" },
+                    { offset:0.8, color:"rgba(  0,100,255,0.3)" },
+                    { offset:1.0, color:"rgba(  0,100,255,0.0)" },
                 ]).toStyle(),
         }).addChildTo(this);
         this.cursor.blendMode = "lighter";
