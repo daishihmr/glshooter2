@@ -1,10 +1,46 @@
 {
-    "bgm4": {
-        "start": 94.344,
-        "end": 173.793
+    "bgmShipSelect": {
+        "start": 28,
+        "end": 191.2
+    },
+    "bgm1": {
+        "start": 25.243,
+        "end": 192.073
     },
     "bgmBoss": {
-        "start": 26.5,
-        "end": 237
+        "start": 12.531,
+        "end": 97.594
+    },
+    "bgmResult": {
+        "start": 9.913,
+        "end": 59.999
+    },
+    "bgm2": {
+        "start": 26.052,
+        "end": 152.368
+    },
+    "bgm3": {
+        "start": 77.6,
+        "end": 154.4
+    },
+    "bgm4": {
+        "start": 7.285,
+        "end": 82.714
+    },
+    "bgm5": {
+        "start": 40.4,
+        "end": 245.2
+    },
+    "bgmLastBoss": {
+        "start": 13.565,
+        "end": 148.173
+    },
+    "bgmExBoss": {
+        "start": 28.767,
+        "end": 201.369
+    },
+    "bgmEnding": {
+        "start": 32.666,
+        "end": 118
     }
 }

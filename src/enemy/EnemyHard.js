@@ -391,6 +391,7 @@ gls2.Enemy.Komachi = tm.createClass(
         this._sprite.draw(canvas);
     },
     destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     }
 });
@@ -446,6 +447,7 @@ gls2.Enemy.Mktn = tm.createClass(
         this._sprite.draw(canvas);
     },
     destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     },
 });
@@ -482,6 +484,7 @@ gls2.Enemy.Nozomi = tm.createClass(
         this._sprite.draw(canvas);
     },
     destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     },
 });
@@ -952,6 +955,7 @@ gls2.Enemy.Honoka = tm.createClass({
         });
     },
     destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     },
     draw: function(canvas) {
@@ -1038,6 +1042,7 @@ gls2.Enemy.Mai = tm.createClass(
         });
     },
     destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     },
     draw: function(canvas) {
@@ -1099,6 +1104,7 @@ gls2.Enemy.Setsuna = tm.createClass(
         });
     },
     destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     },
     draw: function(canvas) {
@@ -1174,6 +1180,7 @@ gls2.Enemy.Rikka = tm.createClass(
         });
     },
     destroy: function() {
+        gls2.Effect.explodeL(this.x, this.y, this.gameScene);
         this.fallDown();
     },
     draw: function(canvas) {

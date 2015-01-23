@@ -1,281 +1,281 @@
 {
-    "launch0": {
+    "launch0CBL": {
         "title": "タイプA出撃！",
         "description": "機体タイプAで出撃する",
         "grade": 2,
         "secret": false
     },
-    "launch1": {
+    "launch1CBL": {
         "title": "タイプB出撃！",
         "description": "機体タイプBで出撃する",
         "grade": 2,
         "secret": false
     },
-    "launch2": {
+    "launch2CBL": {
         "title": "タイプC出撃！",
         "description": "機体タイプCで出撃する",
         "grade": 2,
         "secret": false
     },
-    "bomb1": {
+    "bomb1CBL": {
         "title": "ボム！",
         "description": "ボムを投下する",
         "grade": 0,
         "secret": false
     },
-    "bomb2": {
+    "bomb2CBL": {
         "title": "オートボム！",
         "description": "オートボムを投下する",
         "grade": 0,
         "secret": false
     },
-    "hyper1": {
+    "hyper1CBL": {
         "title": "ハイパーシステム起動！",
         "description": "ハイパーシステムを発動する",
         "grade": 0,
         "secret": false
     },
-    "hyper10": {
+    "hyper10CBL": {
         "title": "MAXハイパー！！",
         "description": "ハイパーシステムをLv10まで溜めて発動する",
         "grade": 2,
         "secret": true
     },
-    "score100M": {
+    "score100MCBL": {
         "title": "スコア1億！",
         "description": "スコアを1億点以上獲得する",
         "grade": 0,
         "secret": false
     },
-    "score2G": {
+    "score2GCBL": {
         "title": "スコア20億！",
         "description": "スコアを20億点以上獲得する",
         "grade": 0,
         "secret": false
     },
-    "score20G": {
+    "score20GCBL": {
         "title": "スコア200億！",
         "description": "スコアを200億点以上獲得する",
         "grade": 1,
         "secret": false
     },
-    "score50G": {
+    "score50GCBL": {
         "title": "スコア500億！",
         "description": "スコアを500億点以上獲得する",
         "grade": 1,
         "secret": false
     },
-    "score100G": {
+    "score100GCBL": {
         "title": "スコア1000億！",
         "description": "スコアを1000億点以上獲得する",
         "grade": 1,
         "secret": true
     },
-    "score1T": {
+    "score1TCBL": {
         "title": "スコア1兆！",
         "description": "スコアを1兆点以上獲得する",
         "grade": 2,
         "secret": true
     },
-    "combo100": {
+    "combo100CBL": {
         "title": "100HIT達成！",
         "description": "コンボを100HIT以上つなげる",
         "grade": 0,
         "secret": false
     },
-    "combo1000": {
+    "combo1000CBL": {
         "title": "1000HIT達成！",
         "description": "コンボを1,000HIT以上つなげる",
         "grade": 0,
         "secret": false
     },
-    "combo10000": {
+    "combo10000CBL": {
         "title": "10000HIT達成！",
         "description": "コンボを10,000HIT以上つなげる",
         "grade": 1,
         "secret": false
     },
-    "combo100000": {
+    "combo100000CBL": {
         "title": "100000HIT達成！",
         "description": "コンボを100,000HIT以上つなげる",
         "grade": 1,
         "secret": false
     },
-    "extend1": {
+    "extend1CBL": {
         "title": "ファーストエクステンド！",
         "description": "ファーストエクステンド(10億点)を達成する",
         "grade": 0,
         "secret": false
     },
-    "extend2": {
+    "extend2CBL": {
         "title": "セカンドエクステンド！",
         "description": "セカンドエクステンド(100億点)を達成する",
         "grade": 1,
         "secret": false
     },
-    "extend3": {
+    "extend3CBL": {
         "title": "財閥からのプレゼント",
         "description": "エクステンドアイテムを取得する",
         "grade": 1,
         "secret": true
     },
-    "nomiss1": {
+    "nomiss1CBL": {
         "title": "ステージ1ノーミス！",
         "description": "ステージ1をノーミスノーコンティニューでクリアする",
         "grade": 2,
         "secret": true
     },
-    "nomiss2": {
+    "nomiss2CBL": {
         "title": "ステージ2ノーミス！",
         "description": "ステージ2をノーミスノーコンティニューでクリアする",
         "grade": 2,
         "secret": true
     },
-    "nomiss3": {
+    "nomiss3CBL": {
         "title": "ステージ3ノーミス！",
         "description": "ステージ3をノーミスノーコンティニューでクリアする",
         "grade": 2,
         "secret": true
     },
-    "nomiss4": {
+    "nomiss4CBL": {
         "title": "ステージ4ノーミス！",
         "description": "ステージ4をノーミスノーコンティニューでクリアする",
         "grade": 2,
         "secret": true
     },
-    "nomiss5": {
+    "nomiss5CBL": {
         "title": "ステージ5ノーミス！",
         "description": "ステージ5をノーミスノーコンティニューでクリアする",
         "grade": 2,
         "secret": true
     },
-    "mboss1": {
+    "mboss1CBL": {
         "title": "ユキシロ撃破！",
         "description": "ステージ1中ボス「ユキシロ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "mboss2": {
+    "mboss2CBL": {
         "title": "ミショウ撃破！",
         "description": "ステージ2中ボス「ミショウ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "mboss3": {
+    "mboss3CBL": {
         "title": "ヒガシ撃破！",
         "description": "ステージ3中ボス「ヒガシ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "mboss4": {
+    "mboss4CBL": {
         "title": "ヒシカワ撃破！",
         "description": "ステージ4中ボス「ヒシカワ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "mboss5": {
+    "mboss5CBL": {
         "title": "ミナミノ撃破！",
         "description": "ステージ5中ボス「ミナミノ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "boss1": {
+    "boss1CBL": {
         "title": "ミスミ撃破！",
         "description": "ステージ1ボス「ミスミ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "boss2": {
+    "boss2CBL": {
         "title": "ヒュウガ撃破！",
         "description": "ステージ2ボス「ヒュウガ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "boss3": {
+    "boss3CBL": {
         "title": "モモゾノ撃破！",
         "description": "ステージ3ボス「モモゾノ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "boss4": {
+    "boss4CBL": {
         "title": "アイダ撃破！",
         "description": "ステージ4ボス「アイダ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "boss5": {
+    "boss5CBL": {
         "title": "ホウジョウ撃破！",
         "description": "ステージ5ボス「ホウジョウ」を撃破する",
         "grade": 0,
         "secret": false
     },
-    "allclear0": {
+    "allclear0CBL": {
         "title": "タイプA完！",
         "description": "自機タイプAですべてのステージをクリアする",
         "grade": 2,
         "secret": false
     },
-    "allclear1": {
+    "allclear1CBL": {
         "title": "タイプB完！",
         "description": "自機タイプBですべてのステージをクリアする",
         "grade": 2,
         "secret": false
     },
-    "allclear2": {
+    "allclear2CBL": {
         "title": "タイプC完！",
         "description": "自機タイプCですべてのステージをクリアする",
         "grade": 2,
         "secret": false
     },
-    "aura300": {
+    "aura300CBL": {
         "title": "超接近戦！",
         "description": "1ステージ中にオーラ撃ちを合計300フレーム以上成立させる",
         "grade": 1,
         "secret": true
     },
-    "hyperAndHyper": {
+    "hyperAndHyperCBL": {
         "title": "ハイパー狂！",
         "description": "1ステージ中にハイパーシステムを5回発動する",
         "grade": 1,
         "secret": true
     },
-    "hyperAndHyperAndHyper": {
+    "hyperAndHyperAndHyperCBL": {
         "title": "ハイハイハイパー！",
         "description": "ハイパーゲージをレベル0から6以上まで一気にチャージする",
         "grade": 1,
         "secret": true
     },
-    "nicebomb": {
+    "nicebombCBL": {
         "title": "ナイスボム！",
         "description": "敵弾が至近に迫った時にボンバーを投下する",
         "grade": 0,
         "secret": false
     },
-    "nohyper": {
+    "nohyperCBL": {
         "title": "ノーハイパー！",
         "description": "ハイパーシステムを一度も使わずにステージクリアする",
         "grade": 0,
         "secret": false
     },
-    "nobomb": {
+    "nobombCBL": {
         "title": "ノーボム！",
         "description": "ボンバーを一度も使わずにステージクリアする",
         "grade": 0,
         "secret": false
     },
-    "kill100": {
+    "kill100CBL": {
         "title": "ぱふぇ☆",
         "description": "ステージ中の敵機をすべて撃破する",
         "grade": 0,
         "secret": false
     },
-    "kill40": {
+    "kill40CBL": {
         "title": "慈悲の心",
         "description": "ステージを撃墜率40%未満でクリアする",
         "grade": 0,
         "secret": false
     },
-    "manpower": {
+    "manpowerCBL": {
         "title": "人の力",
         "description": "Cボタンを一度も押さずにステージクリアする",
         "grade": 0,
