@@ -793,9 +793,9 @@ gls2.EnemySoft.nao = tm.createClass(
         }.bind(enemy));
     },
 });
-gls2.EnemySoft.nao1 = gls2.EnemySoft.nao( 3, 1);
-gls2.EnemySoft.nao2 = gls2.EnemySoft.nao( 6, 1);
-gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(12, 1);
+gls2.EnemySoft.nao1 = gls2.EnemySoft.nao( 5, 1);
+gls2.EnemySoft.nao2 = gls2.EnemySoft.nao( 8, 1);
+gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(14, 1);
 
 /**
  * 小型浮揚戦車

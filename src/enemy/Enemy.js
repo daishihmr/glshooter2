@@ -321,10 +321,10 @@ gls2.Enemy = tm.createClass(
             this.y += ((Math.random() * 3)-1.5) + 1;
         });
         this.tweener.clear()
-            .to({
-                x: SC_W*0.5,
-                y: SC_H*0.2
-            }, 500, "easeOutQuad")
+            // .to({
+            //     x: SC_W*0.5,
+            //     y: SC_H*0.2
+            // }, 500, "easeOutQuad")
             .wait(2000)
             .call(function() {
                 this.off("enterframe", mexp);

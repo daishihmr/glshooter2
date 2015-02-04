@@ -99,7 +99,7 @@ gls2.GameScene = tm.createClass(
     /** @type {gls2.GameScene.Layer} */
     effectLayer1: null,
     /** @type {gls2.GameScene.Layer} */
-    bulletLayer: null,
+    bulletLayers: null,
     /** @type {gls2.GameScene.LabelLayer} */
     labelLayer: null,
 
@@ -182,7 +182,9 @@ gls2.GameScene = tm.createClass(
         this.effectLayer0 = gls2.GameScene.Layer().addChildTo(this);
         this.playerLayer = gls2.GameScene.Layer().addChildTo(this);
         this.effectLayer1 = gls2.GameScene.Layer().addChildTo(this);
-        this.bulletLayer = gls2.GameScene.Layer().addChildTo(this);
+        this.bulletLayers = Array.range(2).map(function(i) {
+            return gls2.GameScene.Layer().addChildTo(this);
+        }.bind(this));
         this.labelLayer = gls2.GameScene.LabelLayer(this).addChildTo(this);
 
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
@@ -203,7 +205,7 @@ gls2.GameScene = tm.createClass(
         if (child.isEffect) {
             this.effectLayer0.addChild(child);
         } else if (child instanceof gls2.Bullet) {
-            this.bulletLayer.addChild(child);
+            this.bulletLayers[child.layer].addChild(child);
         } else if (child instanceof gls2.StarItem
             || child instanceof gls2.BombItem
             || child instanceof gls2.ExtendItem) {
@@ -670,7 +672,9 @@ gls2.GameScene = tm.createClass(
         this.effectLayer0.removeChildren();
         this.effectLayer1.removeChildren();
         this.playerLayer.removeChildren();
-        this.bulletLayer.removeChildren();
+        this.bulletLayers.forEach(function(bl) {
+            bl.removeChildren();
+        });
         this.lastElement.removeChildren();
 
         this.baseScore = 0;
@@ -1012,6 +1016,7 @@ gls2.GameScene = tm.createClass(
 
     extendZanki: function() {
         // エクステンドエフェクト
+        gls2.Danmaku.erase(true);
         gls2.playSound("voExtend");
         gls2.playSound("decision");
         this.println("extended.");
