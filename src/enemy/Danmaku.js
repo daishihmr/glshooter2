@@ -11,37 +11,37 @@ var $ = bulletml.dsl;
 
 // 弾種
 /** 青弾（小） */
-var BS = function(action) { return $.bullet(action, {frame:1,ball:true}); };
+var BS = function(action) { return $.bullet(action, {frame:1,ball:true,layer:2}); };
 /** 青弾（大） */
-var BL = function(action) { return $.bullet(action, {frame:3,ball:true}); };
+var BL = function(action) { return $.bullet(action, {frame:3,ball:true,layer:1}); };
 /** 赤弾（小） */
-var RS = function(action) { return $.bullet(action, {frame:0,ball:true}); };
+var RS = function(action) { return $.bullet(action, {frame:0,ball:true,layer:2}); };
 /** 赤弾（大） */
-var RL = function(action) { return $.bullet(action, {frame:2,ball:true}); };
+var RL = function(action) { return $.bullet(action, {frame:2,ball:true,layer:1}); };
 /** 青針弾（小） */
-var BNS = function(action) { return $.bullet(action, {frame:1}); };
+var BNS = function(action) { return $.bullet(action, {frame:1,layer:2}); };
 /** 青針弾（大） */
-var BNL = function(action) { return $.bullet(action, {frame:3}); };
+var BNL = function(action) { return $.bullet(action, {frame:3,layer:1}); };
 /** 赤針弾（小） */
-var RNS = function(action) { return $.bullet(action, {frame:0}); };
+var RNS = function(action) { return $.bullet(action, {frame:0,layer:2}); };
 /** 赤針弾（大） */
-var RNL = function(action) { return $.bullet(action, {frame:2}); };
+var RNL = function(action) { return $.bullet(action, {frame:2,layer:1}); };
 /** 赤イクラ弾 */
-var RI = function(action) { return $.bullet(action, {frame:4,ball:true}); };
+var RI = function(action) { return $.bullet(action, {frame:4,ball:true,layer:2}); };
 /** 見えない弾 */
-var IVS = function(action) { return $.bullet(action, {visible:false}) };
+var IVS = function(action) { return $.bullet(action, {visible:false,layer:1}) };
 /** 赤リング弾（大） */
-var RR = function(action) { return $.bullet(action, {frame:6,ball:true}); };
+var RR = function(action) { return $.bullet(action, {frame:6,ball:true,layer:1}); };
 /** 青リング（大） */
-var BR = function(action) { return $.bullet(action, {frame:7,ball:true}); };
+var BR = function(action) { return $.bullet(action, {frame:7,ball:true,layer:1}); };
 /** 青針弾（細） */
-var BNSH = function(action) { return $.bullet(action, {frame:0,needle:true}); };
+var BNSH = function(action) { return $.bullet(action, {frame:0,needle:true,layer:2}); };
 /** 赤針弾（細） */
-var RNSH = function(action) { return $.bullet(action, {frame:1,needle:true}); };
+var RNSH = function(action) { return $.bullet(action, {frame:1,needle:true,layer:2}); };
 /** 青レーザー */
-var BLSR = function(action) { return $.bullet(action, {frame:2,laser:true}); };
+var BLSR = function(action) { return $.bullet(action, {frame:2,laser:true,layer:0}); };
 /** 赤レーザー */
-var RLSR = function(action) { return $.bullet(action, {frame:3,laser:true}); };
+var RLSR = function(action) { return $.bullet(action, {frame:3,laser:true,layer:0}); };
 
 /**
  * 発射間隔

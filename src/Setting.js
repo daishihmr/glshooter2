@@ -154,7 +154,7 @@ var HYPER_CHARGE_BY_STAR = 0.0005;
  * 星アイテム（大）取得にチャージされるハイパーゲージ値
  * @const
  */
-var HYPER_CHARGE_BY_STAR_LARGE = 0.04;
+var HYPER_CHARGE_BY_STAR_LARGE = 0.01;
 
 
 /**

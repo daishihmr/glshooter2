@@ -182,7 +182,7 @@ gls2.GameScene = tm.createClass(
         this.effectLayer0 = gls2.GameScene.Layer().addChildTo(this);
         this.playerLayer = gls2.GameScene.Layer().addChildTo(this);
         this.effectLayer1 = gls2.GameScene.Layer().addChildTo(this);
-        this.bulletLayers = Array.range(2).map(function(i) {
+        this.bulletLayers = Array.range(3).map(function(i) {
             return gls2.GameScene.Layer().addChildTo(this);
         }.bind(this));
         this.labelLayer = gls2.GameScene.LabelLayer(this).addChildTo(this);
