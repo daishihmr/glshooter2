@@ -421,7 +421,14 @@ gls2.GameScene = tm.createClass(
                     if (shot.hp > 0 && gls2.Collision.isHit(shot, bullet)) {
                         bullet.hp -= (6 - this.hyperRank);
                         if (bullet.hp < 0) {
-                            bullet.destroy();
+                            var p = bullet.destroy();
+
+                            // 撃ち返し
+                            var s = bulletml.Walker.globalScope["$rank"] * 10;
+                            if (gls2.math.rand(0, 20) < s && 150*150 < gls2.distanceSq(p, this.player)) {
+                                gls2.Danmaku.fireOne(p);
+                            }
+
                             this.addScore(BULLET_SCORE);
                             this.addCombo(BULLET_COMBO);
 

@@ -42,6 +42,8 @@ var RNSH = function(action) { return $.bullet(action, {frame:1,needle:true,layer
 var BLSR = function(action) { return $.bullet(action, {frame:2,laser:true,layer:0}); };
 /** 赤レーザー */
 var RLSR = function(action) { return $.bullet(action, {frame:3,laser:true,layer:0}); };
+/** 撃ち返し */
+var FB = function(action) { return $.bullet(action, {frame:1,ball:true,layer:2,hp:10}); };
 
 /**
  * 発射間隔
@@ -3104,7 +3106,7 @@ gls2.Danmaku.setup = function() {
     config.bulletFactory = function(spec) {
         var b = bulletPool.shift(0);
         if (b) {
-            b.hp = BULLET_HP;
+            b.hp = BULLET_HP * (spec.hp || 1);
 
             activeList.push(b);
             b.setFrameIndex((spec.frame === undefined) ? 1 : spec.frame);
@@ -3182,6 +3184,23 @@ gls2.Danmaku.clearAll = function() {
 };
 
 /**
+ * 撃ち返し
+ */
+gls2.Danmaku.fireOne = function(sprite) {
+    var ticker = gls2.Danmaku["fireback"].createTicker();
+    sprite.on("enterframe", ticker);
+};
+
+/**
+ * 自機狙い弾を1発発射.撃ち返し用.
+ */
+gls2.Danmaku["fireback"] = new bulletml.Root({
+    "top": $.action([
+        $.fire($.direction(Math.randf(-2, 2)), $.speed(1.2), FB),
+    ]),
+});
+
+/**
  * 弾クラス
  * @class
  */
@@ -3219,17 +3238,20 @@ gls2.Bullet = tm.createClass(
         p.addChildTo(this.parent);
 
         this.remove();
+
+        return p;
     },
 });
 gls2.Bullet.destroyEffect = function() {
-    if (gls2.Bullet.destroyEffect.cache === null) {
-        gls2.Bullet.destroyEffect.cache = gls2.Particle(10, 1, 0.92, tm.graphics.Canvas()
+    if (destroyEffectOriginal === null) {
+        destroyEffectOriginal = gls2.Particle(10, 1, 0.92, tm.graphics.Canvas()
                 .resize(10, 10)
                 .setFillStyle(
                     tm.graphics.RadialGradient(10*0.5, 10*0.5, 0, 10*0.5, 10*0.5, 10*0.5)
                         .addColorStopList([
                             { offset: 0.0, color: "rgba(255,100,100,0.0)" },
                             { offset: 0.3, color: "rgba(255,100,100,0.0)" },
+                            { offset: 0.7, color: "rgba(255,100,180,1.0)" },
                             { offset: 0.9, color: "rgba(255,180,180,1.0)" },
                             { offset: 1.0, color: "rgba(255,100,100,0.0)" },
                         ]).toStyle()
@@ -3238,11 +3260,11 @@ gls2.Bullet.destroyEffect = function() {
                 .element
         );
     }
-    return gls2.Bullet.destroyEffect.cache.clone();
+    return destroyEffectOriginal.clone();
 };
-gls2.Bullet.destroyEffect.cache = null;
+var destroyEffectOriginal = null;
 
-var bulletPool = [];
+var bulletPool = gls2.Danmaku.bulletPool = [];
 var activeList = gls2.Bullet.activeList = [];
 
 })();
