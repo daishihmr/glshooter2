@@ -69,7 +69,7 @@ gls2.Boss = tm.createClass(
 
             // TODO 爆発エフェクト
             gls2.Effect.explodeM(this.x, this.y, this.gameScene);
-            gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
+            gls2.Danmaku.erase(true, gls2.distanceSq(this, this.player) < CROSS_RANGE);
 
             // 第2形態へ
             this.softwares[1].setup(this);
@@ -81,7 +81,7 @@ gls2.Boss = tm.createClass(
 
             // TODO 爆発エフェクト
             gls2.Effect.explodeM(this.x, this.y, this.gameScene);
-            gls2.Danmaku.erase(true, this.gameScene.isHyperMode);
+            gls2.Danmaku.erase(true, gls2.distanceSq(this, this.player) < CROSS_RANGE);
 
             // 発狂へ
             this.softwares[2].setup(this);

@@ -196,7 +196,7 @@ gls2.Enemy = tm.createClass(
             }
 
             if (this.erase) {
-                gls2.Danmaku.erase(true, this.gameScene.isHyperMode, (this instanceof gls2.Boss));
+                gls2.Danmaku.erase(true, gls2.distanceSq(this, this.player) < CROSS_RANGE, (this instanceof gls2.Boss));
             }
 
             this.dispatchEvent(tm.event.Event("destroy"));

@@ -254,10 +254,10 @@ var COMBO_GAUGE_DECR_RATE_WHEN_HYPERMODE = 0.3;
 var COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO = 0.0025;
 
 /**
- * コンボボーナス。何点ごとに倍率が1上がるか
+ * コンボボーナス。何HITごとに倍率が1上がるか
  * @const
  */
-var COMBO_BONUS = 1000;
+var COMBO_BONUS = 500;
 
 /**
  * 弾破壊時のスコア
@@ -420,3 +420,8 @@ var INITIAL_STAGE = 0;
  * @const
  */
 var STAGE_NUMBER = 5;
+
+/**
+ * 撃ち返し発生距離
+ */
+var FIRE_BACK_DISTANCE_SQ = 120*120;

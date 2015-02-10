@@ -425,7 +425,7 @@ gls2.GameScene = tm.createClass(
 
                             // 撃ち返し
                             var s = bulletml.Walker.globalScope["$rank"] * 10;
-                            if (gls2.math.rand(0, 20) < s && 150*150 < gls2.distanceSq(p, this.player)) {
+                            if (gls2.math.rand(0, 20) < s && FIRE_BACK_DISTANCE_SQ < gls2.distanceSq(p, this.player)) {
                                 gls2.Danmaku.fireOne(p);
                             }
 
@@ -511,13 +511,13 @@ gls2.GameScene = tm.createClass(
             if (this.comboGauge <= 0) {
                 // コンボゲージ切れ
                 this.comboGauge = 0;
-                if (this.isHyperMode || this.hyperLevel > 0) {
-                    // ハイパー中orハイパーレディの場合は即コンボ切れ
+                if (this.hyperLevel > 0) {
+                    // ハイパーレディの場合は即コンボ切れ
                     this.baseScore = 0;
                     this.comboCount = 0;
                     this.comboDown = 0;
                 } else {
-                    // NoハイパーかつハイパーゲージがNoMAXの場合は徐々にコンボが低下
+                    // ハイパーゲージがNoMAXの場合は徐々にコンボが低下
                     if (this.comboCount > 0) {
                         if (this.comboDown <= 0) {
                             this.comboDown = this.comboCount * COMBO_COUNT_DECR_WHEN_COMBOGAUGE_ZERO;
