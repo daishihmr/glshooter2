@@ -238,9 +238,9 @@ gls2.Player = tm.createClass(
 
     update: function(app) {
         if (this.muteki) {
-            this.visible = (app.frame/2) % 2 === 0;
+            this.alpha = (app.frame/2) % 2 === 0 ? 0.5 : 1.0;
         } else {
-            this.visible = true;
+            this.alpha = 1.0;
         }
 
         var kb = gls2.core.mode === 2 ? this.gameScene.stage.keyboard : app.keyboard;

@@ -241,7 +241,17 @@ gls2.ResultScene = tm.createClass(
                         app.replaceScene(gls2.EndingScene());
                     } else {
                         this.gameScene.startStage(this.gameScene.stageNumber + 1);
-                        app.replaceScene(this.gameScene);
+                        // app.replaceScene(this.gameScene);
+                        var loadingScene = tm.ui.LoadingScene({
+                            assets: this.gameScene.stage.assets,
+                            width: SC_W,
+                            height: SC_H,
+                            nextScene: function() {
+                                return this.gameScene;
+                            }.bind(this),
+                        });
+                        loadingScene.bg.canvas.clearColor("black");
+                        app.replaceScene(loadingScene);
                     }
                 } else if (gls2.core.mode === 1) {
                     gls2.stopBgm();

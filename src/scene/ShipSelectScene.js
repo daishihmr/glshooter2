@@ -345,8 +345,20 @@ gls2.ShipSelectScene = tm.createClass(
 
     startGame: function() {
         gls2.core.gameScene.autoBomb = this.autoBomb;
-        gls2.core.replaceScene(gls2.core.gameScene);
         gls2.core.gameScene.start(this.type, this.style);
+
+        // gls2.core.replaceScene(gls2.core.gameScene);
+        var loadingScene = tm.ui.LoadingScene({
+            assets: gls2.core.gameScene.stage.assets,
+            width: SC_W,
+            height: SC_H,
+            nextScene: function() {
+                return gls2.core.gameScene;
+            }.bind(this),
+        });
+        loadingScene.bg.canvas.clearColor("black");
+        gls2.core.replaceScene(loadingScene);
+
         gls2.fadeOutBgm();
     },
 

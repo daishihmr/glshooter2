@@ -184,7 +184,7 @@ gls2.MiniBomb = tm.createClass({
                 .addChildTo(this.parent);
         }
         this.a += 0.04;
-        var theta = this.age * 0.04;
+        var theta = this.age * 0.02;
         this.r = Math.sin(theta) * 100;
 
         if (Math.PI < theta) {

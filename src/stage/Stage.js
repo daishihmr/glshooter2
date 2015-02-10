@@ -19,6 +19,8 @@ gls2.Stage = tm.createClass(
 
     frame: 0,
 
+    assets: null,
+
     init: function(gameScene) {
         var scene = this.gameScene = gameScene;
         this.player = gameScene.player;
@@ -28,6 +30,8 @@ gls2.Stage = tm.createClass(
         this.seq = gls2.StageSequencer();
 
         this.frame = 0;
+
+        this.assets = {};
     },
 
     setupBackground: function() {

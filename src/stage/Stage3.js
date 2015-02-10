@@ -16,6 +16,10 @@ gls2.Stage3 = tm.createClass(
     init: function(gameScene) {
         this.superInit(gameScene);
 
+        this.assets = {
+            "bgm3": "assets2/nc70057.mp3",
+        };
+
         //start
         this.seq.add(  0, function() {
             gls2.playBgm("bgm3", true),

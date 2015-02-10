@@ -404,8 +404,8 @@ gls2.GameScene = tm.createClass(
                     }
                 }
             }
-            this.comboCount = 0;
-            this.comboGauge = 0;
+            // this.comboCount = 0;
+            // this.comboGauge = 0;
         }
 
         // ショットvs敵弾
@@ -452,6 +452,9 @@ gls2.GameScene = tm.createClass(
                             this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
                             this.addRank(-0.01);
                             gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
+                            // gls2.Bomb(this.player, this)
+                            //     .setPosition(gls2.math.clamp(this.player.x, SC_W*0.2, SC_W*0.8), Math.max(this.player.y - SC_H*0.5, SC_H*0.3))
+                            //     .addChildTo(this);
                             gls2.core.putAchevement("bomb2");
                             this.autoBombCountByStage[this.stageNumber] += 1;
                         } else {
@@ -473,6 +476,9 @@ gls2.GameScene = tm.createClass(
                                 this.hyperRank = gls2.math.clamp(this.hyperRank - 1, 0, 1);
                                 this.addRank(-0.01);
                                 gls2.MiniBomb(this.player, this).setPosition(this.player.x, this.player.y).addChildTo(this);
+                                // gls2.Bomb(this.player, this)
+                                //     .setPosition(gls2.math.clamp(this.player.x, SC_W*0.2, SC_W*0.8), Math.max(this.player.y - SC_H*0.5, SC_H*0.3))
+                                //     .addChildTo(this);
                                 gls2.core.putAchevement("bomb2");
                                 this.autoBombCountByStage[this.stageNumber] += 1;
                             } else {
@@ -651,8 +657,6 @@ gls2.GameScene = tm.createClass(
             this.startStage(-1);
         }
 
-        gls2.playSound("voLetsGo");
-
         this.startRec();
 
         if (playerType === 0) gls2.core.putAchevement("launch0");
@@ -661,8 +665,6 @@ gls2.GameScene = tm.createClass(
     },
 
     startStage: function(stageNumber) {
-        this.println("3...2...1...");
-
         if (this.player.parent !== null) this.player.remove();
         gls2.Enemy.clearAll();
         gls2.ShotBullet.clearAll();
@@ -698,6 +700,7 @@ gls2.GameScene = tm.createClass(
         this.stageNumber = stageNumber;
         this.stage = gls2.Stage.create(this, stageNumber);
         this.tweener.clear().wait(1000).call(function() {
+            if (stageNumber === 0) gls2.playSound("voLetsGo");
             this.launch();
         }.bind(this));
 
@@ -722,6 +725,7 @@ gls2.GameScene = tm.createClass(
     },
 
     launch: function() {
+        this.println("3...2...1...");
         this.println("Let's go!");
 
         this.player

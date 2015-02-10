@@ -100,7 +100,9 @@ gls2.GlShooter2 = tm.createClass(
 
             // bgm
             "bgmShipSelect": "assets2/nc99963.mp3",
-            "bgm1": "assets2/nc99049.mp3",
+            "bgmBoss": "assets2/nc66543.mp3",
+            "bgmResult": "assets2/nc66558.mp3",
+            "bgmEnding": "assets2/nc70056.mp3",
             "bgmLoopInfo": "assets2/loop.json",
 
             // sound
@@ -133,7 +135,7 @@ gls2.GlShooter2 = tm.createClass(
             "sound/voWarning": "assets/vo_warning.mp3",
         };
 
-        var loadingScene = tm.ui["LoadingScene"]({
+        var loadingScene = tm.ui.LoadingScene({
             assets: assets,
             width: SC_W,
             height: SC_H,
@@ -226,17 +228,17 @@ gls2.GlShooter2 = tm.createClass(
 
         this.gameScene = gls2.GameScene();
 
-        tm.asset.Loader().load({
-            "bgm2": "assets2/nc67881.mp3",
-            "bgm3": "assets2/nc70057.mp3",
-            "bgm4": "assets2/nc67880.mp3",
-            "bgm5": "assets2/nc86158.mp3",
-            "bgmBoss": "assets2/nc66543.mp3",
-            "bgmLastBoss": "assets2/nc67538.mp3",
-            "bgmExBoss": "assets2/nc104507.mp3",
-            "bgmResult": "assets2/nc66558.mp3",
-            "bgmEnding": "assets2/nc70056.mp3",
-        });
+        // tm.asset.Loader().load({
+        //     "bgm2": "assets2/nc67881.mp3",
+        //     "bgm3": "assets2/nc70057.mp3",
+        //     "bgm4": "assets2/nc67880.mp3",
+        //     "bgm5": "assets2/nc86158.mp3",
+        //     "bgmBoss": "assets2/nc66543.mp3",
+        //     "bgmLastBoss": "assets2/nc67538.mp3",
+        //     "bgmExBoss": "assets2/nc104507.mp3",
+        //     "bgmResult": "assets2/nc66558.mp3",
+        //     "bgmEnding": "assets2/nc70056.mp3",
+        // });
     },
 
     exitApp: function() {

@@ -16,6 +16,10 @@ gls2.Stage4 = tm.createClass(
     init: function(gameScene) {
         this.superInit(gameScene);
 
+        this.assets = {
+            "bgm4": "assets2/nc67880.mp3",
+        };
+
         this.seq.add(  0, function() {
             gls2.playBgm("bgm4", true),
             this.gameScene.ground.direction = Math.PI*0.5;
