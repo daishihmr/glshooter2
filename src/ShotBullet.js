@@ -4,6 +4,7 @@
  */
 (function() {
 
+var SZ = 64;
 var origParticle = null;
 
 gls2.ShotBullet = tm.createClass({
@@ -18,7 +19,6 @@ gls2.ShotBullet = tm.createClass({
     isEffect: true,
 
     init: function(color) {
-        var SZ = 64;
         this.superInit("shotbullet", SZ, SZ);
         this.blendMode = "lighter";
         this.alpha = 0.5;
@@ -57,7 +57,7 @@ gls2.ShotBullet = tm.createClass({
      * col: 0=red, 1=green, 2=blue, 3=hyper
      */
     setColor: function(col) {
-        this.setFrameIndex(col, 64, 64);
+        // this.setFrameIndex(col, SZ, SZ);
         if (col === 3) {
             this.speed = 60;
             this.boundingRadius = 52;
@@ -99,7 +99,9 @@ gls2.ShotBulletPool = tm.createClass({
     /** @type {Array.<gls2.ShotBullet>} */
     pool: null,
     hyper: false,
+    color: 0,
     init: function(color, count) {
+        this.color = color;
         this.hyper = color === 3;
         this.pool = [];
         for (var i = 0; i < count; i++) {
@@ -138,6 +140,8 @@ gls2.ShotBulletPool = tm.createClass({
 
         shotBullet.setPosition(x, y);
         shotBullet.rotation = dir+90;
+
+        shotBullet.setFrameIndex(this.color + 4 * gls2.math.rand(0, 3), SZ, SZ);
 
         return shotBullet;
     },

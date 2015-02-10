@@ -46,67 +46,74 @@ tm.main(function() {
             .fillRect(x-rad,y-rad,rad*2,rad*2);
     };
 
-    var d2 = function(dr, sr, rr, df) {
+    var d2 = function(dr, sr, rr, df, r0, r1, r2) {
         var x = S*0.5;
         var y = S*0.1;
         var dir = Math.PI/2+dr;
         var r = 0;
         for (var i = 0; i < S; i++) {
-            df(x-15, y+4, r);
-            df(x, y, r);
-            df(x+15, y+4, r);
+            df(x-15, y+4+r0, r);
+            df(x, y+r1, r);
+            df(x+15, y+4+r2, r);
             x += Math.cos(dir) * sr;
-            y += Math.sin(dir) * sr;
+            y += Math.sin(dir) * sr * 0.8;
             var j = i / S;
             r = Math.sin(Math.PI*2 * j)*S/rr + 1;
         }
     };
 
-    var out = tm.graphics.Canvas("#c").resize(S*4, S);
+    var out = tm.graphics.Canvas("#c").resize(S*4, S*4);
 
-    canvas.clear();
-    d2(    0, 1.7, 20, dr);
-    d2(-0.06, 1.6, 32, dr);
-    d2( 0.06, 1.6, 32, dr);
-    d2(-0.12, 1.5, 32, dr);
-    d2( 0.12, 1.5, 32, dr);
-    d2(-0.18, 1.4, 32, dr);
-    d2( 0.18, 1.4, 32, dr);
-    out.drawImage(canvas.element, S*0, 0);
+    for (var i = 0; i < 4; i++) {
+        var r0 = Math.randf(-6, 6);
+        var r1 = Math.randf(-6, 6);
+        var r2 = Math.randf(-6, 6);
 
-    canvas.clear();
-    d2(    0, 1.7, 20, dg);
-    d2(-0.06, 1.6, 32, dg);
-    d2( 0.06, 1.6, 32, dg);
-    d2(-0.12, 1.5, 32, dg);
-    d2( 0.12, 1.5, 32, dg);
-    d2(-0.18, 1.4, 32, dg);
-    d2( 0.18, 1.4, 32, dg);
-    out.drawImage(canvas.element, S*1, 0);
+        canvas.clear();
+        d2(    0, 1.8, 20, dr, r0, r1, r2);
+        d2(-0.06, 1.6, 32, dr, r0, r1, r2);
+        d2( 0.06, 1.6, 32, dr, r0, r1, r2);
+        d2(-0.12, 1.5, 32, dr, r0, r1, r2);
+        d2( 0.12, 1.5, 32, dr, r0, r1, r2);
+        d2(-0.18, 1.4, 32, dr, r0, r1, r2);
+        d2( 0.18, 1.4, 32, dr, r0, r1, r2);
+        out.drawImage(canvas.element, S*0, S*i);
 
-    canvas.clear();
-    d2(    0, 1.7, 20, db);
-    d2(-0.06, 1.6, 32, db);
-    d2( 0.06, 1.6, 32, db);
-    d2(-0.12, 1.5, 32, db);
-    d2( 0.12, 1.5, 32, db);
-    d2(-0.18, 1.4, 32, db);
-    d2( 0.18, 1.4, 32, db);
-    out.drawImage(canvas.element, S*2, 0);
+        canvas.clear();
+        d2(    0, 1.8, 20, dg, r0, r1, r2);
+        d2(-0.06, 1.6, 32, dg, r0, r1, r2);
+        d2( 0.06, 1.6, 32, dg, r0, r1, r2);
+        d2(-0.12, 1.5, 32, dg, r0, r1, r2);
+        d2( 0.12, 1.5, 32, dg, r0, r1, r2);
+        d2(-0.18, 1.4, 32, dg, r0, r1, r2);
+        d2( 0.18, 1.4, 32, dg, r0, r1, r2);
+        out.drawImage(canvas.element, S*1, S*i);
 
-    canvas.clear();
-    d2(    0, 1.8, 16, dh);
-    d2(-0.10, 1.6, 20, dh);
-    d2( 0.10, 1.6, 20, dh);
-    d2(-0.20, 1.5, 20, dh);
-    d2( 0.20, 1.5, 20, dh);
-    d2(-0.30, 1.2, 20, dh);
-    d2( 0.30, 1.2, 20, dh);
-    d2(-0.40, 1.1, 20, dh);
-    d2( 0.40, 1.1, 20, dh);
-    d2(-0.50, 1.4, 20, dh);
-    d2( 0.50, 1.4, 20, dh);
-    out.drawImage(canvas.element, S*3, 0);
+        canvas.clear();
+        d2(    0, 1.8, 20, db, r0, r1, r2);
+        d2(-0.06, 1.6, 32, db, r0, r1, r2);
+        d2( 0.06, 1.6, 32, db, r0, r1, r2);
+        d2(-0.12, 1.5, 32, db, r0, r1, r2);
+        d2( 0.12, 1.5, 32, db, r0, r1, r2);
+        d2(-0.18, 1.4, 32, db, r0, r1, r2);
+        d2( 0.18, 1.4, 32, db, r0, r1, r2);
+        out.drawImage(canvas.element, S*2, S*i);
+
+        canvas.clear();
+        d2(    0, 1.8, 16, dh, r0, r1, r2);
+        d2(-0.10, 1.6, 20, dh, r0, r1, r2);
+        d2( 0.10, 1.6, 20, dh, r0, r1, r2);
+        d2(-0.20, 1.5, 20, dh, r0, r1, r2);
+        d2( 0.20, 1.5, 20, dh, r0, r1, r2);
+        d2(-0.30, 1.2, 20, dh, r0, r1, r2);
+        d2( 0.30, 1.2, 20, dh, r0, r1, r2);
+        d2(-0.40, 1.1, 20, dh, r0, r1, r2);
+        d2( 0.40, 1.1, 20, dh, r0, r1, r2);
+        d2(-0.50, 1.4, 20, dh, r0, r1, r2);
+        d2( 0.50, 1.4, 20, dh, r0, r1, r2);
+        out.drawImage(canvas.element, S*3, S*i);
+
+    }
 
     tm.dom.Element("#c").event.click(function() {
         out.saveAsImage();

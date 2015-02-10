@@ -107,7 +107,7 @@ gls2.TutorialStage = tm.createClass(
             "などでハイパーゲージが上昇！"
         ]));
         this.seq.add(  1, input("c",  true));
-        for (var i = 0; i < 23; i++) {
+        for (var i = 0; i < 35; i++) {
             this.seq.add(20, "heri2-T-center");
         }
         this.seq.add(200, input("c",  false));
