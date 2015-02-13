@@ -239,7 +239,7 @@ var HYPER_COMBO = [1, 10, 20, 30, 45, 60, 85, 110, 150, 180, 300];
  * 1フレームあたりのコンボゲージ減少値
  * @const
  */
-var COMBO_GAUGE_DECR = 0.02;
+var COMBO_GAUGE_DECR = 0.04;
 
 /**
  * ハイパーモード中のコンボゲージ減少倍率
@@ -317,7 +317,7 @@ var STAR_ITEM_BASESCORE = 100;
  * ハイパーモード時の弾幕激化係数（少ないほど激化）
  * @const
  */
-var ENEMY_ATTACK_INTERVAL_RATE_HYPER = 0.3;
+var ENEMY_ATTACK_INTERVAL_RATE_HYPER = 0.2;
 
 /**
  * 基本弾速
@@ -335,7 +335,7 @@ var CROSS_RANGE = 250*250;
  * 敵弾のHP
  * @const
  */
-var BULLET_HP = 40;
+var BULLET_HP = 10;
 
 /**
  * ショットのHP
@@ -353,7 +353,7 @@ var AUTO_BOMB_SELECT = false;
  * オートボム発動時に残ボム数をすべて消費するか
  * @const
  */
-var AUTO_BOMB_TO_ZERO = false;
+var AUTO_BOMB_TO_ZERO = true;
 
 /**
  * ステージクリア時ボーナス：小星
