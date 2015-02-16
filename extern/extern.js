@@ -1,5 +1,7 @@
 (function() {
 
+tm.ui.LoadingScene = tm.ui.LoadingScene || {};
+
 tm.app.Object2D.prototype.accessor("boundingWidthLeft", {
     "get": function() {
         return this._boundingWidthLeft;
