@@ -4,6 +4,9 @@
  */
 (function() {
 
+var FLOW = {
+};
+
 /**
  * @class
  * @extends {gls2.Scene}
@@ -16,6 +19,8 @@ gls2.KeyConfigScene = tm.createClass(
     init: function() {
         this.superInit();
     },
+
+
 });
 
 })();
