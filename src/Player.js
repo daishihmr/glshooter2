@@ -172,7 +172,7 @@ gls2.Player = tm.createClass(
             var value = gameScene.hyperTime / HYPERMODE_TIME;
 
             canvas.strokeStyle = "rgba(50,50,255,0.4)";
-            canvas.lineWidth = "12";
+            canvas.lineWidth = "15";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
             canvas.strokeStyle = "rgba(100,100,255,0.4)";
             canvas.lineWidth = "8";
