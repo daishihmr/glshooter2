@@ -424,8 +424,8 @@ gls2.GameScene = tm.createClass(
                             var p = bullet.destroy();
 
                             // 撃ち返し
-                            var s = bulletml.Walker.globalScope["$rank"] * 10;
-                            if (gls2.math.rand(0, 20) < s && FIRE_BACK_DISTANCE_SQ < gls2.distanceSq(p, this.player)) {
+                            var s = this.hyperRank;
+                            if (gls2.math.rand(0, 40) < s && FIRE_BACK_DISTANCE_SQ < gls2.distanceSq(p, this.player)) {
                                 gls2.Danmaku.fireOne(p);
                             }
 
