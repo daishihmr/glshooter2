@@ -317,7 +317,7 @@ var STAR_ITEM_BASESCORE = 100;
  * ハイパーモード時の弾幕激化係数（少ないほど激化）
  * @const
  */
-var ENEMY_ATTACK_INTERVAL_RATE_HYPER = 0.4;
+var ENEMY_ATTACK_INTERVAL_RATE_HYPER = 0.8;
 
 /**
  * 基本弾速
