@@ -10,19 +10,7 @@ var backfireParticle = null;
  * ショットボタンを何フレーム押し続けるとレーザーになるか
  * @const
  */
-var LASER_FRAME = 10;
-
-/** @const */
-var KEYBOARD_MOVE = {
-      0: { x:  1.0, y:  0.0 },
-     45: { x:  0.7, y: -0.7 },
-     90: { x:  0.0, y: -1.0 },
-    135: { x: -0.7, y: -0.7 },
-    180: { x: -1.0, y:  0.0 },
-    225: { x: -0.7, y:  0.7 },
-    270: { x:  0.0, y:  1.0 },
-    315: { x:  0.7, y:  0.7 },
-};
+var LASER_FRAME = 1;
 
 /**
  * 自機
@@ -243,14 +231,11 @@ gls2.Player = tm.createClass(
             this.alpha = 1.0;
         }
 
-        var kb = gls2.core.mode === 2 ? this.gameScene.stage.keyboard : app.keyboard;
+        var kb = gls2.core.mode === 2 ? this.gameScene.stage.keyboard : app;
         if (this.controllable || gls2.core.mode === 2) {
-            var angle = kb.getKeyAngle();
-            if (angle !== null) {
-                var m = KEYBOARD_MOVE[angle];
-                this.x += m.x * this.speed * (this.fireLaser ? 0.5 : 1);
-                this.y += m.y * this.speed * (this.fireLaser ? 0.5 : 1);
-            }
+            var direction = kb.getKeyDirection();
+            this.x += direction.x * this.speed * (this.fireLaser ? 0.5 : 1);
+            this.y += direction.y * this.speed * (this.fireLaser ? 0.5 : 1);
             this.x = gls2.math.clamp(this.x, 15, SC_W-15);
             this.y = gls2.math.clamp(this.y, 15, SC_H-15);
 

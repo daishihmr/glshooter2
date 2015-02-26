@@ -234,27 +234,27 @@ gls2.GameScene = tm.createClass(
     update: function(app) {
         // var beginProcessTime = new Date().getTime();
 
-        this.record(app.keyboard);
+        // this.record(app);
 
         this.stage.update(app.frame);
         if (app.frame % 2 === 0) this.scoreLabel.update();
 
-        if (DEBUG && app.keyboard.getKeyDown("escape")) {
+        if (DEBUG && app.getKeyDown("escape")) {
             // タイトル画面に戻る
             this.app.replaceScene(gls2.TitleScene());
             gls2.stopBgm();
-        } else if (app.keyboard.getKeyDown("space")) {
+        } else if (app.getKeyDown("space")) {
             // ポーズ
             this.openPauseMenu(0);
-        } else if (app.keyboard.getKeyDown("p")) {
+        } else if (app.getKeyDown("p")) {
             this.shotScreen().saveAsImage();
             this.openPauseMenu(0);
         }
 
         if (DEBUG) {
-            if (app.keyboard.getKeyDown("h")) {
+            if (app.getKeyDown("h")) {
                 this.addHyperGauge(1.2 / HYPER_CHARGE_RATE);
-            } else if (app.keyboard.getKeyDown("b")) {
+            } else if (app.getKeyDown("b")) {
                 gls2.BombItem(SC_W * 0.5, SC_H * 0.5, this.player).addChildTo(this);
             }
         }
