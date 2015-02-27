@@ -2303,5 +2303,43 @@ gls2.EnemySoft.Miry = tm.createClass(
     }
 });
 
+/**
+ * エクストラボス「サカガミ」
+ */
+gls2.EnemySoft.Ayumi1 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = [];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.startAttack = false;
+        enemy.endAttack = false;
+        enemy.tweener
+            .clear()
+            .move(SC_W*0.5, SC_H*0.3, 1200, "easeOutQuad")
+            .call(function() {
+                this.startAttack = true;
+                this.dispatchEvent(tm.event.Event("completeattack"));
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            if (this.endAttack) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Ayumi1 = gls2.EnemySoft.Ayumi1();
 })();
 

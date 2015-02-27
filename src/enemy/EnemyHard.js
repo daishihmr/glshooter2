@@ -26,6 +26,14 @@ gls2.Enemy.DATA = {
     "akimoto":   [   250,   300000, false,  true, 10, {"width":200, "heightBottom":10, "heightTop":60}, ],
     "yumehara":  [   300,   500000, false,  true, 20, {"width":180, "heightBottom":40, "heightTop":120}, ],
     "aono":      [   230,   300000, false,  true, 10, {"width":280, "heightBottom":30, "heightTop":60}, ],
+    "hino":      [    20,    10000, false, false,  1, {"width": 64, "height": 64}, ],
+    "hoshizora": [   300,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
+    "yotsuba":    [  300,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
+    "yotsubaLeaf":[   30,   100000, false, false, 10, {"width": 64, "height": 64}, ],
+    "midorikawa":[     5,     2000, false, false,  1, {"width": 64, "height": 64}, ],
+    "aoki":      [     5,     3200, false, false,  1, {"width": 64, "height": 64}, ],
+    "madoka":    [   250,   400000, false,  true, 10, {"width":256, "height": 64}, ],
+
     "yukishiro": [   750,   800000, false,  true, 20, {"width":240, "height":80}, ],
     "misumi":    [  3000,  2000000, false,  true,  0, {"width":240, "height":80}, ],
     "mishou":    [  1000,  1000000, false,  true, 20, {"width":300, "height":80}, ],
@@ -44,16 +52,11 @@ gls2.Enemy.DATA = {
     "lary":      [   300,     2000,  true,  true,  5, {"radius": 24} ],
     "shiry":     [   250,     2000,  true,  true,  5, {"radius": 24} ],
     "dodory":    [   120,     2000,  true, false,  5, {"radius": 24} ],
+
+    "sakagami":  [ 18000,5000000000,false,  true,  0, {"radius": 50} ],
+
     "kurumi":    [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
-    //Stage3
-    "hino":      [    20,    10000, false, false,  1, {"width": 64, "height": 64}, ],
-    "hoshizora": [   300,   300000 ,false,  true, 30, {"width":128, "height": 64}, ],
-    "yotsuba":    [  300,   500000, false,  true, 40, {"width": 64, "height": 64}, ],
-    "yotsubaLeaf":[   30,   100000, false, false, 10, {"width": 64, "height": 64}, ],
-    "midorikawa":[     5,     2000, false, false,  1, {"width": 64, "height": 64}, ],
-    "aoki":      [     5,     3200, false, false,  1, {"width": 64, "height": 64}, ],
-    "madoka":    [   250,   400000, false,  true, 10, {"width":256, "height": 64}, ],
 };
 
 /**
@@ -173,9 +176,9 @@ gls2.Enemy.Bukky = tm.createClass({
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -206,9 +209,9 @@ gls2.Enemy.FighterS = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -254,9 +257,9 @@ gls2.Enemy.Urara = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -287,9 +290,9 @@ gls2.Enemy.FighterM = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -317,9 +320,9 @@ gls2.Enemy.Milk = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -347,9 +350,9 @@ gls2.Enemy.Ako = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -380,9 +383,9 @@ gls2.Enemy.Komachi = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -436,9 +439,9 @@ gls2.Enemy.Mktn = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -473,9 +476,9 @@ gls2.Enemy.Nozomi = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -504,9 +507,9 @@ gls2.Enemy.Cannon = tm.createClass({
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -584,9 +587,9 @@ gls2.Enemy.Cannon2 = tm.createClass({
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -617,9 +620,9 @@ gls2.Enemy.Cannon3 = tm.createClass({
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -726,9 +729,9 @@ gls2.Enemy.aguri = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -771,9 +774,9 @@ gls2.Enemy.miyuki = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -839,9 +842,9 @@ gls2.Enemy.Alice = tm.createClass({
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -947,9 +950,9 @@ gls2.Enemy.Honoka = tm.createClass({
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -983,9 +986,9 @@ gls2.Enemy.Nagisa = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1034,9 +1037,9 @@ gls2.Enemy.Mai = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1065,9 +1068,9 @@ gls2.Enemy.Saki = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1096,9 +1099,9 @@ gls2.Enemy.Setsuna = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1126,9 +1129,9 @@ gls2.Enemy.Love = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1172,9 +1175,9 @@ gls2.Enemy.Rikka = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1224,9 +1227,9 @@ gls2.Enemy.Mana = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1344,9 +1347,9 @@ gls2.Enemy.Kanade = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1418,9 +1421,9 @@ gls2.Enemy.KanadeCannon = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1559,9 +1562,9 @@ gls2.Enemy.Hibiki = tm.createClass(
     },
     ondying: function() {
         this.on("enterframe", function(e) {
-            if (e.app.frame % 30 === 0) {
+            if (e.app.frame % 13 === 0) {
                 this._sprite.toRed();
-            } else if (e.app.frame % 30 === 5) {
+            } else if (e.app.frame % 13 === 5) {
                 this._sprite.toNormal();
             }
         });
@@ -1641,16 +1644,58 @@ gls2.Enemy.Miry = tm.createClass(
 });
 
 /**
- * エクストラボス「ヒビカナ」
+ * エクストラボス「サカガミ」
+ * @extends {gls2.Boss}
  */
+gls2.Enemy.Ayumi = tm.createClass(
+/** @lends {gls2.Enemy.Ayumi.prototype} */
+{
+    superClass: gls2.Boss,
+
+    fusion: null,
+    enen: null,
+    grell: null,
+
+    init: function(gameScene, software) {
+        this.superInit(gameScene, software, "sakagami");
+        this._sprite = _Sprite("tex5", 64*4, 64*4).setFrameIndex(2);
+        this.aura = gls2.Particle(500, 1.0, 0.8);
+    },
+    update: function(app) {
+        gls2.Enemy.prototype.update.apply(this, arguments);
+    },
+    ondying: function() {
+        this.on("enterframe", function(e) {
+            if (e.app.frame % 13 === 0) {
+                this._sprite.toRed();
+            } else if (e.app.frame % 13 === 5) {
+                this._sprite.toNormal();
+            }
+        });
+    },
+    destroy: function() {
+        this.bossDestroy();
+        gls2.core.fps = FPS;
+
+        // スクショを撮る
+        this.gameScene.screenShot = this.gameScene.shotScreen().canvas.toDataURL("image/png")
+    },
+    draw: function(canvas) {
+        this._sprite.draw(canvas);
+    },
+});
 
 /*
  * 使ってない名前
  *
- * もたもたしている間に出ちゃった名前
+ * もたもたしている間に出ちゃった名前→次回作で使う名前
  * 「アイノ」
  * 「シラユキ」
  * 「オオモリ」
+ * 「ヒカワ」
+ * 「ハルノ」
+ * 「カイドウ」
+ * 「アマノガワ」
  *
  * 足りなくなったら
  * 「ニシジマ」
@@ -1666,6 +1711,10 @@ gls2.Enemy.Miry = tm.createClass(
  * 「チネン」
  * 「オウジ」
  * 「オカダ」
+ * 「レジーナ」
+ * 「ブルー」
+ * 「オハナ」
+ * 「オリナ」
  */
 
 /**
