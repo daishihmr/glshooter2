@@ -138,19 +138,19 @@ gls2.DialogMenu = tm.createClass(
             return;
         }
 
-        if (this.showExit && app.keyboard.getKeyDown("x")) {
+        if (this.showExit && app.getKeyDown("x")) {
             this._selected = this.selections.length-1;
             this.closeDialog(this._selected);
             return;
-        } else if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) {
+        } else if (app.getKeyDown("z") || app.getKeyDown("c") || app.getKeyDown("space")) {
             this.closeDialog(this._selected);
             gls2.playSound("decision");
             return;
-        } else if (app.keyboard.getKeyDown("down")) {
+        } else if (app.getKeyDown("down")) {
             this._selected += 1;
             this._selected = gls2.math.clamp(this._selected, 0, this.selections.length-1);
             gls2.playSound("select");
-        } else if (app.keyboard.getKeyDown("up")) {
+        } else if (app.getKeyDown("up")) {
             this._selected -= 1;
             this._selected = gls2.math.clamp(this._selected, 0, this.selections.length-1);
             gls2.playSound("select");

@@ -160,9 +160,9 @@ gls2.EndingScene = tm.createClass(
         this.ground.addChildTo(gls2.core.gameScene);
     },
     update: function(app) {
-        if (app.keyboard.getKey("z")
-            || app.keyboard.getKey("x")
-            || app.keyboard.getKey("c")
+        if (app.getKey("z")
+            || app.getKey("x")
+            || app.getKey("c")
             || (this.startBgm && gls2.currentBgm && gls2.currentBgm.source["playbackState"] !== AudioBufferSourceNode["PLAYING_STATE"])) {
             if (!this.labels.some(function(l) { return !!l.parent; })) {
                 this.startFadeOut();

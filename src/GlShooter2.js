@@ -59,6 +59,7 @@ gls2.GlShooter2 = tm.createClass(
         this.timeoutTasks = [];
 
         this.keyboard = tm.input.Keyboard(window);
+        this.gamepadManager = tm.input.GamepadManager();
 
         var assets = {
             // data
@@ -168,6 +169,8 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     update: function() {
+        this.gamepadManager._update();
+
         var copied = [].concat(this.timeoutTasks);
         for (var i = 0; i < copied.length; i++) {
             if (copied[i].frame === this.frame) {
@@ -375,7 +378,23 @@ gls2.GlShooter2 = tm.createClass(
                 this.currentScene.addChild(gls2.GetTrophyEffect(data[key].title));
             }
         }
-    }
+    },
+
+    // input
+
+    getKeyDirection: function() {
+        return this.keyboard.getKeyDirection();
+    },
+
+    getKey: function(param) {
+        return this.keyboard.getKey(param);
+    },
+    getKeyDown: function(param) {
+        return this.keyboard.getKeyDown(param);
+    },
+    getKeyUp: function(param) {
+        return this.keyboard.getKeyUp(param);
+    },
 
 });
 

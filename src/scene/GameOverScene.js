@@ -31,7 +31,7 @@ gls2.GameOverScene = tm.createClass(
         });
     },
     update: function(app) {
-        if (app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || (this.age == 300 && !this.opened)) {
+        if (app.getKeyDown("z") || app.getKeyDown("c") || (this.age == 300 && !this.opened)) {
             this.openMenu();
         }
 

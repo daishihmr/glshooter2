@@ -94,7 +94,7 @@ gls2.TitleScene = tm.createClass({
             this._generateParticle(Math.cos(this.age*-0.01+Math.PI*4/3)*100+SC_W*0.5, Math.sin(this.age*-0.01+Math.PI*4/3)*100+SC_H*0.5, 2);
         }
 
-        if ((app.keyboard.getKeyDown("z") || app.keyboard.getKeyDown("c") || app.keyboard.getKeyDown("space")) && !this.gameStarted) {
+        if ((app.getKeyDown("z") || app.getKeyDown("c") || app.getKeyDown("space")) && !this.gameStarted) {
             this.openMainMenu()
         }
 
