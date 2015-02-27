@@ -424,8 +424,8 @@ gls2.GameScene = tm.createClass(
                             var p = bullet.destroy();
 
                             // 撃ち返し
-                            var s = bulletml.Walker.globalScope["$rank"] * 10;
-                            if (gls2.math.rand(0, 20) < s && FIRE_BACK_DISTANCE_SQ < gls2.distanceSq(p, this.player)) {
+                            var s = this.hyperRank;
+                            if (gls2.math.rand(0, 40) < s && FIRE_BACK_DISTANCE_SQ < gls2.distanceSq(p, this.player)) {
                                 gls2.Danmaku.fireOne(p);
                             }
 
@@ -808,7 +808,7 @@ gls2.GameScene = tm.createClass(
         // var min = Math.max(0, gls2.core.difficulty - 1) * 0.02 + (this.player.style !== 2 ? 0.00 : 0.10);
         var min = 0.00;
         bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(v, min, 0.50) * RANK_RATE;
-        bulletml.Walker.globalScope["$difficulty"] = Math.sqrt(bulletml.Walker.globalScope["$rank"] * 0.2);
+        bulletml.Walker.globalScope["$difficulty"] = bulletml.Walker.globalScope["$rank"] * 0.5;
     },
 
     addRank: function(v) {
