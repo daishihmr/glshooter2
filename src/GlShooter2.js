@@ -98,6 +98,7 @@ gls2.GlShooter2 = tm.createClass(
             "keyC": "assets/letter-uppercase-C-icon.png",
             "keyZ": "assets/letter-uppercase-Z-icon.png",
             "keyX": "assets/letter-uppercase-X-icon.png",
+            "exboss": "assets/exboss.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc99963.mp3",

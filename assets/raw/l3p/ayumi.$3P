@@ -1,0 +1,118 @@
+/*							Parts Assembler
+                                  Version 2.04.100723(:
+Parts: 
+	F2\F202.suf
+	armor\armor06.suf
+	basic\ball\ball01.suf
+	nozzle\nozzle11.suf
+	roarm\roarm11.suf
+	robody\robody07.suf
+	robody\robody13.suf
+	robody\robody14.suf
+	rohand\rohand02.suf
+Light: (   32   32  -89 ) ( 1.00 1.00 1.00)
+Info:
+	DisplayOffset: (  40.000  22.870   0.000 )
+	DisplayScale: 0.250000000000
+	MeshFlag: 1
+	MeshSpacing: 200
+	ShowStatus: 0
+	ShowAttr: 1
+	GridFlag: 1
+	GridSpacing: 50
+	RotSpacing: 10
+	SelectedOnly: 0
+	DispRelative: 0
+Palette:
+	0: atr "#01" { col ( rgb ( 0.940 0.960 0.670 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) }
+	1: atr "#02" { col ( rgb ( 0.950 0.640 0.860 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) }
+	2: atr "#03" { col ( 1.000 ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" 0.800 1.000 ) mapsize ( 0 0 1 1 ) }
+	3: atr "#04" { col ( rgb ( 1.000 0.180 0.200 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) }
+	4: atr "#05" { col ( rgb ( 0.670 0.890 0.740 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.050 0.100 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) }
+	5: atr "#06" { col ( rgb ( 0.600 0.900 1.000 ) ) amb ( 1.000 ) dif ( 0.000 ) opt ( emittion 0.050 4.000 ) }
+	6: atr noname { col ( rgb ( 0.960 0.870 0.670 ) ) amb ( 0.330 ) dif ( 0.800 ) spc ( 0.000 0.100 0.000 ) colormap ( "L3\effect\horizon.png" ) mapsize ( 0 0 1 1 ) }
+*/
+fram
+{
+	light pal( rgb ( 1.00 1.00 1.00 ) -49 -50 -70 )
+	{	mov ( 2951.98 50.4257 2653.54 ) eye deg( 45 ) }
+	{	mov ( -258.838 43.1348 -85.2532 ) target }
+	{	mov ( -141.739 0 339.622 ) rotz ( -180 ) roty ( 24.148 ) rotx ( 0 )
+		scal ( 1.88754 1.90698 2.06169 ) obj robody07 /* "robody\robody07.suf" atr "#03" */
+	}
+	{	mov ( -141.739 200 339.622 ) rotz ( -180 ) roty ( 24.148 ) rotx ( 0 )
+		scal ( 2.05352 0.256358 2.24298 ) obj robody07 /* "robody\robody07.suf" atr "#04" */
+	}
+	{	mov ( -141.739 -200 339.622 ) rotz ( -180 ) roty ( 24.148 ) rotx ( 0 )
+		scal ( 2.05352 -0.256358 2.24298 ) obj robody07 /* "robody\robody07.suf" atr "#04" */
+	}
+	{	mov ( -47.6101 0 -7.22236 ) rotz ( -180 ) roty ( 0.498005 ) rotx ( 0 )
+		scal ( 1.59339 1.6098 1.7404 ) obj robody07 /* "robody\robody07.suf" atr "#03" */
+	}
+	{	mov ( -47.6101 168.832 -7.22236 ) rotz ( -180 ) roty ( 0.498005 ) rotx ( 0 )
+		scal ( 1.7335 0.216408 1.89344 ) obj robody07 /* "robody\robody07.suf" atr "#04" */
+	}
+	{	mov ( -47.6101 -168.832 -7.22236 ) rotz ( -180 ) roty ( 0.498005 ) rotx ( 0 )
+		scal ( 1.7335 -0.216408 1.89344 ) obj robody07 /* "robody\robody07.suf" atr "#04" */
+	}
+	{	mov ( -656.371 662.4 369.221 ) rotz ( 0 ) roty ( 64.2717 ) rotx ( 0 )
+		scal ( 1.83218 0.96 1.28 ) obj robody14 /* "robody\robody14.suf" atr "#02" */
+	}
+	{	mov ( -731.695 281.6 552.877 ) rotz ( 0 ) roty ( 55.852 ) rotx ( 0 )
+		scal ( 0.96 0.96 1.28 ) obj robody14 /* "robody\robody14.suf" atr "#02" */
+	}
+	{	mov ( -731.695 -281.6 552.877 ) rotz ( 0 ) roty ( 55.852 ) rotx ( 0 )
+		scal ( 0.96 -0.96 1.28 ) obj robody14 /* "robody\robody14.suf" atr "#02" */
+	}
+	{	mov ( -656.371 -662.4 369.221 ) rotz ( 0 ) roty ( 64.2717 ) rotx ( 0 )
+		scal ( 1.83218 -0.96 1.28 ) obj robody14 /* "robody\robody14.suf" atr "#02" */
+	}
+	{	mov ( 200.954 -244 367.232 ) rotz ( 11.0361 ) roty ( -5.51876 ) rotx ( 17.6251 )
+		scal ( 0.460509 1.07647 2.86141 ) obj F202 /* "F2\F202.suf" atr "#05" */
+	}
+	{	mov ( 200.954 244 367.232 ) rotz ( -11.0361 ) roty ( -5.51876 ) rotx ( -17.6251 )
+		scal ( 0.460509 -1.07647 2.86141 ) obj F202 /* "F2\F202.suf" atr "#05" */
+	}
+	{	mov ( 43.7191 -424 -367.376 ) rotz ( -39.341 ) roty ( 27.6158 ) rotx ( -9.53123 )
+		scal ( 1.56934 1.97646 5.58617 ) obj nozzle11 /* "nozzle\nozzle11.suf" atr "#03" */
+	}
+	{	mov ( 43.7191 424 -367.376 ) rotz ( 39.341 ) roty ( 27.6158 ) rotx ( 9.53123 )
+		scal ( 1.56934 -1.97646 5.58617 ) obj nozzle11 /* "nozzle\nozzle11.suf" atr "#03" */
+	}
+	{	mov ( -31.7985 -360 -374.931 ) rotz ( 61.2384 ) roty ( 75.2338 ) rotx ( 147.122 )
+		scal ( 1.6555 1.02077 0.867142 ) obj robody13 /* "robody\robody13.suf" atr "#05" */
+	}
+	{	mov ( -31.7985 360 -374.931 ) rotz ( -61.2384 ) roty ( 75.2338 ) rotx ( -147.122 )
+		scal ( 1.6555 -1.02077 0.867142 ) obj robody13 /* "robody\robody13.suf" atr "#05" */
+	}
+	{	mov ( 212.964 0 609.33 ) rotz ( 0 ) roty ( -2.07099 ) rotx ( 180 )
+		scal ( 1.30186 0.394495 0.521576 ) obj roarm11 /* "roarm\roarm11.suf" atr "#02" */
+	}
+	{	mov ( 185.746 -128 611.375 ) rotz ( -4.49485 ) roty ( -7.28822 ) rotx ( -177.908 )
+		scal ( 1.38941 0.421025 0.556652 ) obj roarm11 /* "roarm\roarm11.suf" atr "#02" */
+	}
+	{	mov ( 185.746 128 611.375 ) rotz ( 4.49485 ) roty ( -7.28822 ) rotx ( 177.908 )
+		scal ( 1.38941 -0.421025 0.556652 ) obj roarm11 /* "roarm\roarm11.suf" atr "#02" */
+	}
+	{	mov ( -253.822 -267.165 575.595 ) rotz ( -83.1456 ) roty ( 47.6929 ) rotx ( -145.744 )
+		scal ( 3.46334 1.53404 7.049 ) obj rohand02 /* "rohand\rohand02.suf" atr "#01" */
+	}
+	{	mov ( -156.615 -293.925 624.622 ) rotz ( -41.0936 ) roty ( 66.2899 ) rotx ( -109.566 )
+		scal ( 3.46334 1.53404 6.09875 ) obj rohand02 /* "rohand\rohand02.suf" atr "#01" */
+	}
+	{	mov ( 282 0 476 ) rotz ( 0 ) roty ( 0 ) rotx ( 0 )
+		scal ( 0.305872 0.305872 0.305872 ) obj ball01 /* "basic\ball\ball01.suf" atr "#06" */
+	}
+	{	mov ( -253.822 267.165 575.595 ) rotz ( 83.1456 ) roty ( 47.6929 ) rotx ( 145.744 )
+		scal ( 3.46334 -1.53404 7.049 ) obj rohand02 /* "rohand\rohand02.suf" atr "#01" */
+	}
+	{	mov ( -156.615 293.925 624.622 ) rotz ( 41.0936 ) roty ( 66.2899 ) rotx ( 109.566 )
+		scal ( 3.46334 -1.53404 6.09875 ) obj rohand02 /* "rohand\rohand02.suf" atr "#01" */
+	}
+	{	mov ( -181.791 0 24.777 ) rotz ( 0 ) roty ( 4.22383 ) rotx ( 0 )
+		scal ( 1.65314 1.65314 1.65314 ) obj armor06 /* "armor\armor06.suf" atr "#03" */
+	}
+	{	mov ( -146.208 0 -109.592 ) rotz ( 0 ) roty ( 4.22383 ) rotx ( 0 )
+		scal ( 1.65314 1.65314 1.65314 ) obj armor06 /* "armor\armor06.suf" atr "#05" */
+	}
+}
