@@ -60,6 +60,8 @@ gls2.GlShooter2 = tm.createClass(
 
         this.keyboard = tm.input.Keyboard(window);
         this.gamepadManager = tm.input.GamepadManager();
+        this.gamepad = null;
+        this.gamepadConfig = {}.$extend(gls2["gamepadConfigDefault"]);
 
         var assets = {
             // data
@@ -171,6 +173,14 @@ gls2.GlShooter2 = tm.createClass(
 
     update: function() {
         this.gamepadManager._update();
+        if (this.gamepad === null) {
+            for (var i = 0, end = 4; i < end; i++) {
+                if (this.gamepadManager.isConnected(i)) {
+                    this.gamepad = this.gamepadManager.get(i);
+                    break;
+                }
+            }
+        }
 
         var copied = [].concat(this.timeoutTasks);
         for (var i = 0; i < copied.length; i++) {
@@ -384,21 +394,55 @@ gls2.GlShooter2 = tm.createClass(
 
     // input
 
+    gamepadConfig: null,
+
     getKeyDirection: function() {
-        return this.keyboard.getKeyDirection();
+        var v = tm.geom.Vector2(0, 0);
+        if (this.gamepad !== null) {
+            v.add(this.gamepad.getStickDirection());
+            if (v.lengthSquared() < 0.25 * 0.25) {
+                v.set(0, 0);
+            }
+            v.add(this.gamepad.getKeyDirection());
+        }
+        v.add(this.keyboard.getKeyDirection());
+        return v.normalize();
     },
 
     getKey: function(param) {
-        return this.keyboard.getKey(param);
+        var result = false;
+        if (this.gamepad !== null) {
+            result = this.gamepad.getKey(this.gamepadConfig[param]);
+        }
+        return this.keyboard.getKey(param) || result;
     },
     getKeyDown: function(param) {
-        return this.keyboard.getKeyDown(param);
+        var result = false;
+        if (this.gamepad !== null) {
+            result = this.gamepad.getKeyDown(this.gamepadConfig[param]);
+        }
+        return this.keyboard.getKeyDown(param) || result;
     },
     getKeyUp: function(param) {
-        return this.keyboard.getKeyUp(param);
+        var result = false;
+        if (this.gamepad !== null) {
+            result = this.gamepad.getKeyUp(this.gamepadConfig[param]);
+        }
+        return this.keyboard.getKeyUp(param) || result;
     },
 
 });
+
+gls2["gamepadConfigDefault"] = {
+    "z": "r2",
+    "x": "a",
+    "c": "x",
+    "up": "up",
+    "down": "down",
+    "left": "left",
+    "right": "right",
+    "space": "start",
+};
 
 tm.display.AnimationSprite.prototype.clone = function() {
     return tm.app.AnimationSprite(this.ss, this.width, this.height);

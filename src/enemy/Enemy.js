@@ -39,6 +39,13 @@ gls2.Enemy = tm.createClass(
      */
     hp: 0,
     hpMax: 0,
+
+    /**
+     * 防御力
+     * ダメージ値に積算される
+     */
+    guardPoint: 1,
+
     /** 撃破時の素点 */
     score: 0,
     /** 地上物か */
@@ -187,7 +194,7 @@ gls2.Enemy = tm.createClass(
         // 可視範囲に入ったことのない敵はダメージを受けない
         if (!this.entered || this.barrier) return false;
 
-        this.hp -= damagePoint;
+        this.hp -= damagePoint * this.guardPoint;
         if (this.hp <= 0) {
 
             var r = gls2.math.randf(0, 5);

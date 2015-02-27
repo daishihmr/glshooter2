@@ -6,6 +6,7 @@ java -jar tools/compiler.jar \
 --define STATS=false \
 --externs libs/tmlib.js \
 --externs libs/mt.js \
+--externs libs/gamepad.js \
 --externs extern/extern.js \
 --externs extern/tween.js \
 --externs extern/tweener.js \
@@ -58,7 +59,7 @@ java -jar tools/compiler.jar \
 --compilation_level ADVANCED_OPTIMIZATIONS \
 --language_in ECMASCRIPT5 \
 --js_output_file target/gls2.js \
-# --formatting PRETTY_PRINT
+--formatting PRETTY_PRINT
 
 # --formatting SINGLE_QUOTES
 # --externs libs/mt.js \

@@ -700,7 +700,7 @@ gls2.EnemyUnit = {
 /**
  * エクストラボス「サカガミ」
  */
-"ayumi": [{ "hard":$e.Ayumi, "soft":[$s.Ayumi1], "x":SC_W*0.5, "y":SC_H*0.8, "boss":true }],
+"ayumi": [{ "hard":$e.Ayumi, "soft":[$s.Ayumi1, $s.Ayumi2, $s.Ayumi3], "x":SC_W*0.5, "y":SC_H*0.8, "boss":true }],
 
 };
 

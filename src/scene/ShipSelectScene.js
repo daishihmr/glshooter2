@@ -28,7 +28,8 @@ gls2.ShipSelectScene = tm.createClass(
     labelStyle: null,
 
     type: 0,
-    style: 0,
+    // style: 0,
+    style: 2,
     autoBomb: false,
 
     moving: false,

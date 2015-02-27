@@ -62,6 +62,8 @@ gls2.Player = tm.createClass(
 
     frame: 0,
 
+    dx: 0,
+
     /** @constructs */
     init: function(gameScene, type, style) {
         this.superInit("fighter", 64, 64);
@@ -74,7 +76,7 @@ gls2.Player = tm.createClass(
 
         this.speed = [6.0, 5.0, 4.5][type] * 1.2;
 
-        this.boundingRadius = (style === 2 || style === 3) ? 2 : 7;
+        this.boundingRadius = (style === 2 || style === 3) ? 3 : 6;
         this.altitude = 10;
 
         this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type, 100);
@@ -233,16 +235,18 @@ gls2.Player = tm.createClass(
             this.alpha = 1.0;
         }
 
-        var kb = gls2.core.mode === 2 ? this.gameScene.stage.keyboard : app;
+        var input = gls2.core.mode === 2 ? this.gameScene.stage.keyboard : app;
+
+        var lastX = this.x;
         if (this.controllable || gls2.core.mode === 2) {
-            var direction = kb.getKeyDirection();
+            var direction = input.getKeyDirection();
             this.x += direction.x * this.speed * (this.fireLaser ? 0.5 : 1);
             this.y += direction.y * this.speed * (this.fireLaser ? 0.5 : 1);
             this.x = gls2.math.clamp(this.x, 15, SC_W-15);
             this.y = gls2.math.clamp(this.y, 15, SC_H-15);
 
-            var pressC = kb.getKey("c") && this.attackable;
-            var pressZ = kb.getKey("z") && this.attackable;
+            var pressC = input.getKey("c") && this.attackable;
+            var pressZ = input.getKey("z") && this.attackable;
             if (pressZ) this.gameScene.pressC = true;
 
             if (pressC) {
@@ -267,7 +271,7 @@ gls2.Player = tm.createClass(
             this.laser.y = this.y - 40;
 
             // スペシャルウェポン
-            if (kb.getKeyDown("x") && this.attackable) {
+            if (input.getKeyDown("x") && this.attackable) {
                 if (this.gameScene.hyperLevel > 0 && !this.gameScene.isHyperMode) {
                     // ハイパー
                     this.gameScene.startHyperMode();
@@ -297,6 +301,8 @@ gls2.Player = tm.createClass(
             this.fireLaser = false;
         }
 
+        this.dx = this.x - lastX;
+
         // ショット発射
         if (this.fireShot) {
             var s = Math.sin(app.frame * 0.2);
@@ -320,10 +326,10 @@ gls2.Player = tm.createClass(
         }
 
         // ビット
-        this.controlBit(kb);
+        this.controlBit(input);
 
         // ロール
-        this._calcRoll(kb, app.frame);
+        this._calcRoll(input, app.frame);
 
         // バックファイア
         if (app.frame % 2 === 0) {
@@ -343,7 +349,7 @@ gls2.Player = tm.createClass(
         this.gameScene.comboCount = 0;
     },
 
-    controlBit: function(kb) {
+    controlBit: function(input) {
         if (this.type === 0) {
             for (var i = this.bits.length; this.bits[--i] !== undefined; ) {
                 var bit = this.bits[i];
@@ -360,9 +366,9 @@ gls2.Player = tm.createClass(
         } else if (this.type === 1) {
             var p = this.bitPivot;
             if (!this.fireLaser || this.style !== 3) {
-                if (this.controllable && kb.getKey("left")) {
+                if (this.controllable && this.dx < 0) {
                     p.rotation = Math.max(p.rotation - 3, -50);
-                } else if (this.controllable && kb.getKey("right")) {
+                } else if (this.controllable && 0 < this.dx) {
                     p.rotation = Math.min(p.rotation + 3,  50);
                 } else {
                     if (3 < p.rotation) {
@@ -379,10 +385,10 @@ gls2.Player = tm.createClass(
         }
     },
 
-    _calcRoll: function(kb, frame) {
-        if ((this.controllable || gls2.core.mode === 2) && kb.getKey("left")) {
+    _calcRoll: function(input, frame) {
+        if ((this.controllable || gls2.core.mode === 2) && this.dx < 0) {
             this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3);
-        } else if ((this.controllable || gls2.core.mode === 2) && kb.getKey("right")) {
+        } else if ((this.controllable || gls2.core.mode === 2) && 0 < this.dx) {
             this.roll = gls2.math.clamp(this.roll + 0.2, -3, 3);
         } else {
             if (this.roll < 0) {

@@ -66,6 +66,7 @@ gls2.Boss = tm.createClass(
             gls2.EnemySoft.pauseAttack(this);
             this.clearEventListener("completeattack");
             this.tweener.clear();
+            this.fire(tm.event.Event("secondform"));
 
             // TODO 爆発エフェクト
             gls2.Effect.explodeM(this.x, this.y, this.gameScene);
@@ -78,6 +79,7 @@ gls2.Boss = tm.createClass(
             gls2.EnemySoft.pauseAttack(this);
             this.clearEventListener("completeattack");
             this.tweener.clear();
+            this.fire(tm.event.Event("hakkyo"));
 
             // TODO 爆発エフェクト
             gls2.Effect.explodeM(this.x, this.y, this.gameScene);

@@ -1712,11 +1712,9 @@ gls2.Enemy.Ayumi = tm.createClass(
         this.barrier = this.gameScene.isBombActive || this.gameScene.hyperMutekiTime > 0 || this.player.muteki;
         if (this.barrier) {
             if (!lastBarrier && this.hp > this.hpMax * 0.1) {
-                this.hyperCircle2.tweener.clear().fadeIn(100);
                 this.hyperCircle3.tweener.clear().fadeIn(100);
             }
         } else if (lastBarrier && this.hp > this.hpMax * 0.1) {
-            this.hyperCircle2.tweener.clear().fadeOut(1000);
             this.hyperCircle3.tweener.clear().fadeOut(1000);
         }
 
@@ -1733,6 +1731,9 @@ gls2.Enemy.Ayumi = tm.createClass(
             .setPosition(this.x, this.y)
             .addChildTo(this.gameScene);
     },
+    onhakkyo: function() {
+        this.guardPoint = 0.25;
+    },
     ondying: function() {
         this.on("enterframe", function(e) {
             if (e.app.frame % 13 === 0) {
@@ -1743,6 +1744,9 @@ gls2.Enemy.Ayumi = tm.createClass(
         });
     },
     destroy: function() {
+        this.hyperCircle2.alpha = 0;
+        this.hyperCircle3.alpha = 0;
+
         this.bossDestroy();
         gls2.core.fps = FPS;
 

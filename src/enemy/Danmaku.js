@@ -3098,13 +3098,13 @@ gls2.Danmaku["love-3-2"] = new bulletml.Root({
 });
 
 /**
- * 能登第1形態-1
+ * 能登第1形態-1a
  */
-gls2.Danmaku["ayumi-1-1"] = new bulletml.Root({
+gls2.Danmaku["ayumi-1-1a"] = new bulletml.Root({
     "top0": $.action([
         $.wait(30),
         $.fire($.direction(0, "absolute"), $spd8, IVS),
-        $.repeat(60, [
+        $.repeat(80, [
             $.fire($.direction("360/18 + $loop.index * 0.06", "sequence"), $.speed(0, "sequence"), BNSH),
             $.repeat(18-1, [
                 $.fire($.direction("360/18", "sequence"), $.speed(0, "sequence"), BNSH),
@@ -3116,7 +3116,7 @@ gls2.Danmaku["ayumi-1-1"] = new bulletml.Root({
     "top1": $.action([
         $.wait(33),
         $.fire($.direction(0, "absolute"), $spd8, IVS),
-        $.repeat(60, [
+        $.repeat(80, [
             $.fire($.direction("360/18 + $loop.index * -0.06", "sequence"), $.speed(0, "sequence"), RNSH),
             $.repeat(18-1, [
                 $.fire($.direction("360/18", "sequence"), $.speed(0, "sequence"), RNSH),
@@ -3128,9 +3128,69 @@ gls2.Danmaku["ayumi-1-1"] = new bulletml.Root({
 });
 
 /**
- * 能登第1形態-2
+ * 能登第1形態-1b
  */
-gls2.Danmaku["ayumi-1-2"] = new bulletml.Root({
+gls2.Danmaku["ayumi-1-1b"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.fire($.direction(0, "absolute"), $spd8, IVS),
+        $.repeat(120, [
+            $.fire($.direction("360/18 + Math.sin($loop.index * 0.05) * 2", "sequence"), $.speed(0, "sequence"), BNSH),
+            $.repeat(18-1, [
+                $.fire($.direction("360/18", "sequence"), $.speed(0, "sequence"), BNSH),
+            ]),
+            $interval(6),
+        ]),
+        $interval(90),
+    ]),
+    "top1": $.action([
+        $.wait(33),
+        $.fire($.direction(0, "absolute"), $spd8, IVS),
+        $.repeat(120, [
+            $.fire($.direction("360/18 + Math.sin($loop.index * 0.05) * 1", "sequence"), $.speed(0, "sequence"), RNSH),
+            $.repeat(18-1, [
+                $.fire($.direction("360/18", "sequence"), $.speed(0, "sequence"), RNSH),
+            ]),
+            $interval(6),
+        ]),
+        $interval(90),
+    ]),
+});
+
+/**
+ * 能登第1形態-2a
+ */
+gls2.Danmaku["ayumi-1-2a"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.action([-47, -42, 12, 1, 31, 2, -81, 0, -78, -32, 2, -80, 40, -89, -55, 18, -46, 16, -89, 57].map(function(i) {
+            return $.action([
+                $absoluteNway(20, i-30+  0, i+30+  0, $spd2, BL),
+                $absoluteNway(20, i-30+ 90, i+30+ 90, $spd2, BL),
+                $absoluteNway(20, i-30+180, i+30+180, $spd2, BL),
+                $absoluteNway(20, i-30+270, i+30+270, $spd2, BL),
+                $interval(40),
+            ]);
+        })),
+        $interval(90),
+    ]),
+    "top2": $.action([
+        $.wait(30),
+        $.fire($.direction(0, "absolute"), $spd7, IVS),
+        $.repeat(200, [
+            $.fire($.direction("360/9 - 5", "sequence"), $.speed(0, "sequence"), RNS),
+            $.repeat(9-1, [
+                $.fire($.direction("360/9", "sequence"), $.speed(0, "sequence"), RNS),
+            ]),
+            $interval(3),
+        ]),
+        $interval(90),
+    ]),
+});
+/**
+ * 能登第1形態-2b
+ */
+gls2.Danmaku["ayumi-1-2b"] = new bulletml.Root({
     "top0": $.action([
         $.wait(30),
         $.action([-47, -42, 12, 1, 31, 2, -81, 0, -78, -32, 2, -80, 40, -89, -55, 18, -46, 16, -89, 57].map(function(i) {
@@ -3146,25 +3206,13 @@ gls2.Danmaku["ayumi-1-2"] = new bulletml.Root({
     ]),
     "top1": $.action([
         $.wait(30),
-        $.fire($.direction(0, "absolute"), $spd5, IVS),
-        $.repeat(110, [
-            $.fire($.direction("360/9 + 5", "sequence"), $.speed(0, "sequence"), $.offsetX(-20), RNS),
+        $.fire($.direction(0, "absolute"), $spd7, IVS),
+        $.repeat(200, [
+            $.fire($.direction("360/9 + $loop.index * 0.08", "sequence"), $.speed(0, "sequence"), RNS),
             $.repeat(9-1, [
-                $.fire($.direction("360/9", "sequence"), $.speed(0, "sequence"), $.offsetX(-20), RNS),
+                $.fire($.direction("360/9", "sequence"), $.speed(0, "sequence"), RNS),
             ]),
-            $interval(6),
-        ]),
-        $interval(90),
-    ]),
-    "top2": $.action([
-        $.wait(30),
-        $.fire($.direction(0, "absolute"), $spd5, IVS),
-        $.repeat(110, [
-            $.fire($.direction("360/9 - 5", "sequence"), $.speed(0, "sequence"), $.offsetX(+20), RNS),
-            $.repeat(9-1, [
-                $.fire($.direction("360/9", "sequence"), $.speed(0, "sequence"), $.offsetX(+20), RNS),
-            ]),
-            $interval(6),
+            $interval(3),
         ]),
         $interval(90),
     ]),
@@ -3220,44 +3268,177 @@ gls2.Danmaku["ayumi-1-4"] = new bulletml.Root({
     "top0": $.action([
         $.wait(30),
         $.fire($.direction(0), $spd6, IVS),
-        $.repeat(70, [
+        $.repeat(140, [
             $.repeat(6, [
-                $.fire($.direction(360/6, "sequence"), $.speed(0, "sequence"), BS),
+                $.fire($.direction(360/6, "sequence"), $.speed(0, "sequence"), BL),
             ]),
 
             $.fire($.direction(-1, "sequence"), $.speed(0, "sequence"), IVS),
-            $interval(3),
+            $interval(4),
         ]),
         $.wait(90),
     ]),
     "top1": $.action([
         $.wait(25),
         $.fire($.direction(0), $spd6, IVS),
-        $.repeat(70, [
+        $.repeat(140, [
             $.repeat(5, [
-                $.fire($.direction(360/5, "sequence"), $.speed(0, "sequence"), RS),
+                $.fire($.direction(360/5, "sequence"), $.speed(0, "sequence"), RL),
             ]),
 
             $.fire($.direction(+1.3, "sequence"), $.speed(0, "sequence"), IVS),
-            $interval(3),
+            $interval(4),
         ]),
         $.wait(90),
     ]),
     "top2": $.action([
         $.wait(25),
-        $.repeat(3, [
-            $.wait(41),
-            $nway(41, -180, 180, $spd7, BS),
+        $.repeat(7, [
+            $.wait(35),
+            $nway(60, -180, 180, $spd6, BNS),
+            $.wait(13),
         ]),
         $.wait(90),
     ]),
     "top3": $.action([
         $.wait(25),
-        $.repeat(3, [
+        $.repeat(7, [
             $.wait(48),
-            $nway(41, -180, 180, $spd8(2), RS),
+            $nway(60, -180, 180, $spd8(2), RNS),
         ]),
         $.wait(90),
+    ]),
+});
+
+/**
+ * 能登第2形態-1
+ */
+gls2.Danmaku["ayumi-2-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.repeat(20, [
+            $.fire($.direction(+135, "absolute"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.repeat(40, [
+            $.fire($.direction(4, "sequence"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.repeat(10, [
+            $.fire($.direction(0, "sequence"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.wait(90),
+    ]),
+    "top1": $.action([
+        $.wait(30),
+        $.repeat(20, [
+            $.fire($.direction(-135, "absolute"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.repeat(40, [
+            $.fire($.direction(-4, "sequence"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.repeat(10, [
+            $.fire($.direction(0, "sequence"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.wait(90),
+    ]),
+    "top2": $.action([
+        $.wait(30),
+        $.repeat(20, [
+            $.fire($.direction(0, "absolute"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.repeat(40, [
+            $.fire($.direction(-1, "sequence"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.repeat(10, [
+            $.fire($.direction(0, "sequence"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.wait(90),
+    ]),
+    "top3": $.action([
+        $.wait(30),
+        $.repeat(20, [
+            $.fire($.direction(0, "absolute"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.repeat(40, [
+            $.fire($.direction(+1, "sequence"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.repeat(10, [
+            $.fire($.direction(0, "sequence"), $.speed(2), RR($.actionRef("seed"))),
+            $.wait(12),
+        ]),
+        $.wait(90),
+    ]),
+    "seed": $.action([
+        $.repeat(999, [
+            $.wait(12),
+            $.fire($.direction(-100, "relative"), $spd2, BNS),
+            $.fire($.direction(+100, "relative"), $spd2, RNS),
+        ]),
+    ]),
+});
+
+/**
+ * 能登第2形態-2
+ */
+gls2.Danmaku["ayumi-2-2"] = new bulletml.Root({
+    "top0": $.action([
+        $.repeat(3, [
+            $.bindVar("t", "$loop.index + 1"),
+            $.wait(20),
+            $.fire($.direction(-45), $spd1("$loop.index * 5"), IVS),
+            $.repeat(30, [
+                $.repeat(11, [
+                    $.fire($.direction(360/11, "sequence"), $.speed(0, "sequence"), RNSH),
+                ]),
+                $.fire($.direction("+3 * $t", "sequence"), $.speed(0.1, "sequence"), IVS),
+                $.wait(4),
+            ]),
+            $.wait(20),
+            $.fire($.direction(-45), $spd1("$loop.index * 5"), IVS),
+            $.repeat(30, [
+                $.repeat(11, [
+                    $.fire($.direction(360/11, "sequence"), $.speed(0, "sequence"), BNSH),
+                ]),
+                $.fire($.direction("-3 * $t", "sequence"), $.speed(0.1, "sequence"), IVS),
+                $.wait(4),
+            ]),
+        ]),
+        $.wait(20),
+        $nway(80, -180, 180, $spd8, BNS),
+        $.wait(8),
+        $nway(100, -180, 180, $spd8(5), BNS),
+        $.wait(8),
+        $nway(120, -180, 180, $spd8(10), BNS),
+        $.wait(8),
+        $.wait(20),
+        $nway(81, -180, 180, $spd8, BNS),
+        $.wait(8),
+        $nway(101, -180, 180, $spd8(5), BNS),
+        $.wait(8),
+        $nway(121, -180, 180, $spd8(10), BNS),
+        $.wait(8),
+    ]),
+});
+
+/**
+ * 能登第2形態-3
+ */
+gls2.Danmaku["ayumi-2-3"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.repeat(80, [
+
+        ]),
     ]),
 });
 

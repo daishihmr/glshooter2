@@ -1,6 +1,7 @@
 (function() {
 
 tm.ui.LoadingScene = tm.ui.LoadingScene || {};
+tm.input.GamepadManager = tm.input.GamepadManager || {};
 
 tm.app.Object2D.prototype.accessor("boundingWidthLeft", {
     "get": function() {
