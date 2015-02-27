@@ -53,7 +53,7 @@ gls2.Enemy.DATA = {
     "shiry":     [   250,     2000,  true,  true,  5, {"radius": 24} ],
     "dodory":    [   120,     2000,  true, false,  5, {"radius": 24} ],
 
-    "sakagami":  [ 18000,5000000000,false,  true,  0, {"radius": 50} ],
+    "sakagami":  [  9000,5000000000,false,  true,  0, {"radius": 90} ],
 
     "kurumi":    [    30,      500, false, false,  1, {"width":24, "height":48}, ],
 
@@ -1656,13 +1656,82 @@ gls2.Enemy.Ayumi = tm.createClass(
     enen: null,
     grell: null,
 
+    barrier: false,
+
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "sakagami");
-        this._sprite = _Sprite("tex5", 64*4, 64*4).setFrameIndex(2);
-        this.aura = gls2.Particle(500, 1.0, 0.8);
+        var self = this;
+
+        this._sprite = _Sprite("exboss", 64*2, 64*2);
+        this.aura = gls2.Particle(300, 1.0, 0.9, tm.graphics.Canvas()
+            .resize(32, 32)
+            .setFillStyle(
+                tm.graphics.RadialGradient(32*0.5, 32*0.5, 0, 32*0.5, 32*0.5, 32*0.5)
+                    .addColorStopList([
+                        {offset:0, color: "rgba(255,  0,  0,0.1)"},
+                        {offset:1, color: "rgba(  0,  0,  0,0.0)"},
+                    ]).toStyle()
+            )
+            .fillRect(0, 0, 32, 32)
+            .element);
+
+        this.hyperCircle2 = tm.display.CanvasElement(160, 160).addChildTo(this);
+        this.hyperCircle2.blendMode = "lighter";
+        this.hyperCircle2.rotation = -90;
+        this.hyperCircle2.strokeStyle = "rgba(180,180,255,0.4)";
+        this.hyperCircle2.alpha = 0;
+        this.hyperCircle2.draw = function(canvas) {
+            canvas.lineCap = "round";
+            var value = self.hp / (self.hpMax * 0.1);
+
+            canvas.strokeStyle = "rgba(50,50,255,0.4)";
+            canvas.lineWidth = "15";
+            canvas.strokeArc(0, 0, 80, 0, value*Math.PI*2, false);
+            canvas.strokeStyle = "rgba(100,100,255,0.4)";
+            canvas.lineWidth = "8";
+            canvas.strokeArc(0, 0, 80, 0, value*Math.PI*2, false);
+            canvas.strokeStyle = "rgba(180,180,255,0.4)";
+            canvas.lineWidth = "4";
+            canvas.strokeArc(0, 0, 80, 0, value*Math.PI*2, false);
+        };
+
+        this.hyperCircle3 = tm.display.CircleShape(160, 160, {
+            fillStyle: tm.graphics.RadialGradient(80,80,0,80,80,70).addColorStopList([
+                { offset:0.0, color:"rgba(0,0,50,0.0)" },
+                { offset:0.9, color:"rgba(0,0,50,0.8)" },
+                { offset:1.0, color:"rgba(0,0,50,0.0)" },
+            ]).toStyle(),
+            strokeStyle: "rgba(0,0,0,0)",
+        }).addChildTo(this);
+        this.hyperCircle3.alpha = 0;
     },
     update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
+
+        var lastBarrier = this.barrier;
+        this.barrier = this.gameScene.isBombActive || this.gameScene.hyperMutekiTime > 0 || this.player.muteki;
+        if (this.barrier) {
+            if (!lastBarrier && this.hp > this.hpMax * 0.1) {
+                this.hyperCircle2.tweener.clear().fadeIn(100);
+                this.hyperCircle3.tweener.clear().fadeIn(100);
+            }
+        } else if (lastBarrier && this.hp > this.hpMax * 0.1) {
+            this.hyperCircle2.tweener.clear().fadeOut(1000);
+            this.hyperCircle3.tweener.clear().fadeOut(1000);
+        }
+
+        if (this.hp < this.hpMax * 0.1) {
+            this.hyperCircle2.alpha = 1;
+            this.hyperCircle3.alpha = 1;
+        }
+
+        var v = tm.geom.Vector2(0, 0).setRandom(null, null, 6);
+        this.aura.clone()
+            .on("enterframe", function() {
+                this.position.add(v);
+            })
+            .setPosition(this.x, this.y)
+            .addChildTo(this.gameScene);
     },
     ondying: function() {
         this.on("enterframe", function(e) {

@@ -2315,7 +2315,12 @@ gls2.EnemySoft.Ayumi1 = tm.createClass(
      */
     init: function() {
         this.superInit();
-        this.patterns = [];
+        this.patterns = [
+            "ayumi-1-1",
+            "ayumi-1-2",
+            "ayumi-1-3",
+            "ayumi-1-4",
+        ];
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -2327,8 +2332,33 @@ gls2.EnemySoft.Ayumi1 = tm.createClass(
             .clear()
             .move(SC_W*0.5, SC_H*0.3, 1200, "easeOutQuad")
             .call(function() {
+                gls2.fadeOutBgm();
+                gls2.playBgm("bgmExBoss", true);
+                this.gameScene.ground.direction = Math.PI * -0.5;
+                this.gameScene.ground.tweener.clear().to({
+                    speed: 10,
+                }, 120);
+            }.bind(enemy))
+            .call(function() {
                 this.startAttack = true;
                 this.dispatchEvent(tm.event.Event("completeattack"));
+            }.bind(enemy))
+            .call(function() {
+
+                var temp = function() {
+                    var d = gls2.FixedRandom.randf(0, SC_W*0.1);
+                    var a = gls2.FixedRandom.randf(0, Math.PI * 2);
+                    this.tweener
+                        .clear()
+                        .move(
+                            SC_W * 0.5 + Math.cos(a) * d,
+                            SC_H * 0.3 + Math.sin(a) * d * 0.25,
+                            2000, "easeInOutQuad"
+                        )
+                        .call(temp);
+                }.bind(this);
+                temp();
+
             }.bind(enemy));
 
         enemy.on("completeattack", function() {
@@ -2341,5 +2371,6 @@ gls2.EnemySoft.Ayumi1 = tm.createClass(
     },
 });
 gls2.EnemySoft.Ayumi1 = gls2.EnemySoft.Ayumi1();
+
 })();
 

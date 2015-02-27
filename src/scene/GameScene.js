@@ -185,6 +185,7 @@ gls2.GameScene = tm.createClass(
         this.bulletLayers = Array.range(3).map(function(i) {
             return gls2.GameScene.Layer().addChildTo(this);
         }.bind(this));
+        this.topLayer = gls2.GameScene.Layer().addChildTo(this);
         this.labelLayer = gls2.GameScene.LabelLayer(this).addChildTo(this);
 
         tm.bulletml.AttackPattern.defaultConfig.addTarget = this;
@@ -218,6 +219,7 @@ gls2.GameScene = tm.createClass(
             }
         } else if (child instanceof gls2.Player) {
             this.playerLayer.addChild(child);
+            child.hitCircle.addChildTo(this.topLayer);
         } else if (child === this.lastElement
             || child === this.ground
             || child instanceof gls2.GameScene.Layer
@@ -681,6 +683,7 @@ gls2.GameScene = tm.createClass(
         this.effectLayer0.removeChildren();
         this.effectLayer1.removeChildren();
         this.playerLayer.removeChildren();
+        this.topLayer.removeChildren();
         this.bulletLayers.forEach(function(bl) {
             bl.removeChildren();
         });

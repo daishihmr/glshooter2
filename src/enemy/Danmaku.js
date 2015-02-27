@@ -35,9 +35,9 @@ var RR = function(action) { return $.bullet(action, {frame:6,ball:true,layer:1})
 /** 青リング（大） */
 var BR = function(action) { return $.bullet(action, {frame:7,ball:true,layer:1}); };
 /** 青針弾（細） */
-var BNSH = function(action) { return $.bullet(action, {frame:0,needle:true,layer:2}); };
+var BNSH = function(action) { return $.bullet(action, {frame:1,needle:true,layer:2}); };
 /** 赤針弾（細） */
-var RNSH = function(action) { return $.bullet(action, {frame:1,needle:true,layer:2}); };
+var RNSH = function(action) { return $.bullet(action, {frame:0,needle:true,layer:2}); };
 /** 青レーザー */
 var BLSR = function(action) { return $.bullet(action, {frame:2,laser:true,layer:0}); };
 /** 赤レーザー */
@@ -60,6 +60,8 @@ var $spd3 = function(v) { v = v===undefined?0:v; return $.speed("((0.1+$difficul
 var $spd4 = function(v) { v = v===undefined?0:v; return $.speed("((0.1+$difficulty)*1.6 - $bg*0.05 + $ex*0.2)*1.5 + 1.40 + ("+v+"*0.1)" ); };
 var $spd5 = function(v) { v = v===undefined?0:v; return $.speed("((0.1+$difficulty)*1.6 - $bg*0.05 + $ex*0.2)*1.5 + 1.70 + ("+v+"*0.1)" ); };
 var $spd6 = function(v) { v = v===undefined?0:v; return $.speed("((0.1+$difficulty)*1.6 - $bg*0.05 + $ex*0.2)*1.5 + 2.00 + ("+v+"*0.1)" ); };
+var $spd7 = function(v) { v = v===undefined?0:v; return $.speed("((0.1+$difficulty)*1.6 - $bg*0.05 + $ex*0.2)*1.5 + 2.30 + ("+v+"*0.1)" ); };
+var $spd8 = function(v) { v = v===undefined?0:v; return $.speed("((0.1+$difficulty)*1.6 - $bg*0.05 + $ex*0.2)*1.5 + 2.60 + ("+v+"*0.1)" ); };
 
 /** 自機狙い弾 */
 var $fire0 = function(spd) { return $.fire($.direction(Math.randf(-2, 2)), spd || $spd3, RNS) };
@@ -3096,6 +3098,170 @@ gls2.Danmaku["love-3-2"] = new bulletml.Root({
 });
 
 /**
+ * 能登第1形態-1
+ */
+gls2.Danmaku["ayumi-1-1"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.fire($.direction(0, "absolute"), $spd8, IVS),
+        $.repeat(60, [
+            $.fire($.direction("360/18 + $loop.index * 0.06", "sequence"), $.speed(0, "sequence"), BNSH),
+            $.repeat(18-1, [
+                $.fire($.direction("360/18", "sequence"), $.speed(0, "sequence"), BNSH),
+            ]),
+            $interval(6),
+        ]),
+        $interval(90),
+    ]),
+    "top1": $.action([
+        $.wait(33),
+        $.fire($.direction(0, "absolute"), $spd8, IVS),
+        $.repeat(60, [
+            $.fire($.direction("360/18 + $loop.index * -0.06", "sequence"), $.speed(0, "sequence"), RNSH),
+            $.repeat(18-1, [
+                $.fire($.direction("360/18", "sequence"), $.speed(0, "sequence"), RNSH),
+            ]),
+            $interval(6),
+        ]),
+        $interval(90),
+    ]),
+});
+
+/**
+ * 能登第1形態-2
+ */
+gls2.Danmaku["ayumi-1-2"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.action([-47, -42, 12, 1, 31, 2, -81, 0, -78, -32, 2, -80, 40, -89, -55, 18, -46, 16, -89, 57].map(function(i) {
+            return $.action([
+                $absoluteNway(20, i-30+  0, i+30+  0, $spd2, BL),
+                $absoluteNway(20, i-30+ 90, i+30+ 90, $spd2, BL),
+                $absoluteNway(20, i-30+180, i+30+180, $spd2, BL),
+                $absoluteNway(20, i-30+270, i+30+270, $spd2, BL),
+                $interval(40),
+            ]);
+        })),
+        $interval(90),
+    ]),
+    "top1": $.action([
+        $.wait(30),
+        $.fire($.direction(0, "absolute"), $spd5, IVS),
+        $.repeat(110, [
+            $.fire($.direction("360/9 + 5", "sequence"), $.speed(0, "sequence"), $.offsetX(-20), RNS),
+            $.repeat(9-1, [
+                $.fire($.direction("360/9", "sequence"), $.speed(0, "sequence"), $.offsetX(-20), RNS),
+            ]),
+            $interval(6),
+        ]),
+        $interval(90),
+    ]),
+    "top2": $.action([
+        $.wait(30),
+        $.fire($.direction(0, "absolute"), $spd5, IVS),
+        $.repeat(110, [
+            $.fire($.direction("360/9 - 5", "sequence"), $.speed(0, "sequence"), $.offsetX(+20), RNS),
+            $.repeat(9-1, [
+                $.fire($.direction("360/9", "sequence"), $.speed(0, "sequence"), $.offsetX(+20), RNS),
+            ]),
+            $interval(6),
+        ]),
+        $interval(90),
+    ]),
+});
+
+/**
+ * 能登第1形態-3
+ */
+gls2.Danmaku["ayumi-1-3"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.action(
+            [107, 103, 99, 79, 88, 104, 98, 81].map(function(a, i) {
+                var odd = i % 2 === 0;
+                if (odd) {
+                    return $.action([
+                        $.fire($.direction(-a, "absolute"), $.speed(4), BL($.actionRef("seed", "(2+$rand*10)", i + 5))),
+                        $.wait(60 - i*2),
+                    ]);
+                } else {
+                    return $.action([
+                        $.fire($.direction(+a, "absolute"), $.speed(4), BL($.actionRef("seed", "(2+$rand*10)", i + 5))),
+                        $.wait(60 - i*2),
+                    ]);
+                }
+            })
+        ),
+        $.wait(24),
+        $.wait(90),
+    ]),
+    "seed": $.action([
+        $.wait("$1"),
+        $.changeSpeed($.speed(0.4), 1),
+        $.wait(20),
+        $.fire($.direction(-20), $spd4, IVS),
+        $.repeat("$2", [
+            $.repeat(3, [
+                $.fire($.direction(5, "sequence"), $.speed(0, "sequence"), BNSH),
+                $.fire($.direction(5, "sequence"), $.speed(0, "sequence"), RNSH),
+            ]),
+            $.fire($.direction(5, "sequence"), $.speed(0, "sequence"), BNSH),
+
+            $.fire($.direction(-20), $.speed(0, "sequence"), IVS),
+            $interval(3),
+        ]),
+    ]),
+});
+
+/**
+ * 能登第1形態-4
+ */
+gls2.Danmaku["ayumi-1-4"] = new bulletml.Root({
+    "top0": $.action([
+        $.wait(30),
+        $.fire($.direction(0), $spd6, IVS),
+        $.repeat(70, [
+            $.repeat(6, [
+                $.fire($.direction(360/6, "sequence"), $.speed(0, "sequence"), BS),
+            ]),
+
+            $.fire($.direction(-1, "sequence"), $.speed(0, "sequence"), IVS),
+            $interval(3),
+        ]),
+        $.wait(90),
+    ]),
+    "top1": $.action([
+        $.wait(25),
+        $.fire($.direction(0), $spd6, IVS),
+        $.repeat(70, [
+            $.repeat(5, [
+                $.fire($.direction(360/5, "sequence"), $.speed(0, "sequence"), RS),
+            ]),
+
+            $.fire($.direction(+1.3, "sequence"), $.speed(0, "sequence"), IVS),
+            $interval(3),
+        ]),
+        $.wait(90),
+    ]),
+    "top2": $.action([
+        $.wait(25),
+        $.repeat(3, [
+            $.wait(41),
+            $nway(41, -180, 180, $spd7, BS),
+        ]),
+        $.wait(90),
+    ]),
+    "top3": $.action([
+        $.wait(25),
+        $.repeat(3, [
+            $.wait(48),
+            $nway(41, -180, 180, $spd8(2), RS),
+        ]),
+        $.wait(90),
+    ]),
+});
+
+/**
  * 弾幕初期設定
  */
 gls2.Danmaku.setup = function() {
@@ -3110,6 +3276,7 @@ gls2.Danmaku.setup = function() {
     config.bulletFactory = function(spec) {
         var b = bulletPool.shift(0);
         if (b) {
+            b.rotation = 0;
             b.hp = BULLET_HP * (spec.hp || 1);
 
             activeList.push(b);

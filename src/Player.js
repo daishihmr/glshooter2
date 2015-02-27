@@ -169,6 +169,7 @@ gls2.Player = tm.createClass(
             canvas.lineWidth = "4";
             canvas.strokeArc(0, 0, 40, 0, value*Math.PI*2, false);
         };
+
         this.hyperCircle3 = tm.display.CircleShape(80, 80, {
             fillStyle: tm.graphics.RadialGradient(40,40,0,40,40,35).addColorStopList([
                 { offset:0.0, color:"rgba(0,0,50,0.0)" },
@@ -211,8 +212,9 @@ gls2.Player = tm.createClass(
     },
 
     _createHitCircle: function() {
-        this.hitCircle = tm.display.Sprite("tex0", 20, 20).addChildTo(this);
+        this.hitCircle = tm.display.Sprite("tex0", 20, 20);
         this.hitCircle.setFrameIndex(5);
+        this.hitCircle.position = this.position;
         // this.hitCircle.blendMode = "lighter";
         this.hitCircle.update = function(app) {
             var s = 1.2 + Math.sin(app.frame * 0.2) * 0.15;

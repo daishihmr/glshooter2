@@ -101,11 +101,11 @@ gls2.GlShooter2 = tm.createClass(
             "exboss": "assets/exboss.png",
 
             // bgm
-            "bgmShipSelect": "assets2/nc99963.mp3",
-            "bgm1": "assets2/nc99049.mp3",
-            "bgmBoss": "assets2/nc66543.mp3",
-            "bgmResult": "assets2/nc66558.mp3",
-            "bgmEnding": "assets2/nc70056.mp3",
+            // "bgmShipSelect": "assets2/nc99963.mp3",
+            // "bgm1": "assets2/nc99049.mp3",
+            // "bgmBoss": "assets2/nc66543.mp3",
+            // "bgmResult": "assets2/nc66558.mp3",
+            // "bgmEnding": "assets2/nc70056.mp3",
             "bgmLoopInfo": "assets2/loop.json",
 
             // sound
@@ -198,6 +198,7 @@ gls2.GlShooter2 = tm.createClass(
             "tex_tank1",
             "yotsubaLeaf",
             "kanade-cannon",
+            "exboss",
         ].forEach(function(name) {
 
             var tex = tm.asset.AssetManager.get(name);

@@ -697,6 +697,11 @@ gls2.EnemyUnit = {
  */
 "hibiki": [{ "hard":$e.Hibiki, "soft":[$s.Hibiki1, $s.Hibiki2, $s.Hibiki3], "x":SC_W*0.5, "y":-200, "boss":true }],
 
+/**
+ * エクストラボス「サカガミ」
+ */
+"ayumi": [{ "hard":$e.Ayumi, "soft":[$s.Ayumi1], "x":SC_W*0.5, "y":SC_H*0.8, "boss":true }],
+
 };
 
 })();

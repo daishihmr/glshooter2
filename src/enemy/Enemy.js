@@ -68,6 +68,10 @@ gls2.Enemy = tm.createClass(
      * 攻撃はすりぬけ、自機との衝突も発生しない
      */
     muteki: false,
+    /**
+     * 攻撃は命中するがダメージを受けない
+     */
+    barrier: false,
 
     /**
      * 速度
@@ -181,7 +185,7 @@ gls2.Enemy = tm.createClass(
      */
     damage: function(damagePoint) {
         // 可視範囲に入ったことのない敵はダメージを受けない
-        if (!this.entered) return false;
+        if (!this.entered || this.barrier) return false;
 
         this.hp -= damagePoint;
         if (this.hp <= 0) {
@@ -366,7 +370,7 @@ gls2.Enemy = tm.createClass(
             .wait(500)
             .call(function() {
                 for (var i = 0; i < 8; i++) {
-                    gls2.LargeExplodeEffect(this.x+Math.cos(Math.PI*2*i/8)*80, this.y+Math.sin(Math.PI*2*i/8)*80, this.gameScene);
+                    gls2.LargeExplodeEffect(this.x+Math.cos(Math.PI*2*i/8)*80, this.y+Math.sin(Math.PI*2*i/8)*80, this.gameScene, true);
                 }
             }.bind(this))
             .wait(2000)

@@ -413,7 +413,7 @@ var CONTINUE_COUNT_BY_ACHEVEMENT_GRADE = [ 0.1, 0.4, 1.0 ];
  * 開始ステージ(0～)
  * @const
  */
-var INITIAL_STAGE = 0;
+var INITIAL_STAGE = 4;
 
 /**
  * 総ステージ数
