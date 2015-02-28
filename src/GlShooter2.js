@@ -52,7 +52,8 @@ gls2.GlShooter2 = tm.createClass(
         if (gls2.core !== null) throw new Error("class 'gls2.GlShooter2' is singleton!!");
         this.superInit(id);
         gls2.core = this;
-        this.resize(SC_W, SC_H).fitWindow();
+        this.resize(SC_W, SC_H);
+        this.fitWindow();
         this.fps = FPS;
         this.background = "rgba(0,0,0,0)";
 
@@ -63,10 +64,9 @@ gls2.GlShooter2 = tm.createClass(
         this.gamepad = null;
         this.gamepadConfig = {}.$extend(gls2["gamepadConfigDefault"]);
 
-        var assets = {
-            // data
-            "achevements": "assets/achevements.json",
+        this.tasksForGoogle = [];
 
+        var assets = {
             // image
             "tex0": "assets/tex0.png",
             "tex_bit": "assets/tex_bit.png",
@@ -103,11 +103,11 @@ gls2.GlShooter2 = tm.createClass(
             "exboss": "assets/exboss.png",
 
             // bgm
-            // "bgmShipSelect": "assets2/nc99963.mp3",
-            // "bgm1": "assets2/nc99049.mp3",
-            // "bgmBoss": "assets2/nc66543.mp3",
-            // "bgmResult": "assets2/nc66558.mp3",
-            // "bgmEnding": "assets2/nc70056.mp3",
+            "bgmShipSelect": "assets2/nc99963.mp3",
+            "bgm1": "assets2/nc99049.mp3",
+            "bgmBoss": "assets2/nc66543.mp3",
+            "bgmResult": "assets2/nc66558.mp3",
+            "bgmEnding": "assets2/nc70056.mp3",
             "bgmLoopInfo": "assets2/loop.json",
 
             // sound
@@ -163,12 +163,12 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     calcContinueCountMax: function() {
-        var achevements = window["achevements"];
-        var data = tm.asset.AssetManager.get("achevements").data;
-        if (!achevements) return INITIAL_CONTINUE_COUNT;
-        return Math.floor(achevements.reduce(function(a, b) {
-            return data[b] ? a + CONTINUE_COUNT_BY_ACHEVEMENT_GRADE[data[b]["grade"]] : a;
-        }, INITIAL_CONTINUE_COUNT));
+        var unlockCount = 0;
+        var achievementData = window["achievementData"];
+        for (var id in achievementData) if (achievementData.hasOwnProperty(id)) {
+            unlockCount += ~~(achievementData[id].unlocked);
+        }
+        return ~~(unlockCount * CONTINUE_COUNT_BY_ACHEVEMENT);
     },
 
     update: function() {
@@ -189,6 +189,10 @@ gls2.GlShooter2 = tm.createClass(
             } else {
                 this.timeoutTasks.erase(copied[i]);
             }
+        }
+
+        if (this.frame % 6 === 0) {
+            this._postToGoogle();
         }
     },
 
@@ -263,89 +267,25 @@ gls2.GlShooter2 = tm.createClass(
 
     loggedIn: false,
 
-    /**
-     * @param {?String} userName
-     * @param {function()} callback
-     */
-    postScore: function(userName, callback) {
+    postScore: function(leaderboardId, score) {
         if (this.mode !== 0) return;
 
-        // console.log("this.gameScene.fpsAvgByStage = " + this.gameScene.fpsAvgByStage);
-        // console.log("this.gameScene.stageNumber = " + this.gameScene.stageNumber);
-        var avgFps = this.gameScene.fpsAvgByStage.slice(0, this.gameScene.stageNumber+1)["average"]();
-        // console.log("avgFps = " + avgFps);
-        var data = {
-            "score": Math.floor(this.gameScene.score),
-            "stage": this.gameScene.stageNumber + 1,
-            "continueCount": this.gameScene.continueCount,
-            "shipType": this.gameScene.player.type,
-            "shipStyle": this.gameScene.player.style,
-            "fps": avgFps,
-            "screenShot": this.gameScene.screenShot,
-            "scoreByStage": this.gameScene.scoreByStage,
-            "fpsAvgByStage": this.gameScene.fpsAvgByStage,
-            "missCountByStage": this.gameScene.missCountByStage,
-            "continueCountByStage": this.gameScene.continueCountByStage,
-            "bombCountByStage": this.gameScene.bombCountByStage,
-            "autoBombCountByStage": this.gameScene.autoBombCountByStage,
-            "hyperCountByStage": this.gameScene.hyperCountByStage,
-            "hyperLevelHistory": this.gameScene.hyperLevelHistory,
-            "game": 1,
-        };
-        if (userName) {
-            data["userName"] = userName;
-            this.loggedIn = false;
-        } else {
-            this.loggedIn = true;
+        if (!window["gapi"] || !gapi.client || !gapi.client.games) {
+            return;
         }
 
-        tm.util.Ajax.load({
-            "url": "/api/ranking/post",
-            "data": data,
-            "type": "POST",
-            "dataType": "json",
-            "success": function(result) {
-                if (!result) {
-                    callback("スコア登録に失敗しました！＞＜");
-                } else if (result["success"]) {
-                    callback(null, true, result["scoreId"]);
-                } else if (result["confirmLogin"]) {
-                    if (window.confirm("login (or sign up) ?\nログインしていません。ログインしますか？")) {
-                        window["onchildclose"] = function() {
-                            this.postScore(null, callback);
-                            window["onchildclose"] = undefined;
-                        }.bind(this);
-                        window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
-                    } else if (window.confirm("try anonymous submit?\n匿名でスコア登録しますか？")) {
-                        var userName = "";
-                        while (userName === "") userName = window.prompt("user name\n仮のユーザー名:", this.getAnonName());
-                        if (userName === null) return;
-                        userName = userName.substring(0, 10);
-                        this.postScore(userName + " (匿名)", callback);
-                    } else {
-                        callback(null, false);
-                    }
-                } else {
-                    callback("スコア登録に失敗しました！＞＜");
-                }
-            }.bind(this),
-            "error": function() {
-                callback("スコア登録に失敗しました！＞＜");
-            }
-        });
-    },
+        console.log("postScore", leaderboardId, score);
 
-    getAnonName: function() {
-        return [
-            "名無しシューター",
-            "名無し大佐",
-            "名無しにゃん",
-            "名無したそ",
-            "名無し☆",
-            "能登名無し",
-            "名無し(30)",
-            "名無し総理"
-        ]["pickup"]();
+        var req = gapi.client.games.scores["submit"]({
+            "leaderboardId": leaderboardId,
+            "score": ~~score,
+            "language": "ja",
+        });
+
+        this.tasksForGoogle.push({
+            req: req,
+            data: null,
+        });
     },
 
     timeoutTasks: null,
@@ -356,40 +296,57 @@ gls2.GlShooter2 = tm.createClass(
         });
     },
 
-    putAchevement: function(key) {
+    tasksForGoogle: null,
+    waitingForGoogle: false,
+
+    putAchevement: function(achievementId) {
         if (this.mode !== 0) return;
-        if (!window["achevements"] || window["achevements"].indexOf(key) !== -1) {
-            return;
-        }
+        if (!window["gapi"] || !gapi.client || !gapi.client.games) return;
 
-        var data = tm.asset.AssetManager.get("achevements").data;
-        if (!data[key]) return;
+        var achievementData = window["achievementData"];
+        var data = achievementData[achievementId];
+        if (!data || data.unlocked || data.waiting) return;
 
-        var achevements = window["achevements"];
+        data.waiting = true;
 
-        if (achevements.indexOf(key) == -1) {
-            achevements.push(key);
-            tm.util.Ajax.load({
-                url: "/api/achevement/" + key,
-                type: "POST",
-                dataType: "json",
-                success: function(json) {
-                    // console.dir(json);
-                    if (data[key]) {
-                        gls2.playSound("achevement");
-                        this.gameScene.labelLayer.addChild(gls2.GetTrophyEffect(data[key].title));
+        var req = gapi.client.games.achievements["unlock"]({
+            "achievementId": achievementId,
+        });
+        this.tasksForGoogle.push({
+            data: data,
+            req: req,
+        });
+    },
+
+    _postToGoogle: function() {
+        var self = this;
+        if (self.waitingForGoogle) return;
+
+        var task = self.tasksForGoogle.shift();
+        if (!task) return;
+
+        self.waitingForGoogle = true;
+        task.req.execute(function(res) {
+            self.waitingForGoogle = false;
+            if (task.data) task.data.waiting = false;
+            if (res["error"]) {
+                console.warn(res);
+            } else if (res["unbeatenScores"]) {
+                for (var i = 0, iend = res["unbeatenScores"].length; i < iend; i++) {
+                    if (res["unbeatenScores"][i]["timeSpan"] === "ALL_TIME") {
+                        // TODO
+                        console.log("ハイスコア更新！");
+                        break;
                     }
-                }.bind(this),
-                error: function() {
-                    console.warn("error!");
-                },
-            });
-
-            if (DEBUG && data[key]) {
-                gls2.playSound("achevement");
-                this.currentScene.addChild(gls2.GetTrophyEffect(data[key].title));
+                }
+            } else if (res["newlyUnlocked"]) {
+                if (task.data) {
+                    task.data.unlocked = true;
+                    gls2.playSound("achevement");
+                    self.gameScene.labelLayer.addChild(gls2.GetTrophyEffect(task.data.name));
+                }
             }
-        }
+        });
     },
 
     // input

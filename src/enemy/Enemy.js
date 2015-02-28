@@ -213,17 +213,17 @@ gls2.Enemy = tm.createClass(
             this.dispatchEvent(tm.event.Event("destroy"));
             this.destroy();
 
-            if (this.name === "yukishiro") gls2.core.putAchevement("mboss1");
-            else if (this.name === "mishou") gls2.core.putAchevement("mboss2");
-            else if (this.name === "higashi") gls2.core.putAchevement("mboss3");
-            else if (this.name === "hishikawa") gls2.core.putAchevement("mboss4");
-            else if (this.name === "minamino") gls2.core.putAchevement("mboss5");
-            else if (this.name === "misumi") gls2.core.putAchevement("boss1");
-            else if (this.name === "hyuga") gls2.core.putAchevement("boss2");
-            else if (this.name === "momozono") gls2.core.putAchevement("boss3");
-            else if (this.name === "aida") gls2.core.putAchevement("boss4");
-            else if (this.name === "houjou") gls2.core.putAchevement("boss5");
-            else if (this.name === "sakagami") gls2.core.putAchevement("exboss2");
+            if (this.name === "yukishiro") gls2.core.putAchevement(gpgsConstants.ACH_YUKISHIRO);
+            else if (this.name === "mishou") gls2.core.putAchevement(gpgsConstants.ACH_MISHOU);
+            else if (this.name === "higashi") gls2.core.putAchevement(gpgsConstants.ACH_HIGASHI);
+            else if (this.name === "hishikawa") gls2.core.putAchevement(gpgsConstants.ACH_HISHIKAWA);
+            else if (this.name === "minamino") gls2.core.putAchevement(gpgsConstants.ACH_MINAMINO);
+            else if (this.name === "misumi") gls2.core.putAchevement(gpgsConstants.ACH_MISUMI);
+            else if (this.name === "hyuga") gls2.core.putAchevement(gpgsConstants.ACH_HYUUGA);
+            else if (this.name === "momozono") gls2.core.putAchevement(gpgsConstants.ACH_MOMOZONO);
+            else if (this.name === "aida") gls2.core.putAchevement(gpgsConstants.ACH_AIDA);
+            else if (this.name === "houjou") gls2.core.putAchevement(gpgsConstants.ACH_HOUJOU);
+            else if (this.name === "sakagami") gls2.core.putAchevement(gpgsConstants.ACH_SAKAGAMI);
 
             return true;
         } else {

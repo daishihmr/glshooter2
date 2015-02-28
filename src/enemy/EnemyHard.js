@@ -1548,7 +1548,7 @@ gls2.Enemy.Hibiki = tm.createClass(
 
             if (this.canAttackToExBoss) {
                 this.gameScene.stage.launchEnemy(gls2.EnemyUnit["ayumi"][0]);
-                gls2.core.putAchevement("exboss1");
+                gls2.core.putAchevement(gpgsConstants.ACH_MEETSAKAGAMI);
             } else {
                 var tempTimer = tm.app.Object2D();
                 tempTimer.tweener
@@ -1601,7 +1601,7 @@ gls2.Enemy.Hibiki = tm.createClass(
         gls2.core.fps = FPS;
 
         // スクショを撮る
-        this.gameScene.screenShot = this.gameScene.shotScreen().canvas.toDataURL("image/png")
+        this.gameScene.screenShot = this.gameScene.shotScreen(1.0).canvas.toDataURL("image/png")
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);
@@ -1778,7 +1778,7 @@ gls2.Enemy.Ayumi = tm.createClass(
         gls2.core.fps = FPS;
 
         // スクショを撮る
-        this.gameScene.screenShot = this.gameScene.shotScreen().canvas.toDataURL("image/png")
+        this.gameScene.screenShot = this.gameScene.shotScreen(1.0).canvas.toDataURL("image/png")
     },
     draw: function(canvas) {
         this._sprite.draw(canvas);

@@ -264,14 +264,16 @@ gls2.GameScene = tm.createClass(
         // console.log("update " + (new Date().getTime() - beginProcessTime));
     },
 
-    shotScreen: function() {
+    shotScreen: function(rate) {
+        rate = rate || 1.0;
+
         // スクショを撮る
         var out = tm.graphics.Canvas();
-        out.resize(SC_W, SC_H);
+        out.resize(SC_W * rate, SC_H * rate);
         out.clearColor("black");
-        out.drawImage(this.ground.ground.element, 0, 0);
-        out.drawImage(this.app.canvas.element, 0, 0);
-        out.drawImage(this.scoreLabel.element, 0, 0);
+        out.drawImage(this.ground.ground.element, 0, 0, SC_W, SC_H, 0, 0, SC_W * rate, SC_H * rate);
+        out.drawImage(this.app.canvas.element, 0, 0, SC_W, SC_H, 0, 0, SC_W * rate, SC_H * rate);
+        out.drawImage(this.scoreLabel.element, 0, 0, SC_W, SC_H, 0, 0, SC_W * rate, SC_H * rate);
         return out;
     },
 
@@ -385,7 +387,7 @@ gls2.GameScene = tm.createClass(
 
                     this.auraAttackFrameTotal += 1;
                     if (this.auraAttackFrameTotal > 300) {
-                        gls2.core.putAchevement("aura300");
+                        gls2.core.putAchevement(gpgsConstants.ACH_CROSS_RANGE);
                     }
                 }
             }
@@ -464,7 +466,7 @@ gls2.GameScene = tm.createClass(
                             // gls2.Bomb(this.player, this)
                             //     .setPosition(gls2.math.clamp(this.player.x, SC_W*0.2, SC_W*0.8), Math.max(this.player.y - SC_H*0.5, SC_H*0.3))
                             //     .addChildTo(this);
-                            gls2.core.putAchevement("bomb2");
+                            gls2.core.putAchevement(gpgsConstants.ACH_AUTO_BOMB);
                             this.autoBombCountByStage[this.stageNumber] += 1;
                         } else {
                             this.miss();
@@ -488,7 +490,7 @@ gls2.GameScene = tm.createClass(
                                 // gls2.Bomb(this.player, this)
                                 //     .setPosition(gls2.math.clamp(this.player.x, SC_W*0.2, SC_W*0.8), Math.max(this.player.y - SC_H*0.5, SC_H*0.3))
                                 //     .addChildTo(this);
-                                gls2.core.putAchevement("bomb2");
+                                gls2.core.putAchevement(gpgsConstants.ACH_AUTO_BOMB);
                                 this.autoBombCountByStage[this.stageNumber] += 1;
                             } else {
                                 this.miss();
@@ -668,9 +670,9 @@ gls2.GameScene = tm.createClass(
 
         this.startRec();
 
-        if (playerType === 0) gls2.core.putAchevement("launch0");
-        else if (playerType === 1) gls2.core.putAchevement("launch1");
-        else if (playerType === 2) gls2.core.putAchevement("launch2");
+        if (playerType === 0) gls2.core.putAchevement(gpgsConstants.ACH_TYPEA_SALLY);
+        else if (playerType === 1) gls2.core.putAchevement(gpgsConstants.ACH_TYPEB_SALLY);
+        else if (playerType === 2) gls2.core.putAchevement(gpgsConstants.ACH_TYPEC_SALLY);
     },
 
     startStage: function(stageNumber) {
@@ -794,7 +796,7 @@ gls2.GameScene = tm.createClass(
             }.bind(this));
         } else {
             // コンティニュー確認画面へ
-            this.screenShot = this.shotScreen().canvas.toDataURL("image/png");
+            this.screenShot = this.shotScreen(1.0).canvas.toDataURL("image/png");
             if (gls2.core.highScore === this.score) {
                 gls2.core.highScoreScreenShot = this.screenShot;
             }
@@ -892,8 +894,8 @@ gls2.GameScene = tm.createClass(
             var es = EXTEND_SCORE[i];
             if (before < es && es <= this.score) {
                 this.extendZanki();
-                if (i == 0) this.app.putAchevement("extend1");
-                if (i == 1) this.app.putAchevement("extend2");
+                if (i == 0) this.app.putAchevement(gpgsConstants.ACH_FIRST_EXTEND);
+                if (i == 1) this.app.putAchevement(gpgsConstants.ACH_SECOND_EXTEND);
             }
         }
         gls2.core.highScore = Math.max(gls2.core.highScore, this.score);
@@ -904,12 +906,12 @@ gls2.GameScene = tm.createClass(
             gls2.core.highScoreContinueCount = this.continueCount;
         }
 
-        if (this.score >= 1000000000000) gls2.core.putAchevement("score1T");
-        else if (this.score >= 100000000000) gls2.core.putAchevement("score100G");
-        else if (this.score >= 50000000000) gls2.core.putAchevement("score50G");
-        else if (this.score >= 20000000000) gls2.core.putAchevement("score20G");
-        else if (this.score >= 2000000000) gls2.core.putAchevement("score2G");
-        else if (this.score >= 100000000) gls2.core.putAchevement("score100M");
+        if (this.score >= 1000000000000) gls2.core.putAchevement(gpgsConstants.ACH_SCORE1000000000000);
+        else if (this.score >= 100000000000) gls2.core.putAchevement(gpgsConstants.ACH_SCORE100000000000);
+        else if (this.score >= 50000000000) gls2.core.putAchevement(gpgsConstants.ACH_SCORE50000000000);
+        else if (this.score >= 20000000000) gls2.core.putAchevement(gpgsConstants.ACH_SCORE20000000000);
+        else if (this.score >= 2000000000) gls2.core.putAchevement(gpgsConstants.ACH_SCORE2000000000);
+        else if (this.score >= 100000000) gls2.core.putAchevement(gpgsConstants.ACH_SCORE100000000);
     },
 
     addCombo: function(v) {
@@ -918,10 +920,10 @@ gls2.GameScene = tm.createClass(
         this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
         if (1 <= v) this.comboGauge = 1;
 
-        if (this.comboCount >= 100000) this.app.putAchevement("combo100000");
-        else if (this.comboCount >= 10000) this.app.putAchevement("combo10000");
-        else if (this.comboCount >= 1000) this.app.putAchevement("combo1000");
-        else if (this.comboCount >= 100) this.app.putAchevement("combo100");
+        if (this.comboCount >= 100000) this.app.putAchevement(gpgsConstants.ACH_100000HIT);
+        else if (this.comboCount >= 10000) this.app.putAchevement(gpgsConstants.ACH_10000HIT);
+        else if (this.comboCount >= 1000) this.app.putAchevement(gpgsConstants.ACH_1000HIT);
+        else if (this.comboCount >= 100) this.app.putAchevement(gpgsConstants.ACH_100HIT);
     },
 
     addHyperGauge: function(v) {
@@ -944,7 +946,7 @@ gls2.GameScene = tm.createClass(
             }
 
         }
-        if (this.hyperLevel > 5 && gls2.core.frame-this.hyperChargeStart <= 60) gls2.core.putAchevement("hyperAndHyperAndHyper");
+        // if (this.hyperLevel > 5 && gls2.core.frame-this.hyperChargeStart <= 60) gls2.core.putAchevement("hyperAndHyperAndHyper");
 
         this.hyperGauge = gls2.math.clamp(this.hyperGauge + v, 0, 1);
         if (this.hyperGauge >= 1) {
@@ -992,9 +994,9 @@ gls2.GameScene = tm.createClass(
         // すべての弾を消す
         gls2.Danmaku.erase(true);
 
-        this.app.putAchevement("hyper1");
+        this.app.putAchevement(gpgsConstants.ACH_ACTIVATE_HYPER);
         if (this.currentHyperLevel == 10) {
-            this.app.putAchevement("hyper10");
+            this.app.putAchevement(gpgsConstants.ACH_MAX_HYPER);
         }
 
         this.hyperCountByStage[this.stageNumber] += 1;
@@ -1266,10 +1268,10 @@ gls2.GameScene = tm.createClass(
     },
 
     canAttackToExBoss: function() {
-        // ノーミス and 2ボム以内
-        var bomb = this.bombCountByStage.reduce(function(a,b){ return a+b }, 0)
-            + this.autoBombCountByStage.reduce(function(a,b){ return a+b }, 0);
-        return this.missCountTotal === 0 || bomb <= 2;
+        // ノーミス and ノーコンティニュー
+        // var bomb = this.bombCountByStage.reduce(function(a,b){ return a+b }, 0)
+        //     + this.autoBombCountByStage.reduce(function(a,b){ return a+b }, 0);
+        return this.missCountTotal === 0 && this.this.gameScene.continueCount === 0;
     },
 
     rec: null,

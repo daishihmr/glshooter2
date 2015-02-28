@@ -1,4 +1,4 @@
-./build.sh
+./build.sh $1
 
 rm -rf package
 

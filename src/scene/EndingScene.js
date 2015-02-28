@@ -146,9 +146,9 @@ gls2.EndingScene = tm.createClass(
         }.bind(this));
     },
     "onenter": function() {
-        if (gls2.core.gameScene.player.type === 0) gls2.core.putAchevement("allclear0");
-        else if (gls2.core.gameScene.player.type === 1) gls2.core.putAchevement("allclear1");
-        else if (gls2.core.gameScene.player.type === 2) gls2.core.putAchevement("allclear2");
+        if (gls2.core.gameScene.player.type === 0) gls2.core.putAchevement(gpgsConstants.ACH_TYPEA);
+        else if (gls2.core.gameScene.player.type === 1) gls2.core.putAchevement(gpgsConstants.ACH_TYPEB);
+        else if (gls2.core.gameScene.player.type === 2) gls2.core.putAchevement(gpgsConstants.ACH_TYPEC);
     },
     "onexit": function() {
         // groundをgameSceneに返す

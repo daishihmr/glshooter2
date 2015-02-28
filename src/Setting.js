@@ -404,16 +404,16 @@ var HASH_TAG = "tmshooter";
 var INITIAL_CONTINUE_COUNT = 3;
 
 /**
- * 実績グレード別コンティニュー可能回数増加量
+ * 実績ポイント : コンティニュー可能回数
  * @const
  */
-var CONTINUE_COUNT_BY_ACHEVEMENT_GRADE = [ 0.1, 0.4, 1.0 ];
+var CONTINUE_COUNT_BY_ACHEVEMENT = 0.2;
 
 /**
  * 開始ステージ(0～)
  * @const
  */
-var INITIAL_STAGE = 4;
+var INITIAL_STAGE = 0;
 
 /**
  * 総ステージ数

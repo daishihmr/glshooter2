@@ -7,11 +7,14 @@ java -jar tools/compiler.jar \
 --externs libs/tmlib.js \
 --externs libs/mt.js \
 --externs libs/gamepad.js \
+--externs libs/signinbutton.js \
+--externs libs/gpgsconstants.js \
 --externs extern/extern.js \
 --externs extern/tween.js \
 --externs extern/tweener.js \
 --externs extern/keyboard.js \
 --externs extern/gls2.js \
+--externs extern/google.js \
 --js libs/bulletml.js \
 --js libs/bulletml.walker.js \
 --js libs/bulletml.dsl.js \
@@ -59,7 +62,7 @@ java -jar tools/compiler.jar \
 --compilation_level ADVANCED_OPTIMIZATIONS \
 --language_in ECMASCRIPT5 \
 --js_output_file target/gls2.js \
---formatting PRETTY_PRINT
+# --formatting PRETTY_PRINT
 
 # --formatting SINGLE_QUOTES
 # --externs libs/mt.js \

@@ -251,12 +251,6 @@
         "grade": 1,
         "secret": true
     },
-    "hyperAndHyperAndHyper": {
-        "title": "ハイハイハイパー！",
-        "description": "ハイパーゲージをレベル0から6以上まで一気にチャージする",
-        "grade": 1,
-        "secret": true
-    },
     "nicebomb": {
         "title": "ナイスボム！",
         "description": "敵弾が至近に迫った時にボンバーを投下する",

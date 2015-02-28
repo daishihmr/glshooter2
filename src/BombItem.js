@@ -86,7 +86,7 @@ gls2.ExtendItem = tm.createClass(
         this.y += 0.5;
         if (gls2.distanceSq(this, this.player) < 64*64) {
             this.player.gameScene.extendZanki();
-            gls2.core.putAchevement("extend3");
+            gls2.core.putAchevement(gpgsConstants.ACH_PRESENT_FROM_ALICE);
             this.remove();
         }
         if (this.y > SC_H+64) {

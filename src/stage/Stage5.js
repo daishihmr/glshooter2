@@ -16,11 +16,11 @@ gls2.Stage5 = tm.createClass(
     init: function(gameScene) {
         this.superInit(gameScene);
 
-        // this.assets = {
-            // "bgm5": "assets2/nc86158.mp3",
-            // "bgmLastBoss": "assets2/nc67538.mp3",
-            // "bgmExBoss": "assets2/nc104507.mp3",
-        // };
+        this.assets = {
+            "bgm5": "assets2/nc86158.mp3",
+            "bgmLastBoss": "assets2/nc67538.mp3",
+            "bgmExBoss": "assets2/nc104507.mp3",
+        };
 
         this.seq.add(  0, function() {
             gls2.playBgm("bgm5", true),

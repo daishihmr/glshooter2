@@ -177,29 +177,29 @@ gls2.ResultScene = tm.createClass(
 
         this.on("enter", function() {
             if (this.gameScene.killCount === this.gameScene.enemyCount) {
-                gls2.core.putAchevement("kill100");
+                gls2.core.putAchevement(gpgsConstants.ACH_PERFECT);
             } else if (this.gameScene.killCount / this.gameScene.enemyCount < 0.4) {
-                gls2.core.putAchevement("kill40");
+                gls2.core.putAchevement(gpgsConstants.ACH_MERCY);
             }
 
             if (this.gameScene.missCountTotal === 0 && this.gameScene.continueCount === 0) {
-                if (this.gameScene.stageNumber === 0) gls2.core.putAchevement("nomiss1");
-                else if (this.gameScene.stageNumber === 1) gls2.core.putAchevement("nomiss2");
-                else if (this.gameScene.stageNumber === 2) gls2.core.putAchevement("nomiss3");
-                else if (this.gameScene.stageNumber === 3) gls2.core.putAchevement("nomiss4");
-                else if (this.gameScene.stageNumber === 4) gls2.core.putAchevement("nomiss5");
+                if (this.gameScene.stageNumber === 0) gls2.core.putAchevement(gpgsConstants.ACH_STAGE1);
+                else if (this.gameScene.stageNumber === 1) gls2.core.putAchevement(gpgsConstants.ACH_STAGE2);
+                else if (this.gameScene.stageNumber === 2) gls2.core.putAchevement(gpgsConstants.ACH_STAGE3);
+                else if (this.gameScene.stageNumber === 3) gls2.core.putAchevement(gpgsConstants.ACH_STAGE4);
+                else if (this.gameScene.stageNumber === 4) gls2.core.putAchevement(gpgsConstants.ACH_STAGE5);
             }
 
             if (this.gameScene.hyperCountByStage[this.gameScene.stageNumber] === 0) {
-                gls2.core.putAchevement("nohyper");
+                gls2.core.putAchevement(gpgsConstants.ACH_NO_HYPER);
             } else if (this.gameScene.hyperCountByStage[this.gameScene.stageNumber] >= 5) {
-                gls2.core.putAchevement("hyperAndHyper");
+                gls2.core.putAchevement(gpgsConstants.ACH_HYPER_AND_HYPER);
             }
             if (this.gameScene.bombCountByStage[this.gameScene.stageNumber] === 0 && this.gameScene.autoBombCountByStage[this.gameScene.stageNumber] === 0) {
-                gls2.core.putAchevement("nobomb");
+                gls2.core.putAchevement(gpgsConstants.ACH_NO_BOMB);
             }
             if (!this.gameScene.pressC) {
-                gls2.core.putAchevement("manpower");
+                gls2.core.putAchevement(gpgsConstants.ACH_HUMAN_POWER);
             }
         });
         this.on("exit", function() {
@@ -236,6 +236,42 @@ gls2.ResultScene = tm.createClass(
                 }
 
                 if (gls2.core.mode === 0) {
+
+                    var leaderboards = [
+                        [
+                            gpgsConstants.LEAD_SHOTSTYLE_STAGE1,
+                            gpgsConstants.LEAD_SHOTSTYLE_STAGE2,
+                            gpgsConstants.LEAD_SHOTSTYLE_STAGE3,
+                            gpgsConstants.LEAD_SHOTSTYLE_STAGE4,
+                            gpgsConstants.LEAD_SHOTSTYLE_STAGE5,
+                        ],
+                        [
+                            gpgsConstants.LEAD_LASERSTYLE_STAGE1,
+                            gpgsConstants.LEAD_LASERSTYLE_STAGE2,
+                            gpgsConstants.LEAD_LASERSTYLE_STAGE3,
+                            gpgsConstants.LEAD_LASERSTYLE_STAGE4,
+                            gpgsConstants.LEAD_LASERSTYLE_STAGE5,
+                        ],
+                        [
+                            gpgsConstants.LEAD_EXPERTSTYLE_STAGE1,
+                            gpgsConstants.LEAD_EXPERTSTYLE_STAGE2,
+                            gpgsConstants.LEAD_EXPERTSTYLE_STAGE3,
+                            gpgsConstants.LEAD_EXPERTSTYLE_STAGE4,
+                            gpgsConstants.LEAD_EXPERTSTYLE_STAGE5,
+                        ],
+                        [
+                            gpgsConstants.LEAD_BEGINNERSTYLE_STAGE1,
+                            gpgsConstants.LEAD_BEGINNERSTYLE_STAGE2,
+                            gpgsConstants.LEAD_BEGINNERSTYLE_STAGE3,
+                            gpgsConstants.LEAD_BEGINNERSTYLE_STAGE4,
+                            gpgsConstants.LEAD_BEGINNERSTYLE_STAGE5,
+                        ],
+                    ];
+                    var stage = this.gameScene.stageNumber;
+                    var style = this.gameScene.player.style;
+                    var leaderboardId = leaderboards[style][stage];
+                    gls2.core.postScore(leaderboardId, this.gameScene.scoreByStage[stage]);
+
                     if (this.gameScene.stageNumber + 1 == STAGE_NUMBER) {
                         // goto ending
                         app.replaceScene(gls2.EndingScene());

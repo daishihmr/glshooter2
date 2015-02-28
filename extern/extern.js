@@ -2,6 +2,13 @@
 
 tm.ui.LoadingScene = tm.ui.LoadingScene || {};
 tm.input.GamepadManager = tm.input.GamepadManager || {};
+tm.google.SigninButton = tm.google.SigninButton || {};
+
+window["gapi"] = window["gapi"] || {};
+gapi.client = gapi.client || {};
+gapi.client.games = gapi.client.games || {};
+gapi.client.games.scores = gapi.client.games.scores || {};
+gapi.client.games.achievements = gapi.client.games.achievements || {};
 
 tm.app.Object2D.prototype.accessor("boundingWidthLeft", {
     "get": function() {

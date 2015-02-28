@@ -25,9 +25,10 @@ gls2.GameOverScene = tm.createClass(
 
         this.interactive = true;
 
-        this.on("enter", function() {
+        this.one("enter", function() {
             gls2.playBgm("gameover");
-            if (!this.tried) this.sendScore();
+            this.sendScore();
+            this.openMenu();
         });
     },
     update: function(app) {
@@ -42,28 +43,31 @@ gls2.GameOverScene = tm.createClass(
         canvas.clearColor("black");
     },
 
-    tried: false,
-    posted: false,
-    wait: false,
-    scoreId: null,
-
     sendScore: function() {
-        if (gls2.core.mode === 1) return;
+        var leaderboards = [
+            [
+                gpgsConstants.LEAD_TYPEA_SHOTSTYLE,
+                gpgsConstants.LEAD_TYPEA_LASERSTYLE,
+                gpgsConstants.LEAD_TYPEA_EXPERTSTYLE,
+                gpgsConstants.LEAD_TYPEA_BEGINNERSTYLE,
+            ],
+            [
+                gpgsConstants.LEAD_TYPEB_SHOTSTYLE,
+                gpgsConstants.LEAD_TYPEB_LASERSTYLE,
+                gpgsConstants.LEAD_TYPEB_EXPERTSTYLE,
+                gpgsConstants.LEAD_TYPEB_BEGINNERSTYLE,
+            ],
+            [
+                gpgsConstants.LEAD_TYPEC_SHOTSTYLE,
+                gpgsConstants.LEAD_TYPEC_LASERSTYLE,
+                gpgsConstants.LEAD_TYPEC_EXPERTSTYLE,
+                gpgsConstants.LEAD_TYPEC_BEGINNERSTYLE,
+            ],
+        ];
 
-        this.wait = true;
-        this.tried = true;
-        this.app.postScore(null, function(error, success, scoreId) {
-            this.wait = false;
-            if (error) {
-                this.openErrorDialog(error);
-            } else if (success) {
-                this.posted = true;
-                this.scoreId = scoreId;
-                this.openSuccessDialog();
-            } else {
-                this.openMenu();
-            }
-        }.bind(this));
+        var player = gls2.core.gameScene.player;
+        var leaderboardId = leaderboards[player.type][player.style];
+        this.app.postScore(leaderboardId, gls2.core.gameScene.score);
     },
 
     openMenu: function() {
@@ -72,14 +76,9 @@ gls2.GameOverScene = tm.createClass(
 
         var menu = [ "tweet result", "back to title" ];
         var labels = [
-            "スコアをTwitterへ投稿します",
+            "プレイ結果をTwitterへ投稿します",
             "タイトルへ戻ります"
         ];
-
-        if (!this.posted && gls2.core.mode === 0) {
-            menu.push("save score");
-            labels.push("スコアを登録します");
-        }
 
         this.openDialogMenu("GAME OVER", menu, this.onResultMenu, {
             "defaultValue": 1,
@@ -93,40 +92,41 @@ gls2.GameOverScene = tm.createClass(
             this.tweetScore();
         } else if (result === 1) {
             this.app.replaceScene(gls2.TitleScene());
-        } else {
-            this.sendScore();
         }
     },
 
-    openSuccessDialog: function() {
-        this.openDialogMenu("SUCCESS!", ["ok"], function() { this.openMenu() }, {
-            "menuDescriptions": ["スコア登録しました！"],
-            "showExit": false
-        });
-    },
-
-    openErrorDialog: function() {
-        this.openDialogMenu("ERROR!", ["ok"], function() { this.openMenu() }, {
-            "menuDescriptions": ["スコア登録に失敗しました！＞＜"],
-            "showExit": false
-        });
-    },
-
     tweetScore: function() {
-        var text = "TM-Shooter SCORE: {score} {stage} {type}-{style} continue:{cont}".format({
+        var text = "TM-Shooter CBL SCORE: {score} {stage} {type}-{style} continue:{cont} #{hashtag}".format({
             "score": Math.floor(this.app.gameScene.score),
             "stage": this.app.gameScene.stageNumber < STAGE_NUMBER ? ("Stage" + (this.app.gameScene.stageNumber + 1)) : "ALL",
             "type": "ABC"[this.app.gameScene.player.type],
             "style": ["S", "L", "EX", "BG"][this.app.gameScene.player.style],
-            "cont": this.app.gameScene.continueCount
+            "cont": this.app.gameScene.continueCount,
+            "hashtag": HASH_TAG,
         });
-        var twitterURL = tm.social.Twitter.createURL({
-            "type"    : "tweet",
-            "text"    : text,
-            "hashtags": HASH_TAG,
-            "url"     : this.scoreId ? (window.location.origin + "/ranking/" + this.scoreId) : window.location.origin
-        });
-        window.open(twitterURL, "tweet", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
+        var media = this.app.gameScene.screenShot;
+        if (media) {
+            media = media.replace("data:image/png;base64,", "");
+        }
+
+        window.open("", "childWindow", "width=500, height=500, menubar=no, toolbar=no, location=no, status=no, resizable=yes, scrollbars=yes");
+
+        var form = document.createElement("form");
+        form.method = "post";
+        form.action = "http://commons.dev7.jp/twitters/post-with-image";
+        // form.action = "http://localhost:5000/twitters/post-with-image";
+        form.target = "childWindow";
+        var textInput = document.createElement("input");
+        textInput.name = "text";
+        textInput.value = text;
+        form.appendChild(textInput);
+        var mediaInput = document.createElement("input");
+        mediaInput.name = "media";
+        mediaInput.value = media;
+        form.appendChild(mediaInput);
+
+        form.submit();
+        form = null;
     }
 
 });
