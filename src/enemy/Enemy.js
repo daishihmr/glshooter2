@@ -223,6 +223,7 @@ gls2.Enemy = tm.createClass(
             else if (this.name === "momozono") gls2.core.putAchevement("boss3");
             else if (this.name === "aida") gls2.core.putAchevement("boss4");
             else if (this.name === "houjou") gls2.core.putAchevement("boss5");
+            else if (this.name === "sakagami") gls2.core.putAchevement("exboss2");
 
             return true;
         } else {
@@ -376,9 +377,7 @@ gls2.Enemy = tm.createClass(
             }.bind(this))
             .wait(500)
             .call(function() {
-                for (var i = 0; i < 8; i++) {
-                    gls2.LargeExplodeEffect(this.x+Math.cos(Math.PI*2*i/8)*80, this.y+Math.sin(Math.PI*2*i/8)*80, this.gameScene, true);
-                }
+                gls2.LargeExplodeEffect(this.x, this.y, this.gameScene, true);
             }.bind(this))
             .wait(2000)
             .call(function() {

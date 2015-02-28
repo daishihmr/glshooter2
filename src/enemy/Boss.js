@@ -44,6 +44,8 @@ gls2.Boss = tm.createClass(
                 .wait(7000)
                 .call(function() {
 
+                    tempTimer.remove();
+
                     // ステージクリア
                     this.gameScene.clearStage();
 

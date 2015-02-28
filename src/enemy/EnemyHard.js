@@ -1540,6 +1540,30 @@ gls2.Enemy.Hibiki = tm.createClass(
         this.setScale(1.5);
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
+
+        this.clearEventListener("removed");
+        this.addEventListener("removed", function() {
+            this.gameScene.boss = null;
+            this.gameScene.hideBossLife();
+
+            if (this.canAttackToExBoss) {
+                this.gameScene.stage.launchEnemy(gls2.EnemyUnit["ayumi"][0]);
+                gls2.core.putAchevement("exboss1");
+            } else {
+                var tempTimer = tm.app.Object2D();
+                tempTimer.tweener
+                    .wait(7000)
+                    .call(function() {
+
+                        tempTimer.remove();
+
+                        // ステージクリア
+                        this.gameScene.clearStage();
+
+                    }.bind(this));
+                tempTimer.addChildTo(this.gameScene.lastElement);
+            }
+        });
     },
     update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
@@ -1559,6 +1583,9 @@ gls2.Enemy.Hibiki = tm.createClass(
             this.aura.clone().setPosition(this.x, this.y)
                 .addChildTo(this.gameScene);
         }
+    },
+    onlaunch: function() {
+        this.canAttackToExBoss = this.gameScene.canAttackToExBoss();
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -1695,10 +1722,10 @@ gls2.Enemy.Ayumi = tm.createClass(
             canvas.strokeArc(0, 0, 80, 0, value*Math.PI*2, false);
         };
 
-        this.hyperCircle3 = tm.display.CircleShape(160, 160, {
-            fillStyle: tm.graphics.RadialGradient(80,80,0,80,80,70).addColorStopList([
+        this.hyperCircle3 = tm.display.CircleShape(170, 170, {
+            fillStyle: tm.graphics.RadialGradient(85,85,0,85,85,80).addColorStopList([
                 { offset:0.0, color:"rgba(0,0,50,0.0)" },
-                { offset:0.9, color:"rgba(0,0,50,0.8)" },
+                { offset:0.9, color:"rgba(0,150,50,0.8)" },
                 { offset:1.0, color:"rgba(0,0,50,0.0)" },
             ]).toStyle(),
             strokeStyle: "rgba(0,0,0,0)",

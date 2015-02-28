@@ -2316,15 +2316,12 @@ gls2.EnemySoft._Ayumi1 = tm.createClass(
     init: function() {
         this.superInit();
         this.patterns = [
-            // "ayumi-1-1a",
-            // "ayumi-1-2a",
-            // "ayumi-1-3",
-            // "ayumi-1-1b",
-            // "ayumi-1-2b",
-            // "ayumi-1-4",
-            "ayumi-2-1",
-            "ayumi-2-2",
-            "ayumi-2-3",
+            "ayumi-1-1a",
+            "ayumi-1-2a",
+            "ayumi-1-3",
+            "ayumi-1-1b",
+            "ayumi-1-2b",
+            "ayumi-1-4",
         ];
     },
     setup: function(enemy) {
@@ -2335,8 +2332,13 @@ gls2.EnemySoft._Ayumi1 = tm.createClass(
         enemy.endAttack = false;
         enemy.tweener
             .clear()
+            .wait(1000)
             .move(SC_W*0.5, SC_H*0.3, 1200, "easeOutQuad")
             .call(function() {
+                console.log("死ぬがよい");
+                this.gameScene.demoPlaying = false;
+                this.gameScene.player.attackable = true;
+
                 gls2.fadeOutBgm();
                 gls2.playBgm("bgmExBoss", true);
                 this.gameScene.ground.direction = Math.PI * -0.5;
@@ -2384,9 +2386,13 @@ gls2.EnemySoft._Ayumi2 = tm.createClass(
     /**
      * @constructs
      */
-    init: function(patterns) {
+    init: function() {
         this.superInit();
-        this.patterns = patterns;
+        this.patterns = [
+            "ayumi-2-1",
+            "ayumi-2-2",
+            "ayumi-2-3",
+        ];
     },
     setup: function(enemy) {
         gls2.EnemySoft.prototype.setup.call(this, enemy);
@@ -2427,12 +2433,60 @@ gls2.EnemySoft._Ayumi2 = tm.createClass(
         });
     },
 });
-gls2.EnemySoft.Ayumi2 = gls2.EnemySoft._Ayumi2([
-    "ayumi-2-1",
-    "ayumi-2-2",
-    "ayumi-2-3",
-]);
-gls2.EnemySoft.Ayumi3 = gls2.EnemySoft._Ayumi2([]);
+gls2.EnemySoft.Ayumi2 = gls2.EnemySoft._Ayumi2();
+
+gls2.EnemySoft._Ayumi3 = tm.createClass(
+{
+    superClass: gls2.EnemySoft,
+    patterns: null,
+    /**
+     * @constructs
+     */
+    init: function() {
+        this.superInit();
+        this.patterns = ["ayumi-3"];
+    },
+    setup: function(enemy) {
+        gls2.EnemySoft.prototype.setup.call(this, enemy);
+
+        enemy.patterns = [].concat(this.patterns);
+        enemy.startAttack = false;
+        enemy.endAttack = false;
+        enemy.tweener
+            .clear()
+            .wait(3000)
+            .call(function() {
+                this.startAttack = true;
+                this.dispatchEvent(tm.event.Event("completeattack"));
+            }.bind(enemy))
+            .call(function() {
+
+                var temp = function() {
+                    var d = gls2.FixedRandom.randf(0, SC_W*0.1);
+                    var a = gls2.FixedRandom.randf(0, Math.PI * 2);
+                    this.tweener
+                        .clear()
+                        .move(
+                            SC_W * 0.5 + Math.cos(a) * d,
+                            SC_H * 0.3 + Math.sin(a) * d * 0.25,
+                            2000, "easeInOutQuad"
+                        )
+                        .call(temp);
+                }.bind(this);
+                temp();
+
+            }.bind(enemy));
+
+        enemy.on("completeattack", function() {
+            if (this.hp <= 0) return;
+            if (this.endAttack) return;
+            var pattern = this.patterns.shift();
+            gls2.EnemySoft.attack(this, pattern);
+            this.patterns.push(pattern);
+        });
+    },
+});
+gls2.EnemySoft.Ayumi3 = gls2.EnemySoft._Ayumi3([]);
 
 
 })();

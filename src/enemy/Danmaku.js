@@ -3436,11 +3436,101 @@ gls2.Danmaku["ayumi-2-2"] = new bulletml.Root({
 gls2.Danmaku["ayumi-2-3"] = new bulletml.Root({
     "top0": $.action([
         $.wait(30),
-        $.repeat(80, [
-
+        $.fire($.direction(30, "absolute"), $.speed(3), IVS),
+        $.repeat(60, [
+            $.bindVar("t", "5 + $loop.index * 0.1"),
+            $.repeat(9/2, [
+                $.fire($.direction(360/9, "sequence"), $.speed(0, "sequence"), RR($.actionRef("bit1", "$t"))),
+                $.fire($.direction(360/9, "sequence"), $.speed(0, "sequence"), RR($.actionRef("bit2", "$t"))),
+            ]),
+            $.fire($.direction(5, "sequence"), $.speed(0, "sequence"), IVS),
+            $.wait(7),
         ]),
+        $.wait(90),
+    ]),
+    "top1": $.action([
+        $.wait(30),
+        $.fire($.direction(30, "absolute"), $.speed(2), IVS),
+        $.repeat(15, [
+            $.repeat(13, [
+                $.fire($.direction(360/13, "sequence"), $.speed(2), RI),
+                $.repeat(5, [
+                    $.fire($.direction(0, "sequence"), $.speed(-0.05, "sequence"), RI),
+                ]),
+            ]),
+            $.wait(28),
+        ]),
+        $.wait(90),
+    ]),
+    "bit1": $.action([
+        $.wait("$1"),
+        $.fire($.direction("-10 + $rand * 20"), $spd2(0), RL),
+        $.vanish(),
+    ]),
+    "bit2": $.action([
+        $.wait("$1"),
+        $.fire($.direction("-10 + $rand * 20"), $spd2(2), BL),
+        $.vanish(),
     ]),
 });
+
+/**
+ * 能登発狂
+ */
+gls2.Danmaku["ayumi-3"] = new bulletml.Root({
+    "top0": $.action([
+        $.fire($.direction(30, "absolute"), $.speed(15), IVS),
+        $.repeat(2000, [
+            $.bindVar("t", "$loop.index * 2"),
+            $.repeat(6/2, [
+                $.fire($.direction(360/6, "sequence"), $.speed(0, "sequence"), IVS($.actionRef("bit0", "$t"))),
+            ]),
+            $.fire($.direction(-2, "sequence"), $.speed(0, "sequence"), IVS),
+            $.wait(2),
+        ]),
+    ]),
+    "bit0": $.action([
+        $.wait(1),
+        $.fire($.direction("120", "relative"), $spd6, BL),
+        $.vanish(),
+    ]),
+
+    "top1": $.action([
+        $.fire($.direction(30, "absolute"), $.speed(8), IVS),
+        $.repeat(1000, [
+            $.bindVar("t", "$loop.index * 2"),
+            $.repeat(6/2, [
+                $.fire($.direction(360/6, "sequence"), $.speed(0, "sequence"), IVS($.actionRef("bit1", "$t"))),
+            ]),
+            $.fire($.direction(2, "sequence"), $.speed(0, "sequence"), IVS),
+            $.wait(4),
+        ]),
+    ]),
+    "bit1": $.action([
+        $.wait(1),
+        $.fire($.direction("$1*-1.5", "relative"), $spd4, BS),
+        $.vanish(),
+    ]),
+
+    "top2": $.action([
+        $.fire($.direction(30, "absolute"), $.speed(15), IVS),
+        $.repeat(2000, [
+            $.bindVar("t", "$loop.index * 2"),
+            $.repeat(6/2, [
+                $.fire($.direction(360/6, "sequence"), $.speed(0, "sequence"), IVS($.actionRef("bit2", "$t"))),
+            ]),
+            $.fire($.direction(2, "sequence"), $.speed(0, "sequence"), IVS),
+            $.wait(2),
+        ]),
+    ]),
+    "bit2": $.action([
+        $.wait(1),
+        $.fire($.direction("$1*1.0", "relative"), $spd6, RL),
+        $.vanish(),
+    ]),
+
+});
+
 
 /**
  * 弾幕初期設定

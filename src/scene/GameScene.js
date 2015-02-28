@@ -675,6 +675,7 @@ gls2.GameScene = tm.createClass(
 
     startStage: function(stageNumber) {
         if (this.player.parent !== null) this.player.remove();
+        if (this.player.hitCircle.parent !== null) this.player.hitCircle.remove();
         gls2.Enemy.clearAll();
         gls2.ShotBullet.clearAll();
         gls2.Danmaku.clearAll();
@@ -769,6 +770,7 @@ gls2.GameScene = tm.createClass(
 
         this.player.controllable = false;
         this.player.remove();
+        this.player.hitCircle.remove();
         this.zanki -= 1;
         this.comboGauge = 0;
         this.comboCount = 0;
@@ -1261,6 +1263,13 @@ gls2.GameScene = tm.createClass(
                 gpsOffsetX: 0,
             }, 1600, "easeOutBack")
         ;
+    },
+
+    canAttackToExBoss: function() {
+        // ノーミス and 2ボム以内
+        var bomb = this.bombCountByStage.reduce(function(a,b){ return a+b }, 0)
+            + this.autoBombCountByStage.reduce(function(a,b){ return a+b }, 0);
+        return this.missCountTotal === 0 || bomb <= 2;
     },
 
     rec: null,
