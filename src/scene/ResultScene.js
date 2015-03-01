@@ -59,7 +59,7 @@ gls2.ResultScene = tm.createClass(
             this.gameScene.starItemLarge,
             ~~(this.gameScene.killCount / this.gameScene.enemyCount * 100),
             this.gameScene.maxComboCount,
-            this.gameScene.missCount === 0 ? STAGE_CLEAR_BONUS_NO_MISS : 0,
+            this.gameScene.missCount === 0 ? STAGE_CLEAR_BONUS_NO_MISS * (this.gameScene.stageNumber+1) : 0,
         ];
         this.incrs = this.values.map(function(v) {
             return v * 0.01;

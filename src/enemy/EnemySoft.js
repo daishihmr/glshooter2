@@ -2349,8 +2349,6 @@ gls2.EnemySoft._Ayumi1 = tm.createClass(
                 this.gameScene.demoPlaying = false;
                 this.gameScene.player.attackable = true;
 
-                gls2.fadeOutBgm();
-                gls2.playBgm("bgmExBoss", true);
                 this.gameScene.ground.direction = Math.PI * -0.5;
                 this.gameScene.ground.tweener.clear().to({
                     speed: 10,

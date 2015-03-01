@@ -353,7 +353,7 @@ var AUTO_BOMB_SELECT = false;
  * オートボム発動時に残ボム数をすべて消費するか
  * @const
  */
-var AUTO_BOMB_TO_ZERO = true;
+var AUTO_BOMB_TO_ZERO = false;
 
 /**
  * ステージクリア時ボーナス：小星

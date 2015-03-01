@@ -1549,6 +1549,8 @@ gls2.Enemy.Hibiki = tm.createClass(
             if (this.canAttackToExBoss) {
                 this.gameScene.stage.launchEnemy(gls2.EnemyUnit["ayumi"][0]);
                 gls2.core.putAchevement(gpgsConstants.ACH_MEETSAKAGAMI);
+                gls2.fadeOutBgm();
+                gls2.playBgm("bgmExBoss");
             } else {
                 var tempTimer = tm.app.Object2D();
                 tempTimer.tweener
