@@ -1,6 +1,5 @@
 var gpgsConstants = gpgsConstants || {}
-gpgsConstants.CLIENT_ID = '257317887375-ad4ja6ant0ml0ua8i0jdm1h4k8bhr8ef.apps.googleusercontent.com';
-// gpgsConstants.CLIENT_ID = '257317887375-3ju2qcf9f8kutcf3heeco57esaqji8hl.apps.googleusercontent.com';
+gpgsConstants.CLIENT_ID = '257317887375-gum967gcq9b8r9a2bhcbcg6go2gbici5.apps.googleusercontent.com';
 gpgsConstants.ACH_TYPEA_SALLY = 'CgkIj7vdyr4HEAIQDg';
 gpgsConstants.ACH_TYPEB_SALLY = 'CgkIj7vdyr4HEAIQDw';
 gpgsConstants.ACH_TYPEC_SALLY = 'CgkIj7vdyr4HEAIQEA';

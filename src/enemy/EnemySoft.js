@@ -24,11 +24,21 @@ gls2.EnemySoft = tm.createClass(
  * @static
  */
 gls2.EnemySoft.attack = function(enemy, danmakuName) {
-    if (gls2.Danmaku[danmakuName] === undefined) {
+    var danmaku = null;
+    if (gls2.core.gameScene.player.style === 2) {
+        if (gls2.Danmaku[danmakuName + "Expert"] !== undefined) {
+            danmaku = gls2.Danmaku[danmakuName + "Expert"];
+        } else {
+            danmaku = gls2.Danmaku[danmakuName];
+        }
+    } else {
+        danmaku = gls2.Danmaku[danmakuName];
+    }
+    if (danmaku === undefined) {
         console.warn("Danmaku[" + danmakuName + "] is undefined!");
         return;
     }
-    var ticker = gls2.Danmaku[danmakuName].createTicker();
+    var ticker = danmaku.createTicker();
     enemy.on("enterframe", ticker);
     enemy.on("completeattack", function() {
         ticker.stop = true;
@@ -793,9 +803,9 @@ gls2.EnemySoft.nao = tm.createClass(
         }.bind(enemy));
     },
 });
-gls2.EnemySoft.nao1 = gls2.EnemySoft.nao( 5, 1);
-gls2.EnemySoft.nao2 = gls2.EnemySoft.nao( 8, 1);
-gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(14, 1);
+gls2.EnemySoft.nao1 = gls2.EnemySoft.nao( 9, 1);
+gls2.EnemySoft.nao2 = gls2.EnemySoft.nao(10, 1);
+gls2.EnemySoft.nao3 = gls2.EnemySoft.nao(11, 1);
 
 /**
  * 小型浮揚戦車

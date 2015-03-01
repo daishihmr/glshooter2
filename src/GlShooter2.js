@@ -168,7 +168,7 @@ gls2.GlShooter2 = tm.createClass(
         for (var id in achievementData) if (achievementData.hasOwnProperty(id)) {
             unlockCount += ~~(achievementData[id].unlocked);
         }
-        return ~~(unlockCount * CONTINUE_COUNT_BY_ACHEVEMENT);
+        return INITIAL_CONTINUE_COUNT + ~~(unlockCount * CONTINUE_COUNT_BY_ACHEVEMENT);
     },
 
     update: function() {
@@ -270,7 +270,7 @@ gls2.GlShooter2 = tm.createClass(
     postScore: function(leaderboardId, score) {
         if (this.mode !== 0) return;
 
-        if (!window["gapi"] || !gapi.client || !gapi.client.games) {
+        if (!gapi.client.games.scores["submit"]) {
             return;
         }
 
@@ -301,7 +301,8 @@ gls2.GlShooter2 = tm.createClass(
 
     putAchevement: function(achievementId) {
         if (this.mode !== 0) return;
-        if (!window["gapi"] || !gapi.client || !gapi.client.games) return;
+        if (!window["achievementData"]) return;
+        if (!gapi.client.games.achievements["unlock"]) return;
 
         var achievementData = window["achievementData"];
         var data = achievementData[achievementId];

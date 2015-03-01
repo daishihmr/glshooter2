@@ -1268,10 +1268,10 @@ gls2.GameScene = tm.createClass(
     },
 
     canAttackToExBoss: function() {
-        // ノーミス and ノーコンティニュー
+        // 2ミス以内
         // var bomb = this.bombCountByStage.reduce(function(a,b){ return a+b }, 0)
         //     + this.autoBombCountByStage.reduce(function(a,b){ return a+b }, 0);
-        return this.missCountTotal === 0 && this.this.gameScene.continueCount === 0;
+        return (gls2.core.mode === 1) || (gls2.core.mode === 0 && this.continueCount === 0 && this.missCountTotal <= 2);
     },
 
     rec: null,

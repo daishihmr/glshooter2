@@ -521,9 +521,9 @@ gls2.EnemyUnit = {
 "nozomi4-2": [{ "hard":$e.Nozomi, "soft":$s.Nozomi4, "x":SC_W*0.7, "y":SC_H*-0.3 }],
 
 // 大型戦闘機「ユメハラ」5面用
-"nozomi5-0": [{ "hard":$e.Nozomi, "soft":$s.Nozomi5, "x":SC_W*0.3, "y":SC_H*-0.4 }],
+"nozomi5-0": [{ "hard":$e.Nozomi, "soft":$s.Nozomi5, "x":SC_W*0.3, "y":SC_H*-0.3 }],
 "nozomi5-1": [{ "hard":$e.Nozomi, "soft":$s.Nozomi5, "x":SC_W*0.5, "y":SC_H*-0.2 }],
-"nozomi5-2": [{ "hard":$e.Nozomi, "soft":$s.Nozomi5, "x":SC_W*0.7, "y":SC_H*-0.4 }],
+"nozomi5-2": [{ "hard":$e.Nozomi, "soft":$s.Nozomi5, "x":SC_W*0.7, "y":SC_H*-0.3 }],
 
 // 大型戦闘機「アオノ」5面用
 "mktn5-0": [{ "hard":$e.Mktn, "soft":$s.Mktn(0.6), "x":SC_W*1.3, "y":SC_H*0.2 }],
