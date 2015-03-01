@@ -96,7 +96,7 @@ gls2.GameOverScene = tm.createClass(
     },
 
     tweetScore: function() {
-        var text = "TM-Shooter CBL SCORE: {score} {stage} {type}-{style} continue:{cont} #{hashtag}".format({
+        var text = "TM-Shooter CBL SCORE:{score} {stage} {type}-{style} continue:{cont} http://daishihmr.github.io/tmshooter-cbl/ #{hashtag}".format({
             "score": Math.floor(this.app.gameScene.score),
             "stage": this.app.gameScene.stageNumber < STAGE_NUMBER ? ("Stage" + (this.app.gameScene.stageNumber + 1)) : "ALL",
             "type": "ABC"[this.app.gameScene.player.type],

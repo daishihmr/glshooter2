@@ -62,7 +62,7 @@ java -jar tools/compiler.jar \
 --compilation_level ADVANCED_OPTIMIZATIONS \
 --language_in ECMASCRIPT5 \
 --js_output_file target/gls2.js \
---formatting PRETTY_PRINT
+# --formatting PRETTY_PRINT
 
 # --formatting SINGLE_QUOTES
 # --externs libs/mt.js \
