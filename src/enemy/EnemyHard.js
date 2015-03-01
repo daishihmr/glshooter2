@@ -1541,6 +1541,10 @@ gls2.Enemy.Hibiki = tm.createClass(
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
 
+        this.on("launch", function() {
+            this.canAttackToExBoss = this.gameScene.canAttackToExBoss();
+        });
+
         this.clearEventListener("removed");
         this.addEventListener("removed", function() {
             this.gameScene.boss = null;
@@ -1585,9 +1589,6 @@ gls2.Enemy.Hibiki = tm.createClass(
             this.aura.clone().setPosition(this.x, this.y)
                 .addChildTo(this.gameScene);
         }
-    },
-    onlaunch: function() {
-        this.canAttackToExBoss = this.gameScene.canAttackToExBoss();
     },
     ondying: function() {
         this.on("enterframe", function(e) {
