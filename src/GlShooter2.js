@@ -278,7 +278,7 @@ gls2.GlShooter2 = tm.createClass(
 
         var req = gapi.client.games.scores["submit"]({
             "leaderboardId": leaderboardId,
-            "score": ~~score,
+            "score": Math.floor(score),
             "language": "ja",
         });
 
