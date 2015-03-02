@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand">TM-Shooter CBL</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li id="mode-leaderboard" class="active">
+                        <a onclick="onChangeMode(0)">Leaderboard</a>
+                    </li>
+                    <li id="mode-achievement">
+                        <a onclick="onChangeMode(2)">Achievement</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div id="list"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>
+
+    <script id="template" type="text/reactive">
+        {{#if mode === 0}}
+        <div class="list-group">
+            {{#leaderboards}}
+            <a on-click="onLeadarboardClick(id)" class="list-group-item">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <img src="{{iconUrl}}" width="64px" height="64px" class="media-object">
+                    </div>
+                    <div class="media-body media-middle">
+                        <h4 class="list-group-item-heading">{{name}}</h4>
+                        <p class="list-group-item-text"></p>
+                    </div>
+                    <div class="media-right media-middle">
+                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </a>
+            {{/leaderboards}}
+        </div>
+        {{/if}}
+        {{#if mode === 1}}
+        <div class="list-group" >
+            <div style="margin-top:10px;margin-bottom:10px">
+                <span>友達:{{numScores}}人</span>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">{{timeSpan}}</button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a on-click="onChangeTimeSpan('DAILY')">DAILY</a></li>
+                    <li><a on-click="onChangeTimeSpan('WEEKLY')">WEEKLY</a></li>
+                    <li><a on-click="onChangeTimeSpan('ALL_TIME')">ALL_TIME</a></li>
+                  </ul>
+                </div>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">{{collection}}</button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a on-click="onChangeCollection('PUBLIC')">PUBLIC</a></li>
+                    <li><a on-click="onChangeCollection('SOCIAL')">SOCIAL</a></li>
+                  </ul>
+                </div>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">{{window}}</button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a on-click="onChangeWindow('TOP')">TOP</a></li>
+                    <li><a on-click="onChangeWindow('MY SCORE')">MY SCORE</a></li>
+                  </ul>
+                </div>
+
+            </div>
+            {{#scores}}
+            <a on-click="onItemClick(id)" class="list-group-item">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <h3>{{formattedScoreRank}}</h3>
+                    </div>
+                    <div class="media-left media-middle">
+                        <img src="{{player.avatarImageUrl}}" width="64px" height="64px" class="media-object">
+                    </div>
+                    <div class="media-body media-middle">
+                        <h4 class="list-group-item-heading">{{player.displayName}}</h4>
+                        <p class="list-group-item-text">{{formattedScore}}</p>
+                    </div>
+                </div>
+            </a>
+            {{/scores}}
+        </div>
+        {{/if}}
+        {{#if mode === 2}}
+        <div class="list-group">
+            {{#achievements}}
+            <a on-click="onAchievementClick(id)" class="list-group-item">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        {{#if icon}}
+                            <img src="{{icon}}" width="64px" height="64px" class="media-object">
+                        {{else}}
+                            <img src="./hidden.png" width="64px" height="64px" class="media-object">
+                        {{/if}}
+                    </div>
+                    <div class="media-body media-middle">
+                        <h4 class="list-group-item-heading">{{name}}</h4>
+                        <p class="list-group-item-text">{{description}}</p>
+                        <p class="list-group-item-text">{{date}}</p>
+                    </div>
+                </div>
+            </a>
+            {{/achievements}}
+        </div>
+        {{/if}}
+    </script>
+
+
+    <script src="./googleplay.js"></script>
+
+</body>
+
+</html>

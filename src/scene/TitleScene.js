@@ -157,11 +157,12 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        var menu = [ "arcade mode", "training mode", "tutorial", "setting" ];
+        var menu = [ "arcade mode", "training mode", "tutorial", "ranking", "setting" ];
         var labels = [
             "ゲームを開始します",
             "トレーニングを開始します",
             "チュートリアルを開始します",
+            "ランキングを表示します",
             "設定を変更します"
         ];
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
@@ -206,7 +207,10 @@ gls2.TitleScene = tm.createClass({
                     gls2.core.gameScene.start(2, 0);
                 }.bind(this));
             break;
-        case 3: // option
+        case 3: // ranking
+            window.open("./googleplay/");
+            break;
+        case 4: // option
             this.openSetting();
             break;
         }

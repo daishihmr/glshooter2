@@ -37,6 +37,7 @@
         },
 
         _signinCallback: function(auth) {
+            console.log(auth);
             if (auth && auth.error == null) {
                 this.visible = false;
                 gapi.client.load("games", "v1", function() {
