@@ -265,13 +265,15 @@ gls2.TitleScene = tm.createClass({
 
     openSetting: function() {
         this.openDialogMenu("SETTING", [
+            "key config",
             "bgm volume",
             "sound volume",
             "particle",
-            "bullet appearance"
+            "bullet appearance",
         ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
+                "キーボードやゲームパッドの設定を行います",
                 "BGMボリュームを設定します",
                 "効果音ボリュームを設定します",
                 "パーティクルのON/OFFを設定します",
@@ -283,21 +285,45 @@ gls2.TitleScene = tm.createClass({
         if (result !== 4) this.lastSetting = result;
         switch (result) {
         case 0:
-            this.openBgmSetting();
+            this.openKeySetting();
             break;
         case 1:
-            this.openSeSetting();
+            this.openBgmSetting();
             break;
         case 2:
-            this.openParticleSetting();
+            this.openSeSetting();
             break;
         case 3:
+            this.openParticleSetting();
+            break;
+        case 4:
             this.openBulletAppearanceSetting();
             break;
         default:
             this.openMainMenu();
             break;
         }
+    },
+
+    openKeySetting: function() {
+        this.openDialogMenu("KEY CONFIG", [
+            "gamepad " + (!gls2.core.gamepadEnabled ? "on" : "off"),
+        ], this.onResultKeySetting, {
+            "defaultValue": this.lastSetting,
+            "menuDescriptions": [
+                "ゲームパッドを{0}にします".format(!gls2.core.gamepadEnabled ? "有効" : "無効")
+            ],
+        });
+    },
+
+    onResultKeySetting: function(result) {
+        if (result === 0) {
+            gls2.core.gamepadEnabled = !gls2.core.gamepadEnabled;
+            // if (gls2.core.gamepadEnabled) {
+            //     gls2.core.pushScene(gls2.KeyConfigScene());
+            // }
+        }
+        this.saveSetting();
     },
 
     openBgmSetting: function() {

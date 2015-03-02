@@ -352,38 +352,48 @@ gls2.GlShooter2 = tm.createClass(
 
     // input
 
+    gamepadEnabled: false,
+    gamepadManager: null,
+    gamepad: null,
     gamepadConfig: null,
+    gamepadStickNeutral: tm.geom.Vector2(0, 0),
+
+    resetGamepadStickNutoral: function() {
+        if (this.gamepadEnabled && this.gamepad !== null) {
+            this.gamepadStickNeutral = this.gamepad.getStickVector().negate();
+        }
+    },
 
     getKeyDirection: function() {
         var v = tm.geom.Vector2(0, 0);
-        if (this.gamepad !== null) {
-            v.add(this.gamepad.getStickDirection());
-            if (v.lengthSquared() < 0.25 * 0.25) {
-                v.set(0, 0);
+        if (this.gamepadEnabled && this.gamepad !== null) {
+            var stick = tm.geom.Vector2.add(this.gamepad.getStickVector(), this.gamepadStickNeutral);
+            if (0.2*0.2 <= stick.lengthSquared()) {
+                v.add(stick);
             }
             v.add(this.gamepad.getKeyDirection());
         }
         v.add(this.keyboard.getKeyDirection());
-        return v.normalize();
+        return v;
     },
 
     getKey: function(param) {
         var result = false;
-        if (this.gamepad !== null) {
+        if (this.gamepadEnabled && this.gamepad !== null) {
             result = this.gamepad.getKey(this.gamepadConfig[param]);
         }
         return this.keyboard.getKey(param) || result;
     },
     getKeyDown: function(param) {
         var result = false;
-        if (this.gamepad !== null) {
+        if (this.gamepadEnabled && this.gamepad !== null) {
             result = this.gamepad.getKeyDown(this.gamepadConfig[param]);
         }
         return this.keyboard.getKeyDown(param) || result;
     },
     getKeyUp: function(param) {
         var result = false;
-        if (this.gamepad !== null) {
+        if (this.gamepadEnabled && this.gamepad !== null) {
             result = this.gamepad.getKeyUp(this.gamepadConfig[param]);
         }
         return this.keyboard.getKeyUp(param) || result;
