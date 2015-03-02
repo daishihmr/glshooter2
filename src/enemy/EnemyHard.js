@@ -1734,6 +1734,10 @@ gls2.Enemy.Ayumi = tm.createClass(
             strokeStyle: "rgba(0,0,0,0)",
         }).addChildTo(this);
         this.hyperCircle3.alpha = 0;
+
+        this.on("hakkyo", function() {
+            this.guardPoint = 0.25;
+        });
     },
     update: function(app) {
         gls2.Enemy.prototype.update.apply(this, arguments);
@@ -1760,9 +1764,6 @@ gls2.Enemy.Ayumi = tm.createClass(
             })
             .setPosition(this.x, this.y)
             .addChildTo(this.gameScene);
-    },
-    onhakkyo: function() {
-        this.guardPoint = 0.25;
     },
     ondying: function() {
         this.on("enterframe", function(e) {

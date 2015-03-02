@@ -24,7 +24,7 @@ gls2.Ground = tm.createClass(
     /** @type {gls2.GroundElement} */
     gElement: null,
 
-    /** 
+    /**
      * 長辺の長さ
      */
     lengthH: null,
