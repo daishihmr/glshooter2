@@ -77,7 +77,8 @@ tm.display.CanvasElement.prototype.accessor("altitude", {
         this._altitude = v;
         if (this._altitude > 0) {
             this.shadowColor = "rgba(0,0,0," + (0.5+0.5*(1-v/10)) + ")";
-            this.shadowBlur = 50 * v/10;
+            this.shadowBlur = 0;// 50 * v/10;
+            this.shadowAlpha = (0.3+0.7*(1-v/10));
             this.shadowOffsetX = 2 * this._altitude;
             this.shadowOffsetY = 7 * this._altitude;
         } else {

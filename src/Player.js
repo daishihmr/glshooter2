@@ -78,6 +78,7 @@ gls2.Player = tm.createClass(
 
         this.boundingRadius = (style === 2 || style === 3) ? 3 : 6;
         this.altitude = 10;
+        this.shadowBlur = 50;
 
         this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type, 100);
         this.hyperShotPool = gls2.ShotBulletPool(3, 100);
@@ -236,7 +237,7 @@ gls2.Player = tm.createClass(
         }
 
         var input = gls2.core.mode === 2 ? this.gameScene.stage.keyboard : app;
-
+        
         var lastX = this.x;
         if (this.controllable || gls2.core.mode === 2) {
             var direction = input.getKeyDirection();
@@ -448,6 +449,7 @@ gls2.Bit = tm.createClass(
         this.player = player;
 
         this.altitude = 10;
+        this.shadowBlur = 50;
 
         this.gotoAndPlay(bit.turn ? "anim0" : "anim1");
     },

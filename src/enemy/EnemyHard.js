@@ -75,6 +75,7 @@ gls2.Enemy.Heri1 = tm.createClass(
         this.superInit(gameScene, software, "kujo");
 
         this._sprite = _Sprite("tex1", 64, 64);
+        this._shadow = _Sprite.createShadow("tex1", 64, 64);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -86,6 +87,7 @@ gls2.Enemy.Heri1 = tm.createClass(
         }
     },
     draw: function(canvas) {
+        this._shadow.setFrameIndex((this.frame % 4 < 2) ? 0 : 1).drawShadow(canvas, this);
         this._sprite.setFrameIndex((this.frame % 4 < 2) ? 0 : 1).draw(canvas);
     }
 });
@@ -106,6 +108,7 @@ gls2.Enemy.Heri2 = tm.createClass(
         this.superInit(gameScene, software, "kiryu");
 
         this._sprite = _Sprite("tex1", 64, 64);
+        this._shadow = _Sprite.createShadow("tex1", 64, 64);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
@@ -117,6 +120,7 @@ gls2.Enemy.Heri2 = tm.createClass(
         }
     },
     draw: function(canvas) {
+        this._shadow.setFrameIndex((this.frame % 4 < 2) ? 8 : 9).drawShadow(canvas, this);
         this._sprite.setFrameIndex((this.frame % 4 < 2) ? 8 : 9).draw(canvas);
     }
 });
@@ -135,6 +139,8 @@ gls2.Enemy.Tank1 = tm.createClass({
 
         this._sprite1 = _Sprite("tex_tank1", 64, 64);
         this._sprite2 = _Sprite("tex_tank1", 64, 64);
+        this._shadow1 = _Sprite.createShadow("tex_tank1", 64, 64);
+        this._shadow2 = _Sprite.createShadow("tex_tank1", 64, 64);
         this.baseDir = this.baseDir || 0;
         this.cannonDir = this.cannonDir || 0;
     },
@@ -150,9 +156,13 @@ gls2.Enemy.Tank1 = tm.createClass({
 
         this._sprite1.setFrameIndex(~~(b*16/(Math.PI*2)), 64, 64);
         this._sprite2.setFrameIndex(~~(c*16/(Math.PI*2)) + 16, 64, 64);
+        this._shadow1.setFrameIndex(~~(b*16/(Math.PI*2)), 64, 64);
+        this._shadow2.setFrameIndex(~~(c*16/(Math.PI*2)) + 16, 64, 64);
     },
     draw: function(canvas) {
+        this._shadow1.drawShadow(canvas, this);
         this._sprite1.draw(canvas);
+        this._shadow2.drawShadow(canvas, this);
         this._sprite2.draw(canvas);
     },
     destroy: function() {
@@ -173,6 +183,7 @@ gls2.Enemy.Bukky = tm.createClass({
         this.superInit(gameScene, software, "yamabuki");
 
         this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(7);
+        this._shadow = _Sprite.createShadow("tex2", 64*4, 64*2).setFrameIndex(7);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -184,6 +195,7 @@ gls2.Enemy.Bukky = tm.createClass({
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -206,6 +218,7 @@ gls2.Enemy.FighterS = tm.createClass(
         this.superInit(gameScene, software, "tsukikage");
 
         this._sprite = _Sprite("tex1", 64*1, 64*1).setFrameIndex(23);
+        this._shadow = _Sprite.createShadow("tex1", 64*1, 64*1).setFrameIndex(23);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -217,6 +230,7 @@ gls2.Enemy.FighterS = tm.createClass(
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -240,6 +254,7 @@ gls2.Enemy.Urara = tm.createClass(
         this.superInit(gameScene, software, "kasugano");
 
         this._sprite = _Sprite("tex5", 64*1, 64*1).setFrameIndex(1);
+        this._shadow = _Sprite.createShadow("tex5", 64*1, 64*1).setFrameIndex(1);
         this.aura = gls2.Particle(80, 1.0, 0.8);
 
         this.beforePos = tm.geom.Vector2();
@@ -265,6 +280,7 @@ gls2.Enemy.Urara = tm.createClass(
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -287,6 +303,7 @@ gls2.Enemy.FighterM = tm.createClass(
         this.superInit(gameScene, software, "kurokawa");
 
         this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(1);
+        this._shadow = _Sprite.createShadow("tex1", 64*2, 64*2).setFrameIndex(1);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -298,6 +315,7 @@ gls2.Enemy.FighterM = tm.createClass(
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -317,6 +335,7 @@ gls2.Enemy.Milk = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "mimino");
         this._sprite = _Sprite("tex4", 64*2, 64*2).setFrameIndex(10);
+        this._shadow= _Sprite.createShadow("tex4", 64*2, 64*2).setFrameIndex(10);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -328,6 +347,7 @@ gls2.Enemy.Milk = tm.createClass(
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -347,6 +367,7 @@ gls2.Enemy.Ako = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "shirabe");
         this._sprite = _Sprite("tex5", 64*2, 64*2).setFrameIndex(4);
+        this._shadow = _Sprite.createShadow("tex5", 64*2, 64*2).setFrameIndex(4);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -358,6 +379,7 @@ gls2.Enemy.Ako = tm.createClass(
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -380,6 +402,7 @@ gls2.Enemy.Komachi = tm.createClass(
         this.superInit(gameScene, software, "akimoto");
 
         this._sprite = _Sprite("tex1", 64*4, 64*2).setFrameIndex(1);
+        this._shadow = _Sprite.createShadow("tex1", 64*4, 64*2).setFrameIndex(1);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -391,6 +414,7 @@ gls2.Enemy.Komachi = tm.createClass(
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -413,6 +437,8 @@ gls2.Enemy.Mktn = tm.createClass(
         this.superInit(gameScene, software, "aono");
 
         this._sprite = _Sprite("tex1", 64*4, 64*2);
+        this._shadow = _Sprite.createShadow("tex1", 64*4, 64*2);
+        
         this._sprite.srcRect.x = 128;
         this._sprite.srcRect.y = 128;
         this._sprite.srcRect.width = 64*4;
@@ -447,6 +473,7 @@ gls2.Enemy.Mktn = tm.createClass(
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -469,10 +496,12 @@ gls2.Enemy.Nozomi = tm.createClass(
         this.superInit(gameScene, software, "yumehara");
 
         this._sprite = _Sprite("tex1", 64*4, 64*4);
-        this._sprite.srcRect.x = 128;
-        this._sprite.srcRect.y = 256;
-        this._sprite.srcRect.width = 64*4;
-        this._sprite.srcRect.height = 64*4;
+        var s=this._shadow = _Sprite.createShadow("tex1", 64*4, 64*4);
+        
+        s.srcRect.x=this._sprite.srcRect.x = 128;
+        s.srcRect.y=this._sprite.srcRect.y = 256;
+        s.srcRect.width=this._sprite.srcRect.width = 64*4;
+        s.srcRect.height=this._sprite.srcRect.height = 64*4;
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -484,6 +513,7 @@ gls2.Enemy.Nozomi = tm.createClass(
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -504,6 +534,7 @@ gls2.Enemy.Cannon = tm.createClass({
         this.superInit(gameScene, software, "kise");
 
         this._sprite = _Sprite("tex1", 64*1, 64*2).setFrameIndex(14);
+        this._shadow= _Sprite.createShadow("tex1", 64*1, 64*2).setFrameIndex(14);
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -515,6 +546,7 @@ gls2.Enemy.Cannon = tm.createClass({
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -534,6 +566,7 @@ gls2.Enemy.Tsubomi = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hanasaki");
         this._sprite = _Sprite("tex1", 64*2, 64*2).setFrameIndex(12);
+        this._shadow = _Sprite.createShadow("tex1", 64*2, 64*2).setFrameIndex(12);
     },
     ondying: function() {
     },
@@ -542,6 +575,7 @@ gls2.Enemy.Tsubomi = tm.createClass({
         this.remove();
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -556,6 +590,7 @@ gls2.Enemy.Itsuki = tm.createClass({
         this.superInit(gameScene, software, "myodoin");
 
         this._sprite = _Sprite("tex5", 64*1, 64*2).setFrameIndex(0);
+        this._shadow = _Sprite.createShadow("tex5", 64*1, 64*2).setFrameIndex(0);
     },
     ondying: function() {
     },
@@ -564,6 +599,7 @@ gls2.Enemy.Itsuki = tm.createClass({
         this.remove();
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -580,10 +616,12 @@ gls2.Enemy.Cannon2 = tm.createClass({
         this.superInit(gameScene, software, "kenzaki");
 
         this._sprite = _Sprite("tex1", 64*2, 64*4);
-        this._sprite.srcRect.x = 0;
-        this._sprite.srcRect.y = 128;
-        this._sprite.srcRect.width = 64*2;
-        this._sprite.srcRect.height = 64*4;
+        var s = this._shadow = _Sprite.createShadow("tex1", 64*2, 64*4);
+        
+        s.srcRect.x=this._sprite.srcRect.x = 0;
+        s.srcRect.y=this._sprite.srcRect.y = 128;
+        s.srcRect.width=this._sprite.srcRect.width = 64*2;
+        s.srcRect.height=this._sprite.srcRect.height = 64*4;
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -595,6 +633,7 @@ gls2.Enemy.Cannon2 = tm.createClass({
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -615,6 +654,7 @@ gls2.Enemy.Cannon3 = tm.createClass({
         this.superInit(gameScene, software, "minazuki");
 
         this._sprite = _Sprite("tex5", 64*2, 64*4);
+        this._shadow = _Sprite.createShadow("tex5", 64*2, 64*4).setFrameIndex(1);
         this._sprite.setFrameIndex(1);
         this.setScale(1.2);
     },
@@ -628,6 +668,7 @@ gls2.Enemy.Cannon3 = tm.createClass({
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -645,9 +686,11 @@ gls2.Enemy.akane = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hino");
         this._sprite = _Sprite("tex4", 64, 32).setFrameIndex(0);
+        this._shadow = _Sprite.createShadow("tex4", 64, 32).setFrameIndex(0);
         this.setScale(1.5);
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -664,11 +707,13 @@ gls2.Enemy.nao = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "midorikawa");
         this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(8);
+        this._shadow = _Sprite.createShadow("tex4", 64, 64).setFrameIndex(8);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -685,11 +730,13 @@ gls2.Enemy.reika = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "aoki");
         this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(1);
+        this._shadow = _Sprite.createShadow("tex4", 64, 64).setFrameIndex(1);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
 /*
         canvas.fillStyle = "yellow";
@@ -720,11 +767,13 @@ gls2.Enemy.aguri = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "madoka");
         this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(3);
+        this._shadow = _Sprite.createShadow("tex4", 256, 128).setFrameIndex(3);
     },
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     ondying: function() {
@@ -751,6 +800,7 @@ gls2.Enemy.miyuki = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "hoshizora");
         this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(1);
+        this._shadow = _Sprite.createShadow("tex4", 256, 128).setFrameIndex(1);
         this.boundingWidth = 384;
         this.setScale(1.5);
     },
@@ -766,6 +816,7 @@ gls2.Enemy.miyuki = tm.createClass(
         }
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -833,11 +884,13 @@ gls2.Enemy.Alice = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsuba");
         this._sprite = _Sprite("tex4", 128, 128).setFrameIndex(1);
+        this._shadow = _Sprite.createShadow("tex4", 128, 128).setFrameIndex(1);
         this.boundingWidth = 192;
         this.boundingHeight = 192;
         this.setScale(1.5);
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     ondying: function() {
@@ -891,6 +944,7 @@ gls2.Enemy.AliceLeaf = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "yotsubaLeaf");
         this._sprite = _Sprite("yotsubaLeaf", 64, 64).setFrameIndex(0);
+        this._shadow = _Sprite.createShadow("yotsubaLeaf", 64, 64).setFrameIndex(0);
         this.boundingWidth = 96;
         this.boundingHeight = 96;
         this.setScale(1.5);
@@ -899,6 +953,7 @@ gls2.Enemy.AliceLeaf = tm.createClass({
         gls2.Enemy.prototype.update.call(this, app);
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -917,13 +972,16 @@ gls2.Enemy.Erika = tm.createClass({
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "kurumi");
         this._sprite = _Sprite("tex3", 64, 128);
+        this._shadow = _Sprite.createShadow("tex3", 64, 128);
         this._sprite.setFrameIndex(8);
+        this._shadow.setFrameIndex(8);
     },
 
     ondying: function() {
     },
 
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 
@@ -946,6 +1004,7 @@ gls2.Enemy.Honoka = tm.createClass({
         this.superInit(gameScene, software, "yukishiro");
 
         this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(0);
+        this._shadow = _Sprite.createShadow("tex2", 64*4, 64*2).setFrameIndex(0);
         this.setScale(1.5);
     },
     ondying: function() {
@@ -962,6 +1021,7 @@ gls2.Enemy.Honoka = tm.createClass({
         this.fallDown();
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -982,6 +1042,7 @@ gls2.Enemy.Nagisa = tm.createClass(
         this.superInit(gameScene, software, "misumi");
 
         this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(1);
+        this._shadow = _Sprite.createShadow("tex2", 64*4, 64*2).setFrameIndex(1);
         this.setScale(1.5);
     },
     ondying: function() {
@@ -994,6 +1055,7 @@ gls2.Enemy.Nagisa = tm.createClass(
         });
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
     destroy: function() {
@@ -1013,6 +1075,7 @@ gls2.Enemy.Mai = tm.createClass(
         this.superInit(gameScene, software, "mishou");
 
         this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(2);
+        this._shadow = _Sprite.createShadow("tex2", 64*4, 64*2).setFrameIndex(2);
         this.setScale(1.2);
 
         this.backFire = gls2.Particle(80, 1.0, 0.9);
@@ -1049,6 +1112,7 @@ gls2.Enemy.Mai = tm.createClass(
         this.fallDown();
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -1064,6 +1128,7 @@ gls2.Enemy.Saki = tm.createClass(
         this.superInit(gameScene, software, "hyuga");
 
         this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(3);
+        this._shadow = _Sprite.createShadow("tex2", 64*4, 64*2).setFrameIndex(3);
         this.setScale(1.5);
     },
     ondying: function() {
@@ -1080,6 +1145,7 @@ gls2.Enemy.Saki = tm.createClass(
         gls2.core.fps = FPS;
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -1094,6 +1160,7 @@ gls2.Enemy.Setsuna = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "higashi");
         this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(2);
+        this._shadow = _Sprite.createShadow("tex4", 256, 128).setFrameIndex(2);
         this.blendMode = "lighter";
         this.setScale(1.5);
     },
@@ -1111,6 +1178,7 @@ gls2.Enemy.Setsuna = tm.createClass(
         this.fallDown();
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -1125,6 +1193,7 @@ gls2.Enemy.Love = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "momozono");
         this._sprite = _Sprite("tex4", 256, 128).setFrameIndex(4);
+        this._shadow = _Sprite.createShadow("tex4", 256, 128).setFrameIndex(4);
         this.setScale(1.5);
     },
     ondying: function() {
@@ -1141,6 +1210,7 @@ gls2.Enemy.Love = tm.createClass(
         gls2.core.fps = FPS;
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -1156,7 +1226,9 @@ gls2.Enemy.Rikka = tm.createClass(
         this.superInit(gameScene, software, "hishikawa");
 
         this._sprite = _Sprite("tex2", 64*4, 64*4).setFrameIndex(2);
+        this._shadow = _Sprite.createShadow("tex2", 64*4, 64*4).setFrameIndex(2);
         this._sprite.setScale(2);
+        this._shadow.setScale(2);
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
     },
@@ -1187,6 +1259,7 @@ gls2.Enemy.Rikka = tm.createClass(
         this.fallDown();
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -1202,6 +1275,7 @@ gls2.Enemy.Mana = tm.createClass(
         this.superInit(gameScene, software, "aida");
 
         this._sprite = _Sprite("tex2", 64*4, 64*2).setFrameIndex(5);
+        this._shadow = _Sprite.createShadow("tex2", 64*4, 64*2).setFrameIndex(5);
         this.setScale(1.5);
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
@@ -1239,6 +1313,7 @@ gls2.Enemy.Mana = tm.createClass(
         gls2.core.fps = FPS;
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -1298,6 +1373,7 @@ gls2.Enemy.Kanade = tm.createClass(
         this.muteki = true;
 
         this._sprite = _Sprite("tex5", 64*4, 64*8).setFrameIndex(1);
+        this._shadow = _Sprite.createShadow("tex5", 64*4, 64*8).setFrameIndex(1);
         this.setScale(1.8*KANADE_SCALE);
 
         this.cannons = [];
@@ -1393,6 +1469,7 @@ gls2.Enemy.Kanade = tm.createClass(
             }.bind(this));
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -1409,6 +1486,7 @@ gls2.Enemy.KanadeCannon = tm.createClass(
     init: function(gameScene, software, name, textureName, textureRow) {
         this.superInit(gameScene, software, name);
         this._sprite = _Sprite(textureName, 64, 64);
+        this._shadow = _Sprite.createShadow(textureName, 64, 64);
         this.textureRow = textureRow;
     },
     update: function(app) {
@@ -1433,6 +1511,7 @@ gls2.Enemy.KanadeCannon = tm.createClass(
         this.remove();
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     }
 });
@@ -1537,6 +1616,7 @@ gls2.Enemy.Hibiki = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "houjou");
         this._sprite = _Sprite("tex5", 64*4, 64*4).setFrameIndex(2);
+        this._shadow = _Sprite.createShadow("tex5", 64*4, 64*4).setFrameIndex(2);
         this.setScale(1.5);
         this.backFire = gls2.Particle(60, 1.0, 0.95);
         this.aura = gls2.Particle(500, 1.0, 0.8);
@@ -1607,6 +1687,7 @@ gls2.Enemy.Hibiki = tm.createClass(
         this.gameScene.screenShot = this.gameScene.shotScreen(1.0).canvas.toDataURL("image/png")
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -1625,6 +1706,7 @@ gls2.Enemy.Dory = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "dory");
         this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(48);
+        this._shadow = _Sprite.createShadow("tex4", 64, 64).setFrameIndex(48);
         this.setScale(1.5);
         this.aura = gls2.Particle(80, 1.0, 0.8);
     },
@@ -1638,6 +1720,7 @@ gls2.Enemy.Dory = tm.createClass(
         }
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     }
 });
@@ -1656,6 +1739,7 @@ gls2.Enemy.Miry = tm.createClass(
     init: function(gameScene, software) {
         this.superInit(gameScene, software, "miry");
         this._sprite = _Sprite("tex4", 64, 64).setFrameIndex(56);
+        this._shadow = _Sprite.createShadow("tex4", 64, 64).setFrameIndex(56);
         this.setScale(1.5);
         this.aura = gls2.Particle(80, 1.0, 0.8);
     },
@@ -1669,6 +1753,7 @@ gls2.Enemy.Miry = tm.createClass(
         }
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     }
 });
@@ -1693,6 +1778,7 @@ gls2.Enemy.Ayumi = tm.createClass(
         var self = this;
 
         this._sprite = _Sprite("exboss", 64*2, 64*2);
+        this._shadow = _Sprite.createShadow("exboss", 64*2, 64*2);
         this.aura = gls2.Particle(300, 1.0, 0.9, tm.graphics.Canvas()
             .resize(32, 32)
             .setFillStyle(
@@ -1785,6 +1871,7 @@ gls2.Enemy.Ayumi = tm.createClass(
         this.gameScene.screenShot = this.gameScene.shotScreen(1.0).canvas.toDataURL("image/png")
     },
     draw: function(canvas) {
+        this._shadow.drawShadow(canvas, this);
         this._sprite.draw(canvas);
     },
 });
@@ -1832,23 +1919,40 @@ var _Sprite = tm.createClass(
     superClass: tm.display.Sprite,
 
     texName: null,
-
+	
     init: function(tex, w, h) {
         this.superInit(tex, w, h);
-
+        
         if (typeof(tex) === "string") {
             this.texName = tex;
         }
     },
-    draw: function(canvas) {
+    
+    
+    draw: function(canvas){
         var srcRect = this.srcRect;
         var element = this._image.element;
-
+        
         canvas.context.drawImage(element,
-            srcRect.x, srcRect.y, srcRect.width, srcRect.height,
-            -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
+        srcRect. x,srcRect.y, srcRect.width, srcRect.height,
+        -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height
+        );
     },
-
+    
+    drawShadow: function(canvas, parent){
+    	
+        var srcRect = this.srcRect;
+        var element = this._image.element;
+        canvas.save();
+        canvas.globalAlpha = parent.shadowAlpha;
+        canvas.context.drawImage(element,
+        srcRect. x,srcRect.y, srcRect.width, srcRect.height,
+        -this.width*this.origin.x + parent.shadowOffsetX, parent.shadowOffsetY -this.height*this.origin.y, this.width, this.height
+        );
+        
+        canvas.restore();
+    },
+    
     toRed: function() {
         var bx = this.srcRect.x;
         var by = this.srcRect.y;
@@ -1877,5 +1981,10 @@ var _Sprite = tm.createClass(
         this.srcRect.height = bh;
     },
 });
+
+_Sprite.createShadow = function(tex,w,h){
+	return _Sprite(tex + 'Shadow', w, h);
+};
+
 
 })();

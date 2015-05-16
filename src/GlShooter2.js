@@ -230,6 +230,17 @@ gls2.GlShooter2 = tm.createClass(
             cvRed.resize(tex.width, tex.height);
             cvRed.drawBitmap(bmRed, 0, 0);
             tm.asset.AssetManager.set(name + "Red", cvRed);
+            
+            var bmShadow = canvas.getBitmap();
+            bmShadow.filter({
+                calc: function(pixel, index, x, y, bitmap) {
+                    bitmap.setPixelIndex(index, 0, 0, 0);
+                }
+            });
+            var cvShadow = tm.graphics.Canvas();
+            cvShadow.resize(tex.width, tex.height);
+            cvShadow.drawBitmap(bmShadow, 0, 0);
+            tm.asset.AssetManager.set(name + "Shadow", cvShadow);
 
             var bmBlack = canvas.getBitmap();
             bmBlack.filter({
