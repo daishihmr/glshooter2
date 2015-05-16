@@ -55,9 +55,7 @@ gls2.Particle = tm.createClass({
         }
 
         if (gls2.core.particleEffectLevel === 2) {
-            this.on("added", function() {
-                this.remove();
-            });
+            this.alphaDecayRate *= 0.1;
         }
     },
     update: function(app) {
@@ -80,6 +78,7 @@ gls2.Particle = tm.createClass({
 gls2.BackfireParticle = tm.createClass({
     superClass: gls2.Particle,
     ground: null,
+    superUpdate: gls2.Particle.prototype.update,
     init: function(ground, size) {
         size = size || 20;
         this.superInit(size, 1.0, 0.82, tm.graphics.Canvas()
@@ -97,7 +96,7 @@ gls2.BackfireParticle = tm.createClass({
         this.ground = ground;
     },
     update: function(app) {
-        this.superClass.prototype.update.apply(this, app);
+    	this.superUpdate(app);
         this.x += this.ground.dx;
         this.y += this.ground.dy + 0.3;
     },
