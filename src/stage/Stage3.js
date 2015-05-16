@@ -28,6 +28,11 @@ gls2.Stage3 = tm.createClass(
             this.gameScene.ground.speed = 2;
             this.gameScene.ground.tweener.clear().to({speed:6}, 5000, "easeInOutQuad");
         });
+        if(gls2.core.mode === 3) {
+          gls2.core.mode = 1;
+          this.addBoss();
+          return this;
+        }
 
         //0%
         this.seq.add(150, "nao2-center");
@@ -273,20 +278,23 @@ gls2.Stage3 = tm.createClass(
         this.seq.add( 30, "erika");
 
         //100%
-        this.seq.add(300, function() {
-            this.alartWarning(function() {
-                gls2.playBgm("bgmBoss", true);
-            });
+        this.addBoss();
+    },
+    addBoss: function(){
+      this.seq.add(300, function() {
+        this.alartWarning(function() {
+          gls2.playBgm("bgmBoss", true);
         });
-        this.seq.add(  1, function() {
-            //前進
-            this.gameScene.ground.tweener
-                .clear()
-                .to({speed:10, direction:Math.PI*0.5}, 8000, "easeInOutQuad");
-        });
+      });
+      this.seq.add(  1, function() {
+        //前進
+        this.gameScene.ground.tweener
+        .clear()
+        .to({speed:10, direction:Math.PI*0.5}, 8000, "easeInOutQuad");
+      });
 
-        //ステージボス
-        this.seq.add(480, "momozono");
+      //ステージボス
+      this.seq.add(480, "momozono");
     },
 
     setupBackground: function() {

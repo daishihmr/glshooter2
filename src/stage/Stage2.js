@@ -25,6 +25,11 @@ gls2.Stage2 = tm.createClass(
             this.gameScene.ground.direction = Math.PI*0.5;
             this.gameScene.ground.speed = 0.3;
         });
+        if(gls2.core.mode === 3) {
+          gls2.core.mode = 1;
+          this.addBoss();
+          return this;
+        }
 
         this.seq.add(200, "tank25-top");
         this.seq.add(160, "heri1-left");
@@ -163,21 +168,25 @@ gls2.Stage2 = tm.createClass(
 
         this.seq.add(580, "erika");
 
-        this.seq.add(520, function() {
-            this.alartWarning(function() {
-                gls2.playBgm("bgmBoss", true);
-            });
-        });
+        this.addBoss();
+    },
 
-        this.seq.add(300, function() {
-            this.gameScene.ground.tweener
-                .clear()
-                .to({
-                    speed: 5.0,
-                }, 5000, "easeInOutQuad");
+    addBoss: function(){
+      this.seq.add(520, function() {
+        this.alartWarning(function() {
+          gls2.playBgm("bgmBoss", true);
         });
+      });
 
-        this.seq.add(300, "hyuga");
+      this.seq.add(300, function() {
+        this.gameScene.ground.tweener
+        .clear()
+        .to({
+          speed: 5.0,
+        }, 5000, "easeInOutQuad");
+      });
+
+      this.seq.add(300, "hyuga");
     },
 
     setupBackground: function() {

@@ -30,6 +30,7 @@ gls2.Stage = tm.createClass(
         this.seq = gls2.StageSequencer();
 
         this.frame = 0;
+
     },
 
     setupBackground: function() {

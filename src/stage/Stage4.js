@@ -25,6 +25,11 @@ gls2.Stage4 = tm.createClass(
             this.gameScene.ground.direction = Math.PI*0.5;
             this.gameScene.ground.speed = 1;
         });
+        if(gls2.core.mode === 3) {
+          gls2.core.mode = 1;
+          this.addBoss();
+          return this;
+        }
 
         // 0%
 
@@ -241,20 +246,25 @@ gls2.Stage4 = tm.createClass(
 
         // 100% boss
 
-        this.seq.add(200, function() {
-            this.alartWarning(function() {
-                gls2.playBgm("bgmBoss", true);
-            });
+        this.addBoss();
+
+
+    },
+
+    addBoss: function(){
+      this.seq.add(200, function() {
+        this.alartWarning(function() {
+          gls2.playBgm("bgmBoss", true);
         });
+      });
 
-        this.seq.add(  1, function() {
-            this.gameScene.ground.tweener.clear().to({
-                speed: 9,
-            }, 2000);
-        });
+      this.seq.add(  1, function() {
+        this.gameScene.ground.tweener.clear().to({
+          speed: 9,
+        }, 2000);
+      });
 
-        this.seq.add(600, "mana");
-
+      this.seq.add(600, "mana");
     },
 
     setupBackground: function() {

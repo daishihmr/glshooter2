@@ -157,10 +157,11 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        var menu = [ "arcade mode", "training mode", "tutorial", "ranking", "setting" ];
+        var menu = [ "arcade mode", "training mode", "boss battle", "tutorial", "ranking", "setting" ];
         var labels = [
             "ゲームを開始します",
             "トレーニングを開始します",
+            "ボスバトルを開始します",
             "チュートリアルを開始します",
             "ランキングを表示します",
             "設定を変更します"
@@ -189,9 +190,14 @@ gls2.TitleScene = tm.createClass({
                 }.bind(this));
             break;
         case 1: // training
+            gls2.core.mode = 1;
             this.openStageSelect();
             break;
-        case 2: // tutorial
+        case 2: // boss
+            gls2.core.mode = 3;
+            this.openStageSelect();
+            break;
+        case 3: // tutorial
             gls2.core.mode = 2;
             this.tweener
                 .clear()
@@ -207,10 +213,10 @@ gls2.TitleScene = tm.createClass({
                     gls2.core.gameScene.start(2, 0);
                 }.bind(this));
             break;
-        case 3: // ranking
+        case 4: // ranking
             window.open("./googleplay/");
             break;
-        case 4: // option
+        case 5: // option
             this.openSetting();
             break;
         }
@@ -232,7 +238,7 @@ gls2.TitleScene = tm.createClass({
             this.openMainMenu();
             return;
         }
-        gls2.core.mode = 1;
+        //gls2.core.mode = 1;
         gls2.core.selectedStage = result;
         this.openRankSelect();
     },
