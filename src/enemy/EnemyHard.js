@@ -1496,6 +1496,7 @@ gls2.Enemy.KanadeCannon = tm.createClass(
         while(a < 0) { a += Math.PI*2; }
         while(Math.PI*2 <= a) { a -= Math.PI*2; }
         this._sprite.setFrameIndex(this.textureRow*16 + Math.floor(a / (Math.PI*2) * 16));
+        this._shadow.setFrameIndex(this.textureRow*16 + Math.floor(a / (Math.PI*2) * 16));
     },
     ondying: function() {
         this.on("enterframe", function(e) {
@@ -1713,6 +1714,7 @@ gls2.Enemy.Dory = tm.createClass(
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
         this._sprite.setFrameIndex(48+Math.floor(app.frame/5)%3);
+        this._shadow.setFrameIndex(48+Math.floor(app.frame/5)%3);
         if (app.frame%2 === 0 && this.hp > 0) {
             this.aura.clone()
                 .setPosition(this.x, this.y)
@@ -1746,6 +1748,7 @@ gls2.Enemy.Miry = tm.createClass(
     update: function(app) {
         gls2.Enemy.prototype.update.call(this, app);
         this._sprite.setFrameIndex(56+Math.floor(app.frame/5)%3);
+        this._shadow.setFrameIndex(56+Math.floor(app.frame/5)%3);
         if (app.frame%2 === 0 && this.hp > 0) {
             this.aura.clone()
                 .setPosition(this.x, this.y)
