@@ -662,7 +662,7 @@ gls2.GameScene = tm.createClass(
 
         if (gls2.core.mode === 0) {
             this.startStage(INITIAL_STAGE);
-        } else if (gls2.core.mode === 1) {
+        } else if (gls2.core.mode === 1 || gls2.core.mode === 3) {
             this.startStage(gls2.core.selectedStage);
         } else if (gls2.core.mode === 2) {
             this.startStage(-1);

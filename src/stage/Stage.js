@@ -19,6 +19,7 @@ gls2.Stage = tm.createClass(
 
     frame: 0,
 
+    /** @type {Object} */
     assets: null,
 
     init: function(gameScene) {
