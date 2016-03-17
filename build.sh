@@ -1,12 +1,15 @@
 rm -f target/gls2.js
 
 java -jar tools/compiler.jar \
+--define VERSION=\"$1\" \
 --define DEBUG=false \
 --define STATS=false \
 --externs libs/tmlib.js \
 --externs libs/mt.js \
 --externs extern/extern.js \
 --externs extern/tween.js \
+--externs extern/tweener.js \
+--externs extern/keyboard.js \
 --externs extern/gls2.js \
 --js libs/bulletml.js \
 --js libs/bulletml.walker.js \
@@ -25,6 +28,7 @@ java -jar tools/compiler.jar \
 --js src/Ground.js \
 --js src/StarItem.js \
 --js src/stage/Stage.js \
+--js src/stage/TutorialStage.js \
 --js src/stage/Stage1.js \
 --js src/stage/Stage2.js \
 --js src/stage/Stage3.js \
@@ -53,7 +57,7 @@ java -jar tools/compiler.jar \
 --js libs/math.js \
 --compilation_level ADVANCED_OPTIMIZATIONS \
 --language_in ECMASCRIPT5 \
---js_output_file target/gls2.js
+--js_output_file target/gls2.js \
 # --formatting PRETTY_PRINT
 
 # --formatting SINGLE_QUOTES

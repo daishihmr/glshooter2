@@ -2076,7 +2076,7 @@ tm.util = tm.util || {};
     
     /**
      * @class tm.util.Ajax
-     * @TODO ?
+     * Ajax クラス
      */
     tm.util.Ajax = {
         /**
@@ -2086,11 +2086,11 @@ tm.util = tm.util || {};
             for (var key in AJAX_DEFAULT_SETTINGS) {
                 params[key] = params[key] || AJAX_DEFAULT_SETTINGS[key];
             }
-            
+
             var httpRequest = new XMLHttpRequest();
             var ajax_params = "";
             var conv_func = tm.util.Ajax.DATA_CONVERTE_TABLE[params.dataType];
-            
+
             var url = params.url;
             if (params.data) {
                 var query = "";
@@ -2101,7 +2101,7 @@ tm.util = tm.util || {};
                 else {
                     query = tm.util.QueryString.stringify(params.data);
                 }
-                
+
                 if (params.type == 'GET') {
                     params.url += '?' + query;
                     params.data = null;
@@ -2110,23 +2110,23 @@ tm.util = tm.util || {};
                     params.data = query;
                 }
             }
-            
+
             // httpRequest.withCredentials = true;
-            
+
             // コールバック
             httpRequest.onreadystatechange = function() {
                 if (httpRequest.readyState == 4) {
-                    // 成功
-                    if (httpRequest.status === 200) {
-                        // タイプ別に変換をかける
-                        var data = conv_func(httpRequest.responseText);
-                        params.success(data);
-                    }
-                    // status === 0 はローカルファイル用
-                    else if (httpRequest.status === 0) {
-                        // タイプ別に変換をかける
-                        var data = conv_func(httpRequest.responseText);
-                        params.success(data);
+                    // 成功(status === 0 はローカルファイル用)
+                    if (httpRequest.status === 200 || httpRequest.status === 201 || httpRequest.status === 0) {
+                        if (params.responseType !== "arraybuffer") {
+                            // タイプ別に変換をかける
+                            var data = conv_func(httpRequest.responseText);
+                            params.success(data);
+                        }
+                        else {
+                            // バイナリデータ
+                            params.success(this.response);
+                        }
                     }
                     else {
                         params.error(httpRequest.responseText);
@@ -2136,20 +2136,28 @@ tm.util = tm.util || {};
                     //console.log("通信中");
                 }
             };
-            
-            
+
+
             httpRequest.open(params.type, params.url, params.async, params.username, params.password);   // オープン
             if (params.type === "POST") {
                 httpRequest.setRequestHeader('Content-Type', params.contentType);        // ヘッダをセット
             }
-            
+
+            if (params.responseType) {
+                httpRequest.responseType = params.responseType;
+            }
+
             if (params.beforeSend) {
                 params.beforeSend(httpRequest);
             }
-            
+
+            if (params.password) {
+                httpRequest.withCredentials = true;
+            }
+
             httpRequest.send(params.data);
         },
-        
+
         /**
          * loadJSONP
          */
@@ -2158,11 +2166,11 @@ tm.util = tm.util || {};
             g.tmlib_js_dummy_func_count = tm.global.tmlib_js_dummy_func || 0;
             var dummy_func_name = "tmlib_js_dummy_func" + (g.tmlib_js_dummy_func_count++);
             g[dummy_func_name]  = callback;
-            
+
             var elm = document.createElement("script");
             elm.type = "text/javascript";
             elm.charset = "UTF-8";
-            elm.src = url + "&callback=" + dummy_func_name;
+            elm.src = url + (url.indexOf("?") < 0 ? "?" : "&") + "callback=" + dummy_func_name;
             elm.setAttribute("defer", true);
             document.getElementsByTagName("head")[0].appendChild(elm);
         }
@@ -2177,26 +2185,27 @@ tm.util = tm.util || {};
         undefined: function(data) {
             return data;
         },
-        
+
         /* @method */
         text: function(data) {
             return data;
         },
-        
+
         /* @method */
         xml: function(data) {
-            var div = document.createElement("div");
-            div.innerHTML = data;
-            return div;
+            var parser = new DOMParser();
+            var xml = parser.parseFromString(data, 'text/xml');
+
+            return xml;
         },
-        
+
         /* @method */
         dom: function(data) {
             var div = document.createElement("div");
             div.innerHTML = data;
             return tm.dom.Element(div);
         },
-        
+
         /* @method */
         json: function(data) {
             try {
@@ -2207,13 +2216,13 @@ tm.util = tm.util || {};
                 console.dir(data);
             }
         },
-        
+
         /* @method */
         script: function(data) {
             eval(data);
             return data;
         },
-        
+
         /*
          * @method
          * ### Reference
@@ -2227,9 +2236,12 @@ tm.util = tm.util || {};
             }
             return bytearray;
         },
-        
+
     };
-    
+
+
+    tm.util.Ajax.DEFAULT_SETTINGS = AJAX_DEFAULT_SETTINGS;
+
 })();
 
 /*
@@ -17430,8 +17442,14 @@ tm.sound = tm.sound || {};
 
 (function() {
 
-    var isAvailable = tm.global.webkitAudioContext ? true : false;
-    var context = isAvailable ? new webkitAudioContext() : null;
+    var context = null;
+    if (tm.global.webkitAudioContext) {
+        context = new webkitAudioContext();
+    } else if (tm.global.mozAudioContext) {
+        context = new mozAudioContext();
+    } else if (tm.global.AudioContext) {
+        context = new AudioContext();
+    }
 
     /**
      * @class tm.sound.WebAudio
@@ -17446,9 +17464,11 @@ tm.sound = tm.sound || {};
         /** context */
         context: null,
         /** panner */
-        panner: null,
+        // panner: null,
         /** volume */
         volume: 0.8,
+
+        // _pannerEnabled: true,
 
         /**
          * @constructor
@@ -17481,12 +17501,15 @@ tm.sound = tm.sound || {};
          */
         play: function(time) {
             if (time === undefined) time = 0;
-            this.source.noteOn(this.context.currentTime + time);
-            /*
-            this.source.noteGrainOn(this.context.currentTime + time, 0, this.buffer.duration);
-            console.dir(this.buffer.duration);
-            console.dir(this.context.currentTime)
-            */
+
+            this.source.start(this.context.currentTime + time);
+            
+            var self = this;
+            var time = (this.source.buffer.duration/this.source.playbackRate.value)*1000;
+            window.setTimeout(function() {
+                var e = tm.event.Event("ended");
+                self.fire(e);
+            }, time);
 
             return this;
         },
@@ -17496,14 +17519,16 @@ tm.sound = tm.sound || {};
          */
         stop: function(time) {
             if (time === undefined) time = 0;
-            this.source.noteOff(this.context.currentTime + time);
+            try {
+                this.source.stop(this.context.currentTime + time);
+            } catch (e) {}
             
             var buffer = this.buffer;
             var volume = this.volume;
             var loop   = this.loop;
             
             this.source = this.context.createBufferSource();
-            this.source.connect(this.panner);
+            this.source.connect(this.gainNode);
             this.buffer = buffer;
             this.volume = volume;
             this.loop = loop;
@@ -17512,7 +17537,7 @@ tm.sound = tm.sound || {};
         },
 
         /**
-         * @TODO ?
+         * ポーズ
          */
         pause: function() {
             this.source.disconnect();
@@ -17521,10 +17546,10 @@ tm.sound = tm.sound || {};
         },
 
         /**
-         * @TODO ?
+         * レジューム
          */
         resume: function() {
-            this.source.connect(this.panner);
+            this.source.connect(this.gainNode);
 
             return this;
         },
@@ -17541,7 +17566,7 @@ tm.sound = tm.sound || {};
          * dummy
          */
         setPosition: function(x, y, z) {
-            this.panner.setPosition(x, y||0, z||0);
+            // this.panner.setPosition(x, y||0, z||0);
 
             return this;
         },
@@ -17549,7 +17574,7 @@ tm.sound = tm.sound || {};
          * dummy
          */
         setVelocity: function(x, y, z) {
-            this.panner.setVelocity(x, y||0, z||0);
+            // this.panner.setVelocity(x, y||0, z||0);
 
             return this;
         },
@@ -17557,7 +17582,7 @@ tm.sound = tm.sound || {};
          * dummy
          */
         setOrientation: function(x, y, z) {
-            this.panner.setOrientation(x, y||0, z||0);
+            // this.panner.setOrientation(x, y||0, z||0);
 
             return this;
         },
@@ -17601,50 +17626,51 @@ tm.sound = tm.sound || {};
         },
 
         /**
-         * @TODO ?
          * @private
          */
         _load: function(src) {
             if (!this.context) return ;
 
-            var xhr = new XMLHttpRequest();
             var self = this;
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200 || xhr.status === 0) {
-                        self.context.decodeAudioData(xhr.response, function(buffer) {
-                            self._setup();
-                            self.buffer = buffer;
-                            self.loaded = true;
-                            self.dispatchEvent( tm.event.Event("load") );
-                        });
-                    } else {
-                        console.error(xhr);
-                    }
+            tm.util.Ajax.load({
+                type: "GET",
+                url: src,
+                responseType: "arraybuffer",
+                success: function(data) {
+                    // console.debug("WebAudio ajax load success");
+                    self.context.decodeAudioData(data, function(buffer) {
+                        // console.debug("WebAudio decodeAudioData success");
+                        self._setup();
+                        self.buffer = buffer;
+                        self.loaded = true;
+                        self.dispatchEvent( tm.event.Event("load") );
+                    });
                 }
-            };
-            xhr.open("GET", src, true);
-            xhr.responseType = "arraybuffer";
-            xhr.send();
+            });
         },
 
         /**
-         * @TODO ?
          * @private
          */
         _setup: function() {
             this.source     = this.context.createBufferSource();
-//            this.gainNode   = this.context.createGainNode();
-            this.panner     = this.context.createPanner();
+            this.gainNode   = this.context.createGain();
+            // this.panner     = this.context.createPanner();
             this.analyser   = this.context.createAnalyser();
 
-            this.source.connect(this.panner);
-            this.panner.connect(this.analyser);
+            this.source.connect(this.gainNode);
+            this.gainNode.connect(this.analyser);
+            // this.panner.connect(this.analyser);
             this.analyser.connect(this.context.destination);
+
+            // TODO 暫定的対応
+            // if (tm.BROWSER === "Firefox") {
+            //     this.pannerEnabled = false;
+            // }
         },
 
         /**
-         * @TODO ?
+         * トーン
          */
         tone: function(hertz, seconds) {
             // handle parameter
@@ -17671,7 +17697,7 @@ tm.sound = tm.sound || {};
 
     /**
      * @property    buffer
-     * @TODO ?
+     * バッファー
      */
     tm.sound.WebAudio.prototype.accessor("buffer", {
         get: function()  { return this.source.buffer; },
@@ -17680,7 +17706,7 @@ tm.sound = tm.sound || {};
 
     /**
      * @property    loop
-     * @TODO ?
+     * ループフラグ
      */
     tm.sound.WebAudio.prototype.accessor("loop", {
         get: function()  { return this.source.loop; },
@@ -17689,24 +17715,45 @@ tm.sound = tm.sound || {};
 
     /**
      * @property    valume
-     * @TODO ?
+     * ボリューム
      */
     tm.sound.WebAudio.prototype.accessor("volume", {
-        get: function()  { return this.source.gain.value; },
-        set: function(v) { this.source.gain.value = v; }
+        get: function()  { return this.gainNode.gain.value; },
+        set: function(v) { this.gainNode.gain.value = v; }
     });
 
     /**
      * @property    playbackRate
-     * @TODO ?
+     * プレイバックレート
      */
     tm.sound.WebAudio.prototype.accessor("playbackRate", {
         get: function()  { return this.source.playbackRate.value; },
         set: function(v) { this.source.playbackRate.value = v; }
     });
 
+    // /**
+    //  * @property    pannerEnabled
+    //  * panner有効
+    //  */
+    // tm.sound.WebAudio.prototype.accessor("pannerEnabled", {
+    //     get: function()  { return this._pannerEnabled; },
+    //     set: function(v) {
+    //         this.gainNode.disconnect();
+    //         this.panner.disconnect();
+    //         if (v) {
+    //             this.gainNode.connect(this.panner);
+    //             this.panner.connect(this.analyser);
+    //         } else {
+    //             this.gainNode.connect(this.analyser);
+    //         }
+    //         this._pannerEnabled = v;
+
+    //         // console.debug("WebAudio pannerEnabled: " + v);
+    //     }
+    // });
+
     /** @static @property */
-    tm.sound.WebAudio.isAvailable = tm.global.webkitAudioContext ? true : false;
+    tm.sound.WebAudio.isAvailable = (tm.global.webkitAudioContext || tm.global.mozAudioContext || tm.global.AudioContext) ? true : false;
 
 })();
 

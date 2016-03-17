@@ -211,7 +211,7 @@ gls2.Enemy = tm.createClass(
             else if (this.name === "hyuga") gls2.core.putAchevement("boss2");
             else if (this.name === "momozono") gls2.core.putAchevement("boss3");
             else if (this.name === "aida") gls2.core.putAchevement("boss4");
-            else if (this.name === "hojo") gls2.core.putAchevement("boss5");
+            else if (this.name === "houjou") gls2.core.putAchevement("boss5");
 
             return true;
         } else {

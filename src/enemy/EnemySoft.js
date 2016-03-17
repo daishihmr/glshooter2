@@ -175,6 +175,7 @@ gls2.EnemySoft.Heri2 = tm.createClass(
     },
 });
 gls2.EnemySoft.Heri21 = gls2.EnemySoft.Heri2("basic1-0");
+gls2.EnemySoft.Heri2T = gls2.EnemySoft.Heri2("donothing");
 gls2.EnemySoft.Heri25 = function(delay) { return gls2.EnemySoft.Heri2("basic1-3", delay*(Math.random()*2+1)); };
 
 /**
@@ -1803,7 +1804,7 @@ gls2.EnemySoft.Mana2 = tm.createClass(
                     var a = gls2.FixedRandom.random() * Math.PI*2;
                     var d = gls2.FixedRandom.randf(SC_W*0.1, SC_W*0.3);
                     this.tweener
-                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3+Math.sin(a)*d*0.4, 3000, "easeInOutQuad")
+                        .move(SC_W*0.5+Math.cos(a)*d, SC_H*0.3, 3000, "easeInOutQuad")
                         .call(temp);
                 }.bind(this);
                 temp();

@@ -34,6 +34,12 @@ var FPS_DOWN_MIN_RATE = 0.2;
 var INITIAL_RANK = 0.00;
 
 /**
+ * ランクの影響率
+ * @const
+ */
+var RANK_RATE = 0.5;
+
+/**
  * エクステンドスコア
  * @const
  */
@@ -58,13 +64,13 @@ var INITIAL_ZANKI = 3;
  * ボムスロット初期数
  * @const
  */
-var INITIAL_BOMB_MAX = [3, 2, 1];
+var INITIAL_BOMB_MAX = [3, 2, 1, 5];
 
 /**
  * ボムスロット最大数
  * @const
  */
-var BOMB_MAX_MAX = [6, 4, 2];
+var BOMB_MAX_MAX = [6, 4, 2, 99];
 
 /**
  * ショットの攻撃力
@@ -395,7 +401,7 @@ var HASH_TAG = "tmshooter";
  * コンティニュー可能回数初期値
  * @const
  */
-var INITIAL_CONTINUE_COUNT = 0;
+var INITIAL_CONTINUE_COUNT = 3;
 
 /**
  * 実績グレード別コンティニュー可能回数増加量
@@ -404,7 +410,7 @@ var INITIAL_CONTINUE_COUNT = 0;
 var CONTINUE_COUNT_BY_ACHEVEMENT_GRADE = [ 0.1, 0.4, 1.0 ];
 
 /**
-　* 開始ステージ(0～)
+ * 開始ステージ(0～)
  * @const
  */
 var INITIAL_STAGE = 0;

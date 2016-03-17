@@ -116,6 +116,9 @@ gls2.GameScene = tm.createClass(
 
     screenShot: null,
 
+    /** ハイパーチャージ開始フレーム */
+    hyperChargeStart: 0,
+
     /** ステージごとのスコア */
     scoreByStage: null,
     /** ステージごとの平均FPS */
@@ -156,6 +159,9 @@ gls2.GameScene = tm.createClass(
 
     /** オーラ撃ち成立フレーム数 */
     auraAttackFrameTotal: 0,
+
+    /** ステージ中にCボタンを押した */
+    pressC: false,
 
     init: function() {
         if (gls2.GameScene.SINGLETON !== null) throw new Error("class 'gls2.GameScene' is singleton!!");
@@ -231,7 +237,7 @@ gls2.GameScene = tm.createClass(
         this.stage.update(app.frame);
         if (app.frame % 2 === 0) this.scoreLabel.update();
 
-        if (app.keyboard.getKeyDown("escape")) {
+        if (DEBUG && app.keyboard.getKeyDown("escape")) {
             // タイトル画面に戻る
             this.app.replaceScene(gls2.TitleScene());
             gls2.stopBgm();
@@ -246,9 +252,8 @@ gls2.GameScene = tm.createClass(
         if (DEBUG) {
             if (app.keyboard.getKeyDown("h")) {
                 this.addHyperGauge(1.2 / HYPER_CHARGE_RATE);
-            }
-            if (app.keyboard.getKey("v")) {
-
+            } else if (app.keyboard.getKeyDown("b")) {
+                gls2.BombItem(SC_W * 0.5, SC_H * 0.5, this.player).addChildTo(this);
             }
         }
 
@@ -273,7 +278,7 @@ gls2.GameScene = tm.createClass(
     onexitframe: function(app) {
         // var beginProcessTime = new Date().getTime();
 
-        if (this.player.controllable === false) {
+        if (this.player.controllable === false && gls2.core.mode !== 2) {
             gls2.Danmaku.erase();
         }
 
@@ -603,6 +608,7 @@ gls2.GameScene = tm.createClass(
         this.zanki = INITIAL_ZANKI;
         this.bomb = this.bombMax = INITIAL_BOMB_MAX[playerStyle];
         this.bombMaxMax = BOMB_MAX_MAX[playerStyle];
+        this.isBombMaximum = false;
         this.hyperGauge = 0;
         this.hyperRank = 0;
         this.hyperLevel = 0;
@@ -629,10 +635,19 @@ gls2.GameScene = tm.createClass(
         this.hyperLevelHistory = [];
 
         this.player = gls2.Player(this, playerType, playerStyle);
-        this.setRank(INITIAL_RANK);
+        if (gls2.core.mode === 0) {
+            this.setRank(INITIAL_RANK);
+        }
+        bulletml.Walker.globalScope["$bg"] = playerStyle !== 3 ? 0 : 1;
         bulletml.Walker.globalScope["$ex"] = playerStyle !== 2 ? 0 : 1;
 
-        this.startStage(INITIAL_STAGE);
+        if (gls2.core.mode === 0) {
+            this.startStage(INITIAL_STAGE);
+        } else if (gls2.core.mode === 1) {
+            this.startStage(gls2.core.selectedStage);
+        } else if (gls2.core.mode === 2) {
+            this.startStage(-1);
+        }
 
         gls2.playSound("voLetsGo");
 
@@ -696,6 +711,8 @@ gls2.GameScene = tm.createClass(
 
         this.auraAttackFrameTotal = 0;
 
+        this.pressC = false;
+
         this.stageStartFrame = gls2.core.frame;
         this.stageStartTime = Date.now();
     },
@@ -716,8 +733,10 @@ gls2.GameScene = tm.createClass(
             .clear()
             .moveBy(0, -180, 1000, "easeOutBack")
             .call(function() {
-                this.controllable = true;
-                this.attackable = true;
+                if (gls2.core.mode !== 2) {
+                    this.controllable = true;
+                    this.attackable = true;
+                }
             }.bind(this.player))
             .wait(LAUNCH_MUTEKI_TIME)
             .call(function() {
@@ -761,7 +780,7 @@ gls2.GameScene = tm.createClass(
             }
             this.tweener.clear()
                 .wait(2000).call(function() {
-                    if (this.continueCount < gls2.core.calcContinueCountMax()) {
+                    if (this.continueCount < gls2.core.calcContinueCountMax() || gls2.core.mode === 1) {
                         this.openContinueMenu();
                     } else {
                         this.gameOver();
@@ -773,11 +792,11 @@ gls2.GameScene = tm.createClass(
     setRank: function(v) {
         // var min = Math.max(0, gls2.core.difficulty - 1) * 0.02 + (this.player.style !== 2 ? 0.00 : 0.10);
         var min = 0.00;
-        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(v, min, 0.50);
+        bulletml.Walker.globalScope["$rank"] = gls2.math.clamp(v, min, 0.50) * RANK_RATE;
     },
 
     addRank: function(v) {
-        this.setRank(bulletml.Walker.globalScope["$rank"] + v);
+        this.setRank(bulletml.Walker.globalScope["$rank"] / RANK_RATE + v);
     },
 
     gameContinue: function() {
@@ -794,6 +813,9 @@ gls2.GameScene = tm.createClass(
         this.println("System rebooted.", true);
 
         this.score = 0;
+        for (var i = 0; i < this.scoreByStage.length; i++) {
+            this.scoreByStage[i] = 0;
+        }
         this.continueCount += 1;
         this.continueCountByStage[this.stageNumber] += 1;
         this.zanki = INITIAL_ZANKI;
@@ -817,7 +839,7 @@ gls2.GameScene = tm.createClass(
     },
 
     gameOver: function() {
-        if (this.scoreByStage[this.stageNumber - 1] === undefined) {
+        if (this.stageNumber === 0) {
             this.scoreByStage[this.stageNumber] = this.score;
         } else {
             this.scoreByStage[this.stageNumber] = this.score - this.scoreByStage[this.stageNumber - 1];
@@ -841,6 +863,8 @@ gls2.GameScene = tm.createClass(
     },
 
     addScore: function(score) {
+        if (this.player.style === 3) score *= 0.1;
+
         var before = this.score;
         this.score += score;
         for (var i = 0; i < EXTEND_SCORE.length; i++) {
@@ -859,12 +883,12 @@ gls2.GameScene = tm.createClass(
             gls2.core.highScoreContinueCount = this.continueCount;
         }
 
-        if (this.score >= 100000000) gls2.core.putAchevement("score100M");
-        if (this.score >= 2000000000) gls2.core.putAchevement("score2G");
-        if (this.score >= 20000000000) gls2.core.putAchevement("score20G");
-        if (this.score >= 50000000000) gls2.core.putAchevement("score50G");
-        if (this.score >= 100000000000) gls2.core.putAchevement("score100G");
         if (this.score >= 1000000000000) gls2.core.putAchevement("score1T");
+        else if (this.score >= 100000000000) gls2.core.putAchevement("score100G");
+        else if (this.score >= 50000000000) gls2.core.putAchevement("score50G");
+        else if (this.score >= 20000000000) gls2.core.putAchevement("score20G");
+        else if (this.score >= 2000000000) gls2.core.putAchevement("score2G");
+        else if (this.score >= 100000000) gls2.core.putAchevement("score100M");
     },
 
     addCombo: function(v) {
@@ -873,14 +897,15 @@ gls2.GameScene = tm.createClass(
         this.maxComboCount = Math.max(this.maxComboCount, this.comboCount);
         if (1 <= v) this.comboGauge = 1;
 
-        if (this.comboCount >= 100) this.app.putAchevement("combo100");
-        if (this.comboCount >= 1000) this.app.putAchevement("combo1000");
-        if (this.comboCount >= 10000) this.app.putAchevement("combo10000");
         if (this.comboCount >= 100000) this.app.putAchevement("combo100000");
+        else if (this.comboCount >= 10000) this.app.putAchevement("combo10000");
+        else if (this.comboCount >= 1000) this.app.putAchevement("combo1000");
+        else if (this.comboCount >= 100) this.app.putAchevement("combo100");
     },
 
     addHyperGauge: function(v) {
         if (this.hyperLevel === HYPER_LEVEL_MAX) return;
+        else if (this.hyperLevel === 0) this.hyperChargeStart = gls2.core.frame;
 
         v *= HYPER_CHARGE_RATE;
 
@@ -896,6 +921,8 @@ gls2.GameScene = tm.createClass(
                 this.println("HYPER SYSTEM, ready.", true);
                 gls2.playSound("voHyperReady");
             }
+
+            if (this.hyperLevel > 5 && gls2.core.frame-this.hyperChargeStart <= 60) gls2.core.putAchevement("hyperAndHyperAndHyper");
         }
 
         this.hyperGauge = gls2.math.clamp(this.hyperGauge + v, 0, 1);
@@ -1032,16 +1059,23 @@ gls2.GameScene = tm.createClass(
     },
 
     openSetting: function() {
-        this.openDialogMenu("SETTING", [ "bgm volume", "sound volume" ], this.onResultSetting, {
+        this.openDialogMenu("SETTING", [
+            "bgm volume",
+            "sound volume",
+            "particle",
+            "bullet appearance"
+        ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
                 "効果音ボリュームを設定します",
+                "パーティクルのON/OFFを設定します",
+                "敵弾の見た目に関する設定です"
             ],
         });
     },
     onResultSetting: function(result) {
-        if (result !== 3) this.lastSetting = result;
+        if (result !== 4) this.lastSetting = result;
         switch (result) {
         case 0:
             this.openBgmSetting();
@@ -1049,8 +1083,14 @@ gls2.GameScene = tm.createClass(
         case 1:
             this.openSeSetting();
             break;
+        case 2:
+            this.openParticleSetting();
+            break;
+        case 3:
+            this.openBulletAppearanceSetting();
+            break;
         default:
-            this.openPauseMenu();
+            this.openPauseMenu(0);
             break;
         }
     },
@@ -1085,6 +1125,7 @@ gls2.GameScene = tm.createClass(
     },
     onResultBgmSetting: function(result) {
         if (result !== 6) gls2.core.bgmVolume = result;
+        this.saveSetting();
         this.openSetting(1);
     },
 
@@ -1098,7 +1139,46 @@ gls2.GameScene = tm.createClass(
         if (result !== 6) {
             gls2.core.seVolume = result;
         }
+        this.saveSetting();
         this.openSetting(1);
+    },
+
+    openParticleSetting: function() {
+        this.openDialogMenu("PARTICLES", [ "ON", "LITE", "OFF" ], this.onResultParticleSetting, {
+            "defaultValue": gls2.core.particleEffectLevel,
+            "showExit": false,
+        });
+    },
+    onResultParticleSetting: function(result) {
+        gls2.core.particleEffectLevel = result;
+        this.saveSetting();
+        this.openSetting(1);
+    },
+
+    openBulletAppearanceSetting: function() {
+        this.openDialogMenu("BULLET", [ "NORMAL", "LARGE" ], this.onResultBulletAppearanceSetting, {
+            "defaultValue": gls2.core.bulletBig,
+            "showExit": false,
+            "menuDescriptions": [
+                "通常サイズで表示します",
+                "大きめに表示します"
+            ]
+        });
+    },
+    onResultBulletAppearanceSetting: function(result) {
+        gls2.core.bulletBig = result;
+        this.saveSetting();
+        this.openSetting(1);
+    },
+
+    saveSetting: function() {
+        var config = {
+            "bgmVolume": gls2.core.bgmVolume,
+            "seVolume": gls2.core.seVolume,
+            "particleEffectLevel": gls2.core.particleEffectLevel,
+            "bulletBig": gls2.core.bulletBig
+        };
+        localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },
 
     openContinueMenu: function() {

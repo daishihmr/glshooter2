@@ -16,6 +16,16 @@ gls2.GlShooter2 = tm.createClass(
 /** @lends {gls2.GlShooter2.prototype} */
 {
     superClass: tm.display.CanvasApp,
+
+    /**
+     * ゲームモード
+     * 0: アーケードモード
+     * 1: トレーニングモード
+     */
+    mode: 0,
+    /** トレーニングモード時の選択ステージ */
+    selectedStage: 0,
+
     /** アプリ実行中のハイスコア */
     highScore: 0,
     /** ハイスコア取得時の最終到達ステージ */
@@ -33,8 +43,8 @@ gls2.GlShooter2 = tm.createClass(
     bgmVolume: 3,
     /** SE音量(0～5) */
     seVolume: 3,
-    /** 難易度(0～4) */
-    difficulty: 1,
+    particleEffectLevel: 0,
+    bulletBig: false,
 
     gameScene: null,
 
@@ -80,6 +90,13 @@ gls2.GlShooter2 = tm.createClass(
             "bomb": "assets/bomb.png",
             "bombIcon": "assets/bomb_icon.png",
             "result_bg": "assets/result_bg.png",
+            "keyDown": "assets/arrow-down-icon.png",
+            "keyLeft": "assets/arrow-left-icon.png",
+            "keyRight": "assets/arrow-right-icon.png",
+            "keyUp": "assets/arrow-up-icon.png",
+            "keyC": "assets/letter-uppercase-C-icon.png",
+            "keyZ": "assets/letter-uppercase-Z-icon.png",
+            "keyX": "assets/letter-uppercase-X-icon.png",
 
             // bgm
             "bgmShipSelect": "assets2/nc44200.mp3",
@@ -112,7 +129,7 @@ gls2.GlShooter2 = tm.createClass(
             "sound/voGetBomb": "assets/vo_getbomb.mp3",
             "sound/voJacms": "assets/vo_jacms.mp3",
             "sound/voLetsGo": "assets/vo_letsgo.mp3",
-            "sound/voSelectShip": "assets/vo_select_your_battle_ship.mp3",
+            "sound/voSelectShip": "assets/vo_select_your_machine.mp3",
             "sound/voWarning": "assets/vo_warning.mp3",
         };
 
@@ -139,6 +156,15 @@ gls2.GlShooter2 = tm.createClass(
         });
         loadingScene.bg.canvas.clearColor("black");
         this.replaceScene(loadingScene);
+
+        var configJson = localStorage.getItem("tmshooter.config");
+        if (configJson) {
+            var config = JSON.parse(configJson);
+            this.bgmVolume = config["bgmVolume"];
+            this.seVolume = config["seVolume"];
+            this.particleEffectLevel = config["particleEffectLevel"];
+            this.bulletBig = config["bulletBig"];
+        }
     },
 
     calcContinueCountMax: function() {
@@ -226,6 +252,8 @@ gls2.GlShooter2 = tm.createClass(
      * @param {function()} callback
      */
     postScore: function(userName, callback) {
+        if (this.mode !== 0) return;
+
         // console.log("this.gameScene.fpsAvgByStage = " + this.gameScene.fpsAvgByStage);
         // console.log("this.gameScene.stageNumber = " + this.gameScene.stageNumber);
         var avgFps = this.gameScene.fpsAvgByStage.slice(0, this.gameScene.stageNumber+1)["average"]();
@@ -261,19 +289,19 @@ gls2.GlShooter2 = tm.createClass(
             "dataType": "json",
             "success": function(result) {
                 if (!result) {
-                    callback("登録に失敗しました！＞＜");
+                    callback("スコア登録に失敗しました！＞＜");
                 } else if (result["success"]) {
                     callback(null, true, result["scoreId"]);
                 } else if (result["confirmLogin"]) {
-                    if (confirm("ログインしていません。ログインしますか？")) {
+                    if (window.confirm("login (or sign up) ?\nログインしていません。ログインしますか？")) {
                         window["onchildclose"] = function() {
                             this.postScore(null, callback);
                             window["onchildclose"] = undefined;
                         }.bind(this);
                         window.open("/loginByPopup", "login", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
-                    } else if (confirm("匿名でスコア登録しますか？")) {
+                    } else if (window.confirm("try anonymous submit?\n匿名でスコア登録しますか？")) {
                         var userName = "";
-                        while (userName === "") userName = window.prompt("仮のユーザー名:", this.getAnonName());
+                        while (userName === "") userName = window.prompt("user name\n仮のユーザー名:", this.getAnonName());
                         if (userName === null) return;
                         userName = userName.substring(0, 10);
                         this.postScore(userName + " (匿名)", callback);
@@ -281,11 +309,11 @@ gls2.GlShooter2 = tm.createClass(
                         callback(null, false);
                     }
                 } else {
-                    callback("登録に失敗しました！＞＜");
+                    callback("スコア登録に失敗しました！＞＜");
                 }
             }.bind(this),
             "error": function() {
-                callback("登録に失敗しました！＞＜");
+                callback("スコア登録に失敗しました！＞＜");
             }
         });
     },
@@ -312,6 +340,7 @@ gls2.GlShooter2 = tm.createClass(
     },
 
     putAchevement: function(key) {
+        if (this.mode !== 0) return;
         if (!window["achevements"] || window["achevements"].indexOf(key) !== -1) {
             return;
         }

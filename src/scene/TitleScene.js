@@ -24,13 +24,24 @@ gls2.TitleScene = tm.createClass({
 
         tm.display.Label("TM-Shooter", 50)
             .setPosition(SC_W * 0.5, SC_H * 0.25).addChildTo(this);
-        tm.display.Label("version 1.1", 22)
+        tm.display.Label("version " + VERSION, 22)
             .setPosition(SC_W * 0.9, SC_H * 0.30).setAlign("right").addChildTo(this);
+
+        tm.display.Label("1st ", 22)
+            .setPosition(SC_W * 0.15, SC_H * 0.70).setAlign("left").addChildTo(this);
+        tm.display.Label(EXTEND_SCORE[0] + " PTS", 22)
+            .setPosition(SC_W * 0.85, SC_H * 0.70).setAlign("right").addChildTo(this);
+        tm.display.Label("2nd ", 22)
+            .setPosition(SC_W * 0.15, SC_H * 0.75).setAlign("left").addChildTo(this);
+        tm.display.Label(EXTEND_SCORE[1] + " PTS", 22)
+            .setPosition(SC_W * 0.85, SC_H * 0.75).setAlign("right").addChildTo(this);
+
         this.highScoreLabel = tm.display.Label()
             .setPosition(SC_W * 0.5, SC_H * 0.40); //.addChildTo(this);
         tm.display.Label("press button").setPosition(SC_W * 0.5, SC_H * 0.9).addChildTo(this);
 
         this.addEventListener("enter", function() {
+            gls2.core.fps = FPS;
             this.gameStarted = false;
             this.updateHighScoreLabel();
         });
@@ -107,9 +118,11 @@ gls2.TitleScene = tm.createClass({
     },
 
     openMainMenu: function() {
-        var menu = [ "start", "setting" ];
+        var menu = [ "arcade mode", "training mode", "tutorial", "setting" ];
         var labels = [
             "ゲームを開始します",
+            "トレーニングを開始します",
+            "チュートリアルを開始します",
             "設定を変更します"
         ];
         this.openDialogMenu("MAIN MENU", menu, this.onResultMainMenu, {
@@ -121,6 +134,7 @@ gls2.TitleScene = tm.createClass({
         if (result !== 2) this.lastMainMenu = result;
         switch (result) {
         case 0: // start
+            gls2.core.mode = 0;
             this.tweener
                 .clear()
                 .call(function() {
@@ -134,32 +148,112 @@ gls2.TitleScene = tm.createClass({
                     gls2.core.replaceScene(gls2.ShipSelectScene());
                 }.bind(this));
             break;
-        case 1: // option
+        case 1: // training
+            this.openStageSelect();
+            break;
+        case 2: // tutorial
+            gls2.core.mode = 2;
+            this.tweener
+                .clear()
+                .call(function() {
+                    this.gameStarted = true;
+                    for (var i = 0, end = this.particles.length; i < end; i++) {
+                        this.particles[i].speed = 8;
+                    }
+                }.bind(this))
+                .wait(1000)
+                .call(function() {
+                    gls2.core.replaceScene(gls2.core.gameScene);
+                    gls2.core.gameScene.start(2, 0);
+                }.bind(this));
+            break;
+        case 3: // option
             this.openSetting();
             break;
         }
     },
 
+    openStageSelect: function(defaultValue) {
+        this.openDialogMenu("STAGE", [
+            "stage 1",
+            "stage 2",
+            "stage 3",
+            "stage 4",
+            "stage 5",
+        ], this.onResultStageSelect, {
+            "defaultValue": defaultValue || 0
+        });
+    },
+    onResultStageSelect: function(result) {
+        if (result === 5) {
+            this.openMainMenu();
+            return;
+        }
+        gls2.core.mode = 1;
+        gls2.core.selectedStage = result;
+        this.openRankSelect();
+    },
+
+    openRankSelect: function() {
+        this.openDialogMenu("RANK", [
+            "0",
+            "10",
+            "20",
+            "30",
+            "40",
+            "50",
+        ], this.onResultRankSelect, {});
+    },
+    onResultRankSelect: function(result) {
+        if (result === 6) {
+            this.openStageSelect(gls2.core.selectedStage);
+            return;
+        }
+        gls2.core.gameScene.setRank(result*0.1);
+        this.tweener
+            .clear()
+            .call(function() {
+                this.gameStarted = true;
+                for (var i = 0, end = this.particles.length; i < end; i++) {
+                    this.particles[i].speed = 8;
+                }
+            }.bind(this))
+            .wait(1000)
+            .call(function() {
+                gls2.core.replaceScene(gls2.ShipSelectScene());
+            }.bind(this));
+    },
+
     openSetting: function() {
         this.openDialogMenu("SETTING", [
             "bgm volume",
-            "sound volume"
+            "sound volume",
+            "particle",
+            "bullet appearance"
         ], this.onResultSetting, {
             "defaultValue": this.lastSetting,
             "menuDescriptions": [
                 "BGMボリュームを設定します",
-                "効果音ボリュームを設定します"
+                "効果音ボリュームを設定します",
+                "パーティクルのON/OFFを設定します",
+                "敵弾の見た目に関する設定です"
             ],
         });
     },
     onResultSetting: function(result) {
-        if (result !== 3) this.lastSetting = result;
+        if (result !== 4) this.lastSetting = result;
         switch (result) {
         case 0:
             this.openBgmSetting();
             break;
         case 1:
             this.openSeSetting();
+            break;
+        case 2:
+            this.openParticleSetting();
+            break;
+        case 3:
+            this.openBulletAppearanceSetting();
             break;
         default:
             this.openMainMenu();
@@ -175,10 +269,10 @@ gls2.TitleScene = tm.createClass({
             },
             "showExit": false,
         });
-
     },
     onResultBgmSetting: function(result) {
         if (result !== 6) gls2.core.bgmVolume = result;
+        this.saveSetting();
         this.openSetting();
     },
 
@@ -192,24 +286,46 @@ gls2.TitleScene = tm.createClass({
         if (result !== 6) {
             gls2.core.seVolume = result;
         }
+        this.saveSetting();
         this.openSetting();
     },
 
-    openDifficultySetting: function() {
-        this.openDialogMenu("DIFFICULTY", [ "easy", "normal", "hard", "very hard", "hell" ], this.onResultDifficultySetting, {
-            "defaultValue": gls2.core.difficulty,
-            "menuDescriptions": [
-                "初心者でも安心して挑戦可能な入門コース",
-                "普通の難易度。easyでは物足りない人へ",
-                "一般的な弾幕STGの難易度",
-                "hardはヌルすぎるという人向け",
-                "死ぬがよい",
-            ],
+    openParticleSetting: function() {
+        this.openDialogMenu("PARTICLES", [ "ON", "LITE", "OFF" ], this.onResultParticleSetting, {
+            "defaultValue": gls2.core.particleEffectLevel,
+            "showExit": false,
         });
     },
-    onResultDifficultySetting: function(result) {
-        if (result !== 5) gls2.core.difficulty = result;
+    onResultParticleSetting: function(result) {
+        gls2.core.particleEffectLevel = result;
+        this.saveSetting();
         this.openSetting();
+    },
+
+    openBulletAppearanceSetting: function() {
+        this.openDialogMenu("BULLET", [ "NORMAL", "LARGE" ], this.onResultBulletAppearanceSetting, {
+            "defaultValue": gls2.core.bulletBig,
+            "showExit": false,
+            "menuDescriptions": [
+                "通常サイズで表示します",
+                "大きめに表示します"
+            ]
+        });
+    },
+    onResultBulletAppearanceSetting: function(result) {
+        gls2.core.bulletBig = result;
+        this.saveSetting();
+        this.openSetting();
+    },
+
+    saveSetting: function() {
+        var config = {
+            "bgmVolume": gls2.core.bgmVolume,
+            "seVolume": gls2.core.seVolume,
+            "particleEffectLevel": gls2.core.particleEffectLevel,
+            "bulletBig": gls2.core.bulletBig
+        };
+        localStorage.setItem("tmshooter.config", JSON.stringify(config));
     },
 
     toString: function() { return "gls2.TitleScene" },

@@ -69,13 +69,13 @@
         "title": "スコア1000億！",
         "description": "スコアを1000億点以上獲得する",
         "grade": 1,
-        "secret": false
+        "secret": true
     },
     "score1T": {
         "title": "スコア1兆！",
         "description": "スコアを1兆点以上獲得する",
         "grade": 2,
-        "secret": false
+        "secret": true
     },
     "combo100": {
         "title": "100HIT達成！",
@@ -241,8 +241,44 @@
     },
     "hyperAndHyperAndHyper": {
         "title": "ハイハイハイパー！",
-        "description": "60フレームの間にハイパーゲージを5レベル以上チャージする",
+        "description": "ハイパーゲージをレベル0から6以上まで一気にチャージする",
         "grade": 1,
         "secret": true
+    },
+    "nicebomb": {
+        "title": "ナイスボム！",
+        "description": "敵弾が至近に迫った時にボンバーを投下する",
+        "grade": 0,
+        "secret": false
+    },
+    "nohyper": {
+        "title": "ノーハイパー！",
+        "description": "ハイパーシステムを一度も使わずにステージクリアする",
+        "grade": 0,
+        "secret": false
+    },
+    "nobomb": {
+        "title": "ノーボム！",
+        "description": "ボンバーを一度も使わずにステージクリアする",
+        "grade": 0,
+        "secret": false
+    },
+    "kill100": {
+        "title": "ぱふぇ☆",
+        "description": "ステージ中の敵機をすべて撃破する",
+        "grade": 0,
+        "secret": false
+    },
+    "kill40": {
+        "title": "慈悲の心",
+        "description": "ステージを撃墜率40%未満でクリアする",
+        "grade": 0,
+        "secret": false
+    },
+    "manpower": {
+        "title": "人の力",
+        "description": "Cボタンを一度も押さずにステージクリアする",
+        "grade": 0,
+        "secret": false
     }
 }

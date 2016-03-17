@@ -319,8 +319,8 @@ gls2.ChargeEffect = tm.createClass({
     target: null,
     rad: 0,
     angle: 0,
-    alpha : 2,
     isEffect: true,
+    alpha: 1,
 
     reverse: false,
 
@@ -332,6 +332,17 @@ gls2.ChargeEffect = tm.createClass({
         this.angle = 0;
         this.rad = reverse ? 0 : 200;
         this.alpha = reverse ? 1 : 0;
+
+        this.on("added", function() {
+            if (gls2.ChargeEffect.exists) {
+                this.remove();
+            } else {
+                gls2.ChargeEffect.exists = true;
+            }
+        });
+        this.on("removed", function() {
+            gls2.ChargeEffect.exists = false;
+        });
     },
 
     update: function(app) {
@@ -340,21 +351,22 @@ gls2.ChargeEffect = tm.createClass({
             return;
         }
 
-        if (app.frame % 2 === 0) {
-            for (var i = 0; i < 9; i++) {
-                var a = this.angle + i/9 * Math.PI*2;
-                gls2.Particle(this.reverse ? 100 : 60, this.alpha, 0.9)
+        if (app.frame % 3 === 0) {
+            for (var i = 0; i < 8; i++) {
+                var a = this.angle + i/6 * Math.PI*2;
+                gls2.Particle(120, this.alpha, 0.9)
                     .setPosition(Math.cos(a)*this.rad+this.target.x, Math.sin(a)*this.rad+this.target.y)
                     .addChildTo(this.target.parent);
             }
         }
         this.angle += 0.05;
-        this.rad += this.reverse ? 4 : -4;
-        this.alpha += this.reverse ? -0.02 : 0.05;
-        if (this.rad < 0 || 200 < this.rad) this.remove();
+        this.rad += 4 * (this.reverse ? 1 : -1);
+        this.alpha += 0.02 * (this.reverse ? -1 : 1);
+        if (this.rad < 0 || 600 < this.rad) this.remove();
     },
 
 });
+gls2.ChargeEffect.exists = false;
 
 gls2.StartHyperEffect = tm.createClass({
     superClass: tm.app.Object2D,
@@ -420,7 +432,7 @@ gls2.GetTrophyEffect = tm.createClass({
             .setPosition(-20, 0)
             .addChildTo(this.label);
     },
-    onadded: function() {
+    "onadded": function() {
         if (this.parent instanceof tm.app.Scene) {
             this.parent.one("exit", function() {
                 if (this.parent) this.remove();

@@ -44,6 +44,7 @@ gls2.Player = tm.createClass(
      * 0:ショット
      * 1:レーザー
      * 2:エキスパート
+     * 3:ビギナー
      */
     style: 0,
 
@@ -85,7 +86,7 @@ gls2.Player = tm.createClass(
 
         this.speed = [6.0, 5.0, 4.5][type];
 
-        this.boundingRadius = 3;
+        this.boundingRadius = (style === 2 || style === 3) ? 2 : 7;
         this.altitude = 10;
 
         this.currentShotPool = this.normalShotPool = gls2.ShotBulletPool(type, 100);
@@ -242,8 +243,8 @@ gls2.Player = tm.createClass(
             this.visible = true;
         }
 
-        var kb = app.keyboard;
-        if (this.controllable) {
+        var kb = gls2.core.mode === 2 ? this.gameScene.stage.keyboard : app.keyboard;
+        if (this.controllable || gls2.core.mode === 2) {
             var angle = kb.getKeyAngle();
             if (angle !== null) {
                 var m = KEYBOARD_MOVE[angle];
@@ -255,6 +256,7 @@ gls2.Player = tm.createClass(
 
             var pressC = kb.getKey("c") && this.attackable;
             var pressZ = kb.getKey("z") && this.attackable;
+            if (pressZ) this.gameScene.pressC = true;
 
             if (pressC) {
                 this.pressTimeC += 1;
@@ -269,6 +271,9 @@ gls2.Player = tm.createClass(
             this.fireShot = !this.fireLaser && (0 <= this.pressTimeC || pressZ) && app.frame % shotInterval === 0;
             if (pressZ) {
                 this.pressTimeC = 0;
+            }
+            if (this.style === 3 && this.fireLaser) {
+                this.fireShot = app.frame % shotInterval === 0;
             }
 
             this.laser.x = this.x;
@@ -288,6 +293,13 @@ gls2.Player = tm.createClass(
                         .setPosition(gls2.math.clamp(this.x, SC_W*0.2, SC_W*0.8), Math.max(this.y - SC_H*0.5, SC_H*0.3))
                         .addChildTo(this.gameScene);
                     gls2.core.putAchevement("bomb1");
+                    for (var i = 0; i < gls2.Bullet.activeList.length; i++) {
+                        var b = gls2.Bullet.activeList[i];
+                        if (b.visible === false) continue;
+                        if ((this.x-b.x)*(this.x-b.x)+(this.y-b.y)*(this.y-b.y) < 15*15) {
+                            gls2.core.putAchevement("nicebomb");
+                        }
+                    }
 
                     this.gameScene.bombCountByStage[this.gameScene.stageNumber] += 1;
                 }
@@ -309,13 +321,12 @@ gls2.Player = tm.createClass(
         }
 
         // レーザー発射
-        if (this.fireLaser) {
+        if (this.fireLaser && this.style !== 3) {
             for (var i = 0, len = this.bits.length; i < len; i++) {
                 this.bits[i].v = false;
             }
             this.bitPivot.rotation = 0;
         } else {
-            this.laser.visible = false;
             for (var i = 0, len = this.bits.length; i < len; i++) {
                 this.bits[i].v = true;
             }
@@ -361,7 +372,7 @@ gls2.Player = tm.createClass(
             }
         } else if (this.type === 1) {
             var p = this.bitPivot;
-            if (!this.fireLaser) {
+            if (!this.fireLaser || this.style !== 3) {
                 if (this.controllable && kb.getKey("left")) {
                     p.rotation = Math.max(p.rotation - 3, -50);
                 } else if (this.controllable && kb.getKey("right")) {
@@ -382,9 +393,9 @@ gls2.Player = tm.createClass(
     },
 
     _calcRoll: function(kb, frame) {
-        if (this.controllable && kb.getKey("left")) {
+        if ((this.controllable || gls2.core.mode === 2) && kb.getKey("left")) {
             this.roll = gls2.math.clamp(this.roll - 0.2, -3, 3);
-        } else if (this.controllable && kb.getKey("right")) {
+        } else if ((this.controllable || gls2.core.mode === 2) && kb.getKey("right")) {
             this.roll = gls2.math.clamp(this.roll + 0.2, -3, 3);
         } else {
             if (this.roll < 0) {

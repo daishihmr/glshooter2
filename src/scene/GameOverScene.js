@@ -48,6 +48,8 @@ gls2.GameOverScene = tm.createClass(
     scoreId: null,
 
     sendScore: function() {
+        if (gls2.core.mode === 1) return;
+
         this.wait = true;
         this.tried = true;
         this.app.postScore(null, function(error, success, scoreId) {
@@ -74,8 +76,13 @@ gls2.GameOverScene = tm.createClass(
             "タイトルへ戻ります"
         ];
 
+        if (!this.posted && gls2.core.mode === 0) {
+            menu.push("save score");
+            labels.push("スコアを登録します");
+        }
+
         this.openDialogMenu("GAME OVER", menu, this.onResultMenu, {
-            "defaultValue": this.posted ? 1 : 0,
+            "defaultValue": 1,
             "menuDescriptions": labels,
             "showExit": false
         });
@@ -84,21 +91,23 @@ gls2.GameOverScene = tm.createClass(
     onResultMenu: function(result) {
         if (result === 0) {
             this.tweetScore();
-        } else {
+        } else if (result === 1) {
             this.app.replaceScene(gls2.TitleScene());
+        } else {
+            this.sendScore();
         }
     },
 
     openSuccessDialog: function() {
         this.openDialogMenu("SUCCESS!", ["ok"], function() { this.openMenu() }, {
-            "menuDescriptions": ["登録しました！"],
+            "menuDescriptions": ["スコア登録しました！"],
             "showExit": false
         });
     },
 
     openErrorDialog: function() {
         this.openDialogMenu("ERROR!", ["ok"], function() { this.openMenu() }, {
-            "menuDescriptions": ["登録に失敗しました！＞＜"],
+            "menuDescriptions": ["スコア登録に失敗しました！＞＜"],
             "showExit": false
         });
     },
@@ -108,7 +117,7 @@ gls2.GameOverScene = tm.createClass(
             "score": Math.floor(this.app.gameScene.score),
             "stage": this.app.gameScene.stageNumber < STAGE_NUMBER ? ("Stage" + (this.app.gameScene.stageNumber + 1)) : "ALL",
             "type": "ABC"[this.app.gameScene.player.type],
-            "style": ["S", "L", "EX"][this.app.gameScene.player.style],
+            "style": ["S", "L", "EX", "BG"][this.app.gameScene.player.style],
             "cont": this.app.gameScene.continueCount
         });
         var twitterURL = tm.social.Twitter.createURL({
