@@ -27,7 +27,6 @@ gls2.GameOverScene = tm.createClass(
 
         this.on("enter", function() {
             gls2.playBgm("gameover");
-            if (!this.tried) this.sendScore();
         });
     },
     update: function(app) {
@@ -47,27 +46,7 @@ gls2.GameOverScene = tm.createClass(
     wait: false,
     scoreId: null,
 
-    sendScore: function() {
-        if (gls2.core.mode === 1) return;
-
-        this.wait = true;
-        this.tried = true;
-        this.app.postScore(null, function(error, success, scoreId) {
-            this.wait = false;
-            if (error) {
-                this.openErrorDialog(error);
-            } else if (success) {
-                this.posted = true;
-                this.scoreId = scoreId;
-                this.openSuccessDialog();
-            } else {
-                this.openMenu();
-            }
-        }.bind(this));
-    },
-
     openMenu: function() {
-        if (this.wait) return;
         this.opened = true;
 
         var menu = [ "tweet result", "back to title" ];
@@ -76,13 +55,8 @@ gls2.GameOverScene = tm.createClass(
             "タイトルへ戻ります"
         ];
 
-        if (!this.posted && gls2.core.mode === 0) {
-            menu.push("save score");
-            labels.push("スコアを登録します");
-        }
-
         this.openDialogMenu("GAME OVER", menu, this.onResultMenu, {
-            "defaultValue": 1,
+            "defaultValue": 0,
             "menuDescriptions": labels,
             "showExit": false
         });
@@ -93,27 +67,11 @@ gls2.GameOverScene = tm.createClass(
             this.tweetScore();
         } else if (result === 1) {
             this.app.replaceScene(gls2.TitleScene());
-        } else {
-            this.sendScore();
         }
     },
 
-    openSuccessDialog: function() {
-        this.openDialogMenu("SUCCESS!", ["ok"], function() { this.openMenu() }, {
-            "menuDescriptions": ["スコア登録しました！"],
-            "showExit": false
-        });
-    },
-
-    openErrorDialog: function() {
-        this.openDialogMenu("ERROR!", ["ok"], function() { this.openMenu() }, {
-            "menuDescriptions": ["スコア登録に失敗しました！＞＜"],
-            "showExit": false
-        });
-    },
-
     tweetScore: function() {
-        var text = "TM-Shooter SCORE: {score} {stage} {type}-{style} continue:{cont}".format({
+        var text = "TM-Shooter SCORE:{score}({stage} {type}-{style})continue:{cont}".format({
             "score": Math.floor(this.app.gameScene.score),
             "stage": this.app.gameScene.stageNumber < STAGE_NUMBER ? ("Stage" + (this.app.gameScene.stageNumber + 1)) : "ALL",
             "type": "ABC"[this.app.gameScene.player.type],
@@ -124,7 +82,7 @@ gls2.GameOverScene = tm.createClass(
             "type"    : "tweet",
             "text"    : text,
             "hashtags": HASH_TAG,
-            "url"     : this.scoreId ? (window.location.origin + "/ranking/" + this.scoreId) : window.location.origin
+            "url"     : window.location.href,
         });
         window.open(twitterURL, "tweet", "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=400,height=400");
     }

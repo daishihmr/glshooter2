@@ -37,7 +37,7 @@ var INITIAL_RANK = 0.00;
  * ランクの影響率
  * @const
  */
-var RANK_RATE = 0.5;
+var RANK_RATE = 0.4;
 
 /**
  * エクステンドスコア
@@ -269,7 +269,7 @@ var BULLET_SCORE = 10;
  * 弾破壊時のコンボカウント増加数
  * @const
  */
-var BULLET_COMBO = 1;
+var BULLET_COMBO = 10;
 
 /**
  * ハイパー中の星アイテム増加倍率
@@ -317,7 +317,7 @@ var STAR_ITEM_BASESCORE = 100;
  * ハイパーモード時の弾幕激化係数（少ないほど激化）
  * @const
  */
-var ENEMY_ATTACK_INTERVAL_RATE_HYPER = 0.5;
+var ENEMY_ATTACK_INTERVAL_RATE_HYPER = 0.75;
 
 /**
  * 基本弾速
@@ -329,13 +329,13 @@ var BULLET_SPEED = 3.0;
  * 星アイテム（大）が出る距離
  * @const
  */
-var CROSS_RANGE = 150*150;
+var CROSS_RANGE = 300 * 300;
 
 /**
  * 敵弾のHP
  * @const
  */
-var BULLET_HP = 50;
+var BULLET_HP = 200;
 
 /**
  * ショットのHP
@@ -353,7 +353,7 @@ var AUTO_BOMB_SELECT = false;
  * オートボム発動時に残ボム数をすべて消費するか
  * @const
  */
-var AUTO_BOMB_TO_ZERO = true;
+var AUTO_BOMB_TO_ZERO = false;
 
 /**
  * ステージクリア時ボーナス：小星
@@ -401,7 +401,7 @@ var HASH_TAG = "tmshooter";
  * コンティニュー可能回数初期値
  * @const
  */
-var INITIAL_CONTINUE_COUNT = 3;
+var INITIAL_CONTINUE_COUNT = 99;
 
 /**
  * 実績グレード別コンティニュー可能回数増加量
