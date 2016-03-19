@@ -17443,12 +17443,12 @@ tm.sound = tm.sound || {};
 (function() {
 
     var context = null;
-    if (tm.global.webkitAudioContext) {
+    if (tm.global.AudioContext) {
+        context = new AudioContext();
+    } else if (tm.global.webkitAudioContext) {
         context = new webkitAudioContext();
     } else if (tm.global.mozAudioContext) {
         context = new mozAudioContext();
-    } else if (tm.global.AudioContext) {
-        context = new AudioContext();
     }
 
     /**
